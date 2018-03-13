@@ -1,0 +1,8 @@
+type: object
+properties:
+  hidden:
+    type: boolean
+    default: true
+  disabled:
+    type: boolean
+    default: true

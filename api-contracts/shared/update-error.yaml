@@ -1,0 +1,10 @@
+400:
+  $ref: 'https://raw.githubusercontent.com/TomRyder/ALItemTrader/master/api-contracts/shared/errros/400.yaml'
+401:
+  $ref: 'https://raw.githubusercontent.com/TomRyder/ALItemTrader/master/api-contracts/shared/errros/401.yaml'
+404:
+  $ref: 'https://raw.githubusercontent.com/TomRyder/ALItemTrader/master/api-contracts/shared/errros/404.yaml'
+409:
+  $ref: 'https://raw.githubusercontent.com/TomRyder/ALItemTrader/master/api-contracts/shared/errros/409.yaml'
+412:
+  $ref: 'https://raw.githubusercontent.com/TomRyder/ALItemTrader/master/api-contracts/shared/errros/412.yaml'

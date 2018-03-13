@@ -1,0 +1,226 @@
+swagger: '2.0'
+info:
+  title: Player
+  description: Player management
+  version: 01.00.00
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  '/players':
+    get:
+      operationId: getPlayers
+      description: Returns a paginated set of all Players
+      parameters:
+        - name: page[limit]
+          in: query
+          description: Limit of players to return from the collection
+          type: integer
+          required: false
+        - name: page[offset]
+          in: query
+          description: Offest into the collection
+          type: integer
+          required: false
+      responses:
+        200:
+          description: A collection of Users
+          schema:
+            $ref: '#/definitions/players'
+        400:
+          $ref: 'https://raw.githubusercontent.com/TomRyder/ALItemTrader/master/api-contracts/shared/errros/400.yaml'
+        401:
+          $ref: 'https://raw.githubusercontent.com/TomRyder/ALItemTrader/master/api-contracts/shared/errros/401.yaml'
+        404:
+          $ref: 'https://raw.githubusercontent.com/TomRyder/ALItemTrader/master/api-contracts/shared/errros/404.yaml'
+  '/players/{playerId}':
+    get:
+      operationId: getPlayer
+      description: Returns Player
+      parameters:
+        - name: playerId
+          in: path
+          description: Player ID
+          required: true
+          type: string
+      responses:
+        200:
+          description: A Player
+          schema:
+            $ref: '#/definitions/player'
+        400:
+          $ref: 'https://raw.githubusercontent.com/TomRyder/ALItemTrader/master/api-contracts/shared/errros/400.yaml'
+        401:
+          $ref: 'https://raw.githubusercontent.com/TomRyder/ALItemTrader/master/api-contracts/shared/errros/401.yaml'
+        404:
+          $ref: 'https://raw.githubusercontent.com/TomRyder/ALItemTrader/master/api-contracts/shared/errros/404.yaml'
+    put:
+      operationId: updatePlayer
+      description: Update Player
+      parameters:
+        - name: playerId
+          in: path
+          description: Player ID
+          required: true
+          type: string
+        - name: If-Match
+          in: header
+          description: Provide an E-Tag for concurrency checking
+          type: string
+          required: true
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/playerBody'
+      responses:
+        200:
+          description: Player successfully updated
+          schema:
+            $ref: '#/definitions/player'
+        400:
+          $ref: 'https://raw.githubusercontent.com/TomRyder/ALItemTrader/master/api-contracts/shared/errros/400.yaml'
+        401:
+          $ref: 'https://raw.githubusercontent.com/TomRyder/ALItemTrader/master/api-contracts/shared/errros/401.yaml'
+        404:
+          $ref: 'https://raw.githubusercontent.com/TomRyder/ALItemTrader/master/api-contracts/shared/errros/404.yaml'
+        409:
+          $ref: 'https://raw.githubusercontent.com/TomRyder/ALItemTrader/master/api-contracts/shared/errros/409.yaml'
+        412:
+          $ref: 'https://raw.githubusercontent.com/TomRyder/ALItemTrader/master/api-contracts/shared/errros/412.yaml'
+definitions:
+  playerSelfLink:
+    type: object
+    properties:
+      href:
+        type: string
+        default: '/players/{playerId}'
+  playerTemplateLink:
+    type: object
+    properties:
+      href:
+        type: string
+        default: '/players/resourcetemplate'
+  playerLinks:
+    type: object
+    properties:
+      self:
+        $ref: '#/definitions/playerSelfLink'
+  players:
+    type: object
+    title: Players
+    description: Representation for a collection of Players
+    properties:
+      data:
+        type: object
+        properties:
+          players:
+            type: array
+            items:
+              type: object
+              allOf:
+                - $ref: '#/definitions/playerAttributes'
+                - properties:
+                    _links:
+                      $ref: '#/definitions/playerLinks'
+      meta:
+        type: object
+        description: The metadata for the resource
+        allOf:
+          - $ref: '#/definitions/playerMetaData'
+          - properties:
+              player.results:
+                type: object
+                properties:
+                  items:
+                    type: number
+                  total:
+                    type: number
+              links:
+                type: object
+                properties:
+                  self:
+                    type: object
+                    properties:
+                      href:
+                        type: string
+                        default: '/players'
+                  first:
+                    $ref: 'https://raw.githubusercontent.com/TomRyder/ALItemTrader/master/api-contracts/shared/link.yaml'
+                  prev:
+                    $ref: 'https://raw.githubusercontent.com/TomRyder/ALItemTrader/master/api-contracts/shared/link.yaml'
+                  next:
+                    $ref: 'https://raw.githubusercontent.com/TomRyder/ALItemTrader/master/api-contracts/shared/link.yaml'
+                  last:
+                    $ref: 'https://raw.githubusercontent.com/TomRyder/ALItemTrader/master/api-contracts/shared/link.yaml'
+                  createPlayer:
+                    type: object
+                    properties:
+                      href:
+                        type: string
+                        default: '/players'
+                  playerTemplate:
+                    $ref: '#/definitions/playerTemplateLink'
+  player:
+    type: object
+    title: Player
+    description: Representation for a player
+    properties:
+      data:
+        type: object
+        properties:
+          player:
+            type: object
+            allOf:
+              - $ref: '#/definitions/playerAttributes'
+              - properties:
+                  _links:
+                    $ref: '#/definitions/playerLinks'
+      meta:
+        type: object
+        description: The metadata for the resource
+        allOf:
+          - $ref: '#/definitions/playerMetaData'
+          - properties:
+              player.results:
+                type: object
+                properties:
+                  items:
+                    type: number
+                  total:
+                    type: number
+              links:
+                type: object
+                properties:
+                  self:
+                    type: object
+                    properties:
+                      href:
+                        type: string
+                        default: '/players'
+  playerBody:
+    type: object
+    properties:
+      user:
+        $ref: '#/definitions/playerAttributes'
+  playerAttributes:
+    properties:
+      playerId:
+        type: string
+        format: uuid
+      name:
+        type: string
+      dci:
+        type: string
+  playerMetaData:
+    type: object
+    properties:
+      player.playerId:
+        $ref: 'https://raw.githubusercontent.com/TomRyder/ALItemTrader/master/api-contracts/shared/id-attribute.yaml'
+      player.name:
+        $ref: 'https://raw.githubusercontent.com/TomRyder/ALItemTrader/master/api-contracts/shared/attribute.yaml'
+      player.dci:
+        $ref: 'https://raw.githubusercontent.com/TomRyder/ALItemTrader/master/api-contracts/shared/attribute.yaml'

@@ -1,0 +1,1 @@
+description: The request was not processed because of a concurrency issue, most commonly the 'If-Match' header was required but not provided

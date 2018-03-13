@@ -1,0 +1,18 @@
+description: Invalid input supplied
+  schema:
+    type: object
+    properties:
+      msg:
+        type: object
+        properties:
+          error:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                text:
+                  type: string
+                object:
+                  type: string
