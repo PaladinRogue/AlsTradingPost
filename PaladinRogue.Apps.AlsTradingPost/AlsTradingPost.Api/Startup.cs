@@ -1,6 +1,7 @@
 ﻿using AlsTradingPost.Api.Formatters;
 using AlsTradingPost.Setup;
 using AutoMapper;
+using Common.Api.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +32,7 @@ namespace AlsTradingPost.Api
             services.Configure<MvcOptions>(options =>
             {
                 options.Filters.Add(new RequireHttpsAttribute());
+                options.Filters.Add(new ConcurrencyActionFilter());
             });
 
             ServiceRegistration.RegisterServices(Configuration, services);
