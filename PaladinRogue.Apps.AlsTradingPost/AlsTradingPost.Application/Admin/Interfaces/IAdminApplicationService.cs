@@ -6,8 +6,9 @@ namespace AlsTradingPost.Application.Admin.Interfaces
 {
     public interface IAdminApplicationService
     {
-        IList<AdminAdto> GetAdmins();
-        AdminAdto GetAdminById(Guid id);
+        AdminAdto Get(Guid id);
+        IList<AdminSummaryAdto> GetAll();
         AdminAdto Create(CreateAdminAdto admin);
+        AdminAdto Update(UpdateAdminAdto admin);
     }
 }

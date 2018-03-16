@@ -24,9 +24,9 @@ namespace AlsTradingPost.Domain.AdminServices
             return _mapper.Map<Admin, AdminProjection>(_adminRepository.GetById(id));
         }
 
-        public IList<AdminProjection> GetAll()
+        public IList<AdminSummaryProjection> GetAll()
         {
-            return _mapper.Map<IList<Admin>, IList<AdminProjection>>(_adminRepository.Get());
+            return _mapper.Map<IList<Admin>, IList<AdminSummaryProjection>>(_adminRepository.Get());
         }
     }
 }

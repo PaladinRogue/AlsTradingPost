@@ -3,7 +3,7 @@ using AlsTradingPost.Domain.Interfaces;
 
 namespace AlsTradingPost.Domain.AdminServices.Interfaces
 {
-    public interface IAdminCommandService : ICommandService<AdminDdto>
+    public interface IAdminCommandService : ICreateCommandService<CreateAdminDdto, AdminProjection>, IUpdateCommandService<UpdateAdminDdto, AdminProjection>
     {
     }
 }

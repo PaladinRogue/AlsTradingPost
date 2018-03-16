@@ -10,10 +10,8 @@ namespace AlsTradingPost.Application.Admin.Mappings
         public AdminApplicationMappingProfile()
         {
             CreateMap<AdminProjection, AdminAdto>();
-            CreateMap<AdminDdto, AdminAdto>();
-            CreateMap<CreateAdminAdto, AdminDdto>()
-                .ForMember(dest => dest.Id,
-                    opts => opts.MapFrom(src => Guid.NewGuid()));
+            CreateMap<AdminSummaryProjection, AdminSummaryAdto>();
+            CreateMap<CreateAdminAdto, CreateAdminDdto>();
         }
     }
 }

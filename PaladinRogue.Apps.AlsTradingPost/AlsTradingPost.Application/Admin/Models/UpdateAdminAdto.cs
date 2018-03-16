@@ -1,11 +1,9 @@
-﻿using System;
-using Common.Application.Models;
+﻿using Common.Application.Models;
 
 namespace AlsTradingPost.Application.Admin.Models
 {
-    public class AdminAdto : OutboundVersionedAdto
+    public class UpdateAdminAdto : InboundVersionedAdto
     {
-        public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
     }

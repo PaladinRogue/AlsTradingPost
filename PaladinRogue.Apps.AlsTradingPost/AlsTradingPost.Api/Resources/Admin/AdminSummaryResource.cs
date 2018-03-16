@@ -1,6 +1,7 @@
-﻿namespace AlsTradingPost.Api.Request.Admin
+﻿
+namespace AlsTradingPost.Api.Resources.Admin
 {
-    public class AdminRequestDto
+    public class AdminSummaryResource
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

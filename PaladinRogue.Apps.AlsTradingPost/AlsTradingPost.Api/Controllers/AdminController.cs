@@ -25,7 +25,7 @@ namespace AlsTradingPost.Api.Controllers
         public IActionResult Get()
         {
             return new ObjectResult(
-                _mapper.Map<IList<AdminAdto>, IList<AdminResource>>(_adminApplicationService.GetAdmins())
+                _mapper.Map<IList<AdminSummaryAdto>, IList<AdminSummaryResource>>(_adminApplicationService.GetAll())
             );
         }
 
@@ -33,15 +33,23 @@ namespace AlsTradingPost.Api.Controllers
         public IActionResult Get(Guid id)
         {
             return new ObjectResult(
-                _mapper.Map<AdminAdto, AdminResource>(_adminApplicationService.GetAdminById(id))
+                _mapper.Map<AdminAdto, AdminResource>(_adminApplicationService.Get(id))
             ); 
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]AdminRequestDto request)
+        public IActionResult Post([FromBody]CreateAdminRequestDto request)
         {
             return new ObjectResult(
-                _mapper.Map<AdminAdto, AdminResource>(_adminApplicationService.Create(_mapper.Map<AdminRequestDto, CreateAdminAdto>(request)))
+                _mapper.Map<AdminAdto, AdminResource>(_adminApplicationService.Create(_mapper.Map<CreateAdminRequestDto, CreateAdminAdto>(request)))
+            ); 
+        }
+
+        [HttpPut]
+        public IActionResult Post([FromBody]UpdateAdminRequestDto request)
+        {
+            return new ObjectResult(
+                _mapper.Map<AdminAdto, AdminResource>(_adminApplicationService.Update(_mapper.Map<UpdateAdminRequestDto, UpdateAdminAdto>(request)))
             ); 
         }
     }

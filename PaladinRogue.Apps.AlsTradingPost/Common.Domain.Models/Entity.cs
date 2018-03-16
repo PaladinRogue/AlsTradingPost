@@ -6,10 +6,17 @@ namespace Common.Domain.Models
 {
     public abstract class Entity : IEntity
     {
+        protected Entity()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        public Guid Id { get; set; }
+
         [Timestamp]
         public byte[] Version { get; set; }
 
-        public override int GetHashCode()
+        public int GetConcurrencyVersion()
         {
             var version = Version;
             if (BitConverter.IsLittleEndian)

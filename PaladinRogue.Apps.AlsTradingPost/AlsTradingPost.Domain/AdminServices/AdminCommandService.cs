@@ -20,19 +20,26 @@ namespace AlsTradingPost.Domain.AdminServices
             _mapper = mapper;
         }
 
-        public bool Create(AdminDdto entity)
+        public AdminProjection Create(CreateAdminDdto entity)
 {
             try
             {
-                _adminRepository.Add(_mapper.Map<AdminDdto, Admin>(entity));
+                var newAdmin = _mapper.Map(entity, new Admin());
 
-                return true;
+                _adminRepository.Add(newAdmin);
+
+                return _mapper.Map<Admin, AdminProjection>(_adminRepository.GetById(newAdmin.Id));
             }
             catch (Exception e)
             {
                 Log.Error(e);
                 throw new DomainException("Unable to create admin");
             }
+        }
+
+        public AdminProjection Update(UpdateAdminDdto entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }
