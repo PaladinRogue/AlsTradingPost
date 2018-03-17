@@ -7,16 +7,16 @@ namespace Common.Domain.Resolvers
 {
     public class InboundConcurrencyTokenResolver : IValueResolver<IVersionedDdto, IEntity, byte[]>
     {
-        private readonly IConcurrencyTokenProvider _concurrencyTokenProvider;
+        private readonly IConcurrencyVersionProvider _concurrencyVersionProvider;
 
-        public InboundConcurrencyTokenResolver(IConcurrencyTokenProvider concurrencyTokenProvider)
+        public InboundConcurrencyTokenResolver(IConcurrencyVersionProvider concurrencyVersionProvider)
         {
-            _concurrencyTokenProvider = concurrencyTokenProvider;
+            _concurrencyVersionProvider = concurrencyVersionProvider;
         }
 
         byte[] IValueResolver<IVersionedDdto, IEntity, byte[]>.Resolve(IVersionedDdto source, IEntity destination, byte[] destMember, ResolutionContext context)
         {
-            return _concurrencyTokenProvider.GetConcurrencyToken(source);
+            return _concurrencyVersionProvider.GetConcurrencyTimeStamp(source);
         }
     }
 }

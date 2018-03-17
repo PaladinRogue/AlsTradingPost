@@ -6,6 +6,6 @@ namespace Common.Api.Resource
     public class VersionedResource : IVersionedResource
     {
         [JsonIgnore]
-        public int Version { get; set; }
+        public IConcurrencyVersion Version { get; set; }
     }
 }

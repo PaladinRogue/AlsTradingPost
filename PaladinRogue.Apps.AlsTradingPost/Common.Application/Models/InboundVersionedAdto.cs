@@ -4,6 +4,6 @@ namespace Common.Application.Models
 {
     public class InboundVersionedAdto : IInboundVersionedAdto
     {
-        public int Version { get; set; }
+        public IConcurrencyVersion Version { get; set; }
     }
 }

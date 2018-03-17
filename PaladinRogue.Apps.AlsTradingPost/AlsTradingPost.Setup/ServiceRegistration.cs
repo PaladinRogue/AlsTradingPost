@@ -33,7 +33,7 @@ namespace AlsTradingPost.Setup
 
         public static void RegisterProviders(IConfiguration configuration, IServiceCollection services)
         {
-            services.AddSingleton<IConcurrencyTokenProvider, ConcurrencyTokenProvider>();
+            services.AddSingleton<IConcurrencyVersionProvider, ConcurrencyVersionProvider>();
         }
     }
 }

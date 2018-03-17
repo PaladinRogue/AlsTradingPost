@@ -5,18 +5,18 @@ using Common.Domain.Providers.Interfaces;
 
 namespace Common.Domain.Resolvers
 {
-    public class OutboundConcurrencyTokenResolver : IValueResolver<IEntity, IVersionedProjection, int>
+    public class OutboundConcurrencyTokenResolver : IValueResolver<IEntity, IVersionedProjection, IConcurrencyVersion>
     {
-        private readonly IConcurrencyTokenProvider _concurrencyTokenProvider;
+        private readonly IConcurrencyVersionProvider _concurrencyVersionProvider;
 
-        public OutboundConcurrencyTokenResolver(IConcurrencyTokenProvider concurrencyTokenProvider)
+        public OutboundConcurrencyTokenResolver(IConcurrencyVersionProvider concurrencyVersionProvider)
         {
-            _concurrencyTokenProvider = concurrencyTokenProvider;
+            _concurrencyVersionProvider = concurrencyVersionProvider;
         }
 
-        int IValueResolver<IEntity, IVersionedProjection, int>.Resolve(IEntity source, IVersionedProjection destination, int destMember, ResolutionContext context)
+        IConcurrencyVersion IValueResolver<IEntity, IVersionedProjection, IConcurrencyVersion>.Resolve(IEntity source, IVersionedProjection destination, IConcurrencyVersion destMember, ResolutionContext context)
         {
-            return _concurrencyTokenProvider.GetConcurrencyToken(source);
+            return _concurrencyVersionProvider.GetConcurrencyVersion(source);
         }
     }
 }

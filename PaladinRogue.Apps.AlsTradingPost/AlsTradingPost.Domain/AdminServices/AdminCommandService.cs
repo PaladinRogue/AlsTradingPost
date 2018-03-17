@@ -21,7 +21,7 @@ namespace AlsTradingPost.Domain.AdminServices
         }
 
         public AdminProjection Create(CreateAdminDdto entity)
-{
+        {
             try
             {
                 var newAdmin = _mapper.Map(entity, new Admin());
@@ -39,7 +39,17 @@ namespace AlsTradingPost.Domain.AdminServices
 
         public AdminProjection Update(UpdateAdminDdto entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _adminRepository.Update(_mapper.Map<UpdateAdminDdto, Admin>(entity));
+
+                return _mapper.Map<Admin, AdminProjection>(_adminRepository.GetById(entity.Id));
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+                throw new DomainException("Unable to update admin");
+            }
         }
     }
 }

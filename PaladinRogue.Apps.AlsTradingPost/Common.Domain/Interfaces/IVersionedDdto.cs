@@ -1,6 +1,7 @@
-﻿namespace Common.Domain.Interfaces
+﻿
+namespace Common.Domain.Interfaces
 {
-    public interface IVersionedDdto : IVersion<int>
+    public interface IVersionedDdto : IVersion<IConcurrencyVersion>
     {
     }
 }

@@ -15,15 +15,5 @@ namespace Common.Domain.Models
 
         [Timestamp]
         public byte[] Version { get; set; }
-
-        public int GetConcurrencyVersion()
-        {
-            var version = Version;
-            if (BitConverter.IsLittleEndian)
-            {
-                Array.Reverse(version);
-            }
-            return BitConverter.ToInt32(version, 0);
-        }
     }
 }

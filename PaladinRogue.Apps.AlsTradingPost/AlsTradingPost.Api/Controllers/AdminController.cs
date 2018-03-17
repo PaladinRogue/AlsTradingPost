@@ -45,11 +45,14 @@ namespace AlsTradingPost.Api.Controllers
             ); 
         }
 
-        [HttpPut]
-        public IActionResult Post([FromBody]UpdateAdminRequestDto request)
+        [HttpPut("{id}")]
+        public IActionResult Put([FromBody]UpdateAdminRequestDto request, Guid id)
         {
             return new ObjectResult(
-                _mapper.Map<AdminAdto, AdminResource>(_adminApplicationService.Update(_mapper.Map<UpdateAdminRequestDto, UpdateAdminAdto>(request)))
+                _mapper.Map<AdminAdto, AdminResource>(_adminApplicationService.Update(_mapper.Map(request, new UpdateAdminAdto
+                {
+                    Id = id
+                })))
             ); 
         }
     }

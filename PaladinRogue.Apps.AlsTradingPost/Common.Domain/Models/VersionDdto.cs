@@ -2,8 +2,8 @@
 
 namespace Common.Domain.Models
 {
-    public class VersionedDdto : IVersionedProjection
+    public class VersionedDdto : IVersionedDdto
     {
-        public int Version { get; set; }
+        public IConcurrencyVersion Version { get; set; }
     }
 }

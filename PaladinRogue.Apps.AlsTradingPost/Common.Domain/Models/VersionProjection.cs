@@ -4,6 +4,6 @@ namespace Common.Domain.Models
 {
     public class VersionedProjection : IVersionedProjection
     {
-        public int Version { get; set; }
+        public IConcurrencyVersion Version { get; set; }
     }
 }

@@ -2,9 +2,11 @@
 using System.Linq;
 using Common.Api.Constants;
 using Common.Api.Exceptions;
+using Common.Api.Factories;
 using Common.Api.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Newtonsoft.Json;
 
 namespace Common.Api.Filters
 {
@@ -32,8 +34,8 @@ namespace Common.Api.Filters
                 if (resourceObj == null) throw new Exception("Request object does not implement IVersionedRequest");
 
                 var resource = (IVersionedRequest)resourceObj;
-                int.TryParse(concurrencyValue, out var concurrencyResult);
-                resource.Version = concurrencyResult;
+
+                resource.Version = ConcurrencyVersionFactory.Create(concurrencyValue);
             }
         }
 
@@ -45,8 +47,9 @@ namespace Common.Api.Filters
                 {
                     if (result.Value is IVersionedResource resource)
                     {
-                        context.HttpContext.Response.Headers[ConcurrencyHeaders.ETag] = resource.Version.ToString();
-
+                        var jsonVersion = JsonConvert.SerializeObject(resource.Version);
+                        var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(jsonVersion);
+                        context.HttpContext.Response.Headers[ConcurrencyHeaders.ETag] = Convert.ToBase64String(plainTextBytes);
                     }
                 }
             }

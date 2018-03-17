@@ -1,7 +1,7 @@
 ﻿
 namespace Common.Api.Interfaces
 {
-    public interface IVersionedRequest : IVersioned<int>
+    public interface IVersionedRequest : IVersioned<IConcurrencyVersion>
     {
     }
 }
