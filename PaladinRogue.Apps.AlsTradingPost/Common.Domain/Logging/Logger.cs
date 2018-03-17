@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using log4net;
 
-namespace AlsTradingPost.Domain.Logging
+namespace Common.Domain.Logging
 {
     public abstract class Logger
     {

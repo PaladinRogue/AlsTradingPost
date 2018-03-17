@@ -2,10 +2,10 @@
 using AlsTradingPost.Domain.AdminServices.Interfaces;
 using AlsTradingPost.Domain.AdminServices.Models;
 using AlsTradingPost.Domain.Exceptions;
-using AlsTradingPost.Domain.Logging;
 using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Persistence.Interfaces;
 using AutoMapper;
+using Common.Domain.Logging;
 
 namespace AlsTradingPost.Domain.AdminServices
 {
