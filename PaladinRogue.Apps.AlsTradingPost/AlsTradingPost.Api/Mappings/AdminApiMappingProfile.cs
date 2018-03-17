@@ -10,7 +10,8 @@ namespace AlsTradingPost.Api.Mappings
         public AdminApiMappingProfile()
         {
             CreateMap<AdminAdto, AdminResource>();
-            CreateMap<AdminRequestDto, CreateAdminAdto>();
+            CreateMap<CreateAdminRequestDto, CreateAdminAdto>();
+            CreateMap<UpdateAdminRequestDto, UpdateAdminAdto>();
         }
     }
 }

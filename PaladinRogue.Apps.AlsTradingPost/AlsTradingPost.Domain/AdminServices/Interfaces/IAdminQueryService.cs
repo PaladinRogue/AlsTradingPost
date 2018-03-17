@@ -3,7 +3,7 @@ using AlsTradingPost.Domain.Interfaces;
 
 namespace AlsTradingPost.Domain.AdminServices.Interfaces
 {
-    public interface IAdminQueryService : IQueryService<AdminProjection>
+    public interface IAdminQueryService : IQueryService<AdminProjection>, ISummaryQueryService<AdminSummaryProjection>
     {
     }
 }

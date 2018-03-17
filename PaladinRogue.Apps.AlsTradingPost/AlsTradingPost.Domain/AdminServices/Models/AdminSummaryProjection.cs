@@ -1,11 +1,10 @@
 ﻿using Common.Domain.Models;
 
-namespace AlsTradingPost.Domain.Models.Base
+namespace AlsTradingPost.Domain.AdminServices.Models
 {
-    public abstract class User : Entity
+    public class AdminSummaryProjection
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public Identity Identity { get; set; }
     }
 }

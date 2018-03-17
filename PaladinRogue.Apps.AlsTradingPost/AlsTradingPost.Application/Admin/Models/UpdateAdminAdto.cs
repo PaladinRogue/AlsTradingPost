@@ -1,9 +1,9 @@
 ﻿using System;
-using Common.Domain.Models;
+using Common.Application.Models;
 
-namespace AlsTradingPost.Domain.AdminServices.Models
+namespace AlsTradingPost.Application.Admin.Models
 {
-    public class AdminProjection : VersionedProjection
+    public class UpdateAdminAdto : InboundVersionedAdto
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; }

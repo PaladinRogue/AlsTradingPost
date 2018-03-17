@@ -1,6 +1,6 @@
-﻿namespace AlsTradingPost.Application.Admin.Models
+﻿namespace AlsTradingPost.Api.Request.Admin
 {
-    public class CreateAdminAdto
+    public class CreateAdminRequestDto
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

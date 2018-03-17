@@ -34,7 +34,9 @@ namespace AlsTradingPost.Persistence.Repositories
 
         public void Update(Admin obj)
         {
-            throw new NotImplementedException();
+            _context.Admins.Update(obj);
+
+            _context.SaveChanges();
         }
 
         public void Delete(Guid id)

@@ -12,7 +12,9 @@ namespace AlsTradingPost.Domain.AdminServices.Mappings
         {
             CreateMap<Admin, AdminProjection>()
                 .IncludeBase<IEntity, IVersionedProjection>();
-            CreateMap<AdminDdto, Admin>();
+            CreateMap<CreateAdminDdto, Admin>();
+            CreateMap<UpdateAdminDdto, Admin>()
+                .IncludeBase<IVersionedDdto, IEntity>();
         }
     }
 }

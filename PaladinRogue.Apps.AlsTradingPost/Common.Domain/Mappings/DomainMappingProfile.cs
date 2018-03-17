@@ -10,7 +10,10 @@ namespace Common.Domain.Mappings
         public DomainMappingProfile()
         {
             CreateMap<IEntity, IVersionedProjection>()
-                .ForMember(dest => dest.Version, opts => opts.ResolveUsing<ConcurrencyTokenResolver>());
+                .ForMember(dest => dest.Version, opts => opts.ResolveUsing<OutboundConcurrencyTokenResolver>());
+
+            CreateMap<IVersionedDdto, IEntity>()
+                .ForMember(dest => dest.Version, opts => opts.ResolveUsing<InboundConcurrencyTokenResolver>());
         }
     }
 }

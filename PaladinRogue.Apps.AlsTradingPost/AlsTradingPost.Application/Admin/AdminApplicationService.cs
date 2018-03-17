@@ -21,23 +21,28 @@ namespace AlsTradingPost.Application.Admin
             _adminQueryService = adminQueryService;
         }
 
-        public IList<AdminAdto> GetAdmins()
-        {
-            return _mapper.Map<IList<AdminProjection>, IList<AdminAdto>>(_adminQueryService.GetAll());
-        }
-
-        public AdminAdto GetAdminById(Guid id)
+        public AdminAdto Get(Guid id)
         {
             return _mapper.Map<AdminProjection, AdminAdto> (_adminQueryService.Get(id));
         }
 
+        public IList<AdminSummaryAdto> GetAll()
+        {
+            return _mapper.Map<IList<AdminSummaryProjection>, IList<AdminSummaryAdto>>(_adminQueryService.GetAll());
+        }
+
         public AdminAdto Create(CreateAdminAdto admin)
         {
-            var newAdmin = _mapper.Map<CreateAdminAdto, AdminDdto>(admin);
+            var newAdmin = _mapper.Map<CreateAdminAdto, CreateAdminDdto>(admin);
 
-            var result = _adminCommandService.Create(newAdmin);
+            return _mapper.Map<AdminProjection, AdminAdto>(_adminCommandService.Create(newAdmin));
+        }
 
-            return _mapper.Map<AdminDdto, AdminAdto>(newAdmin);
+        public AdminAdto Update(UpdateAdminAdto admin)
+        {
+            var updatedAdmin = _mapper.Map<UpdateAdminAdto, UpdateAdminDdto>(admin);
+
+            return _mapper.Map<AdminProjection, AdminAdto>(_adminCommandService.Update(updatedAdmin));
         }
     }
 }
