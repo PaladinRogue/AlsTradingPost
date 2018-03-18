@@ -1,6 +1,5 @@
-﻿using Common.Api.Interfaces;
-
-namespace Common.Api.Request
+﻿
+namespace Common.Resources.Concurrency
 {
     public class ConcurrencyVersion : IConcurrencyVersion
     {
