@@ -6,6 +6,7 @@ using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Persistence.Interfaces;
 using AutoMapper;
 using Common.Domain.Logging;
+using Common.Domain.Models;
 
 namespace AlsTradingPost.Domain.AdminServices
 {
@@ -24,7 +25,7 @@ namespace AlsTradingPost.Domain.AdminServices
         {
             try
             {
-                var newAdmin = _mapper.Map(entity, new Admin());
+                var newAdmin = _mapper.Map(entity, EntityFactory.CreateEntity<Admin>());
 
                 _adminRepository.Add(newAdmin);
 
