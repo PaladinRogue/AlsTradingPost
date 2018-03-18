@@ -2,8 +2,8 @@
 using System.Linq;
 using Common.Api.Constants;
 using Common.Api.Exceptions;
-using Common.Api.Factories;
 using Common.Api.Interfaces;
+using Common.Resources.Concurrency;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
@@ -35,7 +35,7 @@ namespace Common.Api.Filters
 
                 var resource = (IVersionedRequest)resourceObj;
 
-                resource.Version = ConcurrencyVersionFactory.Create(concurrencyValue);
+                resource.Version = ConcurrencyVersionFactory.CreateFromBase64String(concurrencyValue);
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using Common.Api.Interfaces;
+using Common.Resources.Concurrency;
 using Newtonsoft.Json;
 
 namespace Common.Api.Resource

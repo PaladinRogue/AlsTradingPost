@@ -1,4 +1,5 @@
 ﻿using Common.Api.Interfaces;
+using Common.Resources.Concurrency;
 
 namespace Common.Api.Request
 {

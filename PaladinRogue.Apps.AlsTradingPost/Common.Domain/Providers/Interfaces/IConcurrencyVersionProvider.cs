@@ -1,5 +1,6 @@
 ﻿using Common.Domain.Interfaces;
 using Common.Domain.Models.Interfaces;
+using Common.Resources.Concurrency;
 
 namespace Common.Domain.Providers.Interfaces
 {

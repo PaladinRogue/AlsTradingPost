@@ -1,4 +1,5 @@
 ﻿using Common.Application.Interfaces;
+using Common.Resources.Concurrency;
 
 namespace Common.Application.Models
 {
