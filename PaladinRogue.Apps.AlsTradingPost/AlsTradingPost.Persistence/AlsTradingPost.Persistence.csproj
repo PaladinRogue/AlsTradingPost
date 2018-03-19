@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <Reference Include="Microsoft.EntityFrameworkCore.SqlServer">
-      <HintPath>..\..\..\..\Users\cheneyd\.nuget\packages\microsoft.entityframeworkcore.sqlserver\2.0.2\lib\netstandard2.0\Microsoft.EntityFrameworkCore.SqlServer.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\.nuget\packages\microsoft.entityframeworkcore.sqlserver\2.0.2\lib\netstandard2.0\Microsoft.EntityFrameworkCore.SqlServer.dll</HintPath>
     </Reference>
   </ItemGroup>
 

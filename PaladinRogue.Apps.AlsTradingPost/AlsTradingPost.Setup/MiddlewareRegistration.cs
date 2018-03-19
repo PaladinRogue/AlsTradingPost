@@ -1,4 +1,5 @@
 ﻿using AlsTradingPost.Setup.Middleware;
+using Common.Api.Middleware;
 using Microsoft.AspNetCore.Builder;
 
 namespace AlsTradingPost.Setup
@@ -8,6 +9,7 @@ namespace AlsTradingPost.Setup
         public static void RegisterTransactionPerRequest(IApplicationBuilder app)
         {
             app.UseMiddleware<TransactionPerRequestMiddleware>();
+            app.UseMiddleware<ExceptionMiddleware>();
         }
     }
 }
