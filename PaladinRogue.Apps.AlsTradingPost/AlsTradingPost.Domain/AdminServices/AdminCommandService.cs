@@ -5,20 +5,22 @@ using AlsTradingPost.Domain.Exceptions;
 using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Persistence.Interfaces;
 using AutoMapper;
-using Common.Domain.Logging;
 using Common.Domain.Models;
+using Microsoft.Extensions.Logging;
 
 namespace AlsTradingPost.Domain.AdminServices
 {
-    public class AdminCommandService : Logger, IAdminCommandService
+    public class AdminCommandService : IAdminCommandService
     {
+        private readonly ILogger<AdminCommandService> _logger;
         private readonly IMapper _mapper;
         private readonly IAdminRepository _adminRepository;
 
-        public AdminCommandService(IMapper mapper, IAdminRepository adminRepository)
+        public AdminCommandService(IMapper mapper, IAdminRepository adminRepository, ILogger<AdminCommandService> logger)
         {
             _adminRepository = adminRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public AdminProjection Create(CreateAdminDdto entity)
@@ -33,7 +35,7 @@ namespace AlsTradingPost.Domain.AdminServices
             }
             catch (Exception e)
             {
-                Log.Error(e);
+                _logger.LogCritical(e, "Unable to create admin");
                 throw new DomainException("Unable to create admin");
             }
         }
@@ -48,7 +50,7 @@ namespace AlsTradingPost.Domain.AdminServices
             }
             catch (Exception e)
             {
-                Log.Error(e);
+                _logger.LogCritical(e, "Unable to update admin");
                 throw new DomainException("Unable to update admin");
             }
         }
