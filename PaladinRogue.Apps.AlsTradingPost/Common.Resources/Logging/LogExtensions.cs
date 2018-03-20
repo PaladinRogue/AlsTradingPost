@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Common.Resources.Logging.Log4Net;
+using Microsoft.Extensions.Logging;
 
 namespace Common.Resources.Logging
 {

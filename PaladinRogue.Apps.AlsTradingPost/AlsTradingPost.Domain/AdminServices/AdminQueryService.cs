@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AlsTradingPost.Domain.AdminServices.Interfaces;
 using AlsTradingPost.Domain.AdminServices.Models;
 using AlsTradingPost.Domain.Models;
@@ -26,7 +27,7 @@ namespace AlsTradingPost.Domain.AdminServices
 
         public IList<AdminSummaryProjection> GetAll()
         {
-            return _mapper.Map<IList<Admin>, IList<AdminSummaryProjection>>(_adminRepository.Get());
+            return _mapper.Map<IList<Admin>, IList<AdminSummaryProjection>>(_adminRepository.Get().ToList());
         }
     }
 }

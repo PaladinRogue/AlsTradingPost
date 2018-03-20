@@ -1,10 +1,10 @@
 ﻿using System;
 using AlsTradingPost.Domain.AdminServices.Interfaces;
 using AlsTradingPost.Domain.AdminServices.Models;
-using AlsTradingPost.Domain.Exceptions;
 using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Persistence.Interfaces;
 using AutoMapper;
+using Common.Domain.Exceptions;
 using Common.Domain.Models;
 using Microsoft.Extensions.Logging;
 
@@ -47,6 +47,11 @@ namespace AlsTradingPost.Domain.AdminServices
                 _adminRepository.Update(_mapper.Map<UpdateAdminDdto, Admin>(entity));
 
                 return _mapper.Map<Admin, AdminProjection>(_adminRepository.GetById(entity.Id));
+            }
+            catch (ConcurrencyDomainException e)
+            {
+                _logger.LogCritical(e, "Unable to create admin");
+                throw;
             }
             catch (Exception e)
             {

@@ -14,7 +14,7 @@ namespace AlsTradingPost.Persistence.Repositories
             _context = context;
         }
 
-        public IList<Identity> Get()
+        public IEnumerable<Identity> Get()
         {
             throw new NotImplementedException();
         }

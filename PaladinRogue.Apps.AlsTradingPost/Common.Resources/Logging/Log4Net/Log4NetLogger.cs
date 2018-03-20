@@ -4,7 +4,7 @@ using System.Xml;
 using log4net;
 using Microsoft.Extensions.Logging;
 
-namespace Common.Resources.Logging
+namespace Common.Resources.Logging.Log4Net
 {
     public class Log4NetLogger : ILogger
     {
@@ -12,11 +12,11 @@ namespace Common.Resources.Logging
 
         public Log4NetLogger(string name, XmlElement xmlElement)
         {
-            var loggerRepository = LogManager.CreateRepository(
-                Assembly.GetEntryAssembly(), typeof(log4net.Repository.Hierarchy.Hierarchy));
+            var loggerRepository = LogManager.CreateRepository(Assembly.GetEntryAssembly(), typeof(log4net.Repository.Hierarchy.Hierarchy));
             _log = LogManager.GetLogger(loggerRepository.Name, name);
             log4net.Config.XmlConfigurator.Configure(loggerRepository, xmlElement);
         }
+
         public IDisposable BeginScope<TState>(TState state)
         {
             return null;
@@ -54,32 +54,32 @@ namespace Common.Resources.Logging
             {
                 throw new ArgumentNullException(nameof(formatter));
             }
-            string message =  formatter(state, exception);
-            if (!string.IsNullOrEmpty(message) || exception != null)
+
+            var message =  formatter(state, exception);
+            if (string.IsNullOrEmpty(message) && exception == null) return;
+
+            switch (logLevel)
             {
-                switch (logLevel)
-                {
-                    case LogLevel.Critical:
-                        _log.Fatal(message);
-                        break;
-                    case LogLevel.Debug:
-                    case LogLevel.Trace:
-                        _log.Debug(message);
-                        break;
-                    case LogLevel.Error:
-                        _log.Error(message);
-                        break;
-                    case LogLevel.Information:
-                        _log.Info(message);
-                        break;
-                    case LogLevel.Warning:
-                        _log.Warn(message);
-                        break;
-                    default:
-                        _log.Warn($"Encountered unknown log level {logLevel}, writing out as Info.");
-                        _log.Info(message, exception);
-                        break;
-                }
+                case LogLevel.Critical:
+                    _log.Fatal(message, exception);
+                    break;
+                case LogLevel.Debug:
+                case LogLevel.Trace:
+                    _log.Debug(message, exception);
+                    break;
+                case LogLevel.Error:
+                    _log.Error(message, exception);
+                    break;
+                case LogLevel.Information:
+                    _log.Info(message, exception);
+                    break;
+                case LogLevel.Warning:
+                    _log.Warn(message, exception);
+                    break;
+                default:
+                    _log.Warn($"Encountered unknown log level {logLevel}, writing out as Info.");
+                    _log.Info(message, exception);
+                    break;
             }
         }
     }

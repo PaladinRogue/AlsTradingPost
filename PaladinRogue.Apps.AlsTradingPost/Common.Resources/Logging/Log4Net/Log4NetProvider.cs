@@ -3,13 +3,14 @@ using System.IO;
 using System.Xml;
 using Microsoft.Extensions.Logging;
 
-namespace Common.Resources.Logging
+namespace Common.Resources.Logging.Log4Net
 {
     public class Log4NetProvider : ILoggerProvider
     {
         private readonly string _log4NetConfigFile;
         private readonly ConcurrentDictionary<string, Log4NetLogger> _loggers =
             new ConcurrentDictionary<string, Log4NetLogger>();
+
         public Log4NetProvider(string log4NetConfigFile)
         {
             _log4NetConfigFile = log4NetConfigFile;
@@ -31,7 +32,7 @@ namespace Common.Resources.Logging
 
         private static XmlElement Parselog4NetConfigFile(string filename)
         {
-            XmlDocument log4NetConfig = new XmlDocument();
+            var log4NetConfig = new XmlDocument();
             log4NetConfig.Load(File.OpenRead(filename));
             return log4NetConfig["log4net"];
         }
