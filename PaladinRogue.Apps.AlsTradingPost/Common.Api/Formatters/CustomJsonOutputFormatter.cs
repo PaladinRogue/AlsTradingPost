@@ -4,11 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AlsTradingPost.Api.Responses;
+using Common.Api.Responses;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Newtonsoft.Json;
 
-namespace AlsTradingPost.Api.Formatters
+namespace Common.Api.Formatters
 {
     public class CustomJsonOutputFormatter : JsonOutputFormatter
     {

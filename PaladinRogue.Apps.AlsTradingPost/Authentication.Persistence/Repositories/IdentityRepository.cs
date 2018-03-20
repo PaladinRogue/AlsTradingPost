@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using AlsTradingPost.Domain.Models;
-using AlsTradingPost.Persistence.Interfaces;
+using Authentication.Domain.Models;
+using Authentication.Persistence.Interfaces;
 
-namespace AlsTradingPost.Persistence.Repositories
+namespace Authentication.Persistence.Repositories
 {
     public class IdentityRepository : IIdentityRepository
     {
-        private readonly AlsTradingPostDbContext _context;
+        private readonly AuthenticationDbContext _context;
 
-        public IdentityRepository(AlsTradingPostDbContext context)
+        public IdentityRepository(AuthenticationDbContext context)
         {
             _context = context;
         }

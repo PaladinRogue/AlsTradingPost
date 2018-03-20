@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Formatters;
 
-namespace AlsTradingPost.Api.Responses
+namespace Common.Api.Responses
 {
     public class CollectionResponse
     {

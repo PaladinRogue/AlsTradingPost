@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using Common.Api.Extensions;
 
-namespace AlsTradingPost.Api.Responses
+namespace Common.Api.Responses
 {
     public class PropertyMeta
     {
