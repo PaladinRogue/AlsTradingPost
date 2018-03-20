@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AlsTradingPost.Domain.Interfaces
+namespace Common.Domain.Interfaces
 {
     public interface ISummaryQueryService<T>
     {

@@ -1,5 +1,5 @@
 ﻿using AlsTradingPost.Domain.AdminServices.Models;
-using AlsTradingPost.Domain.Interfaces;
+using Common.Domain.Interfaces;
 
 namespace AlsTradingPost.Domain.AdminServices.Interfaces
 {

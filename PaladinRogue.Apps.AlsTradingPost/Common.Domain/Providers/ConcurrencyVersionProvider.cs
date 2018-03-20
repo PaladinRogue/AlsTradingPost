@@ -1,6 +1,4 @@
-﻿using System;
-using Common.Domain.Interfaces;
-using Common.Domain.Models;
+﻿using Common.Domain.Interfaces;
 using Common.Domain.Models.Interfaces;
 using Common.Domain.Providers.Interfaces;
 using Common.Resources.Concurrency;

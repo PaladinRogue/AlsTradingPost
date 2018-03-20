@@ -5,6 +5,8 @@ using AlsTradingPost.Domain.AdminServices.Interfaces;
 using AlsTradingPost.Persistence;
 using AlsTradingPost.Persistence.Interfaces;
 using AlsTradingPost.Persistence.Repositories;
+using Common.Domain.ConcurrencyServices;
+using Common.Domain.ConcurrencyServices.Interfaces;
 using Common.Domain.Providers;
 using Common.Domain.Providers.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +21,7 @@ namespace AlsTradingPost.Setup
         {
             services.AddScoped<IAdminApplicationService, AdminApplicationService>();
 
+            services.AddScoped(typeof(IConcurrencyQueryService<>), typeof(ConcurrencyQueryService<>));
             services.AddScoped<IAdminCommandService, AdminCommandService>();
             services.AddScoped<IAdminQueryService, AdminQueryService>();
 

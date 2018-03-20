@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AlsTradingPost.Domain.Interfaces
+namespace Common.Domain.Interfaces
 {
     public interface IQueryService<out T>
     {

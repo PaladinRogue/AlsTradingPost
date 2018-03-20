@@ -1,4 +1,4 @@
-﻿namespace AlsTradingPost.Domain.Interfaces
+﻿namespace Common.Domain.Interfaces
 {
     public interface ICreateCommandService<in TIn, out TOut>
     {

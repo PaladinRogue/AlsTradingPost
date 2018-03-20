@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Persistence.Interfaces;
+using Common.Domain.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlsTradingPost.Persistence.Repositories
 {
@@ -15,14 +17,14 @@ namespace AlsTradingPost.Persistence.Repositories
             _context = context;
         }
 
-        public IList<Admin> Get()
+        public IEnumerable<Admin> Get()
         {
-            return _context.Admins.ToList();
+            return _context.Admins.AsNoTracking();
         }
 
         public Admin GetById(Guid id)
         {
-            return _context.Admins.FirstOrDefault(a => a.Id == id);
+            return _context.Admins.AsNoTracking().FirstOrDefault(a => a.Id == id);
         }
 
         public void Add(Admin admin)
@@ -34,9 +36,16 @@ namespace AlsTradingPost.Persistence.Repositories
 
         public void Update(Admin obj)
         {
-            _context.Admins.Update(obj);
+            try
+            {
+                _context.Admins.Update(obj);
 
-            _context.SaveChanges();
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                throw new ConcurrencyDomainException(obj, e);
+            }
         }
 
         public void Delete(Guid id)

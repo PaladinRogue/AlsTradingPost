@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AlsTradingPost.Domain.Exceptions
+namespace Common.Domain.Exceptions
 {
     public class DomainException : Exception {
         public DomainException(string message)
