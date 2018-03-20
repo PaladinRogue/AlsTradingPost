@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Formatters;
 
-namespace AlsTradingPost.Api.Responses
+namespace Common.Api.Responses
 {
     public class CollectionMeta
     {

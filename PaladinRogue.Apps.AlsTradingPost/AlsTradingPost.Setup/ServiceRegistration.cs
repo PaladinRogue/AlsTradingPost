@@ -29,7 +29,6 @@ namespace AlsTradingPost.Setup
             services.AddScoped<IPlayerRepository, PlayerRepository>();
             services.AddScoped<ICharacterRepository, CharacterRepository>();
             services.AddScoped<IItemRepository, ItemRepository>();
-            services.AddScoped<IIdentityRepository, IdentityRepository>();
 
             services.AddDbContext<AlsTradingPostDbContext>(options => options.UseSqlServer(configuration["ConnectionStrings:CheneyDb"]));
         }

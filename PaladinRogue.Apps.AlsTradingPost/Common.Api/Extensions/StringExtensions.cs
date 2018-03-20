@@ -1,4 +1,4 @@
-﻿namespace AlsTradingPost.Api
+﻿namespace Common.Api.Extensions
 {
     public static class StringExtensions
     {

@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Common.Api.Extensions;
 
-namespace AlsTradingPost.Api.Responses
+namespace Common.Api.Responses
 {
     public class Meta
     {

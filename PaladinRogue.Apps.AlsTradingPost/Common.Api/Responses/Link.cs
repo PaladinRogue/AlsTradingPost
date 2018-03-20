@@ -1,4 +1,4 @@
-namespace AlsTradingPost.Api.Responses
+namespace Common.Api.Responses
 {
     public class Link
     {

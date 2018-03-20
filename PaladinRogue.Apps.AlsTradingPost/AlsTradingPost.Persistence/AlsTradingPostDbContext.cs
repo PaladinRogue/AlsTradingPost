@@ -8,9 +8,7 @@ namespace AlsTradingPost.Persistence
         public AlsTradingPostDbContext(DbContextOptions options) : base(options)
         {
         }
-
-        public DbSet<Identity> Identities { get; set; }
-
+        
         public DbSet<Admin> Admins { get; set; }
 
         public DbSet<Player> Players { get; set; }

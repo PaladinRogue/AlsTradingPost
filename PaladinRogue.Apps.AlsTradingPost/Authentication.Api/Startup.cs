@@ -1,7 +1,7 @@
-﻿using AlsTradingPost.Setup;
+﻿using Common.Api.Formatters;
+using Authentication.Setup;
 using AutoMapper;
 using Common.Api.Filters;
-using Common.Api.Formatters;
 using Common.Resources.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,9 +13,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using MappingRegistration = AlsTradingPost.Api.Mappings.MappingRegistration;
+using MappingRegistration = Authentication.Api.Mappings.MappingRegistration;
 
-namespace AlsTradingPost.Api
+namespace Authentication.Api
 {
     public class Startup
     {

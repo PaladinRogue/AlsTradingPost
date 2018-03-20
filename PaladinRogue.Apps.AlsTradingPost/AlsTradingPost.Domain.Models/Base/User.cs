@@ -1,4 +1,5 @@
-﻿using Common.Domain.Models;
+﻿using System;
+using Common.Domain.Models;
 
 namespace AlsTradingPost.Domain.Models.Base
 {
@@ -6,6 +7,6 @@ namespace AlsTradingPost.Domain.Models.Base
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public Identity Identity { get; set; }
+        public Guid Identity { get; set; }
     }
 }
