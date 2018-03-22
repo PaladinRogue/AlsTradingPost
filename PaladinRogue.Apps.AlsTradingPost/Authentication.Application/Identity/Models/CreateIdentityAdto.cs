@@ -1,9 +1,8 @@
 ﻿using System;
-using Common.Domain.Models;
 
-namespace Authentication.Domain.Models
+namespace Authentication.Application.Identity.Models
 {
-    public class Identity : Entity
+    public class CreateIdentityAdto
     {
         public string Email { get; set; }
         public string UserName { get; set; }

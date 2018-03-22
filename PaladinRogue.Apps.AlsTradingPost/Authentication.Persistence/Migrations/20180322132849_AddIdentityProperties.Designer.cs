@@ -11,9 +11,10 @@ using System;
 namespace Authentication.Persistence.Migrations
 {
     [DbContext(typeof(AuthenticationDbContext))]
-    partial class AuthenticationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180322132849_AddIdentityProperties")]
+    partial class AddIdentityProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -11,9 +11,10 @@ using System;
 namespace AlsTradingPost.Persistence.Migrations
 {
     [DbContext(typeof(AlsTradingPostDbContext))]
-    partial class AlsTradingPostDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180322132703_UpdateToUsePersona")]
+    partial class UpdateToUsePersona
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

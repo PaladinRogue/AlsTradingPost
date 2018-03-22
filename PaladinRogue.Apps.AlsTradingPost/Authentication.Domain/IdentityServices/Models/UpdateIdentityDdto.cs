@@ -1,10 +1,11 @@
 ﻿using System;
 using Common.Domain.Models;
 
-namespace Authentication.Domain.Models
+namespace Authentication.Domain.IdentityServices.Models
 {
-    public class Identity : Entity
+    public class UpdateIdentityDdto : VersionedDdto
     {
+        public Guid Id { get; set; }
         public string Email { get; set; }
         public string UserName { get; set; }
         public string NormalizedEmail { get; set; }

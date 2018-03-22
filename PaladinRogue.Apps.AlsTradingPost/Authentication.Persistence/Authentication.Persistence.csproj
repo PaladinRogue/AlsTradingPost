@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Authentication.Domain.Models\Authentication.Domain.Models.csproj" />
+    <ProjectReference Include="..\Common.Domain\Common.Domain.csproj" />
     <ProjectReference Include="..\Common.Persistence\Common.Persistence.csproj" />
   </ItemGroup>
 

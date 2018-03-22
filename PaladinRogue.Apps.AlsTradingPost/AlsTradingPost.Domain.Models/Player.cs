@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using AlsTradingPost.Domain.Models.Base;
+using Common.Domain.Models;
 
 namespace AlsTradingPost.Domain.Models
 {
-    public class Player : User
+    public class Player : Persona
     {
         public string DCI { get; set; }
         public List<Character> Characters { get; set; }
