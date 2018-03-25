@@ -11,9 +11,10 @@ using System;
 namespace AlsTradingPost.Persistence.Migrations
 {
     [DbContext(typeof(AlsTradingPostDbContext))]
-    partial class AlsTradingPostDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180322132703_UpdateToUsePersona")]
+    partial class UpdateToUsePersona
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,11 +27,17 @@ namespace AlsTradingPost.Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<Guid>("Identity");
+
+                    b.Property<Guid?>("PersonalDetailsId");
+
                     b.Property<byte[]>("Version")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PersonalDetailsId");
 
                     b.ToTable("Admins");
                 });
@@ -87,30 +94,12 @@ namespace AlsTradingPost.Persistence.Migrations
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("AlsTradingPost.Domain.Models.Player", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("DCI");
-
-                    b.Property<byte[]>("Version")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Players");
-                });
-
-            modelBuilder.Entity("AlsTradingPost.Domain.Models.User", b =>
+            modelBuilder.Entity("AlsTradingPost.Domain.Models.PersonalDetails", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("FirstName");
-
-                    b.Property<Guid>("IdentityId");
 
                     b.Property<string>("LastName");
 
@@ -122,7 +111,36 @@ namespace AlsTradingPost.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("PersonalDetails");
+                });
+
+            modelBuilder.Entity("AlsTradingPost.Domain.Models.Player", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("DCI");
+
+                    b.Property<Guid>("Identity");
+
+                    b.Property<Guid?>("PersonalDetailsId");
+
+                    b.Property<byte[]>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonalDetailsId");
+
+                    b.ToTable("Players");
+                });
+
+            modelBuilder.Entity("AlsTradingPost.Domain.Models.Admin", b =>
+                {
+                    b.HasOne("AlsTradingPost.Domain.Models.PersonalDetails", "PersonalDetails")
+                        .WithMany()
+                        .HasForeignKey("PersonalDetailsId");
                 });
 
             modelBuilder.Entity("AlsTradingPost.Domain.Models.Character", b =>
@@ -137,6 +155,13 @@ namespace AlsTradingPost.Persistence.Migrations
                     b.HasOne("AlsTradingPost.Domain.Models.Character", "Character")
                         .WithMany("Items")
                         .HasForeignKey("CharacterId");
+                });
+
+            modelBuilder.Entity("AlsTradingPost.Domain.Models.Player", b =>
+                {
+                    b.HasOne("AlsTradingPost.Domain.Models.PersonalDetails", "PersonalDetails")
+                        .WithMany()
+                        .HasForeignKey("PersonalDetailsId");
                 });
 #pragma warning restore 612, 618
         }

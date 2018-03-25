@@ -69,7 +69,7 @@ namespace AlsTradingPost.Api
             options.OutputFormatters.RemoveType<JsonOutputFormatter>();
 
             // Add custom json output formatter 
-            JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
+            var jsonSerializerSettings = new JsonSerializerSettings
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             };

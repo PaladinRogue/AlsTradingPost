@@ -50,7 +50,18 @@ namespace AlsTradingPost.Persistence.Repositories
 
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var admin = GetById(id);
+
+            try
+            {
+                _context.Admins.Remove(admin);
+
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                throw new ConcurrencyDomainException(admin, e);
+            }
         }
     }
 }

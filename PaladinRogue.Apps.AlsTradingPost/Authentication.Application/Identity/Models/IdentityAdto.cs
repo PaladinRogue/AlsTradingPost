@@ -1,10 +1,11 @@
 ﻿using System;
-using Common.Domain.Models;
+using Common.Application.Models;
 
-namespace Authentication.Domain.Models
+namespace Authentication.Application.Identity.Models
 {
-    public class Identity : Entity
+    public class IdentityAdto : OutboundVersionedAdto
     {
+        public Guid Id { get; set; }
         public string Email { get; set; }
         public string UserName { get; set; }
         public string NormalizedEmail { get; set; }
