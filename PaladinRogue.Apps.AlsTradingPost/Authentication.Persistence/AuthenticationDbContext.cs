@@ -9,6 +9,8 @@ namespace Authentication.Persistence
         {
         }
 
+        public DbSet<Application> Applications { get; set; }
+
         public DbSet<Identity> Identities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
