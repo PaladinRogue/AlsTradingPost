@@ -19,9 +19,9 @@ namespace AlsTradingPost.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration config)
         {
-            Configuration = configuration;
+            Configuration = config;
         }
 
         public IConfiguration Configuration { get; }
@@ -36,7 +36,7 @@ namespace AlsTradingPost.Api
                 options.Filters.Add(new RequireHttpsAttribute());
                 options.Filters.Add(new ConcurrencyActionFilter());
             });
-
+            
             ServiceRegistration.RegisterServices(Configuration, services);
             ServiceRegistration.RegisterProviders(Configuration, services);
 
@@ -73,7 +73,8 @@ namespace AlsTradingPost.Api
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             };
-            options.OutputFormatters.Add(new CustomJsonOutputFormatter(jsonSerializerSettings, System.Buffers.ArrayPool<char>.Shared));
+            options.OutputFormatters.Add(new CustomJsonOutputFormatter(jsonSerializerSettings,
+                System.Buffers.ArrayPool<char>.Shared));
         }
     }
 }

@@ -296,3 +296,4 @@ __pycache__/
 *.pubxml
 
 *.gitconfig
+/PaladinRogue.Apps.AlsTradingPost/AlsTradingPost.Api/secrets.json
