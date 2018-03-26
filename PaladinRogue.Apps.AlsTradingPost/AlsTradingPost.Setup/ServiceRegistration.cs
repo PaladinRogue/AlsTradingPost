@@ -15,7 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AlsTradingPost.Setup
 {
-    public class ServiceRegistration
+  public class ServiceRegistration
     {
         public static void RegisterServices(IConfiguration configuration, IServiceCollection services)
         {
@@ -29,8 +29,9 @@ namespace AlsTradingPost.Setup
             services.AddScoped<IPlayerRepository, PlayerRepository>();
             services.AddScoped<ICharacterRepository, CharacterRepository>();
             services.AddScoped<IItemRepository, ItemRepository>();
-
-            services.AddDbContext<AlsTradingPostDbContext>(options => options.UseSqlServer(configuration["ConnectionStrings:CheneyDb"]));
+            
+              services.AddDbContext<AlsTradingPostDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("CheneyDb")));
         }
 
         public static void RegisterProviders(IConfiguration configuration, IServiceCollection services)

@@ -2,7 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <UserSecretsId>fc9d1e3e-cec2-4a37-bcf0-5d7e27ae45e7</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="secrets.json" />
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
@@ -16,6 +21,10 @@
   <ItemGroup>
     <ProjectReference Include="..\AlsTradingPost.Setup\AlsTradingPost.Setup.csproj" />
     <ProjectReference Include="..\Common.Api\Common.Api.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
   </ItemGroup>
 
 </Project>

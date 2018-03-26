@@ -8,9 +8,7 @@ namespace Authentication.Persistence
         public AuthenticationDbContext(DbContextOptions options) : base(options)
         {
         }
-
-        public DbSet<Application> Applications { get; set; }
-
+        
         public DbSet<Identity> Identities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
