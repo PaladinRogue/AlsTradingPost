@@ -9,7 +9,7 @@ namespace Authentication.Application.Identity.Mappings
         public IdentityApplicationMappingProfile()
         {
             CreateMap<IdentityProjection, IdentityAdto>();
-            CreateMap<CreateIdentityAdto, CreateIdentityDdto>();
+            CreateMap<GetIdentityAdto, CreateIdentityDdto>();
         }
     }
 }

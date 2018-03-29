@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AlsTradingPost.Api
+namespace Common.Api.Settings
 {
     public class AppSettings
     {

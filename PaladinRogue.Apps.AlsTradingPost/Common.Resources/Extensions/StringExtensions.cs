@@ -1,4 +1,4 @@
-﻿namespace Common.Api.Extensions
+﻿namespace Common.Resources.Extensions
 {
     public static class StringExtensions
     {

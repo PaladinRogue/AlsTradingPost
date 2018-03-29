@@ -1,5 +1,4 @@
-﻿using System;
-using Authentication.Application.Identity.Interfaces;
+﻿using Authentication.Application.Identity.Interfaces;
 using Authentication.Application.Identity.Models;
 using Authentication.Domain.IdentityServices.Interfaces;
 using Authentication.Domain.IdentityServices.Models;
@@ -32,16 +31,12 @@ namespace Authentication.Application.Identity
             _concurrencyQueryService = concurrencyQueryService;
         }
 
-        public IdentityAdto Get(Guid id)
-        {
-            return _mapper.Map<IdentityProjection, IdentityAdto> (_identityQueryService.Get(id));
-        }
+	    public IdentityAdto Get(GetIdentityAdto identity)
+	    {
+		    var identityProjection = _identityQueryService.GetByAuthenticationId(identity.AuthenticationId) ??
+		                             _identityCommandService.Create(_mapper.Map<GetIdentityAdto, CreateIdentityDdto>(identity));
 
-        public IdentityAdto Create(CreateIdentityAdto identity)
-        {
-            var newIdentity = _mapper.Map<CreateIdentityAdto, CreateIdentityDdto>(identity);
-
-            return _mapper.Map<IdentityProjection, IdentityAdto>(_identityCommandService.Create(newIdentity));
+		    return _mapper.Map<IdentityProjection, IdentityAdto>(identityProjection);
         }
 
         public IdentityAdto Update(UpdateIdentityAdto identity)

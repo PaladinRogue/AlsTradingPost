@@ -6,5 +6,6 @@ namespace Authentication.Domain.IdentityServices.Models
     public class IdentityProjection : VersionedProjection
     {
         public Guid Id { get; set; }
+        public string AuthenticationId { get; set; }
     }
 }

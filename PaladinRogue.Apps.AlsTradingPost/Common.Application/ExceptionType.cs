@@ -3,7 +3,7 @@
     public enum ExceptionType
     {
         None,
-        Ded,
+        BadRequest,
         Concurrency
     }
 }
