@@ -1,7 +1,9 @@
 ﻿using Common.Api.Formatters;
 using Authentication.Setup;
+using Authentication.Setup.Settings;
 using AutoMapper;
 using Common.Api.Filters;
+using Common.Api.Settings;
 using Common.Resources.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,23 +29,29 @@ namespace Authentication.Api
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddMvc(UseCustomJsonOutputFormatter);
+	    public void ConfigureServices(IServiceCollection services)
+	    {
+		    services.AddMvc(UseCustomJsonOutputFormatter);
 
-            services.Configure<MvcOptions>(options =>
-            {
-                options.Filters.Add(new RequireHttpsAttribute());
-                options.Filters.Add(new ConcurrencyActionFilter());
-            });
+		    services.Configure<MvcOptions>(options =>
+		    {
+			    options.Filters.Add(new RequireHttpsAttribute());
+			    options.Filters.Add(new ConcurrencyActionFilter());
+		    });
 
-            ServiceRegistration.RegisterServices(Configuration, services);
-            ServiceRegistration.RegisterProviders(Configuration, services);
+		    services.Configure<ProxySettings>(Configuration.GetSection(nameof(ProxySettings)));
+		    services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
+		    services.Configure<FacebookAuthSettings>(Configuration.GetSection(nameof(FacebookAuthSettings)));
 
-            services.AddAutoMapper(MappingRegistration.RegisterMappers);
-        }
+			JwtRegistration.RegisterOptions(Configuration, services);
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+		    ServiceRegistration.RegisterServices(Configuration, services);
+		    ServiceRegistration.RegisterProviders(Configuration, services);
+
+		    services.AddAutoMapper(MappingRegistration.RegisterMappers);
+	    }
+
+	    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddLog4Net();
@@ -52,13 +60,12 @@ namespace Authentication.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
+			
             var options = new RewriteOptions()
                 .AddRedirectToHttps();
+            app.UseRewriter(options);
 
             MiddlewareRegistration.RegisterTransactionPerRequest(app);
-
-            app.UseRewriter(options);
 
             app.UseMvc();
         }
@@ -69,7 +76,7 @@ namespace Authentication.Api
             options.OutputFormatters.RemoveType<JsonOutputFormatter>();
 
             // Add custom json output formatter 
-            JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
+            var jsonSerializerSettings = new JsonSerializerSettings
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             };

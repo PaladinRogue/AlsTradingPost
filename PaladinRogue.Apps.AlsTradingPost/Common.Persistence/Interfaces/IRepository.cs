@@ -7,8 +7,8 @@ namespace Common.Persistence.Interfaces
     {
         IEnumerable<T> Get();
         T GetById(Guid id);
-        void Add(T obj);
-        void Update(T obj);
+        void Add(T entity);
+        void Update(T entity);
         void Delete(Guid id);
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Common.Api.Exceptions;
 using Common.Application;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -13,7 +14,8 @@ namespace Common.Api.Middleware
         private static readonly Dictionary<ExceptionType, HttpStatusCode> ExceptionTypeDictionary = new Dictionary<ExceptionType, HttpStatusCode>
         {
             { ExceptionType.None, HttpStatusCode.OK },
-            { ExceptionType.Concurrency, HttpStatusCode.PreconditionFailed }
+            { ExceptionType.Concurrency, HttpStatusCode.PreconditionFailed },
+            { ExceptionType.BadRequest, HttpStatusCode.BadRequest }
         };
 
         private readonly RequestDelegate _next;
@@ -35,14 +37,33 @@ namespace Common.Api.Middleware
             {
                 if (context.Response.HasStarted)
                 {
-                    _logger.LogWarning("The response has already started, the http status code middleware will not be executed.");
+                    _logger.LogWarning(
+                        "The response has already started, the http status code middleware will not be executed.");
                     throw;
                 }
 
                 context.Response.Clear();
 
                 _logger.LogInformation(ex, "Re-written app exception");
-                context.Response.StatusCode = (int)ExceptionTypeDictionary[ex.Type];
+                context.Response.StatusCode = (int) ExceptionTypeDictionary[ex.Type];
+
+                await context.Response.WriteAsync(ex.Message);
+            }
+            catch (PreConditionFailedException ex)
+            {
+                context.Response.Clear();
+
+                _logger.LogInformation(ex, "Re-written pre condition failed exception");
+                context.Response.StatusCode = (int)ExceptionTypeDictionary[ExceptionType.Concurrency];
+
+                await context.Response.WriteAsync(ex.Message);
+            }
+            catch (BadRequestException ex)
+            {
+                context.Response.Clear();
+
+                _logger.LogInformation(ex, "Re-written bad request exception");
+                context.Response.StatusCode = (int)ExceptionTypeDictionary[ExceptionType.BadRequest];
 
                 await context.Response.WriteAsync(ex.Message);
             }

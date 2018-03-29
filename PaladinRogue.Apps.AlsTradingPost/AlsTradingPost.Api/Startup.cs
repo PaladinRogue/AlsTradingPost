@@ -55,10 +55,9 @@ namespace AlsTradingPost.Api
 
             var options = new RewriteOptions()
                 .AddRedirectToHttps();
+            app.UseRewriter(options);
 
             MiddlewareRegistration.RegisterTransactionPerRequest(app);
-
-            app.UseRewriter(options);
 
             app.UseMvc();
         }

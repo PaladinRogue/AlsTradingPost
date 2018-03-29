@@ -27,40 +27,40 @@ namespace Authentication.Persistence.Repositories
             return _context.Identities.AsNoTracking().FirstOrDefault(a => a.Id == id);
         }
 
-        public void Add(Identity identity)
+        public void Add(Identity entity)
         {
-            _context.Identities.Add(identity);
+            _context.Identities.Add(entity);
 
             _context.SaveChanges();
         }
 
-        public void Update(Identity obj)
+        public void Update(Identity entity)
         {
             try
             {
-                _context.Identities.Update(obj);
+                _context.Identities.Update(entity);
 
                 _context.SaveChanges();
             }
             catch (DbUpdateConcurrencyException e)
             {
-                throw new ConcurrencyDomainException(obj, e);
+                throw new ConcurrencyDomainException(entity, e);
             }
         }
 
         public void Delete(Guid id)
         {
-            var identity = GetById(id);
+            var entity = GetById(id);
 
             try
             {
-                _context.Identities.Remove(identity);
+                _context.Identities.Remove(entity);
 
                 _context.SaveChanges();
             }
             catch (DbUpdateConcurrencyException e)
             {
-                throw new ConcurrencyDomainException(identity, e);
+                throw new ConcurrencyDomainException(entity, e);
             }
         }
     }

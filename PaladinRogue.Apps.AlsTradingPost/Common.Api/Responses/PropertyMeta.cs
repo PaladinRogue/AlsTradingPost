@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Common.Api.Extensions;
+using Common.Resources.Extensions;
 
 namespace Common.Api.Responses
 {
