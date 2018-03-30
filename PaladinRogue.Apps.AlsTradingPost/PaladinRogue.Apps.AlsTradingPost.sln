@@ -31,17 +31,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Persistence", "Commo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authentication", "Authentication", "{E4C77BF5-8396-4DC6-8DF7-B240B36298F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.Persistence", "Authentication.Persistence\Authentication.Persistence.csproj", "{5154D93F-95B3-4A7C-8372-4937F444D61E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.Persistence", "Authentication.Persistence\Authentication.Persistence.csproj", "{5154D93F-95B3-4A7C-8372-4937F444D61E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.Domain.Models", "Authentication.Domain.Models\Authentication.Domain.Models.csproj", "{1C99BD9F-FA24-4639-9961-93E381983831}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.Domain.Models", "Authentication.Domain.Models\Authentication.Domain.Models.csproj", "{1C99BD9F-FA24-4639-9961-93E381983831}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.Domain", "Authentication.Domain\Authentication.Domain.csproj", "{ABFDED65-A0E0-4EE3-A88C-6C3D2A39B762}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.Domain", "Authentication.Domain\Authentication.Domain.csproj", "{ABFDED65-A0E0-4EE3-A88C-6C3D2A39B762}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.Application", "Authentication.Application\Authentication.Application.csproj", "{B2219D95-8215-4EB3-835B-8FCFDF66FC2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.Application", "Authentication.Application\Authentication.Application.csproj", "{B2219D95-8215-4EB3-835B-8FCFDF66FC2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.Setup", "Authentication.Setup\Authentication.Setup.csproj", "{EEE2931A-8FF5-4BDA-8405-82F5EF155A03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.Setup", "Authentication.Setup\Authentication.Setup.csproj", "{EEE2931A-8FF5-4BDA-8405-82F5EF155A03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.Api", "Authentication.Api\Authentication.Api.csproj", "{4BE0C76D-7522-473D-AEE0-65BDF7BFDA6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.Api", "Authentication.Api\Authentication.Api.csproj", "{4BE0C76D-7522-473D-AEE0-65BDF7BFDA6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Setup", "Common.Setup\Common.Setup.csproj", "{B198BE88-E4EE-4412-8739-ECD091954C7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -121,6 +123,10 @@ Global
 		{4BE0C76D-7522-473D-AEE0-65BDF7BFDA6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BE0C76D-7522-473D-AEE0-65BDF7BFDA6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BE0C76D-7522-473D-AEE0-65BDF7BFDA6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B198BE88-E4EE-4412-8739-ECD091954C7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B198BE88-E4EE-4412-8739-ECD091954C7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B198BE88-E4EE-4412-8739-ECD091954C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B198BE88-E4EE-4412-8739-ECD091954C7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -138,6 +144,7 @@ Global
 		{B2219D95-8215-4EB3-835B-8FCFDF66FC2F} = {E4C77BF5-8396-4DC6-8DF7-B240B36298F5}
 		{EEE2931A-8FF5-4BDA-8405-82F5EF155A03} = {E4C77BF5-8396-4DC6-8DF7-B240B36298F5}
 		{4BE0C76D-7522-473D-AEE0-65BDF7BFDA6A} = {E4C77BF5-8396-4DC6-8DF7-B240B36298F5}
+		{B198BE88-E4EE-4412-8739-ECD091954C7B} = {6483DDD2-ED71-4A70-ADAE-708284195A4D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6911EF25-A28A-4840-BCB8-4FD4542BCC91}
