@@ -18,9 +18,9 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Authentication.Setup
 {
     public class ServiceRegistration
-    {
-        public static void RegisterServices(IConfiguration configuration, IServiceCollection services)
+    {public static void RegisterServices(IConfiguration configuration, IServiceCollection services)
         {
+	        services.AddSingleton<IEncryptionFactory, EncryptionFactory>();
 	        services.AddSingleton<IHttpClientFactory, HttpClientFactory>();
 
             services.AddScoped(typeof(IConcurrencyQueryService<>), typeof(ConcurrencyQueryService<>));

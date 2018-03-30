@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Principal;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 
@@ -21,10 +20,10 @@ namespace Common.Api.Authentication
 		{
 			var claims = new[]
 			{
-				identity.FindFirst(JwtConstants.Strings.ClaimIdentifiers.Sub),
+				identity.FindFirst(JwtRegisteredClaimNames.Sub),
 				new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
 				new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
-				identity.FindFirst(JwtConstants.Strings.ClaimIdentifiers.Rol)
+				identity.FindFirst(JwtConstants.Strings.ClaimIdentifiers.AccessToken)
 			};
 
 			// Create the JWT security token and encode it.
@@ -39,15 +38,6 @@ namespace Common.Api.Authentication
 			var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
 			return encodedJwt;
-		}
-
-		public ClaimsIdentity GenerateClaimsIdentity(Guid id)
-		{
-			return new ClaimsIdentity(new GenericIdentity(id.ToString(), "Token"), new[]
-			{
-				new Claim(JwtConstants.Strings.ClaimIdentifiers.Sub, id.ToString()),
-				new Claim(JwtConstants.Strings.ClaimIdentifiers.Rol, JwtConstants.Strings.Claims.ApiAccess)
-			});
 		}
 
 		/// <returns>Date converted to seconds since Unix epoch (Jan 1, 1970, midnight UTC).</returns>
