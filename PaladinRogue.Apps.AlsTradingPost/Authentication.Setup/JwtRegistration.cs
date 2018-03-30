@@ -13,14 +13,13 @@ namespace Authentication.Setup
 			services.AddSingleton<IJwtFactory, JwtFactory>();
 
 
-			var jwtAppSettingOptions = configuration.GetSection(nameof(JwtIssuerOptions));
+			IConfigurationSection jwtAppSettingOptions = configuration.GetSection(nameof(JwtIssuerOptions));
 
-			var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configuration["AppSettings:Secret"]));
 			services.Configure<JwtIssuerOptions>(options =>
 			{
 				options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
 				options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
-				options.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+				options.SigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configuration["AppSettings:Secret"]));
 			});
 		}
 		

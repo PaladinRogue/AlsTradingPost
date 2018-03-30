@@ -1,5 +1,5 @@
 ﻿
-namespace Authentication.Api.Resources
+namespace Common.Api.Resource
 {
     public class JwtResource
     {

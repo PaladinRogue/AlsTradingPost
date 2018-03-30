@@ -52,6 +52,11 @@ namespace Common.Api.Authentication
 	    /// <summary>
 	    /// The signing key to use when generating tokens.
 	    /// </summary>
-	    public SigningCredentials SigningCredentials { get; set; }
+	    public SymmetricSecurityKey SigningKey { get; set; }
+
+	    /// <summary>
+	    /// The signing key to use when generating tokens.
+	    /// </summary>
+	    public SigningCredentials SigningCredentials => new SigningCredentials(SigningKey, SecurityAlgorithms.HmacSha256);
 	}
 }

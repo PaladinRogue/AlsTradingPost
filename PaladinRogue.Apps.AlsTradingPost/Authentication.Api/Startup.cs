@@ -1,9 +1,13 @@
-﻿using Common.Api.Formatters;
+﻿using System.Collections.Generic;
+using Authentication.Api.Factories;
+using Authentication.Api.Factories.Interfaces;
+using Common.Api.Formatters;
 using Authentication.Setup;
 using Authentication.Setup.Settings;
 using AutoMapper;
 using Common.Api.Filters;
 using Common.Api.Settings;
+using Common.Domain.DomainEvents.Interfaces;
 using Common.Resources.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,7 +43,9 @@ namespace Authentication.Api
 			    options.Filters.Add(new ConcurrencyActionFilter());
 		    });
 
-		    services.Configure<ProxySettings>(Configuration.GetSection(nameof(ProxySettings)));
+		    services.AddSingleton<IClaimsFactory, ClaimsFactory>();
+
+			services.Configure<ProxySettings>(Configuration.GetSection(nameof(ProxySettings)));
 		    services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
 		    services.Configure<FacebookAuthSettings>(Configuration.GetSection(nameof(FacebookAuthSettings)));
 

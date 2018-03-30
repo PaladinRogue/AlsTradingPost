@@ -7,12 +7,7 @@ namespace Common.Api.Authentication
 		{
 			public static class ClaimIdentifiers
 			{
-				public const string Rol = "rol", Sub = "sub";
-			}
-
-			public static class Claims
-			{
-				public const string ApiAccess = "api_access";
+				public const string AccessToken = "acst";
 			}
 		}
 	}
