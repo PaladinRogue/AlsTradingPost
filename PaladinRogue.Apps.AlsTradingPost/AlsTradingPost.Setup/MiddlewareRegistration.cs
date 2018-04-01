@@ -1,16 +1,16 @@
-﻿using AlsTradingPost.Setup.Middleware;
-using Common.Api.Middleware;
+﻿using Common.Api.Middleware;
+using Common.Setup.Middleware;
 using Microsoft.AspNetCore.Builder;
 
 namespace AlsTradingPost.Setup
 {
     public class MiddlewareRegistration
-    {
-        public static void RegisterTransactionPerRequest(IApplicationBuilder app)
-        {
-            app.UseMiddleware<TransactionPerRequestMiddleware>();
-            app.UseMiddleware<ExceptionMiddleware>();
-        }
-    }
+	{
+		public static void Register(IApplicationBuilder app)
+		{
+			app.UseMiddleware<TransactionPerRequestMiddleware>();
+			app.UseMiddleware<ExceptionMiddleware>();
+		}
+	}
 }
 

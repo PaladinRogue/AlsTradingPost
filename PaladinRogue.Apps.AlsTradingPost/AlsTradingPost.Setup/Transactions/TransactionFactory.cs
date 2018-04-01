@@ -1,0 +1,23 @@
+﻿using AlsTradingPost.Persistence;
+using Common.Resources.Transactions;
+using Microsoft.EntityFrameworkCore.Storage;
+
+namespace AlsTradingPost.Setup.Transactions
+{
+    public class TransactionFactory : ITransactionFactory
+    {
+	    private readonly AlsTradingPostDbContext _dbContext;
+
+	    public TransactionFactory(AlsTradingPostDbContext dbContext)
+	    {
+		    _dbContext = dbContext;
+	    }
+
+	    public ITransaction Create()
+	    {
+		    IDbContextTransaction dbContextTransaction = _dbContext.Database.BeginTransaction();
+
+		    return Transaction.Create(dbContextTransaction);
+	    }
+    }
+}

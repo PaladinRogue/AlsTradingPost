@@ -15,6 +15,7 @@
     <ProjectReference Include="..\AlsTradingPost.Domain\AlsTradingPost.Domain.csproj" />
     <ProjectReference Include="..\Common.Api\Common.Api.csproj" />
     <ProjectReference Include="..\Common.Domain\Common.Domain.csproj" />
+    <ProjectReference Include="..\Common.Setup\Common.Setup.csproj" />
   </ItemGroup>
 
   <ItemGroup>
