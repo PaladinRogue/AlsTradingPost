@@ -1,7 +1,7 @@
 ﻿namespace Common.Domain.DomainEvents.Interfaces
 {
-    public interface IDomainEventDispatcher
+	public interface IDomainEventDispatcher
 	{
 		void DispatchEvents();
-    }
+	}
 }
