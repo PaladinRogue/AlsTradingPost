@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Authentication.Api.Factories;
+﻿using Authentication.Api.Factories;
 using Authentication.Api.Factories.Interfaces;
 using Common.Api.Formatters;
 using Authentication.Setup;
@@ -23,70 +22,76 @@ using MappingRegistration = Authentication.Api.Mappings.MappingRegistration;
 
 namespace Authentication.Api
 {
-    public class Startup
-    {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+	public class Startup
+	{
+		public Startup(IConfiguration configuration)
+		{
+			Configuration = configuration;
+		}
 
-        public IConfiguration Configuration { get; }
+		public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-	    public void ConfigureServices(IServiceCollection services)
-	    {
-		    services.AddMvc(UseCustomJsonOutputFormatter);
+		// This method gets called by the runtime. Use this method to add services to the container.
+		public void ConfigureServices(IServiceCollection services)
+		{
+			services.AddMvc(UseCustomJsonOutputFormatter);
 
-		    services.Configure<MvcOptions>(options =>
-		    {
-			    options.Filters.Add(new RequireHttpsAttribute());
-			    options.Filters.Add(new ConcurrencyActionFilter());
-		    });
+			services.Configure<MvcOptions>(options =>
+			{
+				options.Filters.Add(new RequireHttpsAttribute());
+				options.Filters.Add(new ConcurrencyActionFilter());
+			});
 
-		    services.AddSingleton<IClaimsFactory, ClaimsFactory>();
+			services.AddSingleton<IClaimsFactory, ClaimsFactory>();
 
 			services.Configure<ProxySettings>(Configuration.GetSection(nameof(ProxySettings)));
-		    services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
-		    services.Configure<FacebookAuthSettings>(Configuration.GetSection(nameof(FacebookAuthSettings)));
+			services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
+			services.Configure<FacebookAuthSettings>(Configuration.GetSection(nameof(FacebookAuthSettings)));
 
 			JwtRegistration.RegisterOptions(Configuration, services);
 
-		    ServiceRegistration.RegisterServices(Configuration, services);
-		    ServiceRegistration.RegisterProviders(Configuration, services);
+			EventRegistration.RegisterHandlers(services);
 
-		    services.AddAutoMapper(MappingRegistration.RegisterMappers);
-	    }
+			ServiceRegistration.RegisterServices(Configuration, services);
+			ServiceRegistration.RegisterProviders(Configuration, services);
 
-	    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-        {
-            loggerFactory.AddLog4Net();
+			services.AddAutoMapper(MappingRegistration.RegisterMappers);
+		}
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-			
-            var options = new RewriteOptions()
-                .AddRedirectToHttps();
-            app.UseRewriter(options);
+		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,
+			IDomainEventHandlers domainEventHandlers)
+		{
+			domainEventHandlers.Initialise();
 
-            MiddlewareRegistration.RegisterTransactionPerRequest(app);
+			loggerFactory.AddLog4Net();
 
-            app.UseMvc();
-        }
+			if (env.IsDevelopment())
+			{
+				app.UseDeveloperExceptionPage();
+			}
 
-        public static void UseCustomJsonOutputFormatter(MvcOptions options)
-        {
-            // Remove any json output formatter 
-            options.OutputFormatters.RemoveType<JsonOutputFormatter>();
+			var options = new RewriteOptions()
+				.AddRedirectToHttps();
+			app.UseRewriter(options);
 
-            // Add custom json output formatter 
-            var jsonSerializerSettings = new JsonSerializerSettings
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
-            options.OutputFormatters.Add(new CustomJsonOutputFormatter(jsonSerializerSettings, System.Buffers.ArrayPool<char>.Shared));
-        }
-    }
+			MiddlewareRegistration.Register(app);
+
+			app.UseMvc();
+		}
+
+		public static void UseCustomJsonOutputFormatter(MvcOptions options)
+		{
+			// Remove any json output formatter 
+			options.OutputFormatters.RemoveType<JsonOutputFormatter>();
+
+			// Add custom json output formatter 
+			var jsonSerializerSettings = new JsonSerializerSettings
+			{
+				ContractResolver = new CamelCasePropertyNamesContractResolver()
+			};
+			options.OutputFormatters.Add(new CustomJsonOutputFormatter(jsonSerializerSettings,
+				System.Buffers.ArrayPool<char>.Shared));
+		}
+	}
 }

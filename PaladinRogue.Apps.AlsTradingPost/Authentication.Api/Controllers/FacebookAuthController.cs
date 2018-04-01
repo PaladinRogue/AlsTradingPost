@@ -39,7 +39,7 @@ namespace Authentication.Api.Controllers
 			_identityApplicationService = identityApplicationService;
 			_claimsFactory = claimsFactory;
 		}
-		
+
 		[HttpPost]
 		public async Task<IActionResult> Post([FromBody] FacebookAuthRequestDto request)
 		{
