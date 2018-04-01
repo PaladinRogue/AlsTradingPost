@@ -9,7 +9,6 @@ using Common.Api.Filters;
 using Common.Api.Settings;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Resources.Logging;
-using Common.Setup;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -52,7 +51,7 @@ namespace Authentication.Api
 
 			JwtRegistration.RegisterOptions(Configuration, services);
 
-		    EventRegistration.RegisterEventHandling(services);
+		    EventRegistration.RegisterHandlers(services);
 
 			ServiceRegistration.RegisterServices(Configuration, services);
 		    ServiceRegistration.RegisterProviders(Configuration, services);
@@ -61,9 +60,11 @@ namespace Authentication.Api
 		}
 
 	    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, AuthenticationDomainEventHandlerFactory factory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IDomainEventHandlers domainEventHandlers)
         {
-            loggerFactory.AddLog4Net();
+	        domainEventHandlers.Initialise();
+
+			loggerFactory.AddLog4Net();
 
             if (env.IsDevelopment())
             {

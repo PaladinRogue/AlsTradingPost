@@ -8,8 +8,8 @@ namespace Common.Setup
     {
 	    public static void RegisterEventHandling(IServiceCollection services)
 	    {
-		    services.AddScoped<IDomainEventHandlerResolver, DomainEventHandlerResolver>();
-		    services.AddScoped<IDomainEventFactory, DomainEventFactory>();
+		    services.AddSingleton<IDomainEventHandlers, DomainEventHandlers>();
+		    services.AddScoped<IDomainEvents, DomainEvents>();
 			services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
 	    }
     }

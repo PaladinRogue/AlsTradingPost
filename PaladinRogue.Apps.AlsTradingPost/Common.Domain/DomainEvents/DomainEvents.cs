@@ -3,11 +3,11 @@ using Common.Domain.DomainEvents.Interfaces;
 
 namespace Common.Domain.DomainEvents
 {
-    public class DomainEventFactory : IDomainEventFactory
+    public class DomainEvents : IDomainEvents
     {
 	    private readonly IList<IDomainEvent> _domainEvents;
 
-	    public DomainEventFactory()
+	    public DomainEvents()
 	    {
 		    _domainEvents = new List<IDomainEvent>();
 	    }

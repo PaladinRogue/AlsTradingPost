@@ -4,22 +4,27 @@ namespace Common.Domain.DomainEvents
 {
 	public static class DomainEventHandlerFactory
 	{
-		public static IDictionary<Type, IList<Delegate>> DomainEventTypeHandlers { get; set; }
+		private static IDictionary<Type, IList<Delegate>> _domainEventTypeHandlers;
+
+		public static IEnumerable<Delegate> GetAllOfType(Type type)
+		{
+			return _domainEventTypeHandlers[type];
+		}
 
 		public static void Register<T>(Action<T> handler)
 		{
-			if (DomainEventTypeHandlers == null)
+			if (_domainEventTypeHandlers == null)
 			{
-				DomainEventTypeHandlers = new Dictionary<Type, IList<Delegate>>();
+				_domainEventTypeHandlers = new Dictionary<Type, IList<Delegate>>();
 			}
 
-			if (!DomainEventTypeHandlers.ContainsKey(typeof(T)))
+			if (!_domainEventTypeHandlers.ContainsKey(typeof(T)))
 			{
-				DomainEventTypeHandlers.Add(typeof(T), new List<Delegate> {handler});
+				_domainEventTypeHandlers.Add(typeof(T), new List<Delegate> {handler});
 			}
 			else
 			{
-				DomainEventTypeHandlers[typeof(T)].Add(handler);
+				_domainEventTypeHandlers[typeof(T)].Add(handler);
 			}
 		}
 	}

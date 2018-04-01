@@ -5,20 +5,18 @@ namespace Common.Domain.DomainEvents
 {
     public class DomainEventDispatcher : IDomainEventDispatcher
     {
-	    private readonly IDomainEventHandlerResolver _domainEventHandlerResolver;
-	    private readonly IDomainEventFactory _domainEventFactory;
+	    private readonly IDomainEvents _domainEvents;
 
-		public DomainEventDispatcher(IDomainEventHandlerResolver domainEventHandlerResolver, IDomainEventFactory domainEventFactory)
+		public DomainEventDispatcher(IDomainEvents domainEvents)
 		{
-			_domainEventHandlerResolver = domainEventHandlerResolver;
-			_domainEventFactory = domainEventFactory;
+			_domainEvents = domainEvents;
 		}
 
 	    public void DispatchEvents()
 	    {
-		    foreach (IDomainEvent domainEvent in _domainEventFactory.GetAll())
+		    foreach (IDomainEvent domainEvent in _domainEvents.GetAll())
 		    {
-			    foreach (Delegate domainEventHandler in _domainEventHandlerResolver.ResolveAllOfType(domainEvent.GetType()))
+			    foreach (Delegate domainEventHandler in DomainEventHandlerFactory.GetAllOfType(domainEvent.GetType()))
 			    {
 				   domainEventHandler.DynamicInvoke(domainEvent);
 			    }

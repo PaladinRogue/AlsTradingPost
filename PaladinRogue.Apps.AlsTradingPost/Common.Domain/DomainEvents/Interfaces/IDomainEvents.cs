@@ -2,7 +2,7 @@
 
 namespace Common.Domain.DomainEvents.Interfaces
 {
-    public interface IDomainEventFactory
+    public interface IDomainEvents
 	{
 		void Raise(IDomainEvent domainEventSubscriber);
 		IEnumerable<IDomainEvent> GetAll();
