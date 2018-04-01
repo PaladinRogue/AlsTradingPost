@@ -5,7 +5,6 @@ using Authentication.Domain.IdentityServices.Models;
 using Authentication.Domain.Models;
 using Authentication.Persistence.Interfaces;
 using AutoMapper;
-using Common.Domain.DomainEvents.Interfaces;
 
 namespace Authentication.Domain.IdentityServices
 {
@@ -13,12 +12,10 @@ namespace Authentication.Domain.IdentityServices
     {
         private readonly IMapper _mapper;
         private readonly IIdentityRepository _identityRepository;
-        private readonly IDomainEvents _domainEvents;
 
-		public IdentityQueryService(IMapper mapper, IIdentityRepository identityRepository, IDomainEvents domainEvents, IDomainEventDispatcher domainEventDispatcher)
+		public IdentityQueryService(IMapper mapper, IIdentityRepository identityRepository)
         {
             _identityRepository = identityRepository;
-	        _domainEvents = domainEvents;
 	        _mapper = mapper;
         }
 
