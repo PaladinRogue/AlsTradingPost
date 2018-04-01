@@ -9,7 +9,9 @@ using Common.Api.Authentication;
 using Common.Api.Exceptions;
 using Common.Api.Factories.Interfaces;
 using Common.Api.Helpers;
+using Common.Api.Resource;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
@@ -24,13 +26,15 @@ namespace Authentication.Api.Controllers
 		private readonly JwtIssuerOptions _jwtOptions;
 		private readonly IHttpClientFactory _httpClientFactory;
 		private readonly IIdentityApplicationService _identityApplicationService;
+		private readonly ILogger<FacebookAuthController> _logger;
 
 		public FacebookAuthController(IOptions<FacebookAuthSettings> fbAuthSettingsAccessor,
 			IOptions<JwtIssuerOptions> jwtOptionsAccessor,
 			IJwtFactory jwtFactory,
 			IHttpClientFactory httpClientFactory,
 			IIdentityApplicationService identityApplicationService,
-			IClaimsFactory claimsFactory)
+			IClaimsFactory claimsFactory,
+			ILogger<FacebookAuthController> logger)
 		{
 			_fbAuthSettings = fbAuthSettingsAccessor.Value;
 			_jwtFactory = jwtFactory;
@@ -38,6 +42,7 @@ namespace Authentication.Api.Controllers
 			_httpClientFactory = httpClientFactory;
 			_identityApplicationService = identityApplicationService;
 			_claimsFactory = claimsFactory;
+			_logger = logger;
 		}
 
 		[HttpPost]
@@ -45,23 +50,24 @@ namespace Authentication.Api.Controllers
 		{
 			var appAccessTokenResponse = 
 				await _httpClientFactory.GetStringAsync(string.Format(_fbAuthSettings.AccessTokenEndpoint, _fbAuthSettings.AppId, _fbAuthSettings.AppSecret));
-			var appAccessToken = JsonConvert.DeserializeObject<FacebookAppAccessToken>(appAccessTokenResponse);
+			FacebookAppAccessToken appAccessToken = JsonConvert.DeserializeObject<FacebookAppAccessToken>(appAccessTokenResponse);
 
 			var userAccessTokenValidationResponse = 
 				await _httpClientFactory.GetStringAsync(string.Format(_fbAuthSettings.AccessTokenValidationEndpoint, request.AccessToken, appAccessToken.AccessToken));
-			var userAccessTokenValidation = JsonConvert.DeserializeObject<FacebookUserAccessTokenValidation>(userAccessTokenValidationResponse);
+			FacebookUserAccessTokenValidation userAccessTokenValidation = JsonConvert.DeserializeObject<FacebookUserAccessTokenValidation>(userAccessTokenValidationResponse);
 
 			if (!userAccessTokenValidation.Data.IsValid)
 			{
+				_logger.LogInformation("Invalid facebook token.");
 				throw new BadRequestException("Invalid facebook token.");
 			}
 
-			var identity = _identityApplicationService.Get(new GetIdentityAdto
+			IdentityAdto identity = _identityApplicationService.Get(new GetIdentityAdto
 			{
 				AuthenticationId = userAccessTokenValidation.Data.UserId.ToString()
 			});
 
-			var jwt = await Tokens.GenerateJwt(_claimsFactory.GenerateClaimsIdentity(identity.Id, request.AccessToken), _jwtFactory, _jwtOptions);
+			JwtResource jwt = await Tokens.GenerateJwt(_claimsFactory.GenerateClaimsIdentity(identity.Id, request.AccessToken), _jwtFactory, _jwtOptions);
 
 			return new ObjectResult(jwt);
 		}

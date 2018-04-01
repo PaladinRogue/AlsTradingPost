@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 using Common.Domain.DomainEvents.Interfaces;
 
 namespace Common.Domain.DomainEvents
@@ -12,14 +12,12 @@ namespace Common.Domain.DomainEvents
 			_domainEvents = domainEvents;
 		}
 
-		public void DispatchEvents()
+		public async Task DispatchEventsAsync()
 		{
 			foreach (IDomainEvent domainEvent in _domainEvents.GetAll())
 			{
-				foreach (Delegate domainEventHandler in DomainEventHandlerFactory.GetAllOfType(domainEvent.GetType()))
-				{
-					domainEventHandler.DynamicInvoke(domainEvent);
-				}
+				await Task.Run(() => Parallel.ForEach(DomainEventHandlerFactory.GetAllOfType(domainEvent.GetType()),
+					domainEventHandler => { domainEventHandler.DynamicInvoke(domainEvent); }));
 			}
 		}
 	}

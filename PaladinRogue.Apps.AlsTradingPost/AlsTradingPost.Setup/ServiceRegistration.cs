@@ -33,7 +33,7 @@ namespace AlsTradingPost.Setup
             services.AddScoped<IItemRepository, ItemRepository>();
             
               services.AddDbContext<AlsTradingPostDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("CheneyDb")));
+                options.UseSqlServer(configuration.GetConnectionString("Default")));
 	        services.AddScoped<ITransactionFactory, TransactionFactory>();
 		}
 
