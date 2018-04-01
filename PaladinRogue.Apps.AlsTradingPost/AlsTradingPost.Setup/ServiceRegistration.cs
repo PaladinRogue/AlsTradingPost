@@ -5,10 +5,12 @@ using AlsTradingPost.Domain.AdminServices.Interfaces;
 using AlsTradingPost.Persistence;
 using AlsTradingPost.Persistence.Interfaces;
 using AlsTradingPost.Persistence.Repositories;
+using AlsTradingPost.Setup.Transactions;
 using Common.Domain.ConcurrencyServices;
 using Common.Domain.ConcurrencyServices.Interfaces;
 using Common.Domain.Providers;
 using Common.Domain.Providers.Interfaces;
+using Common.Resources.Transactions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,7 +34,8 @@ namespace AlsTradingPost.Setup
             
               services.AddDbContext<AlsTradingPostDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("CheneyDb")));
-        }
+	        services.AddScoped<ITransactionFactory, TransactionFactory>();
+		}
 
         public static void RegisterProviders(IConfiguration configuration, IServiceCollection services)
         {

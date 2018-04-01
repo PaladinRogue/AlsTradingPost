@@ -5,12 +5,14 @@ using Authentication.Domain.IdentityServices.Interfaces;
 using Authentication.Persistence;
 using Authentication.Persistence.Interfaces;
 using Authentication.Persistence.Repositories;
+using Authentication.Setup.Transactions;
 using Common.Api.Factories;
 using Common.Api.Factories.Interfaces;
 using Common.Domain.ConcurrencyServices;
 using Common.Domain.ConcurrencyServices.Interfaces;
 using Common.Domain.Providers;
 using Common.Domain.Providers.Interfaces;
+using Common.Resources.Transactions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,7 +35,8 @@ namespace Authentication.Setup
 			services.AddScoped<IIdentityRepository, IdentityRepository>();
 
             services.AddDbContext<AuthenticationDbContext>(options => options.UseSqlServer(configuration["ConnectionStrings:CheneyDb"]));
-        }
+	        services.AddScoped<ITransactionFactory, TransactionFactory>();
+		}
 
         public static void RegisterProviders(IConfiguration configuration, IServiceCollection services)
         {

@@ -36,8 +36,10 @@ namespace AlsTradingPost.Api
                 options.Filters.Add(new RequireHttpsAttribute());
                 options.Filters.Add(new ConcurrencyActionFilter());
             });
-            
-            ServiceRegistration.RegisterServices(Configuration, services);
+
+	        EventRegistration.RegisterHandlers(services);
+			
+			ServiceRegistration.RegisterServices(Configuration, services);
             ServiceRegistration.RegisterProviders(Configuration, services);
 
             services.AddAutoMapper(MappingRegistration.RegisterMappers);
@@ -57,7 +59,7 @@ namespace AlsTradingPost.Api
                 .AddRedirectToHttps();
             app.UseRewriter(options);
 
-            MiddlewareRegistration.RegisterTransactionPerRequest(app);
+            MiddlewareRegistration.Register(app);
 
             app.UseMvc();
         }

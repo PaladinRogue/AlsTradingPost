@@ -1,5 +1,5 @@
-﻿using Authentication.Setup.Middleware;
-using Common.Api.Middleware;
+﻿using Common.Api.Middleware;
+using Common.Setup.Middleware;
 using Microsoft.AspNetCore.Builder;
 
 namespace Authentication.Setup
