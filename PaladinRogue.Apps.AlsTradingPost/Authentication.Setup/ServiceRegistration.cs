@@ -34,7 +34,7 @@ namespace Authentication.Setup
 
 			services.AddScoped<IIdentityRepository, IdentityRepository>();
 
-            services.AddDbContext<AuthenticationDbContext>(options => options.UseSqlServer(configuration["ConnectionStrings:CheneyDb"]));
+            services.AddDbContext<AuthenticationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Default")));
 	        services.AddScoped<ITransactionFactory, TransactionFactory>();
 		}
 

@@ -8,7 +8,7 @@ namespace Common.Domain.DomainEvents
 
 		public static IEnumerable<Delegate> GetAllOfType(Type type)
 		{
-			return _domainEventTypeHandlers[type];
+			return _domainEventTypeHandlers.ContainsKey(type) ? _domainEventTypeHandlers[type] : new List<Delegate>();
 		}
 
 		public static void Register<T>(Action<T> handler)
