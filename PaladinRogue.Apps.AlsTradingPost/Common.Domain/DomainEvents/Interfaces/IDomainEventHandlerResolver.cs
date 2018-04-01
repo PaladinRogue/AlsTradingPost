@@ -5,8 +5,6 @@ namespace Common.Domain.DomainEvents.Interfaces
 {
     public interface IDomainEventHandlerResolver
     {
-	    IList<IDomainEventHandler<IDomainEvent>> DomainEventHandlers { get; set; }
-
-	    IEnumerable<IDomainEventHandler<IDomainEvent>> ResolveAllOfType(Type type);
+	    IEnumerable<Delegate> ResolveAllOfType(Type type);
     }
 }

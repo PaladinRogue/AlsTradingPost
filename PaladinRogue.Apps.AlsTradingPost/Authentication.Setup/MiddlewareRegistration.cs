@@ -6,7 +6,7 @@ namespace Authentication.Setup
 {
     public class MiddlewareRegistration
     {
-        public static void RegisterTransactionPerRequest(IApplicationBuilder app)
+        public static void Register(IApplicationBuilder app)
         {
             app.UseMiddleware<TransactionPerRequestMiddleware>();
             app.UseMiddleware<ExceptionMiddleware>();

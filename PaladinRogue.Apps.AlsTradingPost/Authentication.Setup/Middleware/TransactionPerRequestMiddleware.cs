@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Authentication.Persistence;
+using Common.Domain.DomainEvents.Interfaces;
 using Microsoft.AspNetCore.Http;
 
 namespace Authentication.Setup.Middleware
@@ -10,7 +11,7 @@ namespace Authentication.Setup.Middleware
 
         public TransactionPerRequestMiddleware(RequestDelegate next)
         {
-            _next = next;
+	        _next = next;
         }
 
         public async Task Invoke(HttpContext context, AuthenticationDbContext dbContext)
@@ -22,7 +23,7 @@ namespace Authentication.Setup.Middleware
             if (context.Response.StatusCode == 200)
             {
                 transaction.Commit();
-            }
+			}
             else
             {
                 transaction.Rollback();

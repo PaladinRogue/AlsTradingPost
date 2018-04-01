@@ -1,7 +1,7 @@
 ﻿namespace Common.Domain.DomainEvents.Interfaces
 {
-	public interface IDomainEventHandler<in T> where T : IDomainEvent
+	public interface IDomainEventHandler
 	{
-	void Handle(T domainEvent);
+		void Register();
 	}
 }

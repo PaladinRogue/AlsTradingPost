@@ -9,6 +9,7 @@ using Common.Api.Filters;
 using Common.Api.Settings;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Resources.Logging;
+using Common.Setup;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -31,9 +32,9 @@ namespace Authentication.Api
         }
 
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-	    public void ConfigureServices(IServiceCollection services)
+		
+		// This method gets called by the runtime. Use this method to add services to the container.
+		public void ConfigureServices(IServiceCollection services)
 	    {
 		    services.AddMvc(UseCustomJsonOutputFormatter);
 
@@ -51,14 +52,16 @@ namespace Authentication.Api
 
 			JwtRegistration.RegisterOptions(Configuration, services);
 
-		    ServiceRegistration.RegisterServices(Configuration, services);
+		    EventRegistration.RegisterEventHandling(services);
+
+			ServiceRegistration.RegisterServices(Configuration, services);
 		    ServiceRegistration.RegisterProviders(Configuration, services);
 
 		    services.AddAutoMapper(MappingRegistration.RegisterMappers);
-	    }
+		}
 
 	    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, AuthenticationDomainEventHandlerFactory factory)
         {
             loggerFactory.AddLog4Net();
 
@@ -71,8 +74,8 @@ namespace Authentication.Api
                 .AddRedirectToHttps();
             app.UseRewriter(options);
 
-            MiddlewareRegistration.RegisterTransactionPerRequest(app);
-
+            MiddlewareRegistration.Register(app);
+			
             app.UseMvc();
         }
 

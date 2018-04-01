@@ -1,6 +1,7 @@
 ﻿using Authentication.Application.Identity;
 using Authentication.Application.Identity.Interfaces;
 using Authentication.Domain.IdentityServices;
+using Authentication.Domain.IdentityServices.Handlers;
 using Authentication.Domain.IdentityServices.Interfaces;
 using Authentication.Persistence;
 using Authentication.Persistence.Interfaces;
@@ -9,6 +10,7 @@ using Common.Api.Factories;
 using Common.Api.Factories.Interfaces;
 using Common.Domain.ConcurrencyServices;
 using Common.Domain.ConcurrencyServices.Interfaces;
+using Common.Domain.DomainEvents.Interfaces;
 using Common.Domain.Providers;
 using Common.Domain.Providers.Interfaces;
 using Microsoft.EntityFrameworkCore;

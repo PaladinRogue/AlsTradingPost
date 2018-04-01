@@ -1,19 +1,26 @@
-﻿using Common.Domain.DomainEvents.Interfaces;
+﻿using System.Collections.Generic;
+using Common.Domain.DomainEvents.Interfaces;
 
 namespace Common.Domain.DomainEvents
 {
-    public class DomainEventFactory : IDomainEventFectory
+    public class DomainEventFactory : IDomainEventFactory
     {
-	    private readonly DomainEventOrchestrator _domainEventOrchestrator;
+	    private readonly IList<IDomainEvent> _domainEvents;
 
-		public DomainEventFactory(DomainEventOrchestrator domainEventOrchestrator)
-		{
-			_domainEventOrchestrator = domainEventOrchestrator;
-		}
+	    public DomainEventFactory()
+	    {
+		    _domainEvents = new List<IDomainEvent>();
+	    }
 
 	    public void Raise(IDomainEvent domainEvent)
 	    {
-			_domainEventOrchestrator.DomainEvents.Add(domainEvent);
+		    _domainEvents.Add(domainEvent);
 		}
+
+	    public IEnumerable<IDomainEvent> GetAll()
+	    {
+		    return _domainEvents;
+
+	    }
     }
 }
