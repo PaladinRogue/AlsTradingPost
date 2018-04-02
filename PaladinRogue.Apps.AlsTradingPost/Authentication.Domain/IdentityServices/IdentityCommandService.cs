@@ -50,7 +50,7 @@ namespace Authentication.Domain.IdentityServices
             }
             catch (ConcurrencyDomainException e)
             {
-                _logger.LogCritical(e, "Unable to create admin");
+                _logger.LogCritical(e, "Unable to update admin");
                 throw;
             }
             catch (Exception e)
