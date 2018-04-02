@@ -32,8 +32,9 @@ namespace Common.Setup.Middleware
 
 			if (SuccesStatusCodes.Contains((HttpStatusCode)context.Response.StatusCode))
 			{
-				transaction.Commit();
 				await domainEventDispatcher.DispatchEventsAsync();
+
+				transaction.Commit();
 			}
 			else
 			{

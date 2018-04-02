@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Common.Domain\Common.Domain.csproj" />
+    <ProjectReference Include="..\Message.Broker\Message.Broker.csproj" />
   </ItemGroup>
 
 </Project>
