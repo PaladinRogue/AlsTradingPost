@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Common.Api.Factories.Interfaces;
@@ -13,7 +14,7 @@ namespace Common.Api.Factories
 
 		public HttpClientFactory(IOptions<ProxySettings> proxySettingsAccessor)
 		{
-			var proxySettings = proxySettingsAccessor.Value;
+			ProxySettings proxySettings = proxySettingsAccessor.Value;
 
 			if (proxySettings.UseProxy)
 			{
@@ -33,7 +34,7 @@ namespace Common.Api.Factories
 			}
 		}
 
-	    public Task<string> GetStringAsync(string requestUri)
+	    public Task<string> GetStringAsync(Uri requestUri)
 	    {
 		    return _client.GetStringAsync(requestUri);
 	    }

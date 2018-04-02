@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Authentication.Api.FacebookModels;
 using Authentication.Api.Factories.Interfaces;
 using Authentication.Api.Request;
@@ -49,11 +50,11 @@ namespace Authentication.Api.Controllers
 		public async Task<IActionResult> Post([FromBody] FacebookAuthRequestDto request)
 		{
 			var appAccessTokenResponse = 
-				await _httpClientFactory.GetStringAsync(string.Format(_fbAuthSettings.AccessTokenEndpoint, _fbAuthSettings.AppId, _fbAuthSettings.AppSecret));
+				await _httpClientFactory.GetStringAsync(new Uri(string.Format(_fbAuthSettings.AccessTokenEndpoint, _fbAuthSettings.AppId, _fbAuthSettings.AppSecret)));
 			FacebookAppAccessToken appAccessToken = JsonConvert.DeserializeObject<FacebookAppAccessToken>(appAccessTokenResponse);
 
 			var userAccessTokenValidationResponse = 
-				await _httpClientFactory.GetStringAsync(string.Format(_fbAuthSettings.AccessTokenValidationEndpoint, request.AccessToken, appAccessToken.AccessToken));
+				await _httpClientFactory.GetStringAsync(new Uri(string.Format(_fbAuthSettings.AccessTokenValidationEndpoint, request.AccessToken, appAccessToken.AccessToken)));
 			FacebookUserAccessTokenValidation userAccessTokenValidation = JsonConvert.DeserializeObject<FacebookUserAccessTokenValidation>(userAccessTokenValidationResponse);
 
 			if (!userAccessTokenValidation.Data.IsValid)
