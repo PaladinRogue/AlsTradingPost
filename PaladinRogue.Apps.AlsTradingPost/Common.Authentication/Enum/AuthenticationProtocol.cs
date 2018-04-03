@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Authentication.Domain.Models.Enum
+namespace Common.Authentication.Enum
 {
 	[Flags]
 	public enum AuthenticationProtocol

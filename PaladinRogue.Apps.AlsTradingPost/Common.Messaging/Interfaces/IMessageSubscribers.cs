@@ -1,4 +1,4 @@
-﻿namespace Message.Broker.Interfaces
+﻿namespace Common.Messaging.Interfaces
 {
     public interface IMessageSubscribers
     {

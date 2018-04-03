@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Message.Broker.Interfaces;
+using Common.Messaging.Interfaces;
 
-namespace Message.Broker
+namespace Common.Messaging
 {
     public class MessageSubscribers : IMessageSubscribers
 	{

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using AlsTradingPost.Domain.Models.Interfaces;
 using Common.Domain.Models;
 using Common.Domain.Models.Interfaces;
 

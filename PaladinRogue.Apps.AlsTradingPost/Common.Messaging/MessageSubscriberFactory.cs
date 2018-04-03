@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Message.Broker
+namespace Common.Messaging
 {
 	public static class MessageSubscriberFactory
 	{

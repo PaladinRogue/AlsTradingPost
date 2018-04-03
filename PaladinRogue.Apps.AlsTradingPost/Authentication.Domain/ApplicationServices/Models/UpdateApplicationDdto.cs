@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Authentication.Domain.Models;
-using Authentication.Domain.Models.Enum;
+using Common.Authentication.Enum;
 using Common.Domain.Models;
 
 namespace Authentication.Domain.ApplicationServices.Models

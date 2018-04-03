@@ -1,4 +1,4 @@
-﻿using Authentication.Domain.Models.Enum;
+﻿using Common.Authentication.Enum;
 using Common.Domain.Models;
 
 namespace Authentication.Domain.Models

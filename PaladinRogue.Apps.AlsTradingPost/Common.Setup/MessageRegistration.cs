@@ -1,5 +1,6 @@
-﻿using Message.Broker;
-using Message.Broker.Interfaces;
+﻿using Common.Messaging;
+using Common.Messaging.Interfaces;
+using Message.Broker;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Common.Setup

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Message.Broker.Interfaces;
+using Common.Messaging;
+using Common.Messaging.Interfaces;
 
 namespace Message.Broker
 {
