@@ -8,7 +8,7 @@ namespace Authentication.Setup
     {
 	    public static void RegisterSubscribers(IServiceCollection services)
 	    {
-		    Common.Setup.MessageRegistration.RegisterMessaging(services);
+		    Common.Setup.MessageRegistration.RegisterRabbitMqMessaging(services);
 
 	        services.AddSingleton<IMessageSubscriber, ApplicationCreatedMessageSubscriber>();
 	    }

@@ -14,6 +14,7 @@
     <ProjectReference Include="..\Common.Domain\Common.Domain.csproj" />
     <ProjectReference Include="..\Common.Messaging\Common.Messaging.csproj" />
     <ProjectReference Include="..\Common.Resources\Common.Resources.csproj" />
+    <ProjectReference Include="..\Message.Broker\Message.Broker.csproj" />
     <ProjectReference Include="..\Message.Messages\Message.Messages.csproj" />
   </ItemGroup>
 

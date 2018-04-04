@@ -9,7 +9,6 @@ namespace Authentication.Api
 	    public static void Main(string[] args)
 	    {
 		    BuildWebHost(args)
-                .CheckForApplications()
                 .Run();
 	    }
 

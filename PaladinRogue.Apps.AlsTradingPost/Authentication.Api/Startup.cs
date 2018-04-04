@@ -9,6 +9,7 @@ using Common.Api.Settings;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Messaging.Interfaces;
 using Common.Resources.Logging;
+using Common.Setup.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -48,6 +49,7 @@ namespace Authentication.Api
             services.Configure<ProxySettings>(Configuration.GetSection(nameof(ProxySettings)));
             services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
             services.Configure<FacebookAuthSettings>(Configuration.GetSection(nameof(FacebookAuthSettings)));
+            services.Configure<MessagingBusSettings>(Configuration.GetSection(nameof(MessagingBusSettings)));
 
             JwtRegistration.RegisterOptions(Configuration, services);
 
