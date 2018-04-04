@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore;
+﻿using Common.Authentication.Enum;
+using Common.Resources.Extensions;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace AlsTradingPost.Api
@@ -7,13 +9,15 @@ namespace AlsTradingPost.Api
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            BuildWebHost(args)
+                .RegisterApplication("AlsTradingPost", AuthenticationProtocol.Facebook)
+                .Run();
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-	            .UseIISIntegration()
+                .UseIISIntegration()
 				.Build();
     }
 }

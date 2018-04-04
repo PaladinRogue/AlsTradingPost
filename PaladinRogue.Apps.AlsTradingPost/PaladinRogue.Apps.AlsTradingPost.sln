@@ -51,7 +51,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Messaging", "Common.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Message.Broker", "Message.Broker\Message.Broker.csproj", "{2D011140-ACC4-41FE-BA6C-48183C0B99CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Authentication", "Common.Authentication\Common.Authentication.csproj", "{B799D163-A095-4DBB-9A8B-BDDF66E3C56C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Authentication", "Common.Authentication\Common.Authentication.csproj", "{B799D163-A095-4DBB-9A8B-BDDF66E3C56C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Message.Messages", "Message.Messages\Message.Messages.csproj", "{09E7B2D7-A2F0-4F10-8C44-53FCB22E38C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -147,6 +149,10 @@ Global
 		{B799D163-A095-4DBB-9A8B-BDDF66E3C56C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B799D163-A095-4DBB-9A8B-BDDF66E3C56C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B799D163-A095-4DBB-9A8B-BDDF66E3C56C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09E7B2D7-A2F0-4F10-8C44-53FCB22E38C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09E7B2D7-A2F0-4F10-8C44-53FCB22E38C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09E7B2D7-A2F0-4F10-8C44-53FCB22E38C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09E7B2D7-A2F0-4F10-8C44-53FCB22E38C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -168,6 +174,7 @@ Global
 		{D3F18D14-4720-4FA1-A537-96C5A383D185} = {6483DDD2-ED71-4A70-ADAE-708284195A4D}
 		{2D011140-ACC4-41FE-BA6C-48183C0B99CA} = {0C931860-D95B-4A2B-824B-F31E34CC8BAE}
 		{B799D163-A095-4DBB-9A8B-BDDF66E3C56C} = {6483DDD2-ED71-4A70-ADAE-708284195A4D}
+		{09E7B2D7-A2F0-4F10-8C44-53FCB22E38C0} = {0C931860-D95B-4A2B-824B-F31E34CC8BAE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6911EF25-A28A-4840-BCB8-4FD4542BCC91}

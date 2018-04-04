@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore;
+﻿using Common.Resources.Extensions;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace Authentication.Api
@@ -8,7 +9,8 @@ namespace Authentication.Api
 	    public static void Main(string[] args)
 	    {
 		    BuildWebHost(args)
-			    .Run();
+                .CheckForApplications()
+                .Run();
 	    }
 
 	    public static IWebHost BuildWebHost(string[] args) =>

@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Authentication.Application.Application;
+using Common.Messaging.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Authentication.Setup
 {
@@ -7,6 +9,8 @@ namespace Authentication.Setup
 	    public static void RegisterSubscribers(IServiceCollection services)
 	    {
 		    Common.Setup.MessageRegistration.RegisterMessaging(services);
+
+	        services.AddSingleton<IMessageSubscriber, ApplicationCreatedMessageSubscriber>();
 	    }
 	}
 }

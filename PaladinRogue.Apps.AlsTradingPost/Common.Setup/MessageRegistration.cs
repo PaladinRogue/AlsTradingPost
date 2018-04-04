@@ -10,7 +10,7 @@ namespace Common.Setup
 	    public static void RegisterMessaging(IServiceCollection services)
 	    {
 			services.AddSingleton<MessageHandler>();
-		    services.AddSingleton<IMessageReceiver>(p => p.GetService<MessageHandler>());
+		    services.AddSingleton<IMessageSender>(p => p.GetService<MessageHandler>());
 		    services.AddSingleton<IMessageReceiver>(p => p.GetService<MessageHandler>());
 
 		    services.AddSingleton<IMessageSubscribers, MessageSubscribers>();

@@ -37,9 +37,10 @@ namespace AlsTradingPost.Api
                 options.Filters.Add(new ConcurrencyActionFilter());
             });
 
-	        EventRegistration.RegisterHandlers(services);
-			
-			ServiceRegistration.RegisterServices(Configuration, services);
+            EventRegistration.RegisterHandlers(services);
+            MessageRegistration.RegisterSubscribers(services);
+
+            ServiceRegistration.RegisterServices(Configuration, services);
             ServiceRegistration.RegisterProviders(Configuration, services);
 
             services.AddAutoMapper(MappingRegistration.RegisterMappers);

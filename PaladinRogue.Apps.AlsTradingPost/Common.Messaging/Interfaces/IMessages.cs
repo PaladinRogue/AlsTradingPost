@@ -4,7 +4,7 @@ namespace Common.Messaging.Interfaces
 {
     public interface IMessages
 	{
-		void Send(IMessage messageSubscriber);
+		void Send(IMessage message);
 		IEnumerable<IMessage> GetAll();
 	}
 }

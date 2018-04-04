@@ -5,22 +5,21 @@ namespace Common.Messaging
 {
     public class Messages : IMessages
     {
-	    private readonly IList<IMessage> _domainEvents;
+	    private readonly IList<IMessage> _messages;
 
 	    public Messages()
 	    {
-		    _domainEvents = new List<IMessage>();
+		    _messages = new List<IMessage>();
 	    }
 
 	    public void Send(IMessage message)
 	    {
-		    _domainEvents.Add(message);
+		    _messages.Add(message);
 		}
 
 	    public IEnumerable<IMessage> GetAll()
 	    {
-		    return _domainEvents;
-
+		    return _messages;
 	    }
     }
 }
