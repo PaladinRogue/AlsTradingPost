@@ -36,7 +36,7 @@ namespace Message.Broker
             where T : IMessage
             where TH : IMessageSubscriber<T>
         {
-            var handlerToRemove = _findSubscriptionToRemove<T, TH>();
+            Subscription handlerToRemove = _findSubscriptionToRemove<T, TH>();
             var eventName = GetEventKey<T>();
             _doRemoveHandler(eventName, handlerToRemove);
         }

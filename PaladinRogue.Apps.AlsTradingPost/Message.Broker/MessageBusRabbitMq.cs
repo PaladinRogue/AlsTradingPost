@@ -83,9 +83,9 @@ namespace Message.Broker
                     .Name;
 
                 channel.ExchangeDeclare(exchange: BrokerName,
-                    type: "fanout");
+                    type: "direct");
 
-                var serializedMessage = JsonConvert.SerializeObject(message);
+                var serializedMessage = JsonConvert.SerializeObject(message, _settings);
                 var body = Encoding.UTF8.GetBytes(serializedMessage);
 
                 policy.Execute(() =>
@@ -139,7 +139,7 @@ namespace Message.Broker
             var channel = _persistentConnection.CreateModel();
 
             channel.ExchangeDeclare(exchange: BrokerName,
-                type: "fanout");
+                type: "direct");
 
             _queueName = channel.QueueDeclare().QueueName;
 
@@ -173,7 +173,7 @@ namespace Message.Broker
                 foreach (var subscription in subscriptions)
                 {
                     IMessage message = JsonConvert.DeserializeObject<IMessage>(serializedMessage, _settings);
-                    await (Task)subscription.Handler.DynamicInvoke(message);
+                    await Task.Run(() => subscription.Handler.DynamicInvoke(message));
 
                 }
             }
