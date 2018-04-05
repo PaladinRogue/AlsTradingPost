@@ -42,7 +42,8 @@ namespace AlsTradingPost.Api
             services.Configure<ProxySettings>(Configuration.GetSection(nameof(ProxySettings)));
             services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
             services.Configure<MessagingBusSettings>(Configuration.GetSection(nameof(MessagingBusSettings)));
-
+            services.Configure<MessagingBusSettings>(Configuration.GetSection(nameof(MessagingBusSettings)));
+            
             EventRegistration.RegisterHandlers(services);
             MessageRegistration.RegisterSubscribers(services);
 

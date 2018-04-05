@@ -2,7 +2,7 @@
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
-using Common.Messaging.Interfaces;
+using Common.Messaging.Message.Interfaces;
 using Message.Broker.Connection.Interfaces;
 using Message.Broker.Messages.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -15,7 +15,7 @@ using RabbitMQ.Client.Exceptions;
 
 namespace Message.Broker.Messages
 {
-    public class MessageBusRabbitMq : Interfaces.IMessageBus
+    public class MessageBusRabbitMq : IMessageBus
     {
         private const string BrokerName = "paladin_rogue_message_bus";
 
@@ -42,10 +42,10 @@ namespace Message.Broker.Messages
                 TypeNameHandling = TypeNameHandling.All
             };
             _retryCount = retryCount;
-            _messageBusSubscriptionsManager.OnEventRemoved += SubsManager_OnEventRemoved;
+            _messageBusSubscriptionsManager.OnMessageRemoved += SubscriptionManagerOnMessageRemoved;
         }
 
-        private void SubsManager_OnEventRemoved(object sender, string eventName)
+        private void SubscriptionManagerOnMessageRemoved(object sender, string messageName)
         {
             if (!_persistentConnection.IsConnected)
             {
@@ -57,7 +57,7 @@ namespace Message.Broker.Messages
                 channel.QueueUnbind(
                     queue: _queueName,
                     exchange: BrokerName,
-                    routingKey: eventName);
+                    routingKey: messageName);
 
                 if (_messageBusSubscriptionsManager.IsEmpty)
                 {
@@ -81,8 +81,7 @@ namespace Message.Broker.Messages
 
             using (IModel channel = _persistentConnection.CreateModel())
             {
-                var eventName = message.GetType()
-                    .Name;
+                var messageName = message.GetType().Name;
 
                 channel.ExchangeDeclare(
                     exchange: BrokerName,
@@ -95,7 +94,7 @@ namespace Message.Broker.Messages
                 {
                     channel.BasicPublish(
                         exchange: BrokerName,
-                        routingKey: eventName,
+                        routingKey: messageName,
                         basicProperties: null,
                         body: body);
                 });
@@ -104,14 +103,14 @@ namespace Message.Broker.Messages
 
         public void Subscribe<T, TH>(Action<T> handler) where T : IMessage where TH : IMessageSubscriber<T>
         {
-            var eventName = _messageBusSubscriptionsManager.GetEventKey<T>();
-            DoInternalSubscription(eventName);
+            var messageName = _messageBusSubscriptionsManager.GetMessageKey<T>();
+            DoInternalSubscription(messageName);
             _messageBusSubscriptionsManager.AddSubscription<T, TH>(handler);
         }
 
-        private void DoInternalSubscription(string eventName)
+        private void DoInternalSubscription(string messageName)
         {
-            if (_messageBusSubscriptionsManager.HasSubscriptionsForEvent(eventName)) return;
+            if (_messageBusSubscriptionsManager.HasSubscriptionsForMessage(messageName)) return;
 
             if (!_persistentConnection.IsConnected)
             {
@@ -123,7 +122,7 @@ namespace Message.Broker.Messages
                 channel.QueueBind(
                     queue: _queueName,
                     exchange: BrokerName,
-                    routingKey: eventName);
+                    routingKey: messageName);
             }
         }
 
@@ -150,10 +149,10 @@ namespace Message.Broker.Messages
             EventingBasicConsumer consumer = new EventingBasicConsumer(channel);
             consumer.Received += async (model, ea) =>
             {
-                var eventName = ea.RoutingKey;
+                var messageKey = ea.RoutingKey;
                 var message = Encoding.UTF8.GetString(ea.Body);
 
-                await ProcessEvent(eventName, message);
+                await ProcessMessage(messageKey, message);
             };
 
             channel.BasicConsume(
@@ -170,11 +169,11 @@ namespace Message.Broker.Messages
             return channel;
         }
 
-        private async Task ProcessEvent(string eventName, string serializedMessage)
+        private async Task ProcessMessage(string messageName, string serializedMessage)
         {
-            if (_messageBusSubscriptionsManager.HasSubscriptionsForEvent(eventName))
+            if (_messageBusSubscriptionsManager.HasSubscriptionsForMessage(messageName))
             {
-                var subscriptions = _messageBusSubscriptionsManager.GetHandlersForEvent(eventName);
+                var subscriptions = _messageBusSubscriptionsManager.GetSubscribersForMessage(messageName);
 
                 await Task.Run(() => Parallel.ForEach(subscriptions,
                     subscription =>

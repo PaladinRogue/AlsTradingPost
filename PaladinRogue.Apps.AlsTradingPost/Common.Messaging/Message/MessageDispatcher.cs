@@ -1,8 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Common.Messaging.Interfaces;
-using Message.Broker.Messages.Interfaces;
+using Common.Messaging.Message.Interfaces;
 
-namespace Message.Broker.Messages
+namespace Common.Messaging.Message
 {
 	public class MessageDispatcher : IMessageDispatcher
 	{

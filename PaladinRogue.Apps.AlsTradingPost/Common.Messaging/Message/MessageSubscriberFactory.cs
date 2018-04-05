@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
-using Common.Messaging.Interfaces;
+using Common.Messaging.Message.Interfaces;
 
-namespace Common.Messaging
+namespace Common.Messaging.Message
 {
-    public class MessageSubscribers : IMessageSubscribers
+    public class MessageSubscriberFactory : IMessageSubscriberFactory
 	{
 		private readonly IEnumerable<IMessageSubscriber> _subscribers;
 
-		public MessageSubscribers(IEnumerable<IMessageSubscriber> subscribers)
+		public MessageSubscriberFactory(IEnumerable<IMessageSubscriber> subscribers)
 		{
 			_subscribers = subscribers;
 		}

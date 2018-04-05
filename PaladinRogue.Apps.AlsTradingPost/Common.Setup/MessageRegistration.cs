@@ -1,8 +1,7 @@
-﻿using Common.Messaging;
-using Common.Messaging.Interfaces;
-using Common.Resources.Interfaces;
+﻿using System;
+using Common.Messaging.Message;
+using Common.Messaging.Message.Interfaces;
 using Common.Setup.Settings;
-using Message.Broker;
 using Message.Broker.Connection;
 using Message.Broker.Connection.Interfaces;
 using Message.Broker.Messages;
@@ -22,13 +21,12 @@ namespace Common.Setup
 	        services.AddSingleton<IRabbitMqPersistentConnection>(sp =>
 	        {
 	            var logger = sp.GetRequiredService<ILogger<DefaultRabbitMqPersistentConnection>>();
-	            var messageSettingsAccessor = sp.GetRequiredService<IOptions<MessagingBusSettings>>();
 
-	            MessagingBusSettings messageBusSettings = messageSettingsAccessor.Value;
+	            var messageBusSettings = sp.GetRequiredService<IOptions<MessagingBusSettings>>().Value;
 
-                var factory = new ConnectionFactory
+                ConnectionFactory factory = new ConnectionFactory
 	            {
-	                HostName = string.IsNullOrEmpty(messageBusSettings.Connection) ? "localhost" : messageBusSettings.Connection
+	                HostName = string.IsNullOrEmpty(messageBusSettings.Connection) ? throw new ArgumentException(nameof(messageBusSettings.Connection)) : messageBusSettings.Connection
 	            };
 
 	            if (!string.IsNullOrEmpty(messageBusSettings.UserName))
@@ -49,20 +47,18 @@ namespace Common.Setup
 
             services.AddSingleton<IMessageBus, MessageBusRabbitMq>(sp =>
 	        {
-	            IRabbitMqPersistentConnection rabbitMqPersistentConnection = sp.GetRequiredService<IRabbitMqPersistentConnection>();
 	            var logger = sp.GetRequiredService<ILogger<MessageBusRabbitMq>>();
-	            IMessageBusSubscriptionsManager eventBusSubcriptionsManager = sp.GetRequiredService<IMessageBusSubscriptionsManager>();
-	            var messageSettingsAccessor = sp.GetRequiredService<IOptions<MessagingBusSettings>>();
+	            var messageBusSettings = sp.GetRequiredService<IOptions<MessagingBusSettings>>().Value;
 
-	            MessagingBusSettings messageBusSettings = messageSettingsAccessor.Value;
+                IMessageBusSubscriptionsManager eventBusSubcriptionsManager = sp.GetRequiredService<IMessageBusSubscriptionsManager>();
+                IRabbitMqPersistentConnection rabbitMqPersistentConnection = sp.GetRequiredService<IRabbitMqPersistentConnection>();
 
 	            var retryCount = messageBusSettings.RetryCount ?? 5;
-
-
+                
                 return new MessageBusRabbitMq(rabbitMqPersistentConnection, eventBusSubcriptionsManager, logger, retryCount);
 	        });
 
-            services.AddSingleton<IMessageSubscribers, MessageSubscribers>();
+            services.AddSingleton<IMessageSubscriberFactory, MessageSubscriberFactory>();
 		    services.AddScoped<IPendingMessageContainer, PendingMessageDirector>();
 		    services.AddScoped<IPendingMessageProvider>(p => p.GetRequiredService<PendingMessageDirector>());
 			services.AddScoped<IMessageDispatcher, MessageDispatcher>();

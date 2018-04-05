@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Common.Messaging.Interfaces;
+using Common.Messaging.Message.Interfaces;
 using Message.Broker.Messages.Interfaces;
 
 namespace Message.Broker.Messages
 {
-    public class InMemoryMessageBusSubscriptionsManager : IMessageBusSubscriptionsManager
+    public class InMemoryMessageBusSubscriptionsManager: IMessageBusSubscriptionsManager
     {
         private readonly Dictionary<string, List<Subscription>> _handlers;
-        private readonly List<Type> _eventTypes;
+        private readonly List<Type> _messageTypes;
 
-        public event EventHandler<string> OnEventRemoved;
+        public event EventHandler<string> OnMessageRemoved;
 
         public InMemoryMessageBusSubscriptionsManager()
         {
             _handlers = new Dictionary<string, List<Subscription>>();
-            _eventTypes = new List<Type>();
+            _messageTypes = new List<Type>();
         }
 
         public bool IsEmpty => !_handlers.Keys.Any();
@@ -27,98 +27,98 @@ namespace Message.Broker.Messages
             where T : IMessage
             where TH : IMessageSubscriber<T>
         {
-            var eventName = GetEventKey<T>();
-            _doAddSubscription(typeof(TH), handler, eventName);
-            _eventTypes.Add(typeof(T));
+            var messageKey = GetMessageKey<T>();
+            _doAddSubscription(typeof(TH), handler, messageKey);
+            _messageTypes.Add(typeof(T));
         }
 
         public void RemoveSubscription<T, TH>()
             where T : IMessage
             where TH : IMessageSubscriber<T>
         {
-            Subscription handlerToRemove = _findSubscriptionToRemove<T, TH>();
-            var eventName = GetEventKey<T>();
-            _doRemoveHandler(eventName, handlerToRemove);
+            Subscription subscriptionToRemove = _findSubscriptionToRemove<T, TH>();
+            var messageKey = GetMessageKey<T>();
+            _doRemoveSubscription(messageKey, subscriptionToRemove);
         }
 
-        public IEnumerable<Subscription> GetHandlersForEvent<T>() where T : IMessage
+        public IEnumerable<Subscription> GetSubscribersForMessage<T>() where T : IMessage
         {
-            var key = GetEventKey<T>();
-            return GetHandlersForEvent(key);
+            var key = GetMessageKey<T>();
+            return GetSubscribersForMessage(key);
         }
 
-        public IEnumerable<Subscription> GetHandlersForEvent(string eventName) => _handlers[eventName];
+        public IEnumerable<Subscription> GetSubscribersForMessage(string messageName) => _handlers[messageName];
 
-        public bool HasSubscriptionsForEvent<T>() where T : IMessage
+        public bool HasSubscriptionsForMessage<T>() where T : IMessage
         {
-            var key = GetEventKey<T>();
-            return HasSubscriptionsForEvent(key);
+            var key = GetMessageKey<T>();
+            return HasSubscriptionsForMessage(key);
         }
 
-        public bool HasSubscriptionsForEvent(string eventName) => _handlers.ContainsKey(eventName);
+        public bool HasSubscriptionsForMessage(string messageName) => _handlers.ContainsKey(messageName);
 
-        public Type GetEventTypeByName(string eventName) => _eventTypes.SingleOrDefault(t => t.Name == eventName);
+        public Type GetMessageTypeByName(string messageName) => _messageTypes.SingleOrDefault(t => t.Name == messageName);
 
-        public string GetEventKey<T>()
+        public string GetMessageKey<T>()
         {
             return typeof(T).Name;
         }
 
-        private void _doAddSubscription(Type handlerType, Delegate handler, string eventName)
+        private void _doAddSubscription(Type handlerType, Delegate handler, string messageName)
         {
-            if (!HasSubscriptionsForEvent(eventName))
+            if (!HasSubscriptionsForMessage(messageName))
             {
-                _handlers.Add(eventName, new List<Subscription>());
+                _handlers.Add(messageName, new List<Subscription>());
             }
 
-            if (_handlers[eventName].Any(s => s.HandlerType == handlerType))
+            if (_handlers[messageName].Any(s => s.HandlerType == handlerType))
             {
                 throw new ArgumentException(
-                    $"Handler Type {handlerType.Name} already registered for '{eventName}'", nameof(handlerType));
+                    $"Handler Type {handlerType.Name} already registered for '{messageName}'", nameof(handlerType));
             }
 
-            _handlers[eventName].Add(Subscription.Create(handlerType, handler));
+            _handlers[messageName].Add(Subscription.Create(handlerType, handler));
         }
         
-        private void _doRemoveHandler(string eventName, Subscription subscriptionToRemove)
+        private void _doRemoveSubscription(string messageName, Subscription subscriptionToRemove)
         {
             if (subscriptionToRemove == null) return;
 
-            _handlers[eventName].Remove(subscriptionToRemove);
+            _handlers[messageName].Remove(subscriptionToRemove);
 
-            if (_handlers[eventName].Any()) return;
+            if (_handlers[messageName].Any()) return;
 
-            _handlers.Remove(eventName);
-            Type eventType = _eventTypes.SingleOrDefault(e => e.Name == eventName);
-            if (eventType != null)
+            _handlers.Remove(messageName);
+            Type messageType = _messageTypes.SingleOrDefault(e => e.Name == messageName);
+            if (messageType != null)
             {
-                _eventTypes.Remove(eventType);
+                _messageTypes.Remove(messageType);
             }
 
-            _raiseOnEventRemoved(eventName);
+            _raiseOnMessageRemoved(messageName);
         }
 
-        private void _raiseOnEventRemoved(string eventName)
+        private void _raiseOnMessageRemoved(string messageName)
         {
-            OnEventRemoved?.Invoke(this, eventName);
+            OnMessageRemoved?.Invoke(this, messageName);
         }
 
         private Subscription _findSubscriptionToRemove<T, TH>()
             where T : IMessage
             where TH : IMessageSubscriber<T>
         {
-            var eventName = GetEventKey<T>();
-            return _dDoFindSubscriptionToRemove(eventName, typeof(TH));
+            var messageKey = GetMessageKey<T>();
+            return _dDoFindSubscriptionToRemove(messageKey, typeof(TH));
         }
 
-        private Subscription _dDoFindSubscriptionToRemove(string eventName, Type handlerType)
+        private Subscription _dDoFindSubscriptionToRemove(string messageName, Type handlerType)
         {
-            if (!HasSubscriptionsForEvent(eventName))
+            if (!HasSubscriptionsForMessage(messageName))
             {
                 return null;
             }
 
-            return _handlers[eventName].SingleOrDefault(s => s.HandlerType == handlerType);
+            return _handlers[messageName].SingleOrDefault(s => s.HandlerType == handlerType);
         }
     }
 }

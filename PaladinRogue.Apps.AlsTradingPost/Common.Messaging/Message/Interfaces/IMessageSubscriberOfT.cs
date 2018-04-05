@@ -1,4 +1,4 @@
-﻿namespace Common.Messaging.Interfaces
+﻿namespace Common.Messaging.Message.Interfaces
 {
 	public interface IMessageSubscriber<in T> where T : IMessage
 	{

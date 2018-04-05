@@ -1,27 +1,20 @@
-using Common.Messaging.Interfaces;
+using Common.Messaging.Message;
+using Common.Messaging.Message.Interfaces;
 using Common.Messaging.Messages;
-using Message.Broker.Messages.Interfaces;
 using Microsoft.Extensions.Logging;
 
 namespace Authentication.Application.Application
 {
-    public class ApplicationCreatedMessageSubscriber : IMessageSubscriber, IMessageSubscriber<ApplicationCreatedMessage>
+    public class ApplicationCreatedMessageSubscriber : MessageSubscriber<ApplicationCreatedMessage, ApplicationCreatedMessageSubscriber>
     {
         private readonly ILogger<ApplicationCreatedMessageSubscriber> _logger;
-        private readonly IMessageBus _messageBus;
 
-        public ApplicationCreatedMessageSubscriber(ILogger<ApplicationCreatedMessageSubscriber> logger, IMessageBus messageBus)
+        public ApplicationCreatedMessageSubscriber(ILogger<ApplicationCreatedMessageSubscriber> logger, IMessageBus messageBus) : base(messageBus)
         {
             _logger = logger;
-            _messageBus = messageBus;
         }
-
-        public void Subscribe()
-        {
-            _messageBus.Subscribe<ApplicationCreatedMessage, ApplicationCreatedMessageSubscriber>(Handle);
-        }
-
-        public void Handle(ApplicationCreatedMessage message)
+        
+        public override void Handle(ApplicationCreatedMessage message)
         {
             _logger.LogInformation("hi Dan I am here");
         }

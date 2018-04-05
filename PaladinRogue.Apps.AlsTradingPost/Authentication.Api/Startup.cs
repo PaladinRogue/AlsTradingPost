@@ -7,7 +7,7 @@ using AutoMapper;
 using Common.Api.Filters;
 using Common.Api.Settings;
 using Common.Domain.DomainEvents.Interfaces;
-using Common.Messaging.Interfaces;
+using Common.Messaging.Message.Interfaces;
 using Common.Resources.Logging;
 using Common.Setup.Settings;
 using Microsoft.AspNetCore.Builder;
@@ -50,7 +50,7 @@ namespace Authentication.Api
             services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
             services.Configure<FacebookAuthSettings>(Configuration.GetSection(nameof(FacebookAuthSettings)));
             services.Configure<MessagingBusSettings>(Configuration.GetSection(nameof(MessagingBusSettings)));
-
+            
             JwtRegistration.RegisterOptions(Configuration, services);
 
             EventRegistration.RegisterHandlers(services);
@@ -67,10 +67,10 @@ namespace Authentication.Api
             IHostingEnvironment env,
             ILoggerFactory loggerFactory,
             IDomainEventHandlers domainEventHandlers,
-            IMessageSubscribers messageSubscribers)
+            IMessageSubscriberFactory messageSubscriberFactory)
         {
             domainEventHandlers.Initialise();
-            messageSubscribers.Initialise();
+            messageSubscriberFactory.Initialise();
 
             loggerFactory.AddLog4Net();
 

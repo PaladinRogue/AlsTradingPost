@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Common.Messaging.Interfaces;
+using Common.Messaging.Message.Interfaces;
 
-namespace Common.Messaging
+namespace Common.Messaging.Message
 {
     public class PendingMessageDirector : IPendingMessageContainer, IPendingMessageProvider
     {

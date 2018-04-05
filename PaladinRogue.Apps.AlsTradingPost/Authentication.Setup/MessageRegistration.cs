@@ -1,5 +1,5 @@
 ﻿using Authentication.Application.Application;
-using Common.Messaging.Interfaces;
+using Common.Messaging.Message.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Authentication.Setup

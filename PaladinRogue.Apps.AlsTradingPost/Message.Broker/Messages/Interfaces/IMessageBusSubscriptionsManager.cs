@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Common.Messaging.Interfaces;
+using Common.Messaging.Message.Interfaces;
 
 namespace Message.Broker.Messages.Interfaces
 {
@@ -8,7 +8,7 @@ namespace Message.Broker.Messages.Interfaces
     {
         bool IsEmpty { get; }
 
-        event EventHandler<string> OnEventRemoved;
+        event EventHandler<string> OnMessageRemoved;
 
         void AddSubscription<T, TH>(Action<T> handler)
             where T : IMessage
@@ -18,16 +18,16 @@ namespace Message.Broker.Messages.Interfaces
             where T : IMessage
             where TH : IMessageSubscriber<T>;
 
-        bool HasSubscriptionsForEvent<T>() where T : IMessage;
+        bool HasSubscriptionsForMessage<T>() where T : IMessage;
 
-        bool HasSubscriptionsForEvent(string messageName);
+        bool HasSubscriptionsForMessage(string messageName);
 
         void Clear();
 
-        IEnumerable<Subscription> GetHandlersForEvent<T>() where T : IMessage;
+        IEnumerable<Subscription> GetSubscribersForMessage<T>() where T : IMessage;
 
-        IEnumerable<Subscription> GetHandlersForEvent(string messageName);
+        IEnumerable<Subscription> GetSubscribersForMessage(string messageName);
 
-        string GetEventKey<T>();
+        string GetMessageKey<T>();
     }
 }

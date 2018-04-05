@@ -1,4 +1,4 @@
-﻿using Common.Messaging.Interfaces;
+﻿using Common.Messaging.Message.Interfaces;
 using Common.Resources.Authentication;
 
 namespace Common.Messaging.Messages
