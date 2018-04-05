@@ -1,7 +1,7 @@
 ﻿using System;
 using Common.Messaging.Messages;
 using Common.Resources.Authentication;
-using Message.Broker.Interfaces;
+using Message.Broker.Messages.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 

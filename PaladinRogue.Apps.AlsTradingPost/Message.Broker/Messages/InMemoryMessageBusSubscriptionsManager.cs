@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Common.Messaging.Interfaces;
-using Message.Broker.Interfaces;
+using Message.Broker.Messages.Interfaces;
 
-namespace Message.Broker
+namespace Message.Broker.Messages
 {
     public class InMemoryMessageBusSubscriptionsManager : IMessageBusSubscriptionsManager
     {

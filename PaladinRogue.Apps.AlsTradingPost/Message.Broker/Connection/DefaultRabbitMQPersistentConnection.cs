@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net.Sockets;
-using Message.Broker.Interfaces;
+using Message.Broker.Connection.Interfaces;
 using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Retry;
@@ -9,7 +9,7 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Exceptions;
 
-namespace Message.Broker
+namespace Message.Broker.Connection
 {
     public class DefaultRabbitMqPersistentConnection : IRabbitMqPersistentConnection
     {

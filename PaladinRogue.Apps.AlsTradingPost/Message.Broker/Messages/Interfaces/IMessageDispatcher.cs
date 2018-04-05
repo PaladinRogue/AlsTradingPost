@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Message.Broker.Interfaces
+namespace Message.Broker.Messages.Interfaces
 {
 	public interface IMessageDispatcher
 	{

@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Net.Sockets;
-using RabbitMQ.Client;
 using System.Text;
 using System.Threading.Tasks;
 using Common.Messaging.Interfaces;
-using Message.Broker.Interfaces;
+using Message.Broker.Connection.Interfaces;
+using Message.Broker.Messages.Interfaces;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Polly;
 using Polly.Retry;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Exceptions;
-using IMessageBus = Message.Broker.Interfaces.IMessageBus;
 
-namespace Message.Broker
+namespace Message.Broker.Messages
 {
-    public class MessageBusRabbitMq : IMessageBus
+    public class MessageBusRabbitMq : Interfaces.IMessageBus
     {
         private const string BrokerName = "paladin_rogue_message_bus";
 

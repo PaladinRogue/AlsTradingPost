@@ -1,7 +1,7 @@
 ﻿using System;
 using Common.Messaging.Interfaces;
 
-namespace Message.Broker.Interfaces
+namespace Message.Broker.Messages.Interfaces
 {
     public interface IMessageBus
     {

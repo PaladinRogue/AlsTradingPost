@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Message.Broker
+namespace Message.Broker.Messages
 {
     public class Subscription
     {
