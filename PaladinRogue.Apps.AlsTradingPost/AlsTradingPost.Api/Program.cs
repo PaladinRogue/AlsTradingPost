@@ -1,5 +1,6 @@
-﻿using Common.Authentication.Enum;
+﻿using Common.Resources.Authentication;
 using Common.Resources.Extensions;
+using Common.Setup.Extentions;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 

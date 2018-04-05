@@ -1,5 +1,6 @@
 ﻿using Common.Messaging;
 using Common.Messaging.Interfaces;
+using Common.Resources.Interfaces;
 using Common.Setup.Settings;
 using Message.Broker;
 using Message.Broker.Interfaces;
@@ -59,7 +60,8 @@ namespace Common.Setup
 	        });
 
             services.AddSingleton<IMessageSubscribers, MessageSubscribers>();
-		    services.AddScoped<IMessages, Messages>();
+		    services.AddScoped<IPendingMessageContainer, PendingMessageDirector>();
+		    services.AddScoped<IPendingMessageProvider>(p => p.GetRequiredService<PendingMessageDirector>());
 			services.AddScoped<IMessageDispatcher, MessageDispatcher>();
 	    }
     }

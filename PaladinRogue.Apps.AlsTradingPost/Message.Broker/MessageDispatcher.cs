@@ -6,18 +6,18 @@ namespace Message.Broker
 {
 	public class MessageDispatcher : IMessageDispatcher
 	{
-		private readonly IMessages _messages;
+		private readonly IPendingMessageProvider _pendingMessageProvider;
 		private readonly IMessageBus _messageBus;
 
-		public MessageDispatcher(IMessages messages, IMessageBus messageBus)
+		public MessageDispatcher(IPendingMessageProvider pendingMessageProvider, IMessageBus messageBus)
 		{
-			_messages = messages;
+		    _pendingMessageProvider = pendingMessageProvider;
 		    _messageBus = messageBus;
 		}
 
 		public async Task DispatchMessagesAsync()
 		{
-			await Task.Run(() => Parallel.ForEach(_messages.GetAll(),
+			await Task.Run(() => Parallel.ForEach(_pendingMessageProvider.GetAll(),
 				message => { _messageBus.Publish(message); }));
 		}
 	}

@@ -1,6 +1,6 @@
 using Common.Messaging.Interfaces;
+using Common.Messaging.Messages;
 using Message.Broker.Interfaces;
-using Message.Messages;
 using Microsoft.Extensions.Logging;
 
 namespace Authentication.Application.Application

@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using Message.Broker.Interfaces;
 using Microsoft.Extensions.Logging;
 using Polly;
+using Polly.Retry;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Exceptions;
@@ -61,7 +62,7 @@ namespace Message.Broker
 
             lock (_syncRoot)
             {
-                var policy = Policy.Handle<SocketException>()
+                RetryPolicy policy = Policy.Handle<SocketException>()
                     .Or<BrokerUnreachableException>()
                     .WaitAndRetry(_retryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (ex, time) =>
                     {

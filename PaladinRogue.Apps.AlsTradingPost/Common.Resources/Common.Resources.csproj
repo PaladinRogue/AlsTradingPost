@@ -15,11 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Common.Authentication\Common.Authentication.csproj" />
     <ProjectReference Include="..\Common.Domain.Models\Common.Domain.Models.csproj" />
-    <ProjectReference Include="..\Common.Messaging\Common.Messaging.csproj" />
-    <ProjectReference Include="..\Message.Broker\Message.Broker.csproj" />
-    <ProjectReference Include="..\Message.Messages\Message.Messages.csproj" />
   </ItemGroup>
 
 </Project>

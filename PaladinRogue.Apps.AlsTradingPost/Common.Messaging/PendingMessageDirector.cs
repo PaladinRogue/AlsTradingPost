@@ -3,16 +3,16 @@ using Common.Messaging.Interfaces;
 
 namespace Common.Messaging
 {
-    public class Messages : IMessages
+    public class PendingMessageDirector : IPendingMessageContainer, IPendingMessageProvider
     {
 	    private readonly IList<IMessage> _messages;
 
-	    public Messages()
+	    public PendingMessageDirector()
 	    {
 		    _messages = new List<IMessage>();
 	    }
 
-	    public void Send(IMessage message)
+	    public void Add(IMessage message)
 	    {
 		    _messages.Add(message);
 		}

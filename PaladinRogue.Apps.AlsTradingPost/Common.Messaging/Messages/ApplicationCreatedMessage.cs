@@ -1,7 +1,7 @@
-﻿using Common.Authentication.Enum;
-using Common.Messaging.Interfaces;
+﻿using Common.Messaging.Interfaces;
+using Common.Resources.Authentication;
 
-namespace Message.Messages
+namespace Common.Messaging.Messages
 {
     public class ApplicationCreatedMessage : IMessage
     {

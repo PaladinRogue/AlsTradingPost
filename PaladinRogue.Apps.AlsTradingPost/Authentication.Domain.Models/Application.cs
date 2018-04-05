@@ -1,5 +1,5 @@
-﻿using Common.Authentication.Enum;
-using Common.Domain.Models;
+﻿using Common.Domain.Models;
+using Common.Resources.Authentication;
 
 namespace Authentication.Domain.Models
 {

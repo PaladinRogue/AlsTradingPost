@@ -1,11 +1,11 @@
 ﻿using System;
-using Common.Authentication.Enum;
+using Common.Messaging.Messages;
+using Common.Resources.Authentication;
 using Message.Broker.Interfaces;
-using Message.Messages;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Common.Resources.Extensions
+namespace Common.Setup.Extentions
 {
     public static class WebHostExtensions
     {

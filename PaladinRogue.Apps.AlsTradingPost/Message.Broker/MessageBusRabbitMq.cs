@@ -17,7 +17,7 @@ namespace Message.Broker
 {
     public class MessageBusRabbitMq : IMessageBus
     {
-        const string BrokerName = "paladin_rogue_message_bus";
+        private const string BrokerName = "paladin_rogue_message_bus";
 
         private readonly ILogger<MessageBusRabbitMq> _logger;
         private readonly IRabbitMqPersistentConnection _persistentConnection;
@@ -28,7 +28,8 @@ namespace Message.Broker
         private string _queueName;
 
         public MessageBusRabbitMq(IRabbitMqPersistentConnection persistentConnection,
-            IMessageBusSubscriptionsManager messageBusSubscriptionsManager, ILogger<MessageBusRabbitMq> logger,
+            IMessageBusSubscriptionsManager messageBusSubscriptionsManager,
+            ILogger<MessageBusRabbitMq> logger,
             int retryCount = 5)
         {
             _persistentConnection = persistentConnection;
@@ -51,9 +52,10 @@ namespace Message.Broker
                 _persistentConnection.TryConnect();
             }
 
-            using (var channel = _persistentConnection.CreateModel())
+            using (IModel channel = _persistentConnection.CreateModel())
             {
-                channel.QueueUnbind(queue: _queueName,
+                channel.QueueUnbind(
+                    queue: _queueName,
                     exchange: BrokerName,
                     routingKey: eventName);
 
@@ -77,12 +79,13 @@ namespace Message.Broker
                 .WaitAndRetry(_retryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
                     (ex, time) => { _logger.LogWarning(ex.ToString()); });
 
-            using (var channel = _persistentConnection.CreateModel())
+            using (IModel channel = _persistentConnection.CreateModel())
             {
                 var eventName = message.GetType()
                     .Name;
 
-                channel.ExchangeDeclare(exchange: BrokerName,
+                channel.ExchangeDeclare(
+                    exchange: BrokerName,
                     type: "direct");
 
                 var serializedMessage = JsonConvert.SerializeObject(message, _settings);
@@ -90,7 +93,8 @@ namespace Message.Broker
 
                 policy.Execute(() =>
                 {
-                    channel.BasicPublish(exchange: BrokerName,
+                    channel.BasicPublish(
+                        exchange: BrokerName,
                         routingKey: eventName,
                         basicProperties: null,
                         body: body);
@@ -107,20 +111,19 @@ namespace Message.Broker
 
         private void DoInternalSubscription(string eventName)
         {
-            var containsKey = _messageBusSubscriptionsManager.HasSubscriptionsForEvent(eventName);
-            if (!containsKey)
-            {
-                if (!_persistentConnection.IsConnected)
-                {
-                    _persistentConnection.TryConnect();
-                }
+            if (_messageBusSubscriptionsManager.HasSubscriptionsForEvent(eventName)) return;
 
-                using (var channel = _persistentConnection.CreateModel())
-                {
-                    channel.QueueBind(queue: _queueName,
-                        exchange: BrokerName,
-                        routingKey: eventName);
-                }
+            if (!_persistentConnection.IsConnected)
+            {
+                _persistentConnection.TryConnect();
+            }
+
+            using (IModel channel = _persistentConnection.CreateModel())
+            {
+                channel.QueueBind(
+                    queue: _queueName,
+                    exchange: BrokerName,
+                    routingKey: eventName);
             }
         }
 
@@ -136,14 +139,15 @@ namespace Message.Broker
                 _persistentConnection.TryConnect();
             }
 
-            var channel = _persistentConnection.CreateModel();
+            IModel channel = _persistentConnection.CreateModel();
 
-            channel.ExchangeDeclare(exchange: BrokerName,
+            channel.ExchangeDeclare(
+                exchange: BrokerName,
                 type: "direct");
 
             _queueName = channel.QueueDeclare().QueueName;
 
-            var consumer = new EventingBasicConsumer(channel);
+            EventingBasicConsumer consumer = new EventingBasicConsumer(channel);
             consumer.Received += async (model, ea) =>
             {
                 var eventName = ea.RoutingKey;
@@ -152,7 +156,8 @@ namespace Message.Broker
                 await ProcessEvent(eventName, message);
             };
 
-            channel.BasicConsume(queue: _queueName,
+            channel.BasicConsume(
+                queue: _queueName,
                 autoAck: false,
                 consumer: consumer);
 
@@ -170,12 +175,13 @@ namespace Message.Broker
             if (_messageBusSubscriptionsManager.HasSubscriptionsForEvent(eventName))
             {
                 var subscriptions = _messageBusSubscriptionsManager.GetHandlersForEvent(eventName);
-                foreach (var subscription in subscriptions)
-                {
-                    IMessage message = JsonConvert.DeserializeObject<IMessage>(serializedMessage, _settings);
-                    await Task.Run(() => subscription.Handler.DynamicInvoke(message));
 
-                }
+                await Task.Run(() => Parallel.ForEach(subscriptions,
+                    subscription =>
+                    {
+                        IMessage message = JsonConvert.DeserializeObject<IMessage>(serializedMessage, _settings);
+                        subscription.Handler.DynamicInvoke(message);
+                    }));
             }
         }
 

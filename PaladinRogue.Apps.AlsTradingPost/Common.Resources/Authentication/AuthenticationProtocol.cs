@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Authentication.Enum
+namespace Common.Resources.Authentication
 {
 	[Flags]
 	public enum AuthenticationProtocol
