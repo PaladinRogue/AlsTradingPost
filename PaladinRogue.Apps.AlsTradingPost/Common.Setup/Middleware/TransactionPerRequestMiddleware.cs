@@ -23,8 +23,7 @@ namespace Common.Setup.Middleware
 			_next = next;
 		}
 
-		public async Task Invoke(HttpContext context, ITransactionFactory transactionFactory,
-			IDomainEventDispatcher domainEventDispatcher)
+		public async Task Invoke(HttpContext context, ITransactionFactory transactionFactory, IDomainEventDispatcher domainEventDispatcher)
 		{
 			ITransaction transaction = transactionFactory.Create();
 

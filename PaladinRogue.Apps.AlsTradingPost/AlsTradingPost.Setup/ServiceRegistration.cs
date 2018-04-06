@@ -5,7 +5,7 @@ using AlsTradingPost.Domain.AdminServices.Interfaces;
 using AlsTradingPost.Persistence;
 using AlsTradingPost.Persistence.Interfaces;
 using AlsTradingPost.Persistence.Repositories;
-using AlsTradingPost.Setup.Transactions;
+using AlsTradingPost.Persistence.Transactions;
 using Common.Domain.ConcurrencyServices;
 using Common.Domain.ConcurrencyServices.Interfaces;
 using Common.Domain.Providers;
@@ -27,6 +27,7 @@ namespace AlsTradingPost.Setup
             services.AddScoped<IAdminCommandService, AdminCommandService>();
             services.AddScoped<IAdminQueryService, AdminQueryService>();
 
+            services.AddScoped<IAuditRepository, AuditRepository>();
             services.AddScoped<IAdminRepository, AdminRepository>();
             services.AddScoped<IPlayerRepository, PlayerRepository>();
             services.AddScoped<ICharacterRepository, CharacterRepository>();
