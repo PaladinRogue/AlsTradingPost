@@ -10,6 +10,6 @@ namespace Common.Resources.Extensions
 				   .GetField(item.ToString())
 				   .GetCustomAttributes(typeof(DescriptionAttribute), false)
 				   .Cast<DescriptionAttribute>()
-				   .FirstOrDefault()?.Description ?? string.Empty;
+				   .SingleOrDefault()?.Description ?? string.Empty;
 	}
 }

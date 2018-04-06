@@ -20,7 +20,7 @@ namespace Authentication.Domain.IdentityServices
 
 		public IdentityProjection GetByAuthenticationId(string authenticationId)
 		{
-			return _mapper.Map<Identity, IdentityProjection>(_identityRepository.GetByAuthenticationId(authenticationId));
+			return _mapper.Map<Identity, IdentityProjection>(_identityRepository.GetSingle(i => i.AuthenticationId == authenticationId));
 		}
 
 		public IdentityProjection Get(Guid id)

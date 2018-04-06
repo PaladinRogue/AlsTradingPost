@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.Persistence;
+using Common.Domain.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlsTradingPost.Persistence.Repositories
 {
@@ -16,27 +19,68 @@ namespace AlsTradingPost.Persistence.Repositories
 
         public IEnumerable<Character> Get()
         {
-            throw new NotImplementedException();
+            return _context.Characters.AsNoTracking();
         }
 
         public Character GetById(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _context.Characters.AsNoTracking().SingleOrDefault(a => a.Id == id);
+            }
+            catch (InvalidOperationException)
+            {
+                throw new DomainException("Multiple entites exist with given Id");
+            }
         }
 
-        public void Add(Character character)
+        public Character GetSingle(Predicate<Character> predicate)
         {
-            _context.Characters.Add(character);
+            try
+            {
+                return _context.Characters.AsNoTracking().SingleOrDefault(a => predicate(a));
+            }
+            catch (InvalidOperationException)
+            {
+                throw new DomainException($"Multiple entites exist which match given predicate ({ predicate })");
+            }
         }
 
-        public void Update(Character obj)
+        public void Add(Character entity)
         {
-            throw new NotImplementedException();
+            _context.Characters.Add(entity);
+
+            _context.SaveChanges();
+        }
+
+        public void Update(Character entity)
+        {
+            try
+            {
+                _context.Characters.Update(entity);
+
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                throw new ConcurrencyDomainException(entity, e);
+            }
         }
 
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            Character entity = GetById(id);
+
+            try
+            {
+                _context.Characters.Remove(entity);
+
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                throw new ConcurrencyDomainException(entity, e);
+            }
         }
     }
 }

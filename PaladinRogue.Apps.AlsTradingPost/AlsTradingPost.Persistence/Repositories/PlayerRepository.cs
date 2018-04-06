@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.Persistence;
+using Common.Domain.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlsTradingPost.Persistence.Repositories
 {
@@ -16,27 +19,68 @@ namespace AlsTradingPost.Persistence.Repositories
 
         public IEnumerable<Player> Get()
         {
-            throw new NotImplementedException();
+            return _context.Players.AsNoTracking();
         }
 
         public Player GetById(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _context.Players.AsNoTracking().SingleOrDefault(a => a.Id == id);
+            }
+            catch (InvalidOperationException)
+            {
+                throw new DomainException("Multiple entites exist with given Id");
+            }
         }
 
-        public void Add(Player player)
+        public Player GetSingle(Predicate<Player> predicate)
         {
-            _context.Players.Add(player);
+            try
+            {
+                return _context.Players.AsNoTracking().SingleOrDefault(a => predicate(a));
+            }
+            catch (InvalidOperationException)
+            {
+                throw new DomainException($"Multiple entites exist which match given predicate ({ predicate })");
+            }
         }
 
-        public void Update(Player obj)
+        public void Add(Player entity)
         {
-            throw new NotImplementedException();
+            _context.Players.Add(entity);
+
+            _context.SaveChanges();
+        }
+
+        public void Update(Player entity)
+        {
+            try
+            {
+                _context.Players.Update(entity);
+
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                throw new ConcurrencyDomainException(entity, e);
+            }
         }
 
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            Player entity = GetById(id);
+
+            try
+            {
+                _context.Players.Remove(entity);
+
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                throw new ConcurrencyDomainException(entity, e);
+            }
         }
     }
 }

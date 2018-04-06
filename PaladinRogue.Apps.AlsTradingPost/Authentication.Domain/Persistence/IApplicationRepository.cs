@@ -5,6 +5,5 @@ namespace Authentication.Domain.Persistence
 {
     public interface IApplicationRepository : IRepository<Application>
     {
-        Application GetByName(string applicationName);
     }
 }

@@ -25,7 +25,7 @@ namespace Authentication.Domain.ApplicationServices
 
 	    public ApplicationProjection GetByName(string applicationName)
 	    {
-	        return _mapper.Map<Application, ApplicationProjection>(_applicationRepository.GetByName(applicationName));
+	        return _mapper.Map<Application, ApplicationProjection>(_applicationRepository.GetSingle(a => a.Name == applicationName));
         }
 	}
 }
