@@ -1,8 +1,7 @@
-﻿using AlsTradingPost.Persistence;
-using Common.Resources.Transactions;
+﻿using Common.Resources.Transactions;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace AlsTradingPost.Setup.Transactions
+namespace AlsTradingPost.Persistence.Transactions
 {
     public class TransactionFactory : ITransactionFactory
     {

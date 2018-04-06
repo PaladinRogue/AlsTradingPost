@@ -20,7 +20,6 @@ namespace Common.Domain.DomainEvents
 	    public IEnumerable<IDomainEvent> GetAll()
 	    {
 		    return _domainEvents;
-
 	    }
     }
 }

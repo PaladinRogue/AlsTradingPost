@@ -9,6 +9,8 @@ namespace AlsTradingPost.Persistence
         {
         }
         
+        public DbSet<Audit> Audits { get; set; }
+        
         public DbSet<User> Users { get; set; }
         
         public DbSet<Admin> Admins { get; set; }

@@ -1,7 +1,7 @@
 ﻿using Common.Resources.Transactions;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace AlsTradingPost.Setup.Transactions
+namespace AlsTradingPost.Persistence.Transactions
 {
     public class Transaction : ITransaction
     {
@@ -20,7 +20,6 @@ namespace AlsTradingPost.Setup.Transactions
 	    public void Dispose()
 	    {
 			_dbContextTransaction.Dispose();
-
 		}
 
 	    public void Commit()
