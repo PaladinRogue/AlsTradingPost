@@ -10,10 +10,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Authentication.Domain.Models\Authentication.Domain.Models.csproj" />
-    <ProjectReference Include="..\Authentication.Persistence\Authentication.Persistence.csproj" />
     <ProjectReference Include="..\Common.Domain.Models\Common.Domain.Models.csproj" />
     <ProjectReference Include="..\Common.Domain\Common.Domain.csproj" />
-    <ProjectReference Include="..\Common.Persistence\Common.Persistence.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -2,7 +2,7 @@
 using Authentication.Domain.ApplicationServices.Interfaces;
 using Authentication.Domain.ApplicationServices.Models;
 using Authentication.Domain.Models;
-using Authentication.Persistence.Interfaces;
+using Authentication.Domain.Persistence;
 using AutoMapper;
 
 namespace Authentication.Domain.ApplicationServices

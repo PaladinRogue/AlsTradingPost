@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AlsTradingPost.Domain.Models;
-using AlsTradingPost.Persistence.Interfaces;
+using AlsTradingPost.Domain.Persistence;
 using Common.Domain.Exceptions;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AlsTradingPost.Domain.Models;
-using AlsTradingPost.Persistence.Interfaces;
+using AlsTradingPost.Domain.Persistence;
 
 namespace AlsTradingPost.Persistence.Repositories
 {
