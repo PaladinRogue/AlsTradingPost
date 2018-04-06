@@ -1,4 +1,5 @@
-﻿using Authentication.Api.Factories;
+﻿using System;
+using Authentication.Api.Factories;
 using Authentication.Api.Factories.Interfaces;
 using Common.Api.Formatters;
 using Authentication.Setup;
@@ -34,7 +35,7 @@ namespace Authentication.Api
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(UseCustomJsonOutputFormatter);
 
@@ -50,27 +51,29 @@ namespace Authentication.Api
             services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
             services.Configure<FacebookAuthSettings>(Configuration.GetSection(nameof(FacebookAuthSettings)));
             services.Configure<MessagingBusSettings>(Configuration.GetSection(nameof(MessagingBusSettings)));
-            
-            JwtRegistration.RegisterOptions(Configuration, services);
 
+            JwtRegistration.RegisterOptions(Configuration, services);
             EventRegistration.RegisterHandlers(services);
             MessageRegistration.RegisterSubscribers(services);
-
             ServiceRegistration.RegisterServices(Configuration, services);
-            ServiceRegistration.RegisterProviders(Configuration, services);
+            ServiceRegistration.RegisterProviders(services);
 
             services.AddAutoMapper(MappingRegistration.RegisterMappers);
+
+            return services.BuildServiceProvider();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app,
             IHostingEnvironment env,
+            IServiceProvider serviceProvider,
             ILoggerFactory loggerFactory,
             IDomainEventHandlers domainEventHandlers,
             IMessageSubscriberFactory messageSubscriberFactory)
         {
             domainEventHandlers.Initialise();
             messageSubscriberFactory.Initialise();
+
 
             loggerFactory.AddLog4Net();
 

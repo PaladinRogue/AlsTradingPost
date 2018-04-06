@@ -22,7 +22,8 @@ namespace Common.Setup
 	        {
 	            var logger = sp.GetRequiredService<ILogger<DefaultRabbitMqPersistentConnection>>();
 
-	            var messageBusSettings = sp.GetRequiredService<IOptions<MessagingBusSettings>>().Value;
+	            var messageBusSettingsAccessor = sp.GetRequiredService<IOptions<MessagingBusSettings>>();
+	            MessagingBusSettings messageBusSettings = messageBusSettingsAccessor.Value;
 
                 ConnectionFactory factory = new ConnectionFactory
 	            {

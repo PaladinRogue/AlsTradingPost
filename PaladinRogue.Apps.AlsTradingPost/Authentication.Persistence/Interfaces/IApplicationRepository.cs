@@ -5,5 +5,6 @@ namespace Authentication.Persistence.Interfaces
 {
     public interface IApplicationRepository : IRepository<Application>
     {
+        Application GetByName(string applicationName);
     }
 }

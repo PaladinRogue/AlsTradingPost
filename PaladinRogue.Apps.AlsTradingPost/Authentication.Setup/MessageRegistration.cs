@@ -10,7 +10,7 @@ namespace Authentication.Setup
 	    {
 		    Common.Setup.MessageRegistration.RegisterRabbitMqMessaging(services);
 
-	        services.AddSingleton<IMessageSubscriber, ApplicationCreatedMessageSubscriber>();
+	        services.AddScoped<IMessageSubscriber, ApplicationCreatedMessageSubscriber>();
 	    }
 	}
 }

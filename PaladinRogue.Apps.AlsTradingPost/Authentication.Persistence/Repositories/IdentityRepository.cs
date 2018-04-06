@@ -63,5 +63,10 @@ namespace Authentication.Persistence.Repositories
                 throw new ConcurrencyDomainException(entity, e);
             }
         }
+
+        public Identity GetByAuthenticationId(string authenticationId)
+        {
+            return _context.Identities.AsNoTracking().FirstOrDefault(a => a.AuthenticationId == authenticationId);
+        }
     }
 }

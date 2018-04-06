@@ -5,5 +5,6 @@ namespace Authentication.Persistence.Interfaces
 {
     public interface IIdentityRepository : IRepository<Identity>
     {
+        Identity GetByAuthenticationId(string authenticationId);
     }
 }

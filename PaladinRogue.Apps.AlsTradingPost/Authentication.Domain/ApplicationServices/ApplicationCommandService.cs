@@ -35,8 +35,8 @@ namespace Authentication.Domain.ApplicationServices
             }
             catch (Exception e)
             {
-                _logger.LogCritical(e, "Unable to create admin");
-                throw new DomainException("Unable to create admin");
+                _logger.LogCritical(e, "Unable to create application");
+                throw new DomainException("Unable to create application");
             }
         }
 
@@ -50,13 +50,13 @@ namespace Authentication.Domain.ApplicationServices
             }
             catch (ConcurrencyDomainException e)
             {
-                _logger.LogCritical(e, "Unable to update admin");
+                _logger.LogCritical(e, "Unable to update application");
                 throw;
             }
             catch (Exception e)
             {
-                _logger.LogCritical(e, "Unable to update admin");
-                throw new DomainException("Unable to update admin");
+                _logger.LogCritical(e, "Unable to update application");
+                throw new DomainException("Unable to update application");
             }
         }
     }

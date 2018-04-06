@@ -63,5 +63,10 @@ namespace Authentication.Persistence.Repositories
                 throw new ConcurrencyDomainException(entity, e);
             }
         }
-    }
+
+	    public Application GetByName(string name)
+	    {
+	        return _context.Applications.AsNoTracking().FirstOrDefault(a => a.Name == name);
+        }
+	}
 }
