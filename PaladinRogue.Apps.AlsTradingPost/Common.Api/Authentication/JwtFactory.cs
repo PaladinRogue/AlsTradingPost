@@ -2,38 +2,54 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Common.Api.Authentication.Constants;
+using Common.Api.Factories.Interfaces;
+using Common.Api.Resource.Interfaces;
 using Microsoft.Extensions.Options;
 
 namespace Common.Api.Authentication
 {
 	public class JwtFactory : IJwtFactory
 	{
-		private readonly JwtIssuerOptions _jwtOptions;
+		private readonly JwtIssuerOptions _jwtIssuerOptions;
+		private readonly IClaimsFactory _claimsFactory;
 
-		public JwtFactory(IOptions<JwtIssuerOptions> jwtOptions)
+		public JwtFactory(IOptions<JwtIssuerOptions> jwtOptions, IClaimsFactory claimsFactory)
 		{
-			_jwtOptions = jwtOptions.Value;
-			ThrowIfInvalidOptions(_jwtOptions);
-		}
+		    _claimsFactory = claimsFactory;
+		    _jwtIssuerOptions = jwtOptions.Value;
 
-		public async Task<string> GenerateEncodedToken(ClaimsIdentity identity)
+			ThrowIfInvalidOptions(_jwtIssuerOptions);
+	    }
+
+	    public async Task<T> GenerateJwt<T>(Guid id) where T : IJwtResource
+	    {
+	        T jwt = Activator.CreateInstance<T>();
+
+	        jwt.AuthToken = await GenerateEncodedToken(_claimsFactory.GenerateClaimsIdentity(id));
+	        jwt.ExpiresIn = (int) _jwtIssuerOptions.ValidFor.TotalSeconds;
+
+	        return jwt;
+	    }
+
+        private async Task<string> GenerateEncodedToken(ClaimsIdentity identity)
 		{
 			var claims = new[]
 			{
 				identity.FindFirst(JwtRegisteredClaimNames.Sub),
-				new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
-				new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
-				identity.FindFirst(JwtConstants.Strings.ClaimIdentifiers.AccessToken)
-			};
+				new Claim(JwtRegisteredClaimNames.Jti, await _jwtIssuerOptions.JtiGenerator()),
+				new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtIssuerOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
+                identity.FindFirst(JwtClaimIdentifiers.Rol)
+            };
 
 			// Create the JWT security token and encode it.
-			var jwt = new JwtSecurityToken(
-				issuer: _jwtOptions.Issuer,
-				audience: _jwtOptions.Audience,
-				claims: claims,
-				notBefore: _jwtOptions.NotBefore,
-				expires: _jwtOptions.Expiration,
-				signingCredentials: _jwtOptions.SigningCredentials);
+		    var jwt = new JwtSecurityToken(
+		        issuer: _jwtIssuerOptions.Issuer,
+		        audience: _jwtIssuerOptions.Audience,
+		        claims: claims,
+		        notBefore: _jwtIssuerOptions.NotBefore,
+		        expires: _jwtIssuerOptions.Expiration,
+		        signingCredentials: _jwtIssuerOptions.SigningCredentials);
 
 			var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
@@ -55,9 +71,9 @@ namespace Common.Api.Authentication
 				throw new ArgumentException("Must be a non-zero TimeSpan.", nameof(JwtIssuerOptions.ValidFor));
 			}
 
-			if (options.SigningCredentials == null)
+			if (options.SigningKey == null)
 			{
-				throw new ArgumentNullException(nameof(JwtIssuerOptions.SigningCredentials));
+				throw new ArgumentNullException(nameof(JwtIssuerOptions.SigningKey));
 			}
 
 			if (options.JtiGenerator == null)

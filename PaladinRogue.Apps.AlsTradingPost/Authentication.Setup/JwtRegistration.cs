@@ -13,11 +13,9 @@ namespace Authentication.Setup
 		{
 		    AppSettings appSettings = new AppSettings();
 		    IConfigurationSection appSettingsSection = configuration.GetSection(nameof(AppSettings));
+            appSettingsSection.Bind(appSettings);
 
-		    appSettingsSection.Bind(appSettings);
-		    services.Configure<AppSettings>(appSettingsSection);
-
-            services.AddSingleton<IJwtFactory, JwtFactory>();
+            services.AddScoped<IJwtFactory, JwtFactory>();
             
 			IConfigurationSection jwtAppSettingOptions = configuration.GetSection(nameof(JwtIssuerOptions));
 
@@ -28,6 +26,5 @@ namespace Authentication.Setup
 				options.SigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(appSettings.Secret));
 			});
 		}
-		
     }
 }

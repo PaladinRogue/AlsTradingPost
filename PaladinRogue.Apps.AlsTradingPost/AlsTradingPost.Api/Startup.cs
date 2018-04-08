@@ -1,7 +1,13 @@
-﻿using AlsTradingPost.Setup;
+﻿using System;
+using AlsTradingPost.Api.Factories;
+using AlsTradingPost.Setup;
+using AlsTradingPost.Setup.Settings;
 using AutoMapper;
+using Common.Api.Factories.Interfaces;
 using Common.Api.Filters;
 using Common.Api.Formatters;
+using Common.Api.Providers;
+using Common.Api.Providers.Interfaces;
 using Common.Api.Settings;
 using Common.Resources.Logging;
 using Common.Setup.Settings;
@@ -29,7 +35,7 @@ namespace AlsTradingPost.Api
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(UseCustomJsonOutputFormatter);
 
@@ -39,18 +45,23 @@ namespace AlsTradingPost.Api
                 options.Filters.Add(new ConcurrencyActionFilter());
             });
 
+            services.AddScoped<IClaimsFactory, ClaimsFactory>();
+            services.AddScoped<IIdentityProvider, IdentityProvider>();
+
             services.Configure<ProxySettings>(Configuration.GetSection(nameof(ProxySettings)));
             services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
             services.Configure<MessagingBusSettings>(Configuration.GetSection(nameof(MessagingBusSettings)));
-            services.Configure<MessagingBusSettings>(Configuration.GetSection(nameof(MessagingBusSettings)));
-            
+            services.Configure<FacebookSettings>(Configuration.GetSection(nameof(FacebookSettings)));
+
+            JwtRegistration.RegisterOptions(Configuration, services);
             EventRegistration.RegisterHandlers(services);
             MessageRegistration.RegisterSubscribers(services);
-
             ServiceRegistration.RegisterServices(Configuration, services);
             ServiceRegistration.RegisterProviders(Configuration, services);
 
             services.AddAutoMapper(MappingRegistration.RegisterMappers);
+
+            return services.BuildServiceProvider();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +80,7 @@ namespace AlsTradingPost.Api
 
             MiddlewareRegistration.Register(app);
 
+            app.UseAuthentication();
             app.UseMvc();
         }
 

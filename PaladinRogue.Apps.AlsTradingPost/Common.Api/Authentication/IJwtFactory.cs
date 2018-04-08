@@ -1,10 +1,11 @@
-﻿using System.Security.Claims;
+﻿using System;
 using System.Threading.Tasks;
+using Common.Api.Resource.Interfaces;
 
 namespace Common.Api.Authentication
 {
     public interface IJwtFactory
-	{
-		Task<string> GenerateEncodedToken(ClaimsIdentity identity);
-	}
+    {
+        Task<T> GenerateJwt<T>(Guid id) where T : IJwtResource;
+    }
 }

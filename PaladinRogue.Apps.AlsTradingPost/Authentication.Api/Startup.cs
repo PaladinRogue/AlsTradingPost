@@ -1,10 +1,10 @@
 ﻿using System;
 using Authentication.Api.Factories;
-using Authentication.Api.Factories.Interfaces;
 using Common.Api.Formatters;
 using Authentication.Setup;
 using Authentication.Setup.Settings;
 using AutoMapper;
+using Common.Api.Factories.Interfaces;
 using Common.Api.Filters;
 using Common.Api.Settings;
 using Common.Domain.DomainEvents.Interfaces;
