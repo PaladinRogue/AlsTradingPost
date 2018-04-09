@@ -24,43 +24,62 @@ namespace AlsTradingPost.Persistence.Repositories
 
         public Admin GetById(Guid id)
         {
-            return _context.Admins.AsNoTracking().FirstOrDefault(a => a.Id == id);
+            try
+            {
+                return _context.Admins.AsNoTracking().SingleOrDefault(a => a.Id == id);
+            }
+            catch (InvalidOperationException)
+            {
+                throw new DomainException("Multiple entites exist with given Id");
+            }
         }
 
-        public void Add(Admin admin)
+        public Admin GetSingle(Predicate<Admin> predicate)
         {
-            _context.Admins.Add(admin);
+            try
+            {
+                return _context.Admins.AsNoTracking().SingleOrDefault(a => predicate(a));
+            }
+            catch (InvalidOperationException)
+            {
+                throw new DomainException($"Multiple entites exist which match given predicate ({ predicate })");
+            }
+        }
+
+        public void Add(Admin entity)
+        {
+            _context.Admins.Add(entity);
 
             _context.SaveChanges();
         }
 
-        public void Update(Admin obj)
+        public void Update(Admin entity)
         {
             try
             {
-                _context.Admins.Update(obj);
+                _context.Admins.Update(entity);
 
                 _context.SaveChanges();
             }
             catch (DbUpdateConcurrencyException e)
             {
-                throw new ConcurrencyDomainException(obj, e);
+                throw new ConcurrencyDomainException(entity, e);
             }
         }
 
         public void Delete(Guid id)
         {
-            var admin = GetById(id);
+            Admin entity = GetById(id);
 
             try
             {
-                _context.Admins.Remove(admin);
+                _context.Admins.Remove(entity);
 
                 _context.SaveChanges();
             }
             catch (DbUpdateConcurrencyException e)
             {
-                throw new ConcurrencyDomainException(admin, e);
+                throw new ConcurrencyDomainException(entity, e);
             }
         }
     }

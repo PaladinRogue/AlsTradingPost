@@ -5,6 +5,5 @@ namespace Authentication.Domain.Persistence
 {
     public interface IIdentityRepository : IRepository<Identity>
     {
-        Identity GetByAuthenticationId(string authenticationId);
     }
 }

@@ -41,9 +41,7 @@ namespace Common.Api.Authentication
 	    /// </summary>
 	    public TimeSpan ValidFor { get; set; } = TimeSpan.FromMinutes(120);
 
-
-
-	    /// <summary>
+        /// <summary>
 	    /// "jti" (JWT ID) Claim (default ID is a GUID)
 	    /// </summary>
 	    public Func<Task<string>> JtiGenerator =>
@@ -54,9 +52,9 @@ namespace Common.Api.Authentication
 	    /// </summary>
 	    public SymmetricSecurityKey SigningKey { get; set; }
 
-	    /// <summary>
-	    /// The signing key to use when generating tokens.
-	    /// </summary>
-	    public SigningCredentials SigningCredentials => new SigningCredentials(SigningKey, SecurityAlgorithms.HmacSha256);
-	}
+        /// <summary>
+        /// The signing key to use when generating tokens.
+        /// </summary>
+        public SigningCredentials SigningCredentials { get; set; }
+    }
 }

@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Authentication.Api.FacebookModels;
-using Authentication.Api.Factories.Interfaces;
 using Authentication.Api.Request;
+using Authentication.Api.Resources;
 using Authentication.Application.Identity.Interfaces;
 using Authentication.Application.Identity.Models;
 using Authentication.Setup.Settings;
 using Common.Api.Authentication;
 using Common.Api.Exceptions;
 using Common.Api.Factories.Interfaces;
-using Common.Api.Helpers;
-using Common.Api.Resource;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -23,30 +21,30 @@ namespace Authentication.Api.Controllers
 	{
 		private readonly FacebookAuthSettings _fbAuthSettings;
 		private readonly IJwtFactory _jwtFactory;
-		private readonly IClaimsFactory _claimsFactory;
-		private readonly JwtIssuerOptions _jwtOptions;
 		private readonly IHttpClientFactory _httpClientFactory;
 		private readonly IIdentityApplicationService _identityApplicationService;
 		private readonly ILogger<FacebookAuthController> _logger;
+	    private readonly IEncryptionFactory _encryptionFactory;
+	    private readonly JwtIssuerOptions _jwtIssuerOptions;
 
-		public FacebookAuthController(IOptions<FacebookAuthSettings> fbAuthSettingsAccessor,
-			IOptions<JwtIssuerOptions> jwtOptionsAccessor,
-			IJwtFactory jwtFactory,
-			IHttpClientFactory httpClientFactory,
-			IIdentityApplicationService identityApplicationService,
-			IClaimsFactory claimsFactory,
-			ILogger<FacebookAuthController> logger)
-		{
-			_fbAuthSettings = fbAuthSettingsAccessor.Value;
-			_jwtFactory = jwtFactory;
-			_jwtOptions = jwtOptionsAccessor.Value;
-			_httpClientFactory = httpClientFactory;
-			_identityApplicationService = identityApplicationService;
-			_claimsFactory = claimsFactory;
-			_logger = logger;
-		}
+	    public FacebookAuthController(IOptions<FacebookAuthSettings> fbAuthSettingsAccessor,
+	        IJwtFactory jwtFactory,
+	        IHttpClientFactory httpClientFactory,
+	        IIdentityApplicationService identityApplicationService,
+	        ILogger<FacebookAuthController> logger,
+	        IEncryptionFactory encryptionFactory,
+	        IOptions<JwtIssuerOptions> jwtIssuerOptionsAccessor)
+	    {
+	        _fbAuthSettings = fbAuthSettingsAccessor.Value;
+	        _jwtFactory = jwtFactory;
+	        _httpClientFactory = httpClientFactory;
+	        _identityApplicationService = identityApplicationService;
+	        _logger = logger;
+	        _encryptionFactory = encryptionFactory;
+	        _jwtIssuerOptions = jwtIssuerOptionsAccessor.Value;
+	    }
 
-		[HttpPost]
+	    [HttpPost]
 		public async Task<IActionResult> Post([FromBody] FacebookAuthRequestDto request)
 		{
 			var appAccessTokenResponse = 
@@ -68,9 +66,11 @@ namespace Authentication.Api.Controllers
 				AuthenticationId = userAccessTokenValidation.Data.UserId.ToString()
 			});
 
-			JwtResource jwt = await Tokens.GenerateJwt(_claimsFactory.GenerateClaimsIdentity(identity.Id, request.AccessToken), _jwtFactory, _jwtOptions);
+		    FacebookJwtResource jwt = await _jwtFactory.GenerateJwt<FacebookJwtResource>(identity.Id);
 
-			return new ObjectResult(jwt);
+		    jwt.AccessToken = _encryptionFactory.Enrypt(request.AccessToken, _jwtIssuerOptions.SigningKey);
+
+            return new ObjectResult(jwt);
 		}
 	}
 }

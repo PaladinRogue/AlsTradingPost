@@ -30,7 +30,7 @@ namespace Common.Api.Filters
 
                 if(concurrencyValue == null) throw new PreConditionFailedException();
 
-                object resourceObj = context.ActionArguments.Values.OfType<IVersionedRequest>().FirstOrDefault();
+                object resourceObj = context.ActionArguments.Values.OfType<IVersionedRequest>().SingleOrDefault();
                 if (resourceObj == null) throw new Exception("Request object does not implement IVersionedRequest");
 
                 var resource = (IVersionedRequest)resourceObj;

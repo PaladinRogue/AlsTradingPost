@@ -24,7 +24,26 @@ namespace Authentication.Persistence.Repositories
 
         public Identity GetById(Guid id)
         {
-            return _context.Identities.AsNoTracking().FirstOrDefault(a => a.Id == id);
+            try
+            {
+                return _context.Identities.AsNoTracking().SingleOrDefault(a => a.Id == id);
+            }
+            catch (InvalidOperationException)
+            {
+                throw new DomainException("Multiple entites exist with given Id");
+            }
+        }
+
+        public Identity GetSingle(Predicate<Identity> predicate)
+        {
+            try
+            {
+                return _context.Identities.AsNoTracking().SingleOrDefault(a => predicate(a));
+            }
+            catch (InvalidOperationException)
+            {
+                throw new DomainException($"Multiple entites exist which match given predicate ({ predicate })");
+            }
         }
 
         public void Add(Identity entity)
@@ -50,7 +69,7 @@ namespace Authentication.Persistence.Repositories
 
         public void Delete(Guid id)
         {
-            var entity = GetById(id);
+            Identity entity = GetById(id);
 
             try
             {
@@ -62,11 +81,6 @@ namespace Authentication.Persistence.Repositories
             {
                 throw new ConcurrencyDomainException(entity, e);
             }
-        }
-
-        public Identity GetByAuthenticationId(string authenticationId)
-        {
-            return _context.Identities.AsNoTracking().FirstOrDefault(a => a.AuthenticationId == authenticationId);
         }
     }
 }

@@ -13,21 +13,21 @@ namespace Authentication.Setup
 		{
 		    AppSettings appSettings = new AppSettings();
 		    IConfigurationSection appSettingsSection = configuration.GetSection(nameof(AppSettings));
+            appSettingsSection.Bind(appSettings);
 
-		    appSettingsSection.Bind(appSettings);
-		    services.Configure<AppSettings>(appSettingsSection);
-
-            services.AddSingleton<IJwtFactory, JwtFactory>();
+            services.AddScoped<IJwtFactory, JwtFactory>();
             
 			IConfigurationSection jwtAppSettingOptions = configuration.GetSection(nameof(JwtIssuerOptions));
 
-			services.Configure<JwtIssuerOptions>(options =>
+		    SymmetricSecurityKey signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(appSettings.Secret));
+
+            services.Configure<JwtIssuerOptions>(options =>
 			{
 				options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
 				options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
-				options.SigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(appSettings.Secret));
-			});
+				options.SigningKey = signingKey;
+			    options.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+            });
 		}
-		
     }
 }

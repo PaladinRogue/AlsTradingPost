@@ -24,10 +24,29 @@ namespace Authentication.Persistence.Repositories
 
         public Application GetById(Guid id)
         {
-            return _context.Applications.AsNoTracking().FirstOrDefault(a => a.Id == id);
+            try
+            {
+                return _context.Applications.AsNoTracking().SingleOrDefault(a => a.Id == id);
+            }
+            catch (InvalidOperationException)
+            {
+                throw new DomainException("Multiple entites exist with given Id");
+            }
         }
 
-        public void Add(Application entity)
+	    public Application GetSingle(Predicate<Application> predicate)
+	    {
+	        try
+	        {
+	            return _context.Applications.AsNoTracking().SingleOrDefault(a => predicate(a));
+	        }
+	        catch (InvalidOperationException)
+	        {
+	            throw new DomainException($"Multiple entites exist which match given predicate ({ predicate })");
+	        }
+	    }
+
+	    public void Add(Application entity)
         {
             _context.Applications.Add(entity);
 
@@ -50,7 +69,7 @@ namespace Authentication.Persistence.Repositories
 
         public void Delete(Guid id)
         {
-            var entity = GetById(id);
+            Application entity = GetById(id);
 
             try
             {
@@ -62,11 +81,6 @@ namespace Authentication.Persistence.Repositories
             {
                 throw new ConcurrencyDomainException(entity, e);
             }
-        }
-
-	    public Application GetByName(string name)
-	    {
-	        return _context.Applications.AsNoTracking().FirstOrDefault(a => a.Name == name);
         }
 	}
 }
