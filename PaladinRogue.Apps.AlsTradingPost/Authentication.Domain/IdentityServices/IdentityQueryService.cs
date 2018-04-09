@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Authentication.Domain.IdentityServices.Interfaces;
 using Authentication.Domain.IdentityServices.Models;
 using Authentication.Domain.Models;
@@ -21,9 +20,7 @@ namespace Authentication.Domain.IdentityServices
 
 		public IdentityProjection GetByAuthenticationId(string authenticationId)
 		{
-			var identity = _identityRepository.Get().FirstOrDefault(entity => entity.AuthenticationId == authenticationId);
-
-			return _mapper.Map<Identity, IdentityProjection>(identity);
+			return _mapper.Map<Identity, IdentityProjection>(_identityRepository.GetByAuthenticationId(authenticationId));
 		}
 
 		public IdentityProjection Get(Guid id)

@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Authentication.Application.Application;
+using Common.Messaging.Message.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Authentication.Setup
 {
@@ -6,7 +8,9 @@ namespace Authentication.Setup
     {
 	    public static void RegisterSubscribers(IServiceCollection services)
 	    {
-		    Common.Setup.MessageRegistration.RegisterMessaging(services);
+		    Common.Setup.MessageRegistration.RegisterRabbitMqMessaging(services);
+
+	        services.AddScoped<IMessageSubscriber, ApplicationCreatedMessageSubscriber>();
 	    }
 	}
 }

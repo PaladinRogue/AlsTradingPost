@@ -2,7 +2,9 @@
 using AutoMapper;
 using Common.Api.Filters;
 using Common.Api.Formatters;
+using Common.Api.Settings;
 using Common.Resources.Logging;
+using Common.Setup.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -37,9 +39,15 @@ namespace AlsTradingPost.Api
                 options.Filters.Add(new ConcurrencyActionFilter());
             });
 
-	        EventRegistration.RegisterHandlers(services);
-			
-			ServiceRegistration.RegisterServices(Configuration, services);
+            services.Configure<ProxySettings>(Configuration.GetSection(nameof(ProxySettings)));
+            services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
+            services.Configure<MessagingBusSettings>(Configuration.GetSection(nameof(MessagingBusSettings)));
+            services.Configure<MessagingBusSettings>(Configuration.GetSection(nameof(MessagingBusSettings)));
+            
+            EventRegistration.RegisterHandlers(services);
+            MessageRegistration.RegisterSubscribers(services);
+
+            ServiceRegistration.RegisterServices(Configuration, services);
             ServiceRegistration.RegisterProviders(Configuration, services);
 
             services.AddAutoMapper(MappingRegistration.RegisterMappers);

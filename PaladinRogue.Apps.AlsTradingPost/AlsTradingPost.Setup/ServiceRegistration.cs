@@ -32,11 +32,10 @@ namespace AlsTradingPost.Setup
             services.AddScoped<IPlayerRepository, PlayerRepository>();
             services.AddScoped<ICharacterRepository, CharacterRepository>();
             services.AddScoped<IItemRepository, ItemRepository>();
-            
-              services.AddDbContext<AlsTradingPostDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("Default")));
-	        services.AddScoped<ITransactionFactory, TransactionFactory>();
-		}
+
+            services.AddDbContext<AlsTradingPostDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Default")));
+            services.AddScoped<ITransactionFactory, TransactionFactory>();
+        }
 
         public static void RegisterProviders(IConfiguration configuration, IServiceCollection services)
         {

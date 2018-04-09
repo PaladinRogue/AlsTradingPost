@@ -1,5 +1,4 @@
-﻿using System;
-using AlsTradingPost.Application.Admin.Models;
+﻿using AlsTradingPost.Application.Admin.Models;
 using AlsTradingPost.Domain.AdminServices.Models;
 using AutoMapper;
 

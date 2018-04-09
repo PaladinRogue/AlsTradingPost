@@ -10,10 +10,12 @@ namespace Authentication.Persistence
         }
         
         public DbSet<Identity> Identities { get; set; }
-
+        
+        public DbSet<Application> Applications { get; set; }
+		
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("dbo");
         }
-    }
+	}
 }

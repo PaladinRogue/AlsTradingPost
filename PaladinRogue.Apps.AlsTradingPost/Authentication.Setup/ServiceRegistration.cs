@@ -1,5 +1,7 @@
 ﻿using Authentication.Application.Identity;
 using Authentication.Application.Identity.Interfaces;
+using Authentication.Domain.ApplicationServices;
+using Authentication.Domain.ApplicationServices.Interfaces;
 using Authentication.Domain.IdentityServices;
 using Authentication.Domain.IdentityServices.Interfaces;
 using Authentication.Persistence;
@@ -20,7 +22,8 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Authentication.Setup
 {
     public class ServiceRegistration
-    {public static void RegisterServices(IConfiguration configuration, IServiceCollection services)
+    {
+        public static void RegisterServices(IConfiguration configuration, IServiceCollection services)
         {
 	        services.AddSingleton<IEncryptionFactory, EncryptionFactory>();
 	        services.AddSingleton<IHttpClientFactory, HttpClientFactory>();
@@ -34,11 +37,17 @@ namespace Authentication.Setup
 
 			services.AddScoped<IIdentityRepository, IdentityRepository>();
 
-            services.AddDbContext<AuthenticationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Default")));
+			services.AddScoped<IApplicationQueryService, ApplicationQueryService>();
+			services.AddScoped<IApplicationCommandService, ApplicationCommandService>();
+
+			services.AddScoped<IApplicationRepository, ApplicationRepository>();
+
+            services.AddEntityFrameworkSqlServer().AddOptions()
+                .AddDbContext<AuthenticationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Default")));
 	        services.AddScoped<ITransactionFactory, TransactionFactory>();
 		}
 
-        public static void RegisterProviders(IConfiguration configuration, IServiceCollection services)
+        public static void RegisterProviders(IServiceCollection services)
         {
             services.AddSingleton<IConcurrencyVersionProvider, ConcurrencyVersionProvider>();
         }
