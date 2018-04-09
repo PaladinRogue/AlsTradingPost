@@ -1,6 +1,6 @@
 ﻿using Common.Domain.Models.Interfaces;
 
-namespace AlsTradingPost.Persistence.Interfaces
+namespace AlsTradingPost.Domain.Persistence
 {
     public interface IAuditRepository
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Common.Persistence.Interfaces
+namespace Common.Domain.Persistence
 {
     public interface IRepository<T>
     {

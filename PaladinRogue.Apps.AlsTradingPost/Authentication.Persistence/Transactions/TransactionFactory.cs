@@ -1,8 +1,7 @@
-﻿using Authentication.Persistence;
-using Common.Resources.Transactions;
+﻿using Common.Resources.Transactions;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace Authentication.Setup.Transactions
+namespace Authentication.Persistence.Transactions
 {
     public class TransactionFactory : ITransactionFactory
     {

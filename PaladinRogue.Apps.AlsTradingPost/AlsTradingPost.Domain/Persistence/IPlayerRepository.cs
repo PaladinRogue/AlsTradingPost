@@ -1,7 +1,7 @@
 ﻿using AlsTradingPost.Domain.Models;
-using Common.Persistence.Interfaces;
+using Common.Domain.Persistence;
 
-namespace AlsTradingPost.Persistence.Interfaces
+namespace AlsTradingPost.Domain.Persistence
 {
     public interface IPlayerRepository : IRepository<Player>
     {

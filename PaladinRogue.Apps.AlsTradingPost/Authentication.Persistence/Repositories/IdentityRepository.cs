@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Authentication.Domain.Models;
-using Authentication.Persistence.Interfaces;
+using Authentication.Domain.Persistence;
 using Common.Domain.Exceptions;
 using Microsoft.EntityFrameworkCore;
 

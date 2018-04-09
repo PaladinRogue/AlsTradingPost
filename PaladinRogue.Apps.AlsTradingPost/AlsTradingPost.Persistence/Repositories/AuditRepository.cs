@@ -1,5 +1,5 @@
 ﻿using AlsTradingPost.Domain.Models;
-using AlsTradingPost.Persistence.Interfaces;
+using AlsTradingPost.Domain.Persistence;
 using Common.Domain.Models.Interfaces;
 
 namespace AlsTradingPost.Persistence.Repositories

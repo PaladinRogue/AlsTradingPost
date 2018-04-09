@@ -2,7 +2,7 @@
 using Authentication.Domain.IdentityServices.Interfaces;
 using Authentication.Domain.IdentityServices.Models;
 using Authentication.Domain.Models;
-using Authentication.Persistence.Interfaces;
+using Authentication.Domain.Persistence;
 using AutoMapper;
 using Common.Domain.Exceptions;
 using Common.Domain.Models;

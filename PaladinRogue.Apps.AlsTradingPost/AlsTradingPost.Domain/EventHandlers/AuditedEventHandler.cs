@@ -1,4 +1,4 @@
-﻿using AlsTradingPost.Persistence.Interfaces;
+﻿using AlsTradingPost.Domain.Persistence;
 using Common.Domain.DomainEvents;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Resources.Transactions;

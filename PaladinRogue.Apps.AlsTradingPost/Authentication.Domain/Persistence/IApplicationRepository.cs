@@ -1,7 +1,7 @@
 ﻿using Authentication.Domain.Models;
-using Common.Persistence.Interfaces;
+using Common.Domain.Persistence;
 
-namespace Authentication.Persistence.Interfaces
+namespace Authentication.Domain.Persistence
 {
     public interface IApplicationRepository : IRepository<Application>
     {

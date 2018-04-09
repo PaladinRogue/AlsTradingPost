@@ -2,7 +2,7 @@
 using AlsTradingPost.Domain.AdminServices.Interfaces;
 using AlsTradingPost.Domain.AdminServices.Models;
 using AlsTradingPost.Domain.Models;
-using AlsTradingPost.Persistence.Interfaces;
+using AlsTradingPost.Domain.Persistence;
 using AutoMapper;
 using Common.Domain.Exceptions;
 using Common.Domain.Models;

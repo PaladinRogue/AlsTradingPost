@@ -2,8 +2,8 @@
 using AlsTradingPost.Application.Admin.Interfaces;
 using AlsTradingPost.Domain.AdminServices;
 using AlsTradingPost.Domain.AdminServices.Interfaces;
+using AlsTradingPost.Domain.Persistence;
 using AlsTradingPost.Persistence;
-using AlsTradingPost.Persistence.Interfaces;
 using AlsTradingPost.Persistence.Repositories;
 using AlsTradingPost.Persistence.Transactions;
 using Common.Domain.ConcurrencyServices;
