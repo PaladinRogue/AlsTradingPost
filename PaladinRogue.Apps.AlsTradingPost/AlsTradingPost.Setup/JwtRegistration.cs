@@ -21,30 +21,45 @@ namespace AlsTradingPost.Setup
             JwtIssuerOptions jwtIssuerOptions = new JwtIssuerOptions();
             IConfigurationSection jwtIssuerOptionsSection = configuration.GetSection(nameof(JwtIssuerOptions));
 
+            JwtAuthenticationIssuerOptions jwtAuthenticationIssuerOptions = new JwtAuthenticationIssuerOptions();
+            IConfigurationSection jwtAuthenticationIssuerOptionsSection = configuration.GetSection(nameof(JwtAuthenticationIssuerOptions));
+
 		    SymmetricSecurityKey signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(appSettings.Secret));
 
             services.Configure<JwtIssuerOptions>(options =>
-			{
-				options.Issuer = jwtIssuerOptions.Issuer;
-				options.Audience = jwtIssuerOptions.Audience;
-				options.SigningKey = signingKey;
+            {
+                options.Issuer = jwtIssuerOptionsSection[nameof(JwtIssuerOptions.Issuer)];
+                options.Audience = jwtIssuerOptionsSection[nameof(JwtIssuerOptions.Audience)];
+                options.SigningKey = signingKey;
 			    options.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
             });
 
 		    jwtIssuerOptionsSection.Bind(jwtIssuerOptions);
+
+		    SymmetricSecurityKey authenticationSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(appSettings.AuthenticationSecret));
+
+            services.Configure<JwtAuthenticationIssuerOptions>(options =>
+            {
+                options.Issuer = jwtAuthenticationIssuerOptionsSection[nameof(JwtIssuerOptions.Issuer)];
+                options.Audience = jwtAuthenticationIssuerOptionsSection[nameof(JwtIssuerOptions.Audience)];
+                options.SigningKey = authenticationSigningKey;
+			    options.SigningCredentials = new SigningCredentials(authenticationSigningKey, SecurityAlgorithms.HmacSha256);
+            });
+
+		    jwtAuthenticationIssuerOptionsSection.Bind(jwtAuthenticationIssuerOptions);
             
 		    services.AddScoped<IJwtFactory, JwtFactory>();
 
             TokenValidationParameters tokenValidationParameters = new TokenValidationParameters
 		    {
 		        ValidateIssuer = true,
-		        ValidIssuer = jwtIssuerOptions.Issuer,
+		        ValidIssuer = jwtAuthenticationIssuerOptions.Issuer,
 
 		        ValidateAudience = true,
-		        ValidAudience = jwtIssuerOptions.Audience,
+		        ValidAudience = jwtAuthenticationIssuerOptions.Audience,
 
 		        ValidateIssuerSigningKey = true,
-		        IssuerSigningKey = signingKey,
+		        IssuerSigningKey = authenticationSigningKey,
 
 		        RequireExpirationTime = false,
 		        ValidateLifetime = true,
@@ -58,14 +73,14 @@ namespace AlsTradingPost.Setup
 
 		    }).AddJwtBearer(configureOptions =>
 		    {
-		        configureOptions.ClaimsIssuer = jwtIssuerOptions.Issuer;
+		        configureOptions.ClaimsIssuer = jwtAuthenticationIssuerOptions.Issuer;
 		        configureOptions.TokenValidationParameters = tokenValidationParameters;
 		        configureOptions.SaveToken = true;
 		    });
             
 		    services.AddAuthorization(options =>
 		    {
-		        options.AddPolicy("AppAccess", policy => policy.RequireClaim(JwtClaimIdentifiers.Rol, JwtClaims.AppAccess));
+		        options.AddPolicy(JwtClaims.AppAccess, policy => policy.RequireClaim(JwtClaimIdentifiers.Rol, JwtClaims.AppAccess));
 		    });
         }
     }

@@ -34,9 +34,7 @@ namespace AlsTradingPost.Api.Controllers
             _jwtOptions = jwtOptionsAccessor.Value;
             _fbSettings = fbSettingsAccessor.Value;
         }
-
-
-        [Authorize(Policy = "AppAccess")]
+        
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]FacebookAuthRequestDto request)
         {
@@ -55,9 +53,9 @@ namespace AlsTradingPost.Api.Controllers
 //                AuthenticationId = userAccessTokenValidation.Data.UserId.ToString()
 //            });
 
-            IJwtResource jwt = await _jwtFactory.GenerateJwt<JwtResource>(_identityProvider.Id);
+//            IJwtResource jwt = await _jwtFactory.GenerateJwt<JwtResource>(_identityProvider.Id);
 
-            return new ObjectResult(jwt);
+            return new ObjectResult("Ok");
         }
     }
 }
