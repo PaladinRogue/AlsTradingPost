@@ -1,11 +1,10 @@
 ﻿using System;
 using Authentication.Api.Factories;
-using Common.Api.Formatters;
 using Authentication.Setup;
 using Authentication.Setup.Settings;
 using AutoMapper;
+using Common.Api.Extensions;
 using Common.Api.Factories.Interfaces;
-using Common.Api.Filters;
 using Common.Api.Settings;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Messaging.Message.Interfaces;
@@ -14,13 +13,10 @@ using Common.Setup.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using MappingRegistration = Authentication.Api.Mappings.MappingRegistration;
 
 namespace Authentication.Api
@@ -37,12 +33,13 @@ namespace Authentication.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(UseCustomJsonOutputFormatter);
+            services.AddMvc();
 
             services.Configure<MvcOptions>(options =>
             {
-                options.Filters.Add(new RequireHttpsAttribute());
-                options.Filters.Add(new ConcurrencyActionFilter());
+                options.UseCustomJsonOutputFormatter()
+                    .UseConcurrencyFilter()
+                    .RequireHttps();
             });
 
             services.AddSingleton<IClaimsFactory, ClaimsFactory>();
@@ -73,8 +70,7 @@ namespace Authentication.Api
         {
             domainEventHandlers.Initialise();
             messageSubscriberFactory.Initialise();
-
-
+            
             loggerFactory.AddLog4Net();
 
             if (env.IsDevelopment())
@@ -89,20 +85,6 @@ namespace Authentication.Api
             MiddlewareRegistration.Register(app);
 
             app.UseMvc();
-        }
-
-        public static void UseCustomJsonOutputFormatter(MvcOptions options)
-        {
-            // Remove any json output formatter 
-            options.OutputFormatters.RemoveType<JsonOutputFormatter>();
-
-            // Add custom json output formatter 
-            var jsonSerializerSettings = new JsonSerializerSettings
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
-            options.OutputFormatters.Add(new CustomJsonOutputFormatter(jsonSerializerSettings,
-                System.Buffers.ArrayPool<char>.Shared));
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using Common.Api.Authentication;
 using Common.Api.Authentication.Constants;
@@ -53,13 +54,24 @@ namespace AlsTradingPost.Setup
             TokenValidationParameters tokenValidationParameters = new TokenValidationParameters
 		    {
 		        ValidateIssuer = true,
-		        ValidIssuer = jwtAuthenticationIssuerOptions.Issuer,
+		        ValidIssuers = new List<string>
+		        {
+		            jwtIssuerOptions.Issuer,
+                    jwtAuthenticationIssuerOptions.Issuer
+                },
 
 		        ValidateAudience = true,
-		        ValidAudience = jwtAuthenticationIssuerOptions.Audience,
+		        ValidAudiences = new List<string> {
+		            jwtIssuerOptions.Audience,
+		            jwtAuthenticationIssuerOptions.Audience
+                },
 
 		        ValidateIssuerSigningKey = true,
-		        IssuerSigningKey = authenticationSigningKey,
+		        IssuerSigningKeys = new List<SecurityKey>
+		        {
+		            signingKey,
+		            authenticationSigningKey
+                },
 
 		        RequireExpirationTime = false,
 		        ValidateLifetime = true,
@@ -73,7 +85,6 @@ namespace AlsTradingPost.Setup
 
 		    }).AddJwtBearer(configureOptions =>
 		    {
-		        configureOptions.ClaimsIssuer = jwtAuthenticationIssuerOptions.Issuer;
 		        configureOptions.TokenValidationParameters = tokenValidationParameters;
 		        configureOptions.SaveToken = true;
 		    });

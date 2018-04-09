@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace Common.Api.Filters
 {
-    public class AuthorizeControllerFilter : IControllerModelConvention
+    public class AuthorizeAppAccessControllerFilter : IControllerModelConvention
     {
         public void Apply(ControllerModel controller)
         {
