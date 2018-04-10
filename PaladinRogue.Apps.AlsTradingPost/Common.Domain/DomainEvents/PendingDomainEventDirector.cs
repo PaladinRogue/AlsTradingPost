@@ -3,18 +3,18 @@ using Common.Domain.DomainEvents.Interfaces;
 
 namespace Common.Domain.DomainEvents
 {
-    public class DomainEvents : IDomainEvents
+    public class PendingDomainEventDirector : IPendingDomainEventContainer, IPendingDomainEventProvider
     {
 	    private readonly IList<IDomainEvent> _domainEvents;
 
-	    public DomainEvents()
+	    public PendingDomainEventDirector()
 	    {
-		    _domainEvents = new List<IDomainEvent>();
+	        _domainEvents = new List<IDomainEvent>();
 	    }
 
-	    public void Raise(IDomainEvent domainEvent)
+	    public void Add(IDomainEvent domainEvent)
 	    {
-		    _domainEvents.Add(domainEvent);
+	        _domainEvents.Add(domainEvent);
 		}
 
 	    public IEnumerable<IDomainEvent> GetAll()

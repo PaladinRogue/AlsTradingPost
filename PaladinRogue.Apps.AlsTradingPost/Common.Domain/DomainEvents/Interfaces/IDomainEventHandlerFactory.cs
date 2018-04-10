@@ -1,6 +1,6 @@
 ﻿namespace Common.Domain.DomainEvents.Interfaces
 {
-    public interface IDomainEventHandlers
+    public interface IDomainEventHandlerFactory
     {
 	    void Initialise();
     }

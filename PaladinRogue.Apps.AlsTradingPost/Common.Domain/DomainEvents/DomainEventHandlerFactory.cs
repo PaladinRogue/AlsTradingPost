@@ -1,31 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using Common.Domain.DomainEvents.Interfaces;
+
 namespace Common.Domain.DomainEvents
 {
-	public static class DomainEventHandlerFactory
-	{
-		private static IDictionary<Type, IList<Delegate>> _domainEventTypeHandlers;
+	public class DomainEventHandlerFactory : IDomainEventHandlerFactory
+    {
+	    private readonly IEnumerable<IDomainEventHandler> _handlers;
 
-		public static IEnumerable<Delegate> GetAllOfType(Type type)
-		{
-			return _domainEventTypeHandlers.ContainsKey(type) ? _domainEventTypeHandlers[type] : new List<Delegate>();
-		}
+	    public DomainEventHandlerFactory(IEnumerable<IDomainEventHandler> handlers)
+	    {
+	        _handlers = handlers;
+	    }
 
-		public static void Register<T>(Action<T> handler)
-		{
-			if (_domainEventTypeHandlers == null)
-			{
-				_domainEventTypeHandlers = new Dictionary<Type, IList<Delegate>>();
-			}
-
-			if (!_domainEventTypeHandlers.ContainsKey(typeof(T)))
-			{
-				_domainEventTypeHandlers.Add(typeof(T), new List<Delegate> {handler});
-			}
-			else
-			{
-				_domainEventTypeHandlers[typeof(T)].Add(handler);
-			}
-		}
-	}
+	    public void Initialise()
+	    {
+	        foreach (IDomainEventHandler messageSubscriber in _handlers)
+	        {
+	            messageSubscriber.Register();
+	        }
+	    }
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common.Messaging.Message.Interfaces;
+using Common.Resources;
 
 namespace Message.Broker.Messages.Interfaces
 {

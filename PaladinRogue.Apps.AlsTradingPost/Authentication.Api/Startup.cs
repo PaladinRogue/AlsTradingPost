@@ -65,10 +65,10 @@ namespace Authentication.Api
             IHostingEnvironment env,
             IServiceProvider serviceProvider,
             ILoggerFactory loggerFactory,
-            IDomainEventHandlers domainEventHandlers,
+            IDomainEventHandlerFactory domainEventHandlerFactory,
             IMessageSubscriberFactory messageSubscriberFactory)
         {
-            domainEventHandlers.Initialise();
+            domainEventHandlerFactory.Initialise();
             messageSubscriberFactory.Initialise();
             
             loggerFactory.AddLog4Net();
