@@ -43,20 +43,13 @@ namespace AlsTradingPost.Application.User
             return _mapper.Map<IList<UserSummaryProjection>, IList<UserSummaryAdto>>(_userQueryService.GetAll());
         }
 
-        public UserAdto Create(CreateUserAdto user)
-        {
-            var newUser = _mapper.Map<CreateUserAdto, CreateUserDdto>(user);
-
-            return _mapper.Map<UserProjection, UserAdto>(_userCommandService.Create(newUser));
-        }
-
         public UserAdto Update(UpdateUserAdto user)
         {
             try
             {
                 _concurrencyQueryService.CheckConcurrency(user.Id, user.Version);
 
-                var updatedUser = _mapper.Map<UpdateUserAdto, UpdateUserDdto>(user);
+                UpdateUserDdto updatedUser = _mapper.Map<UpdateUserAdto, UpdateUserDdto>(user);
 
                 return _mapper.Map<UserProjection, UserAdto>(_userCommandService.Update(updatedUser));
             }

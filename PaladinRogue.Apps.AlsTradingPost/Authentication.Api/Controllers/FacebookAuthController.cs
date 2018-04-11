@@ -7,6 +7,7 @@ using Authentication.Application.Identity.Interfaces;
 using Authentication.Application.Identity.Models;
 using Authentication.Setup.Settings;
 using Common.Api.Authentication;
+using Common.Api.Authentication.FacebookModels;
 using Common.Api.Exceptions;
 using Common.Api.Factories.Interfaces;
 using Microsoft.AspNetCore.Mvc;

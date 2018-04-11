@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using AlsTradingPost.Api.Request.Admin;
 using AlsTradingPost.Api.Resources.Admin;
+using AlsTradingPost.Api.Templates.Admin;
 using AlsTradingPost.Application.Admin.Interfaces;
 using AlsTradingPost.Application.Admin.Models;
 using AutoMapper;
@@ -38,15 +38,15 @@ namespace AlsTradingPost.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]CreateAdminRequestDto request)
+        public IActionResult Post([FromBody]CreateAdminTemplate request)
         {
             return new ObjectResult(
-                _mapper.Map<AdminAdto, AdminResource>(_adminApplicationService.Create(_mapper.Map<CreateAdminRequestDto, CreateAdminAdto>(request)))
+                _mapper.Map<AdminAdto, AdminResource>(_adminApplicationService.Create(_mapper.Map<CreateAdminTemplate, CreateAdminAdto>(request)))
             ); 
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put([FromBody]UpdateAdminRequestDto request, Guid id)
+        public IActionResult Put([FromBody]UpdateAdminTemplate request, Guid id)
         {
             return new ObjectResult(
                 _mapper.Map<AdminAdto, AdminResource>(_adminApplicationService.Update(_mapper.Map(request, new UpdateAdminAdto

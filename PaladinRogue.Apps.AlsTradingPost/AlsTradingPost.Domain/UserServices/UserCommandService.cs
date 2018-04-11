@@ -7,7 +7,6 @@ using AlsTradingPost.Domain.UserServices.Models;
 using AutoMapper;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Domain.Exceptions;
-using Common.Domain.Models;
 using Microsoft.Extensions.Logging;
 
 namespace AlsTradingPost.Domain.UserServices
@@ -28,25 +27,6 @@ namespace AlsTradingPost.Domain.UserServices
             _mapper = mapper;
             _logger = logger;
             _pendingDomainEventContainer = pendingDomainEventContainer;
-        }
-
-        public UserProjection Create(CreateUserDdto entity)
-        {
-            try
-            {
-                User newUser = _mapper.Map(entity, EntityFactory.CreateEntity<User>());
-
-                _userRepository.Add(newUser);
-
-                _pendingDomainEventContainer.Add(UserCreatedDomainEvent.Create(newUser));
-
-                return _mapper.Map<User, UserProjection>(_userRepository.GetById(newUser.Id));
-            }
-            catch (Exception e)
-            {
-                _logger.LogCritical(e, "Unable to create user");
-                throw new DomainException("Unable to create user");
-            }
         }
 
         public UserProjection Update(UpdateUserDdto entity)

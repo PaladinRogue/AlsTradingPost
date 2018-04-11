@@ -1,5 +1,5 @@
 ﻿
-namespace Authentication.Api.FacebookModels
+namespace Common.Api.Authentication.FacebookModels
 {
     public class FacebookUserAccessTokenValidation
     {

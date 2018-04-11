@@ -2,6 +2,7 @@
 {
     public class FacebookSettings
     {
-        public string GraphEndpoint { get; set; }
+        public string AccessTokenValidationEndpoint { get; set; }
+        public string DataEndpoint { get; set; }
     }
 }

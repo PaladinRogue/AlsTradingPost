@@ -1,5 +1,5 @@
-﻿using AlsTradingPost.Api.Request.Admin;
-using AlsTradingPost.Api.Resources.Admin;
+﻿using AlsTradingPost.Api.Resources.Admin;
+using AlsTradingPost.Api.Templates.Admin;
 using AlsTradingPost.Application.Admin.Models;
 using AutoMapper;
 
@@ -10,8 +10,8 @@ namespace AlsTradingPost.Api.Mappings
         public AdminApiMappingProfile()
         {
             CreateMap<AdminAdto, AdminResource>();
-            CreateMap<CreateAdminRequestDto, CreateAdminAdto>();
-            CreateMap<UpdateAdminRequestDto, UpdateAdminAdto>();
+            CreateMap<CreateAdminTemplate, CreateAdminAdto>();
+            CreateMap<UpdateAdminTemplate, UpdateAdminAdto>();
         }
     }
 }

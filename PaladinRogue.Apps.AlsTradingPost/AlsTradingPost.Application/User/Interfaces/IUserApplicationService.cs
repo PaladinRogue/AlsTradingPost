@@ -8,7 +8,6 @@ namespace AlsTradingPost.Application.User.Interfaces
     {
         UserAdto Get(Guid id);
         IList<UserSummaryAdto> GetAll();
-        UserAdto Create(CreateUserAdto admin);
         UserAdto Update(UpdateUserAdto admin);
     }
 }
