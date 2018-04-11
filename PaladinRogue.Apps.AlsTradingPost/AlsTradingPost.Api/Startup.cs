@@ -8,6 +8,7 @@ using Common.Api.Factories.Interfaces;
 using Common.Api.Providers;
 using Common.Api.Providers.Interfaces;
 using Common.Api.Settings;
+using Common.Domain.DomainEvents.Interfaces;
 using Common.Resources.Logging;
 using Common.Setup.Settings;
 using Microsoft.AspNetCore.Builder;
@@ -63,8 +64,13 @@ namespace AlsTradingPost.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app,
+            IHostingEnvironment env,
+            ILoggerFactory loggerFactory,
+            IDomainEventHandlerFactory domainEventHandlerFactory)
         {
+            domainEventHandlerFactory.Initialise();
+
             loggerFactory.AddLog4Net();
 
             if (env.IsDevelopment())
