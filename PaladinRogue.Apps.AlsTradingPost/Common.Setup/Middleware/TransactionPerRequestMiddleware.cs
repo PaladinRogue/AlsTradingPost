@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using Common.Domain.DomainEvents.Interfaces;
+using Common.Messaging.Message.Interfaces;
 using Common.Resources.Transactions;
 using Microsoft.AspNetCore.Http;
 
@@ -23,7 +24,7 @@ namespace Common.Setup.Middleware
 			_next = next;
 		}
 
-		public async Task Invoke(HttpContext context, ITransactionFactory transactionFactory, IDomainEventDispatcher domainEventDispatcher)
+		public async Task Invoke(HttpContext context, ITransactionFactory transactionFactory, IDomainEventDispatcher domainEventDispatcher, IMessageDispatcher messageDispatcher)
 		{
 			ITransaction transaction = transactionFactory.Create();
 
@@ -34,6 +35,8 @@ namespace Common.Setup.Middleware
 				await domainEventDispatcher.DispatchEventsAsync();
 
 				transaction.Commit();
+
+			    await messageDispatcher.DispatchMessagesAsync();
 			}
 			else
 			{

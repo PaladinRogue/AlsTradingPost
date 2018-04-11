@@ -11,7 +11,7 @@ namespace Common.Messaging.Message.Interfaces
             where TH : IMessageSubscriber<T>;
 
         void Unsubscribe<T, TH>()
-            where TH : IMessageSubscriber<T>
-            where T : IMessage;
+            where T : IMessage
+            where TH : IMessageSubscriber<T>;
     }
 }

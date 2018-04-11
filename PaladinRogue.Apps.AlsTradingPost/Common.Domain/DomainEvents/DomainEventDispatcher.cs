@@ -5,20 +5,19 @@ namespace Common.Domain.DomainEvents
 {
 	public class DomainEventDispatcher : IDomainEventDispatcher
 	{
-		private readonly IDomainEvents _domainEvents;
+	    private readonly IPendingDomainEventProvider _pendingDomainEventProvider;
+	    private readonly IDomainEventBus _domainEventBus;
 
-		public DomainEventDispatcher(IDomainEvents domainEvents)
-		{
-			_domainEvents = domainEvents;
-		}
+        public DomainEventDispatcher(IDomainEventBus domainEventBus, IPendingDomainEventProvider pendingDomainEventProvider)
+        {
+            _domainEventBus = domainEventBus;
+            _pendingDomainEventProvider = pendingDomainEventProvider;
+        }
 
 		public async Task DispatchEventsAsync()
 		{
-			foreach (IDomainEvent domainEvent in _domainEvents.GetAll())
-			{
-				await Task.Run(() => Parallel.ForEach(DomainEventHandlerFactory.GetAllOfType(domainEvent.GetType()),
-					domainEventHandler => { domainEventHandler.DynamicInvoke(domainEvent); }));
-			}
-		}
+		    await Task.Run(() => Parallel.ForEach(_pendingDomainEventProvider.GetAll(),
+		        message => { _domainEventBus.Publish(message); }));
+        }
 	}
 }

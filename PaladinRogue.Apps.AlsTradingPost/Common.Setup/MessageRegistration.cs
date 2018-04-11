@@ -60,8 +60,10 @@ namespace Common.Setup
 	        });
 
             services.AddSingleton<IMessageSubscriberFactory, MessageSubscriberFactory>();
-		    services.AddScoped<IPendingMessageContainer, PendingMessageDirector>();
-		    services.AddScoped<IPendingMessageProvider>(p => p.GetRequiredService<PendingMessageDirector>());
+
+	        PendingMessageDirector pendingMessageDirector = new PendingMessageDirector();
+            services.AddScoped<IPendingMessageContainer>(sp => pendingMessageDirector);
+		    services.AddScoped<IPendingMessageProvider>(sp => pendingMessageDirector);
 			services.AddScoped<IMessageDispatcher, MessageDispatcher>();
 	    }
     }

@@ -5,28 +5,25 @@ using Common.Resources.Transactions;
 
 namespace AlsTradingPost.Domain.EventHandlers
 {
-    public class AuditedEventHandler : IDomainEventHandler<IAuditedEvent>, IDomainEventHandler
+    public class AuditedEventHandler : DomainEventHandler<IAuditedEvent, AuditedEventHandler>
     {
         private readonly ITransactionFactory _transactionFactory;
         private readonly IAuditRepository _auditRepository;
 
-        public AuditedEventHandler(ITransactionFactory transactionFactory, IAuditRepository auditRepository)
+        public AuditedEventHandler(ITransactionFactory transactionFactory, IAuditRepository auditRepository,
+            IDomainEventBus domainEventBus) : base(domainEventBus)
         {
             _transactionFactory = transactionFactory;
             _auditRepository = auditRepository;
         }
-        public void Handle(IAuditedEvent domainEvent)
+
+        public override void Handle(IAuditedEvent domainEvent)
         {
-            using (var transaction = _transactionFactory.Create())
+            using (ITransaction transaction = _transactionFactory.Create())
             {
                 _auditRepository.AuditEntity(domainEvent.Entity);
                 transaction.Commit();
             }
-        }
-
-        public void Register()
-        {
-            DomainEventHandlerFactory.Register<IAuditedEvent>(Handle);
         }
     }
 }
