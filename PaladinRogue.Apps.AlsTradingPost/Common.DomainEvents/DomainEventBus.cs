@@ -16,7 +16,7 @@ namespace DomainEvent.Broker
 
         public void Publish(IDomainEvent domainEvent)
         {
-            Task.FromResult(ProcessDomainEvent(domainEvent.GetType().Name, domainEvent));
+            Task.FromResult(ProcessDomainEvent(domainEvent.GetType(), domainEvent));
         }
 
         public void Subscribe<T, TH>(Action<T> handler) where T : IDomainEvent where TH : IDomainEventHandler<T>
@@ -29,15 +29,12 @@ namespace DomainEvent.Broker
             _domainEventBusSubscriptionsManager.RemoveSubscription<T, TH>();
         }
 
-        private async Task ProcessDomainEvent(string domainEventName, IDomainEvent domainEvent)
+        private async Task ProcessDomainEvent(Type domainEventType, IDomainEvent domainEvent)
         {
-            if (_domainEventBusSubscriptionsManager.HasSubscriptionsForDomainEvent(domainEventName))
-            {
-                var subscriptions = _domainEventBusSubscriptionsManager.GetSubscribersForDomainEvent(domainEventName);
+            var subscriptions = _domainEventBusSubscriptionsManager.GetSubscribersForDomainEvent(domainEventType, domainEventType.IsClass);
 
-                await Task.Run(() => Parallel.ForEach(subscriptions,
-                    subscription => { subscription.Handler.DynamicInvoke(domainEvent); }));
-            }
+            await Task.Run(() => Parallel.ForEach(subscriptions,
+                subscription => { subscription.Handler.DynamicInvoke(domainEvent); }));
         }
 
         public void Dispose()

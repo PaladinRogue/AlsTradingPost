@@ -19,17 +19,22 @@ namespace DomainEvent.Broker
             _handlers = new Dictionary<string, List<Subscription>>();
             _domainEventTypes = new List<Type>();
         }
-
-        public bool IsEmpty => !_handlers.Keys.Any();
-
+        
         public void Clear() => _handlers.Clear();
 
         public void AddSubscription<T, TH>(Action<T> handler)
             where T : IDomainEvent
             where TH : IDomainEventHandler<T>
         {
-            var domainEventKey = GetDomainEventKey<T>();
+            var domainEventKey = _getDomainEventKey<T>();
             _doAddSubscription(typeof(TH), handler, domainEventKey);
+
+            foreach (Type @interface in typeof(T).GetInterfaces())
+            {
+                _doAddSubscription(typeof(TH), handler, @interface.Name);
+                _domainEventTypes.Add(@interface);
+            }
+
             _domainEventTypes.Add(typeof(T));
         }
 
@@ -38,36 +43,51 @@ namespace DomainEvent.Broker
             where TH : IDomainEventHandler<T>
         {
             Subscription subscriptionToRemove = _findSubscriptionToRemove<T, TH>();
-            var domainEventKey = GetDomainEventKey<T>();
+
+            var domainEventKey = _getDomainEventKey<T>();
             _doRemoveSubscription(domainEventKey, subscriptionToRemove);
+
+            foreach (Type @interface in typeof(T).GetInterfaces())
+            {
+                subscriptionToRemove = _dDoFindSubscriptionToRemove(@interface.Name, typeof(TH));
+                _doRemoveSubscription(@interface.Name, subscriptionToRemove);
+            }
         }
 
-        public IEnumerable<Subscription> GetSubscribersForDomainEvent<T>() where T : IDomainEvent
+        public IEnumerable<Subscription> GetSubscribersForDomainEvent(Type domainEventType, bool includeInterfaces = false)
         {
-            var key = GetDomainEventKey<T>();
-            return GetSubscribersForDomainEvent(key);
+            var subscriptions = new List<Subscription>();
+            if (_hasSubscriptionsForDomainEvent(domainEventType.Name))
+            {
+                subscriptions.AddRange(_getSubscribersForDomainEvent(domainEventType.Name));
+            }
+
+            if (includeInterfaces)
+            {
+                foreach (Type @interface in domainEventType.GetInterfaces())
+                {
+                    if (_hasSubscriptionsForDomainEvent(@interface.Name))
+                    {
+                        subscriptions.AddRange(_getSubscribersForDomainEvent(@interface.Name));
+                    }
+                }
+            }
+
+            return subscriptions;
         }
 
-        public IEnumerable<Subscription> GetSubscribersForDomainEvent(string domainEventName) => _handlers[domainEventName];
+        private IEnumerable<Subscription> _getSubscribersForDomainEvent(string domainEventName) => _handlers[domainEventName];
 
-        public bool HasSubscriptionsForDomainEvent<T>() where T : IDomainEvent
-        {
-            var key = GetDomainEventKey<T>();
-            return HasSubscriptionsForDomainEvent(key);
-        }
+        private bool _hasSubscriptionsForDomainEvent(string domainEventName) => _handlers.ContainsKey(domainEventName);
 
-        public bool HasSubscriptionsForDomainEvent(string domainEventName) => _handlers.ContainsKey(domainEventName);
-
-        public Type GetDomainEventTypeByName(string domainEventName) => _domainEventTypes.SingleOrDefault(t => t.Name == domainEventName);
-
-        public string GetDomainEventKey<T>()
+        private string _getDomainEventKey<T>()
         {
             return typeof(T).Name;
         }
 
         private void _doAddSubscription(Type handlerType, Delegate handler, string domainEventName)
         {
-            if (!HasSubscriptionsForDomainEvent(domainEventName))
+            if (!_hasSubscriptionsForDomainEvent(domainEventName))
             {
                 _handlers.Add(domainEventName, new List<Subscription>());
             }
@@ -108,13 +128,13 @@ namespace DomainEvent.Broker
             where T : IDomainEvent
             where TH : IDomainEventHandler<T>
         {
-            var domainEventKey = GetDomainEventKey<T>();
+            var domainEventKey = _getDomainEventKey<T>();
             return _dDoFindSubscriptionToRemove(domainEventKey, typeof(TH));
         }
 
         private Subscription _dDoFindSubscriptionToRemove(string domainEventName, Type handlerType)
         {
-            if (!HasSubscriptionsForDomainEvent(domainEventName))
+            if (!_hasSubscriptionsForDomainEvent(domainEventName))
             {
                 return null;
             }
