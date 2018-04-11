@@ -1,9 +1,9 @@
 ﻿using AlsTradingPost.Domain.Models;
+using Common.Domain.Persistence;
 
 namespace AlsTradingPost.Domain.Persistence
 {
-    public interface IAuditRepository
+    public interface IUserRepository : IRepository<User>
     {
-        void Add(Audit audit);
     }
 }

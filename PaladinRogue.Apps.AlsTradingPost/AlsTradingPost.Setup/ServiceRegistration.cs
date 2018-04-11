@@ -1,8 +1,14 @@
 ﻿using AlsTradingPost.Application.Admin;
 using AlsTradingPost.Application.Admin.Interfaces;
+using AlsTradingPost.Application.User;
+using AlsTradingPost.Application.User.Interfaces;
 using AlsTradingPost.Domain.AdminServices;
 using AlsTradingPost.Domain.AdminServices.Interfaces;
+using AlsTradingPost.Domain.AuditServices;
+using AlsTradingPost.Domain.AuditServices.Interfaces;
 using AlsTradingPost.Domain.Persistence;
+using AlsTradingPost.Domain.UserServices;
+using AlsTradingPost.Domain.UserServices.Interfaces;
 using AlsTradingPost.Persistence;
 using AlsTradingPost.Persistence.Repositories;
 using AlsTradingPost.Persistence.Transactions;
@@ -21,12 +27,17 @@ namespace AlsTradingPost.Setup
     {
         public static void RegisterServices(IConfiguration configuration, IServiceCollection services)
         {
+            services.AddScoped<IUserApplicationService, UserApplicationService>();
             services.AddScoped<IAdminApplicationService, AdminApplicationService>();
 
             services.AddScoped(typeof(IConcurrencyQueryService<>), typeof(ConcurrencyQueryService<>));
+            services.AddScoped<IAuditCommandService, AuditCommandService>();
+            services.AddScoped<IUserCommandService, UserCommandService>();
+            services.AddScoped<IUserQueryService, UserQueryService>();
             services.AddScoped<IAdminCommandService, AdminCommandService>();
             services.AddScoped<IAdminQueryService, AdminQueryService>();
 
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAuditRepository, AuditRepository>();
             services.AddScoped<IAdminRepository, AdminRepository>();
             services.AddScoped<IPlayerRepository, PlayerRepository>();

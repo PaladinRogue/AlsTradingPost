@@ -1,4 +1,4 @@
-﻿using AlsTradingPost.Domain.EventHandlers;
+﻿using AlsTradingPost.Domain.DomainEvents.Handlers;
 using Common.Domain.DomainEvents.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
