@@ -21,7 +21,7 @@ namespace Common.Domain.Persistence
         T GetSingle(Predicate<T> predicate);
         /// <summary>Adds an entity of type <typeparamref name="T"/>.</summary>
         /// <param name="entity">The entity to add.</param>
-        /// <exception cref="UpdateDomainException">Failed to add <paramref name="entity">entity</paramref>.</exception>
+        /// <exception cref="CreateDomainException">Failed to add <paramref name="entity">entity</paramref>.</exception>
         /// <exception cref="ConcurrencyDomainException">Concurrency check has failed for given <typeparamref name="T">entity</typeparamref>.</exception>
         void Add(T entity);
         /// <summary>Updates an entity of type <typeparamref name="T"/>.</summary>
@@ -31,7 +31,7 @@ namespace Common.Domain.Persistence
         void Update(T entity);
         /// <summary>Deletes an entity of type <typeparamref name="T"/>.</summary>
         /// <param name="id">The id of the entity to delete.</param>
-        /// <exception cref="UpdateDomainException">Failed to delete <paramref name="id">entity</paramref>.</exception>
+        /// <exception cref="DeleteDomainException">Failed to delete <paramref name="id">entity</paramref>.</exception>
         /// <exception cref="ConcurrencyDomainException">Concurrency check has failed for given <typeparamref name="id">entity</typeparamref>.</exception>
         void Delete(Guid id);
     }

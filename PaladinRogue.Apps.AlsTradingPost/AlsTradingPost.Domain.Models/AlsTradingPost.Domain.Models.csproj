@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AlsTradingPost.Resources\AlsTradingPost.Resources.csproj" />
     <ProjectReference Include="..\Common.Domain.Models\Common.Domain.Models.csproj" />
   </ItemGroup>
 

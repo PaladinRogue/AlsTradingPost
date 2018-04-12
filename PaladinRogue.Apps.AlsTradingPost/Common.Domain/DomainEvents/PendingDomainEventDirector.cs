@@ -3,7 +3,7 @@ using Common.Domain.DomainEvents.Interfaces;
 
 namespace Common.Domain.DomainEvents
 {
-    public class PendingDomainEventDirector : IPendingDomainEventContainer, IPendingDomainEventProvider
+    public class PendingDomainEventDirector : IPendingDomainEventDirector
     {
 	    private readonly IList<IDomainEvent> _domainEvents;
 

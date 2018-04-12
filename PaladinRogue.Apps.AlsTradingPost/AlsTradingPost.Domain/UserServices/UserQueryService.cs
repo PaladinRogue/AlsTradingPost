@@ -29,5 +29,10 @@ namespace AlsTradingPost.Domain.UserServices
         {
             return _mapper.Map<IList<User>, IList<UserSummaryProjection>>(_userRepository.Get().ToList());
         }
+
+        public UserProjection GetByIdentityId(Guid identityId)
+        {
+            return _mapper.Map<User, UserProjection>(_userRepository.GetSingle(u => u.IdentityId == identityId));
+        }
     }
 }

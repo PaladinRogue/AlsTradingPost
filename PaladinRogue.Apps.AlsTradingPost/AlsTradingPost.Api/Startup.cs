@@ -5,11 +5,11 @@ using AlsTradingPost.Setup.Settings;
 using AutoMapper;
 using Common.Api.Extensions;
 using Common.Api.Factories.Interfaces;
-using Common.Api.Providers;
-using Common.Api.Providers.Interfaces;
 using Common.Api.Settings;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Resources.Logging;
+using Common.Resources.Providers;
+using Common.Resources.Providers.Interfaces;
 using Common.Setup.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -45,7 +45,7 @@ namespace AlsTradingPost.Api
             });
 
             services.AddScoped<IClaimsFactory, ClaimsFactory>();
-            services.AddScoped<IIdentityProvider, IdentityProvider>();
+            services.AddScoped<ICurrentIdentityProvider, CurrentIdentityProvider>();
 
             services.Configure<ProxySettings>(Configuration.GetSection(nameof(ProxySettings)));
             services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));

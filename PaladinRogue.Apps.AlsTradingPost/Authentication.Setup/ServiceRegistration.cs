@@ -44,7 +44,7 @@ namespace Authentication.Setup
 
             services.AddEntityFrameworkSqlServer().AddOptions()
                 .AddDbContext<AuthenticationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Default")));
-	        services.AddScoped<ITransactionFactory, TransactionFactory>();
+	        services.AddTransient<ITransactionFactory, TransactionFactory>();
 		}
 
         public static void RegisterProviders(IServiceCollection services)

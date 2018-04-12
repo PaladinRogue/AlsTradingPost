@@ -14,9 +14,9 @@ namespace AlsTradingPost.Persistence.Transactions
 
 	    public ITransaction Create()
 	    {
-		    IDbContextTransaction dbContextTransaction = _dbContext.Database.BeginTransaction();
+	        IDbContextTransaction dbContextTransaction = _dbContext.Database.BeginTransaction();
 
-		    return Transaction.Create(dbContextTransaction);
-	    }
+	        return Transaction.Create(dbContextTransaction);
+        }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Common.Api.Authentication.Constants;
 using Common.Api.Factories.Interfaces;
 using Common.Api.Resource.Interfaces;
+using Common.Resources.Authentication;
 using Microsoft.Extensions.Options;
 
 namespace Common.Api.Authentication
@@ -36,11 +37,9 @@ namespace Common.Api.Authentication
 		{
 			var claims = new[]
 			{
-				identity.FindFirst(JwtRegisteredClaimNames.Sub),
 				new Claim(JwtRegisteredClaimNames.Jti, await _jwtIssuerOptions.JtiGenerator()),
-				new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtIssuerOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
-                identity.FindFirst(JwtClaimIdentifiers.Rol)
-            };
+				new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtIssuerOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64)
+            }.Concat(identity.Claims);
 
 			// Create the JWT security token and encode it.
 		    var jwt = new JwtSecurityToken(

@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AlsTradingPost.Domain.Models\AlsTradingPost.Domain.Models.csproj" />
+    <ProjectReference Include="..\AlsTradingPost.Resources\AlsTradingPost.Resources.csproj" />
     <ProjectReference Include="..\Common.Domain.Models\Common.Domain.Models.csproj" />
     <ProjectReference Include="..\Common.Domain\Common.Domain.csproj" />
   </ItemGroup>
