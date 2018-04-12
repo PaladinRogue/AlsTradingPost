@@ -54,8 +54,8 @@ namespace Common.Api.Factories
 
 		    if (fullCipher == null || fullCipher.Length <= 0)
 			    throw new ArgumentNullException(nameof(cipherText));
-
-		    string plaintext;
+            
+            string plaintext;
 		    var keyBytes = securityKey.Key;
 
 		    using (Aes aesAlg = Aes.Create())
@@ -67,7 +67,7 @@ namespace Common.Api.Factories
 
 				aesAlg.Key = keyBytes;
 
-				using (MemoryStream msDecrypt = new MemoryStream(fullCipher))
+                using (MemoryStream msDecrypt = new MemoryStream(fullCipher))
 			    {
 				    var iv = new byte[16];
 				    msDecrypt.Read(iv, 0, 16);

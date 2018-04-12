@@ -6,6 +6,7 @@ using AutoMapper;
 using Common.Application;
 using Common.Domain.ConcurrencyServices.Interfaces;
 using Common.Domain.Exceptions;
+using Common.Resources.Exceptions;
 using Microsoft.Extensions.Logging;
 
 namespace Authentication.Application.Identity

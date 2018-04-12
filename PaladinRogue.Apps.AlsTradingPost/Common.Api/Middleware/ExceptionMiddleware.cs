@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Common.Api.Exceptions;
 using Common.Application;
+using Common.Resources.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
@@ -15,7 +16,8 @@ namespace Common.Api.Middleware
         {
             { ExceptionType.None, HttpStatusCode.OK },
             { ExceptionType.Concurrency, HttpStatusCode.PreconditionFailed },
-            { ExceptionType.BadRequest, HttpStatusCode.BadRequest }
+            { ExceptionType.BadRequest, HttpStatusCode.BadRequest },
+            { ExceptionType.Unauthorized, HttpStatusCode.Unauthorized }
         };
 
         private readonly RequestDelegate _next;

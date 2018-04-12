@@ -13,10 +13,8 @@ namespace Common.Setup
 	        services.AddSingleton<IDomainEventBusSubscriptionsManager, InMemoryDomainEventBusSubscriptionsManager>();
             services.AddSingleton<IDomainEventBus, DomainEventBus>();
             services.AddSingleton<IDomainEventHandlerFactory, DomainEventHandlerFactory>();
-
-	        PendingDomainEventDirector pendingDomainEventDirector = new PendingDomainEventDirector();
-	        services.AddScoped<IPendingDomainEventContainer>(sp => pendingDomainEventDirector);
-	        services.AddScoped<IPendingDomainEventProvider>(sp => pendingDomainEventDirector);
+            
+	        services.AddScoped<IPendingDomainEventDirector, PendingDomainEventDirector>();
             services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
         }
     }

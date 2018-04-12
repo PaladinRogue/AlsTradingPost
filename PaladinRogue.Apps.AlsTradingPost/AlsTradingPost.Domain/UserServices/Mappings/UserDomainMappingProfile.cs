@@ -12,6 +12,7 @@ namespace AlsTradingPost.Domain.UserServices.Mappings
         {
             CreateMap<User, UserProjection>()
                 .IncludeBase<IEntity, IVersionedProjection>();
+            CreateMap<CreateUserDdto, User>();
             CreateMap<UpdateUserDdto, User>()
                 .IncludeBase<IVersionedDdto, IEntity>();
         }

@@ -1,6 +1,6 @@
 using System;
 
-namespace Common.Application
+namespace Common.Resources.Exceptions
 {
     public class AppException : Exception
     {

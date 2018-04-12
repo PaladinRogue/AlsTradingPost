@@ -10,6 +10,7 @@ namespace Common.Api.Authentication.FacebookModels
         [JsonProperty("last_name")]
         public string LastName { get; set; }
         public string Locale { get; set; }
+        [JsonProperty("picture")]
         public FacebookPictureData PictureData { get; set; }
     }
 }

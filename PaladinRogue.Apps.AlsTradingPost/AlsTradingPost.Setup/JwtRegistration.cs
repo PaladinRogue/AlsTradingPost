@@ -4,6 +4,7 @@ using System.Text;
 using Common.Api.Authentication;
 using Common.Api.Authentication.Constants;
 using Common.Api.Settings;
+using Common.Resources.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

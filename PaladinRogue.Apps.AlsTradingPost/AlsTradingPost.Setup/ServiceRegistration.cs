@@ -12,11 +12,18 @@ using AlsTradingPost.Domain.UserServices.Interfaces;
 using AlsTradingPost.Persistence;
 using AlsTradingPost.Persistence.Repositories;
 using AlsTradingPost.Persistence.Transactions;
+using AlsTradingPost.Resources.Providers;
+using AlsTradingPost.Resources.Providers.Interfaces;
+using Common.Api.Factories;
+using Common.Api.Factories.Interfaces;
 using Common.Domain.ConcurrencyServices;
 using Common.Domain.ConcurrencyServices.Interfaces;
 using Common.Domain.Providers;
 using Common.Domain.Providers.Interfaces;
+using Common.Resources.Providers;
+using Common.Resources.Providers.Interfaces;
 using Common.Resources.Transactions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +34,9 @@ namespace AlsTradingPost.Setup
     {
         public static void RegisterServices(IConfiguration configuration, IServiceCollection services)
         {
+            services.AddSingleton<IEncryptionFactory, EncryptionFactory>();
+            services.AddSingleton<IHttpClientFactory, HttpClientFactory>();
+
             services.AddScoped<IUserApplicationService, UserApplicationService>();
             services.AddScoped<IAdminApplicationService, AdminApplicationService>();
 
@@ -45,11 +55,15 @@ namespace AlsTradingPost.Setup
             services.AddScoped<IItemRepository, ItemRepository>();
 
             services.AddDbContext<AlsTradingPostDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Default")));
-            services.AddScoped<ITransactionFactory, TransactionFactory>();
+            services.AddTransient<ITransactionFactory, TransactionFactory>();
         }
 
         public static void RegisterProviders(IConfiguration configuration, IServiceCollection services)
         {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<ICurrentIdentityProvider, CurrentIdentityProvider>();
+            services.AddSingleton<ICurrentUserProvider, CurrentUserProvider>();
+
             services.AddSingleton<IConcurrencyVersionProvider, ConcurrencyVersionProvider>();
         }
     }

@@ -7,6 +7,7 @@ using AlsTradingPost.Domain.UserServices.Models;
 using AutoMapper;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Domain.Exceptions;
+using Common.Domain.Models;
 using Microsoft.Extensions.Logging;
 
 namespace AlsTradingPost.Domain.UserServices
@@ -16,30 +17,56 @@ namespace AlsTradingPost.Domain.UserServices
         private readonly ILogger<UserCommandService> _logger;
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
-        private readonly IPendingDomainEventContainer _pendingDomainEventContainer;
+        private readonly IPendingDomainEventDirector _pendingDomainEventDirector;
 
         public UserCommandService(IMapper mapper,
             IUserRepository userRepository,
             ILogger<UserCommandService> logger,
-            IPendingDomainEventContainer pendingDomainEventContainer)
+            IPendingDomainEventDirector pendingDomainEventDirector)
         {
             _userRepository = userRepository;
             _mapper = mapper;
             _logger = logger;
-            _pendingDomainEventContainer = pendingDomainEventContainer;
+            _pendingDomainEventDirector = pendingDomainEventDirector;
         }
 
         public UserProjection Update(UpdateUserDdto entity)
         {
+            User user = null;
             try
             {
-                User user = _mapper.Map<UpdateUserDdto, User>(entity);
+                user = _mapper.Map<UpdateUserDdto, User>(entity);
 
                 _userRepository.Update(user);
 
-                _pendingDomainEventContainer.Add(UserCreatedDomainEvent.Create(user));
+                _pendingDomainEventDirector.Add(UserUpdatedDomainEvent.Create(user));
 
                 return _mapper.Map<User, UserProjection>(_userRepository.GetById(entity.Id));
+            }
+            catch (ConcurrencyDomainException e)
+            {
+                _logger.LogCritical(e, "Unable to update user");
+                throw;
+            }
+            catch (Exception e)
+            {
+                _logger.LogCritical(e, "Unable to update user");
+                throw new UpdateDomainException(user, e);
+            }
+        }
+
+        public UserProjection Create(CreateUserDdto entity)
+        {
+            User user = null;
+            try
+            {
+                user = _mapper.Map(entity, EntityFactory.CreateEntity<User>());
+
+                _userRepository.Add(user);
+
+                _pendingDomainEventDirector.Add(UserCreatedDomainEvent.Create(user));
+
+                return _mapper.Map<User, UserProjection>(_userRepository.GetById(user.Id));
             }
             catch (ConcurrencyDomainException e)
             {
@@ -48,8 +75,8 @@ namespace AlsTradingPost.Domain.UserServices
             }
             catch (Exception e)
             {
-                _logger.LogCritical(e, "Unable to update user");
-                throw new DomainException("Unable to update user");
+                _logger.LogCritical(e, "Unable to create user");
+                throw new UpdateDomainException(user, e);
             }
         }
     }

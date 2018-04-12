@@ -8,8 +8,7 @@ namespace AlsTradingPost.Api.Mappings
     {
         public UserApiMappingProfile()
         {
-            CreateMap<FacebookUserData, UpdateUserAdto>()
-                .ForMember(d => d.KnownAs, opts => opts.MapFrom(s => s.Name))
+            CreateMap<FacebookUserData, FacebookUpdateAdto>()
                 .ForMember(d => d.PictureUrl, opts => opts.MapFrom(s => s.PictureData.Picture.Url));
         }
     }

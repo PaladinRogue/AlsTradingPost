@@ -10,6 +10,7 @@ using Common.Api.Authentication;
 using Common.Api.Authentication.FacebookModels;
 using Common.Api.Exceptions;
 using Common.Api.Factories.Interfaces;
+using Common.Resources.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

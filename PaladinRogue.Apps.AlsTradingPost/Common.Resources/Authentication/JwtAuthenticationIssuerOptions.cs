@@ -1,4 +1,4 @@
-﻿namespace Common.Api.Authentication
+﻿namespace Common.Resources.Authentication
 {
     public class JwtAuthenticationIssuerOptions : JwtIssuerOptions
     {

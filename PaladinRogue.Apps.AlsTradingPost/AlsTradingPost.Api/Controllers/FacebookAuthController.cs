@@ -9,10 +9,9 @@ using Common.Api.Authentication;
 using Common.Api.Authentication.FacebookModels;
 using Common.Api.Exceptions;
 using Common.Api.Factories.Interfaces;
-using Common.Api.Providers.Interfaces;
 using Common.Api.Resource;
 using Common.Api.Resource.Interfaces;
-using Microsoft.AspNetCore.Authorization;
+using Common.Resources.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -25,7 +24,6 @@ namespace AlsTradingPost.Api.Controllers
     {
         private readonly IJwtFactory _jwtFactory;
         private readonly ILogger<FacebookAuthController> _logger;
-        private readonly IIdentityProvider _identityProvider;
         private readonly JwtAuthenticationIssuerOptions _jwtAuthenticationIssuerOptions;
         private readonly FacebookSettings _fbSettings;
         private readonly IUserApplicationService _userApplicationService;
@@ -36,14 +34,12 @@ namespace AlsTradingPost.Api.Controllers
             IJwtFactory jwtFactory,
             IOptions<JwtAuthenticationIssuerOptions> jwtAuthenticationIssuerOptions,
             ILogger<FacebookAuthController> logger,
-            IIdentityProvider identityProvider,
             IUserApplicationService userApplicationService,
             IHttpClientFactory httpClientFactory,
             IEncryptionFactory encryptionFactory)
         {
             _jwtFactory = jwtFactory;
             _logger = logger;
-            _identityProvider = identityProvider;
             _userApplicationService = userApplicationService;
             _httpClientFactory = httpClientFactory;
             _encryptionFactory = encryptionFactory;
@@ -56,9 +52,19 @@ namespace AlsTradingPost.Api.Controllers
         {
             var accessToken = _encryptionFactory.Decrypt<string>(request.AccessToken, _jwtAuthenticationIssuerOptions.SigningKey);
 
-            var userAccessTokenValidationResponse = await _httpClientFactory.GetStringAsync(new Uri(
-                string.Format(_fbSettings.AccessTokenValidationEndpoint, accessToken, accessToken)
-            ));
+            string userAccessTokenValidationResponse;
+
+            try
+            {
+                userAccessTokenValidationResponse = await _httpClientFactory.GetStringAsync(new Uri(
+                    string.Format(_fbSettings.AccessTokenValidationEndpoint, accessToken, accessToken)
+                ));
+            }
+            catch (Exception)
+            {
+                _logger.LogInformation("Invalid facebook token.");
+                throw new BadRequestException("Invalid facebook token.");
+            }
 
             FacebookUserAccessTokenValidation userAccessTokenValidation = JsonConvert.DeserializeObject<FacebookUserAccessTokenValidation>(userAccessTokenValidationResponse);
 
@@ -68,18 +74,16 @@ namespace AlsTradingPost.Api.Controllers
                 throw new BadRequestException("Invalid facebook token.");
             }
 
-            var userInfoResponse = await _httpClientFactory.GetStringAsync(new Uri(
+            var serializedUserData = await _httpClientFactory.GetStringAsync(new Uri(
                 string.Format(_fbSettings.DataEndpoint, accessToken)
             ));
 
-            FacebookUserData userInfo = JsonConvert.DeserializeObject<FacebookUserData>(userInfoResponse);
-            UpdateUserAdto updateUserAdto = Mapper.Map<FacebookUserData, UpdateUserAdto>(userInfo);
+            FacebookUserData userData = JsonConvert.DeserializeObject<FacebookUserData>(serializedUserData);
+            FacebookUpdateAdto facebookUpdateAdto = Mapper.Map<FacebookUserData, FacebookUpdateAdto>(userData);
 
-            updateUserAdto.Id = _identityProvider.Id;
+            Guid userId = _userApplicationService.FacebookUpdate(facebookUpdateAdto);
 
-            UserAdto user = _userApplicationService.Update(updateUserAdto);
-
-            IJwtResource jwt = await _jwtFactory.GenerateJwt<JwtResource>(_identityProvider.Id);
+            IJwtResource jwt = await _jwtFactory.GenerateJwt<JwtResource>(userId);
 
             return new ObjectResult(jwt);
         }

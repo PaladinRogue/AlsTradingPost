@@ -4,10 +4,11 @@ using AlsTradingPost.Application.User.Interfaces;
 using AlsTradingPost.Application.User.Models;
 using AlsTradingPost.Domain.UserServices.Interfaces;
 using AlsTradingPost.Domain.UserServices.Models;
+using AlsTradingPost.Resources;
 using AutoMapper;
-using Common.Application;
-using Common.Domain.ConcurrencyServices.Interfaces;
 using Common.Domain.Exceptions;
+using Common.Resources.Exceptions;
+using Common.Resources.Providers.Interfaces;
 using Microsoft.Extensions.Logging;
 
 namespace AlsTradingPost.Application.User
@@ -18,19 +19,19 @@ namespace AlsTradingPost.Application.User
         private readonly IUserCommandService _userCommandService;
         private readonly IUserQueryService _userQueryService;
         private readonly IMapper _mapper;
-        private readonly IConcurrencyQueryService<IUserQueryService> _concurrencyQueryService;
+        private readonly ICurrentIdentityProvider _currentIdentityProvider;
 
         public UserApplicationService(ILogger<UserApplicationService> logger,
             IMapper mapper,
             IUserCommandService userCommandService,
             IUserQueryService userQueryService,
-            IConcurrencyQueryService<IUserQueryService> concurrencyQueryService)
+            ICurrentIdentityProvider currentIdentityProvider)
         {
             _mapper = mapper;
             _userCommandService = userCommandService;
             _userQueryService = userQueryService;
+            _currentIdentityProvider = currentIdentityProvider;
             _logger = logger;
-            _concurrencyQueryService = concurrencyQueryService;
         }
 
         public UserAdto Get(Guid id)
@@ -43,15 +44,31 @@ namespace AlsTradingPost.Application.User
             return _mapper.Map<IList<UserSummaryProjection>, IList<UserSummaryAdto>>(_userQueryService.GetAll());
         }
 
-        public UserAdto Update(UpdateUserAdto user)
+        public Guid FacebookUpdate(FacebookUpdateAdto user)
         {
             try
             {
-                _concurrencyQueryService.CheckConcurrency(user.Id, user.Version);
+                Guid identityId = _currentIdentityProvider.Id;
+                UserProjection existingUser = _userQueryService.GetByIdentityId(identityId);
 
-                UpdateUserDdto updatedUser = _mapper.Map<UpdateUserAdto, UpdateUserDdto>(user);
+                UserProjection userProjection;
+                if (existingUser == null)
+                {
+                    CreateUserDdto createUserDdto = _mapper.Map<FacebookUpdateAdto, CreateUserDdto>(user);
 
-                return _mapper.Map<UserProjection, UserAdto>(_userCommandService.Update(updatedUser));
+                    createUserDdto.Personas = Persona.Player;
+                    createUserDdto.IdentityId = identityId;
+
+                    userProjection = _userCommandService.Create(createUserDdto);
+                }
+                else
+                {
+                    UpdateUserDdto existingUserDdto = _mapper.Map<UserProjection, UpdateUserDdto>(existingUser);
+                    UpdateUserDdto updateUserDdto = _mapper.Map(user, existingUserDdto);
+                    userProjection = _userCommandService.Update(updateUserDdto);
+                }
+
+                return userProjection.Id;
             }
             catch (ConcurrencyDomainException e)
             {

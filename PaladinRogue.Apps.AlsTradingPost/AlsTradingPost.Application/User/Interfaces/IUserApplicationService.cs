@@ -8,6 +8,6 @@ namespace AlsTradingPost.Application.User.Interfaces
     {
         UserAdto Get(Guid id);
         IList<UserSummaryAdto> GetAll();
-        UserAdto Update(UpdateUserAdto admin);
+        Guid FacebookUpdate(FacebookUpdateAdto admin);
     }
 }

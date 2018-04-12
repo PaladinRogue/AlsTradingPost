@@ -10,6 +10,9 @@ namespace AlsTradingPost.Application.User.Mappings
         {
             CreateMap<UserProjection, UserAdto>();
             CreateMap<UserSummaryProjection, UserSummaryAdto>();
+            CreateMap<FacebookUpdateAdto, CreateUserDdto>();
+            CreateMap<FacebookUpdateAdto, UpdateUserDdto>();
+            CreateMap<UserProjection, UpdateUserDdto>();
         }
     }
 }
