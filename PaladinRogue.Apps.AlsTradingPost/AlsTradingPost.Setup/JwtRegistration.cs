@@ -7,6 +7,7 @@ using Common.Api.Authentication;
 using Common.Api.Authentication.Constants;
 using Common.Api.Settings;
 using Common.Resources.Authentication;
+using Common.Resources.Authentication.Constants;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
