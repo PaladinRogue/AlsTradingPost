@@ -4,8 +4,9 @@ using System.Security.Claims;
 using System.Security.Principal;
 using AlsTradingPost.Application.User.Interfaces;
 using AlsTradingPost.Application.User.Models;
-using AlsTradingPost.Resources.Constants;
+using Common.Api.Authentication.Constants;
 using Common.Api.Factories.Interfaces;
+using JwtClaims = AlsTradingPost.Resources.Constants.JwtClaims;
 
 namespace AlsTradingPost.Api.Factories
 {
@@ -25,7 +26,8 @@ namespace AlsTradingPost.Api.Factories
             return new ClaimsIdentity(new GenericIdentity(id.ToString(), "Token"), new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, id.ToString()),
-                new Claim(JwtClaims.Persona, user.Personas.ToString())
+                new Claim(JwtClaims.Persona, user.Personas.ToString()),
+                new Claim(JwtClaimIdentifiers.Rol, Common.Api.Authentication.Constants.JwtClaims.AppAccess)
             });
         }
     }
