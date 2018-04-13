@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using AlsTradingPost.Resources;
+using AlsTradingPost.Setup.Infrastructure.Authorization;
 using Common.Api.Authentication;
 using Common.Api.Authentication.Constants;
 using Common.Api.Settings;
 using Common.Resources.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -93,7 +96,11 @@ namespace AlsTradingPost.Setup
 		    services.AddAuthorization(options =>
 		    {
 		        options.AddPolicy(JwtClaims.AppAccess, policy => policy.RequireClaim(JwtClaimIdentifiers.Rol, JwtClaims.AppAccess));
+                options.AddPolicy(PersonaPolicies.Admin, policy => policy.Requirements.Add(new HasPersonaRequirement(Persona.Admin)));
+                options.AddPolicy(PersonaPolicies.Player, policy => policy.Requirements.Add(new HasPersonaRequirement(Persona.Player)));
 		    });
+            
+            services.AddSingleton<IAuthorizationHandler, HasPersonaHandler>();
         }
     }
 }

@@ -4,12 +4,15 @@ using AlsTradingPost.Api.Resources.Admin;
 using AlsTradingPost.Api.Templates.Admin;
 using AlsTradingPost.Application.Admin.Interfaces;
 using AlsTradingPost.Application.Admin.Models;
+using AlsTradingPost.Setup.Infrastructure.Authorization;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlsTradingPost.Api.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(PersonaPolicies.Admin)]
     public class AdminController : Controller
     {
         private readonly IMapper _mapper;
