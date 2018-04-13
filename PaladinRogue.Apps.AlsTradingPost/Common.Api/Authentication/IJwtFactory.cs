@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using Common.Api.Resource.Interfaces;
 
@@ -6,6 +6,6 @@ namespace Common.Api.Authentication
 {
     public interface IJwtFactory
     {
-        Task<T> GenerateJwt<T>(Guid id) where T : IJwtResource;
+        Task<T> GenerateJwt<T>(ClaimsIdentity identity) where T : IJwtResource;
     }
 }

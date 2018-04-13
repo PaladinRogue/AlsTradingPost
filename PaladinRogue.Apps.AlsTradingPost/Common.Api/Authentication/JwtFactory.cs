@@ -3,7 +3,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Common.Api.Factories.Interfaces;
 using Common.Api.Resource.Interfaces;
 using Common.Resources.Authentication;
 using Microsoft.Extensions.Options;
@@ -13,21 +12,19 @@ namespace Common.Api.Authentication
 	public class JwtFactory : IJwtFactory
 	{
 		private readonly JwtIssuerOptions _jwtIssuerOptions;
-		private readonly IClaimsFactory _claimsFactory;
 
-		public JwtFactory(IOptions<JwtIssuerOptions> jwtOptions, IClaimsFactory claimsFactory)
+		public JwtFactory(IOptions<JwtIssuerOptions> jwtOptions)
 		{
-		    _claimsFactory = claimsFactory;
 		    _jwtIssuerOptions = jwtOptions.Value;
 
 			ThrowIfInvalidOptions(_jwtIssuerOptions);
 	    }
 
-	    public async Task<T> GenerateJwt<T>(Guid id) where T : IJwtResource
+	    public async Task<T> GenerateJwt<T>(ClaimsIdentity identity) where T : IJwtResource
 	    {
 	        T jwt = Activator.CreateInstance<T>();
 
-	        jwt.AuthToken = await GenerateEncodedToken(_claimsFactory.GenerateClaimsIdentity(id));
+	        jwt.AuthToken = await GenerateEncodedToken(identity);
 	        jwt.ExpiresIn = (int) _jwtIssuerOptions.ValidFor.TotalSeconds;
 
 	        return jwt;
