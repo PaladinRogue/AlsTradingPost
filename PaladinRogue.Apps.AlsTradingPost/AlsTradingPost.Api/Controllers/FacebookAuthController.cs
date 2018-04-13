@@ -29,6 +29,7 @@ namespace AlsTradingPost.Api.Controllers
         private readonly IUserApplicationService _userApplicationService;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IEncryptionFactory _encryptionFactory;
+        private readonly IClaimsFactory _claimsFactory;
 
         public FacebookAuthController(IOptions<FacebookSettings> fbSettingsAccessor,
             IJwtFactory jwtFactory,
@@ -36,13 +37,15 @@ namespace AlsTradingPost.Api.Controllers
             ILogger<FacebookAuthController> logger,
             IUserApplicationService userApplicationService,
             IHttpClientFactory httpClientFactory,
-            IEncryptionFactory encryptionFactory)
+            IEncryptionFactory encryptionFactory,
+            IClaimsFactory claimsFactory)
         {
             _jwtFactory = jwtFactory;
             _logger = logger;
             _userApplicationService = userApplicationService;
             _httpClientFactory = httpClientFactory;
             _encryptionFactory = encryptionFactory;
+            _claimsFactory = claimsFactory;
             _jwtAuthenticationIssuerOptions = jwtAuthenticationIssuerOptions.Value;
             _fbSettings = fbSettingsAccessor.Value;
         }
@@ -60,9 +63,9 @@ namespace AlsTradingPost.Api.Controllers
                     string.Format(_fbSettings.AccessTokenValidationEndpoint, accessToken, accessToken)
                 ));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogInformation("Invalid facebook token.");
+                _logger.LogInformation(ex, "Invalid facebook token.");
                 throw new BadRequestException("Invalid facebook token.");
             }
 
@@ -83,7 +86,7 @@ namespace AlsTradingPost.Api.Controllers
 
             Guid userId = _userApplicationService.FacebookUpdate(facebookUpdateAdto);
 
-            IJwtResource jwt = await _jwtFactory.GenerateJwt<JwtResource>(userId);
+            IJwtResource jwt = await _jwtFactory.GenerateJwt<JwtResource>(_claimsFactory.GenerateClaimsIdentity(userId));
 
             return new ObjectResult(jwt);
         }
