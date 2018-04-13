@@ -7,10 +7,12 @@ using Authentication.Application.Identity.Interfaces;
 using Authentication.Application.Identity.Models;
 using Authentication.Setup.Settings;
 using Common.Api.Authentication;
+using Common.Api.Authentication.Constants;
 using Common.Api.Authentication.FacebookModels;
 using Common.Api.Exceptions;
 using Common.Api.Factories.Interfaces;
 using Common.Resources.Authentication;
+using Common.Resources.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -28,7 +30,6 @@ namespace Authentication.Api.Controllers
 		private readonly ILogger<FacebookAuthController> _logger;
 	    private readonly IEncryptionFactory _encryptionFactory;
 	    private readonly JwtIssuerOptions _jwtIssuerOptions;
-	    private readonly IClaimsFactory _claimsFactory;
 
         public FacebookAuthController(IOptions<FacebookAuthSettings> fbAuthSettingsAccessor,
 	        IJwtFactory jwtFactory,
@@ -36,8 +37,7 @@ namespace Authentication.Api.Controllers
 	        IIdentityApplicationService identityApplicationService,
 	        ILogger<FacebookAuthController> logger,
 	        IEncryptionFactory encryptionFactory,
-	        IOptions<JwtIssuerOptions> jwtIssuerOptionsAccessor,
-            IClaimsFactory claimsFactory)
+	        IOptions<JwtIssuerOptions> jwtIssuerOptionsAccessor)
 	    {
 	        _fbAuthSettings = fbAuthSettingsAccessor.Value;
 	        _jwtFactory = jwtFactory;
@@ -45,7 +45,6 @@ namespace Authentication.Api.Controllers
 	        _identityApplicationService = identityApplicationService;
 	        _logger = logger;
 	        _encryptionFactory = encryptionFactory;
-	        _claimsFactory = claimsFactory;
 	        _jwtIssuerOptions = jwtIssuerOptionsAccessor.Value;
 	    }
 
@@ -71,7 +70,9 @@ namespace Authentication.Api.Controllers
 				AuthenticationId = userAccessTokenValidation.Data.UserId.ToString()
 			});
 
-		    FacebookJwtResource jwt = await _jwtFactory.GenerateJwt<FacebookJwtResource>(_claimsFactory.GenerateClaimsIdentity(identity.Id));
+		    FacebookJwtResource jwt = await _jwtFactory.GenerateJwt<FacebookJwtResource>(
+		        ClaimsBuilder.CreateBuilder().WithSubject(identity.Id).WithRole(JwtClaims.AppAccess).Build()
+            );
 
 		    jwt.AccessToken = _encryptionFactory.Enrypt(request.AccessToken, _jwtIssuerOptions.SigningKey);
 

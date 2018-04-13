@@ -13,7 +13,7 @@ namespace Common.Resources.Extensions
         }
         public static Guid? CurrentSubject(this IHttpContextAccessor httpContextAccessor)
         {
-            Guid.TryParse(httpContextAccessor?.HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value, out Guid subjectId);
+            Guid.TryParse(httpContextAccessor?.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value, out Guid subjectId);
 
             return subjectId == Guid.Empty ? null : (Guid?)subjectId;
         }

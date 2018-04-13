@@ -1,10 +1,8 @@
 ﻿using System;
-using Authentication.Api.Factories;
 using Authentication.Setup;
 using Authentication.Setup.Settings;
 using AutoMapper;
 using Common.Api.Extensions;
-using Common.Api.Factories.Interfaces;
 using Common.Api.Settings;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Messaging.Message.Interfaces;
@@ -41,8 +39,6 @@ namespace Authentication.Api
                     .UseConcurrencyFilter()
                     .RequireHttps();
             });
-
-            services.AddSingleton<IClaimsFactory, ClaimsFactory>();
 
             services.Configure<ProxySettings>(Configuration.GetSection(nameof(ProxySettings)));
             services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));

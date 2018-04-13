@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using AlsTradingPost.Resources;
+using AlsTradingPost.Resources.Constants;
 using Microsoft.AspNetCore.Authorization;
-using JwtClaims = AlsTradingPost.Resources.Constants.JwtClaims;
 
 namespace AlsTradingPost.Setup.Infrastructure.Authorization
 {
@@ -13,7 +13,7 @@ namespace AlsTradingPost.Setup.Infrastructure.Authorization
             if (context.User.HasClaim(c =>
             {
                 Enum.TryParse(c.Value, out Persona persona);
-                return c.Type == JwtClaims.Persona &&
+                return c.Type == JwtClaimIdentifiers.Persona &&
                        persona == requirement.Persona;
             }))
             {

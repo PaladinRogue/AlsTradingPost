@@ -44,7 +44,7 @@ namespace AlsTradingPost.Application.User
             return _mapper.Map<IList<UserSummaryProjection>, IList<UserSummaryAdto>>(_userQueryService.GetAll());
         }
 
-        public Guid FacebookUpdate(FacebookUpdateAdto user)
+        public UserAdto FacebookUpdate(FacebookUpdateAdto user)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace AlsTradingPost.Application.User
                     userProjection = _userCommandService.Update(updateUserDdto);
                 }
 
-                return userProjection.Id;
+                return Mapper.Map<UserProjection, UserAdto>(userProjection);
             }
             catch (ConcurrencyDomainException e)
             {

@@ -8,7 +8,7 @@ namespace AlsTradingPost.Resources.Extensions
     {
         public static Persona CurrentPersonas(this IHttpContextAccessor httpContextAccessor)
         {
-            Enum.TryParse(httpContextAccessor?.HttpContext?.User?.FindFirst(JwtClaims.Persona)?.Value, out Persona personas);
+            Enum.TryParse(httpContextAccessor?.HttpContext?.User?.FindFirst(JwtClaimIdentifiers.Persona)?.Value, out Persona personas);
 
             return personas;
         }

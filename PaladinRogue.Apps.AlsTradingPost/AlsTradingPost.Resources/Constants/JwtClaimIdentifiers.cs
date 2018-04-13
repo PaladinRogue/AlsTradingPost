@@ -1,6 +1,6 @@
 ﻿namespace AlsTradingPost.Resources.Constants
 {
-    public static class JwtClaims
+    public static class JwtClaimIdentifiers
     {
         public const string Persona = "psn";
     }

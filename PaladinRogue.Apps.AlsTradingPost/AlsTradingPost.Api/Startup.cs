@@ -1,10 +1,8 @@
 ﻿using System;
-using AlsTradingPost.Api.Factories;
 using AlsTradingPost.Setup;
 using AlsTradingPost.Setup.Settings;
 using AutoMapper;
 using Common.Api.Extensions;
-using Common.Api.Factories.Interfaces;
 using Common.Api.Settings;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Resources.Logging;
@@ -43,8 +41,7 @@ namespace AlsTradingPost.Api
                     .UseAppAccessAuthorizeFilter()
                     .RequireHttps();
             });
-
-            services.AddScoped<IClaimsFactory, ClaimsFactory>();
+            
             services.AddScoped<ICurrentIdentityProvider, CurrentIdentityProvider>();
 
             services.Configure<ProxySettings>(Configuration.GetSection(nameof(ProxySettings)));

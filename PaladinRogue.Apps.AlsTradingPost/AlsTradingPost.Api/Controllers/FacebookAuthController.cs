@@ -3,9 +3,11 @@ using System.Threading.Tasks;
 using AlsTradingPost.Api.Templates.FacebookAuth;
 using AlsTradingPost.Application.User.Interfaces;
 using AlsTradingPost.Application.User.Models;
+using AlsTradingPost.Resources.Claims;
 using AlsTradingPost.Setup.Settings;
 using AutoMapper;
 using Common.Api.Authentication;
+using Common.Api.Authentication.Constants;
 using Common.Api.Authentication.FacebookModels;
 using Common.Api.Exceptions;
 using Common.Api.Factories.Interfaces;
@@ -29,7 +31,6 @@ namespace AlsTradingPost.Api.Controllers
         private readonly IUserApplicationService _userApplicationService;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IEncryptionFactory _encryptionFactory;
-        private readonly IClaimsFactory _claimsFactory;
 
         public FacebookAuthController(IOptions<FacebookSettings> fbSettingsAccessor,
             IJwtFactory jwtFactory,
@@ -37,15 +38,13 @@ namespace AlsTradingPost.Api.Controllers
             ILogger<FacebookAuthController> logger,
             IUserApplicationService userApplicationService,
             IHttpClientFactory httpClientFactory,
-            IEncryptionFactory encryptionFactory,
-            IClaimsFactory claimsFactory)
+            IEncryptionFactory encryptionFactory)
         {
             _jwtFactory = jwtFactory;
             _logger = logger;
             _userApplicationService = userApplicationService;
             _httpClientFactory = httpClientFactory;
             _encryptionFactory = encryptionFactory;
-            _claimsFactory = claimsFactory;
             _jwtAuthenticationIssuerOptions = jwtAuthenticationIssuerOptions.Value;
             _fbSettings = fbSettingsAccessor.Value;
         }
@@ -53,7 +52,8 @@ namespace AlsTradingPost.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] FacebookAuthTemplate request)
         {
-            var accessToken = _encryptionFactory.Decrypt<string>(request.AccessToken, _jwtAuthenticationIssuerOptions.SigningKey);
+            var accessToken =
+                _encryptionFactory.Decrypt<string>(request.AccessToken, _jwtAuthenticationIssuerOptions.SigningKey);
 
             string userAccessTokenValidationResponse;
 
@@ -69,7 +69,8 @@ namespace AlsTradingPost.Api.Controllers
                 throw new BadRequestException("Invalid facebook token.");
             }
 
-            FacebookUserAccessTokenValidation userAccessTokenValidation = JsonConvert.DeserializeObject<FacebookUserAccessTokenValidation>(userAccessTokenValidationResponse);
+            FacebookUserAccessTokenValidation userAccessTokenValidation =
+                JsonConvert.DeserializeObject<FacebookUserAccessTokenValidation>(userAccessTokenValidationResponse);
 
             if (!userAccessTokenValidation.Data.IsValid)
             {
@@ -84,9 +85,11 @@ namespace AlsTradingPost.Api.Controllers
             FacebookUserData userData = JsonConvert.DeserializeObject<FacebookUserData>(serializedUserData);
             FacebookUpdateAdto facebookUpdateAdto = Mapper.Map<FacebookUserData, FacebookUpdateAdto>(userData);
 
-            Guid userId = _userApplicationService.FacebookUpdate(facebookUpdateAdto);
+            UserAdto userAdto = _userApplicationService.FacebookUpdate(facebookUpdateAdto);
 
-            IJwtResource jwt = await _jwtFactory.GenerateJwt<JwtResource>(_claimsFactory.GenerateClaimsIdentity(userId));
+            IJwtResource jwt = await _jwtFactory.GenerateJwt<JwtResource>(
+                ClaimsBuilder.CreateBuilder().WithPersonas(userAdto.Personas).WithSubject(userAdto.Id).WithRole(JwtClaims.AppAccess).Build()
+            );
 
             return new ObjectResult(jwt);
         }
