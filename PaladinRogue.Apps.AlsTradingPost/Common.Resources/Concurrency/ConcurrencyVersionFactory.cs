@@ -7,8 +7,8 @@ namespace Common.Resources.Concurrency
     {
         public static IConcurrencyVersion CreateFromBase64String(string entityTagValue)
         {
-            var base64EncodedBytes = System.Convert.FromBase64String(entityTagValue);
-            var thing = System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+            byte[] base64EncodedBytes = System.Convert.FromBase64String(entityTagValue);
+            string thing = System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
             return JsonConvert.DeserializeObject<ConcurrencyVersion>(thing);
         }
 

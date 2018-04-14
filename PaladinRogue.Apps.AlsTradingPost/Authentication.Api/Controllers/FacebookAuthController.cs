@@ -51,11 +51,11 @@ namespace Authentication.Api.Controllers
 	    [HttpPost]
 		public async Task<IActionResult> Post([FromBody] FacebookAuthRequestDto request)
 		{
-			var appAccessTokenResponse = 
+			string appAccessTokenResponse = 
 				await _httpClientFactory.GetStringAsync(new Uri(string.Format(_fbAuthSettings.AccessTokenEndpoint, _fbAuthSettings.AppId, _fbAuthSettings.AppSecret)));
 			FacebookAppAccessToken appAccessToken = JsonConvert.DeserializeObject<FacebookAppAccessToken>(appAccessTokenResponse);
 
-			var userAccessTokenValidationResponse = 
+			string userAccessTokenValidationResponse = 
 				await _httpClientFactory.GetStringAsync(new Uri(string.Format(_fbAuthSettings.AccessTokenValidationEndpoint, request.AccessToken, appAccessToken.AccessToken)));
 			FacebookUserAccessTokenValidation userAccessTokenValidation = JsonConvert.DeserializeObject<FacebookUserAccessTokenValidation>(userAccessTokenValidationResponse);
 

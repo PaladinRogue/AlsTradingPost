@@ -11,10 +11,10 @@ namespace Common.Api.Factories
     {
 	    public string Enrypt<T>(T data, SymmetricSecurityKey securityKey)
 	    {
-		    var textToEncode = JsonConvert.SerializeObject(data);
+		    string textToEncode = JsonConvert.SerializeObject(data);
 		    byte[] encrypted;
 
-		    var keyBytes = securityKey.Key;
+		    byte[] keyBytes = securityKey.Key;
 		    
 		    using (Aes aesAlg = Aes.Create())
 		    {
@@ -24,7 +24,7 @@ namespace Common.Api.Factories
 			    }
 
 			    aesAlg.Key = keyBytes;
-			    var iv = aesAlg.IV;
+			    byte[] iv = aesAlg.IV;
 
 			    ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
 
@@ -50,13 +50,13 @@ namespace Common.Api.Factories
 
 	    public T Decrypt<T>(string cipherText, SymmetricSecurityKey securityKey)
 	    {
-		    var fullCipher = Convert.FromBase64String(cipherText);
+		    byte[] fullCipher = Convert.FromBase64String(cipherText);
 
 		    if (fullCipher == null || fullCipher.Length <= 0)
 			    throw new ArgumentNullException(nameof(cipherText));
             
             string plaintext;
-		    var keyBytes = securityKey.Key;
+		    byte[] keyBytes = securityKey.Key;
 
 		    using (Aes aesAlg = Aes.Create())
 			{
@@ -69,7 +69,7 @@ namespace Common.Api.Factories
 
                 using (MemoryStream msDecrypt = new MemoryStream(fullCipher))
 			    {
-				    var iv = new byte[16];
+				    byte[] iv = new byte[16];
 				    msDecrypt.Read(iv, 0, 16);
 				    aesAlg.IV = iv;
 

@@ -45,7 +45,7 @@ namespace AlsTradingPost.Application.Admin
 
         public AdminAdto Create(CreateAdminAdto admin)
         {
-            var newAdmin = _mapper.Map<CreateAdminAdto, CreateAdminDdto>(admin);
+            CreateAdminDdto newAdmin = _mapper.Map<CreateAdminAdto, CreateAdminDdto>(admin);
 
             return _mapper.Map<AdminProjection, AdminAdto>(_adminCommandService.Create(newAdmin));
         }
@@ -56,7 +56,7 @@ namespace AlsTradingPost.Application.Admin
             {
                 _concurrencyQueryService.CheckConcurrency(admin.Id, admin.Version);
 
-                var updatedAdmin = _mapper.Map<UpdateAdminAdto, UpdateAdminDdto>(admin);
+                UpdateAdminDdto updatedAdmin = _mapper.Map<UpdateAdminAdto, UpdateAdminDdto>(admin);
 
                 return _mapper.Map<AdminProjection, AdminAdto>(_adminCommandService.Update(updatedAdmin));
             }

@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Xml;
 using log4net;
+using log4net.Repository;
 using Microsoft.Extensions.Logging;
 
 namespace Common.Resources.Logging.Log4Net
@@ -12,7 +13,7 @@ namespace Common.Resources.Logging.Log4Net
 
         public Log4NetLogger(string name, XmlElement xmlElement)
         {
-            var loggerRepository = LogManager.CreateRepository(Assembly.GetEntryAssembly(), typeof(log4net.Repository.Hierarchy.Hierarchy));
+            ILoggerRepository loggerRepository = LogManager.CreateRepository(Assembly.GetEntryAssembly(), typeof(log4net.Repository.Hierarchy.Hierarchy));
             _log = LogManager.GetLogger(loggerRepository.Name, name);
             log4net.Config.XmlConfigurator.Configure(loggerRepository, xmlElement);
         }
@@ -55,7 +56,7 @@ namespace Common.Resources.Logging.Log4Net
                 throw new ArgumentNullException(nameof(formatter));
             }
 
-            var message =  formatter(state, exception);
+            string message =  formatter(state, exception);
             if (string.IsNullOrEmpty(message) && exception == null) return;
 
             switch (logLevel)

@@ -27,7 +27,7 @@ namespace Authentication.Domain.IdentityServices
         {
             try
             {
-                var newIdentity = _mapper.Map(entity, EntityFactory.CreateEntity<Identity>());
+                Identity newIdentity = _mapper.Map(entity, EntityFactory.CreateEntity<Identity>());
 
                 _identityRepository.Add(newIdentity);
 

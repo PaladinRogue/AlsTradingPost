@@ -28,7 +28,7 @@ namespace Message.Broker.Messages
             where T : IMessage
             where TH : IMessageSubscriber<T>
         {
-            var messageKey = GetMessageKey<T>();
+            string messageKey = GetMessageKey<T>();
             _doAddSubscription(typeof(TH), handler, messageKey);
             _messageTypes.Add(typeof(T));
         }
@@ -38,13 +38,13 @@ namespace Message.Broker.Messages
             where TH : IMessageSubscriber<T>
         {
             Subscription subscriptionToRemove = _findSubscriptionToRemove<T, TH>();
-            var messageKey = GetMessageKey<T>();
+            string messageKey = GetMessageKey<T>();
             _doRemoveSubscription(messageKey, subscriptionToRemove);
         }
 
         public IEnumerable<Subscription> GetSubscribersForMessage<T>() where T : IMessage
         {
-            var key = GetMessageKey<T>();
+            string key = GetMessageKey<T>();
             return GetSubscribersForMessage(key);
         }
 
@@ -52,7 +52,7 @@ namespace Message.Broker.Messages
 
         public bool HasSubscriptionsForMessage<T>() where T : IMessage
         {
-            var key = GetMessageKey<T>();
+            string key = GetMessageKey<T>();
             return HasSubscriptionsForMessage(key);
         }
 
@@ -108,7 +108,7 @@ namespace Message.Broker.Messages
             where T : IMessage
             where TH : IMessageSubscriber<T>
         {
-            var messageKey = GetMessageKey<T>();
+            string messageKey = GetMessageKey<T>();
             return _dDoFindSubscriptionToRemove(messageKey, typeof(TH));
         }
 

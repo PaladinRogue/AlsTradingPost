@@ -33,7 +33,7 @@ namespace Common.Api.Filters
                 object resourceObj = context.ActionArguments.Values.OfType<IVersionedRequest>().SingleOrDefault();
                 if (resourceObj == null) throw new Exception("Request object does not implement IVersionedRequest");
 
-                var resource = (IVersionedRequest)resourceObj;
+                IVersionedRequest resource = (IVersionedRequest)resourceObj;
 
                 resource.Version = ConcurrencyVersionFactory.CreateFromBase64String(concurrencyValue);
             }
@@ -47,8 +47,8 @@ namespace Common.Api.Filters
                 {
                     if (result.Value is IVersionedResource resource)
                     {
-                        var jsonVersion = JsonConvert.SerializeObject(resource.Version);
-                        var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(jsonVersion);
+                        string jsonVersion = JsonConvert.SerializeObject(resource.Version);
+                        byte[] plainTextBytes = System.Text.Encoding.UTF8.GetBytes(jsonVersion);
                         context.HttpContext.Response.Headers[ConcurrencyHeaders.ETag] = Convert.ToBase64String(plainTextBytes);
                     }
                 }

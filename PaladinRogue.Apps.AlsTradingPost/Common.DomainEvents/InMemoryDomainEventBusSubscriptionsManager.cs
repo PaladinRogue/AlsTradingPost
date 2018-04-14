@@ -26,7 +26,7 @@ namespace DomainEvent.Broker
             where T : IDomainEvent
             where TH : IDomainEventHandler<T>
         {
-            var domainEventKey = _getDomainEventKey<T>();
+            string domainEventKey = _getDomainEventKey<T>();
             _doAddSubscription(typeof(TH), handler, domainEventKey);
             _domainEventTypes.Add(typeof(T));
         }
@@ -37,13 +37,13 @@ namespace DomainEvent.Broker
         {
             Subscription subscriptionToRemove = _findSubscriptionToRemove<T, TH>();
 
-            var domainEventKey = _getDomainEventKey<T>();
+            string domainEventKey = _getDomainEventKey<T>();
             _doRemoveSubscription(domainEventKey, subscriptionToRemove);
         }
 
         public IEnumerable<Subscription> GetSubscribersForDomainEvent(Type domainEventType, bool includeInterfaces = false)
         {
-            var subscriptions = new List<Subscription>();
+            List<Subscription> subscriptions = new List<Subscription>();
             if (_hasSubscriptionsForDomainEvent(domainEventType.Name))
             {
                 subscriptions.AddRange(_getSubscribersForDomainEvent(domainEventType.Name));
@@ -115,7 +115,7 @@ namespace DomainEvent.Broker
             where T : IDomainEvent
             where TH : IDomainEventHandler<T>
         {
-            var domainEventKey = _getDomainEventKey<T>();
+            string domainEventKey = _getDomainEventKey<T>();
             return _dDoFindSubscriptionToRemove(domainEventKey, typeof(TH));
         }
 

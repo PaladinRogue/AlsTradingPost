@@ -34,7 +34,7 @@ namespace Authentication.Application.Identity
 
 	    public IdentityAdto Get(GetIdentityAdto identity)
 	    {
-		    var identityProjection = _identityQueryService.GetByAuthenticationId(identity.AuthenticationId) ??
+		    IdentityProjection identityProjection = _identityQueryService.GetByAuthenticationId(identity.AuthenticationId) ??
 		                             _identityCommandService.Create(_mapper.Map<GetIdentityAdto, CreateIdentityDdto>(identity));
 
 		    return _mapper.Map<IdentityProjection, IdentityAdto>(identityProjection);
@@ -46,7 +46,7 @@ namespace Authentication.Application.Identity
             {
                 _concurrencyQueryService.CheckConcurrency(identity.Id, identity.Version);
 
-                var updatedIdentity = _mapper.Map<UpdateIdentityAdto, UpdateIdentityDdto>(identity);
+                UpdateIdentityDdto updatedIdentity = _mapper.Map<UpdateIdentityAdto, UpdateIdentityDdto>(identity);
 
                 return _mapper.Map<IdentityProjection, IdentityAdto>(_identityCommandService.Update(updatedIdentity));
             }

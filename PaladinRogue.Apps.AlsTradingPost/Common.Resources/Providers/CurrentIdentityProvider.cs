@@ -25,7 +25,7 @@ namespace Common.Resources.Providers
             {
                 if (_httpContextAccessor.CurrentIssuer() == _jwtAuthenticationIssuerOptionsAccessor.Issuer)
                 {
-                    var currentUserId = _httpContextAccessor.CurrentSubject();
+                    Guid? currentUserId = _httpContextAccessor.CurrentSubject();
                     if (currentUserId.HasValue)
                     {
                         return currentUserId.Value;

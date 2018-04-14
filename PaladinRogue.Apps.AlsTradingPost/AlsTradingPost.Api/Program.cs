@@ -1,4 +1,5 @@
-﻿using Common.Resources.Authentication;
+﻿using AlsTradingPost.Setup.Infrastructure.DbInitializer;
+using Common.Resources.Authentication;
 using Common.Resources.Extensions;
 using Common.Setup.Extentions;
 using Microsoft.AspNetCore;
@@ -12,6 +13,8 @@ namespace AlsTradingPost.Api
         {
             BuildWebHost(args)
                 .RegisterApplication("AlsTradingPost", AuthenticationProtocol.Facebook)
+                .ApplyMigrations()
+                .SeedData()
                 .Run();
         }
 

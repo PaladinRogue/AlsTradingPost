@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using Common.Messaging.Message.Interfaces;
+using Common.Resources;
 using Message.Broker.Connection.Interfaces;
 using Message.Broker.Messages.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -81,14 +83,14 @@ namespace Message.Broker.Messages
 
             using (IModel channel = _persistentConnection.CreateModel())
             {
-                var messageName = message.GetType().Name;
+                string messageName = message.GetType().Name;
 
                 channel.ExchangeDeclare(
                     exchange: BrokerName,
                     type: "direct");
 
-                var serializedMessage = JsonConvert.SerializeObject(message, _settings);
-                var body = Encoding.UTF8.GetBytes(serializedMessage);
+                string serializedMessage = JsonConvert.SerializeObject(message, _settings);
+                byte[] body = Encoding.UTF8.GetBytes(serializedMessage);
 
                 policy.Execute(() =>
                 {
@@ -103,7 +105,7 @@ namespace Message.Broker.Messages
 
         public void Subscribe<T, TH>(Action<T> handler) where T : IMessage where TH : IMessageSubscriber<T>
         {
-            var messageName = _messageBusSubscriptionsManager.GetMessageKey<T>();
+            string messageName = _messageBusSubscriptionsManager.GetMessageKey<T>();
             DoInternalSubscription(messageName);
             _messageBusSubscriptionsManager.AddSubscription<T, TH>(handler);
         }
@@ -149,8 +151,8 @@ namespace Message.Broker.Messages
             EventingBasicConsumer consumer = new EventingBasicConsumer(channel);
             consumer.Received += async (model, ea) =>
             {
-                var messageKey = ea.RoutingKey;
-                var message = Encoding.UTF8.GetString(ea.Body);
+                string messageKey = ea.RoutingKey;
+                string message = Encoding.UTF8.GetString(ea.Body);
 
                 await ProcessMessage(messageKey, message);
             };
@@ -173,7 +175,7 @@ namespace Message.Broker.Messages
         {
             if (_messageBusSubscriptionsManager.HasSubscriptionsForMessage(messageName))
             {
-                var subscriptions = _messageBusSubscriptionsManager.GetSubscribersForMessage(messageName);
+                IEnumerable<Subscription> subscriptions = _messageBusSubscriptionsManager.GetSubscribersForMessage(messageName);
 
                 await Task.Run(() => Parallel.ForEach(subscriptions,
                     subscription =>

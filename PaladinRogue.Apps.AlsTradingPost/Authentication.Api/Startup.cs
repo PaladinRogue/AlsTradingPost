@@ -74,7 +74,7 @@ namespace Authentication.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            var options = new RewriteOptions()
+            RewriteOptions options = new RewriteOptions()
                 .AddRedirectToHttps();
             app.UseRewriter(options);
 
