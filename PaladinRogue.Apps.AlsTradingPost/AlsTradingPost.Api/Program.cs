@@ -1,7 +1,6 @@
 ﻿using AlsTradingPost.Setup.Infrastructure.DbInitializer;
+using Common.Api.ApplicationRegistration;
 using Common.Resources.Authentication;
-using Common.Resources.Extensions;
-using Common.Setup.Extentions;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 

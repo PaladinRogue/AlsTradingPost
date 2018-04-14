@@ -20,8 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AlsTradingPost.Application\AlsTradingPost.Application.csproj" />
+    <ProjectReference Include="..\AlsTradingPost.Resources\AlsTradingPost.Resources.csproj" />
     <ProjectReference Include="..\AlsTradingPost.Setup\AlsTradingPost.Setup.csproj" />
     <ProjectReference Include="..\Common.Api\Common.Api.csproj" />
+    <ProjectReference Include="..\Common.Setup\Common.Setup.csproj" />
   </ItemGroup>
 
   <ItemGroup>

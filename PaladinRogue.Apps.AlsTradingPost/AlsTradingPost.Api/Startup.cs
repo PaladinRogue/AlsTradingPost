@@ -1,6 +1,6 @@
 ﻿using System;
+using AlsTradingPost.Resources.Settings;
 using AlsTradingPost.Setup;
-using AlsTradingPost.Setup.Settings;
 using AutoMapper;
 using Common.Api.Extensions;
 using Common.Api.Settings;
@@ -16,7 +16,6 @@ using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using MappingRegistration = AlsTradingPost.Api.Mappings.MappingRegistration;
 
 namespace AlsTradingPost.Api
 {
@@ -51,8 +50,12 @@ namespace AlsTradingPost.Api
 
             JwtRegistration.RegisterOptions(Configuration, services);
             EventRegistration.RegisterHandlers(services);
+
             MessageRegistration.RegisterSubscribers(services);
-            ServiceRegistration.RegisterServices(Configuration, services);
+            ServiceRegistration.RegisterApplicationServices(Configuration, services);
+            ServiceRegistration.RegisterDomainServices(Configuration, services);
+            ServiceRegistration.RegisterPersistenceServices(Configuration, services);
+
             ServiceRegistration.RegisterProviders(Configuration, services);
 
             services.AddAutoMapper(MappingRegistration.RegisterMappers);

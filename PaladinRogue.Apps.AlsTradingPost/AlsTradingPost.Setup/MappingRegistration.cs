@@ -1,8 +1,8 @@
-﻿using AlsTradingPost.Application.Admin.Mappings;
-using AlsTradingPost.Application.User.Mappings;
-using AlsTradingPost.Domain.AdminServices.Mappings;
-using AlsTradingPost.Domain.ItemReferenceDataServices.Mappings;
-using AlsTradingPost.Domain.UserServices.Mappings;
+﻿using AlsTradingPost.Application.AdminApplication.Mappings;
+using AlsTradingPost.Application.UserApplication.Mappings;
+using AlsTradingPost.Domain.AdminDomain.Mappings;
+using AlsTradingPost.Domain.ItemReferenceDataDomain.Mappings;
+using AlsTradingPost.Domain.UserDomain.Mappings;
 using AutoMapper;
 using Common.Domain.Mappings;
 
