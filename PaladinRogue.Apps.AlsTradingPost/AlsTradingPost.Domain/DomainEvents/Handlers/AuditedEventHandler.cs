@@ -1,5 +1,5 @@
-﻿using AlsTradingPost.Domain.AuditServices.Interfaces;
-using AlsTradingPost.Domain.AuditServices.Models;
+﻿using AlsTradingPost.Domain.AuditDomain.Interfaces;
+using AlsTradingPost.Domain.AuditDomain.Models;
 using AutoMapper;
 using Common.Domain.DomainEvents;
 using Common.Domain.DomainEvents.Interfaces;

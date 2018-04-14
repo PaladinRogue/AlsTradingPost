@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AlsTradingPost.Api.Templates.FacebookAuth;
-using AlsTradingPost.Application.User.Interfaces;
-using AlsTradingPost.Application.User.Models;
+using AlsTradingPost.Api.FacebookAuth;
+using AlsTradingPost.Application.UserApplication.Interfaces;
+using AlsTradingPost.Application.UserApplication.Models;
 using AlsTradingPost.Resources.Claims;
-using AlsTradingPost.Setup.Settings;
+using AlsTradingPost.Resources.Settings;
 using AutoMapper;
 using Common.Api.Authentication;
 using Common.Api.Authentication.Constants;

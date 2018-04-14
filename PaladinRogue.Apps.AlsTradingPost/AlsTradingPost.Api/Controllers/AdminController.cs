@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using AlsTradingPost.Api.Resources.Admin;
-using AlsTradingPost.Api.Templates.Admin;
-using AlsTradingPost.Application.Admin.Interfaces;
-using AlsTradingPost.Application.Admin.Models;
-using AlsTradingPost.Setup.Infrastructure.Authorization;
+using AlsTradingPost.Api.Admin;
+using AlsTradingPost.Application.AdminApplication.Interfaces;
+using AlsTradingPost.Application.AdminApplication.Models;
+using AlsTradingPost.Resources.Authorization;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
