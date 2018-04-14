@@ -1,6 +1,6 @@
 ﻿using AlsTradingPost.Api.Admin;
 using AlsTradingPost.Api.FacebookAuth;
-using AlsTradingPost.Api.ItemreferenceData;
+using AlsTradingPost.Api.ItemReferenceData;
 using AutoMapper;
 
 namespace AlsTradingPost.Api

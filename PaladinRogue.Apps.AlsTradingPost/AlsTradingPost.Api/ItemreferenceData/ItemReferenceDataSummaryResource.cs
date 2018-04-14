@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AlsTradingPost.Api.ItemreferenceData
+namespace AlsTradingPost.Api.ItemReferenceData
 {
     public class ItemReferenceDataSummaryResource
     {
