@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Common.Api.Authentication;
+using Common.Api.Authentication.Interfaces;
 using Common.Api.Settings;
 using Common.Resources.Authentication;
 using Microsoft.Extensions.Configuration;

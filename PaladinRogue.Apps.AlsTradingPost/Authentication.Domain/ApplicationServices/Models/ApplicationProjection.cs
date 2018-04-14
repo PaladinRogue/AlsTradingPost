@@ -1,4 +1,5 @@
 ﻿using System;
+using Common.Domain.Concurrency;
 using Common.Domain.Models;
 using Common.Resources.Authentication;
 

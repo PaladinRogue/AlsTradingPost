@@ -7,8 +7,8 @@ using AlsTradingPost.Domain.UserServices.Models;
 using AlsTradingPost.Resources;
 using AutoMapper;
 using Common.Domain.Exceptions;
+using Common.Resources.Concurrency.Interfaces;
 using Common.Resources.Exceptions;
-using Common.Resources.Providers.Interfaces;
 using Microsoft.Extensions.Logging;
 
 namespace AlsTradingPost.Application.User

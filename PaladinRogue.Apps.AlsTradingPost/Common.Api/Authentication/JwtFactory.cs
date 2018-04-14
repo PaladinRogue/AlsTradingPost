@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Common.Api.Resource.Interfaces;
+using Common.Api.Authentication.Interfaces;
 using Common.Resources.Authentication;
 using Microsoft.Extensions.Options;
 

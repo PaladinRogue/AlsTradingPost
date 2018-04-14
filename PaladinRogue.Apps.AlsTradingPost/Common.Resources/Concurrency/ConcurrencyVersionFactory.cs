@@ -1,4 +1,5 @@
 ﻿using Common.Domain.Models.Interfaces;
+using Common.Resources.Concurrency.Interfaces;
 using Newtonsoft.Json;
 
 namespace Common.Resources.Concurrency

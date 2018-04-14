@@ -5,6 +5,7 @@ using AlsTradingPost.Resources;
 using AlsTradingPost.Setup.Infrastructure.Authorization;
 using Common.Api.Authentication;
 using Common.Api.Authentication.Constants;
+using Common.Api.Authentication.Interfaces;
 using Common.Api.Settings;
 using Common.Resources.Authentication;
 using Common.Resources.Authentication.Constants;

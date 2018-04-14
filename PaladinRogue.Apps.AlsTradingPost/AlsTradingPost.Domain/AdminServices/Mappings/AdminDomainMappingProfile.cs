@@ -1,7 +1,7 @@
 ﻿using AlsTradingPost.Domain.AdminServices.Models;
 using AlsTradingPost.Domain.Models;
 using AutoMapper;
-using Common.Domain.Interfaces;
+using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Models.Interfaces;
 
 namespace AlsTradingPost.Domain.AdminServices.Mappings

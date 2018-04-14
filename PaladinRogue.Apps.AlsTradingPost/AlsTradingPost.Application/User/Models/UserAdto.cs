@@ -1,6 +1,6 @@
 ﻿using System;
 using AlsTradingPost.Resources;
-using Common.Application.Models;
+using Common.Application.Concurrency;
 
 namespace AlsTradingPost.Application.User.Models
 {

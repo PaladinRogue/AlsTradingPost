@@ -1,4 +1,4 @@
-﻿using Common.Api.Resource.Interfaces;
+﻿using Common.Api.Authentication.Interfaces;
 
 namespace Authentication.Api.Resources
 {

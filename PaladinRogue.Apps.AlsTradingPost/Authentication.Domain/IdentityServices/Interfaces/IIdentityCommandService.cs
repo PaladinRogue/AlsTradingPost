@@ -1,5 +1,5 @@
 ﻿using Authentication.Domain.IdentityServices.Models;
-using Common.Domain.Interfaces;
+using Common.Domain.Services;
 
 namespace Authentication.Domain.IdentityServices.Interfaces
 {
