@@ -21,6 +21,8 @@ namespace AlsTradingPost.Persistence
 
         public DbSet<Item> Items { get; set; }
 
+        public DbSet<ItemReferenceData> ItemReferenceData { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("dbo");

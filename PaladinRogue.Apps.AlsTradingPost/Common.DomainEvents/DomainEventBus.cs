@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Common.Domain.DomainEvents.Interfaces;
+using Common.Resources;
 using DomainEvent.Broker.Interfaces;
 
 namespace DomainEvent.Broker
@@ -31,7 +33,7 @@ namespace DomainEvent.Broker
 
         private async Task ProcessDomainEvent(Type domainEventType, IDomainEvent domainEvent)
         {
-            var subscriptions = _domainEventBusSubscriptionsManager.GetSubscribersForDomainEvent(domainEventType, domainEventType.IsClass);
+            IEnumerable<Subscription> subscriptions = _domainEventBusSubscriptionsManager.GetSubscribersForDomainEvent(domainEventType, domainEventType.IsClass);
 
             await Task.Run(() => Parallel.ForEach(subscriptions,
                 subscription => { subscription.Handler.DynamicInvoke(domainEvent); }));

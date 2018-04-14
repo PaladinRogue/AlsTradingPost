@@ -1,6 +1,7 @@
 ﻿using AlsTradingPost.Application.Admin.Mappings;
 using AlsTradingPost.Application.User.Mappings;
 using AlsTradingPost.Domain.AdminServices.Mappings;
+using AlsTradingPost.Domain.ItemReferenceDataServices.Mappings;
 using AlsTradingPost.Domain.UserServices.Mappings;
 using AutoMapper;
 using Common.Domain.Mappings;
@@ -9,7 +10,6 @@ namespace AlsTradingPost.Setup
 {
     public class MappingRegistration
     {
-
         public static void RegisterMappers(IMapperConfigurationExpression configuration)
         {
             RegisterApplicationMappers(configuration);
@@ -26,6 +26,7 @@ namespace AlsTradingPost.Setup
         {
             configuration.AddProfile<DomainMappingProfile>();
 
+            configuration.AddProfile<ItemReferenceDataDomainMappingProfile>();
             configuration.AddProfile<AdminDomainMappingProfile>();
             configuration.AddProfile<UserDomainMappingProfile>();
         }

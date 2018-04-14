@@ -18,7 +18,7 @@ namespace Common.Domain.ConcurrencyServices
 
         public void CheckConcurrency(Guid id, IConcurrencyVersion version)
         {
-            var entity = _queryService.Get(id);
+            IVersionedProjection entity = _queryService.Get(id);
             if (!entity.Version.Version.SequenceEqual(version.Version))
             {
                 throw new ConcurrencyDomainException(typeof(T), id, version);

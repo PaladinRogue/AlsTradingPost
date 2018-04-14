@@ -20,9 +20,9 @@ namespace Common.Setup
             services.AddSingleton<IMessageBusSubscriptionsManager, InMemoryMessageBusSubscriptionsManager>();
 	        services.AddSingleton<IRabbitMqPersistentConnection>(sp =>
 	        {
-	            var logger = sp.GetRequiredService<ILogger<DefaultRabbitMqPersistentConnection>>();
+	            ILogger<DefaultRabbitMqPersistentConnection> logger = sp.GetRequiredService<ILogger<DefaultRabbitMqPersistentConnection>>();
 
-	            var messageBusSettingsAccessor = sp.GetRequiredService<IOptions<MessagingBusSettings>>();
+	            IOptions<MessagingBusSettings> messageBusSettingsAccessor = sp.GetRequiredService<IOptions<MessagingBusSettings>>();
 	            MessagingBusSettings messageBusSettings = messageBusSettingsAccessor.Value;
 
                 ConnectionFactory factory = new ConnectionFactory
@@ -41,20 +41,20 @@ namespace Common.Setup
 	            }
 
 
-	            var retryCount = messageBusSettings.RetryCount ?? 5;
+	            int retryCount = messageBusSettings.RetryCount ?? 5;
 
                 return new DefaultRabbitMqPersistentConnection(factory, logger, retryCount);
 	        });
 
             services.AddSingleton<IMessageBus, MessageBusRabbitMq>(sp =>
 	        {
-	            var logger = sp.GetRequiredService<ILogger<MessageBusRabbitMq>>();
-	            var messageBusSettings = sp.GetRequiredService<IOptions<MessagingBusSettings>>().Value;
+	            ILogger<MessageBusRabbitMq> logger = sp.GetRequiredService<ILogger<MessageBusRabbitMq>>();
+	            MessagingBusSettings messageBusSettings = sp.GetRequiredService<IOptions<MessagingBusSettings>>().Value;
 
                 IMessageBusSubscriptionsManager eventBusSubcriptionsManager = sp.GetRequiredService<IMessageBusSubscriptionsManager>();
                 IRabbitMqPersistentConnection rabbitMqPersistentConnection = sp.GetRequiredService<IRabbitMqPersistentConnection>();
 
-	            var retryCount = messageBusSettings.RetryCount ?? 5;
+	            int retryCount = messageBusSettings.RetryCount ?? 5;
                 
                 return new MessageBusRabbitMq(rabbitMqPersistentConnection, eventBusSubcriptionsManager, logger, retryCount);
 	        });

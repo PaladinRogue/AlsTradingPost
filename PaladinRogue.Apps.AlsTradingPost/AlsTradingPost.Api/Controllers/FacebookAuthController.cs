@@ -52,7 +52,7 @@ namespace AlsTradingPost.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] FacebookAuthTemplate request)
         {
-            var accessToken =
+            string accessToken =
                 _encryptionFactory.Decrypt<string>(request.AccessToken, _jwtAuthenticationIssuerOptions.SigningKey);
 
             string userAccessTokenValidationResponse;
@@ -78,7 +78,7 @@ namespace AlsTradingPost.Api.Controllers
                 throw new BadRequestException("Invalid facebook token.");
             }
 
-            var serializedUserData = await _httpClientFactory.GetStringAsync(new Uri(
+            string serializedUserData = await _httpClientFactory.GetStringAsync(new Uri(
                 string.Format(_fbSettings.DataEndpoint, accessToken)
             ));
 

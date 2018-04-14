@@ -32,7 +32,7 @@ namespace Common.Resources.Logging.Log4Net
 
         private static XmlElement Parselog4NetConfigFile(string filename)
         {
-            var log4NetConfig = new XmlDocument();
+            XmlDocument log4NetConfig = new XmlDocument();
             log4NetConfig.Load(File.OpenRead(filename));
             return log4NetConfig["log4net"];
         }

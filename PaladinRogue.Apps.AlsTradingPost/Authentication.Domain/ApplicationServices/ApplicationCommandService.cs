@@ -27,7 +27,7 @@ namespace Authentication.Domain.ApplicationServices
         {
             try
             {
-                var newApplication = _mapper.Map(entity, EntityFactory.CreateEntity<Application>());
+                Application newApplication = _mapper.Map(entity, EntityFactory.CreateEntity<Application>());
 
                 _identityRepository.Add(newApplication);
 

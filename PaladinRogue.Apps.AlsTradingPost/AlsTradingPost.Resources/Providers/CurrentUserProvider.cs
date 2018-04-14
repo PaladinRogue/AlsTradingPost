@@ -25,7 +25,7 @@ namespace AlsTradingPost.Resources.Providers
             {
                 if (_httpContextAccessor.CurrentIssuer() == _jwtIssuerOptions.Issuer)
                 {
-                    var currentUserId = _httpContextAccessor.CurrentSubject();
+                    Guid? currentUserId = _httpContextAccessor.CurrentSubject();
                     if (currentUserId.HasValue)
                     {
                         return currentUserId.Value;

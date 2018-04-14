@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -32,14 +33,14 @@ namespace Common.Api.Authentication
 
         private async Task<string> GenerateEncodedToken(ClaimsIdentity identity)
 		{
-			var claims = new[]
+			IEnumerable<Claim> claims = new[]
 			{
 				new Claim(JwtRegisteredClaimNames.Jti, await _jwtIssuerOptions.JtiGenerator()),
 				new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtIssuerOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64)
             }.Concat(identity.Claims);
 
 			// Create the JWT security token and encode it.
-		    var jwt = new JwtSecurityToken(
+		    JwtSecurityToken jwt = new JwtSecurityToken(
 		        issuer: _jwtIssuerOptions.Issuer,
 		        audience: _jwtIssuerOptions.Audience,
 		        claims: claims,
@@ -47,7 +48,7 @@ namespace Common.Api.Authentication
 		        expires: _jwtIssuerOptions.Expiration,
 		        signingCredentials: _jwtIssuerOptions.SigningCredentials);
 
-			var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+			string encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
 			return encodedJwt;
 		}
