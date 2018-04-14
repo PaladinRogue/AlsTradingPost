@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Common.Domain.Interfaces;
+using Common.Domain.Concurrency;
+using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Models.Interfaces;
-using Common.Domain.Resolvers;
 
 namespace Common.Domain.Mappings
 {

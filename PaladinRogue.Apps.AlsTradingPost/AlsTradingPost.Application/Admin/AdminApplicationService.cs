@@ -5,7 +5,7 @@ using AlsTradingPost.Application.Admin.Models;
 using AlsTradingPost.Domain.AdminServices.Interfaces;
 using AlsTradingPost.Domain.AdminServices.Models;
 using AutoMapper;
-using Common.Domain.ConcurrencyServices.Interfaces;
+using Common.Domain.Concurrency.Services.Interfaces;
 using Common.Domain.Exceptions;
 using Common.Resources.Exceptions;
 using Microsoft.Extensions.Logging;

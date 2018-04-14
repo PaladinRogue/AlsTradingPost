@@ -1,4 +1,4 @@
-﻿using Common.Api.Request;
+﻿using Common.Api.Concurrency;
 
 namespace AlsTradingPost.Api.Templates.Admin
 {

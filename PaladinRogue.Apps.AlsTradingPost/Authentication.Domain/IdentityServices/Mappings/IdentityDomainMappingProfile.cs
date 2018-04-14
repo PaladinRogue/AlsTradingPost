@@ -1,7 +1,7 @@
 ﻿using Authentication.Domain.IdentityServices.Models;
 using Authentication.Domain.Models;
 using AutoMapper;
-using Common.Domain.Interfaces;
+using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Models.Interfaces;
 
 namespace Authentication.Domain.IdentityServices.Mappings

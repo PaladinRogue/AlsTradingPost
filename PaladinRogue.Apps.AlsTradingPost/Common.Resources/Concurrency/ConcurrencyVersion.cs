@@ -1,4 +1,6 @@
 ﻿
+using Common.Resources.Concurrency.Interfaces;
+
 namespace Common.Resources.Concurrency
 {
     public class ConcurrencyVersion : IConcurrencyVersion

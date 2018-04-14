@@ -1,5 +1,5 @@
 ﻿using System;
-using Common.Application.Models;
+using Common.Application.Concurrency;
 
 namespace AlsTradingPost.Application.Admin.Models
 {

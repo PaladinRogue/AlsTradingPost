@@ -1,5 +1,6 @@
 ﻿using System;
 using AlsTradingPost.Resources;
+using Common.Domain.Concurrency;
 using Common.Domain.Models;
 
 namespace AlsTradingPost.Domain.UserServices.Models

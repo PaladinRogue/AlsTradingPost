@@ -1,4 +1,4 @@
-﻿using Common.Api.Resource;
+﻿using Common.Api.Concurrency;
 
 namespace AlsTradingPost.Api.Resources.Admin
 {
