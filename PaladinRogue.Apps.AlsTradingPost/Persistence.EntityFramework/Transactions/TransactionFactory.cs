@@ -1,13 +1,14 @@
 ﻿using Common.Resources.Transactions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace AlsTradingPost.Persistence.Transactions
+namespace Persistence.EntityFramework.Transactions
 {
     public class TransactionFactory : ITransactionFactory
     {
-	    private readonly AlsTradingPostDbContext _dbContext;
+	    private readonly DbContext _dbContext;
 
-	    public TransactionFactory(AlsTradingPostDbContext dbContext)
+	    public TransactionFactory(DbContext dbContext)
 	    {
 		    _dbContext = dbContext;
 	    }

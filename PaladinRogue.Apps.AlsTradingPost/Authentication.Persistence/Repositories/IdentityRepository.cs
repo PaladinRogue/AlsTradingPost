@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Authentication.Domain.Models;
 using Authentication.Domain.Persistence;
@@ -15,11 +14,6 @@ namespace Authentication.Persistence.Repositories
         public IdentityRepository(AuthenticationDbContext context)
         {
             _context = context;
-        }
-
-        public IEnumerable<Identity> Get()
-        {
-            return _context.Identities.AsNoTracking();
         }
 
         public Identity GetById(Guid id)

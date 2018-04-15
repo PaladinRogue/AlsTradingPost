@@ -5,6 +5,7 @@ using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.Persistence;
 using Common.Domain.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using Persistence.EntityFramework.Repositories;
 
 namespace AlsTradingPost.Persistence.Repositories
 {

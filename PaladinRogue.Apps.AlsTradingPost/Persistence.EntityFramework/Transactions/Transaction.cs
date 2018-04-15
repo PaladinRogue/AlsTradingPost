@@ -1,7 +1,7 @@
 ﻿using Common.Resources.Transactions;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace Authentication.Persistence.Transactions
+namespace Persistence.EntityFramework.Transactions
 {
     public class Transaction : ITransaction
     {
@@ -20,7 +20,6 @@ namespace Authentication.Persistence.Transactions
 	    public void Dispose()
 	    {
 			_dbContextTransaction.Dispose();
-
 		}
 
 	    public void Commit()

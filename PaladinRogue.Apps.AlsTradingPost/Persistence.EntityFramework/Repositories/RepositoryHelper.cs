@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
-namespace AlsTradingPost.Persistence
+namespace Persistence.EntityFramework.Repositories
 {
     public static class RepositoryHelper
     {

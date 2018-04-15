@@ -15,7 +15,6 @@ using AlsTradingPost.Domain.UserDomain;
 using AlsTradingPost.Domain.UserDomain.Interfaces;
 using AlsTradingPost.Persistence;
 using AlsTradingPost.Persistence.Repositories;
-using AlsTradingPost.Persistence.Transactions;
 using AlsTradingPost.Resources.Providers;
 using AlsTradingPost.Resources.Providers.Interfaces;
 using Common.Api.Encryption;
@@ -33,6 +32,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Persistence.EntityFramework.Transactions;
 
 namespace AlsTradingPost.Setup
 {
@@ -76,6 +76,7 @@ namespace AlsTradingPost.Setup
             services.AddScoped<IItemReferenceDataRepository, ItemReferenceDataRepository>();
 
             services.AddDbContext<AlsTradingPostDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Default")));
+            services.AddScoped<DbContext>(sp => sp.GetRequiredService<AlsTradingPostDbContext>());
             services.AddTransient<ITransactionFactory, TransactionFactory>();
         }
 

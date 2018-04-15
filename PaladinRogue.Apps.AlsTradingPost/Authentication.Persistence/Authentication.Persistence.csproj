@@ -18,6 +18,7 @@
     <ProjectReference Include="..\Authentication.Domain.Models\Authentication.Domain.Models.csproj" />
     <ProjectReference Include="..\Authentication.Domain\Authentication.Domain.csproj" />
     <ProjectReference Include="..\Common.Domain\Common.Domain.csproj" />
+    <ProjectReference Include="..\Persistence.EntityFramework\Persistence.EntityFramework.csproj" />
   </ItemGroup>
 
 </Project>
