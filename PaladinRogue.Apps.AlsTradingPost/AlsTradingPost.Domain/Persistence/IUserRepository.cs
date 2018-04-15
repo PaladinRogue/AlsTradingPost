@@ -3,7 +3,7 @@ using Common.Domain.Persistence;
 
 namespace AlsTradingPost.Domain.Persistence
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IUserRepository : IGet<User>, IGetPage<User>, IGetById<User>, IGetSingle<User>, IAdd<User>, IUpdate<User>, IDelete
     {
     }
 }

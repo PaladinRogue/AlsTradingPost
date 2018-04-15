@@ -51,7 +51,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Message.Broker", "Message.B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainEvent.Broker", "Common.DomainEvents\DomainEvent.Broker.csproj", "{36D1CA67-D497-4FE4-8C0C-73E0C48B6644}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlsTradingPost.Resources", "AlsTradingPost.Resources\AlsTradingPost.Resources.csproj", "{21A4A2B0-8677-4742-ACC4-5D6D3E5A476D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlsTradingPost.Resources", "AlsTradingPost.Resources\AlsTradingPost.Resources.csproj", "{21A4A2B0-8677-4742-ACC4-5D6D3E5A476D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

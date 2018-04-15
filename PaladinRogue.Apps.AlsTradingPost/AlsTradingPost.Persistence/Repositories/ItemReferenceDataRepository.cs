@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.Persistence;
 using Common.Domain.Exceptions;
@@ -17,9 +18,91 @@ namespace AlsTradingPost.Persistence.Repositories
             _context = context;
         }
 
-        public IEnumerable<ItemReferenceData> Get()
+        private IQueryable<ItemReferenceData> _filter(Predicate<ItemReferenceData> predicate)
         {
-            return _context.ItemReferenceData.AsNoTracking();
+            IQueryable<ItemReferenceData> results = _context.ItemReferenceData.AsNoTracking();
+
+            if (predicate != null)
+            {
+                results = results.Where(i => predicate(i));
+            }
+
+            return results;
+        }
+
+        private static IOrderedQueryable<ItemReferenceData> _orderBy<TOrderByKey>(IQueryable<ItemReferenceData> results,
+            Expression<Func<ItemReferenceData, TOrderByKey>> orderBy, bool orderByAscending)
+        {
+            if (orderBy != null)
+            {
+                results = orderByAscending ? results.OrderBy(orderBy) : results.OrderByDescending(orderBy);
+            }
+
+            return (IOrderedQueryable<ItemReferenceData>)results;
+        }
+
+        private static IEnumerable<ItemReferenceData> _thenBy<TThenByKey>(IOrderedQueryable<ItemReferenceData> results,
+            Expression<Func<ItemReferenceData, TThenByKey>> thenBy, bool thenByAscending)
+        {
+            if (thenBy != null)
+            {
+                results = thenByAscending ? results.ThenBy(thenBy) : results.ThenByDescending(thenBy);
+            }
+
+            return results;
+        }
+
+        public IEnumerable<ItemReferenceData> Get(Predicate<ItemReferenceData> predicate = null)
+        {
+            return _filter(predicate);
+        }
+
+        public IEnumerable<ItemReferenceData> Get<TOrderByKey>(Predicate<ItemReferenceData> predicate = null, Expression<Func<ItemReferenceData, TOrderByKey>> orderBy = null, bool orderByAscending = true)
+        {
+            return _orderBy(_filter(predicate), orderBy, orderByAscending);
+        }
+
+        public IEnumerable<ItemReferenceData> Get<TOrderByKey, TThenByKey>(Predicate<ItemReferenceData> predicate = null,
+            Expression<Func<ItemReferenceData, TOrderByKey>> orderBy = null,
+            bool orderByAscending = true,
+            Expression<Func<ItemReferenceData, TThenByKey>> thenBy = null,
+            bool thenByAscending = true)
+        {
+            return _thenBy(_orderBy(_filter(predicate), orderBy, orderByAscending), thenBy, thenByAscending);
+        }
+
+        public IEnumerable<ItemReferenceData> GetPage(int pageSize, int pageOffset, out int totalResults, Predicate<ItemReferenceData> predicate = null)
+        {
+            IEnumerable<ItemReferenceData> results = Get(predicate).ToList();
+
+            totalResults = results.Count();
+
+            return results.Skip(pageOffset).Take(pageSize);
+        }
+
+        public IEnumerable<ItemReferenceData> GetPage<TOrderByKey>(int pageSize, int pageOffset, out int totalResults, Predicate<ItemReferenceData> predicate = null,
+            Expression<Func<ItemReferenceData, TOrderByKey>> orderBy = null, bool orderByAscending = true)
+        {
+            IEnumerable<ItemReferenceData> results = Get(predicate, orderBy, orderByAscending).ToList();
+
+            totalResults = results.Count();
+
+            return results.Skip(pageOffset).Take(pageSize);
+        }
+
+        public IEnumerable<ItemReferenceData> GetPage<TOrderByKey, TThenByKey>(int pageSize,
+            int pageOffset, out int totalResults,
+            Predicate<ItemReferenceData> predicate = null,
+            Expression<Func<ItemReferenceData, TOrderByKey>> orderBy = null,
+            bool orderByAscending = true,
+            Expression<Func<ItemReferenceData, TThenByKey>> thenBy = null,
+            bool thenByAscending = true)
+        {
+            IEnumerable<ItemReferenceData> results = Get(predicate, orderBy, orderByAscending, thenBy, thenByAscending).ToList();
+
+            totalResults = results.Count();
+
+            return results.Skip(pageOffset).Take(pageSize);
         }
 
         public ItemReferenceData GetById(Guid id)

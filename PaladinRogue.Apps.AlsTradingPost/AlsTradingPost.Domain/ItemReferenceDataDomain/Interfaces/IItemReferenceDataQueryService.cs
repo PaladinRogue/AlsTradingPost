@@ -1,9 +1,10 @@
 ﻿using AlsTradingPost.Domain.ItemReferenceDataDomain.Models;
-using Common.Domain.Services;
+using AlsTradingPost.Domain.Models;
+using Common.Domain.Services.Interfaces;
 
 namespace AlsTradingPost.Domain.ItemReferenceDataDomain.Interfaces
 {
-    public interface IItemReferenceDataQueryService : ISummaryQueryService<ItemReferenceDataSummaryProjection>
+    public interface IItemReferenceDataQueryService : IPagedSummaryQueryService<ItemReferenceData, ItemReferenceDataPagedCollectionDdto>
     {
     }
 }

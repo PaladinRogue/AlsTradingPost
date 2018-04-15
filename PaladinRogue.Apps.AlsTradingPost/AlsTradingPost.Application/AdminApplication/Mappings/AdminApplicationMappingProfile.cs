@@ -9,7 +9,6 @@ namespace AlsTradingPost.Application.AdminApplication.Mappings
         public AdminApplicationMappingProfile()
         {
             CreateMap<AdminProjection, AdminAdto>();
-            CreateMap<AdminSummaryProjection, AdminSummaryAdto>();
             CreateMap<CreateAdminAdto, CreateAdminDdto>();
         }
     }

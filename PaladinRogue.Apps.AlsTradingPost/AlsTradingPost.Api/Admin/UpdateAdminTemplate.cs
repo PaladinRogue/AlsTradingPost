@@ -2,7 +2,7 @@
 
 namespace AlsTradingPost.Api.Admin
 {
-    public class UpdateAdminTemplate : VersionedRequest
+    public class UpdateAdminTemplate : VersionedTemplate
     {
     }
 }

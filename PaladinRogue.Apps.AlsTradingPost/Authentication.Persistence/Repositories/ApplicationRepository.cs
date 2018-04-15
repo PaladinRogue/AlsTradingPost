@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Authentication.Domain.Models;
 using Authentication.Domain.Persistence;
@@ -15,11 +14,6 @@ namespace Authentication.Persistence.Repositories
         public ApplicationRepository(AuthenticationDbContext context)
         {
             _context = context;
-        }
-
-        public IEnumerable<Application> Get()
-        {
-            return _context.Applications.AsNoTracking();
         }
 
         public Application GetById(Guid id)
@@ -58,22 +52,6 @@ namespace Authentication.Persistence.Repositories
             try
             {
                 _context.Applications.Update(entity);
-
-                _context.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                throw new ConcurrencyDomainException(entity, e);
-            }
-        }
-
-        public void Delete(Guid id)
-        {
-            Application entity = GetById(id);
-
-            try
-            {
-                _context.Applications.Remove(entity);
 
                 _context.SaveChanges();
             }

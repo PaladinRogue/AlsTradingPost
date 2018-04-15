@@ -1,4 +1,4 @@
-﻿namespace Common.Domain.Services
+﻿namespace Common.Domain.Services.Interfaces
 {
     public interface IUpdateCommandService<in TIn, out TOut>
     {

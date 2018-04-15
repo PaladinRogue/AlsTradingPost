@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using AlsTradingPost.Application.UserApplication.Interfaces;
 using AlsTradingPost.Application.UserApplication.Models;
 using AlsTradingPost.Domain.UserDomain.Interfaces;
@@ -36,12 +35,7 @@ namespace AlsTradingPost.Application.UserApplication
 
         public UserAdto Get(Guid id)
         {
-            return _mapper.Map<UserProjection, UserAdto> (_userQueryService.Get(id));
-        }
-
-        public IList<UserSummaryAdto> GetAll()
-        {
-            return _mapper.Map<IList<UserSummaryProjection>, IList<UserSummaryAdto>>(_userQueryService.GetAll());
+            return _mapper.Map<UserProjection, UserAdto>(_userQueryService.GetById(id));
         }
 
         public UserAdto FacebookUpdate(FacebookUpdateAdto user)

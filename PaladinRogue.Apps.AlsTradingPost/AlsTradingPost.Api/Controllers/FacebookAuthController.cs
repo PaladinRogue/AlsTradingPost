@@ -4,7 +4,7 @@ using AlsTradingPost.Api.FacebookAuth;
 using AlsTradingPost.Application.UserApplication.Interfaces;
 using AlsTradingPost.Application.UserApplication.Models;
 using AlsTradingPost.Resources.Claims;
-using AlsTradingPost.Resources.Settings;
+using AlsTradingPost.Setup.Infrastructure.Settings;
 using AutoMapper;
 using Common.Api.Authentication;
 using Common.Api.Authentication.Constants;

@@ -3,7 +3,7 @@ using Common.Domain.Persistence;
 
 namespace Authentication.Domain.Persistence
 {
-    public interface IIdentityRepository : IRepository<Identity>
+    public interface IIdentityRepository : IGetById<Identity>, IGetSingle<Identity>, IAdd<Identity>, IUpdate<Identity>
     {
     }
 }

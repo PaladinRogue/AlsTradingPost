@@ -1,4 +1,4 @@
-﻿namespace AlsTradingPost.Resources.Settings
+﻿namespace AlsTradingPost.Setup.Infrastructure.Settings
 {
     public class FacebookSettings
     {

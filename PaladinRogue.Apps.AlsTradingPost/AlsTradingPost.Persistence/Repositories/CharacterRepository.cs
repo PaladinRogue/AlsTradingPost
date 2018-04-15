@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.Persistence;
 using Common.Domain.Exceptions;
@@ -17,9 +18,91 @@ namespace AlsTradingPost.Persistence.Repositories
             _context = context;
         }
 
-        public IEnumerable<Character> Get()
+        private IQueryable<Character> _filter(Predicate<Character> predicate)
         {
-            return _context.Characters.AsNoTracking();
+            IQueryable<Character> results = _context.Characters.AsNoTracking();
+
+            if (predicate != null)
+            {
+                results = results.Where(i => predicate(i));
+            }
+
+            return results;
+        }
+
+        private static IOrderedQueryable<Character> _orderBy<TOrderByKey>(IQueryable<Character> results,
+            Expression<Func<Character, TOrderByKey>> orderBy, bool orderByAscending)
+        {
+            if (orderBy != null)
+            {
+                results = orderByAscending ? results.OrderBy(orderBy) : results.OrderByDescending(orderBy);
+            }
+
+            return (IOrderedQueryable<Character>)results;
+        }
+
+        private static IEnumerable<Character> _thenBy<TThenByKey>(IOrderedQueryable<Character> results,
+            Expression<Func<Character, TThenByKey>> thenBy, bool thenByAscending)
+        {
+            if (thenBy != null)
+            {
+                results = thenByAscending ? results.ThenBy(thenBy) : results.ThenByDescending(thenBy);
+            }
+
+            return results;
+        }
+
+        public IEnumerable<Character> Get(Predicate<Character> predicate = null)
+        {
+            return _filter(predicate);
+        }
+
+        public IEnumerable<Character> Get<TOrderByKey>(Predicate<Character> predicate = null, Expression<Func<Character, TOrderByKey>> orderBy = null, bool orderByAscending = true)
+        {
+            return _orderBy(_filter(predicate), orderBy, orderByAscending);
+        }
+
+        public IEnumerable<Character> Get<TOrderByKey, TThenByKey>(Predicate<Character> predicate = null,
+            Expression<Func<Character, TOrderByKey>> orderBy = null,
+            bool orderByAscending = true,
+            Expression<Func<Character, TThenByKey>> thenBy = null,
+            bool thenByAscending = true)
+        {
+            return _thenBy(_orderBy(_filter(predicate), orderBy, orderByAscending), thenBy, thenByAscending);
+        }
+
+        public IEnumerable<Character> GetPage(int pageSize, int pageOffset, out int totalResults, Predicate<Character> predicate = null)
+        {
+            IEnumerable<Character> results = Get(predicate).ToList();
+
+            totalResults = results.Count();
+
+            return results.Skip(pageOffset).Take(pageSize);
+        }
+
+        public IEnumerable<Character> GetPage<TOrderByKey>(int pageSize, int pageOffset, out int totalResults, Predicate<Character> predicate = null,
+            Expression<Func<Character, TOrderByKey>> orderBy = null, bool orderByAscending = true)
+        {
+            IEnumerable<Character> results = Get(predicate, orderBy, orderByAscending).ToList();
+
+            totalResults = results.Count();
+
+            return results.Skip(pageOffset).Take(pageSize);
+        }
+
+        public IEnumerable<Character> GetPage<TOrderByKey, TThenByKey>(int pageSize,
+            int pageOffset, out int totalResults,
+            Predicate<Character> predicate = null,
+            Expression<Func<Character, TOrderByKey>> orderBy = null,
+            bool orderByAscending = true,
+            Expression<Func<Character, TThenByKey>> thenBy = null,
+            bool thenByAscending = true)
+        {
+            IEnumerable<Character> results = Get(predicate, orderBy, orderByAscending, thenBy, thenByAscending).ToList();
+
+            totalResults = results.Count();
+
+            return results.Skip(pageOffset).Take(pageSize);
         }
 
         public Character GetById(Guid id)

@@ -4,6 +4,7 @@ using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Concurrency.Services.Interfaces;
 using Common.Domain.Exceptions;
 using Common.Domain.Services;
+using Common.Domain.Services.Interfaces;
 using Common.Resources.Concurrency;
 using Common.Resources.Concurrency.Interfaces;
 
@@ -20,7 +21,7 @@ namespace Common.Domain.Concurrency.Services
 
         public void CheckConcurrency(Guid id, IConcurrencyVersion version)
         {
-            IVersionedProjection entity = _queryService.Get(id);
+            IVersionedProjection entity = _queryService.GetById(id);
             if (!entity.Version.Version.SequenceEqual(version.Version))
             {
                 throw new ConcurrencyDomainException(typeof(T), id, version);

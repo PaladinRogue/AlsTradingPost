@@ -1,6 +1,6 @@
 ﻿using System;
-using AlsTradingPost.Resources.Settings;
 using AlsTradingPost.Setup;
+using AlsTradingPost.Setup.Infrastructure.Settings;
 using AutoMapper;
 using Common.Api.Extensions;
 using Common.Api.Settings;

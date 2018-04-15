@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using AlsTradingPost.Domain.Persistence;
 using AlsTradingPost.Domain.UserDomain.Interfaces;
 using AlsTradingPost.Domain.UserDomain.Models;
@@ -19,14 +17,9 @@ namespace AlsTradingPost.Domain.UserDomain
             _mapper = mapper;
         }
 
-        public UserProjection Get(Guid id)
+        public UserProjection GetById(Guid id)
         {
             return _mapper.Map<Domain.Models.User, UserProjection>(_userRepository.GetById(id));
-        }
-
-        public IList<UserSummaryProjection> GetAll()
-        {
-            return _mapper.Map<IList<Domain.Models.User>, IList<UserSummaryProjection>>(_userRepository.Get().ToList<Domain.Models.User>());
         }
 
         public UserProjection GetByIdentityId(Guid identityId)

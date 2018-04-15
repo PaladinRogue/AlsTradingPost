@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using AlsTradingPost.Api.ItemreferenceData;
+﻿using AlsTradingPost.Api.ItemReferenceData;
 using AlsTradingPost.Application.ItemReferenceDataApplication.Interfaces;
 using AlsTradingPost.Application.ItemReferenceDataApplication.Models;
-using AlsTradingPost.Resources.Authorization;
+using AlsTradingPost.Setup.Infrastructure.Authorization;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,21 +12,24 @@ namespace AlsTradingPost.Api.Controllers
     [Authorize(PersonaPolicies.Player)]
     public class ItemReferenceDataController : Controller
     {
-        private readonly IMapper _mapper;
         private readonly IItemReferenceDataApplicationService _itemReferenceDataApplicationService;
 
         public ItemReferenceDataController(IMapper mapper, IItemReferenceDataApplicationService itemReferenceDataApplicationService)
         {
             _itemReferenceDataApplicationService = itemReferenceDataApplicationService;
-            _mapper = mapper;
+        }
+        
+        public IActionResult Get(ItemReferenceDataSearchTemplate itemReferenceDataSearchTemplate)
+        {
+            ItemReferenceDataPagedCollectionAdto result = _itemReferenceDataApplicationService.Search(Mapper.Map<ItemReferenceDataSearchTemplate, ItemReferenceDataSearchAdto>(itemReferenceDataSearchTemplate));
+
+            return new ObjectResult(result);
         }
 
-        [HttpGet]
-        public IActionResult Get()
+        [Route("searchTemplate")]
+        public IActionResult GetSearchTemplate()
         {
-            return new ObjectResult(
-                _mapper.Map<IList<ItemReferenceDataSummaryAdto>, IList<ItemReferenceDataSummaryResource>>(_itemReferenceDataApplicationService.GetAll())
-            );
+            return new ObjectResult(new ItemReferenceDataSearchTemplate());
         }
     }
 }
