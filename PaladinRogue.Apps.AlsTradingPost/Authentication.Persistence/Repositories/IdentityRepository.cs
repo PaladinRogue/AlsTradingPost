@@ -66,21 +66,5 @@ namespace Authentication.Persistence.Repositories
                 throw new ConcurrencyDomainException(entity, e);
             }
         }
-
-        public void Delete(Guid id)
-        {
-            Identity entity = GetById(id);
-
-            try
-            {
-                _context.Identities.Remove(entity);
-
-                _context.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                throw new ConcurrencyDomainException(entity, e);
-            }
-        }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace AlsTradingPost.Resources.Authorization
+﻿namespace AlsTradingPost.Setup.Infrastructure.Authorization
 {
     public static class PersonaPolicies
     {

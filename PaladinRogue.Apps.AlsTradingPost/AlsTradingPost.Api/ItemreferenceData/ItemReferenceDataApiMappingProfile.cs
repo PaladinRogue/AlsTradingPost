@@ -1,7 +1,7 @@
 ﻿using AlsTradingPost.Application.ItemReferenceDataApplication.Models;
 using AutoMapper;
 
-namespace AlsTradingPost.Api.ItemreferenceData
+namespace AlsTradingPost.Api.ItemReferenceData
 {
     public class ItemReferenceDataApiMappingProfile : Profile
     {

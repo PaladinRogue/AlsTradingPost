@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using AlsTradingPost.Api.Admin;
 using AlsTradingPost.Application.AdminApplication.Interfaces;
 using AlsTradingPost.Application.AdminApplication.Models;
-using AlsTradingPost.Resources.Authorization;
+using AlsTradingPost.Setup.Infrastructure.Authorization;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,14 +20,6 @@ namespace AlsTradingPost.Api.Controllers
         {
             _adminApplicationService = adminApplicationService;
             _mapper = mapper;
-        }
-
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return new ObjectResult(
-                _mapper.Map<IList<AdminSummaryAdto>, IList<AdminSummaryResource>>(_adminApplicationService.GetAll())
-            );
         }
 
         [HttpGet("{id}")]

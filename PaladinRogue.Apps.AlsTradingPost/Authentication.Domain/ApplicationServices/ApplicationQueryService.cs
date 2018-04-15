@@ -18,7 +18,7 @@ namespace Authentication.Domain.ApplicationServices
 			_mapper = mapper;
 		}
 
-		public ApplicationProjection Get(Guid id)
+		public ApplicationProjection GetById(Guid id)
 		{
 			return _mapper.Map<Application, ApplicationProjection>(_applicationRepository.GetById(id));
 		}

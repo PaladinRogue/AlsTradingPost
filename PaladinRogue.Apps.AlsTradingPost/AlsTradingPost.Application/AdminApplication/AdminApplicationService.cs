@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using AlsTradingPost.Application.AdminApplication.Interfaces;
 using AlsTradingPost.Application.AdminApplication.Models;
 using AlsTradingPost.Domain.AdminDomain.Interfaces;
@@ -35,12 +34,7 @@ namespace AlsTradingPost.Application.AdminApplication
 
         public AdminAdto Get(Guid id)
         {
-            return _mapper.Map<AdminProjection, AdminAdto> (_adminQueryService.Get(id));
-        }
-
-        public IList<AdminSummaryAdto> GetAll()
-        {
-            return _mapper.Map<IList<AdminSummaryProjection>, IList<AdminSummaryAdto>>(_adminQueryService.GetAll());
+            return _mapper.Map<AdminProjection, AdminAdto> (_adminQueryService.GetById(id));
         }
 
         public AdminAdto Create(CreateAdminAdto admin)
