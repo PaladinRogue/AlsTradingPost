@@ -1,6 +1,6 @@
 ﻿namespace Common.Application.Pagination.Interfaces
 {
-    public interface IPagintationAdto : IPagintation
+    public interface IPaginationAdto : IPagintation
     {
     }
 }
