@@ -5,6 +5,5 @@ namespace Common.Domain.Models.Interfaces
     public interface IEntity
     {
         Guid Id { get; set; }
-        byte[] Version { get; set; }
     }
 }

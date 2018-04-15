@@ -10,10 +10,10 @@ namespace AlsTradingPost.Domain.AdminDomain.Mappings
         public AdminDomainMappingProfile()
         {
             CreateMap<Domain.Models.Admin, AdminProjection>()
-                .IncludeBase<IEntity, IVersionedProjection>();
+                .IncludeBase<IVersionedEntity, IVersionedProjection>();
             CreateMap<CreateAdminDdto, Domain.Models.Admin>();
             CreateMap<UpdateAdminDdto, Domain.Models.Admin>()
-                .IncludeBase<IVersionedDdto, IEntity>();
+                .IncludeBase<IVersionedDdto, IVersionedEntity>();
         }
     }
 }

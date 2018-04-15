@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.Persistence;
-using Common.Domain.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityFramework.Repositories;
 
@@ -23,12 +22,16 @@ namespace AlsTradingPost.Persistence.Repositories
             return RepositoryHelper.Filter(_context.Admins.AsNoTracking(), predicate);
         }
 
-        public IOrderedQueryable<Admin> Get<TOrderByKey>(Predicate<Admin> predicate = null, Func<Admin, TOrderByKey> orderBy = null, bool orderByAscending = true)
+        public IOrderedQueryable<Admin> Get<TOrderByKey>(
+            Predicate<Admin> predicate = null,
+            Func<Admin, TOrderByKey> orderBy = null,
+            bool orderByAscending = true)
         {
             return RepositoryHelper.OrderBy(Get(predicate), orderBy, orderByAscending);
         }
 
-        public IOrderedQueryable<Admin> Get<TOrderByKey, TThenByKey>(Predicate<Admin> predicate = null,
+        public IOrderedQueryable<Admin> Get<TOrderByKey, TThenByKey>(
+            Predicate<Admin> predicate = null,
             Func<Admin, TOrderByKey> orderBy = null,
             bool orderByAscending = true,
             Func<Admin, TThenByKey> thenBy = null,
@@ -37,99 +40,62 @@ namespace AlsTradingPost.Persistence.Repositories
             return RepositoryHelper.ThenBy(Get(predicate, orderBy, orderByAscending), thenBy, thenByAscending);
         }
 
-        public IEnumerable<Admin> GetPage(int pageSize, int pageOffset, out int totalResults, Predicate<Admin> predicate = null)
+        public IEnumerable<Admin> GetPage(
+            int pageSize,
+            int pageOffset,
+            out int totalResults,
+            Predicate<Admin> predicate = null)
         {
-            IEnumerable<Admin> results = Get(predicate).ToList();
-
-            totalResults = results.Count();
-
-            return results.Skip(pageOffset).Take(pageSize);
+            return RepositoryHelper.GetPage(Get(predicate), pageSize, pageOffset, out totalResults);
         }
 
-        public IEnumerable<Admin> GetPage<TOrderByKey>(int pageSize, int pageOffset, out int totalResults, Predicate<Admin> predicate = null,
-            Func<Admin, TOrderByKey> orderBy = null, bool orderByAscending = true)
+        public IEnumerable<Admin> GetPage<TOrderByKey>(
+            int pageSize,
+            int pageOffset,
+            out int totalResults,
+            Predicate<Admin> predicate = null,
+            Func<Admin, TOrderByKey> orderBy = null,
+            bool orderByAscending = true)
         {
-            IEnumerable<Admin> results = Get(predicate, orderBy, orderByAscending).ToList();
-
-            totalResults = results.Count();
-
-            return results.Skip(pageOffset).Take(pageSize);
+            return RepositoryHelper.GetPage(Get(predicate, orderBy, orderByAscending), pageSize, pageOffset, out totalResults);
         }
 
-        public IEnumerable<Admin> GetPage<TOrderByKey, TThenByKey>(int pageSize,
-            int pageOffset, out int totalResults,
+        public IEnumerable<Admin> GetPage<TOrderByKey, TThenByKey>(
+            int pageSize,
+            int pageOffset,
+            out int totalResults,
             Predicate<Admin> predicate = null,
             Func<Admin, TOrderByKey> orderBy = null,
             bool orderByAscending = true,
             Func<Admin, TThenByKey> thenBy = null,
             bool thenByAscending = true)
         {
-            IEnumerable<Admin> results = Get(predicate, orderBy, orderByAscending, thenBy, thenByAscending).ToList();
-
-            totalResults = results.Count();
-
-            return results.Skip(pageOffset).Take(pageSize);
+            return RepositoryHelper.GetPage(Get(predicate, orderBy, orderByAscending, thenBy, thenByAscending), pageSize, pageOffset, out totalResults);
         }
 
         public Admin GetById(Guid id)
         {
-            try
-            {
-                return _context.Admins.AsNoTracking().SingleOrDefault(a => a.Id == id);
-            }
-            catch (InvalidOperationException)
-            {
-                throw new DomainException("Multiple entites exist with given Id");
-            }
+            return RepositoryHelper.GetById(_context.Admins.AsNoTracking(), id);
         }
 
         public Admin GetSingle(Predicate<Admin> predicate)
         {
-            try
-            {
-                return _context.Admins.AsNoTracking().SingleOrDefault(a => predicate(a));
-            }
-            catch (InvalidOperationException)
-            {
-                throw new DomainException($"Multiple entites exist which match given predicate ({ predicate })");
-            }
+            return RepositoryHelper.GetSingle(_context.Admins.AsNoTracking(), predicate);
         }
 
         public void Add(Admin entity)
         {
-            _context.Admins.Add(entity);
-
-            _context.SaveChanges();
+            RepositoryHelper.Add(_context.Admins, _context, entity);
         }
 
         public void Update(Admin entity)
         {
-            try
-            {
-                _context.Admins.Update(entity);
-
-                _context.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                throw new ConcurrencyDomainException(entity, e);
-            }
+            RepositoryHelper.Update(_context.Admins, _context, entity);
         }
 
         public void Delete(Guid id)
         {
-            Admin entity = GetById(id);
-
-            try
-            {
-                _context.Admins.Remove(entity);
-
-                _context.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                throw new ConcurrencyDomainException(entity, e);
-            }
+            RepositoryHelper.Delete(_context.Admins, _context, id);
         }
     }
 }

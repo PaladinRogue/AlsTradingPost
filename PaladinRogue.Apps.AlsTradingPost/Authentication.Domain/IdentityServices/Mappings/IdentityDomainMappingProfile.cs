@@ -11,10 +11,10 @@ namespace Authentication.Domain.IdentityServices.Mappings
         public IdentityDomainMappingProfile()
         {
             CreateMap<Identity, IdentityProjection>()
-                .IncludeBase<IEntity, IVersionedProjection>();
+                .IncludeBase<IVersionedEntity, IVersionedProjection>();
             CreateMap<CreateIdentityDdto, Identity>();
             CreateMap<UpdateIdentityDdto, Identity>()
-                .IncludeBase<IVersionedDdto, IEntity>();
+                .IncludeBase<IVersionedDdto, IVersionedEntity>();
         }
     }
 }

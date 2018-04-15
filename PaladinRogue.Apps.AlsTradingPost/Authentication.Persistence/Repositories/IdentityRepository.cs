@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Linq;
 using Authentication.Domain.Models;
 using Authentication.Domain.Persistence;
-using Common.Domain.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using Persistence.EntityFramework.Repositories;
 
 namespace Authentication.Persistence.Repositories
 {
@@ -18,47 +17,22 @@ namespace Authentication.Persistence.Repositories
 
         public Identity GetById(Guid id)
         {
-            try
-            {
-                return _context.Identities.AsNoTracking().SingleOrDefault(a => a.Id == id);
-            }
-            catch (InvalidOperationException)
-            {
-                throw new DomainException("Multiple entites exist with given Id");
-            }
+            return RepositoryHelper.GetById(_context.Identities.AsNoTracking(), id);
         }
 
         public Identity GetSingle(Predicate<Identity> predicate)
         {
-            try
-            {
-                return _context.Identities.AsNoTracking().SingleOrDefault(a => predicate(a));
-            }
-            catch (InvalidOperationException)
-            {
-                throw new DomainException($"Multiple entites exist which match given predicate ({ predicate })");
-            }
+            return RepositoryHelper.GetSingle(_context.Identities.AsNoTracking(), predicate);
         }
 
         public void Add(Identity entity)
         {
-            _context.Identities.Add(entity);
-
-            _context.SaveChanges();
+            RepositoryHelper.Add(_context.Identities, _context, entity);
         }
 
         public void Update(Identity entity)
         {
-            try
-            {
-                _context.Identities.Update(entity);
-
-                _context.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                throw new ConcurrencyDomainException(entity, e);
-            }
+            RepositoryHelper.Update(_context.Identities, _context, entity);
         }
     }
 }

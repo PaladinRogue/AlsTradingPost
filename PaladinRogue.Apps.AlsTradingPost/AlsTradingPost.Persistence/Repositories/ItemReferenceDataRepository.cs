@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.Persistence;
-using Common.Domain.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityFramework.Repositories;
 
@@ -23,12 +22,16 @@ namespace AlsTradingPost.Persistence.Repositories
             return RepositoryHelper.Filter(_context.ItemReferenceData.AsNoTracking(), predicate);
         }
 
-        public IOrderedQueryable<ItemReferenceData> Get<TOrderByKey>(Predicate<ItemReferenceData> predicate = null, Func<ItemReferenceData, TOrderByKey> orderBy = null, bool orderByAscending = true)
+        public IOrderedQueryable<ItemReferenceData> Get<TOrderByKey>(
+            Predicate<ItemReferenceData> predicate = null,
+            Func<ItemReferenceData, TOrderByKey> orderBy = null,
+            bool orderByAscending = true)
         {
             return RepositoryHelper.OrderBy(Get(predicate), orderBy, orderByAscending);
         }
 
-        public IOrderedQueryable<ItemReferenceData> Get<TOrderByKey, TThenByKey>(Predicate<ItemReferenceData> predicate = null,
+        public IOrderedQueryable<ItemReferenceData> Get<TOrderByKey, TThenByKey>(
+            Predicate<ItemReferenceData> predicate = null,
             Func<ItemReferenceData, TOrderByKey> orderBy = null,
             bool orderByAscending = true,
             Func<ItemReferenceData, TThenByKey> thenBy = null,
@@ -37,99 +40,62 @@ namespace AlsTradingPost.Persistence.Repositories
             return RepositoryHelper.ThenBy(Get(predicate, orderBy, orderByAscending), thenBy, thenByAscending);
         }
 
-        public IEnumerable<ItemReferenceData> GetPage(int pageSize, int pageOffset, out int totalResults, Predicate<ItemReferenceData> predicate = null)
+        public IEnumerable<ItemReferenceData> GetPage(
+            int pageSize,
+            int pageOffset,
+            out int totalResults,
+            Predicate<ItemReferenceData> predicate = null)
         {
-            IEnumerable<ItemReferenceData> results = Get(predicate).ToList();
-
-            totalResults = results.Count();
-
-            return results.Skip(pageOffset).Take(pageSize);
+            return RepositoryHelper.GetPage(Get(predicate), pageSize, pageOffset, out totalResults);
         }
 
-        public IEnumerable<ItemReferenceData> GetPage<TOrderByKey>(int pageSize, int pageOffset, out int totalResults, Predicate<ItemReferenceData> predicate = null,
-            Func<ItemReferenceData, TOrderByKey> orderBy = null, bool orderByAscending = true)
+        public IEnumerable<ItemReferenceData> GetPage<TOrderByKey>(
+            int pageSize,
+            int pageOffset,
+            out int totalResults,
+            Predicate<ItemReferenceData> predicate = null,
+            Func<ItemReferenceData, TOrderByKey> orderBy = null,
+            bool orderByAscending = true)
         {
-            IEnumerable<ItemReferenceData> results = Get(predicate, orderBy, orderByAscending).ToList();
-
-            totalResults = results.Count();
-
-            return results.Skip(pageOffset).Take(pageSize);
+            return RepositoryHelper.GetPage(Get(predicate, orderBy, orderByAscending), pageSize, pageOffset, out totalResults);
         }
 
-        public IEnumerable<ItemReferenceData> GetPage<TOrderByKey, TThenByKey>(int pageSize,
-            int pageOffset, out int totalResults,
+        public IEnumerable<ItemReferenceData> GetPage<TOrderByKey, TThenByKey>(
+            int pageSize,
+            int pageOffset,
+            out int totalResults,
             Predicate<ItemReferenceData> predicate = null,
             Func<ItemReferenceData, TOrderByKey> orderBy = null,
             bool orderByAscending = true,
             Func<ItemReferenceData, TThenByKey> thenBy = null,
             bool thenByAscending = true)
         {
-            IEnumerable<ItemReferenceData> results = Get(predicate, orderBy, orderByAscending, thenBy, thenByAscending).ToList();
-
-            totalResults = results.Count();
-
-            return results.Skip(pageOffset).Take(pageSize);
+            return RepositoryHelper.GetPage(Get(predicate, orderBy, orderByAscending, thenBy, thenByAscending), pageSize, pageOffset, out totalResults);
         }
 
         public ItemReferenceData GetById(Guid id)
         {
-            try
-            {
-                return _context.ItemReferenceData.AsNoTracking().SingleOrDefault(a => a.Id == id);
-            }
-            catch (InvalidOperationException)
-            {
-                throw new DomainException("Multiple entites exist with given Id");
-            }
+            return RepositoryHelper.GetById(_context.ItemReferenceData.AsNoTracking(), id);
         }
 
         public ItemReferenceData GetSingle(Predicate<ItemReferenceData> predicate)
         {
-            try
-            {
-                return _context.ItemReferenceData.AsNoTracking().SingleOrDefault(a => predicate(a));
-            }
-            catch (InvalidOperationException)
-            {
-                throw new DomainException($"Multiple entites exist which match given predicate ({ predicate })");
-            }
+            return RepositoryHelper.GetSingle(_context.ItemReferenceData.AsNoTracking(), predicate);
         }
 
         public void Add(ItemReferenceData entity)
         {
-            _context.ItemReferenceData.Add(entity);
-
-            _context.SaveChanges();
+            RepositoryHelper.Add(_context.ItemReferenceData, _context, entity);
         }
 
         public void Update(ItemReferenceData entity)
         {
-            try
-            {
-                _context.ItemReferenceData.Update(entity);
-
-                _context.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                throw new ConcurrencyDomainException(entity, e);
-            }
+            RepositoryHelper.Update(_context.ItemReferenceData, _context, entity);
         }
 
         public void Delete(Guid id)
         {
-            ItemReferenceData entity = GetById(id);
-
-            try
-            {
-                _context.ItemReferenceData.Remove(entity);
-
-                _context.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                throw new ConcurrencyDomainException(entity, e);
-            }
+            RepositoryHelper.Delete(_context.ItemReferenceData, _context, id);
         }
     }
 }

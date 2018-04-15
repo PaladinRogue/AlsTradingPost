@@ -1,5 +1,6 @@
 ﻿using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.Persistence;
+using Persistence.EntityFramework.Repositories;
 
 namespace AlsTradingPost.Persistence.Repositories
 {
@@ -12,11 +13,9 @@ namespace AlsTradingPost.Persistence.Repositories
             _context = context;
         }
 
-        public void Add(Audit audit)
+        public void Add(Audit entity)
         {
-            _context.Audits.Add(audit);
-
-            _context.SaveChanges();
+            RepositoryHelper.AddUnVersioned(_context.Audits, _context, entity);
         }
     }
 }

@@ -11,10 +11,10 @@ namespace Authentication.Domain.ApplicationServices.Mappings
         public ApplicationDomainMappingProfile()
         {
             CreateMap<Application, ApplicationProjection>()
-                .IncludeBase<IEntity, IVersionedProjection>();
+                .IncludeBase<IVersionedEntity, IVersionedProjection>();
             CreateMap<CreateApplicationDdto, Application>();
             CreateMap<UpdateApplicationDdto, Application>()
-                .IncludeBase<IVersionedDdto, IEntity>();
+                .IncludeBase<IVersionedDdto, IVersionedEntity>();
         }
     }
 }

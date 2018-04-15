@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.Persistence;
-using Common.Domain.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityFramework.Repositories;
 
@@ -23,12 +22,16 @@ namespace AlsTradingPost.Persistence.Repositories
             return RepositoryHelper.Filter(_context.Items.AsNoTracking(), predicate);
         }
 
-        public IOrderedQueryable<Item> Get<TOrderByKey>(Predicate<Item> predicate = null, Func<Item, TOrderByKey> orderBy = null, bool orderByAscending = true)
+        public IOrderedQueryable<Item> Get<TOrderByKey>(
+            Predicate<Item> predicate = null,
+            Func<Item, TOrderByKey> orderBy = null,
+            bool orderByAscending = true)
         {
             return RepositoryHelper.OrderBy(Get(predicate), orderBy, orderByAscending);
         }
 
-        public IOrderedQueryable<Item> Get<TOrderByKey, TThenByKey>(Predicate<Item> predicate = null,
+        public IOrderedQueryable<Item> Get<TOrderByKey, TThenByKey>(
+            Predicate<Item> predicate = null,
             Func<Item, TOrderByKey> orderBy = null,
             bool orderByAscending = true,
             Func<Item, TThenByKey> thenBy = null,
@@ -37,99 +40,62 @@ namespace AlsTradingPost.Persistence.Repositories
             return RepositoryHelper.ThenBy(Get(predicate, orderBy, orderByAscending), thenBy, thenByAscending);
         }
 
-        public IEnumerable<Item> GetPage(int pageSize, int pageOffset, out int totalResults, Predicate<Item> predicate = null)
+        public IEnumerable<Item> GetPage(
+            int pageSize,
+            int pageOffset,
+            out int totalResults,
+            Predicate<Item> predicate = null)
         {
-            IEnumerable<Item> results = Get(predicate).ToList();
-
-            totalResults = results.Count();
-
-            return results.Skip(pageOffset).Take(pageSize);
+            return RepositoryHelper.GetPage(Get(predicate), pageSize, pageOffset, out totalResults);
         }
 
-        public IEnumerable<Item> GetPage<TOrderByKey>(int pageSize, int pageOffset, out int totalResults, Predicate<Item> predicate = null,
-            Func<Item, TOrderByKey> orderBy = null, bool orderByAscending = true)
+        public IEnumerable<Item> GetPage<TOrderByKey>(
+            int pageSize,
+            int pageOffset,
+            out int totalResults,
+            Predicate<Item> predicate = null,
+            Func<Item, TOrderByKey> orderBy = null,
+            bool orderByAscending = true)
         {
-            IEnumerable<Item> results = Get(predicate, orderBy, orderByAscending).ToList();
-
-            totalResults = results.Count();
-
-            return results.Skip(pageOffset).Take(pageSize);
+            return RepositoryHelper.GetPage(Get(predicate, orderBy, orderByAscending), pageSize, pageOffset, out totalResults);
         }
 
-        public IEnumerable<Item> GetPage<TOrderByKey, TThenByKey>(int pageSize,
-            int pageOffset, out int totalResults,
+        public IEnumerable<Item> GetPage<TOrderByKey, TThenByKey>(
+            int pageSize,
+            int pageOffset,
+            out int totalResults,
             Predicate<Item> predicate = null,
             Func<Item, TOrderByKey> orderBy = null,
             bool orderByAscending = true,
             Func<Item, TThenByKey> thenBy = null,
             bool thenByAscending = true)
         {
-            IEnumerable<Item> results = Get(predicate, orderBy, orderByAscending, thenBy, thenByAscending).ToList();
-
-            totalResults = results.Count();
-
-            return results.Skip(pageOffset).Take(pageSize);
+            return RepositoryHelper.GetPage(Get(predicate, orderBy, orderByAscending, thenBy, thenByAscending), pageSize, pageOffset, out totalResults);
         }
 
         public Item GetById(Guid id)
         {
-            try
-            {
-                return _context.Items.AsNoTracking().SingleOrDefault(a => a.Id == id);
-            }
-            catch (InvalidOperationException)
-            {
-                throw new DomainException("Multiple entites exist with given Id");
-            }
+            return RepositoryHelper.GetById(_context.Items.AsNoTracking(), id);
         }
 
         public Item GetSingle(Predicate<Item> predicate)
         {
-            try
-            {
-                return _context.Items.AsNoTracking().SingleOrDefault(a => predicate(a));
-            }
-            catch (InvalidOperationException)
-            {
-                throw new DomainException($"Multiple entites exist which match given predicate ({ predicate })");
-            }
+            return RepositoryHelper.GetSingle(_context.Items.AsNoTracking(), predicate);
         }
 
         public void Add(Item entity)
         {
-            _context.Items.Add(entity);
-
-            _context.SaveChanges();
+            RepositoryHelper.Add(_context.Items, _context, entity);
         }
 
         public void Update(Item entity)
         {
-            try
-            {
-                _context.Items.Update(entity);
-
-                _context.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                throw new ConcurrencyDomainException(entity, e);
-            }
+            RepositoryHelper.Update(_context.Items, _context, entity);
         }
 
         public void Delete(Guid id)
         {
-            Item entity = GetById(id);
-
-            try
-            {
-                _context.Items.Remove(entity);
-
-                _context.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                throw new ConcurrencyDomainException(entity, e);
-            }
+            RepositoryHelper.Delete(_context.Items, _context, id);
         }
     }
 }

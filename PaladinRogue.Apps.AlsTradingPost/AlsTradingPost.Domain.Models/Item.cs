@@ -1,9 +1,8 @@
-﻿using System;
-using Common.Domain.Models;
+﻿using Common.Domain.Models;
 
 namespace AlsTradingPost.Domain.Models
 {
-    public class Item : Entity
+    public class Item : VersionedEntity
     {
         public string Name { get; set; }
         public string Description { get; set; }

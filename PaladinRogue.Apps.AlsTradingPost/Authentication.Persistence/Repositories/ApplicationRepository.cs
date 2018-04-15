@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Linq;
 using Authentication.Domain.Models;
 using Authentication.Domain.Persistence;
-using Common.Domain.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using Persistence.EntityFramework.Repositories;
 
 namespace Authentication.Persistence.Repositories
 {
@@ -16,49 +15,24 @@ namespace Authentication.Persistence.Repositories
             _context = context;
         }
 
-        public Application GetById(Guid id)
-        {
-            try
-            {
-                return _context.Applications.AsNoTracking().SingleOrDefault(a => a.Id == id);
-            }
-            catch (InvalidOperationException)
-            {
-                throw new DomainException("Multiple entites exist with given Id");
-            }
-        }
+	    public Application GetById(Guid id)
+	    {
+	        return RepositoryHelper.GetById(_context.Applications.AsNoTracking(), id);
+	    }
 
 	    public Application GetSingle(Predicate<Application> predicate)
 	    {
-	        try
-	        {
-	            return _context.Applications.AsNoTracking().SingleOrDefault(a => predicate(a));
-	        }
-	        catch (InvalidOperationException)
-	        {
-	            throw new DomainException($"Multiple entites exist which match given predicate ({ predicate })");
-	        }
+	        return RepositoryHelper.GetSingle(_context.Applications.AsNoTracking(), predicate);
 	    }
 
 	    public void Add(Application entity)
-        {
-            _context.Applications.Add(entity);
+	    {
+	        RepositoryHelper.Add(_context.Applications, _context, entity);
+	    }
 
-            _context.SaveChanges();
-        }
-
-        public void Update(Application entity)
-        {
-            try
-            {
-                _context.Applications.Update(entity);
-
-                _context.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                throw new ConcurrencyDomainException(entity, e);
-            }
-        }
-	}
+	    public void Update(Application entity)
+	    {
+	        RepositoryHelper.Update(_context.Applications, _context, entity);
+	    }
+    }
 }

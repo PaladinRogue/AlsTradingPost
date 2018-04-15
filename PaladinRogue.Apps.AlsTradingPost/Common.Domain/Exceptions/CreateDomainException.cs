@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Reflection;
 using Common.Domain.Models.Interfaces;
-using Common.Resources.Concurrency;
 using Common.Resources.Concurrency.Interfaces;
 
 namespace Common.Domain.Exceptions
@@ -9,6 +8,10 @@ namespace Common.Domain.Exceptions
     public class CreateDomainException : DomainException
     {
         public CreateDomainException(IEntity entity, Exception innerException)
+            : base(_formatCreateException(entity.GetType(), entity.Id, null), innerException)
+        {
+        }
+        public CreateDomainException(IVersionedEntity entity, Exception innerException)
             : base(_formatCreateException(entity.GetType(), entity.Id, entity.Version), innerException)
         {
         }
@@ -30,7 +33,9 @@ namespace Common.Domain.Exceptions
                 Array.Reverse(version);
             }
 
-            return $"Failed to create entity: { type.Name } with Id: { id } and Version: { BitConverter.ToInt32(version, 0) }";
+            string versionText = version == null ? "." : $"and Version: {BitConverter.ToInt32(version, 0)}.";
+
+            return $"Failed to create entity: { type.Name } with Id: { id } { versionText }";
         }
     }
 }

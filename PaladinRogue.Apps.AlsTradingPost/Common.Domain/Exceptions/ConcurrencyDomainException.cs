@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Reflection;
 using Common.Domain.Models.Interfaces;
-using Common.Resources.Concurrency;
 using Common.Resources.Concurrency.Interfaces;
 
 namespace Common.Domain.Exceptions
 {
     public class ConcurrencyDomainException : DomainException
     {
-        public ConcurrencyDomainException(IEntity entity, Exception innerException)
+        public ConcurrencyDomainException(IVersionedEntity entity, Exception innerException)
             : base(_formatConcurrencyException(entity.GetType(), entity.Id, entity.Version), innerException)
         {
             
