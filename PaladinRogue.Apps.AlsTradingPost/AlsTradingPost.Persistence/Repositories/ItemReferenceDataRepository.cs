@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.Persistence;
 using Common.Domain.Exceptions;
@@ -18,57 +17,23 @@ namespace AlsTradingPost.Persistence.Repositories
             _context = context;
         }
 
-        private IQueryable<ItemReferenceData> _filter(Predicate<ItemReferenceData> predicate)
+        public IQueryable<ItemReferenceData> Get(Predicate<ItemReferenceData> predicate = null)
         {
-            IQueryable<ItemReferenceData> results = _context.ItemReferenceData.AsNoTracking();
-
-            if (predicate != null)
-            {
-                results = results.Where(i => predicate(i));
-            }
-
-            return results;
+            return RepositoryHelper.Filter(_context.ItemReferenceData.AsNoTracking(), predicate);
         }
 
-        private static IOrderedQueryable<ItemReferenceData> _orderBy<TOrderByKey>(IQueryable<ItemReferenceData> results,
-            Expression<Func<ItemReferenceData, TOrderByKey>> orderBy, bool orderByAscending)
+        public IOrderedQueryable<ItemReferenceData> Get<TOrderByKey>(Predicate<ItemReferenceData> predicate = null, Func<ItemReferenceData, TOrderByKey> orderBy = null, bool orderByAscending = true)
         {
-            if (orderBy != null)
-            {
-                results = orderByAscending ? results.OrderBy(orderBy) : results.OrderByDescending(orderBy);
-            }
-
-            return (IOrderedQueryable<ItemReferenceData>)results;
+            return RepositoryHelper.OrderBy(Get(predicate), orderBy, orderByAscending);
         }
 
-        private static IEnumerable<ItemReferenceData> _thenBy<TThenByKey>(IOrderedQueryable<ItemReferenceData> results,
-            Expression<Func<ItemReferenceData, TThenByKey>> thenBy, bool thenByAscending)
-        {
-            if (thenBy != null)
-            {
-                results = thenByAscending ? results.ThenBy(thenBy) : results.ThenByDescending(thenBy);
-            }
-
-            return results;
-        }
-
-        public IEnumerable<ItemReferenceData> Get(Predicate<ItemReferenceData> predicate = null)
-        {
-            return _filter(predicate);
-        }
-
-        public IEnumerable<ItemReferenceData> Get<TOrderByKey>(Predicate<ItemReferenceData> predicate = null, Expression<Func<ItemReferenceData, TOrderByKey>> orderBy = null, bool orderByAscending = true)
-        {
-            return _orderBy(_filter(predicate), orderBy, orderByAscending);
-        }
-
-        public IEnumerable<ItemReferenceData> Get<TOrderByKey, TThenByKey>(Predicate<ItemReferenceData> predicate = null,
-            Expression<Func<ItemReferenceData, TOrderByKey>> orderBy = null,
+        public IOrderedQueryable<ItemReferenceData> Get<TOrderByKey, TThenByKey>(Predicate<ItemReferenceData> predicate = null,
+            Func<ItemReferenceData, TOrderByKey> orderBy = null,
             bool orderByAscending = true,
-            Expression<Func<ItemReferenceData, TThenByKey>> thenBy = null,
+            Func<ItemReferenceData, TThenByKey> thenBy = null,
             bool thenByAscending = true)
         {
-            return _thenBy(_orderBy(_filter(predicate), orderBy, orderByAscending), thenBy, thenByAscending);
+            return RepositoryHelper.ThenBy(Get(predicate, orderBy, orderByAscending), thenBy, thenByAscending);
         }
 
         public IEnumerable<ItemReferenceData> GetPage(int pageSize, int pageOffset, out int totalResults, Predicate<ItemReferenceData> predicate = null)
@@ -81,7 +46,7 @@ namespace AlsTradingPost.Persistence.Repositories
         }
 
         public IEnumerable<ItemReferenceData> GetPage<TOrderByKey>(int pageSize, int pageOffset, out int totalResults, Predicate<ItemReferenceData> predicate = null,
-            Expression<Func<ItemReferenceData, TOrderByKey>> orderBy = null, bool orderByAscending = true)
+            Func<ItemReferenceData, TOrderByKey> orderBy = null, bool orderByAscending = true)
         {
             IEnumerable<ItemReferenceData> results = Get(predicate, orderBy, orderByAscending).ToList();
 
@@ -93,9 +58,9 @@ namespace AlsTradingPost.Persistence.Repositories
         public IEnumerable<ItemReferenceData> GetPage<TOrderByKey, TThenByKey>(int pageSize,
             int pageOffset, out int totalResults,
             Predicate<ItemReferenceData> predicate = null,
-            Expression<Func<ItemReferenceData, TOrderByKey>> orderBy = null,
+            Func<ItemReferenceData, TOrderByKey> orderBy = null,
             bool orderByAscending = true,
-            Expression<Func<ItemReferenceData, TThenByKey>> thenBy = null,
+            Func<ItemReferenceData, TThenByKey> thenBy = null,
             bool thenByAscending = true)
         {
             IEnumerable<ItemReferenceData> results = Get(predicate, orderBy, orderByAscending, thenBy, thenByAscending).ToList();

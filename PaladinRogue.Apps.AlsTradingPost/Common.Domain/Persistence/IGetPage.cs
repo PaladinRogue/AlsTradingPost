@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace Common.Domain.Persistence
 {
-    public interface IGetPage<T>
+    public interface IGetPage<out T>
     {
         /// <summary>Gets all entities of type <typeparamref name="T"/> which match predicate <paramref name="predicate"/>.</summary>
         /// <param name="pageSize">The page size of the entities to return.</param>
@@ -25,7 +24,7 @@ namespace Common.Domain.Persistence
         /// <returns>Returns an enumerable entities of type <typeparamref name="T"/></returns>
         IEnumerable<T> GetPage<TOrderByKey>(int pageSize, int pageOffset, out int totalResults,
             Predicate<T> predicate = null,
-            Expression<Func<T, TOrderByKey>> orderBy = null,
+            Func<T, TOrderByKey> orderBy = null,
             bool orderByAscending = true);
 
         /// <summary>Gets all entities of type <typeparamref name="T"/> which match predicate <paramref name="predicate"/>.</summary>
@@ -40,9 +39,9 @@ namespace Common.Domain.Persistence
         /// <returns>Returns an enumerable entities of type <typeparamref name="T"/></returns>
         IEnumerable<T> GetPage<TOrderByKey, TThenByKey>(int pageSize, int pageOffset, out int totalResults,
             Predicate<T> predicate = null,
-            Expression<Func<T, TOrderByKey>> orderBy = null,
+            Func<T, TOrderByKey> orderBy = null,
             bool orderByAscending = true,
-            Expression<Func<T, TThenByKey>> thenBy = null,
+            Func<T, TThenByKey> thenBy = null,
             bool thenByAscending = true);
     }
 }

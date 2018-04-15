@@ -19,45 +19,12 @@ namespace AlsTradingPost.Domain.ItemReferenceDataDomain
             _itemReferenceDataRepository = itemReferenceDataRepository;
         }
 
-        public ItemReferenceDataPagedCollectionDdto GetPage(IPaginationDdto paginationDdto, Predicate<ItemReferenceData> predicate = null)
-        {
-            IEnumerable<ItemReferenceData> results = _itemReferenceDataRepository.GetPage(
-                paginationDdto.PageSize,
-                paginationDdto.PageOffset,
-                out int totalResults,
-                predicate
-            );
-
-            return ItemReferenceDataPagedCollectionDdto.Create(
-                Mapper.Map<IEnumerable<ItemReferenceData>, IList<ItemReferenceDataSummaryProjection>>(results),
-                totalResults, paginationDdto
-            );
-        }
-
-        public ItemReferenceDataPagedCollectionDdto GetPage<TOrderByKey>(IPaginationDdto paginationDdto, Predicate<ItemReferenceData> predicate = null,
-            Expression<Func<ItemReferenceData, TOrderByKey>> orderBy = null, bool orderByAscending = true)
-        {
-            IEnumerable<ItemReferenceData> results = _itemReferenceDataRepository.GetPage(
-                paginationDdto.PageSize,
-                paginationDdto.PageOffset,
-                out int totalResults,
-                predicate,
-                orderBy,
-                orderByAscending
-            );
-
-            return ItemReferenceDataPagedCollectionDdto.Create(
-                Mapper.Map<IEnumerable<ItemReferenceData>, IList<ItemReferenceDataSummaryProjection>>(results),
-                totalResults, paginationDdto
-            );
-        }
-
-        public ItemReferenceDataPagedCollectionDdto GetPage<TOrderByKey, TThenByKey>(
+        public ItemReferenceDataPagedCollectionDdto GetPage(
             IPaginationDdto paginationDdto,
             Predicate<ItemReferenceData> predicate = null,
-            Expression<Func<ItemReferenceData, TOrderByKey>> orderBy = null,
+            string orderBy = null,
             bool orderByAscending = true,
-            Expression<Func<ItemReferenceData, TThenByKey>> thenBy = null,
+            string thenBy = null,
             bool thenByAscending = true)
         {
             IEnumerable<ItemReferenceData> results = _itemReferenceDataRepository.GetPage(
@@ -65,9 +32,9 @@ namespace AlsTradingPost.Domain.ItemReferenceDataDomain
                 paginationDdto.PageOffset,
                 out int totalResults,
                 predicate,
-                orderBy,
+                CreatePropertyAccessor<ItemReferenceData>(orderBy),
                 orderByAscending,
-                thenBy,
+                CreatePropertyAccessor<ItemReferenceData>(thenBy),
                 thenByAscending
             );
 
@@ -75,6 +42,18 @@ namespace AlsTradingPost.Domain.ItemReferenceDataDomain
                 Mapper.Map<IEnumerable<ItemReferenceData>, IList<ItemReferenceDataSummaryProjection>>(results),
                 totalResults, paginationDdto
             );
+        }
+
+        private static Func<TIn, object> CreatePropertyAccessor<TIn>(string propertyName)
+        {
+            if (string.IsNullOrEmpty(propertyName))
+            {
+                return null;
+            }
+
+            ParameterExpression param = Expression.Parameter(typeof(TIn));
+            MemberExpression body = Expression.PropertyOrField(param, propertyName);
+            return Expression.Lambda<Func<TIn, object>>(body, param).Compile();
         }
     }
 }

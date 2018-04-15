@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.Persistence;
 using Common.Domain.Exceptions;
@@ -18,57 +17,23 @@ namespace AlsTradingPost.Persistence.Repositories
             _context = context;
         }
 
-        private IQueryable<User> _filter(Predicate<User> predicate)
+        public IQueryable<User> Get(Predicate<User> predicate = null)
         {
-            IQueryable<User> results = _context.Users.AsNoTracking();
-
-            if (predicate != null)
-            {
-                results = results.Where(i => predicate(i));
-            }
-
-            return results;
+            return RepositoryHelper.Filter(_context.Users.AsNoTracking(), predicate);
         }
 
-        private static IOrderedQueryable<User> _orderBy<TOrderByKey>(IQueryable<User> results,
-            Expression<Func<User, TOrderByKey>> orderBy, bool orderByAscending)
+        public IOrderedQueryable<User> Get<TOrderByKey>(Predicate<User> predicate = null, Func<User, TOrderByKey> orderBy = null, bool orderByAscending = true)
         {
-            if (orderBy != null)
-            {
-                results = orderByAscending ? results.OrderBy(orderBy) : results.OrderByDescending(orderBy);
-            }
-
-            return (IOrderedQueryable<User>)results;
+            return RepositoryHelper.OrderBy(Get(predicate), orderBy, orderByAscending);
         }
 
-        private static IEnumerable<User> _thenBy<TThenByKey>(IOrderedQueryable<User> results,
-            Expression<Func<User, TThenByKey>> thenBy, bool thenByAscending)
-        {
-            if (thenBy != null)
-            {
-                results = thenByAscending ? results.ThenBy(thenBy) : results.ThenByDescending(thenBy);
-            }
-
-            return results;
-        }
-
-        public IEnumerable<User> Get(Predicate<User> predicate = null)
-        {
-            return _filter(predicate);
-        }
-
-        public IEnumerable<User> Get<TOrderByKey>(Predicate<User> predicate = null, Expression<Func<User, TOrderByKey>> orderBy = null, bool orderByAscending = true)
-        {
-            return _orderBy(_filter(predicate), orderBy, orderByAscending);
-        }
-
-        public IEnumerable<User> Get<TOrderByKey, TThenByKey>(Predicate<User> predicate = null,
-            Expression<Func<User, TOrderByKey>> orderBy = null,
+        public IOrderedQueryable<User> Get<TOrderByKey, TThenByKey>(Predicate<User> predicate = null,
+            Func<User, TOrderByKey> orderBy = null,
             bool orderByAscending = true,
-            Expression<Func<User, TThenByKey>> thenBy = null,
+            Func<User, TThenByKey> thenBy = null,
             bool thenByAscending = true)
         {
-            return _thenBy(_orderBy(_filter(predicate), orderBy, orderByAscending), thenBy, thenByAscending);
+            return RepositoryHelper.ThenBy(Get(predicate, orderBy, orderByAscending), thenBy, thenByAscending);
         }
 
         public IEnumerable<User> GetPage(int pageSize, int pageOffset, out int totalResults, Predicate<User> predicate = null)
@@ -81,7 +46,7 @@ namespace AlsTradingPost.Persistence.Repositories
         }
 
         public IEnumerable<User> GetPage<TOrderByKey>(int pageSize, int pageOffset, out int totalResults, Predicate<User> predicate = null,
-            Expression<Func<User, TOrderByKey>> orderBy = null, bool orderByAscending = true)
+            Func<User, TOrderByKey> orderBy = null, bool orderByAscending = true)
         {
             IEnumerable<User> results = Get(predicate, orderBy, orderByAscending).ToList();
 
@@ -93,9 +58,9 @@ namespace AlsTradingPost.Persistence.Repositories
         public IEnumerable<User> GetPage<TOrderByKey, TThenByKey>(int pageSize,
             int pageOffset, out int totalResults,
             Predicate<User> predicate = null,
-            Expression<Func<User, TOrderByKey>> orderBy = null,
+            Func<User, TOrderByKey> orderBy = null,
             bool orderByAscending = true,
-            Expression<Func<User, TThenByKey>> thenBy = null,
+            Func<User, TThenByKey> thenBy = null,
             bool thenByAscending = true)
         {
             IEnumerable<User> results = Get(predicate, orderBy, orderByAscending, thenBy, thenByAscending).ToList();
