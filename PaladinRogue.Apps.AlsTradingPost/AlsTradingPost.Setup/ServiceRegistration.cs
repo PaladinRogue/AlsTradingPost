@@ -2,6 +2,8 @@
 using AlsTradingPost.Application.AdminApplication.Interfaces;
 using AlsTradingPost.Application.ItemReferenceDataApplication;
 using AlsTradingPost.Application.ItemReferenceDataApplication.Interfaces;
+using AlsTradingPost.Application.ItemReferenceDataApplication.Models;
+using AlsTradingPost.Application.ItemReferenceDataApplication.Validators;
 using AlsTradingPost.Application.UserApplication;
 using AlsTradingPost.Application.UserApplication.Interfaces;
 using AlsTradingPost.Domain.AdminDomain;
@@ -21,13 +23,14 @@ using Common.Api.Encryption;
 using Common.Api.Encryption.Interfaces;
 using Common.Api.HttpClient;
 using Common.Api.HttpClient.Interfaces;
+using Common.Application.Identity;
 using Common.Domain.Concurrency;
 using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Concurrency.Services;
 using Common.Domain.Concurrency.Services.Interfaces;
-using Common.Resources.Concurrency;
 using Common.Resources.Concurrency.Interfaces;
 using Common.Resources.Transactions;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -38,7 +41,14 @@ namespace AlsTradingPost.Setup
 {
   public class ServiceRegistration
     {
-        public static void RegisterApplicationServices(IConfiguration configuration, IServiceCollection services)
+        public static void RegisterValidators(IServiceCollection services)
+        {
+            ValidatorOptions.LanguageManager.Enabled = false;
+            
+            services.AddTransient<IValidator<ItemReferenceDataSearchAdto>, ItemReferenceDataSearchAdtoValidator>();
+        }
+
+        public static void RegisterApplicationServices(IServiceCollection services)
         {
             services.AddSingleton<IEncryptionFactory, EncryptionFactory>();
             services.AddSingleton<IHttpClientFactory, HttpClientFactory>();
@@ -50,7 +60,7 @@ namespace AlsTradingPost.Setup
             services.AddScoped<IItemReferenceDataApplicationService, ItemReferenceDataApplicationService>();
         }
 
-        public static void RegisterDomainServices(IConfiguration configuration, IServiceCollection services)
+        public static void RegisterDomainServices(IServiceCollection services)
         {
             services.AddScoped(typeof(IConcurrencyQueryService<>), typeof(ConcurrencyQueryService<>));
             services.AddScoped<IAuditCommandService, AuditCommandService>();
@@ -80,7 +90,7 @@ namespace AlsTradingPost.Setup
             services.AddTransient<ITransactionFactory, TransactionFactory>();
         }
 
-        public static void RegisterProviders(IConfiguration configuration, IServiceCollection services)
+        public static void RegisterProviders(IServiceCollection services)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<ICurrentIdentityProvider, CurrentIdentityProvider>();

@@ -1,12 +1,12 @@
 ﻿using System;
+using Common.Application.Exceptions;
 using Common.Resources.Authentication;
 using Common.Resources.Concurrency.Interfaces;
-using Common.Resources.Exceptions;
 using Common.Resources.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
-namespace Common.Resources.Concurrency
+namespace Common.Application.Identity
 {
     public class CurrentIdentityProvider : ICurrentIdentityProvider
     {

@@ -5,9 +5,9 @@ using AlsTradingPost.Domain.UserDomain.Interfaces;
 using AlsTradingPost.Domain.UserDomain.Models;
 using AlsTradingPost.Resources;
 using AutoMapper;
+using Common.Application.Exceptions;
 using Common.Domain.Exceptions;
 using Common.Resources.Concurrency.Interfaces;
-using Common.Resources.Exceptions;
 using Microsoft.Extensions.Logging;
 
 namespace AlsTradingPost.Application.UserApplication

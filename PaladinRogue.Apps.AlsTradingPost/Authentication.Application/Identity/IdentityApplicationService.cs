@@ -3,10 +3,9 @@ using Authentication.Application.Identity.Models;
 using Authentication.Domain.IdentityServices.Interfaces;
 using Authentication.Domain.IdentityServices.Models;
 using AutoMapper;
-using Common.Application;
+using Common.Application.Exceptions;
 using Common.Domain.Concurrency.Services.Interfaces;
 using Common.Domain.Exceptions;
-using Common.Resources.Exceptions;
 using Microsoft.Extensions.Logging;
 
 namespace Authentication.Application.Identity

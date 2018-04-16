@@ -3,6 +3,7 @@ using Authentication.Setup;
 using Authentication.Setup.Settings;
 using AutoMapper;
 using Common.Api.Extensions;
+using Common.Api.ResourceFormatter;
 using Common.Api.Settings;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Messaging.Message.Interfaces;
@@ -35,7 +36,7 @@ namespace Authentication.Api
 
             services.Configure<MvcOptions>(options =>
             {
-                options.UseCustomJsonOutputFormatter()
+                options.UseJsonOutputFormatter<CustomJsonOutputFormatter>(services)
                     .UseConcurrencyFilter()
                     .RequireHttps();
             });

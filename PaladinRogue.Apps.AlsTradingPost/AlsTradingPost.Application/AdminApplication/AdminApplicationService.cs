@@ -4,9 +4,9 @@ using AlsTradingPost.Application.AdminApplication.Models;
 using AlsTradingPost.Domain.AdminDomain.Interfaces;
 using AlsTradingPost.Domain.AdminDomain.Models;
 using AutoMapper;
+using Common.Application.Exceptions;
 using Common.Domain.Concurrency.Services.Interfaces;
 using Common.Domain.Exceptions;
-using Common.Resources.Exceptions;
 using Microsoft.Extensions.Logging;
 
 namespace AlsTradingPost.Application.AdminApplication

@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Threading.Tasks;
-using Common.Resources.Exceptions;
+using Common.Application.Exceptions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Logging;
 
 namespace Common.Api.Exceptions
@@ -27,11 +29,23 @@ namespace Common.Api.Exceptions
             _logger = logger;
         }
 
-        public async Task Invoke(HttpContext context)
+        public async Task Invoke(HttpContext context, JsonOutputFormatter jsonOutputFormatter)
         {
             try
             {
                 await _next(context);
+            }
+            catch (ValidationAppException ex)
+            {
+                context.Response.Clear();
+                context.Response.ContentType = context.Request.ContentType;
+                context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+
+                using (StringWriter stringWriter = new StringWriter())
+                {
+                    jsonOutputFormatter.WriteObject(stringWriter, ex.ValidationResult);
+                    await context.Response.WriteAsync(stringWriter.ToString());
+                }
             }
             catch (AppException ex)
             {
@@ -54,7 +68,7 @@ namespace Common.Api.Exceptions
                 context.Response.Clear();
 
                 _logger.LogInformation(ex, "Re-written pre condition failed exception");
-                context.Response.StatusCode = (int)ExceptionTypeDictionary[ExceptionType.Concurrency];
+                context.Response.StatusCode = (int) ExceptionTypeDictionary[ExceptionType.Concurrency];
 
                 await context.Response.WriteAsync(ex.Message);
             }
@@ -63,7 +77,7 @@ namespace Common.Api.Exceptions
                 context.Response.Clear();
 
                 _logger.LogInformation(ex, "Re-written bad request exception");
-                context.Response.StatusCode = (int)ExceptionTypeDictionary[ExceptionType.BadRequest];
+                context.Response.StatusCode = (int) ExceptionTypeDictionary[ExceptionType.BadRequest];
 
                 await context.Response.WriteAsync(ex.Message);
             }

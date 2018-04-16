@@ -3,9 +3,10 @@ using AlsTradingPost.Setup;
 using AlsTradingPost.Setup.Infrastructure.Settings;
 using AutoMapper;
 using Common.Api.Extensions;
+using Common.Api.ResourceFormatter;
 using Common.Api.Settings;
+using Common.Application.Identity;
 using Common.Domain.DomainEvents.Interfaces;
-using Common.Resources.Concurrency;
 using Common.Resources.Concurrency.Interfaces;
 using Common.Resources.Logging;
 using Common.Setup.Settings;
@@ -35,7 +36,7 @@ namespace AlsTradingPost.Api
 
             services.Configure<MvcOptions>(options =>
             {
-                options.UseCustomJsonOutputFormatter()
+                options.UseJsonOutputFormatter<CustomJsonOutputFormatter>(services)
                     .UseConcurrencyFilter()
                     .UseAppAccessAuthorizeFilter()
                     .RequireHttps();
@@ -52,11 +53,12 @@ namespace AlsTradingPost.Api
             EventRegistration.RegisterHandlers(services);
 
             MessageRegistration.RegisterSubscribers(services);
-            ServiceRegistration.RegisterApplicationServices(Configuration, services);
-            ServiceRegistration.RegisterDomainServices(Configuration, services);
+            ServiceRegistration.RegisterValidators(services);
+            ServiceRegistration.RegisterApplicationServices( services);
+            ServiceRegistration.RegisterDomainServices(services);
             ServiceRegistration.RegisterPersistenceServices(Configuration, services);
 
-            ServiceRegistration.RegisterProviders(Configuration, services);
+            ServiceRegistration.RegisterProviders(services);
 
             services.AddAutoMapper(MappingRegistration.RegisterMappers);
 
@@ -83,7 +85,7 @@ namespace AlsTradingPost.Api
             app.UseRewriter(options);
 
             MiddlewareRegistration.Register(app);
-
+            
             app.UseAuthentication();
             app.UseMvc();
         }
