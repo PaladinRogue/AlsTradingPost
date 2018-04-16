@@ -9,10 +9,6 @@ namespace AlsTradingPost.Application.ItemReferenceDataApplication.Validators
         {
             RuleFor(x => x.Name)
                 .Length(3, 50);
-
-            RuleFor(x => x.PageSize)
-                .GreaterThan(15)
-                .LessThan(5);
         }
     }
 }
