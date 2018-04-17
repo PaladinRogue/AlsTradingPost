@@ -1,4 +1,5 @@
-﻿using Common.Api.Pagination;
+﻿using Common.Api.Pagination.Interfaces;
+using Common.Api.ResourceFormatter.Attributes.Meta;
 using Common.Api.Sorting;
 using Common.Resources.Extensions;
 
@@ -13,7 +14,8 @@ namespace AlsTradingPost.Api.ItemReferenceData
             OrderBy = nameof(Name).ToCamelCase();
             OrderByAscending = true;
         }
-
+        
+        [Length(3, 50)]
         public string Name { get; set; }
         public int PageOffset { get; set; }
         public int PageSize { get; set; }

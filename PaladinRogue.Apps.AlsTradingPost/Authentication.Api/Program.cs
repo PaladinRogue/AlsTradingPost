@@ -1,5 +1,4 @@
-﻿using Common.Resources.Extensions;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace Authentication.Api
@@ -14,8 +13,10 @@ namespace Authentication.Api
 
 	    public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+	            .UseUrls("http://localhost:1002")
                 .UseStartup<Startup>()
-				.UseIISIntegration()
+	            .UseKestrel()
+	            .UseIISIntegration()
                 .Build();
     }
 }

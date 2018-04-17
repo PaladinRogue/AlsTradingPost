@@ -22,14 +22,20 @@ namespace AlsTradingPost.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration config)
+        public Startup(IHostingEnvironment environment)
         {
-            Configuration = config;
+            IConfigurationBuilder builder = new ConfigurationBuilder()
+                .SetBasePath(environment.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("secrets.json", optional: false, reloadOnChange: true);
+
+            Configuration = builder.Build();
+            Environment = environment;
         }
 
+        public IHostingEnvironment Environment { get; }
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
@@ -38,8 +44,12 @@ namespace AlsTradingPost.Api
             {
                 options.UseJsonOutputFormatter<CustomJsonOutputFormatter>(services)
                     .UseConcurrencyFilter()
-                    .UseAppAccessAuthorizeFilter()
-                    .RequireHttps();
+                    .UseAppAccessAuthorizeFilter();
+
+                if (!Environment.IsDevelopment())
+                {
+                    options.RequireHttps();
+                }
             });
             
             services.AddScoped<ICurrentIdentityProvider, CurrentIdentityProvider>();
@@ -65,9 +75,7 @@ namespace AlsTradingPost.Api
             return services.BuildServiceProvider();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app,
-            IHostingEnvironment env,
             ILoggerFactory loggerFactory,
             IDomainEventHandlerFactory domainEventHandlerFactory)
         {
@@ -75,14 +83,16 @@ namespace AlsTradingPost.Api
 
             loggerFactory.AddLog4Net();
 
-            if (env.IsDevelopment())
+            if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            RewriteOptions options = new RewriteOptions()
-                .AddRedirectToHttps();
-            app.UseRewriter(options);
+            else
+            {
+                RewriteOptions options = new RewriteOptions()
+                    .AddRedirectToHttps();
+                app.UseRewriter(options);
+            }
 
             MiddlewareRegistration.Register(app);
             

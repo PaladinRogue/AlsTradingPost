@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <UserSecretsId>d2adf2e6-ac45-4909-a2a1-79646895e1ba</UserSecretsId>
     <ApplicationIcon />
     <OutputType>Exe</OutputType>
     <StartupObject />
@@ -29,9 +28,4 @@
     <ProjectReference Include="..\Common.Resources\Common.Resources.csproj" />
     <ProjectReference Include="..\Common.Setup\Common.Setup.csproj" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
-  </ItemGroup>
-
 </Project>

@@ -25,6 +25,7 @@ namespace Common.Api.ResourceFormatter
                 await base.WriteResponseBodyAsync(context, selectedEncoding);
             }
 
+            //TODO nothing returns ieneumerable anymore
             if (context.ObjectType.GetInterfaces().Any(t => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IEnumerable<>)))
             {
                 await WriteResponse(context, selectedEncoding, new CollectionResource(context));
