@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Api.ResourceFormatter.Attributes.Resource
+namespace Common.Api.ResourceFormatter.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class ResourceNameAttribute : Attribute

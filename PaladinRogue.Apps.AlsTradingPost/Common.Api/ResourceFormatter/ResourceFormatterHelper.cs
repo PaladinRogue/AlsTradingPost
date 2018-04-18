@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using Common.Api.ResourceFormatter.Attributes.Meta;
-using Common.Api.ResourceFormatter.Attributes.Resource;
+using Common.Api.Pagination.Interfaces;
+using Common.Api.ResourceFormatter.Attributes;
+using Common.Api.Sorting;
 using Common.Api.Validation;
+using Common.Api.Validation.Attributes;
+using Common.Resources.Extensions;
+using Microsoft.Data.OData.Query.SemanticAst;
 
 namespace Common.Api.ResourceFormatter
 {
@@ -32,7 +36,8 @@ namespace Common.Api.ResourceFormatter
         
         public static IDictionary<string, object> FormatResourceMeta(object resource)
         {
-            Dictionary<string, object> properties = new Dictionary<string, object>();
+            Dictionary<string, IDictionary<string, object>> properties = new Dictionary<string, IDictionary<string, object>>();
+            List<string> sortableFields = new List<string>();
             
             foreach (PropertyDescriptor property in TypeDescriptor.GetProperties(resource.GetType()))
             {
@@ -40,28 +45,54 @@ namespace Common.Api.ResourceFormatter
 
                 foreach (RequiredAttribute requiredAttribute in property.Attributes.OfType<RequiredAttribute>())
                 {
-                    constraints.Add(ValidationTypes.Required, requiredAttribute.Required);
+                    constraints.Add(ValidationMeta.Required, requiredAttribute.IsRequired);
                 }
 
                 foreach (MinLengthAttribute minLengthAttribute in property.Attributes.OfType<MinLengthAttribute>())
                 {
-                    constraints.Add(ValidationTypes.MinLength, minLengthAttribute.MinLength);
+                    constraints.Add(ValidationMeta.MinLength, minLengthAttribute.MinLength);
                 }
 
                 foreach (MaxLengthAttribute maxLengthAttribute in property.Attributes.OfType<MaxLengthAttribute>())
                 {
-                    constraints.Add(ValidationTypes.MaxLength, maxLengthAttribute.MaxLength);
+                    constraints.Add(ValidationMeta.MaxLength, maxLengthAttribute.MaxLength);
                 }
 
                 foreach (LengthAttribute lengthAttribute in property.Attributes.OfType<LengthAttribute>())
                 {
-                    constraints.Add(ValidationTypes.MaxLength, lengthAttribute.MaxLength);
-                    constraints.Add(ValidationTypes.MinLength, lengthAttribute.MinLength);
+                    constraints.Add(ValidationMeta.MaxLength, lengthAttribute.MaxLength);
+                    constraints.Add(ValidationMeta.MinLength, lengthAttribute.MinLength);
                 }
-                
+
+                foreach (HiddenAttribute hiddenAttribute in property.Attributes.OfType<HiddenAttribute>())
+                {
+                    constraints.Add(FieldMeta.Hidden, hiddenAttribute.IsHidden);
+                }
+
+                sortableFields.AddRange(
+                    from sortableAttribute in property.Attributes.OfType<SortableAttribute>()
+                    where sortableAttribute.IsSortable
+                    select property.Name.ToCamelCase()
+                );
+
                 if (constraints.Any())
                 {
                     properties.Add(property.Name, constraints);
+                }
+            }
+
+            if (resource is IOrderByTemplate orderByTemplate)
+            {
+                const string propertyName = nameof(orderByTemplate.OrderBy);
+
+                if (properties.ContainsKey(propertyName))
+                {
+                    properties[propertyName].Add(FieldMeta.Values, sortableFields);
+                }
+                else
+                {
+                    properties.Add(propertyName, new Dictionary<string, object>());
+                    properties[propertyName].Add(FieldMeta.Values, sortableFields);
                 }
             }
 
@@ -69,7 +100,7 @@ namespace Common.Api.ResourceFormatter
 
             return new Dictionary<string, object> {
                 { resourceNameAttribute?.ResourceName ?? FormatResourceName(resource.GetType().Name), properties }
-            };;
+            };
         }
     }
 }
