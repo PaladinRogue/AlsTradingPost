@@ -1,4 +1,5 @@
-﻿using AlsTradingPost.Application.ItemReferenceDataApplication.Models;
+﻿using AlsTradingPost.Api.Controllers;
+using AlsTradingPost.Application.ItemReferenceDataApplication.Models;
 using AutoMapper;
 
 namespace AlsTradingPost.Api.ItemReferenceData
@@ -8,6 +9,7 @@ namespace AlsTradingPost.Api.ItemReferenceData
         public ItemReferenceDataApiMappingProfile()
         {
             CreateMap<ItemReferenceDataSummaryAdto, ItemReferenceDataSummaryResource>();
+            CreateMap<ItemReferenceDataPagedCollectionAdto, ItemReferenceDataPagedCollectionResource>();
         }
     }
 }

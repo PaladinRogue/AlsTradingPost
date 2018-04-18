@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.Persistence;
-using Common.Domain.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using Persistence.EntityFramework.Repositories;
 
 namespace AlsTradingPost.Persistence.Repositories
 {
@@ -22,12 +22,16 @@ namespace AlsTradingPost.Persistence.Repositories
             return RepositoryHelper.Filter(_context.Characters.AsNoTracking(), predicate);
         }
 
-        public IOrderedQueryable<Character> Get<TOrderByKey>(Predicate<Character> predicate = null, Func<Character, TOrderByKey> orderBy = null, bool orderByAscending = true)
+        public IOrderedQueryable<Character> Get<TOrderByKey>(
+            Predicate<Character> predicate = null,
+            Func<Character, TOrderByKey> orderBy = null,
+            bool orderByAscending = true)
         {
             return RepositoryHelper.OrderBy(Get(predicate), orderBy, orderByAscending);
         }
 
-        public IOrderedQueryable<Character> Get<TOrderByKey, TThenByKey>(Predicate<Character> predicate = null,
+        public IOrderedQueryable<Character> Get<TOrderByKey, TThenByKey>(
+            Predicate<Character> predicate = null,
             Func<Character, TOrderByKey> orderBy = null,
             bool orderByAscending = true,
             Func<Character, TThenByKey> thenBy = null,
@@ -36,99 +40,62 @@ namespace AlsTradingPost.Persistence.Repositories
             return RepositoryHelper.ThenBy(Get(predicate, orderBy, orderByAscending), thenBy, thenByAscending);
         }
 
-        public IEnumerable<Character> GetPage(int pageSize, int pageOffset, out int totalResults, Predicate<Character> predicate = null)
+        public IEnumerable<Character> GetPage(
+            int pageSize,
+            int pageOffset,
+            out int totalResults,
+            Predicate<Character> predicate = null)
         {
-            IEnumerable<Character> results = Get(predicate).ToList();
-
-            totalResults = results.Count();
-
-            return results.Skip(pageOffset).Take(pageSize);
+            return RepositoryHelper.GetPage(Get(predicate), pageSize, pageOffset, out totalResults);
         }
 
-        public IEnumerable<Character> GetPage<TOrderByKey>(int pageSize, int pageOffset, out int totalResults, Predicate<Character> predicate = null,
-            Func<Character, TOrderByKey> orderBy = null, bool orderByAscending = true)
+        public IEnumerable<Character> GetPage<TOrderByKey>(
+            int pageSize,
+            int pageOffset,
+            out int totalResults,
+            Predicate<Character> predicate = null,
+            Func<Character, TOrderByKey> orderBy = null,
+            bool orderByAscending = true)
         {
-            IEnumerable<Character> results = Get(predicate, orderBy, orderByAscending).ToList();
-
-            totalResults = results.Count();
-
-            return results.Skip(pageOffset).Take(pageSize);
+            return RepositoryHelper.GetPage(Get(predicate, orderBy, orderByAscending), pageSize, pageOffset, out totalResults);
         }
 
-        public IEnumerable<Character> GetPage<TOrderByKey, TThenByKey>(int pageSize,
-            int pageOffset, out int totalResults,
+        public IEnumerable<Character> GetPage<TOrderByKey, TThenByKey>(
+            int pageSize,
+            int pageOffset,
+            out int totalResults,
             Predicate<Character> predicate = null,
             Func<Character, TOrderByKey> orderBy = null,
             bool orderByAscending = true,
             Func<Character, TThenByKey> thenBy = null,
             bool thenByAscending = true)
         {
-            IEnumerable<Character> results = Get(predicate, orderBy, orderByAscending, thenBy, thenByAscending).ToList();
-
-            totalResults = results.Count();
-
-            return results.Skip(pageOffset).Take(pageSize);
+            return RepositoryHelper.GetPage(Get(predicate, orderBy, orderByAscending, thenBy, thenByAscending), pageSize, pageOffset, out totalResults);
         }
 
         public Character GetById(Guid id)
         {
-            try
-            {
-                return _context.Characters.AsNoTracking().SingleOrDefault(a => a.Id == id);
-            }
-            catch (InvalidOperationException)
-            {
-                throw new DomainException("Multiple entites exist with given Id");
-            }
+            return RepositoryHelper.GetById(_context.Characters.AsNoTracking(), id);
         }
 
         public Character GetSingle(Predicate<Character> predicate)
         {
-            try
-            {
-                return _context.Characters.AsNoTracking().SingleOrDefault(a => predicate(a));
-            }
-            catch (InvalidOperationException)
-            {
-                throw new DomainException($"Multiple entites exist which match given predicate ({ predicate })");
-            }
+            return RepositoryHelper.GetSingle(_context.Characters.AsNoTracking(), predicate);
         }
 
         public void Add(Character entity)
         {
-            _context.Characters.Add(entity);
-
-            _context.SaveChanges();
+            RepositoryHelper.Add(_context.Characters, _context, entity);
         }
 
         public void Update(Character entity)
         {
-            try
-            {
-                _context.Characters.Update(entity);
-
-                _context.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                throw new ConcurrencyDomainException(entity, e);
-            }
+            RepositoryHelper.Update(_context.Characters, _context, entity);
         }
 
         public void Delete(Guid id)
         {
-            Character entity = GetById(id);
-
-            try
-            {
-                _context.Characters.Remove(entity);
-
-                _context.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                throw new ConcurrencyDomainException(entity, e);
-            }
+            RepositoryHelper.Delete(_context.Characters, _context, id);
         }
     }
 }

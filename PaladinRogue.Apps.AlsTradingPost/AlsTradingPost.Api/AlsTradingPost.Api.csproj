@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <UserSecretsId>fc9d1e3e-cec2-4a37-bcf0-5d7e27ae45e7</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,9 +25,4 @@
     <ProjectReference Include="..\Common.Api\Common.Api.csproj" />
     <ProjectReference Include="..\Common.Setup\Common.Setup.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
-  </ItemGroup>
-
 </Project>

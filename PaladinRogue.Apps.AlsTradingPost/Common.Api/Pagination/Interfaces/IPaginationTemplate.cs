@@ -1,4 +1,4 @@
-﻿namespace Common.Api.Pagination
+﻿namespace Common.Api.Pagination.Interfaces
 {
     public interface IPaginationTemplate
     {

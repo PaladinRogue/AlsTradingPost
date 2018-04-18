@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Reflection;
 using Common.Domain.Models.Interfaces;
-using Common.Resources.Concurrency;
 using Common.Resources.Concurrency.Interfaces;
 
 namespace Common.Domain.Exceptions
 {
     public class DeleteDomainException : DomainException
     {
-        public DeleteDomainException(IEntity entity, Exception innerException)
+        public DeleteDomainException(IVersionedEntity entity, Exception innerException)
             : base(_formatDeleteException(entity.GetType(), entity.Id, entity.Version), innerException)
         {
         }

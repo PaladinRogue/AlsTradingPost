@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using Common.Domain.Models.Interfaces;
 
 namespace Common.Domain.Models
@@ -12,8 +11,5 @@ namespace Common.Domain.Models
         }
 
         public Guid Id { get; set; }
-
-        [Timestamp]
-        public byte[] Version { get; set; }
     }
 }

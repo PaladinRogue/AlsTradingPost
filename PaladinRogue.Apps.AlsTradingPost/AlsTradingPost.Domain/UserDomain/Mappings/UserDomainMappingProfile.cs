@@ -10,10 +10,10 @@ namespace AlsTradingPost.Domain.UserDomain.Mappings
         public UserDomainMappingProfile()
         {
             CreateMap<Domain.Models.User, UserProjection>()
-                .IncludeBase<IEntity, IVersionedProjection>();
+                .IncludeBase<IVersionedEntity, IVersionedProjection>();
             CreateMap<CreateUserDdto, Domain.Models.User>();
             CreateMap<UpdateUserDdto, Domain.Models.User>()
-                .IncludeBase<IVersionedDdto, IEntity>();
+                .IncludeBase<IVersionedDdto, IVersionedEntity>();
         }
     }
 }

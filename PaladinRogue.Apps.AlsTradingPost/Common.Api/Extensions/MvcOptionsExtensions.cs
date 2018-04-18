@@ -1,7 +1,7 @@
-﻿using System.Buffers;
+﻿using System;
+using System.Buffers;
 using Common.Api.Authentication;
 using Common.Api.Concurrency;
-using Common.Api.ResourceFormatter;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +12,7 @@ namespace Common.Api.Extensions
 {
     public static class MvcOptionsExtensions
     {
-        public static MvcOptions UseCustomJsonOutputFormatter(this MvcOptions options)
+        public static MvcOptions UseJsonOutputFormatter<T>(this MvcOptions options, IServiceCollection services) where T : JsonOutputFormatter, IOutputFormatter
         {
             // Remove any json output formatter 
             options.OutputFormatters.RemoveType<JsonOutputFormatter>();
@@ -22,7 +22,12 @@ namespace Common.Api.Extensions
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             };
-            options.OutputFormatters.Add(new CustomJsonOutputFormatter(jsonSerializerSettings, ArrayPool<char>.Shared));
+
+            T customJsonOutputFormatter = (T)Activator.CreateInstance(typeof(T), jsonSerializerSettings, ArrayPool<char>.Shared);
+
+            services.AddSingleton<JsonOutputFormatter>(customJsonOutputFormatter);
+
+            options.OutputFormatters.Add(customJsonOutputFormatter);
 
             return options;
         }

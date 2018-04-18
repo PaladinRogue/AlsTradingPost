@@ -13,7 +13,7 @@ namespace Common.Resources.Concurrency
             return JsonConvert.DeserializeObject<ConcurrencyVersion>(thing);
         }
 
-        public static IConcurrencyVersion CreateFromEntity(IEntity entity)
+        public static IConcurrencyVersion CreateFromEntity(IVersionedEntity entity)
         {
             return new ConcurrencyVersion
             {

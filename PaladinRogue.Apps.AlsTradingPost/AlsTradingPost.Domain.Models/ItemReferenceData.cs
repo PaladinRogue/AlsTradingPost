@@ -2,7 +2,7 @@
 
 namespace AlsTradingPost.Domain.Models
 {
-    public class ItemReferenceData : Entity
+    public class ItemReferenceData : VersionedEntity
     {
         public string Name { get; set; }
 

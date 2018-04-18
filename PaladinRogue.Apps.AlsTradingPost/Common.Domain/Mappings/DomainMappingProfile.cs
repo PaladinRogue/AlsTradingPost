@@ -9,10 +9,10 @@ namespace Common.Domain.Mappings
     {
         public DomainMappingProfile()
         {
-            CreateMap<IEntity, IVersionedProjection>()
+            CreateMap<IVersionedEntity, IVersionedProjection>()
                 .ForMember(dest => dest.Version, opts => opts.ResolveUsing<OutboundConcurrencyTokenResolver>());
 
-            CreateMap<IVersionedDdto, IEntity>()
+            CreateMap<IVersionedDdto, IVersionedEntity>()
                 .ForMember(dest => dest.Version, opts => opts.ResolveUsing<InboundConcurrencyTokenResolver>());
         }
     }

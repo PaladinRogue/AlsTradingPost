@@ -23,7 +23,7 @@ namespace AlsTradingPost.Api.Controllers
         {
             ItemReferenceDataPagedCollectionAdto result = _itemReferenceDataApplicationService.Search(Mapper.Map<ItemReferenceDataSearchTemplate, ItemReferenceDataSearchAdto>(itemReferenceDataSearchTemplate));
 
-            return new ObjectResult(result);
+            return new ObjectResult(Mapper.Map<ItemReferenceDataPagedCollectionAdto, ItemReferenceDataPagedCollectionResource>(result));
         }
 
         [Route("searchTemplate")]

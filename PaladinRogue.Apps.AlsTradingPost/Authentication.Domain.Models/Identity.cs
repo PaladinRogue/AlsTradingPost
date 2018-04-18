@@ -2,7 +2,7 @@
 
 namespace Authentication.Domain.Models
 {
-    public class Identity : Entity
+    public class Identity : VersionedEntity
     {
         public string AuthenticationId { get; set; }
     }

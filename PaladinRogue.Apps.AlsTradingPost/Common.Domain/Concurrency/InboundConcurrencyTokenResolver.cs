@@ -4,7 +4,7 @@ using Common.Domain.Models.Interfaces;
 
 namespace Common.Domain.Concurrency
 {
-    public class InboundConcurrencyTokenResolver : IValueResolver<IVersionedDdto, IEntity, byte[]>
+    public class InboundConcurrencyTokenResolver : IValueResolver<IVersionedDdto, IVersionedEntity, byte[]>
     {
         private readonly IConcurrencyVersionProvider _concurrencyVersionProvider;
 
@@ -13,7 +13,7 @@ namespace Common.Domain.Concurrency
             _concurrencyVersionProvider = concurrencyVersionProvider;
         }
 
-        byte[] IValueResolver<IVersionedDdto, IEntity, byte[]>.Resolve(IVersionedDdto source, IEntity destination, byte[] destMember, ResolutionContext context)
+        byte[] IValueResolver<IVersionedDdto, IVersionedEntity, byte[]>.Resolve(IVersionedDdto source, IVersionedEntity destination, byte[] destMember, ResolutionContext context)
         {
             return _concurrencyVersionProvider.GetConcurrencyTimeStamp(source);
         }

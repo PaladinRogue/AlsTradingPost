@@ -14,11 +14,11 @@ namespace Authentication.Domain.ApplicationServices
 	{
         private readonly ILogger<ApplicationCommandService> _logger;
         private readonly IMapper _mapper;
-        private readonly IApplicationRepository _identityRepository;
+        private readonly IApplicationRepository _applicationRepository;
 
         public ApplicationCommandService(IMapper mapper, IApplicationRepository identityRepository, ILogger<ApplicationCommandService> logger)
         {
-            _identityRepository = identityRepository;
+            _applicationRepository = identityRepository;
             _mapper = mapper;
             _logger = logger;
         }
@@ -29,9 +29,9 @@ namespace Authentication.Domain.ApplicationServices
             {
                 Application newApplication = _mapper.Map(entity, EntityFactory.CreateEntity<Application>());
 
-                _identityRepository.Add(newApplication);
+                _applicationRepository.Add(newApplication);
 
-                return _mapper.Map<Application, ApplicationProjection>(_identityRepository.GetById(newApplication.Id));
+                return _mapper.Map<Application, ApplicationProjection>(_applicationRepository.GetById(newApplication.Id));
             }
             catch (Exception e)
             {
@@ -44,9 +44,9 @@ namespace Authentication.Domain.ApplicationServices
         {
             try
             {
-                _identityRepository.Update(_mapper.Map<UpdateApplicationDdto, Application>(entity));
+                _applicationRepository.Update(_mapper.Map<UpdateApplicationDdto, Application>(entity));
 
-                return _mapper.Map<Application, ApplicationProjection>(_identityRepository.GetById(entity.Id));
+                return _mapper.Map<Application, ApplicationProjection>(_applicationRepository.GetById(entity.Id));
             }
             catch (ConcurrencyDomainException e)
             {

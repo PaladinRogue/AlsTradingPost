@@ -7,7 +7,6 @@ using Authentication.Domain.IdentityServices.Interfaces;
 using Authentication.Domain.Persistence;
 using Authentication.Persistence;
 using Authentication.Persistence.Repositories;
-using Authentication.Persistence.Transactions;
 using Common.Api.Encryption;
 using Common.Api.Encryption.Interfaces;
 using Common.Api.HttpClient;
@@ -20,6 +19,7 @@ using Common.Resources.Transactions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Persistence.EntityFramework.Transactions;
 
 namespace Authentication.Setup
 {
@@ -46,7 +46,8 @@ namespace Authentication.Setup
 
             services.AddEntityFrameworkSqlServer().AddOptions()
                 .AddDbContext<AuthenticationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Default")));
-	        services.AddTransient<ITransactionFactory, TransactionFactory>();
+            services.AddScoped<DbContext>(sp => sp.GetRequiredService<AuthenticationDbContext>());
+            services.AddTransient<ITransactionFactory, TransactionFactory>();
 		}
 
         public static void RegisterProviders(IServiceCollection services)

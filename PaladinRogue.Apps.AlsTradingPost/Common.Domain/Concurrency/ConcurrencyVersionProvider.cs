@@ -7,7 +7,7 @@ namespace Common.Domain.Concurrency
 {
     public class ConcurrencyVersionProvider : IConcurrencyVersionProvider
     {
-        public IConcurrencyVersion GetConcurrencyVersion(IEntity entity)
+        public IConcurrencyVersion GetConcurrencyVersion(IVersionedEntity entity)
         {
             return ConcurrencyVersionFactory.CreateFromEntity(entity);
         }
