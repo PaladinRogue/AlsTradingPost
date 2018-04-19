@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 using Common.Api.Builders.Attributes;
 using Common.Api.Builders.Resource.Attributes;
@@ -119,23 +118,22 @@ namespace Common.Api.Builders
             return nameAttribute?.Name ?? FormatTemplateName(data.GetType().Name);
         }
 
-        private static KeyValuePair<string, Expression<Func<T, TOut>>> CreateAttributeKeyValuePair<T, TOut>(string key, Expression<Func<T, TOut>> accessor) where T : Attribute
+        private static KeyValuePair<string, Func<T, TOut>> CreateAttributeKeyValuePair<T, TOut>(string key, Func<T, TOut> accessor) where T : Attribute
         {
-            return new KeyValuePair<string, Expression<Func<T, TOut>>>(key, accessor);
+            return new KeyValuePair<string, Func<T, TOut>>(key, accessor);
         }
 
         private static void AddAttributeConstraint<T, TOut>(ICollection<Constraint> constraints, MemberDescriptor property,
-            params KeyValuePair<string, Expression<Func<T, TOut>>>[] attributePropertyMappers) where T : Attribute
+            params KeyValuePair<string, Func<T, TOut>>[] attributePropertyMappers) where T : Attribute
         {
             foreach (T attribute in property.Attributes.OfType<T>())
             {
-                foreach (KeyValuePair<string, Expression<Func<T, TOut>>> attributePropertyMapper in attributePropertyMappers)
+                foreach (KeyValuePair<string, Func<T, TOut>> attributePropertyMapper in attributePropertyMappers)
                 {
-                    Func<T, TOut> attributeValueAccessor = attributePropertyMapper.Value.Compile();
                     constraints.Add(new Constraint
                     {
                         Name = attributePropertyMapper.Key,
-                        Value = attributeValueAccessor(attribute)
+                        Value = attributePropertyMapper.Value(attribute)
                     });
                 }
             }
