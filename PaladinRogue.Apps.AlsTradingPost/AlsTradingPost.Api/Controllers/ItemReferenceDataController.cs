@@ -3,6 +3,7 @@ using AlsTradingPost.Application.ItemReferenceDataApplication.Interfaces;
 using AlsTradingPost.Application.ItemReferenceDataApplication.Models;
 using AlsTradingPost.Setup.Infrastructure.Authorization;
 using AutoMapper;
+using Common.Api.Builders.Resource;
 using Common.Api.Builders.Template;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +25,14 @@ namespace AlsTradingPost.Api.Controllers
         {
             ItemReferenceDataPagedCollectionAdto result = _itemReferenceDataApplicationService.Search(Mapper.Map<ItemReferenceDataSearchTemplate, ItemReferenceDataSearchAdto>(itemReferenceDataSearchTemplate));
 
-            return new ObjectResult(Mapper.Map<ItemReferenceDataPagedCollectionAdto, ItemReferenceDataPagedCollectionResource>(result));
+            ItemReferenceDataPagedCollectionResource itemReferenceDataPagedCollectionResource =
+                Mapper.Map<ItemReferenceDataPagedCollectionAdto, ItemReferenceDataPagedCollectionResource>(result);
+            
+            return new ObjectResult(
+                ResourceBuilder<ItemReferenceDataPagedCollectionResource>.Create(itemReferenceDataPagedCollectionResource)
+                .WithMeta(itemReferenceDataSearchTemplate)
+                .Build()
+            );
         }
 
         [Route("searchTemplate")]

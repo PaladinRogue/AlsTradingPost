@@ -25,7 +25,7 @@ namespace Common.Api.Builders.Template
 
         public TemplateBuilder<T> WithMeta()
         {
-            _template.Meta = BuilderHelper.FormatTemplateMeta(_templateData);
+            _template.Meta = BuilderHelper.FormatMeta(_templateData);
 
             return this;
         }

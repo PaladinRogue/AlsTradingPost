@@ -19,12 +19,21 @@ namespace Common.Api.Builders
         {
             return new Data<T>
             {
-                TemplateTypeName = GetTypeName(templateData),
+                TemplateTypeName = GetTemplateTypeName(templateData),
+                Resource = templateData
+            };
+        }
+        
+        public static Data<T> FormatResourceData<T>(T templateData)
+        {
+            return new Data<T>
+            {
+                TemplateTypeName = GetResourceTypeName(templateData),
                 Resource = templateData
             };
         }
 
-        public static Meta FormatTemplateMeta<T>(T templateData)
+        public static Meta FormatMeta<T>(T templateData)
         {
             IList<PropertyMeta> properties = new List<PropertyMeta>();
             IList<string> sortableFields = new List<string>();
@@ -106,16 +115,21 @@ namespace Common.Api.Builders
 
             return new Meta
             {
-                TemplateTypeName = GetTypeName(templateData),
+                TemplateTypeName = GetTemplateTypeName(templateData),
                 Properties = properties
             };
         }
 
-        private static string GetTypeName<T>(T data)
+        private static string GetTemplateTypeName<T>(T data)
         {
-            
             NameAttribute nameAttribute = data.GetType().GetCustomAttribute<NameAttribute>();
             return nameAttribute?.Name ?? FormatTemplateName(data.GetType().Name);
+        }
+        
+        private static string GetResourceTypeName<T>(T data)
+        {
+            NameAttribute nameAttribute = data.GetType().GetCustomAttribute<NameAttribute>();
+            return nameAttribute?.Name ?? FormatResourceName(data.GetType().Name);
         }
 
         private static KeyValuePair<string, Func<T, TOut>> CreateAttributeKeyValuePair<T, TOut>(string key, Func<T, TOut> accessor) where T : Attribute
