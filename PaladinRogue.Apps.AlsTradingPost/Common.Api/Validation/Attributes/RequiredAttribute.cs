@@ -1,15 +1,15 @@
 ﻿using System;
 
-namespace Common.Api.ResourceFormatter.Attributes.Meta
+namespace Common.Api.Validation.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class RequiredAttribute : Attribute
     {
-        public bool Required { get; set; }
+        public bool IsRequired { get; set; }
         
         public RequiredAttribute()
         {
-            Required = true;
+            IsRequired = true;
         }
     }
 }

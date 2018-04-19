@@ -3,7 +3,6 @@ using Authentication.Setup;
 using Authentication.Setup.Settings;
 using AutoMapper;
 using Common.Api.Extensions;
-using Common.Api.ResourceFormatter;
 using Common.Api.Settings;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Messaging.Message.Interfaces;
@@ -12,6 +11,7 @@ using Common.Setup.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -43,7 +43,7 @@ namespace Authentication.Api
 
             services.Configure<MvcOptions>(options =>
             {
-                options.UseJsonOutputFormatter<CustomJsonOutputFormatter>(services)
+                options.UseCamelCaseJsonOutputFormatter<JsonOutputFormatter>(services)
                     .UseConcurrencyFilter();
 
                 if (!Environment.IsDevelopment())

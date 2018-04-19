@@ -39,8 +39,7 @@ namespace AlsTradingPost.Domain.ItemReferenceDataDomain
             );
 
             return ItemReferenceDataPagedCollectionDdto.Create(
-                Mapper.Map<IEnumerable<ItemReferenceData>, IList<ItemReferenceDataSummaryProjection>>(results),
-                totalResults, paginationDdto
+                Mapper.Map<IEnumerable<ItemReferenceData>, IList<ItemReferenceDataSummaryProjection>>(results), totalResults
             );
         }
 

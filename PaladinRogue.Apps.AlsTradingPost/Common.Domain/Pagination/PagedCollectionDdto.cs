@@ -6,21 +6,17 @@ namespace Common.Domain.Pagination
 {
     public class PagedCollectionDdto<T, TOut> : IPagedCollectionDdto<T>
     {
-        protected PagedCollectionDdto(IList<T> results, int totalResults, IPagination paginationDdto)
+        protected PagedCollectionDdto(IList<T> results, int totalResults)
         {
             Results = results;
             TotalResults = totalResults;
-            PageSize = paginationDdto.PageSize;
-            PageOffset = paginationDdto.PageOffset;
         }
 
-        public static TOut Create(IList<T> results, int totalResults, IPagination paginationDdto)
+        public static TOut Create(IList<T> results, int totalResults)
         {
-            return (TOut) Activator.CreateInstance(typeof(TOut), results, totalResults, paginationDdto);
+            return (TOut) Activator.CreateInstance(typeof(TOut), results, totalResults);
         }
 
-        public int PageSize { get; set; }
-        public int PageOffset { get; set; }
         public IList<T> Results { get; set; }
         public int TotalResults { get; set; }
     }

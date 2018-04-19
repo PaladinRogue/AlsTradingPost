@@ -1,6 +1,6 @@
 ﻿namespace Common.Api.Validation
 {
-    public static class ValidationTypes
+    public static class ValidationMeta
     {
         public const string MinLength = "minLength";
         public const string MaxLength = "maxLength";

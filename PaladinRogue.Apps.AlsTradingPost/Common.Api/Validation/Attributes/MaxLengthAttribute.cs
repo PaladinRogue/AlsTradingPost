@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Api.ResourceFormatter.Attributes.Meta
+namespace Common.Api.Validation.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class MaxLengthAttribute : Attribute

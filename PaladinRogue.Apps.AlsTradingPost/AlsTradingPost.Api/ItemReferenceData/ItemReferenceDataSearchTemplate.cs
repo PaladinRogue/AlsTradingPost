@@ -1,6 +1,8 @@
-﻿using Common.Api.Pagination.Interfaces;
-using Common.Api.ResourceFormatter.Attributes.Meta;
+﻿using Common.Api.Builders.Resource.Attributes;
+using Common.Api.Builders.Template.Attributes;
+using Common.Api.Pagination.Interfaces;
 using Common.Api.Sorting;
+using Common.Api.Validation.Attributes;
 using Common.Resources.Extensions;
 
 namespace AlsTradingPost.Api.ItemReferenceData
@@ -15,6 +17,7 @@ namespace AlsTradingPost.Api.ItemReferenceData
             OrderByAscending = true;
         }
         
+        [Sortable]
         [Length(3, 50)]
         public string Name { get; set; }
         public int PageOffset { get; set; }
