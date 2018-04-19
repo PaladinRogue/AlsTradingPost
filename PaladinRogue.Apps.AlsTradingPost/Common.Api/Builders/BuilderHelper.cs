@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using Common.Api.Builders.Attributes;
 using Common.Api.Builders.Resource.Attributes;
@@ -16,12 +18,9 @@ namespace Common.Api.Builders
     {
         public static Data<T> FormatTemplateData<T>(T templateData)
         {
-            NameAttribute nameAttribute =
-                templateData.GetType().GetCustomAttribute<NameAttribute>();
-
             return new Data<T>
             {
-                TemplateTypeName = nameAttribute?.Name ?? FormatTemplateName(templateData.GetType().Name),
+                TemplateTypeName = GetTypeName(templateData),
                 Resource = templateData
             };
         }
@@ -38,73 +37,53 @@ namespace Common.Api.Builders
                     new Constraint
                     {
                         Name = FieldMeta.Type,
-                        Value = property.PropertyType.Name
+                        Value = FieldTypeMapper.GetFieldType(property.PropertyType)
                     }
                 };
 
-                foreach (RequiredAttribute requiredAttribute in property.Attributes.OfType<RequiredAttribute>())
-                {
-                    constraints.Add(new Constraint
-                    {
-                        Name = ValidationMeta.Required,
-                        Value = requiredAttribute.IsRequired
-                    });
-                }
+                AddAttributeConstraint(constraints, property,
+                    CreateAttributeKeyValuePair<RequiredAttribute, bool>(
+                        ValidationMeta.Required,
+                        a => a.IsRequired
+                    ));
 
-                foreach (MinLengthAttribute minLengthAttribute in property.Attributes.OfType<MinLengthAttribute>())
-                {
-                    constraints.Add(new Constraint
-                    {
-                        Name = ValidationMeta.MinLength,
-                        Value = minLengthAttribute.MinLength
-                    });
-                }
+                AddAttributeConstraint(constraints, property,
+                    CreateAttributeKeyValuePair<MinLengthAttribute, int>(
+                        ValidationMeta.MinLength,
+                        a => a.MinLength
+                    ));
 
-                foreach (MaxLengthAttribute maxLengthAttribute in property.Attributes.OfType<MaxLengthAttribute>())
-                {
-                    constraints.Add(new Constraint
-                    {
-                        Name = ValidationMeta.MaxLength,
-                        Value = maxLengthAttribute.MaxLength
-                    });
-                }
+                AddAttributeConstraint(constraints, property,
+                    CreateAttributeKeyValuePair<MaxLengthAttribute, int>(
+                        ValidationMeta.MaxLength,
+                        a => a.MaxLength
+                    ));
 
-                foreach (LengthAttribute lengthAttribute in property.Attributes.OfType<LengthAttribute>())
-                {
-                    constraints.Add(new Constraint
-                    {
-                        Name = ValidationMeta.MinLength,
-                        Value = lengthAttribute.MinLength
-                    });
-                    constraints.Add(new Constraint
-                    {
-                        Name = ValidationMeta.MaxLength,
-                        Value = lengthAttribute.MaxLength
-                    });
-                }
+                AddAttributeConstraint(constraints, property,
+                    CreateAttributeKeyValuePair<LengthAttribute, int>(
+                        ValidationMeta.MinLength,
+                        a => a.MinLength
+                    ), CreateAttributeKeyValuePair<LengthAttribute, int>(
+                        ValidationMeta.MaxLength,
+                        a => a.MaxLength
+                    ));
 
-                foreach (HiddenAttribute hiddenAttribute in property.Attributes.OfType<HiddenAttribute>())
-                {
-                    constraints.Add(new Constraint
-                    {
-                        Name = FieldMeta.Hidden,
-                        Value = hiddenAttribute.IsHidden
-                    });
-                }
+                AddAttributeConstraint(constraints, property,
+                    CreateAttributeKeyValuePair<HiddenAttribute, bool>(
+                        FieldMeta.Hidden,
+                        a => a.IsHidden
+                    ));
 
                 if (property.Attributes.OfType<SortableAttribute>().Any())
                 {
                     sortableFields.Add(property.Name.ToCamelCase());
                 }
-
-                if (constraints.Any())
+                
+                properties.Add(new PropertyMeta
                 {
-                    properties.Add(new PropertyMeta
-                    {
-                        Name = property.Name,
-                        Constraints = constraints
-                    });
-                }
+                    Name = property.Name,
+                    Constraints = constraints
+                });
             }
 
             if (templateData is IThenByTemplate thenByTemplate)
@@ -125,14 +104,41 @@ namespace Common.Api.Builders
                 });
             }
 
-            NameAttribute nameAttribute =
-                templateData.GetType().GetCustomAttribute<NameAttribute>();
 
             return new Meta
             {
-                TemplateTypeName = nameAttribute?.Name ?? FormatTemplateName(templateData.GetType().Name),
+                TemplateTypeName = GetTypeName(templateData),
                 Properties = properties
             };
+        }
+
+        private static string GetTypeName<T>(T data)
+        {
+            
+            NameAttribute nameAttribute = data.GetType().GetCustomAttribute<NameAttribute>();
+            return nameAttribute?.Name ?? FormatTemplateName(data.GetType().Name);
+        }
+
+        private static KeyValuePair<string, Expression<Func<T, TOut>>> CreateAttributeKeyValuePair<T, TOut>(string key, Expression<Func<T, TOut>> accessor) where T : Attribute
+        {
+            return new KeyValuePair<string, Expression<Func<T, TOut>>>(key, accessor);
+        }
+
+        private static void AddAttributeConstraint<T, TOut>(ICollection<Constraint> constraints, MemberDescriptor property,
+            params KeyValuePair<string, Expression<Func<T, TOut>>>[] attributePropertyMappers) where T : Attribute
+        {
+            foreach (T attribute in property.Attributes.OfType<T>())
+            {
+                foreach (KeyValuePair<string, Expression<Func<T, TOut>>> attributePropertyMapper in attributePropertyMappers)
+                {
+                    Func<T, TOut> attributeValueAccessor = attributePropertyMapper.Value.Compile();
+                    constraints.Add(new Constraint
+                    {
+                        Name = attributePropertyMapper.Key,
+                        Value = attributeValueAccessor(attribute)
+                    });
+                }
+            }
         }
         
         private static string FormatTemplateName(string resourceName)
