@@ -1,5 +1,6 @@
 ﻿using System;
-using Common.Api.ResourceFormatter.Attributes;
+using Common.Api.Builders.Resource.Attributes;
+using Common.Api.Builders.Template.Attributes;
 
 namespace AlsTradingPost.Api.ItemReferenceData
 {

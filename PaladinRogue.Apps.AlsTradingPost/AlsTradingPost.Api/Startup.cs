@@ -3,7 +3,6 @@ using AlsTradingPost.Setup;
 using AlsTradingPost.Setup.Infrastructure.Settings;
 using AutoMapper;
 using Common.Api.Extensions;
-using Common.Api.ResourceFormatter;
 using Common.Api.Settings;
 using Common.Application.Identity;
 using Common.Domain.DomainEvents.Interfaces;
@@ -13,6 +12,7 @@ using Common.Setup.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,7 +42,7 @@ namespace AlsTradingPost.Api
 
             services.Configure<MvcOptions>(options =>
             {
-                options.UseJsonOutputFormatter<CustomJsonOutputFormatter>(services)
+                options.UseCamelCaseJsonOutputFormatter<JsonOutputFormatter>(services)
                     .UseConcurrencyFilter()
                     .UseAppAccessAuthorizeFilter();
 

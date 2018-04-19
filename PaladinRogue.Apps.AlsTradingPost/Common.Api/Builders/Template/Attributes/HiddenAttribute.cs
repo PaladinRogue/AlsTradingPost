@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Api.ResourceFormatter.Attributes
+namespace Common.Api.Builders.Template.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class HiddenAttribute : Attribute

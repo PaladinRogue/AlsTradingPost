@@ -12,7 +12,7 @@ namespace Common.Api.Extensions
 {
     public static class MvcOptionsExtensions
     {
-        public static MvcOptions UseJsonOutputFormatter<T>(this MvcOptions options, IServiceCollection services) where T : JsonOutputFormatter, IOutputFormatter
+        public static MvcOptions UseCamelCaseJsonOutputFormatter<T>(this MvcOptions options, IServiceCollection services) where T : JsonOutputFormatter, IOutputFormatter
         {
             // Remove any json output formatter 
             options.OutputFormatters.RemoveType<JsonOutputFormatter>();

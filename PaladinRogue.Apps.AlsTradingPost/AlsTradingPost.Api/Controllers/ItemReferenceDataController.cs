@@ -3,6 +3,7 @@ using AlsTradingPost.Application.ItemReferenceDataApplication.Interfaces;
 using AlsTradingPost.Application.ItemReferenceDataApplication.Models;
 using AlsTradingPost.Setup.Infrastructure.Authorization;
 using AutoMapper;
+using Common.Api.Builders.Template;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,7 +30,11 @@ namespace AlsTradingPost.Api.Controllers
         [Route("searchTemplate")]
         public IActionResult GetSearchTemplate()
         {
-            return new ObjectResult(new ItemReferenceDataSearchTemplate());
+            return new ObjectResult(
+                TemplateBuilder<ItemReferenceDataSearchTemplate>.Create()
+                    .WithMeta()
+                    .Build()
+            );
         }
     }
 }
