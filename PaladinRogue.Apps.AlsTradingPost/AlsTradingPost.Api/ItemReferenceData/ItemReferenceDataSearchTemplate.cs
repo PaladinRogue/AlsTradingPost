@@ -17,7 +17,6 @@ namespace AlsTradingPost.Api.ItemReferenceData
             OrderByAscending = true;
         }
         
-        [Sortable]
         [Length(3, 50)]
         public string Name { get; set; }
         public int PageOffset { get; set; }

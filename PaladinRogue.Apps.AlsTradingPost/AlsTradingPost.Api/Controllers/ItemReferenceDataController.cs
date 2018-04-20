@@ -29,8 +29,10 @@ namespace AlsTradingPost.Api.Controllers
                 Mapper.Map<ItemReferenceDataPagedCollectionAdto, ItemReferenceDataPagedCollectionResource>(result);
             
             return new ObjectResult(
-                ResourceBuilder<ItemReferenceDataPagedCollectionResource>.Create(itemReferenceDataPagedCollectionResource)
-                .WithMeta(itemReferenceDataSearchTemplate)
+                CollectionResourceBuilder<ItemReferenceDataPagedCollectionResource, ItemReferenceDataSearchTemplate, ItemReferenceDataSummaryResource>
+                    .Create(itemReferenceDataPagedCollectionResource, itemReferenceDataSearchTemplate)
+                .WithResourceMeta()
+                .WithSorting()
                 .Build()
             );
         }
