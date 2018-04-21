@@ -2,8 +2,9 @@
 {
     public interface ICollectionResourceBuilder : IBuilder<string, object>
     {
-        ICollectionResourceBuilder WithMeta(bool extendedMeta = false);
+        ICollectionResourceBuilder WithTemplateMeta();
         ICollectionResourceBuilder WithResourceMeta();
+        ICollectionResourceBuilder WithSummaryResourceMeta();
         ICollectionResourceBuilder WithSorting();
     }
 }

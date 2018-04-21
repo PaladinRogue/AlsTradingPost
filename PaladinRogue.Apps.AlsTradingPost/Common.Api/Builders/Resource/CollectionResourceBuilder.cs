@@ -11,6 +11,7 @@ namespace Common.Api.Builders.Resource
         where TCollectionResource : ISummaryResource
     {
         private readonly ResourceBuilderResource<T> _resource;
+        private readonly ResourceBuilderResource<TTemplate> _template;
 
         private readonly T _resourceData;
         private readonly TTemplate _templateData;
@@ -25,6 +26,12 @@ namespace Common.Api.Builders.Resource
             _resource = new ResourceBuilderResource<T>
             {
                 Data = BuildHelper.BuildResourceData(_resourceData),
+                Meta = BuildHelper.BuildMeta(_resourceData)
+            };
+
+            _template = new ResourceBuilderResource<TTemplate>
+            {
+                Data = BuildHelper.BuildTemplateData(_templateData),
                 Meta = BuildHelper.BuildMeta(_templateData)
             };
         }
@@ -35,9 +42,9 @@ namespace Common.Api.Builders.Resource
             return new CollectionResourceBuilder<T, TTemplate, TCollectionResource>(resource, template);
         }
 
-        public ICollectionResourceBuilder WithMeta(bool extendedMeta = false)
+        public ICollectionResourceBuilder WithTemplateMeta()
         {
-            BuildHelper.BuildValidationMeta(_resource.Meta, _templateData);
+            BuildHelper.BuildValidationMeta(_template.Meta, _templateData);
 
             return this;
         }
@@ -49,9 +56,19 @@ namespace Common.Api.Builders.Resource
             return this;
         }
 
+        public ICollectionResourceBuilder WithSummaryResourceMeta()
+        {
+            if (_collectionResources.Any())
+            {
+                BuildHelper.BuildFieldMeta(_collectionResources.First().Meta, _resourceData.Results.First());
+            }
+
+            return this;
+        }
+
         public ICollectionResourceBuilder WithSorting()
         {
-            BuildHelper.BuildSortingMeta<TTemplate, TCollectionResource>(_resource.Meta, _templateData);
+            BuildHelper.BuildSortingMeta<TTemplate, TCollectionResource>(_template.Meta, _templateData);
 
             return this;
         }
@@ -76,19 +93,40 @@ namespace Common.Api.Builders.Resource
             }
 
 
-            return DictionaryBuilder<string, object>.Create()
+            IDictionaryBuilder<string, object> dictionaryBuilder = DictionaryBuilder<string, object>.Create()
                 .Add(_resource.Data.TypeName, DictionaryBuilder<string, object>.Create()
                     .Add(ResourceType.Data, collectionResourceDataBuilder.Build())
-                    .Add(ResourceType.Meta, DictionaryBuilder<string, object>.Create()
-                        .Add(_resource.Meta.TemplateTypeName, _resource.Meta.Properties.ToDictionary(
-                            p => p.Name,
-                            p => p.Constraints.ToDictionary(
-                                c => c.Name,
-                                c => c.Value
-                            )))
-                        .Build())
+                    .Add(ResourceType.Meta, _resource.Meta.Properties.ToDictionary(
+                        p => p.Name,
+                        p => p.Constraints.ToDictionary(
+                            c => c.Name,
+                            c => c.Value
+                        )))
                     .Build())
-                .Build();
+                .Add(_template.Data.TypeName, DictionaryBuilder<string, object>.Create()
+                    .Add(ResourceType.Data, _template.Data.Resource)
+                    .Add(ResourceType.Meta, _template.Meta.Properties.ToDictionary(
+                        p => p.Name,
+                        p => p.Constraints.ToDictionary(
+                            c => c.Name,
+                            c => c.Value
+                        )))
+                    .Build());
+
+            if (_collectionResources.Any())
+            {
+                dictionaryBuilder.Add(_collectionResources.First().Data.TypeName, DictionaryBuilder<string, object>
+                    .Create()
+                    .Add(ResourceType.Meta, _collectionResources.First().Meta.Properties.ToDictionary(
+                        p => p.Name,
+                        p => p.Constraints.ToDictionary(
+                            c => c.Name,
+                            c => c.Value
+                        )))
+                    .Build());
+            }
+
+            return dictionaryBuilder.Build();
         }
     }
 }

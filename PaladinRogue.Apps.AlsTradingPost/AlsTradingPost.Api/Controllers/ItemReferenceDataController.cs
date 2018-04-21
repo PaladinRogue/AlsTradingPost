@@ -31,8 +31,9 @@ namespace AlsTradingPost.Api.Controllers
             return new ObjectResult(
                 CollectionResourceBuilder<ItemReferenceDataPagedCollectionResource, ItemReferenceDataSearchTemplate, ItemReferenceDataSummaryResource>
                     .Create(itemReferenceDataPagedCollectionResource, itemReferenceDataSearchTemplate)
-                    .WithMeta()
+                    .WithTemplateMeta()
                     .WithResourceMeta()
+                    .WithSummaryResourceMeta()
                     .WithSorting()
                     .Build()
             );

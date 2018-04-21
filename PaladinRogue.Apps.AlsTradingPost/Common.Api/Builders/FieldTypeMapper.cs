@@ -9,7 +9,8 @@ namespace Common.Api.Builders
         {
             { typeof(int), FieldType.Number },
             { typeof(bool), FieldType.Boolean },
-            { typeof(string), FieldType.String }
+            { typeof(string), FieldType.String },
+            { typeof(Guid), FieldType.Id }
         };
 
         public static bool HasFieldType<T>()

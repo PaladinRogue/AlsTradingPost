@@ -164,7 +164,8 @@ namespace Common.Api.Builders
         {
             return new ResourceBuilderResource<T>
             {
-                Data = BuildResourceData(resourceData)
+                Data = BuildResourceData(resourceData),
+                Meta = BuildMeta(resourceData)
             };
         }
 
