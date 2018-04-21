@@ -1,54 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Common.Api.Builders.Dictionary;
 
 namespace Common.Api.Builders.Template
 {
-    public class TemplateBuilder<T>
+    public class TemplateBuilder<TTemplate> : ITemplateBuilder
     {
-        private readonly TemplateBuilderTemplate<T> _template;
-        private readonly T _templateData;
+        private readonly TemplateBuilderTemplate<TTemplate> _template;
+
+        private readonly TTemplate _templateData;
 
         private TemplateBuilder()
         {
-            _templateData = Activator.CreateInstance<T>();
-            _template = new TemplateBuilderTemplate<T>
+            _templateData = Activator.CreateInstance<TTemplate>();
+
+            _template = new TemplateBuilderTemplate<TTemplate>
             {
-                Data = BuilderHelper.FormatTemplateData(_templateData)
+                Data = BuildHelper.BuildTemplateData(_templateData),
+                Meta = BuildHelper.BuildMeta(_templateData)
             };
         }
 
-        public static TemplateBuilder<T> Create()
+        public static TemplateBuilder<TTemplate> Create()
         {
-            return new TemplateBuilder<T>();
+            return new TemplateBuilder<TTemplate>();
         }
 
-        public TemplateBuilder<T> WithMeta()
+        public ITemplateBuilder WithMeta()
         {
-            _template.Meta = BuilderHelper.FormatTemplateMeta(_templateData);
+            BuildHelper.BuildValidationMeta(_template.Meta, _templateData);
 
             return this;
         }
 
-        public Template Build()
+        public IDictionary<string, object> Build()
         {
-            return new Template
-            {
-                Data = new Dictionary<string, object>
-                {
-                    {  _template.Data.TemplateTypeName, _template.Data.Resource }
-                },
-                Meta = new Dictionary<string, object>
-                {
-                    {  _template.Meta.TemplateTypeName, _template.Meta.Properties.ToDictionary(
+            return DictionaryBuilder<string, object>.Create()
+                .Add(_template.Data.TypeName, DictionaryBuilder<string, object>.Create()
+                    .Add(ResourceType.Data, _template.Data.Resource)
+                    .Add(ResourceType.Meta, _template.Meta.Properties.ToDictionary(
                         p => p.Name,
                         p => p.Constraints.ToDictionary(
                             c => c.Name,
                             c => c.Value
-                        ))
-                    }
-                }
-            };
+                        )))
+                    .Build())
+                .Build();
         }
     }
 }

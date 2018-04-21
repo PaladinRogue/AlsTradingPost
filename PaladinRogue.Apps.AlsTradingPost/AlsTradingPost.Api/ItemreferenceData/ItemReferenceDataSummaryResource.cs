@@ -1,10 +1,10 @@
 ﻿using System;
 using Common.Api.Builders.Resource.Attributes;
-using Common.Api.Builders.Template.Attributes;
+using Common.Api.Resources;
 
 namespace AlsTradingPost.Api.ItemReferenceData
 {
-    public class ItemReferenceDataSummaryResource
+    public class ItemReferenceDataSummaryResource : ISummaryResource
     {
         public Guid Id { get; set; }
         [Sortable]

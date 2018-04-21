@@ -2,7 +2,7 @@
 {
     public class Data<T>
     {
-        public string TemplateTypeName { get; set; }
+        public string TypeName { get; set; }
 
         public T Resource { get; set; }
     }
