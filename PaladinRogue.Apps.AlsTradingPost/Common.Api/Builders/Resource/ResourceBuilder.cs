@@ -1,75 +1,60 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Common.Api.Builders.Dictionary;
 
 namespace Common.Api.Builders.Resource
 {
     public class ResourceBuilder<T, TTemplate> : IResourceBuilder
     {
-        protected readonly ResourceBuilderResource<T> Resource;
+        private readonly ResourceBuilderResource<T> _resource;
 
-        protected readonly T ResourceData;
-        protected readonly TTemplate Template;
+        private readonly T _resourceData;
+        private readonly TTemplate _templateData;
 
-        protected ResourceBuilder(T resource, TTemplate template)
+        private ResourceBuilder(T resource, TTemplate template)
         {
-            ResourceData = resource;
-            Template = template;
+            _resourceData = resource;
+            _templateData = template;
 
-            Resource = new ResourceBuilderResource<T>
+            _resource = new ResourceBuilderResource<T>
             {
-                Meta = BuildHelper.BuildMeta(template),
-                Data = BuildHelper.BuildResourceData(resource)
+                Data = BuildHelper.BuildResourceData(resource),
+                Meta = BuildHelper.BuildMeta(_templateData)
             };
         }
 
-        public static IResourceBuilder Create(T resource, TTemplate template)
+        public static ResourceBuilder<T, TTemplate> Create(T resource, TTemplate template)
         {
             return new ResourceBuilder<T, TTemplate>(resource, template);
         }
 
+        public IResourceBuilder WithMeta(bool extendedMeta = false)
+        {
+            BuildHelper.BuildValidationMeta(_resource.Meta, _templateData);
+
+            return this;
+        }
+
         public IResourceBuilder WithResourceMeta()
         {
-            if (Resource.Meta == null)
-            {
-                throw new ArgumentException("You must build the meta before adding sorting");
-            }
-
-            BuildHelper.AddFieldMeta(Resource.Meta, ResourceData);
+            BuildHelper.BuildFieldMeta(_resource.Meta, _resourceData);
 
             return this;
         }
 
         public IDictionary<string, object> Build()
         {
-            return new Dictionary<string, object>
-            {
-                {
-                    ResourceType.Data, new Dictionary<string, object>
-                    {
-                        {Resource.Data.TypeName, Resource.Data.Resource}
-                    }
-                },
-                {
-                    ResourceType.Meta, new Dictionary<string, object>
-                    {
-                        {
-                            Resource.Meta.TemplateTypeName, Resource.Meta.Properties.ToDictionary(
-                                p => p.Name,
-                                p => p.Constraints.ToDictionary(
-                                    c => c.Name,
-                                    c => c.Value
-                                ))
-                        }
-                    }
-                }
-            };
+            return DictionaryBuilder<string, object>.Create()
+                .Add(_resource.Data.TypeName, DictionaryBuilder<string, object>.Create()
+                    .Add(ResourceType.Data, _resource.Data.Resource)
+                    .Add(ResourceType.Meta, _resource.Meta.Properties.ToDictionary(
+                        p => p.Name,
+                        p => p.Constraints.ToDictionary(
+                            c => c.Name,
+                            c => c.Value
+                        )))
+                    .Build())
+                .Build();
         }
-    }
-
-    public interface IResourceBuilder
-    {
-        IResourceBuilder WithResourceMeta();
-        IDictionary<string, object> Build();
     }
 }

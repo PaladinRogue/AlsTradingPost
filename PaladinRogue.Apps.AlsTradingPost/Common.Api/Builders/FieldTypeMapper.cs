@@ -12,6 +12,16 @@ namespace Common.Api.Builders
             { typeof(string), FieldType.String }
         };
 
+        public static bool HasFieldType<T>()
+        {
+            return HasFieldType(typeof(T));
+        }
+
+        public static bool HasFieldType(Type type)
+        {
+            return FieldTypeMap.ContainsKey(type);
+        }
+
         public static string GetFieldType<T>()
         {
             return GetFieldType(typeof(T));

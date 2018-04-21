@@ -7,12 +7,12 @@ using Common.Api.Builders.Attributes;
 using Common.Api.Builders.Resource;
 using Common.Api.Builders.Resource.Attributes;
 using Common.Api.Builders.Template.Attributes;
-using Common.Api.Pagination.Interfaces;
 using Common.Api.Resources;
 using Common.Api.Sorting;
 using Common.Api.Validation;
 using Common.Api.Validation.Attributes;
 using Common.Resources.Extensions;
+using ReadOnlyAttribute = Common.Api.Builders.Template.Attributes.ReadOnlyAttribute;
 
 namespace Common.Api.Builders
 {
@@ -36,26 +36,25 @@ namespace Common.Api.Builders
             };
         }
         
-        public static IList<ResourceBuilderResource<T>> BuildCollectionResourceData<T>(IPagedCollectionResource<T> resourceData) where T : ISummaryResource
+        public static IList<ResourceBuilderResource<T>> BuildCollectionResourceData<T>(ICollectionResource<T> data) where T : ISummaryResource
         {
-            List<ResourceBuilderResource<T>> results = new List<ResourceBuilderResource<T>>();
-            
-            foreach (T resourceDataResult in resourceData.Results)
-            {
-                
-            }
-
-            return results;
+            return data.Results.Select(BuildResource).ToList();
         }
 
-        public static Meta BuildMeta<T>(T templateData)
+        public static Meta BuildMeta<T>(T data)
         {
-            IList<PropertyMeta> properties = new List<PropertyMeta>();
-
-            foreach (PropertyDescriptor property in TypeDescriptor.GetProperties(templateData.GetType()))
+            return new Meta
             {
-                IList<Constraint> constraints = new List<Constraint>
-                {
+                TemplateTypeName = GetTemplateTypeName(data),
+                Properties = new List<PropertyMeta>()
+            };
+        }
+        
+        public static void BuildValidationMeta<T>(Meta meta, T data)
+        {
+            foreach (PropertyDescriptor property in TypeDescriptor.GetProperties(data.GetType()))
+            {
+                IList<Constraint> constraints = new List<Constraint> {
                     new Constraint
                     {
                         Name = FieldMeta.Type,
@@ -90,69 +89,41 @@ namespace Common.Api.Builders
                         a => a.MaxLength
                     ));
                 
-                properties.Add(new PropertyMeta
-                {
-                    Name = property.Name,
-                    Constraints = constraints
-                });
+                AddOrUpdatePropertyConstraints(meta, property.Name, constraints);
             }
-            
-            Meta meta =  new Meta
-            {
-                TemplateTypeName = GetTemplateTypeName(templateData),
-                Properties = properties
-            };
-
-            AddFieldMeta(meta, templateData);
-
-            return meta;
         }
         
-        public static void AddFieldMeta<T>(Meta resourceMeta, T resourceData)
+        public static void BuildFieldMeta<T>(Meta meta, T data)
         {
-            foreach (PropertyDescriptor property in TypeDescriptor.GetProperties(resourceData.GetType()))
+            foreach (PropertyDescriptor property in TypeDescriptor.GetProperties(data.GetType()))
             {
-                IList<Constraint> constraints = new List<Constraint>
-                {
+                if (!FieldTypeMapper.HasFieldType(property.PropertyType)) continue;
+                
+                IList<Constraint> constraints = new List<Constraint> {
                     new Constraint
                     {
                         Name = FieldMeta.Type,
                         Value = FieldTypeMapper.GetFieldType(property.PropertyType)
                     }
                 };
-
+                    
                 AddAttributeConstraint(constraints, property,
                     CreateAttributeKeyValuePair<HiddenAttribute, bool>(
                         FieldMeta.Hidden,
                         a => a.IsHidden
                     ));
-
+                    
                 AddAttributeConstraint(constraints, property,
                     CreateAttributeKeyValuePair<ReadOnlyAttribute, bool>(
                         FieldMeta.ReadOnly,
                         a => a.IsReadOnly
                     ));
                 
-                PropertyMeta propertyMeta = resourceMeta.Properties.SingleOrDefault();
-                if (propertyMeta == null)
-                {
-                    resourceMeta.Properties.Add(new PropertyMeta
-                    {
-                        Name = property.Name,
-                        Constraints = constraints
-                    });
-                }
-                else
-                {
-                    foreach (Constraint constraint in constraints)
-                    {
-                        propertyMeta.Constraints.Add(constraint);
-                    }
-                }
+                AddOrUpdatePropertyConstraints(meta, property.Name, constraints);
             }
         }
 
-        public static void AddSorting<T, TSummaryResource>(Meta meta, T templateData)
+        public static void BuildSortingMeta<T, TSummaryResource>(Meta meta, T data)
             where TSummaryResource : ISummaryResource
         {
             IList<string> sortableFields = (
@@ -162,13 +133,13 @@ namespace Common.Api.Builders
                 select property.Name.ToCamelCase()).ToList();
 
 
-            if (templateData is IThenByTemplate thenByTemplate)
+            if (data is IThenByTemplate thenByTemplate)
             {
                 IEnumerable<string> thenByFields = sortableFields.Where(x => x != thenByTemplate.OrderBy);
                 
                 if (thenByFields.Any())
                 {
-                    meta.Properties.Single(p => p.Name == nameof(thenByTemplate.ThenBy)).Constraints.Add(new Constraint
+                    AddOrUpdatePropertyConstraint(meta, nameof(thenByTemplate.ThenBy), new Constraint
                     {
                         Name = FieldMeta.Values,
                         Value = thenByFields
@@ -176,17 +147,64 @@ namespace Common.Api.Builders
                 }
             }
 
-            if (templateData is IOrderByTemplate orderByTemplate)
+            if (data is IOrderByTemplate orderByTemplate)
             {
                 if (sortableFields.Any())
                 {
-                    meta.Properties.Single(p => p.Name == nameof(orderByTemplate.OrderBy)).Constraints.Add(
-                        new Constraint
-                        {
-                            Name = FieldMeta.Values,
-                            Value = sortableFields
-                        });
+                    AddOrUpdatePropertyConstraint(meta, nameof(orderByTemplate.OrderBy), new Constraint
+                    {
+                        Name = FieldMeta.Values,
+                        Value = sortableFields
+                    });
                 }
+            }
+        }
+
+        private static ResourceBuilderResource<T> BuildResource<T>(T resourceData)
+        {
+            return new ResourceBuilderResource<T>
+            {
+                Data = BuildResourceData(resourceData)
+            };
+        }
+
+        private static void AddOrUpdatePropertyConstraints(Meta meta, string propertyName, IList<Constraint> constraints)
+        {
+            PropertyMeta propertyMeta = meta.Properties.SingleOrDefault(p => p.Name == propertyName);
+            if (propertyMeta == null)
+            {
+                meta.Properties.Add(new PropertyMeta
+                {
+                    Name = propertyName,
+                    Constraints = constraints
+                });
+            }
+            else
+            {
+                foreach (Constraint constraint in constraints)
+                {
+                    propertyMeta.Constraints.Add(constraint);
+                }
+            }
+        }
+
+        private static void AddOrUpdatePropertyConstraint(Meta meta, string propertyName, Constraint constraint)
+        {
+            PropertyMeta propertyMeta = meta.Properties.SingleOrDefault(p => p.Name == propertyName);
+            if (propertyMeta == null)
+            {
+                meta.Properties.Add(new PropertyMeta
+                {
+                    Name = propertyName,
+                    Constraints = new List<Constraint>
+                    {
+                        constraint
+                    }
+                });
+            }
+            else
+            {
+                propertyMeta.Constraints.Add(constraint);
             }
         }
 
