@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using Common.Api.Builders.Attributes;
 using Common.Api.Builders.Resource;
-using Common.Api.Builders.Resource.Attributes;
-using Common.Api.Builders.Template.Attributes;
 using Common.Api.Resources;
 using Common.Api.Sorting;
 using Common.Api.Validation;
 using Common.Api.Validation.Attributes;
 using Common.Resources.Extensions;
-using ReadOnlyAttribute = Common.Api.Builders.Template.Attributes.ReadOnlyAttribute;
+using ReadOnlyAttribute = Common.Api.Resources.ReadOnlyAttribute;
 
 namespace Common.Api.Builders
 {
@@ -160,12 +157,18 @@ namespace Common.Api.Builders
             }
         }
 
+        public static IList<Link> BuildLinks<T>(T data)
+        {
+            return new List<Link>();
+        }
+
         private static ResourceBuilderResource<T> BuildResource<T>(T resourceData)
         {
             return new ResourceBuilderResource<T>
             {
                 Data = BuildResourceData(resourceData),
-                Meta = BuildMeta(resourceData)
+                Meta = BuildMeta(resourceData),
+                Links = BuildLinks(resourceData)
             };
         }
 

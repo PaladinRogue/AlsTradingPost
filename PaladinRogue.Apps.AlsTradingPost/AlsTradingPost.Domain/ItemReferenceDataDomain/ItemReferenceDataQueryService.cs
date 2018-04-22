@@ -7,6 +7,7 @@ using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.Persistence;
 using AutoMapper;
 using Common.Domain.Pagination.Interfaces;
+using Common.Resources.Extensions;
 
 namespace AlsTradingPost.Domain.ItemReferenceDataDomain
 {
@@ -31,28 +32,16 @@ namespace AlsTradingPost.Domain.ItemReferenceDataDomain
                 paginationDdto.PageSize,
                 paginationDdto.PageOffset,
                 out int totalResults,
-                CreatePropertyAccessor<ItemReferenceData>(orderBy),
+                orderBy.CreatePropertyAccessor<ItemReferenceData>(),
                 orderByAscending,
                 predicate,
-                CreatePropertyAccessor<ItemReferenceData>(thenBy),
+                thenBy.CreatePropertyAccessor<ItemReferenceData>(),
                 thenByAscending
             );
 
             return ItemReferenceDataPagedCollectionDdto.Create(
                 Mapper.Map<IEnumerable<ItemReferenceData>, IList<ItemReferenceDataSummaryProjection>>(results), totalResults
             );
-        }
-
-        private static Expression<Func<TIn, object>> CreatePropertyAccessor<TIn>(string propertyName)
-        {
-            if (string.IsNullOrEmpty(propertyName))
-            {
-                return null;
-            }
-
-            ParameterExpression param = Expression.Parameter(typeof(TIn));
-            MemberExpression body = Expression.PropertyOrField(param, propertyName);
-            return Expression.Lambda<Func<TIn, object>>(body, param);
         }
     }
 }

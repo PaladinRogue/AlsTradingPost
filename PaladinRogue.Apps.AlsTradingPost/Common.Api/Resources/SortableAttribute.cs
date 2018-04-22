@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Api.Builders.Resource.Attributes
+namespace Common.Api.Resources
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class SortableAttribute : Attribute

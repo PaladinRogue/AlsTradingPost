@@ -1,4 +1,6 @@
-﻿namespace Common.Api.Builders.Resource
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Common.Api.Builders.Resource
 {
     public interface IResourceTemplateBuilder : IBuilder<string, object>
     {

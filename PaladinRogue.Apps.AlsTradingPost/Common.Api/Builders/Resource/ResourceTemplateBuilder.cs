@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Common.Api.Builders.Dictionary;
 
 namespace Common.Api.Builders.Resource
@@ -20,7 +19,8 @@ namespace Common.Api.Builders.Resource
             _resource = new ResourceBuilderResource<T>
             {
                 Data = BuildHelper.BuildResourceData(_resourceData),
-                Meta = BuildHelper.BuildMeta(_resourceData)
+                Meta = BuildHelper.BuildMeta(_resourceData),
+                Links = BuildHelper.BuildLinks(_resourceData)
             };
 
             _template = new ResourceBuilderResource<TTemplate>
@@ -54,20 +54,11 @@ namespace Common.Api.Builders.Resource
             return DictionaryBuilder<string, object>.Create()
                 .Add(_resource.Data.TypeName, DictionaryBuilder<string, object>.Create()
                     .Add(ResourceType.Data, _resource.Data.Resource)
-                    .Add(ResourceType.Meta, _resource.Meta.Properties.ToDictionary(
-                        p => p.Name,
-                        p => p.Constraints.ToDictionary(
-                            c => c.Name,
-                            c => c.Value
-                        )))
+                    .Add(ResourceType.Meta, _resource.Meta.Properties.BuildPropertyDictionary())
+                    .Add(ResourceType.Links, _resource.Links.BuildLinkDictionary())
                     .Build())
                 .Add(_template.Data.TypeName, DictionaryBuilder<string, object>.Create()
-                    .Add(ResourceType.Meta, _template.Meta.Properties.ToDictionary(
-                        p => p.Name,
-                        p => p.Constraints.ToDictionary(
-                            c => c.Name,
-                            c => c.Value
-                        )))
+                    .Add(ResourceType.Meta, _template.Meta.Properties.BuildPropertyDictionary())
                     .Build())
                 .Build();
         }

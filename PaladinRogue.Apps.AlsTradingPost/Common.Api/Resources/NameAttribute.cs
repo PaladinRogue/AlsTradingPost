@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Api.Builders.Attributes
+namespace Common.Api.Resources
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class NameAttribute : Attribute

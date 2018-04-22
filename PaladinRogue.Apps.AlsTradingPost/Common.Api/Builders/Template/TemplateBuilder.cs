@@ -18,7 +18,8 @@ namespace Common.Api.Builders.Template
             _template = new TemplateBuilderTemplate<TTemplate>
             {
                 Data = BuildHelper.BuildTemplateData(_templateData),
-                Meta = BuildHelper.BuildMeta(_templateData)
+                Meta = BuildHelper.BuildMeta(_templateData),
+                Links = BuildHelper.BuildLinks(_templateData)
             };
         }
 
@@ -39,12 +40,8 @@ namespace Common.Api.Builders.Template
             return DictionaryBuilder<string, object>.Create()
                 .Add(_template.Data.TypeName, DictionaryBuilder<string, object>.Create()
                     .Add(ResourceType.Data, _template.Data.Resource)
-                    .Add(ResourceType.Meta, _template.Meta.Properties.ToDictionary(
-                        p => p.Name,
-                        p => p.Constraints.ToDictionary(
-                            c => c.Name,
-                            c => c.Value
-                        )))
+                    .Add(ResourceType.Meta, _template.Meta.Properties.BuildPropertyDictionary())
+                    .Add(ResourceType.Links, _template.Links.BuildLinkDictionary())
                     .Build())
                 .Build();
         }
