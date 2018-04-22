@@ -56,7 +56,7 @@ namespace Authentication.Application.Application
             }
             catch (DomainException e)
             {
-                _logger.LogCritical(e, "Unable create or update application");
+                _logger.LogCritical(e, "Unable to create or update application");
             }
         }
     }
