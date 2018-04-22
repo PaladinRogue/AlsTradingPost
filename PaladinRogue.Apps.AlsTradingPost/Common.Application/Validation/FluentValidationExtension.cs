@@ -13,7 +13,7 @@ namespace Common.Application.Validation
 
             if (!validator.Validate(@object).IsValid)
             {
-                throw new ValidationAppException(validationResult.Format());
+                throw new BusinessValidationRuleApplicationException(validationResult.Format());
             }
         }
 

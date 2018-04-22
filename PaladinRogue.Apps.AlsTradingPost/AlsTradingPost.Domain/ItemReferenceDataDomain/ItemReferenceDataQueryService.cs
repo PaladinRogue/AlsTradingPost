@@ -21,7 +21,7 @@ namespace AlsTradingPost.Domain.ItemReferenceDataDomain
 
         public ItemReferenceDataPagedCollectionDdto GetPage(
             IPaginationDdto paginationDdto,
-            Predicate<ItemReferenceData> predicate = null,
+            Expression<Func<ItemReferenceData, bool>> predicate = null,
             string orderBy = null,
             bool orderByAscending = true,
             string thenBy = null,
@@ -31,9 +31,9 @@ namespace AlsTradingPost.Domain.ItemReferenceDataDomain
                 paginationDdto.PageSize,
                 paginationDdto.PageOffset,
                 out int totalResults,
-                predicate,
                 CreatePropertyAccessor<ItemReferenceData>(orderBy),
                 orderByAscending,
+                predicate,
                 CreatePropertyAccessor<ItemReferenceData>(thenBy),
                 thenByAscending
             );
@@ -43,7 +43,7 @@ namespace AlsTradingPost.Domain.ItemReferenceDataDomain
             );
         }
 
-        private static Func<TIn, object> CreatePropertyAccessor<TIn>(string propertyName)
+        private static Expression<Func<TIn, object>> CreatePropertyAccessor<TIn>(string propertyName)
         {
             if (string.IsNullOrEmpty(propertyName))
             {
@@ -52,7 +52,7 @@ namespace AlsTradingPost.Domain.ItemReferenceDataDomain
 
             ParameterExpression param = Expression.Parameter(typeof(TIn));
             MemberExpression body = Expression.PropertyOrField(param, propertyName);
-            return Expression.Lambda<Func<TIn, object>>(body, param).Compile();
+            return Expression.Lambda<Func<TIn, object>>(body, param);
         }
     }
 }

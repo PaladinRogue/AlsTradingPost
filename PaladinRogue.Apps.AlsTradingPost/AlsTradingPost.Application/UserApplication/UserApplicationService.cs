@@ -9,6 +9,7 @@ using Common.Application.Exceptions;
 using Common.Domain.Exceptions;
 using Common.Resources.Concurrency.Interfaces;
 using Microsoft.Extensions.Logging;
+using ApplicationException = Common.Application.Exceptions.ApplicationException;
 
 namespace AlsTradingPost.Application.UserApplication
 {
@@ -67,7 +68,7 @@ namespace AlsTradingPost.Application.UserApplication
             catch (ConcurrencyDomainException e)
             {
                 _logger.LogInformation(e, "Concurrency exception");
-                throw new AppException(ExceptionType.Concurrency, e);
+                throw new ApplicationException(ExceptionType.Concurrency, e);
             }
         }
     }

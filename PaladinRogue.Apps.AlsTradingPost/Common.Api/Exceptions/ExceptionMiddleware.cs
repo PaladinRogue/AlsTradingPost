@@ -7,6 +7,7 @@ using Common.Application.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Logging;
+using ApplicationException = Common.Application.Exceptions.ApplicationException;
 
 namespace Common.Api.Exceptions
 {
@@ -35,7 +36,7 @@ namespace Common.Api.Exceptions
             {
                 await _next(context);
             }
-            catch (ValidationAppException ex)
+            catch (BusinessValidationRuleApplicationException ex)
             {
                 context.Response.Clear();
                 context.Response.ContentType = context.Request.ContentType;
@@ -47,7 +48,7 @@ namespace Common.Api.Exceptions
                     await context.Response.WriteAsync(stringWriter.ToString());
                 }
             }
-            catch (AppException ex)
+            catch (ApplicationException ex)
             {
                 if (context.Response.HasStarted)
                 {

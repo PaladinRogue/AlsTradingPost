@@ -1,7 +1,7 @@
 ﻿
 namespace Authentication.Api.Request
 {
-    public class FacebookAuthRequestDto
+    public class FacebookAuthTemplate
     {
         public string AccessToken { get; set; }
     }

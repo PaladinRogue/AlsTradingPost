@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Common.Domain.Exceptions;
 using Common.Domain.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -9,43 +10,35 @@ namespace Persistence.EntityFramework.Repositories
 {
     public static class RepositoryHelper
     {
-        public static IQueryable<T> Filter<T>(IQueryable<T> results, Predicate<T> predicate)
+        public static IEnumerable<T> GetPage<T, TOrderByKey>(
+            IQueryable<T> results,
+            Expression<Func<T, TOrderByKey>> orderBy,
+            bool orderByAscending,
+            Expression<Func<T, bool>> predicate,
+            int pageSize, int pageOffset, out int totalResults) where T : class
         {
-            if (predicate != null)
-            {
-                results = results.Where(i => predicate(i));
-            }
+            
+            IQueryable<T> filteredResults = Filter(results, predicate);
+            IQueryable<T> orderedResults = OrderBy(filteredResults, orderBy, orderByAscending);
 
-            return results;
+            return GetPage(orderedResults, pageSize, pageOffset, out totalResults);
         }
 
-        public static IOrderedQueryable<T> OrderBy<T, TOrderByKey>(IQueryable<T> results,
-            Func<T, TOrderByKey> orderBy, bool orderByAscending)
+        public static IEnumerable<T> GetPage<T, TOrderByKey, TThenByKey>(
+            IQueryable<T> results,
+            Expression<Func<T, TOrderByKey>> orderBy,
+            bool orderByAscending,
+            Expression<Func<T, bool>> predicate,
+            Expression<Func<T, TThenByKey>> thenBy,
+            bool thenByAscending,
+            int pageSize, int pageOffset, out int totalResults) where T : class
         {
-            if (orderBy != null)
-            {
-                results = orderByAscending ? results.OrderBy(x => orderBy(x)) : results.OrderByDescending(x => orderBy(x));
-            }
+            
+            IQueryable<T> filteredResults = Filter(results, predicate);
+            IOrderedQueryable<T> orderedResults = OrderBy(filteredResults, orderBy, orderByAscending);
+            IOrderedQueryable<T> thenByOrderedResults = ThenBy(orderedResults, thenBy, thenByAscending);
 
-            return (IOrderedQueryable<T>)results;
-        }
-
-        public static IOrderedQueryable<T> ThenBy<T, TThenByKey>(IOrderedQueryable<T> results,
-            Func<T, TThenByKey> thenBy, bool thenByAscending)
-        {
-            if (thenBy != null)
-            {
-                results = thenByAscending ? results.ThenBy(x => thenBy(x)) : results.ThenByDescending(x => thenBy(x));
-            }
-
-            return results;
-        }
-
-        public static IEnumerable<T> GetPage<T>(IQueryable<T> results, int pageSize, int pageOffset, out int totalResults)
-        {
-            totalResults = results.Count();
-
-            return results.Skip(pageOffset).Take(pageSize);
+            return GetPage(thenByOrderedResults, pageSize, pageOffset, out totalResults);
         }
 
         public static T GetById<T>(IQueryable<T> results, Guid id) where T : IEntity
@@ -60,7 +53,7 @@ namespace Persistence.EntityFramework.Repositories
             }
         }
 
-        public static T GetSingle<T>(IQueryable<T> results, Predicate<T> predicate)
+        public static T GetSingle<T>(IQueryable<T> results, Expression<Func<T, bool>> predicate)
         {
             try
             {
@@ -140,6 +133,40 @@ namespace Persistence.EntityFramework.Repositories
             {
                 throw new DeleteDomainException(entity, e);
             }
+        }
+        
+        private static IQueryable<T> Filter<T>(IQueryable<T> results, Expression<Func<T, bool>> predicate)
+        {
+            return predicate != null ? results.Where(predicate) : results;
+        }
+
+        private static IOrderedQueryable<T> OrderBy<T, TOrderByKey>(IQueryable<T> results,
+            Expression<Func<T, TOrderByKey>> orderBy, bool orderByAscending)
+        {
+            if (orderBy != null)
+            {
+                return orderByAscending ? results.OrderBy(orderBy) : results.OrderByDescending(orderBy);
+            }
+
+            return (IOrderedQueryable<T>) results;
+        }
+
+        private static IOrderedQueryable<T> ThenBy<T, TThenByKey>(IOrderedQueryable<T> results,
+            Expression<Func<T, TThenByKey>> thenBy, bool thenByAscending)
+        {
+            if (thenBy != null)
+            {
+                return thenByAscending ? results.ThenBy(thenBy) : results.ThenByDescending(thenBy);
+            }
+
+            return results;
+        }
+        
+        private static IEnumerable<T> GetPage<T>(IQueryable<T> results, int pageSize, int pageOffset, out int totalResults) where T : class
+        {
+            totalResults = results.Count();
+
+            return results.Skip(pageOffset).Take(pageSize);
         }
     }
 }

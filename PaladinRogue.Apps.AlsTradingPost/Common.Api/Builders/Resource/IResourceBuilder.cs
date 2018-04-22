@@ -2,7 +2,6 @@
 {
     public interface IResourceBuilder : IBuilder<string, object>
     {
-        IResourceBuilder WithTemplateMeta();
         IResourceBuilder WithResourceMeta();
     }
 }

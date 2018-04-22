@@ -52,7 +52,7 @@ namespace Authentication.Application.Identity
             catch (ConcurrencyDomainException e)
             {
                 _logger.LogInformation(e, "Concurrency exception");
-                throw new AppException(ExceptionType.Concurrency, e);
+                throw new ApplicationException(ExceptionType.Concurrency, e);
             }
         }
     }
