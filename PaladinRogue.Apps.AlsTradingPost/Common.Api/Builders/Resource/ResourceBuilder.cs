@@ -4,42 +4,26 @@ using Common.Api.Builders.Dictionary;
 
 namespace Common.Api.Builders.Resource
 {
-    public class ResourceBuilder<T, TTemplate> : IResourceBuilder
+    public class ResourceBuilder<T> : IResourceBuilder
     {
         private readonly ResourceBuilderResource<T> _resource;
-        private readonly ResourceBuilderResource<TTemplate> _template;
 
         private readonly T _resourceData;
-        private readonly TTemplate _templateData;
-
-        private ResourceBuilder(T resource, TTemplate template)
+        
+        private ResourceBuilder(T resource)
         {
             _resourceData = resource;
-            _templateData = template;
 
             _resource = new ResourceBuilderResource<T>
             {
                 Data = BuildHelper.BuildResourceData(_resourceData),
                 Meta = BuildHelper.BuildMeta(_resourceData)
             };
-
-            _template = new ResourceBuilderResource<TTemplate>
-            {
-                Data = BuildHelper.BuildResourceData(_templateData),
-                Meta = BuildHelper.BuildMeta(_templateData)
-            };
         }
 
-        public static ResourceBuilder<T, TTemplate> Create(T resource, TTemplate template)
+        public static ResourceBuilder<T> Create(T resource)
         {
-            return new ResourceBuilder<T, TTemplate>(resource, template);
-        }
-
-        public IResourceBuilder WithTemplateMeta()
-        {
-            BuildHelper.BuildValidationMeta(_template.Meta, _templateData);
-
-            return this;
+            return new ResourceBuilder<T>(resource);
         }
 
         public IResourceBuilder WithResourceMeta()
@@ -55,14 +39,6 @@ namespace Common.Api.Builders.Resource
                 .Add(_resource.Data.TypeName, DictionaryBuilder<string, object>.Create()
                     .Add(ResourceType.Data, _resource.Data.Resource)
                     .Add(ResourceType.Meta, _resource.Meta.Properties.ToDictionary(
-                        p => p.Name,
-                        p => p.Constraints.ToDictionary(
-                            c => c.Name,
-                            c => c.Value
-                        )))
-                    .Build())
-                .Add(_template.Data.TypeName, DictionaryBuilder<string, object>.Create()
-                    .Add(ResourceType.Meta, _template.Meta.Properties.ToDictionary(
                         p => p.Name,
                         p => p.Constraints.ToDictionary(
                             c => c.Name,

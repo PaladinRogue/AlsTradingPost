@@ -5,6 +5,7 @@ using Common.Resources.Concurrency.Interfaces;
 using Common.Resources.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
+using ApplicationException = Common.Application.Exceptions.ApplicationException;
 
 namespace Common.Application.Identity
 {
@@ -32,7 +33,7 @@ namespace Common.Application.Identity
                     }
                 }
 
-                throw new AppException(ExceptionType.Unauthorized, "Current identity token is not valid");
+                throw new ApplicationException(ExceptionType.Unauthorized, "Current identity token is not valid");
             }
         }
     }

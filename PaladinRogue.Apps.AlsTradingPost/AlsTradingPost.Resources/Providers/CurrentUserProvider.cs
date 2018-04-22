@@ -5,6 +5,7 @@ using Common.Resources.Authentication;
 using Common.Resources.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
+using ApplicationException = Common.Application.Exceptions.ApplicationException;
 
 namespace AlsTradingPost.Resources.Providers
 {
@@ -32,7 +33,7 @@ namespace AlsTradingPost.Resources.Providers
                     }
                 }
 
-                throw new AppException(ExceptionType.Unauthorized, "Current user token is not valid");
+                throw new ApplicationException(ExceptionType.Unauthorized, "Current user token is not valid");
             }
         }
     }

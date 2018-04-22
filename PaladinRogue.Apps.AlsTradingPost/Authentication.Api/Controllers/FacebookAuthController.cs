@@ -10,6 +10,7 @@ using Common.Api.Authentication;
 using Common.Api.Authentication.Constants;
 using Common.Api.Authentication.FacebookModels;
 using Common.Api.Authentication.Interfaces;
+using Common.Api.Builders.Resource;
 using Common.Api.Encryption.Interfaces;
 using Common.Api.Exceptions;
 using Common.Api.HttpClient.Interfaces;
@@ -51,14 +52,14 @@ namespace Authentication.Api.Controllers
 	    }
 
 	    [HttpPost]
-		public async Task<IActionResult> Post([FromBody] FacebookAuthRequestDto request)
+		public async Task<IActionResult> Post([FromBody] FacebookAuthTemplate template)
 		{
 			string appAccessTokenResponse = 
 				await _httpClientFactory.GetStringAsync(new Uri(string.Format(_fbAuthSettings.AccessTokenEndpoint, _fbAuthSettings.AppId, _fbAuthSettings.AppSecret)));
 			FacebookAppAccessToken appAccessToken = JsonConvert.DeserializeObject<FacebookAppAccessToken>(appAccessTokenResponse);
 
 			string userAccessTokenValidationResponse = 
-				await _httpClientFactory.GetStringAsync(new Uri(string.Format(_fbAuthSettings.AccessTokenValidationEndpoint, request.AccessToken, appAccessToken.AccessToken)));
+				await _httpClientFactory.GetStringAsync(new Uri(string.Format(_fbAuthSettings.AccessTokenValidationEndpoint, template.AccessToken, appAccessToken.AccessToken)));
 			FacebookUserAccessTokenValidation userAccessTokenValidation = JsonConvert.DeserializeObject<FacebookUserAccessTokenValidation>(userAccessTokenValidationResponse);
 
 			if (!userAccessTokenValidation.Data.IsValid)
@@ -76,9 +77,14 @@ namespace Authentication.Api.Controllers
 		        ClaimsBuilder.CreateBuilder().WithSubject(identity.Id).WithRole(JwtClaims.AppAccess).Build()
             );
 
-		    jwt.AccessToken = _encryptionFactory.Enrypt(request.AccessToken, _jwtIssuerOptions.SigningKey);
+		    jwt.AccessToken = _encryptionFactory.Enrypt(template.AccessToken, _jwtIssuerOptions.SigningKey);
 
-            return new ObjectResult(jwt);
+            return new ObjectResult(
+	            ResourceTemplateBuilder<FacebookJwtResource, FacebookAuthTemplate>.Create(jwt, template)
+		            .WithResourceMeta()
+		            .WithTemplateMeta()
+		            .Build()
+	            );
 		}
 	}
 }

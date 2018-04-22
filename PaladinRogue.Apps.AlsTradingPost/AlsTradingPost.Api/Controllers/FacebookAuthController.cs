@@ -10,6 +10,7 @@ using Common.Api.Authentication;
 using Common.Api.Authentication.Constants;
 using Common.Api.Authentication.FacebookModels;
 using Common.Api.Authentication.Interfaces;
+using Common.Api.Builders.Resource;
 using Common.Api.Encryption.Interfaces;
 using Common.Api.Exceptions;
 using Common.Api.HttpClient.Interfaces;
@@ -50,10 +51,10 @@ namespace AlsTradingPost.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] FacebookAuthTemplate request)
+        public async Task<IActionResult> Post([FromBody] FacebookAuthTemplate template)
         {
             string accessToken =
-                _encryptionFactory.Decrypt<string>(request.AccessToken, _jwtAuthenticationIssuerOptions.SigningKey);
+                _encryptionFactory.Decrypt<string>(template.AccessToken, _jwtAuthenticationIssuerOptions.SigningKey);
 
             string userAccessTokenValidationResponse;
 
@@ -87,11 +88,16 @@ namespace AlsTradingPost.Api.Controllers
 
             UserAdto userAdto = _userApplicationService.FacebookUpdate(facebookUpdateAdto);
 
-            IJwtResource jwt = await _jwtFactory.GenerateJwt<JwtResource>(
+            JwtResource jwt = await _jwtFactory.GenerateJwt<JwtResource>(
                 ClaimsBuilder.CreateBuilder().WithPersonas(userAdto.Personas).WithSubject(userAdto.Id).WithRole(JwtClaims.AppAccess).Build()
             );
 
-            return new ObjectResult(jwt);
+            return new ObjectResult(
+                ResourceTemplateBuilder<JwtResource, FacebookAuthTemplate>.Create(jwt, template)
+                .WithResourceMeta()
+                .WithTemplateMeta()
+                .Build()
+            );
         }
     }
 }

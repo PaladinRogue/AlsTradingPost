@@ -28,7 +28,7 @@ namespace AlsTradingPost.Application.ItemReferenceDataApplication
             
             ItemReferenceDataPagedCollectionDdto result = _itemReferenceDataQueryService.GetPage(
                 Mapper.Map<ItemReferenceDataSearchAdto, ItemReferenceDataSearchDdto>(itemReferenceDataSearchAdto),
-                    i => string.IsNullOrEmpty(itemReferenceDataSearchAdto.Name) || i.Name.Contains(itemReferenceDataSearchAdto.Name, StringComparison.OrdinalIgnoreCase),
+                    i => string.IsNullOrEmpty(itemReferenceDataSearchAdto.Name) || i.Name.Contains(itemReferenceDataSearchAdto.Name),
                     itemReferenceDataSearchAdto.OrderBy,
                     itemReferenceDataSearchAdto.OrderByAscending,
                     itemReferenceDataSearchAdto.ThenBy,

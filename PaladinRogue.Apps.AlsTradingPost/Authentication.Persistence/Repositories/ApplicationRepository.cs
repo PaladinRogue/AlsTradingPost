@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 using Authentication.Domain.Models;
 using Authentication.Domain.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +21,7 @@ namespace Authentication.Persistence.Repositories
 	        return RepositoryHelper.GetById(_context.Applications.AsNoTracking(), id);
 	    }
 
-	    public Application GetSingle(Predicate<Application> predicate)
+	    public Application GetSingle(Expression<Func<Application, bool>> predicate)
 	    {
 	        return RepositoryHelper.GetSingle(_context.Applications.AsNoTracking(), predicate);
 	    }
