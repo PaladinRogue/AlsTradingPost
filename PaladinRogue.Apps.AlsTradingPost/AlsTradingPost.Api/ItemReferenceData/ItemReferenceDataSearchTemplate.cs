@@ -8,6 +8,7 @@ using Common.Resources.Extensions;
 namespace AlsTradingPost.Api.ItemReferenceData
 {
     [SelfLink(RouteDictionary.ItemReferenceDataSearchTemplate, HttpVerbs.Get)]
+    [SearchLink(RouteDictionary.ItemReferenceDataGet)]
     public class ItemReferenceDataSearchTemplate : IPaginationTemplate, IThenByTemplate
     {
         public ItemReferenceDataSearchTemplate()
@@ -25,6 +26,6 @@ namespace AlsTradingPost.Api.ItemReferenceData
         public string OrderBy { get; set; }
         public bool OrderByAscending { get; set; }
         public string ThenBy { get; set; }
-        public bool ThenByAscending { get; set; }
+        public bool? ThenByAscending { get; set; }
     }
 }

@@ -26,7 +26,7 @@ namespace AlsTradingPost.Domain.ItemReferenceDataDomain
             string orderBy = null,
             bool orderByAscending = true,
             string thenBy = null,
-            bool thenByAscending = true)
+            bool? thenByAscending = null)
         {
             IEnumerable<ItemReferenceData> results = _itemReferenceDataRepository.GetPage(
                 paginationDdto.PageSize,

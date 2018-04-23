@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Common.Api.Builders.Resource;
 using Common.Api.Links;
+using Common.Api.Pagination.Interfaces;
 using Common.Api.Resources;
 using Common.Api.Routing;
 using Common.Api.Sorting;
@@ -169,6 +170,30 @@ namespace Common.Api.Builders
                     Uri = RoutingProvider.GetRoute(linkAttribute.UriName, data)
                 })
                 .ToList();
+        }
+
+        public static void AddSelfQueryParams<T>(IEnumerable<Link> links, T data)
+        {
+            Link selfLink = links.Single(l => l.Name == LinkType.Self);
+
+            selfLink.QueryParams = typeof(T).GetProperties()
+                .Where(p => p.GetValue(data) != null)
+                .ToDictionary(
+                    p => p.Name.ToCamelCase(),
+                    p => p.GetValue(data).ToString().ToCamelCase()
+                );
+        }
+
+        public static void AddPagingLinks<T, TCollectionResource>(ResourceBuilderResource<T> resource, IPagedCollectionResource<TCollectionResource> data, IPaginationTemplate pagingData)
+            where TCollectionResource : ISummaryResource
+        {
+            Link selfLink = resource.Links.Single(l => l.Name == LinkType.Self);
+            
+            foreach (Link pagingLink in PagingLinkHelper.GetPagingLinks(pagingData, data.TotalResults))
+            {
+                pagingLink.Uri = selfLink.Uri;
+                resource.Links.Add(pagingLink);
+            }
         }
 
         private static ResourceBuilderResource<T> BuildResource<T>(T resourceData)

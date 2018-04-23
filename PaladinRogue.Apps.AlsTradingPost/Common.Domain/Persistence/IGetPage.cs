@@ -34,6 +34,6 @@ namespace Common.Domain.Persistence
             bool orderByAscending = true,
             Expression<Func<T, bool>> predicate = null,
             Expression<Func<T, TThenByKey>> thenBy = null,
-            bool thenByAscending = true);
+            bool? thenByAscending = null);
     }
 }

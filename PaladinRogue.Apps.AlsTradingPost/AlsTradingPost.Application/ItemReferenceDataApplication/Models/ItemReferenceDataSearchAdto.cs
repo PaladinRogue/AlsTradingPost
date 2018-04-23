@@ -11,6 +11,6 @@ namespace AlsTradingPost.Application.ItemReferenceDataApplication.Models
         public string OrderBy { get; set; }
         public bool OrderByAscending { get; set; }
         public string ThenBy { get; set; }
-        public bool ThenByAscending { get; set; }
+        public bool? ThenByAscending { get; set; }
     }
 }

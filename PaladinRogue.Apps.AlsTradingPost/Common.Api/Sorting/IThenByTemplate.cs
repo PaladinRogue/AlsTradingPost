@@ -3,6 +3,6 @@
     public interface IThenByTemplate : IOrderByTemplate
     {
         string ThenBy { get; set; }
-        bool ThenByAscending { get; set; }
+        bool? ThenByAscending { get; set; }
     }
 }
