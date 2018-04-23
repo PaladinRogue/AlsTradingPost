@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using Common.Api.Builders.Resource;
+using Common.Api.Links;
 using Common.Api.Resources;
+using Common.Api.Routing;
 using Common.Api.Sorting;
 using Common.Api.Validation;
 using Common.Api.Validation.Attributes;
@@ -159,7 +161,14 @@ namespace Common.Api.Builders
 
         public static IList<Link> BuildLinks<T>(T data)
         {
-            return new List<Link>();
+            return typeof(T).GetCustomAttributes<LinkAttribute>()
+                .Select(linkAttribute => new Link
+                {
+                    Name = linkAttribute.LinkName,
+                    AllowVerbs = linkAttribute.HttpVerbs,
+                    Uri = RoutingProvider.GetRouteTemplate(linkAttribute.UriName)
+                })
+                .ToList();
         }
 
         private static ResourceBuilderResource<T> BuildResource<T>(T resourceData)

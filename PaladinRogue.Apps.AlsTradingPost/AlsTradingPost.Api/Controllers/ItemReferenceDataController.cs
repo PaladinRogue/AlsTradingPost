@@ -21,6 +21,7 @@ namespace AlsTradingPost.Api.Controllers
             _itemReferenceDataApplicationService = itemReferenceDataApplicationService;
         }
         
+        [Route("", Name = RouteDictionary.ItemReferenceData)]
         public IActionResult Get(ItemReferenceDataSearchTemplate itemReferenceDataSearchTemplate)
         {
             ItemReferenceDataPagedCollectionAdto result = _itemReferenceDataApplicationService.Search(Mapper.Map<ItemReferenceDataSearchTemplate, ItemReferenceDataSearchAdto>(itemReferenceDataSearchTemplate));
@@ -39,7 +40,7 @@ namespace AlsTradingPost.Api.Controllers
             );
         }
 
-        [Route("searchTemplate")]
+        [Route("searchTemplate", Name = RouteDictionary.ItemReferenceDataSearch)]
         public IActionResult GetSearchTemplate()
         {
             return new ObjectResult(
