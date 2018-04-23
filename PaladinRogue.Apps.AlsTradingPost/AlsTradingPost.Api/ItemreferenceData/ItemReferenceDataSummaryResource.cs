@@ -5,7 +5,7 @@ using Common.Api.Resources;
 
 namespace AlsTradingPost.Api.ItemReferenceData
 {
-    [SelfLink(RouteDictionary.ItemReferenceData, HttpVerbs.Get)]
+    [SelfLink(RouteDictionary.ItemReferenceDataGetById, HttpVerbs.Get)]
     public class ItemReferenceDataSummaryResource : ISummaryResource
     {
         [Hidden]
