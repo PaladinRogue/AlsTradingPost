@@ -5,5 +5,7 @@ namespace Common.Api.Builders
         public string Name { get; set; }
         
         public string Uri { get; set; }
+        
+        public string[] AllowVerbs { get; set; }
     }
 }

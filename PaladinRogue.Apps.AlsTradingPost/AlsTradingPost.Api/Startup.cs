@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using AlsTradingPost.Setup;
 using AlsTradingPost.Setup.Infrastructure.Settings;
 using AutoMapper;
 using Common.Api.Extensions;
+using Common.Api.Routing;
 using Common.Api.Settings;
 using Common.Application.Identity;
 using Common.Domain.DomainEvents.Interfaces;
@@ -12,6 +14,7 @@ using Common.Setup.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
@@ -33,12 +36,15 @@ namespace AlsTradingPost.Api
             Environment = environment;
         }
 
-        public IHostingEnvironment Environment { get; }
-        public IConfiguration Configuration { get; }
+        private IHostingEnvironment Environment { get; }
+        private IConfiguration Configuration { get; }
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.Conventions.Add(new ApiExplorerVisibilityEnabledConvention());
+            });
 
             services.Configure<MvcOptions>(options =>
             {
@@ -77,8 +83,17 @@ namespace AlsTradingPost.Api
 
         public void Configure(IApplicationBuilder app,
             ILoggerFactory loggerFactory,
-            IDomainEventHandlerFactory domainEventHandlerFactory)
+            IDomainEventHandlerFactory domainEventHandlerFactory,
+            IApiDescriptionGroupCollectionProvider apiDescriptionGroupCollectionProvider)
         {
+            RoutingProvider.RegisterRoutes(apiDescriptionGroupCollectionProvider.ApiDescriptionGroups.Items.SelectMany(
+                g => g.Items.Select(i => new Route
+                {
+                    Name = i.ActionDescriptor.AttributeRouteInfo.Name,
+                    Template = i.RelativePath
+                })
+            ));
+            
             domainEventHandlerFactory.Initialise();
 
             loggerFactory.AddLog4Net();

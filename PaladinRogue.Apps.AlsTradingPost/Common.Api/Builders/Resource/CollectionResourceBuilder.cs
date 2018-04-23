@@ -26,7 +26,8 @@ namespace Common.Api.Builders.Resource
             _resource = new ResourceBuilderResource<T>
             {
                 Data = BuildHelper.BuildResourceData(_resourceData),
-                Meta = BuildHelper.BuildMeta(_resourceData)
+                Meta = BuildHelper.BuildMeta(_resourceData),
+                Links = BuildHelper.BuildLinks(_resourceData)
             };
 
             _template = new ResourceBuilderResource<TTemplate>
@@ -82,6 +83,7 @@ namespace Common.Api.Builders.Resource
                         DictionaryBuilder<string, object>.Create()
                             .Add(r.Data.TypeName, DictionaryBuilder<string, object>.Create()
                                 .Add(ResourceType.Data, r.Data.Resource)
+                                .Add(ResourceType.Links, r.Links.BuildLinkDictionary())
                                 .Build())
                             .Build()
                 ));
@@ -96,33 +98,19 @@ namespace Common.Api.Builders.Resource
             IDictionaryBuilder<string, object> dictionaryBuilder = DictionaryBuilder<string, object>.Create()
                 .Add(_resource.Data.TypeName, DictionaryBuilder<string, object>.Create()
                     .Add(ResourceType.Data, collectionResourceDataBuilder.Build())
-                    .Add(ResourceType.Meta, _resource.Meta.Properties.ToDictionary(
-                        p => p.Name,
-                        p => p.Constraints.ToDictionary(
-                            c => c.Name,
-                            c => c.Value
-                        )))
+                    .Add(ResourceType.Meta, _resource.Meta.Properties.BuildPropertyDictionary())
+                    .Add(ResourceType.Links, _resource.Links.BuildLinkDictionary())
                     .Build())
                 .Add(_template.Data.TypeName, DictionaryBuilder<string, object>.Create()
                     .Add(ResourceType.Data, _template.Data.Resource)
-                    .Add(ResourceType.Meta, _template.Meta.Properties.ToDictionary(
-                        p => p.Name,
-                        p => p.Constraints.ToDictionary(
-                            c => c.Name,
-                            c => c.Value
-                        )))
+                    .Add(ResourceType.Meta, _template.Meta.Properties.BuildPropertyDictionary())
                     .Build());
 
             if (_collectionResources.Any())
             {
                 dictionaryBuilder.Add(_collectionResources.First().Data.TypeName, DictionaryBuilder<string, object>
                     .Create()
-                    .Add(ResourceType.Meta, _collectionResources.First().Meta.Properties.ToDictionary(
-                        p => p.Name,
-                        p => p.Constraints.ToDictionary(
-                            c => c.Name,
-                            c => c.Value
-                        )))
+                    .Add(ResourceType.Meta, _collectionResources.First().Meta.Properties.BuildPropertyDictionary())
                     .Build());
             }
 

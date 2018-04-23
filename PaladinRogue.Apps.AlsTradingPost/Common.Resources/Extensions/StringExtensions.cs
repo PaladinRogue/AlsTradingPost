@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Text;
 
 namespace Common.Resources.Extensions
 {
@@ -13,5 +16,28 @@ namespace Common.Resources.Extensions
         {
             return source != null && toCheck != null && source.IndexOf(toCheck, comp) >= 0;
         }
+
+        public static Expression<Func<TIn, object>> CreatePropertyAccessor<TIn>(this string propertyName)
+        {
+            if (string.IsNullOrEmpty(propertyName))
+            {
+                return null;
+            }
+
+            ParameterExpression param = Expression.Parameter(typeof(TIn));
+            MemberExpression body = Expression.PropertyOrField(param, propertyName);
+            return Expression.Lambda<Func<TIn, object>>(body, param);
+        }
+        
+        public static string Format(this string str, IDictionary<string, string> parameters)  
+        {
+            StringBuilder sb = new StringBuilder(str);  
+            foreach(KeyValuePair<string, string> kv in parameters)  
+            {  
+                sb.Replace($"{{{kv.Key}}}", kv.Value ?? "");  
+            }  
+  
+            return sb.ToString();  
+        }  
     }
 }

@@ -32,6 +32,7 @@ using Common.Resources.Concurrency.Interfaces;
 using Common.Resources.Transactions;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -97,6 +98,7 @@ namespace AlsTradingPost.Setup
             services.AddSingleton<ICurrentUserProvider, CurrentUserProvider>();
 
             services.AddSingleton<IConcurrencyVersionProvider, ConcurrencyVersionProvider>();
+            services.AddSingleton<IApiDescriptionGroupCollectionProvider, ApiDescriptionGroupCollectionProvider>();
         }
     }
 }

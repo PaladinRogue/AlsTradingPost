@@ -94,9 +94,9 @@ namespace AlsTradingPost.Api.Controllers
 
             return new ObjectResult(
                 ResourceTemplateBuilder<JwtResource, FacebookAuthTemplate>.Create(jwt, template)
-                .WithResourceMeta()
-                .WithTemplateMeta()
-                .Build()
+                    .WithResourceMeta()
+                    .WithTemplateMeta()
+                    .Build()
             );
         }
     }

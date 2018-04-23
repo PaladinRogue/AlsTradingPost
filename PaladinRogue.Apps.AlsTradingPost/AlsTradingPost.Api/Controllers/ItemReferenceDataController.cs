@@ -1,4 +1,5 @@
-﻿using AlsTradingPost.Api.ItemReferenceData;
+﻿using System;
+using AlsTradingPost.Api.ItemReferenceData;
 using AlsTradingPost.Application.ItemReferenceDataApplication.Interfaces;
 using AlsTradingPost.Application.ItemReferenceDataApplication.Models;
 using AlsTradingPost.Setup.Infrastructure.Authorization;
@@ -20,7 +21,14 @@ namespace AlsTradingPost.Api.Controllers
         {
             _itemReferenceDataApplicationService = itemReferenceDataApplicationService;
         }
+
+        [Route("{id}", Name = RouteDictionary.ItemReferenceDataGetById)]
+        public IActionResult GetById(Guid id)
+        {
+            return new ObjectResult(null);
+        }
         
+        [Route("", Name = RouteDictionary.ItemReferenceDataGet)]
         public IActionResult Get(ItemReferenceDataSearchTemplate itemReferenceDataSearchTemplate)
         {
             ItemReferenceDataPagedCollectionAdto result = _itemReferenceDataApplicationService.Search(Mapper.Map<ItemReferenceDataSearchTemplate, ItemReferenceDataSearchAdto>(itemReferenceDataSearchTemplate));
@@ -39,7 +47,7 @@ namespace AlsTradingPost.Api.Controllers
             );
         }
 
-        [Route("searchTemplate")]
+        [Route("searchTemplate", Name = RouteDictionary.ItemReferenceDataSearchTemplate)]
         public IActionResult GetSearchTemplate()
         {
             return new ObjectResult(
