@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Text;
 
 namespace Common.Resources.Extensions
 {
@@ -26,5 +28,16 @@ namespace Common.Resources.Extensions
             MemberExpression body = Expression.PropertyOrField(param, propertyName);
             return Expression.Lambda<Func<TIn, object>>(body, param);
         }
+        
+        public static string Format(this string str, IDictionary<string, string> parameters)  
+        {
+            StringBuilder sb = new StringBuilder(str);  
+            foreach(KeyValuePair<string, string> kv in parameters)  
+            {  
+                sb.Replace($"{{{kv.Key}}}", kv.Value ?? "");  
+            }  
+  
+            return sb.ToString();  
+        }  
     }
 }

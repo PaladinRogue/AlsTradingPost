@@ -2,7 +2,8 @@
 {
     public static class RouteDictionary
     {
-        public const string ItemReferenceDataSearch = "ItemReferenceDataSearch";
-        public const string ItemReferenceData = "ItemReferenceData";
+        public const string ItemReferenceDataSearchTemplate = "ItemReferenceDataSearchTemplate";
+        public const string ItemReferenceDataGet = "ItemReferenceDataGet";
+        public const string ItemReferenceDataGetById = "ItemReferenceDataGetById";
     }
 }

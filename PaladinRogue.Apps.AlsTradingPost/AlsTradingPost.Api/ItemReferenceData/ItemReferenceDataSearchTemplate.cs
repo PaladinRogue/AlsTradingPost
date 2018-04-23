@@ -1,10 +1,13 @@
-﻿using Common.Api.Pagination.Interfaces;
+﻿using Common.Api.Constants;
+using Common.Api.Links;
+using Common.Api.Pagination.Interfaces;
 using Common.Api.Sorting;
 using Common.Api.Validation.Attributes;
 using Common.Resources.Extensions;
 
 namespace AlsTradingPost.Api.ItemReferenceData
 {
+    [SelfLink(RouteDictionary.ItemReferenceDataSearchTemplate, HttpVerbs.Get)]
     public class ItemReferenceDataSearchTemplate : IPaginationTemplate, IThenByTemplate
     {
         public ItemReferenceDataSearchTemplate()

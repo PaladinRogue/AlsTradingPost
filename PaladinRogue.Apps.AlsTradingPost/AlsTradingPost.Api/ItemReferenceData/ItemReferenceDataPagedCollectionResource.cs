@@ -4,7 +4,7 @@ using Common.Api.Pagination;
 
 namespace AlsTradingPost.Api.ItemReferenceData
 {
-    [SelfLink(RouteDictionary.ItemReferenceDataSearch, HttpVerbs.Get)]
+    [SelfLink(RouteDictionary.ItemReferenceDataGet, HttpVerbs.Get)]
     public class ItemReferenceDataPagedCollectionResource : PagedCollectionResource<ItemReferenceDataSummaryResource>
     {
     }
