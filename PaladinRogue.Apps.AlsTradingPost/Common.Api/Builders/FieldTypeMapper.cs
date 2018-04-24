@@ -8,9 +8,12 @@ namespace Common.Api.Builders
         private static readonly IDictionary<Type, string> FieldTypeMap = new Dictionary<Type, string>
         {
             { typeof(int), FieldType.Number },
+            { typeof(int?), FieldType.Number },
             { typeof(bool), FieldType.Boolean },
+            { typeof(bool?), FieldType.Boolean },
             { typeof(string), FieldType.String },
-            { typeof(Guid), FieldType.Id }
+            { typeof(Guid), FieldType.Id },
+            { typeof(Guid?), FieldType.Id }
         };
 
         public static bool HasFieldType<T>()

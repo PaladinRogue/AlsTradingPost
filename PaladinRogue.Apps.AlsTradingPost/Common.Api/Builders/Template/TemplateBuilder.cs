@@ -21,6 +21,8 @@ namespace Common.Api.Builders.Template
                 Meta = BuildHelper.BuildMeta(_templateData),
                 Links = BuildHelper.BuildLinks(_templateData)
             };
+
+            BuildHelper.AddSearchQueryParams(_template.Links, _templateData);
         }
 
         public static TemplateBuilder<TTemplate> Create()

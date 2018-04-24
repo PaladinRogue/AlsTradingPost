@@ -10,6 +10,6 @@ namespace Common.Domain.Services.Interfaces
             string orderBy = null,
             bool orderByAscending = true,
             string thenBy = null,
-            bool thenByAscending = true);
+            bool? thenByAscending = null);
     }
 }

@@ -23,8 +23,8 @@ namespace Common.Api.Builders
             return links.ToDictionary(
                 p => p.Name,
                 p => DictionaryBuilder<string, object>.Create()
-                    .Add(LinkType.Href, p.Uri)
-                    .Add(LinkType.AllowVerbs, p.AllowVerbs)
+                    .Add(LinkPartType.Href, p.FullUri)
+                    .Add(LinkPartType.AllowVerbs, p.AllowVerbs)
                     .Build()
             );
         }

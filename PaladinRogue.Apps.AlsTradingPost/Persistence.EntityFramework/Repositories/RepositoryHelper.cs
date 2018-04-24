@@ -30,7 +30,7 @@ namespace Persistence.EntityFramework.Repositories
             bool orderByAscending,
             Expression<Func<T, bool>> predicate,
             Expression<Func<T, TThenByKey>> thenBy,
-            bool thenByAscending,
+            bool? thenByAscending,
             int pageSize, int pageOffset, out int totalResults) where T : class
         {
             
@@ -152,11 +152,11 @@ namespace Persistence.EntityFramework.Repositories
         }
 
         private static IOrderedQueryable<T> ThenBy<T, TThenByKey>(IOrderedQueryable<T> results,
-            Expression<Func<T, TThenByKey>> thenBy, bool thenByAscending)
+            Expression<Func<T, TThenByKey>> thenBy, bool? thenByAscending)
         {
             if (thenBy != null)
             {
-                return thenByAscending ? results.ThenBy(thenBy) : results.ThenByDescending(thenBy);
+                return thenByAscending.HasValue && thenByAscending.Value ? results.ThenBy(thenBy) : results.ThenByDescending(thenBy);
             }
 
             return results;

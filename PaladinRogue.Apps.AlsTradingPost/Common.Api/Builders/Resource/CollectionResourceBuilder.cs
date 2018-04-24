@@ -35,6 +35,14 @@ namespace Common.Api.Builders.Resource
                 Data = BuildHelper.BuildTemplateData(_templateData),
                 Meta = BuildHelper.BuildMeta(_templateData)
             };
+
+            BuildHelper.AddSelfQueryParams(_resource.Links, _templateData);
+            
+            if (_resourceData is IPagedCollectionResource<TCollectionResource> resource
+                && _templateData is IPaginationTemplate paginationTemplate)
+            {
+                BuildHelper.AddPagingLinks(_resource, resource, paginationTemplate);
+            }
         }
 
         public static CollectionResourceBuilder<T, TTemplate, TCollectionResource> Create(T resource,

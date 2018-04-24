@@ -37,7 +37,7 @@ namespace AlsTradingPost.Persistence.Repositories
             bool orderByAscending = true,
             Expression<Func<ItemReferenceData, bool>> predicate = null,
             Expression<Func<ItemReferenceData, TThenByKey>> thenBy = null,
-            bool thenByAscending = true)
+            bool? thenByAscending = null)
         {
             return RepositoryHelper.GetPage(_context.ItemReferenceData, orderBy, orderByAscending, predicate, thenBy, thenByAscending, pageSize, pageOffset, out totalResults);
         }

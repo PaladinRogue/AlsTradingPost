@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using Microsoft.AspNetCore.WebUtilities;
+
 namespace Common.Api.Builders
 {
     public class Link
@@ -6,6 +9,10 @@ namespace Common.Api.Builders
         
         public string Uri { get; set; }
         
+        public IDictionary<string, string> QueryParams { private get; set; }
+        
         public string[] AllowVerbs { get; set; }
+
+        public string FullUri => QueryParams != null ? QueryHelpers.AddQueryString(Uri, QueryParams) : Uri;
     }
 }
