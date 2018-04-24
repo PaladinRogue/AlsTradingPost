@@ -1,8 +1,8 @@
 ﻿namespace Common.Api.Routing
 {
-    public interface IRouteProvider
+    public interface IRouteProvider<in T>
     {
-        string GetRouteTemplate<T>(string routeName, T routeData);
-        bool HasRoute(string routeName);
+        string GetRouteTemplate<TRouteData>(string routeName, T routeRestriction, TRouteData routeData);
+        bool HasAccessToRoute(string routeName, T routeRestriction);
     }
 }

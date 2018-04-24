@@ -1,26 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace Common.Api.Routing
+﻿namespace Common.Api.Routing
 {
-    public class Route
+    public class Route<T>
     {
         public string Template { get; }
-        public IEnumerable<string> ControllerPolicies { get; }
-        public IEnumerable<string> ActionPolicies { get; }
-        public bool HasControllerPolicies => ControllerPolicies.Any();
-        public bool HasActionPolicies => ActionPolicies.Any();
+        public T Restriction { get; }
         
-        private Route(string template, IEnumerable<string> controllerPolicies, IEnumerable<string> actionPolicies)
+        private Route(string template, T restriction)
         {
             Template = template;
-            ControllerPolicies = controllerPolicies;
-            ActionPolicies = actionPolicies;
+            Restriction = restriction;
         }
 
-        public static Route Create(string template, IEnumerable<string> controllerPolicies, IEnumerable<string> actionPolicies)
+        public static Route<T> Create(string template, T restriction)
         {
-            return new Route(template, controllerPolicies, actionPolicies);
+            return new Route<T>(template, restriction);
         }
     }
 }

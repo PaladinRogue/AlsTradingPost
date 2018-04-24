@@ -28,7 +28,7 @@ namespace AlsTradingPost.Api.Controllers
             return new ObjectResult(null);
         }
         
-        [Route("", Name = RouteDictionary.ItemReferenceDataGet)]
+        [HttpGet(Name = RouteDictionary.ItemReferenceDataGet)]
         public IActionResult Get(ItemReferenceDataSearchTemplate itemReferenceDataSearchTemplate)
         {
             ItemReferenceDataPagedCollectionAdto result = _itemReferenceDataApplicationService.Search(Mapper.Map<ItemReferenceDataSearchTemplate, ItemReferenceDataSearchAdto>(itemReferenceDataSearchTemplate));

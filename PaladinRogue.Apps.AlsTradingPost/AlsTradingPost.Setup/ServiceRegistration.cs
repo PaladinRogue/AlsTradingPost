@@ -17,8 +17,10 @@ using AlsTradingPost.Domain.UserDomain;
 using AlsTradingPost.Domain.UserDomain.Interfaces;
 using AlsTradingPost.Persistence;
 using AlsTradingPost.Persistence.Repositories;
+using AlsTradingPost.Resources;
 using AlsTradingPost.Resources.Providers;
 using AlsTradingPost.Resources.Providers.Interfaces;
+using AlsTradingPost.Setup.Infrastructure.Routing;
 using Common.Api.Encryption;
 using Common.Api.Encryption.Interfaces;
 using Common.Api.HttpClient;
@@ -101,7 +103,7 @@ namespace AlsTradingPost.Setup
 
             services.AddSingleton<IConcurrencyVersionProvider, ConcurrencyVersionProvider>();
             services.AddSingleton<IApiDescriptionGroupCollectionProvider, ApiDescriptionGroupCollectionProvider>();
-            services.AddSingleton<IRouteProvider, RouteProvider>();
+            services.AddSingleton<IRouteProvider<Persona>, PersonaRouteProvider>();
         }
     }
 }
