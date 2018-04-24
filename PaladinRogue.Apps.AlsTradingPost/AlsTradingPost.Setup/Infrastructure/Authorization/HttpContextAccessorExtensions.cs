@@ -26,11 +26,11 @@ namespace AlsTradingPost.Setup.Infrastructure.Authorization
         private static IEnumerable<string> GetPolicies(Persona personas)
         {
             List<string> policies = new List<string>();
-            foreach (Enum value in Enum.GetValues(personas.GetType()))
+            foreach (Persona value in Enum.GetValues(personas.GetType()))
             {
                 if (personas.HasFlag(value) && !value.Equals(Persona.None))
                 {
-                    policies.Add($"{PersonaPolicies.PREFIX}{value}");
+                    policies.Add(PersonaPolicyMapper.FromPersona(value));
                 }
             }
 

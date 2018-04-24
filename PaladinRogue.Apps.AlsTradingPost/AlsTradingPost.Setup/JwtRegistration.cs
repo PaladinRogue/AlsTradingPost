@@ -98,8 +98,10 @@ namespace AlsTradingPost.Setup
 		    services.AddAuthorization(options =>
 		    {
 		        options.AddPolicy(JwtClaims.AppAccess, policy => policy.RequireClaim(JwtClaimIdentifiers.Rol, JwtClaims.AppAccess));
-                options.AddPolicy(PersonaPolicies.Admin, policy => policy.Requirements.Add(new HasPersonaRequirement(Persona.Admin)));
-                options.AddPolicy(PersonaPolicies.Player, policy => policy.Requirements.Add(new HasPersonaRequirement(Persona.Player)));
+			    foreach (KeyValuePair<Persona, string> keyValuePair in PersonaPolicyMapper.GetMap())
+			    {
+				    options.AddPolicy(keyValuePair.Value, policy => policy.Requirements.Add(new HasPersonaRequirement(keyValuePair.Key)));
+			    }
 		    });
             
             services.AddSingleton<IAuthorizationHandler, HasPersonaHandler>();
