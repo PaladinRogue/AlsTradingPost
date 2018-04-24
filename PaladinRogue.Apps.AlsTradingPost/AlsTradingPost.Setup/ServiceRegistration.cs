@@ -23,6 +23,7 @@ using Common.Api.Encryption;
 using Common.Api.Encryption.Interfaces;
 using Common.Api.HttpClient;
 using Common.Api.HttpClient.Interfaces;
+using Common.Api.Routing;
 using Common.Application.Identity;
 using Common.Domain.Concurrency;
 using Common.Domain.Concurrency.Interfaces;
@@ -40,12 +41,12 @@ using Persistence.EntityFramework.Transactions;
 
 namespace AlsTradingPost.Setup
 {
-  public class ServiceRegistration
+    public class ServiceRegistration
     {
         public static void RegisterValidators(IServiceCollection services)
         {
             ValidatorOptions.LanguageManager.Enabled = false;
-            
+
             services.AddTransient<IValidator<ItemReferenceDataSearchAdto>, ItemReferenceDataSearchAdtoValidator>();
         }
 
@@ -86,7 +87,8 @@ namespace AlsTradingPost.Setup
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<IItemReferenceDataRepository, ItemReferenceDataRepository>();
 
-            services.AddDbContext<AlsTradingPostDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Default")));
+            services.AddDbContext<AlsTradingPostDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("Default")));
             services.AddScoped<DbContext>(sp => sp.GetRequiredService<AlsTradingPostDbContext>());
             services.AddTransient<ITransactionFactory, TransactionFactory>();
         }
@@ -99,6 +101,7 @@ namespace AlsTradingPost.Setup
 
             services.AddSingleton<IConcurrencyVersionProvider, ConcurrencyVersionProvider>();
             services.AddSingleton<IApiDescriptionGroupCollectionProvider, ApiDescriptionGroupCollectionProvider>();
+            services.AddSingleton<IRouteProvider, RouteProvider>();
         }
     }
 }

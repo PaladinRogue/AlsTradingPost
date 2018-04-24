@@ -167,7 +167,7 @@ namespace Common.Api.Builders
                 {
                     Name = linkAttribute.LinkName,
                     AllowVerbs = linkAttribute.HttpVerbs,
-                    Uri = RoutingProvider.GetRoute(linkAttribute.UriName, data)
+                    Uri = "" //RouteProvider.GetRouteTemplate(linkAttribute.UriName, data)
                 })
                 .ToList();
         }

@@ -11,6 +11,7 @@ namespace Common.Resources.Extensions
         {
             return httpContextAccessor?.HttpContext?.User?.FindFirst(JwtRegisteredClaimNames.Iss)?.Value;
         }
+        
         public static Guid? CurrentSubject(this IHttpContextAccessor httpContextAccessor)
         {
             Guid.TryParse(httpContextAccessor?.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value, out Guid subjectId);

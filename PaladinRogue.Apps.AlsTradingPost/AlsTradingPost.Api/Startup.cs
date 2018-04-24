@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Linq;
 using AlsTradingPost.Setup;
 using AlsTradingPost.Setup.Infrastructure.Settings;
 using AutoMapper;
 using Common.Api.Extensions;
 using Common.Api.Routing;
 using Common.Api.Settings;
-using Common.Application.Identity;
 using Common.Domain.DomainEvents.Interfaces;
-using Common.Resources.Concurrency.Interfaces;
 using Common.Resources.Logging;
 using Common.Setup.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
@@ -58,8 +54,6 @@ namespace AlsTradingPost.Api
                 }
             });
             
-            services.AddScoped<ICurrentIdentityProvider, CurrentIdentityProvider>();
-
             services.Configure<ProxySettings>(Configuration.GetSection(nameof(ProxySettings)));
             services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
             services.Configure<MessagingBusSettings>(Configuration.GetSection(nameof(MessagingBusSettings)));
@@ -83,17 +77,8 @@ namespace AlsTradingPost.Api
 
         public void Configure(IApplicationBuilder app,
             ILoggerFactory loggerFactory,
-            IDomainEventHandlerFactory domainEventHandlerFactory,
-            IApiDescriptionGroupCollectionProvider apiDescriptionGroupCollectionProvider)
+            IDomainEventHandlerFactory domainEventHandlerFactory)
         {
-            RoutingProvider.RegisterRoutes(apiDescriptionGroupCollectionProvider.ApiDescriptionGroups.Items.SelectMany(
-                g => g.Items.Select(i => new Route
-                {
-                    Name = i.ActionDescriptor.AttributeRouteInfo.Name,
-                    Template = i.RelativePath
-                })
-            ));
-            
             domainEventHandlerFactory.Initialise();
 
             loggerFactory.AddLog4Net();

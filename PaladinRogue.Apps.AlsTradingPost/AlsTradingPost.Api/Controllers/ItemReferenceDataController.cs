@@ -17,7 +17,7 @@ namespace AlsTradingPost.Api.Controllers
     {
         private readonly IItemReferenceDataApplicationService _itemReferenceDataApplicationService;
 
-        public ItemReferenceDataController(IMapper mapper, IItemReferenceDataApplicationService itemReferenceDataApplicationService)
+        public ItemReferenceDataController(IItemReferenceDataApplicationService itemReferenceDataApplicationService)
         {
             _itemReferenceDataApplicationService = itemReferenceDataApplicationService;
         }
