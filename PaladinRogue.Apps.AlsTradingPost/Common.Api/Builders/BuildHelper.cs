@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using Common.Api.Builders.Dictionary;
 using Common.Api.Builders.Resource;
 using Common.Api.Links;
 using Common.Api.Pagination.Interfaces;
 using Common.Api.Resources;
-using Common.Api.Routing;
 using Common.Api.Sorting;
 using Common.Api.Validation;
 using Common.Api.Validation.Attributes;
@@ -36,7 +36,8 @@ namespace Common.Api.Builders
             };
         }
         
-        public static IList<ResourceBuilderResource<T>> BuildCollectionResourceData<T>(ICollectionResource<T> data) where T : ISummaryResource
+        public static IList<ResourceBuilderResource<TCollectionResource>> BuildCollectionResourceData<TCollectionResource>(ICollectionResource<TCollectionResource> data)
+            where TCollectionResource : ISummaryResource
         {
             return data.Results.Select(BuildResource).ToList();
         }
@@ -160,6 +161,7 @@ namespace Common.Api.Builders
             }
         }
 
+        [Obsolete]
         public static IList<Link> BuildLinks<T>(T data)
         {
             return typeof(T).GetCustomAttributes<LinkAttribute>()
@@ -192,6 +194,17 @@ namespace Common.Api.Builders
                 pagingLink.Uri = selfLink.Uri;
                 resource.Links.Add(pagingLink);
             }
+        }
+
+        public static IDictionary<string, object> Build<T>(ResourceBuilderResource<T> resource)
+        {
+            return DictionaryBuilder<string, object>.Create()
+                .Add(resource.Data.TypeName, DictionaryBuilder<string, object>.Create()
+                    .Add(ResourceType.Data, resource.Data.Resource)
+                    .Add(ResourceType.Meta, resource.Meta.Properties.BuildPropertyDictionary())
+                    .Add(ResourceType.Links, resource.Links.BuildLinkDictionary())
+                    .Build())
+                .Build();
         }
 
         private static void AddQueryParams<T>(Link link, T data)

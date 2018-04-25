@@ -1,16 +1,22 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Common.Api.Builders.Dictionary;
+using Common.Api.Links;
 
 namespace Common.Api.Builders.Resource
 {
-    public class ResourceBuilder<T> : IResourceBuilder
+    public class ResourceBuilder<T> : IResourceBuilder<T>
     {
-        private readonly ResourceBuilderResource<T> _resource;
-
-        private readonly T _resourceData;
+        private ResourceBuilderResource<T> _resource;
         
-        private ResourceBuilder(T resource)
+        private T _resourceData;
+        
+        private readonly ILinkBuilder _linkBuilder;
+
+        public ResourceBuilder(ILinkBuilder linkBuilder)
+        {
+            _linkBuilder = linkBuilder;
+        }
+
+        public IResourceBuilder<T> Create(T resource)
         {
             _resourceData = resource;
 
@@ -18,16 +24,13 @@ namespace Common.Api.Builders.Resource
             {
                 Data = BuildHelper.BuildResourceData(_resourceData),
                 Meta = BuildHelper.BuildMeta(_resourceData),
-                Links = BuildHelper.BuildLinks(_resourceData)
+                Links = _linkBuilder.BuildLinks(_resourceData)
             };
+
+            return this;
         }
 
-        public static ResourceBuilder<T> Create(T resource)
-        {
-            return new ResourceBuilder<T>(resource);
-        }
-
-        public IResourceBuilder WithResourceMeta()
+        public IResourceBuilder<T> WithResourceMeta()
         {
             BuildHelper.BuildFieldMeta(_resource.Meta, _resourceData);
 
@@ -36,13 +39,7 @@ namespace Common.Api.Builders.Resource
 
         public IDictionary<string, object> Build()
         {
-            return DictionaryBuilder<string, object>.Create()
-                .Add(_resource.Data.TypeName, DictionaryBuilder<string, object>.Create()
-                    .Add(ResourceType.Data, _resource.Data.Resource)
-                    .Add(ResourceType.Meta, _resource.Meta.Properties.BuildPropertyDictionary())
-                    .Add(ResourceType.Links, _resource.Links.BuildLinkDictionary())
-                    .Build())
-                .Build();
+            return BuildHelper.Build(_resource);
         }
     }
 }

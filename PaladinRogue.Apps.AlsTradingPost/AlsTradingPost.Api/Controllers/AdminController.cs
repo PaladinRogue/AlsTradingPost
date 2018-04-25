@@ -16,11 +16,13 @@ namespace AlsTradingPost.Api.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IAdminApplicationService _adminApplicationService;
+        private readonly IResourceBuilder<AdminResource> _adminResourceBuilder;
 
-        public AdminController(IMapper mapper, IAdminApplicationService adminApplicationService)
+        public AdminController(IMapper mapper, IAdminApplicationService adminApplicationService, IResourceBuilder<AdminResource> adminResourceBuilder)
         {
             _adminApplicationService = adminApplicationService;
             _mapper = mapper;
+            _adminResourceBuilder = adminResourceBuilder;
         }
 
         [HttpGet("{id}")]
@@ -29,7 +31,7 @@ namespace AlsTradingPost.Api.Controllers
             AdminResource resource = _mapper.Map<AdminAdto, AdminResource>(_adminApplicationService.Get(id));
 
             return new ObjectResult(
-                ResourceBuilder<AdminResource>.Create(resource)
+                _adminResourceBuilder.Create(resource)
                     .WithResourceMeta()
                     .Build()
             );

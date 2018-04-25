@@ -16,10 +16,14 @@ namespace AlsTradingPost.Api.Controllers
     public class ItemReferenceDataController : Controller
     {
         private readonly IItemReferenceDataApplicationService _itemReferenceDataApplicationService;
+        private readonly ITemplateBuilder<ItemReferenceDataSearchTemplate> _itemReferenceDataSearchTtemplateBuilder;
 
-        public ItemReferenceDataController(IItemReferenceDataApplicationService itemReferenceDataApplicationService)
+        public ItemReferenceDataController(
+            IItemReferenceDataApplicationService itemReferenceDataApplicationService,
+            ITemplateBuilder<ItemReferenceDataSearchTemplate> itemReferenceDataSearchTtemplateBuilder)
         {
             _itemReferenceDataApplicationService = itemReferenceDataApplicationService;
+            _itemReferenceDataSearchTtemplateBuilder = itemReferenceDataSearchTtemplateBuilder;
         }
 
         [Route("{id}", Name = RouteDictionary.ItemReferenceDataGetById)]
@@ -51,8 +55,8 @@ namespace AlsTradingPost.Api.Controllers
         public IActionResult GetSearchTemplate()
         {
             return new ObjectResult(
-                TemplateBuilder<ItemReferenceDataSearchTemplate>.Create()
-                    .WithMeta()
+                _itemReferenceDataSearchTtemplateBuilder.Create()
+                    .WithTemplateMeta()
                     .Build()
             );
         }

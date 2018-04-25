@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.WebUtilities;
 
-namespace Common.Api.Builders
+namespace Common.Api.Links
 {
     public class Link
     {

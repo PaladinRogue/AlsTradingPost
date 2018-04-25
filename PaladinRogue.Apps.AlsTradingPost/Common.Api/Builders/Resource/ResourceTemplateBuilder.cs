@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Common.Api.Builders.Dictionary;
 
 namespace Common.Api.Builders.Resource
 {
@@ -51,16 +50,7 @@ namespace Common.Api.Builders.Resource
 
         public IDictionary<string, object> Build()
         {
-            return DictionaryBuilder<string, object>.Create()
-                .Add(_resource.Data.TypeName, DictionaryBuilder<string, object>.Create()
-                    .Add(ResourceType.Data, _resource.Data.Resource)
-                    .Add(ResourceType.Meta, _resource.Meta.Properties.BuildPropertyDictionary())
-                    .Add(ResourceType.Links, _resource.Links.BuildLinkDictionary())
-                    .Build())
-                .Add(_template.Data.TypeName, DictionaryBuilder<string, object>.Create()
-                    .Add(ResourceType.Meta, _template.Meta.Properties.BuildPropertyDictionary())
-                    .Build())
-                .Build();
+            return ResourceTemplateBuilderHelper.Build(_resource, _template);
         }
     }
 }

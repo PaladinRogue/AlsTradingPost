@@ -63,7 +63,9 @@ namespace AlsTradingPost.Api
             EventRegistration.RegisterHandlers(services);
 
             MessageRegistration.RegisterSubscribers(services);
+            
             ServiceRegistration.RegisterValidators(services);
+            ServiceRegistration.RegisterBuilders(services);
             ServiceRegistration.RegisterApplicationServices( services);
             ServiceRegistration.RegisterDomainServices(services);
             ServiceRegistration.RegisterPersistenceServices(Configuration, services);

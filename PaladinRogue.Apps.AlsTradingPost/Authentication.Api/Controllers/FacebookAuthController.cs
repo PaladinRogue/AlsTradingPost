@@ -6,7 +6,6 @@ using Authentication.Api.Resources;
 using Authentication.Application.Identity.Interfaces;
 using Authentication.Application.Identity.Models;
 using Authentication.Setup.Settings;
-using Common.Api.Authentication;
 using Common.Api.Authentication.Constants;
 using Common.Api.Authentication.FacebookModels;
 using Common.Api.Authentication.Interfaces;

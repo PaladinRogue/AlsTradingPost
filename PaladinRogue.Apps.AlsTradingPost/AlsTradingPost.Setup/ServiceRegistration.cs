@@ -20,11 +20,15 @@ using AlsTradingPost.Persistence.Repositories;
 using AlsTradingPost.Resources;
 using AlsTradingPost.Resources.Providers;
 using AlsTradingPost.Resources.Providers.Interfaces;
+using AlsTradingPost.Setup.Infrastructure.Links;
 using AlsTradingPost.Setup.Infrastructure.Routing;
+using Common.Api.Builders.Resource;
+using Common.Api.Builders.Template;
 using Common.Api.Encryption;
 using Common.Api.Encryption.Interfaces;
 using Common.Api.HttpClient;
 using Common.Api.HttpClient.Interfaces;
+using Common.Api.Links;
 using Common.Api.Routing;
 using Common.Application.Identity;
 using Common.Domain.Concurrency;
@@ -45,6 +49,13 @@ namespace AlsTradingPost.Setup
 {
     public class ServiceRegistration
     {
+        public static void RegisterBuilders(IServiceCollection services)
+        {
+            services.AddSingleton<ILinkBuilder, PersonaLinkBuilder>();
+            services.AddTransient(typeof(ITemplateBuilder<>), typeof(TemplateBuilder<>));
+            services.AddTransient(typeof(IResourceBuilder<>), typeof(ResourceBuilder<>));
+        }
+
         public static void RegisterValidators(IServiceCollection services)
         {
             ValidatorOptions.LanguageManager.Enabled = false;
