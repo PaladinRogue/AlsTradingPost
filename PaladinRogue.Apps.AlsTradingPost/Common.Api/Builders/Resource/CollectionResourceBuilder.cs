@@ -1,35 +1,41 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Common.Api.Links;
 using Common.Api.Pagination.Interfaces;
 using Common.Api.Resources;
 
 namespace Common.Api.Builders.Resource
 {
-    public class CollectionResourceBuilder<T, TTemplate, TCollectionResource> : ICollectionResourceBuilder
-        where T : ICollectionResource<TCollectionResource>
-        where TCollectionResource : ISummaryResource
+    public class CollectionResourceBuilder<T> : ICollectionResourceBuilder<T> where T : ISummaryResource
     {
-        private readonly ResourceBuilderResource<T> _resource;
-        private readonly ResourceBuilderResource<TTemplate> _template;
+        private ResourceBuilderResource<ICollectionResource<T>> _resource;
+        private ResourceBuilderResource<ITemplate> _template;
 
-        private readonly T _resourceData;
-        private readonly TTemplate _templateData;
-        private readonly IList<ResourceBuilderResource<TCollectionResource>> _collectionResources;
+        private ICollectionResource<T> _resourceData;
+        private ITemplate _templateData;
+        private IList<ResourceBuilderResource<T>> _collectionResources;
 
-        private CollectionResourceBuilder(T resourceData, TTemplate templateData)
+        private readonly ILinkBuilder _linkBuilder;
+
+        public CollectionResourceBuilder(ILinkBuilder linkBuilder)
         {
-            _resourceData = resourceData;
-            _templateData = templateData;
+            _linkBuilder = linkBuilder;
+        }
+
+        public ICollectionResourceBuilder<T> Create(ICollectionResource<T> collectionResource, ITemplate template)
+        {
+            _resourceData = collectionResource;
+            _templateData = template;
             _collectionResources = BuildHelper.BuildCollectionResourceData(_resourceData);
 
-            _resource = new ResourceBuilderResource<T>
+            _resource = new ResourceBuilderResource<ICollectionResource<T>>
             {
                 Data = BuildHelper.BuildResourceData(_resourceData),
                 Meta = BuildHelper.BuildMeta(_resourceData),
-                Links = BuildHelper.BuildLinks(_resourceData)
+                Links = _linkBuilder.BuildLinks(_resourceData)
             };
 
-            _template = new ResourceBuilderResource<TTemplate>
+            _template = new ResourceBuilderResource<ITemplate>
             {
                 Data = BuildHelper.BuildTemplateData(_templateData),
                 Meta = BuildHelper.BuildMeta(_templateData)
@@ -37,33 +43,30 @@ namespace Common.Api.Builders.Resource
 
             BuildHelper.AddSelfQueryParams(_resource.Links, _templateData);
             
-            if (_resourceData is IPagedCollectionResource<TCollectionResource> resource
+            if (_resourceData is IPagedCollectionResource<T> resource
                 && _templateData is IPaginationTemplate paginationTemplate)
             {
                 BuildHelper.AddPagingLinks(_resource, resource, paginationTemplate);
             }
+
+            return this;
         }
 
-        public static CollectionResourceBuilder<T, TTemplate, TCollectionResource> Create(T resource, TTemplate template)
-        {
-            return new CollectionResourceBuilder<T, TTemplate, TCollectionResource>(resource, template);
-        }
-
-        public ICollectionResourceBuilder WithTemplateMeta()
+        public ICollectionResourceBuilder<T> WithTemplateMeta()
         {
             BuildHelper.BuildValidationMeta(_template.Meta, _templateData);
 
             return this;
         }
 
-        public ICollectionResourceBuilder WithResourceMeta()
+        public ICollectionResourceBuilder<T> WithResourceMeta()
         {
             BuildHelper.BuildFieldMeta(_resource.Meta, _resourceData);
 
             return this;
         }
 
-        public ICollectionResourceBuilder WithSummaryResourceMeta()
+        public ICollectionResourceBuilder<T> WithSummaryResourceMeta()
         {
             if (_collectionResources.Any())
             {
@@ -73,9 +76,12 @@ namespace Common.Api.Builders.Resource
             return this;
         }
 
-        public ICollectionResourceBuilder WithSorting()
+        public ICollectionResourceBuilder<T> WithSorting()
         {
-            BuildHelper.BuildSortingMeta<TTemplate, TCollectionResource>(_template.Meta, _templateData);
+            if (_resourceData.Results.Any())
+            {
+                BuildHelper.BuildSortingMeta(_template.Meta, _templateData, _resourceData.Results.First().GetType());
+            }
 
             return this;
         }

@@ -62,6 +62,7 @@ namespace Authentication.Api
             MessageRegistration.RegisterSubscribers(services);
             ServiceRegistration.RegisterServices(Configuration, services);
             ServiceRegistration.RegisterProviders(services);
+            ServiceRegistration.RegisterBuilders(services);
 
             services.AddAutoMapper(MappingRegistration.RegisterMappers);
 

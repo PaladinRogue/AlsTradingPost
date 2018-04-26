@@ -1,37 +1,43 @@
 ﻿using System.Collections.Generic;
+using Common.Api.Links;
+using Common.Api.Resources;
 
 namespace Common.Api.Builders.Resource
 {
-    public class ResourceTemplateBuilder<T, TTemplate> : IResourceTemplateBuilder
+    public class ResourceTemplateBuilder : IResourceTemplateBuilder
     {
-        private readonly ResourceBuilderResource<T> _resource;
-        private readonly ResourceBuilderResource<TTemplate> _template;
+        private ResourceBuilderResource<IResource> _resource;
+        private ResourceBuilderResource<ITemplate> _template;
 
-        private readonly T _resourceData;
-        private readonly TTemplate _templateData;
+        private IResource _resourceData;
+        private ITemplate _templateData;
 
-        private ResourceTemplateBuilder(T resource, TTemplate template)
+        private readonly ILinkBuilder _linkBuilder;
+
+        public ResourceTemplateBuilder(ILinkBuilder linkBuilder)
+        {
+            _linkBuilder = linkBuilder;
+        }
+
+        public IResourceTemplateBuilder Create(IResource resource, ITemplate template)
         {
             _resourceData = resource;
             _templateData = template;
 
-            _resource = new ResourceBuilderResource<T>
+            _resource = new ResourceBuilderResource<IResource>
             {
                 Data = BuildHelper.BuildResourceData(_resourceData),
                 Meta = BuildHelper.BuildMeta(_resourceData),
-                Links = BuildHelper.BuildLinks(_resourceData)
+                Links = _linkBuilder.BuildLinks(_resourceData)
             };
 
-            _template = new ResourceBuilderResource<TTemplate>
+            _template = new ResourceBuilderResource<ITemplate>
             {
                 Data = BuildHelper.BuildResourceData(_templateData),
                 Meta = BuildHelper.BuildMeta(_templateData)
             };
-        }
 
-        public static ResourceTemplateBuilder<T, TTemplate> Create(T resource, TTemplate template)
-        {
-            return new ResourceTemplateBuilder<T, TTemplate>(resource, template);
+            return this;
         }
 
         public IResourceTemplateBuilder WithTemplateMeta()

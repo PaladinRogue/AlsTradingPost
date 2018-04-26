@@ -9,12 +9,12 @@ namespace Common.Api.Builders.Resource
     public static class CollectionResourceBuilderHelper
     {
 
-        public static IDictionary<string, object> Build<T, TTemplate, TCollectionResource>(
+        public static IDictionary<string, object> Build<T, TTemplate, TSummaryResource>(
             ResourceBuilderResource<T> resource,
-            ICollectionResource<TCollectionResource> resourceData,
+            ICollectionResource<TSummaryResource> resourceData,
             ResourceBuilderResource<TTemplate> template,
-            IList<ResourceBuilderResource<TCollectionResource>> collectionResources)
-            where TCollectionResource : ISummaryResource
+            IList<ResourceBuilderResource<TSummaryResource>> collectionResources)
+            where TSummaryResource : ISummaryResource
         {
             IDictionaryBuilder<string, object> collectionResourceDataBuilder = DictionaryBuilder<string, object>
                 .Create()
@@ -28,7 +28,7 @@ namespace Common.Api.Builders.Resource
                             .Build()
                 ));
 
-            if (resourceData is IPagedCollectionResource<TCollectionResource> pagedCollectionResourceData)
+            if (resourceData is IPagedCollectionResource<TSummaryResource> pagedCollectionResourceData)
             {
                 collectionResourceDataBuilder.Add(nameof(pagedCollectionResourceData.TotalResults),
                     pagedCollectionResourceData.TotalResults);

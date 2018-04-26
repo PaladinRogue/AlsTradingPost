@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using Common.Api.Links;
+using Common.Api.Resources;
 
 namespace Common.Api.Builders.Resource
 {
-    public class ResourceBuilder<T> : IResourceBuilder<T>
+    public class ResourceBuilder : IResourceBuilder
     {
-        private ResourceBuilderResource<T> _resource;
+        private ResourceBuilderResource<IResource> _resource;
         
-        private T _resourceData;
+        private IResource _resourceData;
         
         private readonly ILinkBuilder _linkBuilder;
 
@@ -16,11 +17,11 @@ namespace Common.Api.Builders.Resource
             _linkBuilder = linkBuilder;
         }
 
-        public IResourceBuilder<T> Create(T resource)
+        public IResourceBuilder Create(IResource resource)
         {
             _resourceData = resource;
 
-            _resource = new ResourceBuilderResource<T>
+            _resource = new ResourceBuilderResource<IResource>
             {
                 Data = BuildHelper.BuildResourceData(_resourceData),
                 Meta = BuildHelper.BuildMeta(_resourceData),
@@ -30,7 +31,7 @@ namespace Common.Api.Builders.Resource
             return this;
         }
 
-        public IResourceBuilder<T> WithResourceMeta()
+        public IResourceBuilder WithResourceMeta()
         {
             BuildHelper.BuildFieldMeta(_resource.Meta, _resourceData);
 

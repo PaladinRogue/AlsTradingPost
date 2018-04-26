@@ -1,8 +1,10 @@
-﻿namespace Common.Api.Builders.Resource
+﻿using Common.Api.Resources;
+
+namespace Common.Api.Builders.Resource
 {
-    public interface IResourceBuilder<in T> : IBuilder<string, object>
+    public interface IResourceBuilder : IBuilder<string, object>
     {
-        IResourceBuilder<T> Create(T resource);
-        IResourceBuilder<T> WithResourceMeta();
+        IResourceBuilder Create(IResource resource);
+        IResourceBuilder WithResourceMeta();
     }
 }

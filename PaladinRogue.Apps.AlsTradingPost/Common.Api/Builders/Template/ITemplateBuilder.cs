@@ -1,8 +1,10 @@
-﻿namespace Common.Api.Builders.Template
+﻿using Common.Api.Resources;
+
+namespace Common.Api.Builders.Template
 {
-    public interface ITemplateBuilder<in T> : IBuilder<string, object>
+    public interface ITemplateBuilder : IBuilder<string, object>
     {
-        ITemplateBuilder<T> Create();
-        ITemplateBuilder<T> WithTemplateMeta();
+        ITemplateBuilder Create<T>() where T : ITemplate;
+        ITemplateBuilder WithTemplateMeta();
     }
 }

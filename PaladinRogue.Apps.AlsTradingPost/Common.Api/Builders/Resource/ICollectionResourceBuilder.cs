@@ -1,10 +1,13 @@
-﻿namespace Common.Api.Builders.Resource
+﻿using Common.Api.Resources;
+
+namespace Common.Api.Builders.Resource
 {
-    public interface ICollectionResourceBuilder : IBuilder<string, object>
+    public interface ICollectionResourceBuilder<TSummaryResource> : IBuilder<string, object> where TSummaryResource : ISummaryResource
     {
-        ICollectionResourceBuilder WithTemplateMeta();
-        ICollectionResourceBuilder WithResourceMeta();
-        ICollectionResourceBuilder WithSummaryResourceMeta();
-        ICollectionResourceBuilder WithSorting();
+        ICollectionResourceBuilder<TSummaryResource> Create(ICollectionResource<TSummaryResource> resource, ITemplate template);
+        ICollectionResourceBuilder<TSummaryResource> WithTemplateMeta();
+        ICollectionResourceBuilder<TSummaryResource> WithResourceMeta();
+        ICollectionResourceBuilder<TSummaryResource> WithSummaryResourceMeta();
+        ICollectionResourceBuilder<TSummaryResource> WithSorting();
     }
 }

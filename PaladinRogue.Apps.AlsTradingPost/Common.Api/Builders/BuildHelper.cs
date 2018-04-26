@@ -36,8 +36,8 @@ namespace Common.Api.Builders
             };
         }
         
-        public static IList<ResourceBuilderResource<TCollectionResource>> BuildCollectionResourceData<TCollectionResource>(ICollectionResource<TCollectionResource> data)
-            where TCollectionResource : ISummaryResource
+        public static IList<ResourceBuilderResource<TSummaryResource>> BuildCollectionResourceData<TSummaryResource>(ICollectionResource<TSummaryResource> data)
+            where TSummaryResource : ISummaryResource
         {
             return data.Results.Select(BuildResource).ToList();
         }
@@ -124,11 +124,11 @@ namespace Common.Api.Builders
             }
         }
 
-        public static void BuildSortingMeta<T, TSummaryResource>(Meta meta, T data)
-            where TSummaryResource : ISummaryResource
+        public static void BuildSortingMeta<T>(Meta meta, T data, Type summaryResourceType)
+            where T : ITemplate
         {
             IList<string> sortableFields = (
-                from property in typeof(TSummaryResource).GetProperties()
+                from property in summaryResourceType.GetProperties()
                 let sortableAttribute = property.GetCustomAttribute<SortableAttribute>()
                 where sortableAttribute != null
                 select property.Name.ToCamelCase()).ToList();
@@ -164,7 +164,7 @@ namespace Common.Api.Builders
         [Obsolete]
         public static IList<Link> BuildLinks<T>(T data)
         {
-            return typeof(T).GetCustomAttributes<LinkAttribute>()
+            return data.GetType().GetCustomAttributes<LinkAttribute>()
                 .Select(linkAttribute => new Link
                 {
                     Name = linkAttribute.LinkName,
@@ -184,8 +184,8 @@ namespace Common.Api.Builders
             AddQueryParams(links.Single(l => l.Name == LinkType.Self), data);
         }
 
-        public static void AddPagingLinks<T, TCollectionResource>(ResourceBuilderResource<T> resource, IPagedCollectionResource<TCollectionResource> data, IPaginationTemplate pagingData)
-            where TCollectionResource : ISummaryResource
+        public static void AddPagingLinks<T, TSummaryResource>(ResourceBuilderResource<T> resource, IPagedCollectionResource<TSummaryResource> data, IPaginationTemplate pagingData) 
+            where TSummaryResource : ISummaryResource
         {
             Link selfLink = resource.Links.Single(l => l.Name == LinkType.Self);
             
@@ -214,7 +214,7 @@ namespace Common.Api.Builders
                 return;
             }
             
-            link.QueryParams = typeof(T).GetProperties()
+            link.QueryParams = data.GetType().GetProperties()
                 .Where(p => p.GetValue(data) != null)
                 .ToDictionary(
                     p => p.Name.ToCamelCase(),

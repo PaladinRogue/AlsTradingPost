@@ -7,10 +7,14 @@ using Authentication.Domain.IdentityServices.Interfaces;
 using Authentication.Domain.Persistence;
 using Authentication.Persistence;
 using Authentication.Persistence.Repositories;
+using Common.Api.Builders.Resource;
+using Common.Api.Builders.Template;
 using Common.Api.Encryption;
 using Common.Api.Encryption.Interfaces;
 using Common.Api.HttpClient;
 using Common.Api.HttpClient.Interfaces;
+using Common.Api.Links;
+using Common.Api.Routing;
 using Common.Domain.Concurrency;
 using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Concurrency.Services;
@@ -25,6 +29,12 @@ namespace Authentication.Setup
 {
     public class ServiceRegistration
     {
+	    public static void RegisterBuilders(IServiceCollection services)
+	    {
+		    services.AddSingleton<ILinkBuilder, DefaultLinkBuilder>();
+		    services.AddSingleton<IResourceTemplateBuilder, ResourceTemplateBuilder>();
+	    }
+	    
         public static void RegisterServices(IConfiguration configuration, IServiceCollection services)
         {
 	        services.AddSingleton<IEncryptionFactory, EncryptionFactory>();
@@ -53,6 +63,7 @@ namespace Authentication.Setup
         public static void RegisterProviders(IServiceCollection services)
         {
             services.AddSingleton<IConcurrencyVersionProvider, ConcurrencyVersionProvider>();
+            services.AddSingleton<IRouteProvider<bool>, DefaultRouteProvider>();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Common.Api.Links
         
         public IList<Link> BuildLinks<T>(T data)
         {
-            return typeof(T).GetCustomAttributes<LinkAttribute>()
+            return data.GetType().GetCustomAttributes<LinkAttribute>()
                 .Select(linkAttribute => new Link
                 {
                     Name = linkAttribute.LinkName,

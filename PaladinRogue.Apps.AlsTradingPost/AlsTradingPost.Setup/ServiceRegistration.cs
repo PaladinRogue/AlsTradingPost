@@ -52,8 +52,10 @@ namespace AlsTradingPost.Setup
         public static void RegisterBuilders(IServiceCollection services)
         {
             services.AddSingleton<ILinkBuilder, PersonaLinkBuilder>();
-            services.AddTransient(typeof(ITemplateBuilder<>), typeof(TemplateBuilder<>));
-            services.AddTransient(typeof(IResourceBuilder<>), typeof(ResourceBuilder<>));
+            services.AddSingleton<ITemplateBuilder, TemplateBuilder>();
+            services.AddSingleton<IResourceBuilder, ResourceBuilder>();
+            services.AddSingleton<IResourceTemplateBuilder, ResourceTemplateBuilder>();
+            services.AddSingleton(typeof(ICollectionResourceBuilder<>), typeof(CollectionResourceBuilder<>));
         }
 
         public static void RegisterValidators(IServiceCollection services)

@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using Common.Api.Builders.Resource;
 using Common.Api.Links;
+using Common.Api.Resources;
 
 namespace Common.Api.Builders.Template
 {
-    public class TemplateBuilder<TTemplate> : ITemplateBuilder<TTemplate>
+    public class TemplateBuilder : ITemplateBuilder
     {
-        private ResourceBuilderResource<TTemplate> _template;
+        private ResourceBuilderResource<ITemplate> _template;
         
-        private TTemplate _templateData;
+        private ITemplate _templateData;
         
         private readonly ILinkBuilder _linkBuilder;
 
@@ -18,11 +19,11 @@ namespace Common.Api.Builders.Template
             _linkBuilder = linkBuilder;
         }
 
-        public ITemplateBuilder<TTemplate> Create()
+        public ITemplateBuilder Create<T>() where T : ITemplate
         {
-            _templateData = Activator.CreateInstance<TTemplate>();
+            _templateData = Activator.CreateInstance<T>();
 
-            _template = new ResourceBuilderResource<TTemplate>
+            _template = new ResourceBuilderResource<ITemplate>
             {
                 Data = BuildHelper.BuildTemplateData(_templateData),
                 Meta = BuildHelper.BuildMeta(_templateData),
@@ -34,7 +35,7 @@ namespace Common.Api.Builders.Template
             return this;
         }
 
-        public ITemplateBuilder<TTemplate> WithTemplateMeta()
+        public ITemplateBuilder WithTemplateMeta()
         {
             BuildHelper.BuildValidationMeta(_template.Meta, _templateData);
 
