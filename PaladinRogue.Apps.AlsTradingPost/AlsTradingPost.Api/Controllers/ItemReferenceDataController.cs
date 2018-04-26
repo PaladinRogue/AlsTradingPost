@@ -16,10 +16,16 @@ namespace AlsTradingPost.Api.Controllers
     public class ItemReferenceDataController : Controller
     {
         private readonly IItemReferenceDataApplicationService _itemReferenceDataApplicationService;
+        private readonly ITemplateBuilder _templateBuilder;
+        private readonly ICollectionResourceBuilder<ItemReferenceDataSummaryResource> _collectionResourceBuilder;
 
-        public ItemReferenceDataController(IMapper mapper, IItemReferenceDataApplicationService itemReferenceDataApplicationService)
+        public ItemReferenceDataController(
+            IItemReferenceDataApplicationService itemReferenceDataApplicationService,
+            ITemplateBuilder templateBuilder, ICollectionResourceBuilder<ItemReferenceDataSummaryResource> collectionResourceBuilder)
         {
             _itemReferenceDataApplicationService = itemReferenceDataApplicationService;
+            _templateBuilder = templateBuilder;
+            _collectionResourceBuilder = collectionResourceBuilder;
         }
 
         [Route("{id}", Name = RouteDictionary.ItemReferenceDataGetById)]
@@ -28,7 +34,7 @@ namespace AlsTradingPost.Api.Controllers
             return new ObjectResult(null);
         }
         
-        [Route("", Name = RouteDictionary.ItemReferenceDataGet)]
+        [HttpGet(Name = RouteDictionary.ItemReferenceDataGet)]
         public IActionResult Get(ItemReferenceDataSearchTemplate itemReferenceDataSearchTemplate)
         {
             ItemReferenceDataPagedCollectionAdto result = _itemReferenceDataApplicationService.Search(Mapper.Map<ItemReferenceDataSearchTemplate, ItemReferenceDataSearchAdto>(itemReferenceDataSearchTemplate));
@@ -37,8 +43,7 @@ namespace AlsTradingPost.Api.Controllers
                 Mapper.Map<ItemReferenceDataPagedCollectionAdto, ItemReferenceDataPagedCollectionResource>(result);
             
             return new ObjectResult(
-                CollectionResourceBuilder<ItemReferenceDataPagedCollectionResource, ItemReferenceDataSearchTemplate, ItemReferenceDataSummaryResource>
-                    .Create(itemReferenceDataPagedCollectionResource, itemReferenceDataSearchTemplate)
+                _collectionResourceBuilder.Create(itemReferenceDataPagedCollectionResource, itemReferenceDataSearchTemplate)
                     .WithTemplateMeta()
                     .WithResourceMeta()
                     .WithSummaryResourceMeta()
@@ -51,8 +56,8 @@ namespace AlsTradingPost.Api.Controllers
         public IActionResult GetSearchTemplate()
         {
             return new ObjectResult(
-                TemplateBuilder<ItemReferenceDataSearchTemplate>.Create()
-                    .WithMeta()
+                _templateBuilder.Create<ItemReferenceDataSearchTemplate>()
+                    .WithTemplateMeta()
                     .Build()
             );
         }

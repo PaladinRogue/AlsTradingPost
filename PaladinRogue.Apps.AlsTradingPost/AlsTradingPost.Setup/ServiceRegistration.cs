@@ -17,12 +17,20 @@ using AlsTradingPost.Domain.UserDomain;
 using AlsTradingPost.Domain.UserDomain.Interfaces;
 using AlsTradingPost.Persistence;
 using AlsTradingPost.Persistence.Repositories;
+using AlsTradingPost.Resources;
 using AlsTradingPost.Resources.Providers;
 using AlsTradingPost.Resources.Providers.Interfaces;
+using AlsTradingPost.Setup.Infrastructure.Links;
+using AlsTradingPost.Setup.Infrastructure.Routing;
+using Common.Api.Builders;
+using Common.Api.Builders.Resource;
+using Common.Api.Builders.Template;
 using Common.Api.Encryption;
 using Common.Api.Encryption.Interfaces;
 using Common.Api.HttpClient;
 using Common.Api.HttpClient.Interfaces;
+using Common.Api.Links;
+using Common.Api.Routing;
 using Common.Application.Identity;
 using Common.Domain.Concurrency;
 using Common.Domain.Concurrency.Interfaces;
@@ -40,12 +48,22 @@ using Persistence.EntityFramework.Transactions;
 
 namespace AlsTradingPost.Setup
 {
-  public class ServiceRegistration
+    public class ServiceRegistration
     {
+        public static void RegisterBuilders(IServiceCollection services)
+        {
+            services.AddSingleton<ILinkBuilder, PersonaLinkBuilder>();
+            services.AddSingleton<IBuildHelper, BuildHelper>();
+            services.AddSingleton<ITemplateBuilder, TemplateBuilder>();
+            services.AddSingleton<IResourceBuilder, ResourceBuilder>();
+            services.AddSingleton<IResourceTemplateBuilder, ResourceTemplateBuilder>();
+            services.AddSingleton(typeof(ICollectionResourceBuilder<>), typeof(CollectionResourceBuilder<>));
+        }
+
         public static void RegisterValidators(IServiceCollection services)
         {
             ValidatorOptions.LanguageManager.Enabled = false;
-            
+
             services.AddTransient<IValidator<ItemReferenceDataSearchAdto>, ItemReferenceDataSearchAdtoValidator>();
         }
 
@@ -86,7 +104,8 @@ namespace AlsTradingPost.Setup
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<IItemReferenceDataRepository, ItemReferenceDataRepository>();
 
-            services.AddDbContext<AlsTradingPostDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Default")));
+            services.AddDbContext<AlsTradingPostDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("Default")));
             services.AddScoped<DbContext>(sp => sp.GetRequiredService<AlsTradingPostDbContext>());
             services.AddTransient<ITransactionFactory, TransactionFactory>();
         }
@@ -99,6 +118,7 @@ namespace AlsTradingPost.Setup
 
             services.AddSingleton<IConcurrencyVersionProvider, ConcurrencyVersionProvider>();
             services.AddSingleton<IApiDescriptionGroupCollectionProvider, ApiDescriptionGroupCollectionProvider>();
+            services.AddSingleton<IRouteProvider<Persona>, PersonaRouteProvider>();
         }
     }
 }

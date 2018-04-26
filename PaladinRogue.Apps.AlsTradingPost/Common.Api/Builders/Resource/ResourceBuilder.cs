@@ -1,30 +1,29 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Common.Api.Builders.Dictionary;
+using Common.Api.Links;
+using Common.Api.Resources;
 
 namespace Common.Api.Builders.Resource
 {
-    public class ResourceBuilder<T> : IResourceBuilder
+    public class ResourceBuilder : IResourceBuilder
     {
-        private readonly ResourceBuilderResource<T> _resource;
-
-        private readonly T _resourceData;
+        private ResourceBuilderResource<IResource> _resource;
         
-        private ResourceBuilder(T resource)
+        private IResource _resourceData;
+        
+        private readonly IBuildHelper _buildHelper;
+
+        public ResourceBuilder(IBuildHelper buildHelper)
+        {
+            _buildHelper = buildHelper;
+        }
+
+        public IResourceBuilder Create(IResource resource)
         {
             _resourceData = resource;
 
-            _resource = new ResourceBuilderResource<T>
-            {
-                Data = BuildHelper.BuildResourceData(_resourceData),
-                Meta = BuildHelper.BuildMeta(_resourceData),
-                Links = BuildHelper.BuildLinks(_resourceData)
-            };
-        }
+            _resource = _buildHelper.BuildResourceBuilder(_resourceData);
 
-        public static ResourceBuilder<T> Create(T resource)
-        {
-            return new ResourceBuilder<T>(resource);
+            return this;
         }
 
         public IResourceBuilder WithResourceMeta()
@@ -36,13 +35,7 @@ namespace Common.Api.Builders.Resource
 
         public IDictionary<string, object> Build()
         {
-            return DictionaryBuilder<string, object>.Create()
-                .Add(_resource.Data.TypeName, DictionaryBuilder<string, object>.Create()
-                    .Add(ResourceType.Data, _resource.Data.Resource)
-                    .Add(ResourceType.Meta, _resource.Meta.Properties.BuildPropertyDictionary())
-                    .Add(ResourceType.Links, _resource.Links.BuildLinkDictionary())
-                    .Build())
-                .Build();
+            return BuildHelper.Build(_resource);
         }
     }
 }

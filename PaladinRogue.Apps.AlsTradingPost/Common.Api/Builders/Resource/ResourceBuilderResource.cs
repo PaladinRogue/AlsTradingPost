@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Common.Api.Links;
 
 namespace Common.Api.Builders.Resource
 {

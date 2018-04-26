@@ -1,38 +1,34 @@
 ﻿using System.Collections.Generic;
-using Common.Api.Builders.Dictionary;
+using Common.Api.Links;
+using Common.Api.Resources;
 
 namespace Common.Api.Builders.Resource
 {
-    public class ResourceTemplateBuilder<T, TTemplate> : IResourceTemplateBuilder
+    public class ResourceTemplateBuilder : IResourceTemplateBuilder
     {
-        private readonly ResourceBuilderResource<T> _resource;
-        private readonly ResourceBuilderResource<TTemplate> _template;
+        private ResourceBuilderResource<IResource> _resource;
+        private ResourceBuilderResource<ITemplate> _template;
 
-        private readonly T _resourceData;
-        private readonly TTemplate _templateData;
+        private IResource _resourceData;
+        private ITemplate _templateData;
 
-        private ResourceTemplateBuilder(T resource, TTemplate template)
+        private readonly IBuildHelper _buildHelper;
+
+        public ResourceTemplateBuilder(IBuildHelper buildHelper)
+        {
+            _buildHelper = buildHelper;
+        }
+
+        public IResourceTemplateBuilder Create(IResource resource, ITemplate template)
         {
             _resourceData = resource;
             _templateData = template;
 
-            _resource = new ResourceBuilderResource<T>
-            {
-                Data = BuildHelper.BuildResourceData(_resourceData),
-                Meta = BuildHelper.BuildMeta(_resourceData),
-                Links = BuildHelper.BuildLinks(_resourceData)
-            };
+            _resource = _buildHelper.BuildResourceBuilder(_resourceData);
+            
+            _template = _buildHelper.BuildResourceBuilder(_templateData);
 
-            _template = new ResourceBuilderResource<TTemplate>
-            {
-                Data = BuildHelper.BuildResourceData(_templateData),
-                Meta = BuildHelper.BuildMeta(_templateData)
-            };
-        }
-
-        public static ResourceTemplateBuilder<T, TTemplate> Create(T resource, TTemplate template)
-        {
-            return new ResourceTemplateBuilder<T, TTemplate>(resource, template);
+            return this;
         }
 
         public IResourceTemplateBuilder WithTemplateMeta()
@@ -51,16 +47,7 @@ namespace Common.Api.Builders.Resource
 
         public IDictionary<string, object> Build()
         {
-            return DictionaryBuilder<string, object>.Create()
-                .Add(_resource.Data.TypeName, DictionaryBuilder<string, object>.Create()
-                    .Add(ResourceType.Data, _resource.Data.Resource)
-                    .Add(ResourceType.Meta, _resource.Meta.Properties.BuildPropertyDictionary())
-                    .Add(ResourceType.Links, _resource.Links.BuildLinkDictionary())
-                    .Build())
-                .Add(_template.Data.TypeName, DictionaryBuilder<string, object>.Create()
-                    .Add(ResourceType.Meta, _template.Meta.Properties.BuildPropertyDictionary())
-                    .Build())
-                .Build();
+            return ResourceTemplateBuilderHelper.Build(_resource, _template);
         }
     }
 }

@@ -1,73 +1,65 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Common.Api.Builders.Dictionary;
+using Common.Api.Links;
 using Common.Api.Pagination.Interfaces;
 using Common.Api.Resources;
 
 namespace Common.Api.Builders.Resource
 {
-    public class CollectionResourceBuilder<T, TTemplate, TCollectionResource> : ICollectionResourceBuilder
-        where T : ICollectionResource<TCollectionResource>
-        where TCollectionResource : ISummaryResource
+    public class CollectionResourceBuilder<T> : ICollectionResourceBuilder<T> where T : ISummaryResource
     {
-        private readonly ResourceBuilderResource<T> _resource;
-        private readonly ResourceBuilderResource<TTemplate> _template;
+        private ResourceBuilderResource<ICollectionResource<T>> _resource;
+        private ResourceBuilderResource<ITemplate> _template;
 
-        private readonly T _resourceData;
-        private readonly TTemplate _templateData;
-        private readonly IList<ResourceBuilderResource<TCollectionResource>> _collectionResources;
+        private ICollectionResource<T> _resourceData;
+        private ITemplate _templateData;
+        private IList<ResourceBuilderResource<T>> _collectionResources;
 
-        private CollectionResourceBuilder(T resourceData, TTemplate templateData)
+        private readonly IBuildHelper _buildHelper;
+
+        public CollectionResourceBuilder(IBuildHelper buildHelper)
         {
-            _resourceData = resourceData;
-            _templateData = templateData;
-            _collectionResources = BuildHelper.BuildCollectionResourceData(_resourceData);
+            _buildHelper = buildHelper;
+        }
 
-            _resource = new ResourceBuilderResource<T>
-            {
-                Data = BuildHelper.BuildResourceData(_resourceData),
-                Meta = BuildHelper.BuildMeta(_resourceData),
-                Links = BuildHelper.BuildLinks(_resourceData)
-            };
+        public ICollectionResourceBuilder<T> Create(ICollectionResource<T> collectionResource, ITemplate template)
+        {
+            _resourceData = collectionResource;
+            _templateData = template;
+            _collectionResources = _buildHelper.BuildCollectionResourceData(_resourceData);
 
-            _template = new ResourceBuilderResource<TTemplate>
-            {
-                Data = BuildHelper.BuildTemplateData(_templateData),
-                Meta = BuildHelper.BuildMeta(_templateData)
-            };
+            _resource = _buildHelper.BuildResourceBuilder(_resourceData);
+            
+            _template = _buildHelper.BuildResourceBuilder(_templateData);
 
             BuildHelper.AddSelfQueryParams(_resource.Links, _templateData);
             
-            if (_resourceData is IPagedCollectionResource<TCollectionResource> resource
+            if (_resourceData is IPagedCollectionResource<T> resource
                 && _templateData is IPaginationTemplate paginationTemplate)
             {
                 BuildHelper.AddPagingLinks(_resource, resource, paginationTemplate);
             }
+
+            return this;
         }
 
-        public static CollectionResourceBuilder<T, TTemplate, TCollectionResource> Create(T resource,
-            TTemplate template)
-        {
-            return new CollectionResourceBuilder<T, TTemplate, TCollectionResource>(resource, template);
-        }
-
-        public ICollectionResourceBuilder WithTemplateMeta()
+        public ICollectionResourceBuilder<T> WithTemplateMeta()
         {
             BuildHelper.BuildValidationMeta(_template.Meta, _templateData);
 
             return this;
         }
 
-        public ICollectionResourceBuilder WithResourceMeta()
+        public ICollectionResourceBuilder<T> WithResourceMeta()
         {
             BuildHelper.BuildFieldMeta(_resource.Meta, _resourceData);
 
             return this;
         }
 
-        public ICollectionResourceBuilder WithSummaryResourceMeta()
+        public ICollectionResourceBuilder<T> WithSummaryResourceMeta()
         {
-            if (_collectionResources.Any())
+            if (_collectionResources.Any() && _resourceData.Results.Any())
             {
                 BuildHelper.BuildFieldMeta(_collectionResources.First().Meta, _resourceData.Results.First());
             }
@@ -75,54 +67,19 @@ namespace Common.Api.Builders.Resource
             return this;
         }
 
-        public ICollectionResourceBuilder WithSorting()
+        public ICollectionResourceBuilder<T> WithSorting()
         {
-            BuildHelper.BuildSortingMeta<TTemplate, TCollectionResource>(_template.Meta, _templateData);
+            if (_resourceData.Results.Any())
+            {
+                BuildHelper.BuildSortingMeta(_template.Meta, _templateData, _resourceData.Results.First().GetType());
+            }
 
             return this;
         }
 
         public IDictionary<string, object> Build()
         {
-            IDictionaryBuilder<string, object> collectionResourceDataBuilder = DictionaryBuilder<string, object>
-                .Create()
-                .Add(nameof(_resourceData.Results), _collectionResources.Select(
-                    r =>
-                        DictionaryBuilder<string, object>.Create()
-                            .Add(r.Data.TypeName, DictionaryBuilder<string, object>.Create()
-                                .Add(ResourceType.Data, r.Data.Resource)
-                                .Add(ResourceType.Links, r.Links.BuildLinkDictionary())
-                                .Build())
-                            .Build()
-                ));
-
-            if (_resourceData is IPagedCollectionResource<TCollectionResource> pagedCollectionResourceData)
-            {
-                collectionResourceDataBuilder.Add(nameof(pagedCollectionResourceData.TotalResults),
-                    pagedCollectionResourceData.TotalResults);
-            }
-
-
-            IDictionaryBuilder<string, object> dictionaryBuilder = DictionaryBuilder<string, object>.Create()
-                .Add(_resource.Data.TypeName, DictionaryBuilder<string, object>.Create()
-                    .Add(ResourceType.Data, collectionResourceDataBuilder.Build())
-                    .Add(ResourceType.Meta, _resource.Meta.Properties.BuildPropertyDictionary())
-                    .Add(ResourceType.Links, _resource.Links.BuildLinkDictionary())
-                    .Build())
-                .Add(_template.Data.TypeName, DictionaryBuilder<string, object>.Create()
-                    .Add(ResourceType.Data, _template.Data.Resource)
-                    .Add(ResourceType.Meta, _template.Meta.Properties.BuildPropertyDictionary())
-                    .Build());
-
-            if (_collectionResources.Any())
-            {
-                dictionaryBuilder.Add(_collectionResources.First().Data.TypeName, DictionaryBuilder<string, object>
-                    .Create()
-                    .Add(ResourceType.Meta, _collectionResources.First().Meta.Properties.BuildPropertyDictionary())
-                    .Build());
-            }
-
-            return dictionaryBuilder.Build();
+           return CollectionResourceBuilderHelper.Build(_resource, _resourceData, _template, _collectionResources);
         }
     }
 }

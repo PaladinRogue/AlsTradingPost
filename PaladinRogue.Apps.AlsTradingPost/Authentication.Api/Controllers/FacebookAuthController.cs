@@ -6,7 +6,6 @@ using Authentication.Api.Resources;
 using Authentication.Application.Identity.Interfaces;
 using Authentication.Application.Identity.Models;
 using Authentication.Setup.Settings;
-using Common.Api.Authentication;
 using Common.Api.Authentication.Constants;
 using Common.Api.Authentication.FacebookModels;
 using Common.Api.Authentication.Interfaces;
@@ -33,6 +32,7 @@ namespace Authentication.Api.Controllers
 		private readonly ILogger<FacebookAuthController> _logger;
 	    private readonly IEncryptionFactory _encryptionFactory;
 	    private readonly JwtIssuerOptions _jwtIssuerOptions;
+		private readonly IResourceTemplateBuilder _resourceTemplateBuilder;
 
         public FacebookAuthController(IOptions<FacebookAuthSettings> fbAuthSettingsAccessor,
 	        IJwtFactory jwtFactory,
@@ -40,7 +40,8 @@ namespace Authentication.Api.Controllers
 	        IIdentityApplicationService identityApplicationService,
 	        ILogger<FacebookAuthController> logger,
 	        IEncryptionFactory encryptionFactory,
-	        IOptions<JwtIssuerOptions> jwtIssuerOptionsAccessor)
+	        IOptions<JwtIssuerOptions> jwtIssuerOptionsAccessor,
+	        IResourceTemplateBuilder resourceTemplateBuilder)
 	    {
 	        _fbAuthSettings = fbAuthSettingsAccessor.Value;
 	        _jwtFactory = jwtFactory;
@@ -48,7 +49,8 @@ namespace Authentication.Api.Controllers
 	        _identityApplicationService = identityApplicationService;
 	        _logger = logger;
 	        _encryptionFactory = encryptionFactory;
-	        _jwtIssuerOptions = jwtIssuerOptionsAccessor.Value;
+		    _resourceTemplateBuilder = resourceTemplateBuilder;
+		    _jwtIssuerOptions = jwtIssuerOptionsAccessor.Value;
 	    }
 
 	    [HttpPost]
@@ -80,7 +82,7 @@ namespace Authentication.Api.Controllers
 		    jwt.AccessToken = _encryptionFactory.Enrypt(template.AccessToken, _jwtIssuerOptions.SigningKey);
 
             return new ObjectResult(
-	            ResourceTemplateBuilder<FacebookJwtResource, FacebookAuthTemplate>.Create(jwt, template)
+	            _resourceTemplateBuilder.Create(jwt, template)
 		            .WithResourceMeta()
 		            .WithTemplateMeta()
 		            .Build()

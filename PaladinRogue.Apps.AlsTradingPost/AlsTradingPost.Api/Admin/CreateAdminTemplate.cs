@@ -1,6 +1,8 @@
-﻿namespace AlsTradingPost.Api.Admin
+﻿using Common.Api.Resources;
+
+namespace AlsTradingPost.Api.Admin
 {
-    public class CreateAdminTemplate
+    public class CreateAdminTemplate : ITemplate
     {
     }
 }

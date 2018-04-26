@@ -1,9 +1,9 @@
-﻿using Common.Resources.Concurrency;
+﻿using Common.Api.Resources;
 using Common.Resources.Concurrency.Interfaces;
 
 namespace Common.Api.Concurrency.Interfaces
 {
-    public interface IVersionedResource : IVersioned<IConcurrencyVersion>
+    public interface IVersionedResource : IVersioned<IConcurrencyVersion>, IResource
     {
     }
 }

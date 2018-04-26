@@ -32,6 +32,7 @@ namespace AlsTradingPost.Api.Controllers
         private readonly IUserApplicationService _userApplicationService;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IEncryptionFactory _encryptionFactory;
+        private readonly IResourceTemplateBuilder _resourceTemplateBuilder;
 
         public FacebookAuthController(IOptions<FacebookSettings> fbSettingsAccessor,
             IJwtFactory jwtFactory,
@@ -39,13 +40,15 @@ namespace AlsTradingPost.Api.Controllers
             ILogger<FacebookAuthController> logger,
             IUserApplicationService userApplicationService,
             IHttpClientFactory httpClientFactory,
-            IEncryptionFactory encryptionFactory)
+            IEncryptionFactory encryptionFactory,
+            IResourceTemplateBuilder resourceTemplateBuilder)
         {
             _jwtFactory = jwtFactory;
             _logger = logger;
             _userApplicationService = userApplicationService;
             _httpClientFactory = httpClientFactory;
             _encryptionFactory = encryptionFactory;
+            _resourceTemplateBuilder = resourceTemplateBuilder;
             _jwtAuthenticationIssuerOptions = jwtAuthenticationIssuerOptions.Value;
             _fbSettings = fbSettingsAccessor.Value;
         }
@@ -93,7 +96,7 @@ namespace AlsTradingPost.Api.Controllers
             );
 
             return new ObjectResult(
-                ResourceTemplateBuilder<JwtResource, FacebookAuthTemplate>.Create(jwt, template)
+                _resourceTemplateBuilder.Create(jwt, template)
                     .WithResourceMeta()
                     .WithTemplateMeta()
                     .Build()

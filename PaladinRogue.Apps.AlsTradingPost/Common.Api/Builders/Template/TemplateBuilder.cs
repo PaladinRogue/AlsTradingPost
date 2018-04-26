@@ -1,36 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Common.Api.Builders.Dictionary;
+using Common.Api.Builders.Resource;
+using Common.Api.Links;
+using Common.Api.Resources;
 
 namespace Common.Api.Builders.Template
 {
-    public class TemplateBuilder<TTemplate> : ITemplateBuilder
+    public class TemplateBuilder : ITemplateBuilder
     {
-        private readonly TemplateBuilderTemplate<TTemplate> _template;
+        private ResourceBuilderResource<ITemplate> _template;
+        
+        private ITemplate _templateData;
+        
+        private readonly IBuildHelper _buildHelper;
 
-        private readonly TTemplate _templateData;
-
-        private TemplateBuilder()
+        public TemplateBuilder(IBuildHelper buildHelper)
         {
-            _templateData = Activator.CreateInstance<TTemplate>();
+            _buildHelper = buildHelper;
+        }
 
-            _template = new TemplateBuilderTemplate<TTemplate>
-            {
-                Data = BuildHelper.BuildTemplateData(_templateData),
-                Meta = BuildHelper.BuildMeta(_templateData),
-                Links = BuildHelper.BuildLinks(_templateData)
-            };
+        public ITemplateBuilder Create<T>() where T : ITemplate
+        {
+            _templateData = Activator.CreateInstance<T>();
+
+            _template = _buildHelper.BuildResourceBuilder(_templateData);
 
             BuildHelper.AddSearchQueryParams(_template.Links, _templateData);
+
+            return this;
         }
 
-        public static TemplateBuilder<TTemplate> Create()
-        {
-            return new TemplateBuilder<TTemplate>();
-        }
-
-        public ITemplateBuilder WithMeta()
+        public ITemplateBuilder WithTemplateMeta()
         {
             BuildHelper.BuildValidationMeta(_template.Meta, _templateData);
 
@@ -39,13 +39,7 @@ namespace Common.Api.Builders.Template
 
         public IDictionary<string, object> Build()
         {
-            return DictionaryBuilder<string, object>.Create()
-                .Add(_template.Data.TypeName, DictionaryBuilder<string, object>.Create()
-                    .Add(ResourceType.Data, _template.Data.Resource)
-                    .Add(ResourceType.Meta, _template.Meta.Properties.BuildPropertyDictionary())
-                    .Add(ResourceType.Links, _template.Links.BuildLinkDictionary())
-                    .Build())
-                .Build();
+            return BuildHelper.Build(_template);
         }
     }
 }

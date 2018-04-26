@@ -16,11 +16,18 @@ namespace AlsTradingPost.Api.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IAdminApplicationService _adminApplicationService;
+        private readonly IResourceBuilder _resourceBuilder;
+        private readonly IResourceTemplateBuilder _resourceTemplateBuilder;
 
-        public AdminController(IMapper mapper, IAdminApplicationService adminApplicationService)
+        public AdminController(IMapper mapper,
+            IAdminApplicationService adminApplicationService,
+            IResourceBuilder resourceBuilder,
+            IResourceTemplateBuilder resourceTemplateBuilder)
         {
             _adminApplicationService = adminApplicationService;
             _mapper = mapper;
+            _resourceBuilder = resourceBuilder;
+            _resourceTemplateBuilder = resourceTemplateBuilder;
         }
 
         [HttpGet("{id}")]
@@ -29,7 +36,7 @@ namespace AlsTradingPost.Api.Controllers
             AdminResource resource = _mapper.Map<AdminAdto, AdminResource>(_adminApplicationService.Get(id));
 
             return new ObjectResult(
-                ResourceBuilder<AdminResource>.Create(resource)
+                _resourceBuilder.Create(resource)
                     .WithResourceMeta()
                     .Build()
             );
@@ -42,7 +49,7 @@ namespace AlsTradingPost.Api.Controllers
                 _adminApplicationService.Create(_mapper.Map<CreateAdminTemplate, CreateAdminAdto>(template)));
 
             return new ObjectResult(
-                ResourceTemplateBuilder<AdminResource, CreateAdminTemplate>.Create(resource, template)
+                _resourceTemplateBuilder.Create(resource, template)
                     .WithResourceMeta()
                     .WithTemplateMeta()
                     .Build()
@@ -59,7 +66,7 @@ namespace AlsTradingPost.Api.Controllers
                 })));
 
             return new ObjectResult(
-                ResourceTemplateBuilder<AdminResource, UpdateAdminTemplate>.Create(resource, template)
+                _resourceTemplateBuilder.Create(resource, template)
                     .WithResourceMeta()
                     .WithTemplateMeta()
                     .Build()

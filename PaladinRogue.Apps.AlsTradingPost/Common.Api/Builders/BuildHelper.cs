@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using Common.Api.Builders.Dictionary;
 using Common.Api.Builders.Resource;
 using Common.Api.Links;
 using Common.Api.Pagination.Interfaces;
 using Common.Api.Resources;
-using Common.Api.Routing;
 using Common.Api.Sorting;
 using Common.Api.Validation;
 using Common.Api.Validation.Attributes;
@@ -16,37 +16,28 @@ using ReadOnlyAttribute = Common.Api.Resources.ReadOnlyAttribute;
 
 namespace Common.Api.Builders
 {
-    public static class BuildHelper
+    public class BuildHelper : IBuildHelper
     {
-        public static Data<T> BuildTemplateData<T>(T templateData)
+        private readonly ILinkBuilder _linkBuilder;
+        
+        public BuildHelper(ILinkBuilder linkBuilder)
         {
-            return new Data<T>
-            {
-                TypeName = GetTemplateTypeName(templateData),
-                Resource = templateData
-            };
+            _linkBuilder = linkBuilder;
         }
         
-        public static Data<T> BuildResourceData<T>(T resourceData)
+        public IList<ResourceBuilderResource<TSummaryResource>> BuildCollectionResourceData<TSummaryResource>(ICollectionResource<TSummaryResource> data)
+            where TSummaryResource : ISummaryResource
         {
-            return new Data<T>
-            {
-                TypeName = GetResourceTypeName(resourceData),
-                Resource = resourceData
-            };
-        }
-        
-        public static IList<ResourceBuilderResource<T>> BuildCollectionResourceData<T>(ICollectionResource<T> data) where T : ISummaryResource
-        {
-            return data.Results.Select(BuildResource).ToList();
+            return data.Results.Select(BuildResourceBuilder).ToList();
         }
 
-        public static Meta BuildMeta<T>(T data)
+        public ResourceBuilderResource<T> BuildResourceBuilder<T>(T data)
         {
-            return new Meta
+            return new ResourceBuilderResource<T>
             {
-                TemplateTypeName = GetTemplateTypeName(data),
-                Properties = new List<PropertyMeta>()
+                Data = BuildData(data),
+                Meta = BuildMeta(data),
+                Links = _linkBuilder.BuildLinks(data)
             };
         }
         
@@ -123,11 +114,11 @@ namespace Common.Api.Builders
             }
         }
 
-        public static void BuildSortingMeta<T, TSummaryResource>(Meta meta, T data)
-            where TSummaryResource : ISummaryResource
+        public static void BuildSortingMeta<T>(Meta meta, T data, Type summaryResourceType)
+            where T : ITemplate
         {
             IList<string> sortableFields = (
-                from property in typeof(TSummaryResource).GetProperties()
+                from property in summaryResourceType.GetProperties()
                 let sortableAttribute = property.GetCustomAttribute<SortableAttribute>()
                 where sortableAttribute != null
                 select property.Name.ToCamelCase()).ToList();
@@ -160,18 +151,6 @@ namespace Common.Api.Builders
             }
         }
 
-        public static IList<Link> BuildLinks<T>(T data)
-        {
-            return typeof(T).GetCustomAttributes<LinkAttribute>()
-                .Select(linkAttribute => new Link
-                {
-                    Name = linkAttribute.LinkName,
-                    AllowVerbs = linkAttribute.HttpVerbs,
-                    Uri = RoutingProvider.GetRoute(linkAttribute.UriName, data)
-                })
-                .ToList();
-        }
-
         public static void AddSearchQueryParams<T>(IEnumerable<Link> links, T data)
         {
             AddQueryParams(links.Single(l => l.Name == LinkType.Search), data);
@@ -182,8 +161,8 @@ namespace Common.Api.Builders
             AddQueryParams(links.Single(l => l.Name == LinkType.Self), data);
         }
 
-        public static void AddPagingLinks<T, TCollectionResource>(ResourceBuilderResource<T> resource, IPagedCollectionResource<TCollectionResource> data, IPaginationTemplate pagingData)
-            where TCollectionResource : ISummaryResource
+        public static void AddPagingLinks<T, TSummaryResource>(ResourceBuilderResource<T> resource, IPagedCollectionResource<TSummaryResource> data, IPaginationTemplate pagingData) 
+            where TSummaryResource : ISummaryResource
         {
             Link selfLink = resource.Links.Single(l => l.Name == LinkType.Self);
             
@@ -194,6 +173,35 @@ namespace Common.Api.Builders
             }
         }
 
+        public static IDictionary<string, object> Build<T>(ResourceBuilderResource<T> resource)
+        {
+            return DictionaryBuilder<string, object>.Create()
+                .Add(resource.Data.TypeName, DictionaryBuilder<string, object>.Create()
+                    .Add(ResourceType.Data, resource.Data.Resource)
+                    .Add(ResourceType.Meta, resource.Meta.Properties.BuildPropertyDictionary())
+                    .Add(ResourceType.Links, resource.Links.BuildLinkDictionary())
+                    .Build())
+                .Build();
+        }
+        
+        private static Data<T> BuildData<T>(T resourceData)
+        {
+            return new Data<T>
+            {
+                TypeName = GetConventionTypeName(resourceData),
+                Resource = resourceData
+            };
+        }
+
+        private static Meta BuildMeta<T>(T data)
+        {
+            return new Meta
+            {
+                TemplateTypeName = GetConventionTypeName(data),
+                Properties = new List<PropertyMeta>()
+            };
+        }
+
         private static void AddQueryParams<T>(Link link, T data)
         {
             if (link == null)
@@ -201,22 +209,12 @@ namespace Common.Api.Builders
                 return;
             }
             
-            link.QueryParams = typeof(T).GetProperties()
+            link.QueryParams = data.GetType().GetProperties()
                 .Where(p => p.GetValue(data) != null)
                 .ToDictionary(
                     p => p.Name.ToCamelCase(),
                     p => p.GetValue(data).ToString().ToCamelCase()
                 );
-        }
-
-        private static ResourceBuilderResource<T> BuildResource<T>(T resourceData)
-        {
-            return new ResourceBuilderResource<T>
-            {
-                Data = BuildResourceData(resourceData),
-                Meta = BuildMeta(resourceData),
-                Links = BuildLinks(resourceData)
-            };
         }
 
         private static void AddOrUpdatePropertyConstraints(Meta meta, string propertyName, IList<Constraint> constraints)
@@ -258,17 +256,11 @@ namespace Common.Api.Builders
                 propertyMeta.Constraints.Add(constraint);
             }
         }
-
-        private static string GetTemplateTypeName<T>(T data)
-        {
-            NameAttribute nameAttribute = data.GetType().GetCustomAttribute<NameAttribute>();
-            return nameAttribute?.Name ?? FormatTemplateName(data.GetType().Name);
-        }
         
-        private static string GetResourceTypeName<T>(T data)
+        private static string GetConventionTypeName<T>(T data)
         {
             NameAttribute nameAttribute = data.GetType().GetCustomAttribute<NameAttribute>();
-            return nameAttribute?.Name ?? FormatResourceName(data.GetType().Name);
+            return nameAttribute?.Name ?? FormatConventionName(data.GetType().Name);
         }
 
         private static KeyValuePair<string, Func<T, TOut>> CreateAttributeKeyValuePair<T, TOut>(string key, Func<T, TOut> accessor) where T : Attribute
@@ -292,14 +284,9 @@ namespace Common.Api.Builders
             }
         }
         
-        private static string FormatTemplateName(string resourceName)
+        private static string FormatConventionName(string resourceName)
         {
-            return resourceName.Replace("Template", string.Empty);
-        }
-        
-        private static string FormatResourceName(string resourceName)
-        {
-            return resourceName.Replace("Resource", string.Empty);
+            return resourceName.Replace("Template", string.Empty).Replace("Resource", string.Empty);
         }
     }
 }
