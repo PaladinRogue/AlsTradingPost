@@ -12,23 +12,18 @@ namespace Common.Api.Builders.Template
         
         private ITemplate _templateData;
         
-        private readonly ILinkBuilder _linkBuilder;
+        private readonly IBuildHelper _buildHelper;
 
-        public TemplateBuilder(ILinkBuilder linkBuilder)
+        public TemplateBuilder(IBuildHelper buildHelper)
         {
-            _linkBuilder = linkBuilder;
+            _buildHelper = buildHelper;
         }
 
         public ITemplateBuilder Create<T>() where T : ITemplate
         {
             _templateData = Activator.CreateInstance<T>();
 
-            _template = new ResourceBuilderResource<ITemplate>
-            {
-                Data = BuildHelper.BuildTemplateData(_templateData),
-                Meta = BuildHelper.BuildMeta(_templateData),
-                Links = _linkBuilder.BuildLinks(_templateData)
-            };
+            _template = _buildHelper.BuildResourceBuilder(_templateData);
 
             BuildHelper.AddSearchQueryParams(_template.Links, _templateData);
 

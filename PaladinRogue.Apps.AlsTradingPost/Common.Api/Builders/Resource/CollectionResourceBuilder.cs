@@ -15,31 +15,22 @@ namespace Common.Api.Builders.Resource
         private ITemplate _templateData;
         private IList<ResourceBuilderResource<T>> _collectionResources;
 
-        private readonly ILinkBuilder _linkBuilder;
+        private readonly IBuildHelper _buildHelper;
 
-        public CollectionResourceBuilder(ILinkBuilder linkBuilder)
+        public CollectionResourceBuilder(IBuildHelper buildHelper)
         {
-            _linkBuilder = linkBuilder;
+            _buildHelper = buildHelper;
         }
 
         public ICollectionResourceBuilder<T> Create(ICollectionResource<T> collectionResource, ITemplate template)
         {
             _resourceData = collectionResource;
             _templateData = template;
-            _collectionResources = BuildHelper.BuildCollectionResourceData(_resourceData);
+            _collectionResources = _buildHelper.BuildCollectionResourceData(_resourceData);
 
-            _resource = new ResourceBuilderResource<ICollectionResource<T>>
-            {
-                Data = BuildHelper.BuildResourceData(_resourceData),
-                Meta = BuildHelper.BuildMeta(_resourceData),
-                Links = _linkBuilder.BuildLinks(_resourceData)
-            };
-
-            _template = new ResourceBuilderResource<ITemplate>
-            {
-                Data = BuildHelper.BuildTemplateData(_templateData),
-                Meta = BuildHelper.BuildMeta(_templateData)
-            };
+            _resource = _buildHelper.BuildResourceBuilder(_resourceData);
+            
+            _template = _buildHelper.BuildResourceBuilder(_templateData);
 
             BuildHelper.AddSelfQueryParams(_resource.Links, _templateData);
             
@@ -68,7 +59,7 @@ namespace Common.Api.Builders.Resource
 
         public ICollectionResourceBuilder<T> WithSummaryResourceMeta()
         {
-            if (_collectionResources.Any())
+            if (_collectionResources.Any() && _resourceData.Results.Any())
             {
                 BuildHelper.BuildFieldMeta(_collectionResources.First().Meta, _resourceData.Results.First());
             }

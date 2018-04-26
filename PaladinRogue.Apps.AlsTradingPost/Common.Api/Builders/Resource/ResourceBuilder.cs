@@ -10,23 +10,18 @@ namespace Common.Api.Builders.Resource
         
         private IResource _resourceData;
         
-        private readonly ILinkBuilder _linkBuilder;
+        private readonly IBuildHelper _buildHelper;
 
-        public ResourceBuilder(ILinkBuilder linkBuilder)
+        public ResourceBuilder(IBuildHelper buildHelper)
         {
-            _linkBuilder = linkBuilder;
+            _buildHelper = buildHelper;
         }
 
         public IResourceBuilder Create(IResource resource)
         {
             _resourceData = resource;
 
-            _resource = new ResourceBuilderResource<IResource>
-            {
-                Data = BuildHelper.BuildResourceData(_resourceData),
-                Meta = BuildHelper.BuildMeta(_resourceData),
-                Links = _linkBuilder.BuildLinks(_resourceData)
-            };
+            _resource = _buildHelper.BuildResourceBuilder(_resourceData);
 
             return this;
         }

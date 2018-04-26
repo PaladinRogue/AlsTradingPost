@@ -22,6 +22,7 @@ using AlsTradingPost.Resources.Providers;
 using AlsTradingPost.Resources.Providers.Interfaces;
 using AlsTradingPost.Setup.Infrastructure.Links;
 using AlsTradingPost.Setup.Infrastructure.Routing;
+using Common.Api.Builders;
 using Common.Api.Builders.Resource;
 using Common.Api.Builders.Template;
 using Common.Api.Encryption;
@@ -52,6 +53,7 @@ namespace AlsTradingPost.Setup
         public static void RegisterBuilders(IServiceCollection services)
         {
             services.AddSingleton<ILinkBuilder, PersonaLinkBuilder>();
+            services.AddSingleton<IBuildHelper, BuildHelper>();
             services.AddSingleton<ITemplateBuilder, TemplateBuilder>();
             services.AddSingleton<IResourceBuilder, ResourceBuilder>();
             services.AddSingleton<IResourceTemplateBuilder, ResourceTemplateBuilder>();

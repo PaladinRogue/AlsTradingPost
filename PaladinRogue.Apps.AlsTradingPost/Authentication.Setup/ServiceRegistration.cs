@@ -7,6 +7,7 @@ using Authentication.Domain.IdentityServices.Interfaces;
 using Authentication.Domain.Persistence;
 using Authentication.Persistence;
 using Authentication.Persistence.Repositories;
+using Common.Api.Builders;
 using Common.Api.Builders.Resource;
 using Common.Api.Builders.Template;
 using Common.Api.Encryption;
@@ -31,6 +32,7 @@ namespace Authentication.Setup
     {
 	    public static void RegisterBuilders(IServiceCollection services)
 	    {
+		    services.AddSingleton<IBuildHelper, BuildHelper>();
 		    services.AddSingleton<ILinkBuilder, DefaultLinkBuilder>();
 		    services.AddSingleton<IResourceTemplateBuilder, ResourceTemplateBuilder>();
 	    }

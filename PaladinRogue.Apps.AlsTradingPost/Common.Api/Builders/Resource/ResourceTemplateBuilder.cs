@@ -12,11 +12,11 @@ namespace Common.Api.Builders.Resource
         private IResource _resourceData;
         private ITemplate _templateData;
 
-        private readonly ILinkBuilder _linkBuilder;
+        private readonly IBuildHelper _buildHelper;
 
-        public ResourceTemplateBuilder(ILinkBuilder linkBuilder)
+        public ResourceTemplateBuilder(IBuildHelper buildHelper)
         {
-            _linkBuilder = linkBuilder;
+            _buildHelper = buildHelper;
         }
 
         public IResourceTemplateBuilder Create(IResource resource, ITemplate template)
@@ -24,18 +24,9 @@ namespace Common.Api.Builders.Resource
             _resourceData = resource;
             _templateData = template;
 
-            _resource = new ResourceBuilderResource<IResource>
-            {
-                Data = BuildHelper.BuildResourceData(_resourceData),
-                Meta = BuildHelper.BuildMeta(_resourceData),
-                Links = _linkBuilder.BuildLinks(_resourceData)
-            };
-
-            _template = new ResourceBuilderResource<ITemplate>
-            {
-                Data = BuildHelper.BuildResourceData(_templateData),
-                Meta = BuildHelper.BuildMeta(_templateData)
-            };
+            _resource = _buildHelper.BuildResourceBuilder(_resourceData);
+            
+            _template = _buildHelper.BuildResourceBuilder(_templateData);
 
             return this;
         }

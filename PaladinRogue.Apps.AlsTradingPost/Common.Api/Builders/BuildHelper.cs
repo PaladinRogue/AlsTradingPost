@@ -16,38 +16,28 @@ using ReadOnlyAttribute = Common.Api.Resources.ReadOnlyAttribute;
 
 namespace Common.Api.Builders
 {
-    public static class BuildHelper
+    public class BuildHelper : IBuildHelper
     {
-        public static Data<T> BuildTemplateData<T>(T templateData)
+        private readonly ILinkBuilder _linkBuilder;
+        
+        public BuildHelper(ILinkBuilder linkBuilder)
         {
-            return new Data<T>
-            {
-                TypeName = GetTemplateTypeName(templateData),
-                Resource = templateData
-            };
+            _linkBuilder = linkBuilder;
         }
         
-        public static Data<T> BuildResourceData<T>(T resourceData)
-        {
-            return new Data<T>
-            {
-                TypeName = GetResourceTypeName(resourceData),
-                Resource = resourceData
-            };
-        }
-        
-        public static IList<ResourceBuilderResource<TSummaryResource>> BuildCollectionResourceData<TSummaryResource>(ICollectionResource<TSummaryResource> data)
+        public IList<ResourceBuilderResource<TSummaryResource>> BuildCollectionResourceData<TSummaryResource>(ICollectionResource<TSummaryResource> data)
             where TSummaryResource : ISummaryResource
         {
-            return data.Results.Select(BuildResource).ToList();
+            return data.Results.Select(BuildResourceBuilder).ToList();
         }
 
-        public static Meta BuildMeta<T>(T data)
+        public ResourceBuilderResource<T> BuildResourceBuilder<T>(T data)
         {
-            return new Meta
+            return new ResourceBuilderResource<T>
             {
-                TemplateTypeName = GetTemplateTypeName(data),
-                Properties = new List<PropertyMeta>()
+                Data = BuildData(data),
+                Meta = BuildMeta(data),
+                Links = _linkBuilder.BuildLinks(data)
             };
         }
         
@@ -161,19 +151,6 @@ namespace Common.Api.Builders
             }
         }
 
-        [Obsolete]
-        public static IList<Link> BuildLinks<T>(T data)
-        {
-            return data.GetType().GetCustomAttributes<LinkAttribute>()
-                .Select(linkAttribute => new Link
-                {
-                    Name = linkAttribute.LinkName,
-                    AllowVerbs = linkAttribute.HttpVerbs,
-                    Uri = "" //RouteProvider.GetRouteTemplate(linkAttribute.UriName, data)
-                })
-                .ToList();
-        }
-
         public static void AddSearchQueryParams<T>(IEnumerable<Link> links, T data)
         {
             AddQueryParams(links.Single(l => l.Name == LinkType.Search), data);
@@ -206,6 +183,24 @@ namespace Common.Api.Builders
                     .Build())
                 .Build();
         }
+        
+        private static Data<T> BuildData<T>(T resourceData)
+        {
+            return new Data<T>
+            {
+                TypeName = GetConventionTypeName(resourceData),
+                Resource = resourceData
+            };
+        }
+
+        private static Meta BuildMeta<T>(T data)
+        {
+            return new Meta
+            {
+                TemplateTypeName = GetConventionTypeName(data),
+                Properties = new List<PropertyMeta>()
+            };
+        }
 
         private static void AddQueryParams<T>(Link link, T data)
         {
@@ -220,16 +215,6 @@ namespace Common.Api.Builders
                     p => p.Name.ToCamelCase(),
                     p => p.GetValue(data).ToString().ToCamelCase()
                 );
-        }
-
-        private static ResourceBuilderResource<T> BuildResource<T>(T resourceData)
-        {
-            return new ResourceBuilderResource<T>
-            {
-                Data = BuildResourceData(resourceData),
-                Meta = BuildMeta(resourceData),
-                Links = BuildLinks(resourceData)
-            };
         }
 
         private static void AddOrUpdatePropertyConstraints(Meta meta, string propertyName, IList<Constraint> constraints)
@@ -271,17 +256,11 @@ namespace Common.Api.Builders
                 propertyMeta.Constraints.Add(constraint);
             }
         }
-
-        private static string GetTemplateTypeName<T>(T data)
-        {
-            NameAttribute nameAttribute = data.GetType().GetCustomAttribute<NameAttribute>();
-            return nameAttribute?.Name ?? FormatTemplateName(data.GetType().Name);
-        }
         
-        private static string GetResourceTypeName<T>(T data)
+        private static string GetConventionTypeName<T>(T data)
         {
             NameAttribute nameAttribute = data.GetType().GetCustomAttribute<NameAttribute>();
-            return nameAttribute?.Name ?? FormatResourceName(data.GetType().Name);
+            return nameAttribute?.Name ?? FormatConventionName(data.GetType().Name);
         }
 
         private static KeyValuePair<string, Func<T, TOut>> CreateAttributeKeyValuePair<T, TOut>(string key, Func<T, TOut> accessor) where T : Attribute
@@ -305,14 +284,9 @@ namespace Common.Api.Builders
             }
         }
         
-        private static string FormatTemplateName(string resourceName)
+        private static string FormatConventionName(string resourceName)
         {
-            return resourceName.Replace("Template", string.Empty);
-        }
-        
-        private static string FormatResourceName(string resourceName)
-        {
-            return resourceName.Replace("Resource", string.Empty);
+            return resourceName.Replace("Template", string.Empty).Replace("Resource", string.Empty);
         }
     }
 }
