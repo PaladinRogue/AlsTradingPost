@@ -2,7 +2,6 @@
 using System.Linq.Expressions;
 using Authentication.Domain.Models;
 using Authentication.Domain.Persistence;
-using Microsoft.EntityFrameworkCore;
 using Persistence.EntityFramework.Repositories;
 
 namespace Authentication.Persistence.Repositories
@@ -18,12 +17,12 @@ namespace Authentication.Persistence.Repositories
 
         public Identity GetById(Guid id)
         {
-            return RepositoryHelper.GetById(_context.Identities.AsNoTracking(), id);
+            return RepositoryHelper.GetById(_context.Identities, id);
         }
 
         public Identity GetSingle(Expression<Func<Identity, bool>> predicate)
         {
-            return RepositoryHelper.GetSingle(_context.Identities.AsNoTracking(), predicate);
+            return RepositoryHelper.GetSingle(_context.Identities, predicate);
         }
 
         public void Add(Identity entity)

@@ -11,7 +11,7 @@ namespace AlsTradingPost.Setup.Infrastructure.DbInitializer
         public static DbSet<T> AddOrUpdate<T>(this DbSet<T> existingDbSet, IList<T> dataList)
             where T : class, IEntity
         {
-            IList<T> existingList = existingDbSet.AsNoTracking().ToList();
+            IList<T> existingList = existingDbSet.ToList();
 
             IList<T> itemsToAdd = dataList.Where(existing => existingList.All(i => i.Id != existing.Id)).ToList();
             if (itemsToAdd.Any())
@@ -37,7 +37,7 @@ namespace AlsTradingPost.Setup.Infrastructure.DbInitializer
         public static DbSet<T> AndDelete<T>(this DbSet<T> existingDbSet, IList<T> dataList)
             where T : class, IEntity
         {
-            IList<T> existingList = existingDbSet.AsNoTracking().ToList();
+            IList<T> existingList = existingDbSet.ToList();
 
             IList<T> itemsToDelete = existingList.Where(existing => dataList.All(i => i.Id != existing.Id)).ToList();
             if (itemsToDelete.Any())

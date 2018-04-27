@@ -2,7 +2,6 @@
 using System.Linq.Expressions;
 using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.Persistence;
-using Microsoft.EntityFrameworkCore;
 using Persistence.EntityFramework.Repositories;
 
 namespace AlsTradingPost.Persistence.Repositories
@@ -18,12 +17,12 @@ namespace AlsTradingPost.Persistence.Repositories
         
         public User GetById(Guid id)
         {
-            return RepositoryHelper.GetById(_context.Users.AsNoTracking(), id);
+            return RepositoryHelper.GetById(_context.Users, id);
         }
 
         public User GetSingle(Expression<Func<User, bool>> predicate)
         {
-            return RepositoryHelper.GetSingle(_context.Users.AsNoTracking(), predicate);
+            return RepositoryHelper.GetSingle(_context.Users, predicate);
         }
 
         public void Add(User entity)
