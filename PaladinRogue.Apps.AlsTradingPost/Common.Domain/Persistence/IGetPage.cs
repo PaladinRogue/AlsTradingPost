@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Common.Domain.Persistence
@@ -14,7 +14,7 @@ namespace Common.Domain.Persistence
         /// <param name="orderByAscending">The direction of the ordering.</param>
         /// <param name="predicate">The predicate of the entities to return.</param>
         /// <returns>Returns an enumerable entities of type <typeparamref name="T"/></returns>
-        IEnumerable<T> GetPage<TOrderByKey>(int pageSize, int pageOffset, out int totalResults,
+        IQueryable<T> GetPage<TOrderByKey>(int pageSize, int pageOffset, out int totalResults,
             Expression<Func<T, TOrderByKey>> orderBy,
             bool orderByAscending = true,
             Expression<Func<T, bool>> predicate = null);
@@ -29,7 +29,7 @@ namespace Common.Domain.Persistence
         /// <param name="thenBy">The next ordering function to be applied.</param>
         /// <param name="thenByAscending">The direction of the next ordering.</param>
         /// <returns>Returns an enumerable entities of type <typeparamref name="T"/></returns>
-        IEnumerable<T> GetPage<TOrderByKey, TThenByKey>(int pageSize, int pageOffset, out int totalResults,
+        IQueryable<T> GetPage<TOrderByKey, TThenByKey>(int pageSize, int pageOffset, out int totalResults,
             Expression<Func<T, TOrderByKey>> orderBy,
             bool orderByAscending = true,
             Expression<Func<T, bool>> predicate = null,

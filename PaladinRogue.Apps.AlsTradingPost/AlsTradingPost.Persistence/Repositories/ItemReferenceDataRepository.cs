@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using AlsTradingPost.Domain.Models;
@@ -18,7 +17,7 @@ namespace AlsTradingPost.Persistence.Repositories
             _context = context;
         }
         
-        public IEnumerable<ItemReferenceData> GetPage<TOrderByKey>(
+        public IQueryable<ItemReferenceData> GetPage<TOrderByKey>(
             int pageSize,
             int pageOffset,
             out int totalResults,
@@ -26,10 +25,10 @@ namespace AlsTradingPost.Persistence.Repositories
             bool orderByAscending,
             Expression<Func<ItemReferenceData, bool>> predicate = null)
         {
-            return RepositoryHelper.GetPage(_context.ItemReferenceData, orderBy, orderByAscending, predicate, pageSize, pageOffset, out totalResults);
+            return RepositoryHelper.GetPage(_context.ItemReferenceData.AsNoTracking(), orderBy, orderByAscending, predicate, pageSize, pageOffset, out totalResults);
         }
 
-        public IEnumerable<ItemReferenceData> GetPage<TOrderByKey, TThenByKey>(
+        public IQueryable<ItemReferenceData> GetPage<TOrderByKey, TThenByKey>(
             int pageSize,
             int pageOffset,
             out int totalResults,
@@ -39,7 +38,7 @@ namespace AlsTradingPost.Persistence.Repositories
             Expression<Func<ItemReferenceData, TThenByKey>> thenBy = null,
             bool? thenByAscending = null)
         {
-            return RepositoryHelper.GetPage(_context.ItemReferenceData, orderBy, orderByAscending, predicate, thenBy, thenByAscending, pageSize, pageOffset, out totalResults);
+            return RepositoryHelper.GetPage(_context.ItemReferenceData.AsNoTracking(), orderBy, orderByAscending, predicate, thenBy, thenByAscending, pageSize, pageOffset, out totalResults);
         }
     }
 }

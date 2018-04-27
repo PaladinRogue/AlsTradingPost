@@ -1,7 +1,6 @@
 ﻿using System;
 using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.Persistence;
-using Microsoft.EntityFrameworkCore;
 using Persistence.EntityFramework.Repositories;
 
 namespace AlsTradingPost.Persistence.Repositories
@@ -17,7 +16,7 @@ namespace AlsTradingPost.Persistence.Repositories
 
         public Admin GetById(Guid id)
         {
-            return RepositoryHelper.GetById(_context.Admins.AsNoTracking(), id);
+            return RepositoryHelper.GetById(_context.Admins, id);
         }
 
         public void Add(Admin entity)
