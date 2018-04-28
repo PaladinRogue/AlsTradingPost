@@ -1,9 +1,9 @@
-﻿using Common.Api.Constants;
-using Common.Api.Links;
+﻿using Common.Api.Links;
 using Common.Api.Pagination.Interfaces;
 using Common.Api.Sorting;
 using Common.Api.Validation.Attributes;
 using Common.Resources.Extensions;
+using Common.Setup.Infrastructure.Constants;
 
 namespace AlsTradingPost.Api.ItemReferenceData
 {

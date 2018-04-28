@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Common.Api.Builders
+namespace Common.Api.Meta
 {
     public class Meta
     {

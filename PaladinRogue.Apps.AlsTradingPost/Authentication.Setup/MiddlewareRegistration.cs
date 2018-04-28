@@ -1,5 +1,5 @@
 ﻿using Common.Api.Exceptions;
-using Common.Setup.Middleware;
+using Common.Setup.Infrastructure.Middleware;
 using Microsoft.AspNetCore.Builder;
 
 namespace Authentication.Setup

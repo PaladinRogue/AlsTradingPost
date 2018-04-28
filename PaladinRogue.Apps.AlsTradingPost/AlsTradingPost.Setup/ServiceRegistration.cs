@@ -30,6 +30,7 @@ using Common.Api.Encryption.Interfaces;
 using Common.Api.HttpClient;
 using Common.Api.HttpClient.Interfaces;
 using Common.Api.Links;
+using Common.Api.Meta;
 using Common.Api.Routing;
 using Common.Application.Identity;
 using Common.Domain.Concurrency;
@@ -52,6 +53,7 @@ namespace AlsTradingPost.Setup
     {
         public static void RegisterBuilders(IServiceCollection services)
         {
+            services.AddSingleton<IMetaBuilder, MetaBuilder>();
             services.AddSingleton<ILinkBuilder, PersonaLinkBuilder>();
             services.AddSingleton<IBuildHelper, BuildHelper>();
             services.AddSingleton<ITemplateBuilder, TemplateBuilder>();

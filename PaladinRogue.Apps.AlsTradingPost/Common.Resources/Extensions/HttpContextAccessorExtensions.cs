@@ -18,5 +18,16 @@ namespace Common.Resources.Extensions
 
             return subjectId == Guid.Empty ? null : (Guid?)subjectId;
         }
+        
+        public static bool HasRequestHeader(this IHttpContextAccessor httpContextAccessor, string headerKey)
+        {
+            bool? containsKey = httpContextAccessor?.HttpContext?.Request?.Headers?.ContainsKey(headerKey);
+            if (!containsKey.HasValue || !containsKey.Value) return false;
+            
+            bool.TryParse(httpContextAccessor.HttpContext.Request.Headers[headerKey], out bool headerValue);
+                
+            return headerValue;
+
+        }
     }
 }

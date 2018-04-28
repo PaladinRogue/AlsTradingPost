@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Common.Api.Links;
+using Common.Api.Meta;
 using Common.Api.Resources;
 
 namespace Common.Api.Builders.Resource
@@ -13,10 +13,12 @@ namespace Common.Api.Builders.Resource
         private ITemplate _templateData;
 
         private readonly IBuildHelper _buildHelper;
+        private readonly IMetaBuilder _metaBuilder;
 
-        public ResourceTemplateBuilder(IBuildHelper buildHelper)
+        public ResourceTemplateBuilder(IBuildHelper buildHelper, IMetaBuilder metaBuilder)
         {
             _buildHelper = buildHelper;
+            _metaBuilder = metaBuilder;
         }
 
         public IResourceTemplateBuilder Create(IResource resource, ITemplate template)
@@ -33,14 +35,14 @@ namespace Common.Api.Builders.Resource
 
         public IResourceTemplateBuilder WithTemplateMeta()
         {
-            BuildHelper.BuildValidationMeta(_template.Meta, _templateData);
+            _metaBuilder.BuildValidationMeta(_template.Meta, _templateData);
 
             return this;
         }
 
         public IResourceTemplateBuilder WithResourceMeta()
         {
-            BuildHelper.BuildFieldMeta(_resource.Meta, _resourceData);
+            _metaBuilder.BuildFieldMeta(_resource.Meta, _resourceData);
 
             return this;
         }

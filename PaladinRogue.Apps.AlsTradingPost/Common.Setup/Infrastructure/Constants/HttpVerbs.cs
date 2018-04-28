@@ -1,4 +1,4 @@
-﻿namespace Common.Api.Constants
+﻿namespace Common.Setup.Infrastructure.Constants
 {
     public static class HttpVerbs
     {

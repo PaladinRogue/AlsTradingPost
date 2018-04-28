@@ -15,12 +15,14 @@ using Common.Api.Encryption.Interfaces;
 using Common.Api.HttpClient;
 using Common.Api.HttpClient.Interfaces;
 using Common.Api.Links;
+using Common.Api.Meta;
 using Common.Api.Routing;
 using Common.Domain.Concurrency;
 using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Concurrency.Services;
 using Common.Domain.Concurrency.Services.Interfaces;
 using Common.Resources.Transactions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +34,7 @@ namespace Authentication.Setup
     {
 	    public static void RegisterBuilders(IServiceCollection services)
 	    {
+		    services.AddSingleton<IMetaBuilder, MetaBuilder>();
 		    services.AddSingleton<IBuildHelper, BuildHelper>();
 		    services.AddSingleton<ILinkBuilder, DefaultLinkBuilder>();
 		    services.AddSingleton<IResourceTemplateBuilder, ResourceTemplateBuilder>();
@@ -64,6 +67,7 @@ namespace Authentication.Setup
 
         public static void RegisterProviders(IServiceCollection services)
         {
+	        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IConcurrencyVersionProvider, ConcurrencyVersionProvider>();
             services.AddSingleton<IRouteProvider<bool>, DefaultRouteProvider>();
         }
