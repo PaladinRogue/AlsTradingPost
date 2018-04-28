@@ -30,23 +30,11 @@ namespace Common.Api.Exceptions
             _logger = logger;
         }
 
-        public async Task Invoke(HttpContext context, JsonOutputFormatter jsonOutputFormatter)
+        public async Task Invoke(HttpContext context)
         {
             try
             {
                 await _next(context);
-            }
-            catch (BusinessValidationRuleApplicationException ex)
-            {
-                context.Response.Clear();
-                context.Response.ContentType = context.Request.ContentType;
-                context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
-
-                using (StringWriter stringWriter = new StringWriter())
-                {
-                    jsonOutputFormatter.WriteObject(stringWriter, ex.ValidationResult);
-                    await context.Response.WriteAsync(stringWriter.ToString());
-                }
             }
             catch (ApplicationException ex)
             {

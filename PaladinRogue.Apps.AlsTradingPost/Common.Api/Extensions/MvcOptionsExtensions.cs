@@ -2,6 +2,7 @@
 using System.Buffers;
 using Common.Api.Authentication;
 using Common.Api.Concurrency;
+using Common.Api.Validation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +13,7 @@ namespace Common.Api.Extensions
 {
     public static class MvcOptionsExtensions
     {
-        public static MvcOptions UseCamelCaseJsonOutputFormatter<T>(this MvcOptions options, IServiceCollection services) where T : JsonOutputFormatter, IOutputFormatter
+        public static MvcOptions UseCamelCaseJsonOutputFormatter<T>(this MvcOptions options) where T : JsonOutputFormatter, IOutputFormatter
         {
             // Remove any json output formatter 
             options.OutputFormatters.RemoveType<JsonOutputFormatter>();
@@ -25,8 +26,6 @@ namespace Common.Api.Extensions
 
             T customJsonOutputFormatter = (T)Activator.CreateInstance(typeof(T), jsonSerializerSettings, ArrayPool<char>.Shared);
 
-            services.AddSingleton<JsonOutputFormatter>(customJsonOutputFormatter);
-
             options.OutputFormatters.Add(customJsonOutputFormatter);
 
             return options;
@@ -35,6 +34,13 @@ namespace Common.Api.Extensions
         public static MvcOptions UseConcurrencyFilter(this MvcOptions options)
         {
             options.Filters.Add(new ConcurrencyActionFilter());
+
+            return options;
+        }
+
+        public static MvcOptions UseValidationExceptionFilter(this MvcOptions options)
+        {
+            options.Filters.Add(new ValidationExceptionActionFilter());
 
             return options;
         }
