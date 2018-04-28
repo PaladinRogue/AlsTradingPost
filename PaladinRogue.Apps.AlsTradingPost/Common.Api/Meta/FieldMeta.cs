@@ -1,4 +1,4 @@
-﻿namespace Common.Api.Builders
+﻿namespace Common.Api.Meta
 {
     public static class FieldMeta
     {

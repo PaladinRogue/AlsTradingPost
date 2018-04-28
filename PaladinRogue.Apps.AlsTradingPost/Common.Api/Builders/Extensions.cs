@@ -2,6 +2,7 @@
 using System.Linq;
 using Common.Api.Builders.Dictionary;
 using Common.Api.Links;
+using Common.Api.Meta;
 
 namespace Common.Api.Builders
 {
@@ -10,7 +11,7 @@ namespace Common.Api.Builders
         public static IDictionary<string, Dictionary<string, object>> BuildPropertyDictionary(
             this IEnumerable<PropertyMeta> propertyMetas)
         {
-            return propertyMetas.ToDictionary(
+            return propertyMetas.Where(p => p.Constraints.Any()).ToDictionary(
                 p => p.Name,
                 p => p.Constraints.ToDictionary(
                     c => c.Name,

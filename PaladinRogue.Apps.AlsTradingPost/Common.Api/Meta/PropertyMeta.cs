@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Common.Api.Builders;
 
-namespace Common.Api.Builders
+namespace Common.Api.Meta
 {
     public class PropertyMeta
     {

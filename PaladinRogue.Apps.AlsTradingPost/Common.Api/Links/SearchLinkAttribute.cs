@@ -6,7 +6,7 @@ namespace Common.Api.Links
     public class SearchLinkAttribute : LinkAttribute
     {
         public SearchLinkAttribute(string uriName) 
-            : base(LinkType.Search, uriName, Constants.HttpVerbs.Get)
+            : base(LinkType.Search, uriName, Setup.Infrastructure.Constants.HttpVerbs.Get)
         {
         }
     }

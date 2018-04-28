@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Common.Api.Builders.Resource;
 using Common.Api.Links;
+using Common.Api.Meta;
 using Common.Api.Resources;
 
 namespace Common.Api.Builders.Template
@@ -13,10 +14,12 @@ namespace Common.Api.Builders.Template
         private ITemplate _templateData;
         
         private readonly IBuildHelper _buildHelper;
+        private readonly IMetaBuilder _metaBuilder;
 
-        public TemplateBuilder(IBuildHelper buildHelper)
+        public TemplateBuilder(IBuildHelper buildHelper, IMetaBuilder metaBuilder)
         {
             _buildHelper = buildHelper;
+            _metaBuilder = metaBuilder;
         }
 
         public ITemplateBuilder Create<T>() where T : ITemplate
@@ -32,7 +35,7 @@ namespace Common.Api.Builders.Template
 
         public ITemplateBuilder WithTemplateMeta()
         {
-            BuildHelper.BuildValidationMeta(_template.Meta, _templateData);
+            _metaBuilder.BuildValidationMeta(_template.Meta, _templateData);
 
             return this;
         }

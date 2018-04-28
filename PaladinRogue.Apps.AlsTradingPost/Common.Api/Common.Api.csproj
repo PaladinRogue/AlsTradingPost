@@ -13,5 +13,6 @@
     <ProjectReference Include="..\Common.Application\Common.Application.csproj" />
     <ProjectReference Include="..\Common.Messaging\Common.Messaging.csproj" />
     <ProjectReference Include="..\Common.Resources\Common.Resources.csproj" />
+    <ProjectReference Include="..\Common.Setup\Common.Setup.csproj" />
   </ItemGroup>
 </Project>

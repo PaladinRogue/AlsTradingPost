@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Common.Api.Links;
+using Common.Api.Meta;
 using Common.Api.Pagination.Interfaces;
 using Common.Api.Resources;
 
@@ -16,10 +16,12 @@ namespace Common.Api.Builders.Resource
         private IList<ResourceBuilderResource<T>> _collectionResources;
 
         private readonly IBuildHelper _buildHelper;
+        private readonly IMetaBuilder _metaBuilder;
 
-        public CollectionResourceBuilder(IBuildHelper buildHelper)
+        public CollectionResourceBuilder(IBuildHelper buildHelper, IMetaBuilder metaBuilder)
         {
             _buildHelper = buildHelper;
+            _metaBuilder = metaBuilder;
         }
 
         public ICollectionResourceBuilder<T> Create(ICollectionResource<T> collectionResource, ITemplate template)
@@ -45,14 +47,14 @@ namespace Common.Api.Builders.Resource
 
         public ICollectionResourceBuilder<T> WithTemplateMeta()
         {
-            BuildHelper.BuildValidationMeta(_template.Meta, _templateData);
+            _metaBuilder.BuildValidationMeta(_template.Meta, _templateData);
 
             return this;
         }
 
         public ICollectionResourceBuilder<T> WithResourceMeta()
         {
-            BuildHelper.BuildFieldMeta(_resource.Meta, _resourceData);
+            _metaBuilder.BuildFieldMeta(_resource.Meta, _resourceData);
 
             return this;
         }
@@ -61,7 +63,7 @@ namespace Common.Api.Builders.Resource
         {
             if (_collectionResources.Any() && _resourceData.Results.Any())
             {
-                BuildHelper.BuildFieldMeta(_collectionResources.First().Meta, _resourceData.Results.First());
+                _metaBuilder.BuildFieldMeta(_collectionResources.First().Meta, _resourceData.Results.First());
             }
 
             return this;
@@ -71,7 +73,7 @@ namespace Common.Api.Builders.Resource
         {
             if (_resourceData.Results.Any())
             {
-                BuildHelper.BuildSortingMeta(_template.Meta, _templateData, _resourceData.Results.First().GetType());
+                _metaBuilder.BuildSortingMeta(_template.Meta, _templateData, _resourceData.Results.First().GetType());
             }
 
             return this;

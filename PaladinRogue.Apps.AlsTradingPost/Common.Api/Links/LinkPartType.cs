@@ -1,4 +1,4 @@
-﻿namespace Common.Api.Builders
+﻿namespace Common.Api.Links
 {
     public static class LinkPartType
     {

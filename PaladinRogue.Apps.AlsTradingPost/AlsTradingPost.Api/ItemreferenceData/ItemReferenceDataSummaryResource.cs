@@ -1,7 +1,7 @@
 ﻿using System;
-using Common.Api.Constants;
 using Common.Api.Links;
 using Common.Api.Resources;
+using Common.Setup.Infrastructure.Constants;
 
 namespace AlsTradingPost.Api.ItemReferenceData
 {

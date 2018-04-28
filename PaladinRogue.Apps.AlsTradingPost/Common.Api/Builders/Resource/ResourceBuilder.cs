@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Common.Api.Links;
+using Common.Api.Meta;
 using Common.Api.Resources;
 
 namespace Common.Api.Builders.Resource
@@ -11,10 +11,12 @@ namespace Common.Api.Builders.Resource
         private IResource _resourceData;
         
         private readonly IBuildHelper _buildHelper;
+        private readonly IMetaBuilder _metaBuilder;
 
-        public ResourceBuilder(IBuildHelper buildHelper)
+        public ResourceBuilder(IBuildHelper buildHelper, IMetaBuilder metaBuilder)
         {
             _buildHelper = buildHelper;
+            _metaBuilder = metaBuilder;
         }
 
         public IResourceBuilder Create(IResource resource)
@@ -28,7 +30,7 @@ namespace Common.Api.Builders.Resource
 
         public IResourceBuilder WithResourceMeta()
         {
-            BuildHelper.BuildFieldMeta(_resource.Meta, _resourceData);
+            _metaBuilder.BuildFieldMeta(_resource.Meta, _resourceData);
 
             return this;
         }

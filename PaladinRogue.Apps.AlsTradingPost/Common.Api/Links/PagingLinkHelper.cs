@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Common.Api.Constants;
-using Common.Api.Links;
 using Common.Api.Pagination.Interfaces;
 using Common.Resources.Extensions;
+using Common.Setup.Infrastructure.Constants;
 
-namespace Common.Api.Builders
+namespace Common.Api.Links
 {
     public static class PagingLinkHelper
     {
