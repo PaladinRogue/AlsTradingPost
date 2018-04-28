@@ -44,8 +44,9 @@ namespace AlsTradingPost.Api
 
             services.Configure<MvcOptions>(options =>
             {
-                options.UseCamelCaseJsonOutputFormatter<JsonOutputFormatter>(services)
+                options.UseCamelCaseJsonOutputFormatter<JsonOutputFormatter>()
                     .UseConcurrencyFilter()
+                    .UseValidationExceptionFilter()
                     .UseAppAccessAuthorizeFilter();
 
                 if (!Environment.IsDevelopment())

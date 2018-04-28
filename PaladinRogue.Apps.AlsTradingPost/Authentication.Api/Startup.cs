@@ -43,7 +43,7 @@ namespace Authentication.Api
 
             services.Configure<MvcOptions>(options =>
             {
-                options.UseCamelCaseJsonOutputFormatter<JsonOutputFormatter>(services)
+                options.UseCamelCaseJsonOutputFormatter<JsonOutputFormatter>()
                     .UseConcurrencyFilter();
 
                 if (!Environment.IsDevelopment())

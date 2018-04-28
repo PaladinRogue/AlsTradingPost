@@ -22,11 +22,11 @@ namespace Common.Application.Validation
             return new ValidationResult
             {
                 ValidationErrors = fluentValidationResult.Errors.GroupBy(e => e.PropertyName).ToDictionary(
-                    gk => gk.Key.ToCamelCase(),
+                    gk => gk.Key,
                     gv => gv.ToDictionary(
                             k => FormatFluentValidationErrorCode(k.ErrorCode),
                             v => v.FormattedMessagePlaceholderValues.ToDictionary(
-                                mk => mk.Key.ToCamelCase(),
+                                mk => mk.Key,
                                 mv => mv.Value
                             )
                         )
@@ -36,7 +36,7 @@ namespace Common.Application.Validation
 
         private static string FormatFluentValidationErrorCode(string fluentValidationErrorCode)
         {
-            return fluentValidationErrorCode.Replace("Validator", string.Empty).ToCamelCase();
+            return fluentValidationErrorCode.Replace("Validator", string.Empty);
         }
     }
 }
