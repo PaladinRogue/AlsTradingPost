@@ -37,7 +37,7 @@ namespace AlsTradingPost.Application.Authentication
             
             return await _jwtFactory.GenerateJwt<JwtAdto>(
                 ClaimsBuilder.CreateBuilder()
-                    .WithPersonas(Persona.Player)
+                    .WithPersonas(PersonaFlags.Player)
                     .WithSubject(userProjection.Id)
                     .WithRole(JwtClaims.AppAccess)
                     .Build()

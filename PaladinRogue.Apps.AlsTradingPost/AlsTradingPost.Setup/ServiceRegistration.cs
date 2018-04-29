@@ -116,7 +116,7 @@ namespace AlsTradingPost.Setup
             services.AddSingleton<ICurrentUserProvider, CurrentUserProvider>();
 
             services.AddSingleton<IConcurrencyVersionProvider, ConcurrencyVersionProvider>();
-            services.AddSingleton<IRouteProvider<Persona>, PersonaRouteProvider>();
+            services.AddSingleton<IRouteProvider<PersonaFlags>, PersonaRouteProvider>();
         }
     }
 }

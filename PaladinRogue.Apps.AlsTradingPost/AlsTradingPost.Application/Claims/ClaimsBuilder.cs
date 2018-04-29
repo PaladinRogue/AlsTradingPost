@@ -14,7 +14,7 @@ namespace AlsTradingPost.Application.Claims
             return new ClaimsBuilder();
         }
 
-        public ClaimsBuilder WithPersonas(Persona personas)
+        public ClaimsBuilder WithPersonas(PersonaFlags personas)
         {
             Claims.AddClaim(new Claim(JwtClaimIdentifiers.Persona, personas.ToString()));
 

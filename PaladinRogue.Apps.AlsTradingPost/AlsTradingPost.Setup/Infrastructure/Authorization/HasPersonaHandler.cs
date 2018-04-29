@@ -12,7 +12,7 @@ namespace AlsTradingPost.Setup.Infrastructure.Authorization
         {
             if (context.User.HasClaim(c =>
             {
-                Enum.TryParse(c.Value, out Persona persona);
+                Enum.TryParse(c.Value, out PersonaFlags persona);
                 return c.Type == JwtClaimIdentifiers.Persona &&
                        persona == requirement.Persona;
             }))

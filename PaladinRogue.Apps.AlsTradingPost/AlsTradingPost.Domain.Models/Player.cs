@@ -7,6 +7,6 @@ namespace AlsTradingPost.Domain.Models
     public class Player : VersionedEntity, IPersona
     {
         public string DCI { get; set; }
-        public List<Character> Characters { get; set; }
+        public IEnumerable<Character> Characters { get; set; }
     }
 }

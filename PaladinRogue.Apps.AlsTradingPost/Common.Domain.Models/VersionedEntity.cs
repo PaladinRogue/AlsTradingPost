@@ -10,6 +10,11 @@ namespace Common.Domain.Models
         {
             Id = Guid.NewGuid();
         }
+        
+        protected VersionedEntity(Guid id)
+        {
+            Id = id;
+        }
 
         public Guid Id { get; set; }
 
