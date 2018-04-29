@@ -4,7 +4,6 @@ using AlsTradingPost.Application.Authentication.Models;
 using AlsTradingPost.Application.Claims;
 using AlsTradingPost.Domain.UserDomain.Interfaces;
 using AlsTradingPost.Domain.UserDomain.Models;
-using AlsTradingPost.Resources;
 using AutoMapper;
 using Common.Api.Authentication.Constants;
 using Common.Application.Authentication;
@@ -33,11 +32,11 @@ namespace AlsTradingPost.Application.Authentication
             LoginDdto loginDdto = Mapper.Map<LoginAdto, LoginDdto>(loginAdto);
             loginDdto.IdentityId = _currentIdentityProvider.Id;
 
-            UserProjection userProjection = _userDomainService.Login(loginDdto);
+            AuthenticatedUserProjection userProjection = _userDomainService.Login(loginDdto);
             
             return await _jwtFactory.GenerateJwt<JwtAdto>(
                 ClaimsBuilder.CreateBuilder()
-                    .WithPersonas(PersonaFlags.Player)
+                    .WithPersonas(userProjection.Personas)
                     .WithSubject(userProjection.Id)
                     .WithRole(JwtClaims.AppAccess)
                     .Build()

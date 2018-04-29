@@ -1,5 +1,7 @@
-﻿using AlsTradingPost.Domain.UserDomain.Interfaces;
+﻿using System.Linq;
+using AlsTradingPost.Domain.UserDomain.Interfaces;
 using AlsTradingPost.Domain.UserDomain.Models;
+using AlsTradingPost.Resources;
 using AutoMapper;
 
 namespace AlsTradingPost.Domain.UserDomain
@@ -17,20 +19,31 @@ namespace AlsTradingPost.Domain.UserDomain
             _userCommandService = userCommandService;
         }
 
-        public UserProjection Login(LoginDdto loginDdto)
+        public AuthenticatedUserProjection Login(LoginDdto loginDdto)
         {
+            AuthenticatedUserProjection authenticatedUserProjection;
             UserProjection existingUser = _userQueryService.GetByIdentityId(loginDdto.IdentityId);
 
             if (existingUser == null)
             {
                 CreateUserDdto createUserDdto = Mapper.Map<LoginDdto, CreateUserDdto>(loginDdto);
 
-                return _userCommandService.Create(createUserDdto);
+                authenticatedUserProjection =
+                    Mapper.Map<UserProjection, AuthenticatedUserProjection>(_userCommandService.Create(createUserDdto));
+            }
+            else
+            {
+                UpdateUserDdto existingUserDdto = Mapper.Map<UserProjection, UpdateUserDdto>(existingUser);
+                UpdateUserDdto updateUserDdto = Mapper.Map(loginDdto, existingUserDdto);
+                authenticatedUserProjection =
+                    Mapper.Map<UserProjection, AuthenticatedUserProjection>(_userCommandService.Update(updateUserDdto));
             }
 
-            UpdateUserDdto existingUserDdto = Mapper.Map<UserProjection, UpdateUserDdto>(existingUser);
-            UpdateUserDdto updateUserDdto = Mapper.Map(loginDdto, existingUserDdto);
-            return _userCommandService.Update(updateUserDdto);
+            authenticatedUserProjection.Personas = PersonTypeMapper.GetPersonaFlags(
+                _userQueryService.GetUserPersonas(authenticatedUserProjection.Id).Select(u => u.PersonaType).ToArray()
+            );
+
+            return authenticatedUserProjection;
         }
     }
 }

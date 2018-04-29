@@ -1,4 +1,7 @@
-﻿using AlsTradingPost.Domain.Persistence;
+﻿using System;
+using AlsTradingPost.Domain.Models;
+using AlsTradingPost.Domain.Persistence;
+using Persistence.EntityFramework.Repositories;
 
 namespace AlsTradingPost.Persistence.Repositories
 {
@@ -9,6 +12,11 @@ namespace AlsTradingPost.Persistence.Repositories
         public PlayerRepository(AlsTradingPostDbContext context)
         {
             _context = context;
+        }
+
+        public Player GetById(Guid id)
+        {
+            return RepositoryHelper.GetById(_context.Players, id);
         }
     }
 }

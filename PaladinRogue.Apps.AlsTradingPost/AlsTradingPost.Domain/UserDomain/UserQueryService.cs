@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using AlsTradingPost.Domain.Models;
+using AlsTradingPost.Domain.Models.Interfaces;
 using AlsTradingPost.Domain.Persistence;
 using AlsTradingPost.Domain.UserDomain.Interfaces;
 using AlsTradingPost.Domain.UserDomain.Models;
@@ -8,23 +12,37 @@ namespace AlsTradingPost.Domain.UserDomain
 {
     public class UserQueryService : IUserQueryService
     {
-        private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
+        private readonly IPlayerRepository _playerRepository;
+        private readonly IAdminRepository _adminRepository;
+        private readonly IMapper _mapper;
 
-        public UserQueryService(IMapper mapper, IUserRepository userRepository)
+        public UserQueryService(
+            IUserRepository userRepository,
+            IPlayerRepository playerRepository,
+            IAdminRepository adminRepository,
+            IMapper mapper)
         {
             _userRepository = userRepository;
+            _playerRepository = playerRepository;
+            _adminRepository = adminRepository;
             _mapper = mapper;
-        }
-
-        public UserProjection GetById(Guid id)
-        {
-            return _mapper.Map<Domain.Models.User, UserProjection>(_userRepository.GetById(id));
         }
 
         public UserProjection GetByIdentityId(Guid identityId)
         {
-            return _mapper.Map<Domain.Models.User, UserProjection>(_userRepository.GetSingle(u => u.IdentityId == identityId));
+            return _mapper.Map<User, UserProjection>(_userRepository.GetSingle(u => u.IdentityId == identityId));
+        }
+
+        public IEnumerable<UserPersonaProjection> GetUserPersonas(Guid userid)
+        {
+            List<IPersona> personas = new List<IPersona>
+            {
+                _playerRepository.GetById(userid),
+                _adminRepository.GetById(userid)
+            };
+            
+            return _mapper.Map<IEnumerable<IPersona>, IEnumerable<UserPersonaProjection>>(personas.Where(p => p != null));
         }
     }
 }
