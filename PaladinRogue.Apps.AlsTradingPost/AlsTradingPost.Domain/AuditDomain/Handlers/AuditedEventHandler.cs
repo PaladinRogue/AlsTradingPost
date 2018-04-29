@@ -5,7 +5,7 @@ using Common.Domain.DomainEvents;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Setup.Infrastructure.Transactions;
 
-namespace AlsTradingPost.Domain.DomainEvents.Handlers
+namespace AlsTradingPost.Domain.AuditDomain.Handlers
 {
     public class AuditedEventHandler : DomainEventHandler<IAuditedEvent, AuditedEventHandler>
     {

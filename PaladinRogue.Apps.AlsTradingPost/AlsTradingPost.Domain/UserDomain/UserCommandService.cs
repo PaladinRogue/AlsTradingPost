@@ -1,6 +1,6 @@
 ﻿using System;
-using AlsTradingPost.Domain.DomainEvents;
 using AlsTradingPost.Domain.Persistence;
+using AlsTradingPost.Domain.UserDomain.Events;
 using AlsTradingPost.Domain.UserDomain.Interfaces;
 using AlsTradingPost.Domain.UserDomain.Models;
 using AutoMapper;

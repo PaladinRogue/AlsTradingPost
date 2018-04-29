@@ -1,5 +1,4 @@
 ﻿using System;
-using AlsTradingPost.Resources;
 
 namespace AlsTradingPost.Domain.UserDomain.Models
 {

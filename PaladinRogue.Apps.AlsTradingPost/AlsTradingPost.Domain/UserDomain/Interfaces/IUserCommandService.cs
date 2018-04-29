@@ -1,5 +1,4 @@
 ﻿using AlsTradingPost.Domain.UserDomain.Models;
-using Common.Domain.Services;
 using Common.Domain.Services.Interfaces;
 
 namespace AlsTradingPost.Domain.UserDomain.Interfaces
