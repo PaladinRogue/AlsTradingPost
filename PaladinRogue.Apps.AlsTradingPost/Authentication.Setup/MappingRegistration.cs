@@ -1,5 +1,6 @@
 ﻿using Authentication.Application.Application.Mappings;
-using Authentication.Application.Identity.Mappings;
+using Authentication.Application.Authentication.Mappings;
+using Authentication.Domain.IdentityServices.Mappings;
 using AutoMapper;
 using Common.Domain.Mappings;
 
@@ -16,12 +17,13 @@ namespace Authentication.Setup
         public static void RegisterApplicationMappers(IMapperConfigurationExpression configuration)
         {
             configuration.AddProfile<ApplicationApplicationMappingProfile>();
-            configuration.AddProfile<IdentityApplicationMappingProfile>();
+            configuration.AddProfile<AuthenticationApplicationMappingProfile>();
         }
 
         public static void RegisterDomainMappers(IMapperConfigurationExpression configuration)
         {
             configuration.AddProfile<DomainMappingProfile>();
+            configuration.AddProfile<IdentityDomainMappingProfile>();
         }
     }
 }

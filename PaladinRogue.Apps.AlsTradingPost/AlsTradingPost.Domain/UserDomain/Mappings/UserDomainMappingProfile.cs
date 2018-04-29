@@ -1,4 +1,5 @@
-﻿using AlsTradingPost.Domain.UserDomain.Models;
+﻿using AlsTradingPost.Domain.Models;
+using AlsTradingPost.Domain.UserDomain.Models;
 using AutoMapper;
 using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Models.Interfaces;
@@ -9,10 +10,11 @@ namespace AlsTradingPost.Domain.UserDomain.Mappings
     {
         public UserDomainMappingProfile()
         {
-            CreateMap<Domain.Models.User, UserProjection>()
+            CreateMap<LoginDdto, UpdateUserDdto>();
+            CreateMap<User, UserProjection>()
                 .IncludeBase<IVersionedEntity, IVersionedProjection>();
-            CreateMap<CreateUserDdto, Domain.Models.User>();
-            CreateMap<UpdateUserDdto, Domain.Models.User>()
+            CreateMap<CreateUserDdto, User>();
+            CreateMap<UpdateUserDdto, User>()
                 .IncludeBase<IVersionedDdto, IVersionedEntity>();
         }
     }

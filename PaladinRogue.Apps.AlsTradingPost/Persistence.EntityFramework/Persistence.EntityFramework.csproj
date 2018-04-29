@@ -1,16 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.2" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Common.Domain\Common.Domain.csproj" />
     <ProjectReference Include="..\Common.Resources\Common.Resources.csproj" />
+    <ProjectReference Include="..\Common.Setup\Common.Setup.csproj">
+      <Project>{B198BE88-E4EE-4412-8739-ECD091954C7B}</Project>
+      <Name>Common.Setup</Name>
+    </ProjectReference>
   </ItemGroup>
-
 </Project>

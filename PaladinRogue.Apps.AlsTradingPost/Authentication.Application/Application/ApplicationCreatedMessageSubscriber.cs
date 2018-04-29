@@ -5,7 +5,7 @@ using Common.Domain.Exceptions;
 using Common.Messaging.Message;
 using Common.Messaging.Message.Interfaces;
 using Common.Messaging.Messages;
-using Common.Resources.Transactions;
+using Common.Setup.Infrastructure.Transactions;
 using Microsoft.Extensions.Logging;
 
 namespace Authentication.Application.Application

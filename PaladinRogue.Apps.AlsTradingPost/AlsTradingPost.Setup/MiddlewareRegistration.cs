@@ -1,4 +1,4 @@
-﻿using Common.Api.Exceptions;
+﻿using Common.Setup.Infrastructure.Exceptions;
 using Common.Setup.Infrastructure.Middleware;
 using Microsoft.AspNetCore.Builder;
 

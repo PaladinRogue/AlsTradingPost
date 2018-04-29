@@ -9,6 +9,5 @@ namespace AlsTradingPost.Domain.UserDomain.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PictureUrl { get; set; }
-        public Persona Personas { get; set; }
     }
 }

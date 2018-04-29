@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using Common.Api.Concurrency.Interfaces;
-using Common.Api.Exceptions;
 using Common.Resources.Concurrency;
 using Common.Setup.Infrastructure.Constants;
+using Common.Setup.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;

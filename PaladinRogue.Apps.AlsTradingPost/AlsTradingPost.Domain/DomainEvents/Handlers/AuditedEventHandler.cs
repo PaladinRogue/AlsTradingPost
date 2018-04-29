@@ -3,7 +3,7 @@ using AlsTradingPost.Domain.AuditDomain.Models;
 using AutoMapper;
 using Common.Domain.DomainEvents;
 using Common.Domain.DomainEvents.Interfaces;
-using Common.Resources.Transactions;
+using Common.Setup.Infrastructure.Transactions;
 
 namespace AlsTradingPost.Domain.DomainEvents.Handlers
 {

@@ -1,26 +1,21 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.0.1" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Authentication.Domain\Authentication.Domain.csproj" />
+    <ProjectReference Include="..\Common.Api\Common.Api.csproj">
+      <Project>{6CA01810-F48E-4BB4-B49A-F3B5D12CF0B4}</Project>
+      <Name>Common.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common.Application\Common.Application.csproj" />
     <ProjectReference Include="..\Common.Domain\Common.Domain.csproj" />
     <ProjectReference Include="..\Common.Messaging\Common.Messaging.csproj" />
     <ProjectReference Include="..\Common.Resources\Common.Resources.csproj" />
     <ProjectReference Include="..\Message.Broker\Message.Broker.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.Extensions.Logging.Abstractions">
-      <HintPath>..\..\..\..\Users\cheneyd\.nuget\packages\microsoft.extensions.logging.abstractions\2.0.1\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

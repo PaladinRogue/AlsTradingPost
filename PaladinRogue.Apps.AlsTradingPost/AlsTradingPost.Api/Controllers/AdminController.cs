@@ -1,7 +1,7 @@
 ﻿using System;
 using AlsTradingPost.Api.Admin;
-using AlsTradingPost.Application.AdminApplication.Interfaces;
-using AlsTradingPost.Application.AdminApplication.Models;
+using AlsTradingPost.Application.Admin.Interfaces;
+using AlsTradingPost.Application.Admin.Models;
 using AlsTradingPost.Setup.Infrastructure.Authorization;
 using AutoMapper;
 using Common.Api.Builders.Resource;

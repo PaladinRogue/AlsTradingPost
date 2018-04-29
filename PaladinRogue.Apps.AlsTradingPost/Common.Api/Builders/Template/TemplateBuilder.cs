@@ -28,14 +28,19 @@ namespace Common.Api.Builders.Template
 
             _template = _buildHelper.BuildResourceBuilder(_templateData);
 
-            BuildHelper.AddSearchQueryParams(_template.Links, _templateData);
-
             return this;
         }
 
         public ITemplateBuilder WithTemplateMeta()
         {
             _metaBuilder.BuildValidationMeta(_template.Meta, _templateData);
+
+            return this;
+        }
+
+        public ITemplateBuilder WithSearching()
+        {
+            BuildHelper.AddSearchQueryParams(_template.Links, _templateData);
 
             return this;
         }

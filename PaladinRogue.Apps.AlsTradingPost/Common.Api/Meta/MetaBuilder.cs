@@ -11,7 +11,6 @@ using Common.Api.Validation;
 using Common.Api.Validation.Attributes;
 using Common.Resources.Extensions;
 using Microsoft.AspNetCore.Http;
-using ReadOnlyAttribute = Common.Api.Resources.ReadOnlyAttribute;
 
 namespace Common.Api.Meta
 {

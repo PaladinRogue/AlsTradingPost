@@ -2,7 +2,9 @@
 using Common.Api.Authentication;
 using Common.Api.Authentication.Interfaces;
 using Common.Api.Settings;
+using Common.Application.Authentication;
 using Common.Resources.Authentication;
+using Common.Setup.Infrastructure.Authentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
