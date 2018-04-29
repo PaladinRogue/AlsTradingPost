@@ -1,4 +1,4 @@
-﻿namespace AlsTradingPost.Resources.Constants
+﻿namespace AlsTradingPost.Application.Claims
 {
     public static class JwtClaimIdentifiers
     {

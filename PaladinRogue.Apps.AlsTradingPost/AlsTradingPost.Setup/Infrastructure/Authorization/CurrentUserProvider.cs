@@ -1,5 +1,4 @@
 ﻿using System;
-using AlsTradingPost.Resources.Providers.Interfaces;
 using Common.Application.Authentication;
 using Common.Application.Exceptions;
 using Common.Resources.Extensions;
@@ -7,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using ApplicationException = Common.Application.Exceptions.ApplicationException;
 
-namespace AlsTradingPost.Resources.Providers
+namespace AlsTradingPost.Setup.Infrastructure.Authorization
 {
     public class CurrentUserProvider : ICurrentUserProvider
     {

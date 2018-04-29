@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
-using AlsTradingPost.Resources.Constants;
+using AlsTradingPost.Resources;
 
-namespace AlsTradingPost.Resources.Claims
+namespace AlsTradingPost.Application.Claims
 {
     public class ClaimsBuilder : Common.Application.Claims.ClaimsBuilder
     {

@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using AlsTradingPost.Application.Claims;
 using AlsTradingPost.Resources;
-using AlsTradingPost.Resources.Constants;
 using Microsoft.AspNetCore.Http;
 
 namespace AlsTradingPost.Setup.Infrastructure.Authorization

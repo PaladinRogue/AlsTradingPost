@@ -18,8 +18,7 @@ using AlsTradingPost.Domain.UserDomain.Interfaces;
 using AlsTradingPost.Persistence;
 using AlsTradingPost.Persistence.Repositories;
 using AlsTradingPost.Resources;
-using AlsTradingPost.Resources.Providers;
-using AlsTradingPost.Resources.Providers.Interfaces;
+using AlsTradingPost.Setup.Infrastructure.Authorization;
 using AlsTradingPost.Setup.Infrastructure.Links;
 using AlsTradingPost.Setup.Infrastructure.Routing;
 using Common.Api.Builders;
@@ -36,12 +35,10 @@ using Common.Domain.Concurrency;
 using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Concurrency.Services;
 using Common.Domain.Concurrency.Services.Interfaces;
-using Common.Resources.Concurrency.Interfaces;
 using Common.Setup.Infrastructure.Authorization;
 using Common.Setup.Infrastructure.Transactions;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -98,7 +95,6 @@ namespace AlsTradingPost.Setup
 
         public static void RegisterPersistenceServices(IConfiguration configuration, IServiceCollection services)
         {
-
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAuditRepository, AuditRepository>();
             services.AddScoped<IAdminRepository, AdminRepository>();
