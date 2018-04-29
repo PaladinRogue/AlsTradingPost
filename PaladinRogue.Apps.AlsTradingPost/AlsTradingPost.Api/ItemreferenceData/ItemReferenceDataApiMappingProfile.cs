@@ -1,5 +1,5 @@
 ﻿using AlsTradingPost.Api.Controllers;
-using AlsTradingPost.Application.ItemReferenceDataApplication.Models;
+using AlsTradingPost.Application.ItemReferenceData.Models;
 using AutoMapper;
 
 namespace AlsTradingPost.Api.ItemReferenceData

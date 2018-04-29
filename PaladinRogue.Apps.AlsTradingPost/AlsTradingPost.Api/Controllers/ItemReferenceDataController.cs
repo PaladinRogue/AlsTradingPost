@@ -1,7 +1,7 @@
 ﻿using System;
 using AlsTradingPost.Api.ItemReferenceData;
-using AlsTradingPost.Application.ItemReferenceDataApplication.Interfaces;
-using AlsTradingPost.Application.ItemReferenceDataApplication.Models;
+using AlsTradingPost.Application.ItemReferenceData.Interfaces;
+using AlsTradingPost.Application.ItemReferenceData.Models;
 using AlsTradingPost.Setup.Infrastructure.Authorization;
 using AutoMapper;
 using Common.Api.Builders.Resource;

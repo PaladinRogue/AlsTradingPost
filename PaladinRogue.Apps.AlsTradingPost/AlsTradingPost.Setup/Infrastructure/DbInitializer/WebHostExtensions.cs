@@ -1,6 +1,6 @@
 ﻿using System;
 using AlsTradingPost.Persistence;
-using Common.Resources.Transactions;
+using Common.Setup.Infrastructure.Transactions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

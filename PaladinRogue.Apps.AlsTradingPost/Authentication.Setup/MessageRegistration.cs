@@ -8,8 +8,6 @@ namespace Authentication.Setup
     {
 	    public static void RegisterSubscribers(IServiceCollection services)
 	    {
-		    Common.Setup.MessageRegistration.RegisterRabbitMqMessaging(services);
-
 	        services.AddScoped<IMessageSubscriber, ApplicationCreatedMessageSubscriber>();
 	    }
 	}

@@ -1,4 +1,4 @@
-﻿using Common.Resources.Transactions;
+﻿using Common.Setup.Infrastructure.Transactions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 

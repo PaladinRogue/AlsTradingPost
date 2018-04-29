@@ -1,11 +1,11 @@
-﻿using AlsTradingPost.Application.AdminApplication;
-using AlsTradingPost.Application.AdminApplication.Interfaces;
-using AlsTradingPost.Application.ItemReferenceDataApplication;
-using AlsTradingPost.Application.ItemReferenceDataApplication.Interfaces;
-using AlsTradingPost.Application.ItemReferenceDataApplication.Models;
-using AlsTradingPost.Application.ItemReferenceDataApplication.Validators;
-using AlsTradingPost.Application.UserApplication;
-using AlsTradingPost.Application.UserApplication.Interfaces;
+﻿using AlsTradingPost.Application.Admin;
+using AlsTradingPost.Application.Admin.Interfaces;
+using AlsTradingPost.Application.Authentication;
+using AlsTradingPost.Application.Authentication.Interfaces;
+using AlsTradingPost.Application.ItemReferenceData;
+using AlsTradingPost.Application.ItemReferenceData.Interfaces;
+using AlsTradingPost.Application.ItemReferenceData.Models;
+using AlsTradingPost.Application.ItemReferenceData.Validators;
 using AlsTradingPost.Domain.AdminDomain;
 using AlsTradingPost.Domain.AdminDomain.Interfaces;
 using AlsTradingPost.Domain.AuditDomain;
@@ -25,20 +25,20 @@ using AlsTradingPost.Setup.Infrastructure.Routing;
 using Common.Api.Builders;
 using Common.Api.Builders.Resource;
 using Common.Api.Builders.Template;
-using Common.Api.Encryption;
-using Common.Api.Encryption.Interfaces;
 using Common.Api.HttpClient;
 using Common.Api.HttpClient.Interfaces;
 using Common.Api.Links;
 using Common.Api.Meta;
 using Common.Api.Routing;
-using Common.Application.Identity;
+using Common.Application.Encryption;
+using Common.Application.Encryption.Interfaces;
 using Common.Domain.Concurrency;
 using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Concurrency.Services;
 using Common.Domain.Concurrency.Services.Interfaces;
 using Common.Resources.Concurrency.Interfaces;
-using Common.Resources.Transactions;
+using Common.Setup.Infrastructure.Authorization;
+using Common.Setup.Infrastructure.Transactions;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -74,7 +74,7 @@ namespace AlsTradingPost.Setup
             services.AddSingleton<IEncryptionFactory, EncryptionFactory>();
             services.AddSingleton<IHttpClientFactory, HttpClientFactory>();
 
-            services.AddScoped<IUserApplicationService, UserApplicationService>();
+            services.AddScoped<IAuthenticationApplicationService, AuthenticationApplicationService>();
 
             services.AddScoped<IAdminApplicationService, AdminApplicationService>();
 
@@ -86,6 +86,7 @@ namespace AlsTradingPost.Setup
             services.AddScoped(typeof(IConcurrencyQueryService<>), typeof(ConcurrencyQueryService<>));
             services.AddScoped<IAuditCommandService, AuditCommandService>();
 
+            services.AddScoped<IUserDomainService, UserDomainService>();
             services.AddScoped<IUserCommandService, UserCommandService>();
             services.AddScoped<IUserQueryService, UserQueryService>();
 
@@ -119,7 +120,6 @@ namespace AlsTradingPost.Setup
             services.AddSingleton<ICurrentUserProvider, CurrentUserProvider>();
 
             services.AddSingleton<IConcurrencyVersionProvider, ConcurrencyVersionProvider>();
-            services.AddSingleton<IApiDescriptionGroupCollectionProvider, ApiDescriptionGroupCollectionProvider>();
             services.AddSingleton<IRouteProvider<Persona>, PersonaRouteProvider>();
         }
     }

@@ -4,8 +4,8 @@ using System.Net;
 using System.Threading.Tasks;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Messaging.Message.Interfaces;
-using Common.Resources.Transactions;
 using Common.Setup.Infrastructure.Constants;
+using Common.Setup.Infrastructure.Transactions;
 using Microsoft.AspNetCore.Http;
 
 namespace Common.Setup.Infrastructure.Middleware

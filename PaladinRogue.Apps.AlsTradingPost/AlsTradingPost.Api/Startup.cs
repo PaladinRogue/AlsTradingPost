@@ -6,7 +6,7 @@ using Common.Api.Extensions;
 using Common.Api.Routing;
 using Common.Api.Settings;
 using Common.Domain.DomainEvents.Interfaces;
-using Common.Resources.Logging;
+using Common.Setup.Infrastructure.Logging;
 using Common.Setup.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -19,29 +19,16 @@ using Microsoft.Extensions.Logging;
 
 namespace AlsTradingPost.Api
 {
-    public class Startup
+    public class Startup : Common.Api.Startup
     {
-        public Startup(IHostingEnvironment environment)
+        public Startup(IHostingEnvironment environment) : base(environment)
         {
-            IConfigurationBuilder builder = new ConfigurationBuilder()
-                .SetBasePath(environment.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile("secrets.json", optional: false, reloadOnChange: true);
-
-            Configuration = builder.Build();
-            Environment = environment;
         }
-
-        private IHostingEnvironment Environment { get; }
-        private IConfiguration Configuration { get; }
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options =>
-            {
-                options.Conventions.Add(new ApiExplorerVisibilityEnabledConvention());
-            });
-
+            CommonConfigureServices(services);
+            
             services.Configure<MvcOptions>(options =>
             {
                 options.UseCamelCaseJsonOutputFormatter<JsonOutputFormatter>()
@@ -55,22 +42,19 @@ namespace AlsTradingPost.Api
                 }
             });
             
-            services.Configure<ProxySettings>(Configuration.GetSection(nameof(ProxySettings)));
-            services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
-            services.Configure<MessagingBusSettings>(Configuration.GetSection(nameof(MessagingBusSettings)));
             services.Configure<FacebookSettings>(Configuration.GetSection(nameof(FacebookSettings)));
 
             JwtRegistration.RegisterOptions(Configuration, services);
+            
             EventRegistration.RegisterHandlers(services);
 
             MessageRegistration.RegisterSubscribers(services);
             
             ServiceRegistration.RegisterValidators(services);
             ServiceRegistration.RegisterBuilders(services);
-            ServiceRegistration.RegisterApplicationServices( services);
+            ServiceRegistration.RegisterApplicationServices(services);
             ServiceRegistration.RegisterDomainServices(services);
             ServiceRegistration.RegisterPersistenceServices(Configuration, services);
-
             ServiceRegistration.RegisterProviders(services);
 
             services.AddAutoMapper(MappingRegistration.RegisterMappers);

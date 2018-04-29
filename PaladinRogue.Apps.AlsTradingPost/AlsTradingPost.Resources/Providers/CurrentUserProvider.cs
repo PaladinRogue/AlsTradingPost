@@ -1,7 +1,7 @@
 ﻿using System;
 using AlsTradingPost.Resources.Providers.Interfaces;
+using Common.Application.Authentication;
 using Common.Application.Exceptions;
-using Common.Resources.Authentication;
 using Common.Resources.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;

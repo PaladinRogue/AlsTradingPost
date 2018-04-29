@@ -1,4 +1,4 @@
-﻿using AlsTradingPost.Application.UserApplication.Models;
+﻿using AlsTradingPost.Application.Authentication.Models;
 using AutoMapper;
 using Common.Api.Authentication.FacebookModels;
 
@@ -8,7 +8,7 @@ namespace AlsTradingPost.Api.FacebookAuth
     {
         public FacebookAuthApiMappingProfile()
         {
-            CreateMap<FacebookUserData, FacebookUpdateAdto>()
+            CreateMap<FacebookUserData, LoginAdto>()
                 .ForMember(d => d.PictureUrl, opts => opts.MapFrom(s => s.PictureData.Picture.Url));
         }
     }

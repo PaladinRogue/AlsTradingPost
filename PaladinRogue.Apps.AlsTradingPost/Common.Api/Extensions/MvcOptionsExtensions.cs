@@ -40,7 +40,7 @@ namespace Common.Api.Extensions
 
         public static MvcOptions UseValidationExceptionFilter(this MvcOptions options)
         {
-            options.Filters.Add(new ValidationExceptionActionFilter());
+            options.Filters.Add(new BusinessValidationRuleApplicationExceptionFilter());
 
             return options;
         }

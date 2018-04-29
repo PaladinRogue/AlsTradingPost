@@ -3,43 +3,34 @@ using Authentication.Setup;
 using Authentication.Setup.Settings;
 using AutoMapper;
 using Common.Api.Extensions;
-using Common.Api.Settings;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Messaging.Message.Interfaces;
-using Common.Resources.Logging;
-using Common.Setup.Settings;
+using Common.Setup.Infrastructure.Exceptions;
+using Common.Setup.Infrastructure.Logging;
+using Common.Setup.Infrastructure.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Rewrite;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MappingRegistration = Authentication.Api.Mappings.MappingRegistration;
+using MessageRegistration = Authentication.Setup.MessageRegistration;
+using ServiceRegistration = Authentication.Setup.ServiceRegistration;
 
 namespace Authentication.Api
 {
-    public class Startup
+    public class Startup : Common.Api.Startup
     {
-        public Startup(IHostingEnvironment environment)
+        public Startup(IHostingEnvironment environment) : base(environment)
         {
-            IConfigurationBuilder builder = new ConfigurationBuilder()
-                .SetBasePath(environment.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile("secrets.json", optional: false, reloadOnChange: true);
-
-            Configuration = builder.Build();
-            Environment = environment;
         }
-
-        public IHostingEnvironment Environment { get; }
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            CommonConfigureServices(services);
 
             services.Configure<MvcOptions>(options =>
             {
@@ -52,17 +43,17 @@ namespace Authentication.Api
                 }
             });
 
-            services.Configure<ProxySettings>(Configuration.GetSection(nameof(ProxySettings)));
-            services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
             services.Configure<FacebookAuthSettings>(Configuration.GetSection(nameof(FacebookAuthSettings)));
-            services.Configure<MessagingBusSettings>(Configuration.GetSection(nameof(MessagingBusSettings)));
 
             JwtRegistration.RegisterOptions(Configuration, services);
-            EventRegistration.RegisterHandlers(services);
+            
             MessageRegistration.RegisterSubscribers(services);
-            ServiceRegistration.RegisterServices(Configuration, services);
-            ServiceRegistration.RegisterProviders(services);
+            
             ServiceRegistration.RegisterBuilders(services);
+            ServiceRegistration.RegisterApplicationServices(services);
+            ServiceRegistration.RegisterDomainServices(services);
+            ServiceRegistration.RegisterPersistenceServices(Configuration, services);
+            ServiceRegistration.RegisterProviders(services);
 
             services.AddAutoMapper(MappingRegistration.RegisterMappers);
 
@@ -76,8 +67,6 @@ namespace Authentication.Api
         {
             domainEventHandlerFactory.Initialise();
             messageSubscriberFactory.Initialise();
-            
-            loggerFactory.AddLog4Net();
 
             if (Environment.IsDevelopment())
             {
@@ -89,8 +78,11 @@ namespace Authentication.Api
                     .AddRedirectToHttps();
                 app.UseRewriter(options);
             }
-
-            MiddlewareRegistration.Register(app);
+            
+            loggerFactory.AddLog4Net();
+            
+            app.UseMiddleware<TransactionPerRequestMiddleware>();
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseMvc();
         }

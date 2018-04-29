@@ -6,11 +6,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.0.2" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common.Application\Common.Application.csproj" />
     <ProjectReference Include="..\Common.DomainEvents\DomainEvent.Broker.csproj" />
     <ProjectReference Include="..\Common.Domain\Common.Domain.csproj" />
     <ProjectReference Include="..\Message.Broker\Message.Broker.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Infrastructure" />
   </ItemGroup>
 </Project>

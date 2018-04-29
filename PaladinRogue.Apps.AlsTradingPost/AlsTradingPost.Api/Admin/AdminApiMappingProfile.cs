@@ -1,4 +1,4 @@
-﻿using AlsTradingPost.Application.AdminApplication.Models;
+﻿using AlsTradingPost.Application.Admin.Models;
 using AutoMapper;
 
 namespace AlsTradingPost.Api.Admin

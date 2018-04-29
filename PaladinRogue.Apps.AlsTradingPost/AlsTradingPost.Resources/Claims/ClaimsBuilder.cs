@@ -3,7 +3,7 @@ using AlsTradingPost.Resources.Constants;
 
 namespace AlsTradingPost.Resources.Claims
 {
-    public class ClaimsBuilder : Common.Resources.Claims.ClaimsBuilder
+    public class ClaimsBuilder : Common.Application.Claims.ClaimsBuilder
     {
         protected ClaimsBuilder() 
         {

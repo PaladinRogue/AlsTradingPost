@@ -1,8 +1,6 @@
 ﻿using Authentication.Domain.IdentityServices.Models;
 using Authentication.Domain.Models;
 using AutoMapper;
-using Common.Domain.Concurrency.Interfaces;
-using Common.Domain.Models.Interfaces;
 
 namespace Authentication.Domain.IdentityServices.Mappings
 {
@@ -10,11 +8,9 @@ namespace Authentication.Domain.IdentityServices.Mappings
     {
         public IdentityDomainMappingProfile()
         {
-            CreateMap<Identity, IdentityProjection>()
-                .IncludeBase<IVersionedEntity, IVersionedProjection>();
+            CreateMap<LoginDdto, CreateIdentityDdto>();
+            CreateMap<Identity, IdentityProjection>();
             CreateMap<CreateIdentityDdto, Identity>();
-            CreateMap<UpdateIdentityDdto, Identity>()
-                .IncludeBase<IVersionedDdto, IVersionedEntity>();
         }
     }
 }

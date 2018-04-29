@@ -10,6 +10,5 @@ namespace AlsTradingPost.Domain.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PictureUrl { get; set; }
-        public virtual Persona Personas { get; set; }
     }
 }

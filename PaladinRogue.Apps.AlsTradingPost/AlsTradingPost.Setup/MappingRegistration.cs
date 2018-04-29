@@ -1,5 +1,5 @@
-﻿using AlsTradingPost.Application.AdminApplication.Mappings;
-using AlsTradingPost.Application.UserApplication.Mappings;
+﻿using AlsTradingPost.Application.Admin.Mappings;
+using AlsTradingPost.Application.Authentication.Mappings;
 using AlsTradingPost.Domain.AdminDomain.Mappings;
 using AlsTradingPost.Domain.ItemReferenceDataDomain.Mappings;
 using AlsTradingPost.Domain.UserDomain.Mappings;
@@ -19,7 +19,7 @@ namespace AlsTradingPost.Setup
         public static void RegisterApplicationMappers(IMapperConfigurationExpression configuration)
         {
             configuration.AddProfile<AdminApplicationMappingProfile>();
-            configuration.AddProfile<UserApplicationMappingProfile>();
+            configuration.AddProfile<AuthenticationApplicationMappingProfile>();
         }
 
         public static void RegisterDomainMappers(IMapperConfigurationExpression configuration)
