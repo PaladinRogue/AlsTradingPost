@@ -1,6 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 
-namespace Common.Application.Encryption.Interfaces
+namespace Common.Setup.Infrastructure.Encryption.Interfaces
 {
     public interface IEncryptionFactory
     {

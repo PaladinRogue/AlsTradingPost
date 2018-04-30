@@ -12,7 +12,6 @@ using Common.Api.Builders.Resource;
 using Common.Api.Builders.Template;
 using Common.Api.HttpClient.Interfaces;
 using Common.Application.Authentication;
-using Common.Application.Encryption.Interfaces;
 using Common.Setup.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -33,7 +32,6 @@ namespace Authentication.Api.Controllers
 			IJwtFactory jwtFactory,
 			IHttpClientFactory httpClientFactory,
 			IAuthenticationApplicationService authenticationApplicationService,
-			IEncryptionFactory encryptionFactory,
 			IResourceTemplateBuilder resourceTemplateBuilder,
 			ITemplateBuilder templateBuilder)
 		{

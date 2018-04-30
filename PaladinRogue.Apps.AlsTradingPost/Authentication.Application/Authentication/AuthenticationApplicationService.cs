@@ -7,7 +7,7 @@ using AutoMapper;
 using Common.Api.Authentication.Constants;
 using Common.Application.Authentication;
 using Common.Application.Claims;
-using Common.Application.Encryption.Interfaces;
+using Common.Setup.Infrastructure.Encryption.Interfaces;
 using Microsoft.Extensions.Options;
 
 namespace Authentication.Application.Authentication

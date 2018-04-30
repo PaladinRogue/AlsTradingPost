@@ -13,13 +13,14 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Authentication.Application\Authentication.Application.csproj" />
     <ProjectReference Include="..\Authentication.Setup\Authentication.Setup.csproj" />
     <ProjectReference Include="..\Common.Api\Common.Api.csproj" />
+    <ProjectReference Include="..\Common.Authentication\Common.Authentication.Setup\Common.Authentication.Setup.csproj" />
     <ProjectReference Include="..\Common.Resources\Common.Resources.csproj" />
     <ProjectReference Include="..\Common.Setup\Common.Setup.csproj" />
   </ItemGroup>

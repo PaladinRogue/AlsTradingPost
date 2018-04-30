@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Security.Cryptography;
-using Common.Application.Encryption.Interfaces;
+using Common.Setup.Infrastructure.Encryption.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 
-namespace Common.Application.Encryption
+namespace Common.Setup.Infrastructure.Encryption
 {
     public class EncryptionFactory : IEncryptionFactory
     {
