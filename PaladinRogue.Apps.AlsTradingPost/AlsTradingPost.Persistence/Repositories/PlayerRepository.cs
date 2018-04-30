@@ -18,5 +18,10 @@ namespace AlsTradingPost.Persistence.Repositories
         {
             return RepositoryHelper.GetById(_context.Players, id);
         }
+
+        public void Add(Player entity)
+        {
+            RepositoryHelper.Add(_context.Players, _context, entity);
+        }
     }
 }

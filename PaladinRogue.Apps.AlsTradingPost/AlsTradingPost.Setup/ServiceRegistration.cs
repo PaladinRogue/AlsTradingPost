@@ -13,6 +13,8 @@ using AlsTradingPost.Domain.AuditDomain.Interfaces;
 using AlsTradingPost.Domain.ItemReferenceDataDomain;
 using AlsTradingPost.Domain.ItemReferenceDataDomain.Interfaces;
 using AlsTradingPost.Domain.Persistence;
+using AlsTradingPost.Domain.PlayerDomain;
+using AlsTradingPost.Domain.PlayerDomain.Interfaces;
 using AlsTradingPost.Domain.UserDomain;
 using AlsTradingPost.Domain.UserDomain.Interfaces;
 using AlsTradingPost.Persistence;
@@ -89,6 +91,8 @@ namespace AlsTradingPost.Setup
 
             services.AddScoped<IAdminCommandService, AdminCommandService>();
             services.AddScoped<IAdminQueryService, AdminQueryService>();
+            
+            services.AddScoped<IPlayerCommandService, PlayerCommandService>();
 
             services.AddScoped<IItemReferenceDataQueryService, ItemReferenceDataQueryService>();
         }

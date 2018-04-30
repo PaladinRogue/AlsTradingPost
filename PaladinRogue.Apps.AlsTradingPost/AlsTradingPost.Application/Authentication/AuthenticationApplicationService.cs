@@ -33,7 +33,7 @@ namespace AlsTradingPost.Application.Authentication
             loginDdto.IdentityId = _currentIdentityProvider.Id;
 
             AuthenticatedUserProjection userProjection = _userDomainService.Login(loginDdto);
-            
+
             return await _jwtFactory.GenerateJwt<JwtAdto>(
                 ClaimsBuilder.CreateBuilder()
                     .WithPersonas(userProjection.Personas)

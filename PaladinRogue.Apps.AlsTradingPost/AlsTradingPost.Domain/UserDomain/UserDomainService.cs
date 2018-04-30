@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using AlsTradingPost.Domain.PlayerDomain.Interfaces;
+using AlsTradingPost.Domain.PlayerDomain.Models;
 using AlsTradingPost.Domain.UserDomain.Interfaces;
 using AlsTradingPost.Domain.UserDomain.Models;
 using AlsTradingPost.Resources;
@@ -10,40 +12,51 @@ namespace AlsTradingPost.Domain.UserDomain
     {
         private readonly IUserQueryService _userQueryService;
         private readonly IUserCommandService _userCommandService;
+        private readonly IPlayerCommandService _playerCommandService;
+        private readonly IMapper _mapper;
 
         public UserDomainService(
             IUserQueryService userQueryService,
-            IUserCommandService userCommandService)
+            IUserCommandService userCommandService,
+            IPlayerCommandService playerCommandService,
+            IMapper mapper)
         {
             _userQueryService = userQueryService;
             _userCommandService = userCommandService;
+            _playerCommandService = playerCommandService;
+            _mapper = mapper;
         }
 
         public AuthenticatedUserProjection Login(LoginDdto loginDdto)
         {
-            AuthenticatedUserProjection authenticatedUserProjection;
             UserProjection existingUser = _userQueryService.GetByIdentityId(loginDdto.IdentityId);
 
-            if (existingUser == null)
-            {
-                CreateUserDdto createUserDdto = Mapper.Map<LoginDdto, CreateUserDdto>(loginDdto);
-
-                authenticatedUserProjection =
-                    Mapper.Map<UserProjection, AuthenticatedUserProjection>(_userCommandService.Create(createUserDdto));
-            }
-            else
-            {
-                UpdateUserDdto existingUserDdto = Mapper.Map<UserProjection, UpdateUserDdto>(existingUser);
-                UpdateUserDdto updateUserDdto = Mapper.Map(loginDdto, existingUserDdto);
-                authenticatedUserProjection =
-                    Mapper.Map<UserProjection, AuthenticatedUserProjection>(_userCommandService.Update(updateUserDdto));
-            }
+            AuthenticatedUserProjection authenticatedUserProjection =
+                existingUser == null ? FirstTimeLogin(loginDdto) : ReturnLogin(loginDdto, existingUser);
 
             authenticatedUserProjection.Personas = PersonTypeMapper.GetPersonaFlags(
                 _userQueryService.GetUserPersonas(authenticatedUserProjection.Id).Select(u => u.PersonaType).ToArray()
             );
 
             return authenticatedUserProjection;
+        }
+
+        private AuthenticatedUserProjection FirstTimeLogin(LoginDdto loginDdto)
+        {
+            CreateUserDdto createUserDdto = _mapper.Map<LoginDdto, CreateUserDdto>(loginDdto);
+
+            UserProjection userProjection = _userCommandService.Create(createUserDdto);
+
+            _playerCommandService.Create(_mapper.Map<UserProjection, CreatePlayerDdto>(userProjection));
+
+            return _mapper.Map<UserProjection, AuthenticatedUserProjection>(userProjection);
+        }
+
+        private AuthenticatedUserProjection ReturnLogin(LoginDdto loginDdto, UserProjection existingUser)
+        {
+            UpdateUserDdto existingUserDdto = _mapper.Map<UserProjection, UpdateUserDdto>(existingUser);
+            UpdateUserDdto updateUserDdto = _mapper.Map(loginDdto, existingUserDdto);
+            return _mapper.Map<UserProjection, AuthenticatedUserProjection>(_userCommandService.Update(updateUserDdto));
         }
     }
 }
