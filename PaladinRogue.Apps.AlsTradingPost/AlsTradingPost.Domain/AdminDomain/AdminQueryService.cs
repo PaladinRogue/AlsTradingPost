@@ -1,6 +1,7 @@
 ﻿using System;
 using AlsTradingPost.Domain.AdminDomain.Interfaces;
 using AlsTradingPost.Domain.AdminDomain.Models;
+using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.Persistence;
 using AutoMapper;
 
@@ -19,7 +20,7 @@ namespace AlsTradingPost.Domain.AdminDomain
 
         public AdminProjection GetById(Guid id)
         {
-            return _mapper.Map<Domain.Models.Admin, AdminProjection>(_adminRepository.GetById(id));
+            return _mapper.Map<Admin, AdminProjection>(_adminRepository.GetById(id));
         }
     }
 }

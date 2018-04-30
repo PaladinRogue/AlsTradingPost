@@ -1,6 +1,7 @@
 ﻿using System;
 using AlsTradingPost.Domain.AdminDomain.Interfaces;
 using AlsTradingPost.Domain.AdminDomain.Models;
+using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.Persistence;
 using AutoMapper;
 using Common.Domain.Exceptions;
@@ -26,11 +27,11 @@ namespace AlsTradingPost.Domain.AdminDomain
         {
             try
             {
-                Domain.Models.Admin newAdmin = _mapper.Map(entity, EntityFactory.CreateEntity<Domain.Models.Admin>());
+                Admin newAdmin = _mapper.Map(entity, EntityFactory.CreateEntity<Admin>());
 
                 _adminRepository.Add(newAdmin);
 
-                return _mapper.Map<Domain.Models.Admin, AdminProjection>(_adminRepository.GetById(newAdmin.Id));
+                return _mapper.Map<Admin, AdminProjection>(_adminRepository.GetById(newAdmin.Id));
             }
             catch (Exception e)
             {
@@ -43,13 +44,13 @@ namespace AlsTradingPost.Domain.AdminDomain
         {
             try
             {
-                _adminRepository.Update(_mapper.Map<UpdateAdminDdto, Domain.Models.Admin>(entity));
+                _adminRepository.Update(_mapper.Map<UpdateAdminDdto, Admin>(entity));
 
-                return _mapper.Map<Domain.Models.Admin, AdminProjection>(_adminRepository.GetById(entity.Id));
+                return _mapper.Map<Admin, AdminProjection>(_adminRepository.GetById(entity.Id));
             }
             catch (ConcurrencyDomainException e)
             {
-                _logger.LogCritical(e, "Unable to create admin");
+                _logger.LogCritical(e, "Unable to update admin");
                 throw;
             }
             catch (Exception e)
