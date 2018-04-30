@@ -1,4 +1,4 @@
-﻿namespace Common.Authentication.Setup.Infrastructure.RefreshTokens
+﻿namespace Common.Authentication.Resources.RefreshTokens
 {
     public interface IRefreshTokenProvider
     {

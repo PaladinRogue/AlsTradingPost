@@ -1,4 +1,5 @@
-﻿using Common.Setup.Infrastructure.Hashing;
+﻿using Common.Authentication.Resources.RefreshTokens;
+using Common.Setup.Infrastructure.Hashing;
 
 namespace Common.Authentication.Setup.Infrastructure.RefreshTokens
 {
