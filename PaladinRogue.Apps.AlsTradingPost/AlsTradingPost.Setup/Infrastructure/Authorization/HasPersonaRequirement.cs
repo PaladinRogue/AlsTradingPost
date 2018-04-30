@@ -5,9 +5,9 @@ namespace AlsTradingPost.Setup.Infrastructure.Authorization
 {
     public class HasPersonaRequirement : IAuthorizationRequirement
     {
-        public Persona Persona { get; }
+        public PersonaFlags Persona { get; }
 
-        public HasPersonaRequirement(Persona persona)
+        public HasPersonaRequirement(PersonaFlags persona)
         {
             Persona = persona;
         }

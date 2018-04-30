@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AlsTradingPost.Resources.Providers.Interfaces
+namespace AlsTradingPost.Setup.Infrastructure.Authorization
 {
     public interface ICurrentUserProvider
     {

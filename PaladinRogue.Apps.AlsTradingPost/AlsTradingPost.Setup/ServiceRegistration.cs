@@ -13,13 +13,14 @@ using AlsTradingPost.Domain.AuditDomain.Interfaces;
 using AlsTradingPost.Domain.ItemReferenceDataDomain;
 using AlsTradingPost.Domain.ItemReferenceDataDomain.Interfaces;
 using AlsTradingPost.Domain.Persistence;
+using AlsTradingPost.Domain.PlayerDomain;
+using AlsTradingPost.Domain.PlayerDomain.Interfaces;
 using AlsTradingPost.Domain.UserDomain;
 using AlsTradingPost.Domain.UserDomain.Interfaces;
 using AlsTradingPost.Persistence;
 using AlsTradingPost.Persistence.Repositories;
 using AlsTradingPost.Resources;
-using AlsTradingPost.Resources.Providers;
-using AlsTradingPost.Resources.Providers.Interfaces;
+using AlsTradingPost.Setup.Infrastructure.Authorization;
 using AlsTradingPost.Setup.Infrastructure.Links;
 using AlsTradingPost.Setup.Infrastructure.Routing;
 using Common.Api.Builders;
@@ -36,12 +37,10 @@ using Common.Domain.Concurrency;
 using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Concurrency.Services;
 using Common.Domain.Concurrency.Services.Interfaces;
-using Common.Resources.Concurrency.Interfaces;
 using Common.Setup.Infrastructure.Authorization;
 using Common.Setup.Infrastructure.Transactions;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -92,13 +91,14 @@ namespace AlsTradingPost.Setup
 
             services.AddScoped<IAdminCommandService, AdminCommandService>();
             services.AddScoped<IAdminQueryService, AdminQueryService>();
+            
+            services.AddScoped<IPlayerCommandService, PlayerCommandService>();
 
             services.AddScoped<IItemReferenceDataQueryService, ItemReferenceDataQueryService>();
         }
 
         public static void RegisterPersistenceServices(IConfiguration configuration, IServiceCollection services)
         {
-
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAuditRepository, AuditRepository>();
             services.AddScoped<IAdminRepository, AdminRepository>();
@@ -120,7 +120,7 @@ namespace AlsTradingPost.Setup
             services.AddSingleton<ICurrentUserProvider, CurrentUserProvider>();
 
             services.AddSingleton<IConcurrencyVersionProvider, ConcurrencyVersionProvider>();
-            services.AddSingleton<IRouteProvider<Persona>, PersonaRouteProvider>();
+            services.AddSingleton<IRouteProvider<PersonaFlags>, PersonaRouteProvider>();
         }
     }
 }

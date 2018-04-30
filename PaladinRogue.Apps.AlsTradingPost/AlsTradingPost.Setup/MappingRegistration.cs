@@ -2,6 +2,7 @@
 using AlsTradingPost.Application.Authentication.Mappings;
 using AlsTradingPost.Domain.AdminDomain.Mappings;
 using AlsTradingPost.Domain.ItemReferenceDataDomain.Mappings;
+using AlsTradingPost.Domain.PlayerDomain.Mappings;
 using AlsTradingPost.Domain.UserDomain.Mappings;
 using AutoMapper;
 using Common.Domain.Mappings;
@@ -29,6 +30,7 @@ namespace AlsTradingPost.Setup
             configuration.AddProfile<ItemReferenceDataDomainMappingProfile>();
             configuration.AddProfile<AdminDomainMappingProfile>();
             configuration.AddProfile<UserDomainMappingProfile>();
+            configuration.AddProfile<PlayerDomainMappingProfile>();
         }
     }
 }

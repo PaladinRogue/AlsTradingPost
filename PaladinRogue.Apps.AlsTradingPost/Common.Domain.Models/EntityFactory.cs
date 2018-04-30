@@ -8,5 +8,10 @@ namespace Common.Domain.Models
         {
             return (T)Activator.CreateInstance(typeof(T));
         }
+        
+        public static T CreateEntity<T>(Guid id)
+        {
+            return (T)Activator.CreateInstance(typeof(T), id);
+        }
     }
 }

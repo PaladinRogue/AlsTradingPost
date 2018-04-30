@@ -1,5 +1,9 @@
-﻿using AlsTradingPost.Domain.UserDomain.Interfaces;
+﻿using System.Linq;
+using AlsTradingPost.Domain.PlayerDomain.Interfaces;
+using AlsTradingPost.Domain.PlayerDomain.Models;
+using AlsTradingPost.Domain.UserDomain.Interfaces;
 using AlsTradingPost.Domain.UserDomain.Models;
+using AlsTradingPost.Resources;
 using AutoMapper;
 
 namespace AlsTradingPost.Domain.UserDomain
@@ -8,29 +12,51 @@ namespace AlsTradingPost.Domain.UserDomain
     {
         private readonly IUserQueryService _userQueryService;
         private readonly IUserCommandService _userCommandService;
+        private readonly IPlayerCommandService _playerCommandService;
+        private readonly IMapper _mapper;
 
         public UserDomainService(
             IUserQueryService userQueryService,
-            IUserCommandService userCommandService)
+            IUserCommandService userCommandService,
+            IPlayerCommandService playerCommandService,
+            IMapper mapper)
         {
             _userQueryService = userQueryService;
             _userCommandService = userCommandService;
+            _playerCommandService = playerCommandService;
+            _mapper = mapper;
         }
 
-        public UserProjection Login(LoginDdto loginDdto)
+        public AuthenticatedUserProjection Login(LoginDdto loginDdto)
         {
             UserProjection existingUser = _userQueryService.GetByIdentityId(loginDdto.IdentityId);
 
-            if (existingUser == null)
-            {
-                CreateUserDdto createUserDdto = Mapper.Map<LoginDdto, CreateUserDdto>(loginDdto);
+            AuthenticatedUserProjection authenticatedUserProjection =
+                existingUser == null ? FirstTimeLogin(loginDdto) : ReturnLogin(loginDdto, existingUser);
 
-                return _userCommandService.Create(createUserDdto);
-            }
+            authenticatedUserProjection.Personas = PersonTypeMapper.GetPersonaFlags(
+                _userQueryService.GetUserPersonas(authenticatedUserProjection.Id).Select(u => u.PersonaType).ToArray()
+            );
 
-            UpdateUserDdto existingUserDdto = Mapper.Map<UserProjection, UpdateUserDdto>(existingUser);
-            UpdateUserDdto updateUserDdto = Mapper.Map(loginDdto, existingUserDdto);
-            return _userCommandService.Update(updateUserDdto);
+            return authenticatedUserProjection;
+        }
+
+        private AuthenticatedUserProjection FirstTimeLogin(LoginDdto loginDdto)
+        {
+            CreateUserDdto createUserDdto = _mapper.Map<LoginDdto, CreateUserDdto>(loginDdto);
+
+            UserProjection userProjection = _userCommandService.Create(createUserDdto);
+
+            _playerCommandService.Create(_mapper.Map<UserProjection, CreatePlayerDdto>(userProjection));
+
+            return _mapper.Map<UserProjection, AuthenticatedUserProjection>(userProjection);
+        }
+
+        private AuthenticatedUserProjection ReturnLogin(LoginDdto loginDdto, UserProjection existingUser)
+        {
+            UpdateUserDdto existingUserDdto = _mapper.Map<UserProjection, UpdateUserDdto>(existingUser);
+            UpdateUserDdto updateUserDdto = _mapper.Map(loginDdto, existingUserDdto);
+            return _mapper.Map<UserProjection, AuthenticatedUserProjection>(_userCommandService.Update(updateUserDdto));
         }
     }
 }

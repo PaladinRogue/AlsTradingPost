@@ -3,7 +3,7 @@
 namespace AlsTradingPost.Resources
 {
     [Flags]
-    public enum Persona
+    public enum PersonaFlags
     {
         None,
         Admin,

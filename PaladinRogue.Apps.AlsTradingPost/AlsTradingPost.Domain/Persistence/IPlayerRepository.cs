@@ -3,7 +3,7 @@ using Common.Domain.Persistence;
 
 namespace AlsTradingPost.Domain.Persistence
 {
-    public interface IPlayerRepository
+    public interface IPlayerRepository : IGetById<Player>, IAdd<Player>
     {
     }
 }

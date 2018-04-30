@@ -1,8 +1,7 @@
-﻿using AlsTradingPost.Domain.Models;
-using Common.Domain.DomainEvents.Interfaces;
+﻿using Common.Domain.DomainEvents.Interfaces;
 using Common.Domain.Models.Interfaces;
 
-namespace AlsTradingPost.Domain.DomainEvents
+namespace AlsTradingPost.Domain.UserDomain.Events
 {
     public class UserUpdatedDomainEvent : IAuditedEvent
     {
@@ -13,7 +12,7 @@ namespace AlsTradingPost.Domain.DomainEvents
 
         public IEntity Entity { get; set; }
 
-        public static UserUpdatedDomainEvent Create(User user)
+        public static UserUpdatedDomainEvent Create(Domain.Models.User user)
         {
             return new UserUpdatedDomainEvent(user);
         }

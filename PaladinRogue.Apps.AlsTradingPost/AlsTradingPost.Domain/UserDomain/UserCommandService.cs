@@ -1,6 +1,7 @@
 ﻿using System;
-using AlsTradingPost.Domain.DomainEvents;
+using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.Persistence;
+using AlsTradingPost.Domain.UserDomain.Events;
 using AlsTradingPost.Domain.UserDomain.Interfaces;
 using AlsTradingPost.Domain.UserDomain.Models;
 using AutoMapper;
@@ -31,16 +32,16 @@ namespace AlsTradingPost.Domain.UserDomain
 
         public UserProjection Update(UpdateUserDdto entity)
         {
-            Domain.Models.User user = null;
+            User user = null;
             try
             {
-                user = _mapper.Map<UpdateUserDdto, Domain.Models.User>(entity);
+                user = _mapper.Map<UpdateUserDdto, User>(entity);
 
                 _userRepository.Update(user);
 
                 _pendingDomainEventDirector.Add(UserUpdatedDomainEvent.Create(user));
 
-                return _mapper.Map<Domain.Models.User, UserProjection>(_userRepository.GetById(entity.Id));
+                return _mapper.Map<User, UserProjection>(_userRepository.GetById(entity.Id));
             }
             catch (ConcurrencyDomainException e)
             {
@@ -56,16 +57,16 @@ namespace AlsTradingPost.Domain.UserDomain
 
         public UserProjection Create(CreateUserDdto entity)
         {
-            Domain.Models.User user = null;
+            User user = null;
             try
             {
-                user = _mapper.Map(entity, EntityFactory.CreateEntity<Domain.Models.User>());
+                user = _mapper.Map(entity, EntityFactory.CreateEntity<User>());
 
                 _userRepository.Add(user);
 
                 _pendingDomainEventDirector.Add(UserCreatedDomainEvent.Create(user));
 
-                return _mapper.Map<Domain.Models.User, UserProjection>(_userRepository.GetById(user.Id));
+                return _mapper.Map<User, UserProjection>(_userRepository.GetById(user.Id));
             }
             catch (ConcurrencyDomainException e)
             {

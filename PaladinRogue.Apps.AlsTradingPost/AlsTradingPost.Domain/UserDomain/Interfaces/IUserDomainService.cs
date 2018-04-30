@@ -4,6 +4,6 @@ namespace AlsTradingPost.Domain.UserDomain.Interfaces
 {
     public interface IUserDomainService
     {
-        UserProjection Login(LoginDdto loginDdto);
+        AuthenticatedUserProjection Login(LoginDdto loginDdto);
     }
 }

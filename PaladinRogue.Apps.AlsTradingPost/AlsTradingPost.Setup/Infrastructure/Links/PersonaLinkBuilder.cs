@@ -12,10 +12,10 @@ namespace AlsTradingPost.Setup.Infrastructure.Links
 {
     public class PersonaLinkBuilder : ILinkBuilder
     {
-        private readonly IRouteProvider<Persona> _routeProvider;
+        private readonly IRouteProvider<PersonaFlags> _routeProvider;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public PersonaLinkBuilder(IRouteProvider<Persona> routeProvider, IHttpContextAccessor httpContextAccessor)
+        public PersonaLinkBuilder(IRouteProvider<PersonaFlags> routeProvider, IHttpContextAccessor httpContextAccessor)
         {
             _routeProvider = routeProvider;
             _httpContextAccessor = httpContextAccessor;

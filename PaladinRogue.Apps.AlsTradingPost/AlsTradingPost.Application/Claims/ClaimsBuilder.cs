@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
-using AlsTradingPost.Resources.Constants;
+using AlsTradingPost.Resources;
 
-namespace AlsTradingPost.Resources.Claims
+namespace AlsTradingPost.Application.Claims
 {
     public class ClaimsBuilder : Common.Application.Claims.ClaimsBuilder
     {
@@ -14,7 +14,7 @@ namespace AlsTradingPost.Resources.Claims
             return new ClaimsBuilder();
         }
 
-        public ClaimsBuilder WithPersonas(Persona personas)
+        public ClaimsBuilder WithPersonas(PersonaFlags personas)
         {
             Claims.AddClaim(new Claim(JwtClaimIdentifiers.Persona, personas.ToString()));
 

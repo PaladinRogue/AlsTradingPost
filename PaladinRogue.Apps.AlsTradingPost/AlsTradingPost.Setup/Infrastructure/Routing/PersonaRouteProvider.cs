@@ -12,13 +12,13 @@ using Microsoft.EntityFrameworkCore.Internal;
 
 namespace AlsTradingPost.Setup.Infrastructure.Routing
 {
-    public class PersonaRouteProvider : IRouteProvider<Persona>
+    public class PersonaRouteProvider : IRouteProvider<PersonaFlags>
     {
-        private readonly IDictionary<string, Route<Persona>> _routes;
+        private readonly IDictionary<string, Route<PersonaFlags>> _routes;
 
         public PersonaRouteProvider(IApiDescriptionGroupCollectionProvider apiDescriptionGroupCollectionProvider)
         {
-            _routes = new Dictionary<string, Route<Persona>>();
+            _routes = new Dictionary<string, Route<PersonaFlags>>();
             
             foreach (ApiDescriptionGroup apiDescriptionGroup in apiDescriptionGroupCollectionProvider.ApiDescriptionGroups.Items)
             {
@@ -29,18 +29,18 @@ namespace AlsTradingPost.Setup.Infrastructure.Routing
                     
                     _routes.Add(
                         routeName,
-                        Route<Persona>.Create(apiDescription.RelativePath, GetPersonaPolicy(apiDescription))
+                        Route<PersonaFlags>.Create(apiDescription.RelativePath, GetPersonaPolicy(apiDescription))
                     );
                 }
             }
         }
 
-        public bool HasAccessToRoute(string routeName, Persona routeRestriction)
+        public bool HasAccessToRoute(string routeName, PersonaFlags routeRestriction)
         {
             return _routes.ContainsKey(routeName) && _routes[routeName].Restriction.HasFlag(routeRestriction);
         }
         
-        public string GetRouteTemplate<T>(string routeName, Persona routeRestriction, T routeData)
+        public string GetRouteTemplate<T>(string routeName, PersonaFlags routeRestriction, T routeData)
         {
             string template = GetRouteTemplate(routeName, routeRestriction);
 
@@ -59,17 +59,17 @@ namespace AlsTradingPost.Setup.Infrastructure.Routing
             return FormatRoute(RouteToCamelCase(template).Format(dictionary));
         }
 
-        private static Persona GetPersonaPolicy(ApiDescription apiDescription)
+        private static PersonaFlags GetPersonaPolicy(ApiDescription apiDescription)
         {
             List<string> policies = new List<string>();
 
             if (!(apiDescription.ActionDescriptor is ControllerActionDescriptor controllerActionDescriptor))
-                return Persona.None;
+                return PersonaFlags.None;
             
             policies.AddRange(controllerActionDescriptor.MethodInfo.GetCustomAttributes<AuthorizeAttribute>().Select(a => a.Policy));
             policies.AddRange(controllerActionDescriptor.ControllerTypeInfo.GetCustomAttributes<AuthorizeAttribute>().Select(a => a.Policy));
 
-            Persona persona = Persona.None;
+            PersonaFlags persona = PersonaFlags.None;
             foreach (string policy in policies)
             {
                 persona |= PersonaPolicyMapper.FromPolicy(policy);
@@ -91,7 +91,7 @@ namespace AlsTradingPost.Setup.Infrastructure.Routing
             return formattedRouteParts.Join("/");
         }
         
-        private string GetRouteTemplate(string routeName, Persona routeRestriction)
+        private string GetRouteTemplate(string routeName, PersonaFlags routeRestriction)
         {
             return HasAccessToRoute(routeName, routeRestriction) ?  _routes[routeName].Template : null;
         }

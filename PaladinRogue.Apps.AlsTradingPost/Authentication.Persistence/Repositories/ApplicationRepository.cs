@@ -18,12 +18,12 @@ namespace Authentication.Persistence.Repositories
 
 	    public Application GetById(Guid id)
 	    {
-	        return RepositoryHelper.GetById(_context.Applications.AsNoTracking(), id);
+	        return RepositoryHelper.GetById(_context.Applications, id);
 	    }
 
 	    public Application GetSingle(Expression<Func<Application, bool>> predicate)
 	    {
-	        return RepositoryHelper.GetSingle(_context.Applications.AsNoTracking(), predicate);
+	        return RepositoryHelper.GetSingle(_context.Applications, predicate);
 	    }
 
 	    public void Add(Application entity)
