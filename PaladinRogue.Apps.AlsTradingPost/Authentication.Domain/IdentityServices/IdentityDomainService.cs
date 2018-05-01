@@ -8,19 +8,25 @@ namespace Authentication.Domain.IdentityServices
     {
         private readonly IIdentityCommandService _identityCommandService;
         private readonly IIdentityQueryService _identityQueryService;
+        private readonly IMapper _mapper;
         
         public IdentityDomainService(
             IIdentityQueryService identityQueryService,
-            IIdentityCommandService identityCommandService)
+            IIdentityCommandService identityCommandService,
+            IMapper mapper)
         {
             _identityQueryService = identityQueryService;
             _identityCommandService = identityCommandService;
+            _mapper = mapper;
         }
 
-        public IdentityProjection Login(LoginDdto loginDdto)
+        public LoginIdentityProjection Login(LoginDdto loginDdto)
         {
-            return _identityQueryService.GetByAuthenticationId(loginDdto.AuthenticationId) ??
-                   _identityCommandService.Create(Mapper.Map<LoginDdto, CreateIdentityDdto>(loginDdto));
+            IdentityProjection identityProjection =
+                _identityQueryService.GetByAuthenticationId(loginDdto.AuthenticationId) ??
+                _identityCommandService.Create(Mapper.Map<LoginDdto, CreateIdentityDdto>(loginDdto));
+            
+            return _mapper.Map<IdentityProjection, LoginIdentityProjection>(identityProjection);
         }
     }
 }

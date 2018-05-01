@@ -16,7 +16,8 @@ namespace Common.Authentication.Domain.SessionDomain
 
         public SessionDomainService(ISessionCommandService sessionCommandService,
             IRefreshTokenProvider refreshTokenProvider,
-            ISessionQueryService sessionQueryService, IMapper mapper)
+            ISessionQueryService sessionQueryService,
+            IMapper mapper)
         {
             _sessionCommandService = sessionCommandService;
             _refreshTokenProvider = refreshTokenProvider;
@@ -50,9 +51,8 @@ namespace Common.Authentication.Domain.SessionDomain
             }));
         }
 
-        public CreateSessionProjection Create()
+        public CreateSessionProjection Create(Guid sessionId)
         {
-            Guid sessionId = Guid.NewGuid();
             return _mapper.Map<SessionProjection, CreateSessionProjection>(_sessionCommandService.Create(new CreateSessionDdto
             {
                 Id = sessionId,

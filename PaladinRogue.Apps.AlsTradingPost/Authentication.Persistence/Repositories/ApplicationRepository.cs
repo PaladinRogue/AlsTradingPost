@@ -2,7 +2,6 @@
 using System.Linq.Expressions;
 using Authentication.Domain.Models;
 using Authentication.Domain.Persistence;
-using Microsoft.EntityFrameworkCore;
 using Persistence.EntityFramework.Repositories;
 
 namespace Authentication.Persistence.Repositories

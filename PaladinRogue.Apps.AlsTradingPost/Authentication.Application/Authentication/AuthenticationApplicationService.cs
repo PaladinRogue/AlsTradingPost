@@ -33,10 +33,13 @@ namespace Authentication.Application.Authentication
 
 	    public async Task<ExtendedJwtAdto> LoginAsync(LoginAdto loginAdto)
 	    {
-	        IdentityProjection identityProjection = _identityDomainService.Login(Mapper.Map<LoginAdto, LoginDdto>(loginAdto));
+	        LoginIdentityProjection identityProjection = _identityDomainService.Login(Mapper.Map<LoginAdto, LoginDdto>(loginAdto));
 
 	        ExtendedJwtAdto jwt = await _jwtFactory.GenerateJwt<ExtendedJwtAdto>(
-	            ClaimsBuilder.CreateBuilder().WithSubject(identityProjection.Id).WithRole(JwtClaims.AppAccess).Build()
+	            ClaimsBuilder.CreateBuilder()
+		            .WithSubject(identityProjection.Id)
+		            .WithRole(JwtClaims.AppAccess)
+		            .Build()
 	        );
 
 	        jwt.AccessToken = _encryptionFactory.Enrypt(loginAdto.AccessToken, _jwtIssuerOptions.SigningKey);

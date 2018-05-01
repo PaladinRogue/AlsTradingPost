@@ -6,6 +6,6 @@ namespace Common.Authentication.Domain.SessionDomain.Interfaces
     public interface ISessionDomainService
     {
         RefreshSessionProjection Refresh(RefreshSessionDdto refreshSessionDdto);
-        CreateSessionProjection Create();
+        CreateSessionProjection Create(Guid sessionId);
     }
 }

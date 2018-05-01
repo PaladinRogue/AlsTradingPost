@@ -2,6 +2,6 @@
 {
     public interface IHashFactory
     {
-        Hashing GenerateHash<T>(T data);
+        HashSet GenerateHash<T>(T data);
     }
 }

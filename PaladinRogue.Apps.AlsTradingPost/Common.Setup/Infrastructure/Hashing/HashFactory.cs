@@ -6,10 +6,10 @@ namespace Common.Setup.Infrastructure.Hashing
 {
     public class HashFactory : IHashFactory
     {
-        public Hashing GenerateHash<T>(T data)
+        public HashSet GenerateHash<T>(T data)
         {
             string salt = GetSalt();
-            return new Hashing
+            return new HashSet
             {
                 Salt = salt,
                 Hash = GetHash(data + salt)

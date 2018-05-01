@@ -56,6 +56,7 @@ namespace Authentication.Api
             ServiceRegistration.RegisterProviders(services);
             
             Common.Authentication.Setup.ServiceRegistration.RegisterDomainServices(services);
+            Common.Authentication.Setup.ServiceRegistration.RegisterProviders(services);
 
             services.AddAutoMapper(MappingRegistration.RegisterMappers);
 

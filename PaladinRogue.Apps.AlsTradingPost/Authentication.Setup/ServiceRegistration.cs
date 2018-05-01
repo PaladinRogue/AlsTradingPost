@@ -15,6 +15,7 @@ using Common.Api.HttpClient.Interfaces;
 using Common.Api.Links;
 using Common.Api.Meta;
 using Common.Api.Routing;
+using Common.Authentication.Domain.Persistence;
 using Common.Setup.Infrastructure.Transactions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -55,6 +56,7 @@ namespace Authentication.Setup
         {
 	        services.AddScoped<IIdentityRepository, IdentityRepository>();
 			services.AddScoped<IApplicationRepository, ApplicationRepository>();
+			services.AddScoped<ISessionRepository, SessionRepository>();
 
             services.AddEntityFrameworkSqlServer().AddOptions()
                 .AddDbContext<AuthenticationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Default")));
