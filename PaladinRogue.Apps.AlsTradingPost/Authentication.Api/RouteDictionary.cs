@@ -4,5 +4,6 @@
     {
         public const string AuthenticationServices = "AuthenticationServices";
         public const string AuthenticationFacebook = "AuthenticationFacebook";
+        public const string AuthenticationRefreshToken = "AuthenticationRefreshToken";
     }
 }

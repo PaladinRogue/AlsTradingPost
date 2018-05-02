@@ -1,6 +1,7 @@
 ﻿using Authentication.Application.Authentication.Models;
 using Authentication.Domain.IdentityServices.Models;
 using AutoMapper;
+using Common.Authentication.Domain.SessionDomain.Models;
 
 namespace Authentication.Application.Authentication.Mappings
 {
@@ -9,6 +10,9 @@ namespace Authentication.Application.Authentication.Mappings
         public AuthenticationApplicationMappingProfile()
         {
             CreateMap<LoginAdto, LoginDdto>();
+            CreateMap<RefreshTokenAdto, RefreshSessionDdto>()
+                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.SessionId))
+                .ForMember(d => d.RefreshToken, opts => opts.MapFrom(s => s.Token));
         }
     }
 }

@@ -33,6 +33,7 @@ namespace Authentication.Setup
 		    services.AddSingleton<ILinkBuilder, DefaultLinkBuilder>();
 		    services.AddSingleton<IResourceTemplateBuilder, ResourceTemplateBuilder>();
 		    services.AddSingleton<ITemplateBuilder, TemplateBuilder>();
+		    services.AddSingleton<IResourceBuilder, ResourceBuilder>();
 	    }
 	    
         public static void RegisterApplicationServices(IServiceCollection services)

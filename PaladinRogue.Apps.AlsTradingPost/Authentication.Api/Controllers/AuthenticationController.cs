@@ -7,6 +7,7 @@ using Authentication.Application.Authentication.Interfaces;
 using Authentication.Application.Authentication.Models;
 using Authentication.Setup.Settings;
 using AutoMapper;
+using Common.Api.Authentication;
 using Common.Api.Authentication.FacebookModels;
 using Common.Api.Builders.Resource;
 using Common.Api.Builders.Template;
@@ -27,41 +28,62 @@ namespace Authentication.Api.Controllers
 		private readonly IAuthenticationApplicationService _authenticationApplicationService;
 		private readonly IResourceTemplateBuilder _resourceTemplateBuilder;
 		private readonly ITemplateBuilder _templateBuilder;
+		private readonly IResourceBuilder _resourceBuilder;
 
 		public AuthenticationController(IOptions<FacebookAuthSettings> fbAuthSettingsAccessor,
 			IJwtFactory jwtFactory,
 			IHttpClientFactory httpClientFactory,
 			IAuthenticationApplicationService authenticationApplicationService,
 			IResourceTemplateBuilder resourceTemplateBuilder,
-			ITemplateBuilder templateBuilder)
+			ITemplateBuilder templateBuilder,
+			IResourceBuilder resourceBuilder)
 		{
 			_fbAuthSettings = fbAuthSettingsAccessor.Value;
 			_httpClientFactory = httpClientFactory;
 			_authenticationApplicationService = authenticationApplicationService;
 			_resourceTemplateBuilder = resourceTemplateBuilder;
 			_templateBuilder = templateBuilder;
+			_resourceBuilder = resourceBuilder;
 		}
 
 		[Route("services", Name = RouteDictionary.AuthenticationServices)]
-		public IActionResult Get()
+		public IActionResult GetAuthenticationServices()
+		{
+			return new ObjectResult(
+				_resourceBuilder.Create(new AuthenticationServicesResource())
+					.Build()
+			);
+		}
+
+		[HttpGet]
+		[Route("facebook")]
+		public IActionResult GetAuthenticationTemplate()
 		{
 			return new ObjectResult(
 				_templateBuilder.Create<AuthenticationTemplate>()
-				.WithTemplateMeta()
-				.Build()
+					.WithTemplateMeta()
+					.Build()
 			);
 		}
 
 		[Route("facebook", Name = RouteDictionary.AuthenticationFacebook)]
 		public async Task<IActionResult> PostFacebook([FromBody] AuthenticationTemplate template)
 		{
-			string appAccessTokenResponse = await _httpClientFactory.GetStringAsync(new Uri(string.Format(_fbAuthSettings.AccessTokenEndpoint,
-					_fbAuthSettings.AppId, _fbAuthSettings.AppSecret)));
+			string appAccessTokenResponse = await _httpClientFactory.GetStringAsync(new Uri(string.Format(
+					_fbAuthSettings.AccessTokenEndpoint,
+					_fbAuthSettings.AppId, _fbAuthSettings.AppSecret
+				))
+			);
+
 			FacebookAppAccessToken appAccessToken =
 				JsonConvert.DeserializeObject<FacebookAppAccessToken>(appAccessTokenResponse);
 
-			string userAccessTokenValidationResponse = await _httpClientFactory.GetStringAsync(new Uri(string.Format(_fbAuthSettings.AccessTokenValidationEndpoint,
-					template.AccessToken, appAccessToken.AccessToken)));
+			string userAccessTokenValidationResponse = await _httpClientFactory.GetStringAsync(new Uri(string.Format(
+					_fbAuthSettings.AccessTokenValidationEndpoint,
+					template.AccessToken, appAccessToken.AccessToken
+				))
+			);
+
 			FacebookUserAccessTokenValidation userAccessTokenValidation =
 				JsonConvert.DeserializeObject<FacebookUserAccessTokenValidation>(userAccessTokenValidationResponse);
 
@@ -79,6 +101,24 @@ namespace Authentication.Api.Controllers
 
 			return new ObjectResult(
 				_resourceTemplateBuilder.Create(Mapper.Map<ExtendedJwtAdto, FacebookJwtResource>(extendedJwt), template)
+					.WithResourceMeta()
+					.WithTemplateMeta()
+					.Build()
+			);
+		}
+
+		[Route("refreshToken", Name = RouteDictionary.AuthenticationRefreshToken)]
+		public async Task<IActionResult> PostRefreshToken([FromBody] RefreshTokenTemplate template)
+		{
+			JwtAdto jwt = await _authenticationApplicationService.RefreshTokenAsync(
+				new RefreshTokenAdto
+				{
+					SessionId = template.SessionId,
+					Token = template.RefreshToken
+				});
+
+			return new ObjectResult(
+				_resourceTemplateBuilder.Create(Mapper.Map<JwtAdto, JwtResource>(jwt), template)
 					.WithResourceMeta()
 					.WithTemplateMeta()
 					.Build()

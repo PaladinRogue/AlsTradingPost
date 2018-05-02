@@ -42,13 +42,14 @@ namespace Common.Authentication.Domain.SessionDomain
             {
                 throw new RefreshTokenInvalidDomainException();
             }
-
+            
             return _mapper.Map<SessionProjection, RefreshSessionProjection>(_sessionCommandService.Update(
                 new UpdateSessionDdto
                 {
                     Id = refreshSessionDdto.Id,
                     RefreshToken = _refreshTokenProvider.GenerateRefreshToken(refreshSessionDdto.Id),
-                    Revoked = false
+                    Revoked = false,
+                    Version = sessionProjection.Version
                 }));
         }
 
