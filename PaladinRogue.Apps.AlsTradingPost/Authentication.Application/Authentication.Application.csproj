@@ -13,6 +13,7 @@
       <Name>Common.Api</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common.Application\Common.Application.csproj" />
+    <ProjectReference Include="..\Common.Authentication\Common.Authentication.Domain\Common.Authentication.Domain.csproj" />
     <ProjectReference Include="..\Common.Domain\Common.Domain.csproj" />
     <ProjectReference Include="..\Common.Messaging\Common.Messaging.csproj" />
     <ProjectReference Include="..\Common.Resources\Common.Resources.csproj" />

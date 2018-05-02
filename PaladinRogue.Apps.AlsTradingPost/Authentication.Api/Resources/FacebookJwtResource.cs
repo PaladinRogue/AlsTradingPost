@@ -16,6 +16,9 @@ namespace Authentication.Api.Resources
         public string AuthToken { get; set; }
         [ReadOnly]
         [Hidden]
+        public string RefreshToken { get; set; }
+        [ReadOnly]
+        [Hidden]
         public int ExpiresIn { get; set; }
     }
 }

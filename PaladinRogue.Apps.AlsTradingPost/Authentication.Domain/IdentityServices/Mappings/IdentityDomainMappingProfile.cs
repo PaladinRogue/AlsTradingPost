@@ -9,6 +9,7 @@ namespace Authentication.Domain.IdentityServices.Mappings
         public IdentityDomainMappingProfile()
         {
             CreateMap<LoginDdto, CreateIdentityDdto>();
+            CreateMap<IdentityProjection, LoginIdentityProjection>();
             CreateMap<Identity, IdentityProjection>();
             CreateMap<CreateIdentityDdto, Identity>();
         }

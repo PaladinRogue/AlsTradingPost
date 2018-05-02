@@ -31,9 +31,9 @@ namespace Common.Authentication.Domain.SessionDomain
             {
                 throw new ArgumentNullException(nameof(refreshSessionDdto));
             }
-            
+
             SessionProjection sessionProjection = _sessionQueryService.GetById(refreshSessionDdto.Id);
-            if (sessionProjection.Revoked)
+            if (sessionProjection.IsRevoked)
             {
                 throw new SessionRevokedDomainException();
             }
@@ -43,22 +43,42 @@ namespace Common.Authentication.Domain.SessionDomain
                 throw new RefreshTokenInvalidDomainException();
             }
 
-            return _mapper.Map<SessionProjection, RefreshSessionProjection>(_sessionCommandService.Update(new UpdateSessionDdto
-            {
-                Id = refreshSessionDdto.Id,
-                RefreshToken = _refreshTokenProvider.GenerateRefreshToken(refreshSessionDdto.Id),
-                Revoked = false
-            }));
+            return _mapper.Map<SessionProjection, RefreshSessionProjection>(_sessionCommandService.Update(
+                new UpdateSessionDdto
+                {
+                    Id = refreshSessionDdto.Id,
+                    RefreshToken = _refreshTokenProvider.GenerateRefreshToken(refreshSessionDdto.Id),
+                    Revoked = false
+                }));
         }
 
         public CreateSessionProjection Create(Guid sessionId)
         {
-            return _mapper.Map<SessionProjection, CreateSessionProjection>(_sessionCommandService.Create(new CreateSessionDdto
+            SessionProjection existingSession = _sessionQueryService.GetById(sessionId);
+            if (existingSession == null)
             {
-                Id = sessionId,
-                RefreshToken = _refreshTokenProvider.GenerateRefreshToken(sessionId),
-                Revoked = false
-            }));
+                existingSession = _sessionCommandService.Create(new CreateSessionDdto
+                {
+                    Id = sessionId,
+                    RefreshToken = _refreshTokenProvider.GenerateRefreshToken(sessionId),
+                    Revoked = false
+                });
+            }
+            else
+            {
+                if (existingSession.IsRevoked)
+                {
+                    existingSession = _sessionCommandService.Update(new UpdateSessionDdto
+                    {
+                        Id = existingSession.Id,
+                        RefreshToken = _refreshTokenProvider.GenerateRefreshToken(existingSession.Id),
+                        Revoked = false,
+                        Version = existingSession.Version
+                    });
+                }
+            }
+
+            return _mapper.Map<SessionProjection, CreateSessionProjection>(existingSession);
         }
     }
 }
