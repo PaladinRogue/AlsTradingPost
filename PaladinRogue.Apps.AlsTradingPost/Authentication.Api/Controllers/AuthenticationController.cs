@@ -55,8 +55,7 @@ namespace Authentication.Api.Controllers
 			);
 		}
 
-		[HttpGet]
-		[Route("facebook")]
+		[Route("facebook/resourceTemplate", Name = RouteDictionary.AuthenticationFacebookTemplate)]
 		public IActionResult GetAuthenticationTemplate()
 		{
 			return new ObjectResult(
@@ -102,6 +101,16 @@ namespace Authentication.Api.Controllers
 			return new ObjectResult(
 				_resourceTemplateBuilder.Create(Mapper.Map<ExtendedJwtAdto, FacebookJwtResource>(extendedJwt), template)
 					.WithResourceMeta()
+					.WithTemplateMeta()
+					.Build()
+			);
+		}
+
+		[Route("refreshToken/resourceTemplate", Name = RouteDictionary.AuthenticationRefreshTokenTemplate)]
+		public IActionResult GetRefreshTokenTemplate()
+		{
+			return new ObjectResult(
+				_templateBuilder.Create<RefreshTokenTemplate>()
 					.WithTemplateMeta()
 					.Build()
 			);

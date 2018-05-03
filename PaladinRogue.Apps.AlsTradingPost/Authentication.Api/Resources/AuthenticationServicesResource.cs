@@ -1,8 +1,13 @@
-﻿using Common.Api.Authentication;
+﻿using Common.Api.Links;
+using Common.Api.Resources;
+using Common.Setup.Infrastructure.Constants;
 
 namespace Authentication.Api.Resources
 {
-    public class AuthenticationServicesResource : JwtResource
+    [SelfLink(RouteDictionary.AuthenticationServices, HttpVerbs.Get)]
+    [Link(LinkDictionary.AuthenticationFacebookTemplate, RouteDictionary.AuthenticationFacebookTemplate, HttpVerbs.Get)]
+    [Link(LinkDictionary.AuthenticationRefreshTokenTemplate, RouteDictionary.AuthenticationRefreshTokenTemplate, HttpVerbs.Get)]
+    public class AuthenticationServicesResource : IResource
     {
     }
 }

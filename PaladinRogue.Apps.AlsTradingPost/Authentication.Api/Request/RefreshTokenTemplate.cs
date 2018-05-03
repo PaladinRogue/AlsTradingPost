@@ -6,11 +6,12 @@ using Common.Setup.Infrastructure.Constants;
 
 namespace Authentication.Api.Request
 {
+    [SelfLink(RouteDictionary.AuthenticationRefreshTokenTemplate, HttpVerbs.Get)]
     [Link(LinkDictionary.AuthenticationRefreshToken, RouteDictionary.AuthenticationRefreshToken, HttpVerbs.Post)]
     public class RefreshTokenTemplate : ITemplate
     {
         [Required]
-        public Guid SessionId { get; set; }
+        public Guid? SessionId { get; set; }
         [Required]
         public string RefreshToken { get; set; }
     }

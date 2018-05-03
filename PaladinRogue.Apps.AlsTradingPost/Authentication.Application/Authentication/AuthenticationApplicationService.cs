@@ -7,10 +7,15 @@ using AutoMapper;
 using Common.Api.Authentication.Constants;
 using Common.Application.Authentication;
 using Common.Application.Claims;
+using Common.Application.Exceptions;
+using Common.Authentication.Domain.SessionDomain.Exceptions;
 using Common.Authentication.Domain.SessionDomain.Interfaces;
 using Common.Authentication.Domain.SessionDomain.Models;
 using Common.Setup.Infrastructure.Encryption.Interfaces;
+using Common.Application.Validation;
+using FluentValidation;
 using Microsoft.Extensions.Options;
+using ApplicationException = Common.Application.Exceptions.ApplicationException;
 
 namespace Authentication.Application.Authentication
 {
@@ -22,6 +27,8 @@ namespace Authentication.Application.Authentication
         private readonly IJwtFactory _jwtFactory;
         private readonly ISessionDomainService _sessionDomainService;
         private readonly IMapper _mapper;
+        private readonly IValidator<RefreshTokenAdto> _refreshTokenValidator;
+        private readonly IValidator<LoginAdto> _loginValidator;
 
         public AuthenticationApplicationService(
             IIdentityDomainService identityDomainService,
@@ -29,7 +36,9 @@ namespace Authentication.Application.Authentication
 	        IOptions<JwtIssuerOptions> jwtIssuerOptionsAccessor,
 	        IEncryptionFactory encryptionFactory,
             ISessionDomainService sessionDomainService,
-            IMapper mapper)
+            IMapper mapper,
+            IValidator<RefreshTokenAdto> refreshTokenValidator,
+            IValidator<LoginAdto> loginValidator)
         {
             _identityDomainService = identityDomainService;
 	        _jwtFactory = jwtFactory;
@@ -37,10 +46,14 @@ namespace Authentication.Application.Authentication
 	        _encryptionFactory = encryptionFactory;
 	        _sessionDomainService = sessionDomainService;
 	        _mapper = mapper;
+	        _refreshTokenValidator = refreshTokenValidator;
+	        _loginValidator = loginValidator;
         }
 
 	    public async Task<ExtendedJwtAdto> LoginAsync(LoginAdto loginAdto)
 	    {
+		    _loginValidator.ValidateAndThrow(loginAdto);
+
 	        LoginIdentityProjection loginIdentityProjection = _identityDomainService.Login(Mapper.Map<LoginAdto, LoginDdto>(loginAdto));
 
 	        ExtendedJwtAdto jwt = await _jwtFactory.GenerateJwt<ExtendedJwtAdto>(
@@ -61,19 +74,33 @@ namespace Authentication.Application.Authentication
 
 	    public async Task<JwtAdto> RefreshTokenAsync(RefreshTokenAdto refreshTokenAdto)
 	    {
-		    RefreshSessionProjection refreshSessionProjection = _sessionDomainService.Refresh(_mapper.Map<RefreshTokenAdto, RefreshSessionDdto>(refreshTokenAdto));
+		    _refreshTokenValidator.ValidateAndThrow(refreshTokenAdto);
 		    
-		    JwtAdto jwt = await _jwtFactory.GenerateJwt<JwtAdto>(
-			    ClaimsBuilder.CreateBuilder()
-				    .WithSubject(refreshSessionProjection.Id)
-				    .WithRole(JwtClaims.AppAccess)
-				    .Build()
-		    );
+		    try
+		    {
+			    RefreshSessionProjection refreshSessionProjection =
+				    _sessionDomainService.Refresh(_mapper.Map<RefreshTokenAdto, RefreshSessionDdto>(refreshTokenAdto));
 
-		    jwt.RefreshToken = refreshSessionProjection.RefreshToken;
-		    jwt.SessionId = refreshSessionProjection.Id;
+			    JwtAdto jwt = await _jwtFactory.GenerateJwt<JwtAdto>(
+				    ClaimsBuilder.CreateBuilder()
+					    .WithSubject(refreshSessionProjection.Id)
+					    .WithRole(JwtClaims.AppAccess)
+					    .Build()
+			    );
 
-		    return jwt;
+			    jwt.RefreshToken = refreshSessionProjection.RefreshToken;
+			    jwt.SessionId = refreshSessionProjection.Id;
+
+			    return jwt;
+		    }
+		    catch (SessionRevokedDomainException e)
+		    {
+			    throw new ApplicationException(ExceptionType.Unauthorized, e);
+		    }
+		    catch (RefreshTokenInvalidDomainException e)
+		    {
+			    throw new ApplicationException(ExceptionType.Unauthorized, e);
+		    }
 	    }
     }
 }

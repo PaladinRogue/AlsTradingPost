@@ -1,5 +1,7 @@
 ﻿using Authentication.Application.Authentication;
 using Authentication.Application.Authentication.Interfaces;
+using Authentication.Application.Authentication.Models;
+using Authentication.Application.Authentication.Validators;
 using Authentication.Domain.ApplicationServices;
 using Authentication.Domain.ApplicationServices.Interfaces;
 using Authentication.Domain.IdentityServices;
@@ -17,6 +19,7 @@ using Common.Api.Meta;
 using Common.Api.Routing;
 using Common.Authentication.Domain.Persistence;
 using Common.Setup.Infrastructure.Transactions;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +37,14 @@ namespace Authentication.Setup
 		    services.AddSingleton<IResourceTemplateBuilder, ResourceTemplateBuilder>();
 		    services.AddSingleton<ITemplateBuilder, TemplateBuilder>();
 		    services.AddSingleton<IResourceBuilder, ResourceBuilder>();
+	    }
+
+	    public static void RegisterValidators(IServiceCollection services)
+	    {
+		    ValidatorOptions.LanguageManager.Enabled = false;
+
+		    services.AddTransient<IValidator<RefreshTokenAdto>, RefreshTokenValidator>();
+		    services.AddTransient<IValidator<LoginAdto>, LoginValidator>();
 	    }
 	    
         public static void RegisterApplicationServices(IServiceCollection services)
