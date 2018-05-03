@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Common.Application.Exceptions;
-using Common.Resources.Extensions;
 using FluentValidation;
 
 namespace Common.Application.Validation

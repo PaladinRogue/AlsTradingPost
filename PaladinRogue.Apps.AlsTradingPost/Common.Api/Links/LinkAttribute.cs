@@ -2,7 +2,7 @@
 
 namespace Common.Api.Links
 {
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class LinkAttribute : Attribute
     {
         public string LinkName { get; }

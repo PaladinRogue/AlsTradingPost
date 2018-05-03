@@ -1,4 +1,5 @@
 ﻿using AlsTradingPost.Domain.AdminDomain.Models;
+using AlsTradingPost.Domain.Models;
 using AutoMapper;
 using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Models.Interfaces;
@@ -9,10 +10,10 @@ namespace AlsTradingPost.Domain.AdminDomain.Mappings
     {
         public AdminDomainMappingProfile()
         {
-            CreateMap<Domain.Models.Admin, AdminProjection>()
+            CreateMap<Admin, AdminProjection>()
                 .IncludeBase<IVersionedEntity, IVersionedProjection>();
-            CreateMap<CreateAdminDdto, Domain.Models.Admin>();
-            CreateMap<UpdateAdminDdto, Domain.Models.Admin>()
+            CreateMap<CreateAdminDdto, Admin>();
+            CreateMap<UpdateAdminDdto, Admin>()
                 .IncludeBase<IVersionedDdto, IVersionedEntity>();
         }
     }

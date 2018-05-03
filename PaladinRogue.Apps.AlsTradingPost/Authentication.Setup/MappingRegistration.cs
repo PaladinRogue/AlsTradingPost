@@ -2,6 +2,7 @@
 using Authentication.Application.Authentication.Mappings;
 using Authentication.Domain.IdentityServices.Mappings;
 using AutoMapper;
+using Common.Authentication.Domain.SessionDomain.Mappings;
 using Common.Domain.Mappings;
 
 namespace Authentication.Setup
@@ -24,6 +25,7 @@ namespace Authentication.Setup
         {
             configuration.AddProfile<DomainMappingProfile>();
             configuration.AddProfile<IdentityDomainMappingProfile>();
+            configuration.AddProfile<SessionDomainMappingProfile>();
         }
     }
 }

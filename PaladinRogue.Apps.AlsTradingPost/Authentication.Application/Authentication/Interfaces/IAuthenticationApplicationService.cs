@@ -7,6 +7,8 @@ namespace Authentication.Application.Authentication.Interfaces
     public interface IAuthenticationApplicationService
     {
         Task<ExtendedJwtAdto> LoginAsync(LoginAdto loginAdto);
+        
+        Task<JwtAdto> RefreshTokenAsync(RefreshTokenAdto refreshTokenAdto);
     }
 }
 

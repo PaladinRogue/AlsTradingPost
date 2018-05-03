@@ -48,9 +48,9 @@ namespace Persistence.EntityFramework.Repositories
             {
                 return Filter(results, e => e.Id == id).SingleOrDefault();
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ex)
             {
-                throw new DomainException("Multiple entites exist with given Id");
+                throw new GetByIdDomainException(id, ex);
             }
         }
 
@@ -60,9 +60,9 @@ namespace Persistence.EntityFramework.Repositories
             {
                 return Filter(results, predicate).SingleOrDefault();
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ex)
             {
-                throw new DomainException($"Multiple entites exist which match given predicate ({ predicate })");
+                throw new GetSingleDomainException<T>(predicate, ex);
             }
         }
 

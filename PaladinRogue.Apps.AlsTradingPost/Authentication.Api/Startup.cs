@@ -35,6 +35,7 @@ namespace Authentication.Api
             services.Configure<MvcOptions>(options =>
             {
                 options.UseCamelCaseJsonOutputFormatter<JsonOutputFormatter>()
+                    .UseValidationExceptionFilter()
                     .UseConcurrencyFilter();
 
                 if (!Environment.IsDevelopment())
@@ -50,10 +51,14 @@ namespace Authentication.Api
             MessageRegistration.RegisterSubscribers(services);
             
             ServiceRegistration.RegisterBuilders(services);
+            ServiceRegistration.RegisterValidators(services);
             ServiceRegistration.RegisterApplicationServices(services);
             ServiceRegistration.RegisterDomainServices(services);
             ServiceRegistration.RegisterPersistenceServices(Configuration, services);
             ServiceRegistration.RegisterProviders(services);
+            
+            Common.Authentication.Setup.ServiceRegistration.RegisterDomainServices(services);
+            Common.Authentication.Setup.ServiceRegistration.RegisterProviders(services);
 
             services.AddAutoMapper(MappingRegistration.RegisterMappers);
 

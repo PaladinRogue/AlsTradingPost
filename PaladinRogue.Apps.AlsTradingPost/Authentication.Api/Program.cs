@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore;
+﻿using Authentication.Setup.Infrastructure.DbInitializer;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace Authentication.Api
@@ -8,6 +9,7 @@ namespace Authentication.Api
 	    public static void Main(string[] args)
 	    {
 		    BuildWebHost(args)
+			    .ApplyMigrations()
                 .Run();
 	    }
 

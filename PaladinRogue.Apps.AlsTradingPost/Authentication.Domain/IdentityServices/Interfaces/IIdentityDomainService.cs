@@ -4,6 +4,6 @@ namespace Authentication.Domain.IdentityServices.Interfaces
 {
     public interface IIdentityDomainService
     {
-        IdentityProjection Login(LoginDdto loginDdto);
+        LoginIdentityProjection Login(LoginDdto loginDdto);
     }
 }

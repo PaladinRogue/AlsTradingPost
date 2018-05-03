@@ -1,4 +1,5 @@
 ﻿using Authentication.Domain.Models;
+using Common.Authentication.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Authentication.Persistence
@@ -12,6 +13,8 @@ namespace Authentication.Persistence
         public DbSet<Identity> Identities { get; set; }
         
         public DbSet<Application> Applications { get; set; }
+        
+        public DbSet<Session> Sessions { get; set; }
 		
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

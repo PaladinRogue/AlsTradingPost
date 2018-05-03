@@ -11,6 +11,11 @@ namespace Common.Domain.Models
         
         public static T CreateEntity<T>(Guid id)
         {
+            if (id == Guid.Empty)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            
             return (T)Activator.CreateInstance(typeof(T), id);
         }
     }
