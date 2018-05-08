@@ -70,7 +70,8 @@ namespace Authentication.Api.Controllers
 		{
 			string appAccessTokenResponse = await _httpClientFactory.GetStringAsync(new Uri(string.Format(
 					_fbAuthSettings.AccessTokenEndpoint,
-					_fbAuthSettings.AppId, _fbAuthSettings.AppSecret
+					_fbAuthSettings.AppId,
+					_fbAuthSettings.AppSecret
 				))
 			);
 
@@ -79,7 +80,8 @@ namespace Authentication.Api.Controllers
 
 			string userAccessTokenValidationResponse = await _httpClientFactory.GetStringAsync(new Uri(string.Format(
 					_fbAuthSettings.AccessTokenValidationEndpoint,
-					template.AccessToken, appAccessToken.AccessToken
+					template.AccessToken,
+					appAccessToken.AccessToken
 				))
 			);
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Common.Domain.Models;
 
 namespace Common.Authentication.Domain.Models
@@ -7,14 +8,14 @@ namespace Common.Authentication.Domain.Models
     {
         public Session()
         {
-            
         }
         
-        public Session(Guid userId)
+        public Session(Guid id)
         {
-            Id = userId;
+            Id = id;
         }
         
+        [MaxLength(100)]
         public string RefreshToken { get; set; }
         public bool Revoked { get; set; }
     }
