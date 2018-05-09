@@ -14,6 +14,7 @@ using Common.Application.Authentication;
 using Common.Setup.Infrastructure.Authentication;
 using Common.Setup.Infrastructure.Encryption.Interfaces;
 using Common.Setup.Infrastructure.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -127,6 +128,7 @@ namespace AlsTradingPost.Api.Controllers
             );
         }
 
+        [AllowAnonymous]
         [Route("refreshToken", Name = RouteDictionary.AuthenticationRefreshToken)]
         public async Task<IActionResult> PostRefreshToken([FromBody] RefreshTokenTemplate template)
         {
