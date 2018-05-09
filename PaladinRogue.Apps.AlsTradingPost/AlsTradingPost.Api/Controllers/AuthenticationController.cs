@@ -55,6 +55,7 @@ namespace AlsTradingPost.Api.Controllers
             _fbSettings = fbSettingsAccessor.Value;
         }
 
+        [AllowAnonymous]
         [Route("services", Name = RouteDictionary.AuthenticationServices)]
         public IActionResult GetAuthenticationServices()
         {
@@ -64,6 +65,7 @@ namespace AlsTradingPost.Api.Controllers
             );
         }
 
+        [AllowAnonymous]
         [Route("facebook/resourceTemplate", Name = RouteDictionary.AuthenticationFacebookTemplate)]
         public IActionResult GetAuthenticationTemplate()
         {
@@ -118,6 +120,7 @@ namespace AlsTradingPost.Api.Controllers
             );
         }
 
+        [AllowAnonymous]
         [Route("refreshToken/resourceTemplate", Name = RouteDictionary.AuthenticationRefreshTokenTemplate)]
         public IActionResult GetRefreshTokenTemplate()
         {
