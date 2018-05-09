@@ -2,11 +2,11 @@
 using AutoMapper;
 using Common.Api.Authentication.FacebookModels;
 
-namespace AlsTradingPost.Api.FacebookAuth
+namespace AlsTradingPost.Api.Authentication
 {
-    public class FacebookAuthApiMappingProfile : Profile
+    public class AuthenticationMappingProfile : Profile
     {
-        public FacebookAuthApiMappingProfile()
+        public AuthenticationMappingProfile()
         {
             CreateMap<FacebookUserData, LoginAdto>()
                 .ForMember(d => d.PictureUrl, opts => opts.MapFrom(s => s.PictureData.Picture.Url));

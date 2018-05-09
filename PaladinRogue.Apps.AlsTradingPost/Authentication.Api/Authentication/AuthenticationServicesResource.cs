@@ -2,7 +2,7 @@
 using Common.Api.Resources;
 using Common.Setup.Infrastructure.Constants;
 
-namespace Authentication.Api.Resources
+namespace Authentication.Api.Authentication
 {
     [SelfLink(RouteDictionary.AuthenticationServices, HttpVerbs.Get)]
     [Link(LinkDictionary.AuthenticationFacebookTemplate, RouteDictionary.AuthenticationFacebookTemplate, HttpVerbs.Get)]

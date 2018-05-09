@@ -9,6 +9,10 @@
   <ItemGroup>
     <ProjectReference Include="..\AlsTradingPost.Domain\AlsTradingPost.Domain.csproj" />
     <ProjectReference Include="..\Common.Application\Common.Application.csproj" />
+    <ProjectReference Include="..\Common.Authentication\Common.Authentication.Domain\Common.Authentication.Domain.csproj">
+      <Project>{89B744E4-6DD1-4813-AA88-DD9DE98496FC}</Project>
+      <Name>Common.Authentication.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common.Resources\Common.Resources.csproj" />
   </ItemGroup>
 </Project>

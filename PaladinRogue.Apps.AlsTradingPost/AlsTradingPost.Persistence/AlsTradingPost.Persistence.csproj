@@ -14,6 +14,10 @@
   <ItemGroup>
     <ProjectReference Include="..\AlsTradingPost.Domain.Models\AlsTradingPost.Domain.Models.csproj" />
     <ProjectReference Include="..\AlsTradingPost.Domain\AlsTradingPost.Domain.csproj" />
+    <ProjectReference Include="..\Common.Authentication\Common.Authentication.Domain\Common.Authentication.Domain.csproj">
+      <Project>{89B744E4-6DD1-4813-AA88-DD9DE98496FC}</Project>
+      <Name>Common.Authentication.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common.Domain\Common.Domain.csproj" />
     <ProjectReference Include="..\Persistence.EntityFramework\Persistence.EntityFramework.csproj" />
   </ItemGroup>

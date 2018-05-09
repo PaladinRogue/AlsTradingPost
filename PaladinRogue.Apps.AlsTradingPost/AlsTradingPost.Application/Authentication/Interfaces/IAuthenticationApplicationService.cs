@@ -7,5 +7,7 @@ namespace AlsTradingPost.Application.Authentication.Interfaces
     public interface IAuthenticationApplicationService
     {
         Task<JwtAdto> LoginAsync(LoginAdto loginAdto);
+        
+        Task<JwtAdto> RefreshTokenAsync(RefreshTokenAdto refreshTokenAdto);
     }
 }

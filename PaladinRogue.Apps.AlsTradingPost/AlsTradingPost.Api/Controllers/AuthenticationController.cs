@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AlsTradingPost.Api.FacebookAuth;
+using AlsTradingPost.Api.Authentication;
 using AlsTradingPost.Application.Authentication.Interfaces;
 using AlsTradingPost.Application.Authentication.Models;
 using AlsTradingPost.Setup.Infrastructure.Settings;
@@ -8,13 +8,13 @@ using AutoMapper;
 using Common.Api.Authentication;
 using Common.Api.Authentication.FacebookModels;
 using Common.Api.Builders.Resource;
+using Common.Api.Builders.Template;
 using Common.Api.HttpClient.Interfaces;
 using Common.Application.Authentication;
 using Common.Setup.Infrastructure.Authentication;
 using Common.Setup.Infrastructure.Encryption.Interfaces;
 using Common.Setup.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
@@ -23,36 +23,61 @@ namespace AlsTradingPost.Api.Controllers
     [Route("api/[controller]")]
     public class AuthenticationController : Controller
     {
-        private readonly ILogger<AuthenticationController> _logger;
         private readonly JwtAuthenticationIssuerOptions _jwtAuthenticationIssuerOptions;
         private readonly FacebookSettings _fbSettings;
         private readonly IAuthenticationApplicationService _authenticationApplicationService;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IEncryptionFactory _encryptionFactory;
         private readonly IResourceTemplateBuilder _resourceTemplateBuilder;
+        private readonly IResourceBuilder _resourceBuilder;
+        private readonly ITemplateBuilder _templateBuilder;
+        private readonly IMapper _mapper;
 
         public AuthenticationController(IOptions<FacebookSettings> fbSettingsAccessor,
             IOptions<JwtAuthenticationIssuerOptions> jwtAuthenticationIssuerOptions,
-            ILogger<AuthenticationController> logger,
             IAuthenticationApplicationService authenticationApplicationService,
             IHttpClientFactory httpClientFactory,
             IEncryptionFactory encryptionFactory,
-            IResourceTemplateBuilder resourceTemplateBuilder)
+            IResourceTemplateBuilder resourceTemplateBuilder,
+            ITemplateBuilder templateBuilder,
+            IResourceBuilder resourceBuilder,
+            IMapper mapper)
         {
-            _logger = logger;
             _authenticationApplicationService = authenticationApplicationService;
             _httpClientFactory = httpClientFactory;
             _encryptionFactory = encryptionFactory;
             _resourceTemplateBuilder = resourceTemplateBuilder;
+            _templateBuilder = templateBuilder;
+            _resourceBuilder = resourceBuilder;
+            _mapper = mapper;
             _jwtAuthenticationIssuerOptions = jwtAuthenticationIssuerOptions.Value;
             _fbSettings = fbSettingsAccessor.Value;
         }
 
-        [Route("facebook", Name = RouteDictionary.AuthenticationFacebook)]
-        public async Task<IActionResult> PostFacebook([FromBody] FacebookAuthTemplate template)
+        [Route("services", Name = RouteDictionary.AuthenticationServices)]
+        public IActionResult GetAuthenticationServices()
         {
-            string accessToken =
-                _encryptionFactory.Decrypt<string>(template.AccessToken, _jwtAuthenticationIssuerOptions.SigningKey);
+            return new ObjectResult(
+                _resourceBuilder.Create(new AuthenticationServicesResource())
+                    .Build()
+            );
+        }
+
+        [Route("facebook/resourceTemplate", Name = RouteDictionary.AuthenticationFacebookTemplate)]
+        public IActionResult GetAuthenticationTemplate()
+        {
+            return new ObjectResult(
+                _templateBuilder.Create<AuthenticationTemplate>()
+                    .WithTemplateMeta()
+                    .Build()
+            );
+        }
+
+        [Route("facebook", Name = RouteDictionary.AuthenticationFacebook)]
+        public async Task<IActionResult> PostFacebook([FromBody] AuthenticationTemplate template)
+        {
+            string accessToken = _encryptionFactory.Decrypt<string>(template.AccessToken,
+                _jwtAuthenticationIssuerOptions.SigningKey);
 
             string userAccessTokenValidationResponse;
 
@@ -64,8 +89,7 @@ namespace AlsTradingPost.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation(ex, "Invalid facebook token.");
-                throw new BadRequestException("Invalid facebook token.");
+                throw new BadRequestException("Invalid facebook token.", ex);
             }
 
             FacebookUserAccessTokenValidation userAccessTokenValidation =
@@ -73,7 +97,6 @@ namespace AlsTradingPost.Api.Controllers
 
             if (!userAccessTokenValidation.Data.IsValid)
             {
-                _logger.LogInformation("Invalid facebook token.");
                 throw new BadRequestException("Invalid facebook token.");
             }
 
@@ -87,7 +110,35 @@ namespace AlsTradingPost.Api.Controllers
             JwtAdto jwtAdto = await _authenticationApplicationService.LoginAsync(loginAdto);
 
             return new ObjectResult(
-                _resourceTemplateBuilder.Create(Mapper.Map<JwtAdto, JwtResource>(jwtAdto), template)
+                _resourceTemplateBuilder.Create(_mapper.Map<JwtAdto, JwtResource>(jwtAdto), template)
+                    .WithResourceMeta()
+                    .WithTemplateMeta()
+                    .Build()
+            );
+        }
+
+        [Route("refreshToken/resourceTemplate", Name = RouteDictionary.AuthenticationRefreshTokenTemplate)]
+        public IActionResult GetRefreshTokenTemplate()
+        {
+            return new ObjectResult(
+                _templateBuilder.Create<RefreshTokenTemplate>()
+                    .WithTemplateMeta()
+                    .Build()
+            );
+        }
+
+        [Route("refreshToken", Name = RouteDictionary.AuthenticationRefreshToken)]
+        public async Task<IActionResult> PostRefreshToken([FromBody] RefreshTokenTemplate template)
+        {
+            JwtAdto jwt = await _authenticationApplicationService.RefreshTokenAsync(
+                new RefreshTokenAdto
+                {
+                    SessionId = template.SessionId,
+                    Token = template.RefreshToken
+                });
+
+            return new ObjectResult(
+                _resourceTemplateBuilder.Create(_mapper.Map<JwtAdto, JwtResource>(jwt), template)
                     .WithResourceMeta()
                     .WithTemplateMeta()
                     .Build()

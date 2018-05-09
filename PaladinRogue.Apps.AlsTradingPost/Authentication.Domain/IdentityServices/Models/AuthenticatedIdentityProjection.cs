@@ -2,7 +2,7 @@
 
 namespace Authentication.Domain.IdentityServices.Models
 {
-    public class LoginIdentityProjection
+    public class AuthenticatedIdentityProjection
     {
         public Guid Id { get; set; }
     }

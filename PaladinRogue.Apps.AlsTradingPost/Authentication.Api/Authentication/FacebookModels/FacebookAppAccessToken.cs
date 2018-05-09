@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Authentication.Api.FacebookModels
+namespace Authentication.Api.Authentication.FacebookModels
 {
     public class FacebookAppAccessToken
     {

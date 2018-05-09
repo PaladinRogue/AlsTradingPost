@@ -54,7 +54,7 @@ namespace Authentication.Application.Authentication
 	    {
 		    _loginValidator.ValidateAndThrow(loginAdto);
 
-	        LoginIdentityProjection loginIdentityProjection = _identityDomainService.Login(Mapper.Map<LoginAdto, LoginDdto>(loginAdto));
+	        AuthenticatedIdentityProjection loginIdentityProjection = _identityDomainService.Login(Mapper.Map<LoginAdto, LoginDdto>(loginAdto));
 
 	        ExtendedJwtAdto jwt = await _jwtFactory.GenerateJwt<ExtendedJwtAdto>(
 	            ClaimsBuilder.CreateBuilder()

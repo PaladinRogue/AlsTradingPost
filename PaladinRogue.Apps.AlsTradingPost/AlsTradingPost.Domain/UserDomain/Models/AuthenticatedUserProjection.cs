@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using AlsTradingPost.Resources;
 using Common.Domain.Concurrency;
 
