@@ -4,7 +4,7 @@ using Common.Api.Resources;
 using Common.Api.Validation.Attributes;
 using Common.Setup.Infrastructure.Constants;
 
-namespace Authentication.Api.Request
+namespace AlsTradingPost.Api.Authentication
 {
     [SelfLink(RouteDictionary.AuthenticationRefreshTokenTemplate, HttpVerbs.Get)]
     [Link(LinkDictionary.AuthenticationRefreshToken, RouteDictionary.AuthenticationRefreshToken, HttpVerbs.Post)]

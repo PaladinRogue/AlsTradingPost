@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace AlsTradingPost.Application.ItemReferenceData.Validators
 {
-    public class ItemReferenceDataSearchAdtoValidator : AbstractValidator<ItemReferenceDataSearchAdto>
+    public class ItemReferenceDataSearchValidator : AbstractValidator<ItemReferenceDataSearchAdto>
     {
-        public ItemReferenceDataSearchAdtoValidator()
+        public ItemReferenceDataSearchValidator()
         {
             RuleFor(x => x.Name)
                 .Length(3, 50);

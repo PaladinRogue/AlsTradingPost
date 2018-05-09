@@ -3,7 +3,7 @@ using Common.Api.Links;
 using Common.Api.Meta;
 using Common.Setup.Infrastructure.Constants;
 
-namespace Authentication.Api.Resources
+namespace Authentication.Api.Authentication
 {
     [SelfLink(RouteDictionary.AuthenticationFacebook, HttpVerbs.Get)]
     public class FacebookJwtResource : JwtResource

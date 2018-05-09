@@ -2,6 +2,8 @@
 using AlsTradingPost.Application.Admin.Interfaces;
 using AlsTradingPost.Application.Authentication;
 using AlsTradingPost.Application.Authentication.Interfaces;
+using AlsTradingPost.Application.Authentication.Models;
+using AlsTradingPost.Application.Authentication.Validators;
 using AlsTradingPost.Application.ItemReferenceData;
 using AlsTradingPost.Application.ItemReferenceData.Interfaces;
 using AlsTradingPost.Application.ItemReferenceData.Models;
@@ -31,6 +33,7 @@ using Common.Api.HttpClient.Interfaces;
 using Common.Api.Links;
 using Common.Api.Meta;
 using Common.Api.Routing;
+using Common.Authentication.Domain.Persistence;
 using Common.Domain.Concurrency;
 using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Concurrency.Services;
@@ -65,7 +68,9 @@ namespace AlsTradingPost.Setup
         {
             ValidatorOptions.LanguageManager.Enabled = false;
 
-            services.AddTransient<IValidator<ItemReferenceDataSearchAdto>, ItemReferenceDataSearchAdtoValidator>();
+            services.AddTransient<IValidator<ItemReferenceDataSearchAdto>, ItemReferenceDataSearchValidator>();
+            services.AddTransient<IValidator<LoginAdto>, LoginValidator>();
+            services.AddTransient<IValidator<RefreshTokenAdto>, RefreshTokenValidator>();
         }
 
         public static void RegisterApplicationServices(IServiceCollection services)
@@ -106,6 +111,7 @@ namespace AlsTradingPost.Setup
             services.AddScoped<ICharacterRepository, CharacterRepository>();
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<IItemReferenceDataRepository, ItemReferenceDataRepository>();
+            services.AddScoped<ISessionRepository, SessionRepository>();
 
             services.AddDbContext<AlsTradingPostDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("Default")));

@@ -18,6 +18,7 @@
     <ProjectReference Include="..\AlsTradingPost.Resources\AlsTradingPost.Resources.csproj" />
     <ProjectReference Include="..\AlsTradingPost.Setup\AlsTradingPost.Setup.csproj" />
     <ProjectReference Include="..\Common.Api\Common.Api.csproj" />
+    <ProjectReference Include="..\Common.Authentication\Common.Authentication.Setup\Common.Authentication.Setup.csproj" />
     <ProjectReference Include="..\Common.Setup\Common.Setup.csproj" />
   </ItemGroup>
 </Project>

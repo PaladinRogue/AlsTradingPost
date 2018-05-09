@@ -56,6 +56,9 @@ namespace AlsTradingPost.Api
             ServiceRegistration.RegisterDomainServices(services);
             ServiceRegistration.RegisterPersistenceServices(Configuration, services);
             ServiceRegistration.RegisterProviders(services);
+            
+            Common.Authentication.Setup.ServiceRegistration.RegisterDomainServices(services);
+            Common.Authentication.Setup.ServiceRegistration.RegisterProviders(services);
 
             services.AddAutoMapper(MappingRegistration.RegisterMappers);
 
