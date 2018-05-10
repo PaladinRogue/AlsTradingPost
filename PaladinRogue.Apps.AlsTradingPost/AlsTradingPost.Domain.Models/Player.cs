@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using AlsTradingPost.Domain.Models.Interfaces;
 using AlsTradingPost.Resources;
 using Common.Domain.Models;
@@ -14,11 +15,15 @@ namespace AlsTradingPost.Domain.Models
         {
         }
         
-        public Player(Guid userId)
+        public Player(Guid id)
         {
-            Id = userId;
+            Id = id;
         }
         
+        [MaxLength(50)]
+        public string Alias { get; set; }
+        
+        [MaxLength(50)]
         public string DCI { get; set; }
         public IEnumerable<Character> Characters { get; set; }
     }
