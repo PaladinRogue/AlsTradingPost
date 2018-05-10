@@ -5,11 +5,9 @@ using Common.Setup.Infrastructure.Constants;
 
 namespace AlsTradingPost.Api.Authentication
 {
-    [SelfLink(RouteDictionary.AuthenticationFacebookTemplate, HttpVerbs.Get)]
-    [Link(LinkDictionary.AuthenticationFacebook, RouteDictionary.AuthenticationFacebook, HttpVerbs.Post)]
+    [SelfLink(RouteDictionary.AuthenticationLoginTemplate, HttpVerbs.Get)]
+    [Link(LinkDictionary.AuthenticationFacebook, RouteDictionary.AuthenticationLogin, HttpVerbs.Post)]
     public class AuthenticationTemplate : ITemplate
     {
-        [Required]
-        public string AccessToken { get; set; }
     }
 }

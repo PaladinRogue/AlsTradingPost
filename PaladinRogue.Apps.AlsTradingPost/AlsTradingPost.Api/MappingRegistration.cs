@@ -17,7 +17,6 @@ namespace AlsTradingPost.Api
         public static void RegisterApiMappers(IMapperConfigurationExpression configuration)
         {
             configuration.AddProfile<AdminApiMappingProfile>();
-            configuration.AddProfile<AuthenticationMappingProfile>();
             configuration.AddProfile<ItemReferenceDataApiMappingProfile>();
         }
     }
