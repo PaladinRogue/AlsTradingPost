@@ -15,8 +15,8 @@ using AlsTradingPost.Domain.AuditDomain.Interfaces;
 using AlsTradingPost.Domain.ItemReferenceDataDomain;
 using AlsTradingPost.Domain.ItemReferenceDataDomain.Interfaces;
 using AlsTradingPost.Domain.Persistence;
-using AlsTradingPost.Domain.PlayerDomain;
-using AlsTradingPost.Domain.PlayerDomain.Interfaces;
+using AlsTradingPost.Domain.TraderDomain;
+using AlsTradingPost.Domain.TraderDomain.Interfaces;
 using AlsTradingPost.Domain.UserDomain;
 using AlsTradingPost.Domain.UserDomain.Interfaces;
 using AlsTradingPost.Persistence;
@@ -97,7 +97,7 @@ namespace AlsTradingPost.Setup
             services.AddScoped<IAdminCommandService, AdminCommandService>();
             services.AddScoped<IAdminQueryService, AdminQueryService>();
             
-            services.AddScoped<IPlayerCommandService, PlayerCommandService>();
+            services.AddScoped<ITraderCommandService, TraderCommandService>();
 
             services.AddScoped<IItemReferenceDataQueryService, ItemReferenceDataQueryService>();
         }
@@ -107,7 +107,7 @@ namespace AlsTradingPost.Setup
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAuditRepository, AuditRepository>();
             services.AddScoped<IAdminRepository, AdminRepository>();
-            services.AddScoped<IPlayerRepository, PlayerRepository>();
+            services.AddScoped<ITraderRepository, TraderRepository>();
             services.AddScoped<ICharacterRepository, CharacterRepository>();
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<IItemReferenceDataRepository, ItemReferenceDataRepository>();

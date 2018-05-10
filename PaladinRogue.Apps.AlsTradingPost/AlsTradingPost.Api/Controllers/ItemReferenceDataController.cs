@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AlsTradingPost.Api.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(PersonaPolicies.Player)]
+    [Authorize(PersonaPolicies.Trader)]
     public class ItemReferenceDataController : Controller
     {
         private readonly IItemReferenceDataApplicationService _itemReferenceDataApplicationService;

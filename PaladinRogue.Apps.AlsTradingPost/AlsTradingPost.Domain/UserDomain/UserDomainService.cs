@@ -1,6 +1,4 @@
 ﻿using System.Linq;
-using AlsTradingPost.Domain.PlayerDomain.Interfaces;
-using AlsTradingPost.Domain.PlayerDomain.Models;
 using AlsTradingPost.Domain.UserDomain.Interfaces;
 using AlsTradingPost.Domain.UserDomain.Models;
 using AlsTradingPost.Resources;
@@ -12,18 +10,15 @@ namespace AlsTradingPost.Domain.UserDomain
     {
         private readonly IUserQueryService _userQueryService;
         private readonly IUserCommandService _userCommandService;
-        private readonly IPlayerCommandService _playerCommandService;
         private readonly IMapper _mapper;
 
         public UserDomainService(
             IUserQueryService userQueryService,
             IUserCommandService userCommandService,
-            IPlayerCommandService playerCommandService,
             IMapper mapper)
         {
             _userQueryService = userQueryService;
             _userCommandService = userCommandService;
-            _playerCommandService = playerCommandService;
             _mapper = mapper;
         }
 
@@ -46,8 +41,6 @@ namespace AlsTradingPost.Domain.UserDomain
             CreateUserDdto createUserDdto = _mapper.Map<LoginDdto, CreateUserDdto>(loginDdto);
 
             UserProjection userProjection = _userCommandService.Create(createUserDdto);
-
-            _playerCommandService.Create(_mapper.Map<UserProjection, CreatePlayerDdto>(userProjection));
 
             return _mapper.Map<UserProjection, AuthenticatedUserProjection>(userProjection);
         }

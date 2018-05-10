@@ -7,6 +7,6 @@ namespace AlsTradingPost.Resources
     {
         None,
         Admin,
-        Player
+        Trader
     }
 }

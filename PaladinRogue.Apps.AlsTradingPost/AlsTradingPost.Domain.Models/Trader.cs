@@ -7,15 +7,15 @@ using Common.Domain.Models;
 
 namespace AlsTradingPost.Domain.Models
 {
-    public class Player : VersionedEntity, IPersona
+    public class Trader : VersionedEntity, IPersona
     {
-        public PersonaType TypeDiscriminator => PersonaType.Player;
+        public PersonaType TypeDiscriminator => PersonaType.Trader;
         
-        public Player()
+        public Trader()
         {
         }
         
-        public Player(Guid id)
+        public Trader(Guid id)
         {
             Id = id;
         }
@@ -25,6 +25,6 @@ namespace AlsTradingPost.Domain.Models
         
         [MaxLength(50)]
         public string DCI { get; set; }
-        public IEnumerable<Character> Characters { get; set; }
+        public virtual IEnumerable<Character> Characters { get; set; }
     }
 }

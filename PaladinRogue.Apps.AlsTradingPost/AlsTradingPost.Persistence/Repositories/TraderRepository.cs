@@ -5,23 +5,23 @@ using Persistence.EntityFramework.Repositories;
 
 namespace AlsTradingPost.Persistence.Repositories
 {
-    public class PlayerRepository : IPlayerRepository
+    public class TraderRepository : ITraderRepository
     {
         private readonly AlsTradingPostDbContext _context;
 
-        public PlayerRepository(AlsTradingPostDbContext context)
+        public TraderRepository(AlsTradingPostDbContext context)
         {
             _context = context;
         }
 
-        public Player GetById(Guid id)
+        public Trader GetById(Guid id)
         {
-            return RepositoryHelper.GetById(_context.Players, id);
+            return RepositoryHelper.GetById(_context.Traders, id);
         }
 
-        public void Add(Player entity)
+        public void Add(Trader entity)
         {
-            RepositoryHelper.Add(_context.Players, _context, entity);
+            RepositoryHelper.Add(_context.Traders, _context, entity);
         }
     }
 }

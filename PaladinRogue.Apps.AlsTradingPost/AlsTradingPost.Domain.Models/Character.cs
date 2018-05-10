@@ -9,7 +9,6 @@ namespace AlsTradingPost.Domain.Models
         public string Race { get; set; }
         public string Class { get; set; }
         public int Level { get; set; }
-        public List<Item> Items { get; set; }
-        public Player Player { get; set; }
+        public virtual IEnumerable<Item> Items { get; set; }
     }
 }

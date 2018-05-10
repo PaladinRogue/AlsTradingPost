@@ -18,7 +18,7 @@ namespace AlsTradingPost.Persistence
         
         public DbSet<Admin> Admins { get; set; }
 
-        public DbSet<Player> Players { get; set; }
+        public DbSet<Trader> Traders { get; set; }
 
         public DbSet<Character> Characters { get; set; }
 
