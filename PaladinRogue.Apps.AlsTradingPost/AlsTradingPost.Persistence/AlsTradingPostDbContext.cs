@@ -22,9 +22,9 @@ namespace AlsTradingPost.Persistence
 
         public DbSet<Character> Characters { get; set; }
 
-        public DbSet<Item> Items { get; set; }
+        public DbSet<MagicItem> MagicItems { get; set; }
 
-        public DbSet<ItemReferenceData> ItemReferenceData { get; set; }
+        public DbSet<MagicItemTemplate> MagicItemTemplates { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

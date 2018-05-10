@@ -4,16 +4,16 @@ using AlsTradingPost.Application.Authentication;
 using AlsTradingPost.Application.Authentication.Interfaces;
 using AlsTradingPost.Application.Authentication.Models;
 using AlsTradingPost.Application.Authentication.Validators;
-using AlsTradingPost.Application.ItemReferenceData;
-using AlsTradingPost.Application.ItemReferenceData.Interfaces;
-using AlsTradingPost.Application.ItemReferenceData.Models;
-using AlsTradingPost.Application.ItemReferenceData.Validators;
+using AlsTradingPost.Application.MagicItemTemplate;
+using AlsTradingPost.Application.MagicItemTemplate.Interfaces;
+using AlsTradingPost.Application.MagicItemTemplate.Models;
+using AlsTradingPost.Application.MagicItemTemplate.Validators;
 using AlsTradingPost.Domain.AdminDomain;
 using AlsTradingPost.Domain.AdminDomain.Interfaces;
 using AlsTradingPost.Domain.AuditDomain;
 using AlsTradingPost.Domain.AuditDomain.Interfaces;
-using AlsTradingPost.Domain.ItemReferenceDataDomain;
-using AlsTradingPost.Domain.ItemReferenceDataDomain.Interfaces;
+using AlsTradingPost.Domain.MagicItemTemplateDomain;
+using AlsTradingPost.Domain.MagicItemTemplateDomain.Interfaces;
 using AlsTradingPost.Domain.Persistence;
 using AlsTradingPost.Domain.TraderDomain;
 using AlsTradingPost.Domain.TraderDomain.Interfaces;
@@ -68,7 +68,7 @@ namespace AlsTradingPost.Setup
         {
             ValidatorOptions.LanguageManager.Enabled = false;
 
-            services.AddTransient<IValidator<ItemReferenceDataSearchAdto>, ItemReferenceDataSearchValidator>();
+            services.AddTransient<IValidator<MagicItemTemplateSearchAdto>, MagicItemTemplateSearchValidator>();
             services.AddTransient<IValidator<LoginAdto>, LoginValidator>();
             services.AddTransient<IValidator<RefreshTokenAdto>, RefreshTokenValidator>();
         }
@@ -82,7 +82,7 @@ namespace AlsTradingPost.Setup
 
             services.AddScoped<IAdminApplicationService, AdminApplicationService>();
 
-            services.AddScoped<IItemReferenceDataApplicationService, ItemReferenceDataApplicationService>();
+            services.AddScoped<IMagicItemTemplateApplicationService, MagicItemTemplateApplicationService>();
         }
 
         public static void RegisterDomainServices(IServiceCollection services)
@@ -99,7 +99,7 @@ namespace AlsTradingPost.Setup
             
             services.AddScoped<ITraderCommandService, TraderCommandService>();
 
-            services.AddScoped<IItemReferenceDataQueryService, ItemReferenceDataQueryService>();
+            services.AddScoped<IMagicItemTemplateQueryService, MagicItemTemplateQueryService>();
         }
 
         public static void RegisterPersistenceServices(IConfiguration configuration, IServiceCollection services)
@@ -109,8 +109,8 @@ namespace AlsTradingPost.Setup
             services.AddScoped<IAdminRepository, AdminRepository>();
             services.AddScoped<ITraderRepository, TraderRepository>();
             services.AddScoped<ICharacterRepository, CharacterRepository>();
-            services.AddScoped<IItemRepository, ItemRepository>();
-            services.AddScoped<IItemReferenceDataRepository, ItemReferenceDataRepository>();
+            services.AddScoped<IMagicItemRepository, MagicItemRepository>();
+            services.AddScoped<IMagicItemTemplateRepository, MagicItemTemplateRepository>();
             services.AddScoped<ISessionRepository, SessionRepository>();
 
             services.AddDbContext<AlsTradingPostDbContext>(options =>
