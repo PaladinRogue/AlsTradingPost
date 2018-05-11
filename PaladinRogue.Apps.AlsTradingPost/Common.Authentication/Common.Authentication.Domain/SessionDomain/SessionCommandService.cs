@@ -30,7 +30,7 @@ namespace Common.Authentication.Domain.SessionDomain
         {
             try
             {
-                Session newSession = _mapper.Map(entity, EntityFactory.CreateEntity<Session>(entity.Id));
+                Session newSession = _mapper.Map(entity, AggregateFactory.CreateRoot<Session>(entity.Id));
 
                 _sessionRepository.Add(newSession);
 

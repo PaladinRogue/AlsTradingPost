@@ -4,7 +4,7 @@ using Common.Resources.Authentication;
 
 namespace Authentication.Domain.Models
 {
-    public class Application : VersionedEntity
+    public class Application : AggregateRoot
     {
 	    [MaxLength(20)]
 	    public string Name { get; set; }

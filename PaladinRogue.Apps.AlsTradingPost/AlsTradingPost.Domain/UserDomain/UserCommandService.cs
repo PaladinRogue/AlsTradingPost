@@ -60,7 +60,7 @@ namespace AlsTradingPost.Domain.UserDomain
             User user = null;
             try
             {
-                user = _mapper.Map(entity, EntityFactory.CreateEntity<User>());
+                user = _mapper.Map(entity, AggregateFactory.CreateRoot<User>());
 
                 _userRepository.Add(user);
 

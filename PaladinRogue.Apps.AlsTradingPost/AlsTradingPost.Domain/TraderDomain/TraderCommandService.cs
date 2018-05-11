@@ -31,7 +31,7 @@ namespace AlsTradingPost.Domain.TraderDomain
             Trader trader = null;
             try
             {
-                trader = _mapper.Map(entity, EntityFactory.CreateEntity<Trader>(entity.Id));
+                trader = _mapper.Map(entity, AggregateFactory.CreateRoot<Trader>(entity.Id));
 
                 _traderRepository.Add(trader);
 

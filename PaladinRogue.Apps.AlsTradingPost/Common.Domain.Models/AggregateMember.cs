@@ -3,9 +3,9 @@ using Common.Domain.Models.Interfaces;
 
 namespace Common.Domain.Models
 {
-    public abstract class Entity : IEntity
+    public abstract class AggregateMember : IAggregateMember
     {
-        protected Entity()
+        protected AggregateMember()
         {
             Id = Guid.NewGuid();
         }

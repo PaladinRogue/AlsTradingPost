@@ -1,15 +1,16 @@
 ﻿using System;
+using Common.Domain.Models.Interfaces;
 
 namespace Common.Domain.Models
 {
-    public static class EntityFactory
+    public static class AggregateFactory
     {
-        public static T CreateEntity<T>()
+        public static T CreateRoot<T>() where T : IAggregateRoot
         {
             return (T)Activator.CreateInstance(typeof(T));
         }
         
-        public static T CreateEntity<T>(Guid id)
+        public static T CreateRoot<T>(Guid id) where T : IAggregateRoot
         {
             if (id == Guid.Empty)
             {

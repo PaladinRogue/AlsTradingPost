@@ -4,9 +4,9 @@ using Common.Domain.Models.Interfaces;
 
 namespace Common.Domain.Models
 {
-    public abstract class VersionedEntity : IVersionedEntity
+    public abstract class AggregateRoot : IAggregateRoot
     {
-        protected VersionedEntity()
+        protected AggregateRoot()
         {
             Id = Guid.NewGuid();
         }

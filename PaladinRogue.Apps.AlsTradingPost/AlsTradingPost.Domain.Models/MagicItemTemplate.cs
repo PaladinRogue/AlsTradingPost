@@ -4,7 +4,7 @@ using Common.Domain.Models;
 
 namespace AlsTradingPost.Domain.Models
 {
-    public class MagicItemTemplate : VersionedEntity
+    public class MagicItemTemplate : AggregateRoot
     {
         [MaxLength(100)]
         public string Name { get; set; }

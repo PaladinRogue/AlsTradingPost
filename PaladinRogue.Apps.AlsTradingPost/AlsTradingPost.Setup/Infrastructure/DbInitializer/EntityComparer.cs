@@ -20,7 +20,7 @@ namespace AlsTradingPost.Setup.Infrastructure.DbInitializer
 
         public int GetHashCode(T obj)
         {
-            return _properties.Aggregate(15, (current, propertyInfo) => current * 5 + propertyInfo.GetValue(obj).GetHashCode());
+            return _properties.Where(propertyInfo => propertyInfo.GetValue(obj) != null).Aggregate(15, (current, propertyInfo) => current * 5 + propertyInfo.GetValue(obj).GetHashCode());
         }
     }
 }

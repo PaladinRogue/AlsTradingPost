@@ -3,7 +3,7 @@ using Common.Domain.Models;
 
 namespace Authentication.Domain.Models
 {
-    public class Identity : VersionedEntity
+    public class Identity : AggregateRoot
     {
         [MaxLength(50)]
         public string AuthenticationId { get; set; }
