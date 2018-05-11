@@ -8,6 +8,10 @@ using AlsTradingPost.Application.MagicItemTemplate;
 using AlsTradingPost.Application.MagicItemTemplate.Interfaces;
 using AlsTradingPost.Application.MagicItemTemplate.Models;
 using AlsTradingPost.Application.MagicItemTemplate.Validators;
+using AlsTradingPost.Application.Trader;
+using AlsTradingPost.Application.Trader.Interfaces;
+using AlsTradingPost.Application.Trader.Models;
+using AlsTradingPost.Application.Trader.Validators;
 using AlsTradingPost.Domain.AdminDomain;
 using AlsTradingPost.Domain.AdminDomain.Interfaces;
 using AlsTradingPost.Domain.AuditDomain;
@@ -22,6 +26,7 @@ using AlsTradingPost.Domain.UserDomain.Interfaces;
 using AlsTradingPost.Persistence;
 using AlsTradingPost.Persistence.Repositories;
 using AlsTradingPost.Resources;
+using AlsTradingPost.Resources.Authorization;
 using AlsTradingPost.Setup.Infrastructure.Authorization;
 using AlsTradingPost.Setup.Infrastructure.Links;
 using AlsTradingPost.Setup.Infrastructure.Routing;
@@ -71,6 +76,7 @@ namespace AlsTradingPost.Setup
             services.AddTransient<IValidator<MagicItemTemplateSearchAdto>, MagicItemTemplateSearchValidator>();
             services.AddTransient<IValidator<LoginAdto>, LoginValidator>();
             services.AddTransient<IValidator<RefreshTokenAdto>, RefreshTokenValidator>();
+            services.AddTransient<IValidator<RegisterTraderAdto>, CreateTraderValidator>();
         }
 
         public static void RegisterApplicationServices(IServiceCollection services)
@@ -81,6 +87,8 @@ namespace AlsTradingPost.Setup
             services.AddScoped<IAuthenticationApplicationService, AuthenticationApplicationService>();
 
             services.AddScoped<IAdminApplicationService, AdminApplicationService>();
+            
+            services.AddScoped<ITraderApplicationService, TraderApplicationService>();
 
             services.AddScoped<IMagicItemTemplateApplicationService, MagicItemTemplateApplicationService>();
         }
@@ -97,6 +105,7 @@ namespace AlsTradingPost.Setup
             services.AddScoped<IAdminCommandService, AdminCommandService>();
             services.AddScoped<IAdminQueryService, AdminQueryService>();
             
+            services.AddScoped<ITraderDomainService, TraderDomainService>();
             services.AddScoped<ITraderCommandService, TraderCommandService>();
 
             services.AddScoped<IMagicItemTemplateQueryService, MagicItemTemplateQueryService>();

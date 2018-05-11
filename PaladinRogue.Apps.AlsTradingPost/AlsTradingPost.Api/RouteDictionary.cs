@@ -10,5 +10,7 @@
         public const string MagicItemTemplateSearchTemplate = "MagicItemTemplateSearchTemplate";
         public const string MagicItemTemplateGet = "MagicItemTemplateGet";
         public const string MagicItemTemplateGetById = "MagicItemTemplateGetById";
+        public const string TraderRegisterResourceTemplate = "TraderRegisterResourceTemplate";
+        public const string TraderRegister = "TraderRegister";
     }
 }

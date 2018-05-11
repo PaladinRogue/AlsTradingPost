@@ -1,4 +1,5 @@
 ﻿using System;
+using AlsTradingPost.Resources.Authorization;
 using Common.Application.Authentication;
 using Common.Application.Exceptions;
 using Common.Resources.Extensions;
