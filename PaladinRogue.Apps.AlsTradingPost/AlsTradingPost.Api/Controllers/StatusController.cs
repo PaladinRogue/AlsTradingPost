@@ -1,5 +1,6 @@
 ﻿using AlsTradingPost.Api.Status;
 using Common.Api.Builders.Resource;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlsTradingPost.Api.Controllers
@@ -14,8 +15,8 @@ namespace AlsTradingPost.Api.Controllers
             _resourceBuilder = resourceBuilder;
         }
 
-        [HttpGet]
-        [Route("", Name = RouteDictionary.Status)]
+        [AllowAnonymous]
+        [HttpGet("", Name = RouteDictionary.Status)]
         public IActionResult Get()
         {
             return new ObjectResult(
