@@ -42,6 +42,7 @@ namespace Common.Api
             MessageRegistration.RegisterRabbitMqMessaging(services);
             ServiceRegistration.RegisterProviders(services);
             ServiceRegistration.RegisterServices(services);
+            DataProtectionRegistration.Register(Configuration, services);
         }
     }
 }

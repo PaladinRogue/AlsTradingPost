@@ -3,6 +3,7 @@ using Authentication.Setup;
 using Authentication.Setup.Settings;
 using AutoMapper;
 using Common.Api.Extensions;
+using Common.Domain.DataProtection;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Messaging.Message.Interfaces;
 using Common.Setup.Infrastructure.Exceptions;
@@ -68,10 +69,13 @@ namespace Authentication.Api
         public void Configure(IApplicationBuilder app,
             ILoggerFactory loggerFactory,
             IDomainEventHandlerFactory domainEventHandlerFactory,
-            IMessageSubscriberFactory messageSubscriberFactory)
+            IMessageSubscriberFactory messageSubscriberFactory,
+            IDataProtector dataProtector)
         {
             domainEventHandlerFactory.Initialise();
             messageSubscriberFactory.Initialise();
+            
+            DataProtection.SetDataProtector(dataProtector);
 
             if (Environment.IsDevelopment())
             {

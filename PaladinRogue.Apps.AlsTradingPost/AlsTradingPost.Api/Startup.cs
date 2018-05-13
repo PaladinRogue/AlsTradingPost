@@ -2,7 +2,9 @@
 using AlsTradingPost.Setup;
 using AutoMapper;
 using Common.Api.Extensions;
+using Common.Domain.DataProtection;
 using Common.Domain.DomainEvents.Interfaces;
+using Common.Messaging.Message.Interfaces;
 using Common.Setup.Infrastructure.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -60,9 +62,14 @@ namespace AlsTradingPost.Api
 
         public void Configure(IApplicationBuilder app,
             ILoggerFactory loggerFactory,
-            IDomainEventHandlerFactory domainEventHandlerFactory)
+            IDomainEventHandlerFactory domainEventHandlerFactory,
+            IMessageSubscriberFactory messageSubscriberFactory,
+            IDataProtector dataProtector)
         {
             domainEventHandlerFactory.Initialise();
+            messageSubscriberFactory.Initialise();
+            
+            DataProtection.SetDataProtector(dataProtector);
 
             loggerFactory.AddLog4Net();
 
