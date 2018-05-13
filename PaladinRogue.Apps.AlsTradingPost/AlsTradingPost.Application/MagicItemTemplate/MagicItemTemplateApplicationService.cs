@@ -20,7 +20,7 @@ namespace AlsTradingPost.Application.MagicItemTemplate
             _magicItemTemplateSearchValidator = magicItemTemplateSearchValidator;
         }
 
-        MagicItemTemplatePagedCollectionAdto IMagicItemTemplateApplicationService.Search(MagicItemTemplateSearchAdto magicItemTemplateSearchAdto)
+        public MagicItemTemplatePagedCollectionAdto Search(MagicItemTemplateSearchAdto magicItemTemplateSearchAdto)
         {
             _magicItemTemplateSearchValidator.ValidateAndThrow(magicItemTemplateSearchAdto);
             

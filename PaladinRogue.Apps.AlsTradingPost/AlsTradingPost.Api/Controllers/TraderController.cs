@@ -50,5 +50,18 @@ namespace AlsTradingPost.Api.Controllers
                     .Build()
             );
         }
+
+        [HttpGet("{id}", Name = RouteDictionary.TraderGetById)]
+        public IActionResult Post(Guid id)
+        {
+            TraderResource resource = _mapper.Map<TraderAdto, TraderResource>(
+                _traderApplicationService.GetById(id));
+
+            return new ObjectResult(
+                _resourceBuilder.Create(resource)
+                    .WithResourceMeta()
+                    .Build()
+            );
+        }
     }
 }

@@ -107,6 +107,7 @@ namespace AlsTradingPost.Setup
             
             services.AddScoped<ITraderDomainService, TraderDomainService>();
             services.AddScoped<ITraderCommandService, TraderCommandService>();
+            services.AddScoped<ITraderQueryService, TraderQueryService>();
 
             services.AddScoped<IMagicItemTemplateQueryService, MagicItemTemplateQueryService>();
         }
