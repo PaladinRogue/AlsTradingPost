@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reflection;
 using AlsTradingPost.Resources;
 using AlsTradingPost.Setup.Infrastructure.Authorization;
-using Common.Api.Builders;
 using Common.Api.Links;
 using Common.Api.Routing;
 using Microsoft.AspNetCore.Http;

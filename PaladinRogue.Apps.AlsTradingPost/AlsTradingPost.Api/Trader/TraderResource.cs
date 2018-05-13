@@ -7,7 +7,7 @@ using Common.Setup.Infrastructure.Constants;
 
 namespace AlsTradingPost.Api.Trader
 {
-    [SelfLink(RouteDictionary.TraderGetById, HttpVerbs.Get)]
+    [SelfLink(RouteDictionary.TraderById, HttpVerbs.Get, HttpVerbs.Put)]
     public class TraderResource : VersionedResource
     {
         [ReadOnly]

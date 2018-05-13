@@ -77,6 +77,7 @@ namespace AlsTradingPost.Setup
             services.AddTransient<IValidator<LoginAdto>, LoginValidator>();
             services.AddTransient<IValidator<RefreshTokenAdto>, RefreshTokenValidator>();
             services.AddTransient<IValidator<RegisterTraderAdto>, CreateTraderValidator>();
+            services.AddTransient<IValidator<UpdateTraderAdto>, UpdateTraderValidator>();
         }
 
         public static void RegisterApplicationServices(IServiceCollection services)

@@ -42,7 +42,10 @@ namespace AlsTradingPost.Api.Controllers
         public IActionResult Post([FromBody] TraderTemplate template)
         {
             TraderResource resource = _mapper.Map<RegisteredTraderAdto, TraderResource>(
-                _traderApplicationService.Register(_mapper.Map<TraderTemplate, RegisterTraderAdto>(template ?? new TraderTemplate())));
+                _traderApplicationService.Register(
+                    _mapper.Map<TraderTemplate, RegisterTraderAdto>(template ?? new TraderTemplate())
+                )
+            );
 
             return new ObjectResult(
                 _resourceBuilder.Create(resource)
@@ -51,11 +54,28 @@ namespace AlsTradingPost.Api.Controllers
             );
         }
 
-        [HttpGet("{id}", Name = RouteDictionary.TraderGetById)]
+        [HttpGet("{id}", Name = RouteDictionary.TraderById)]
         public IActionResult GetById(Guid id)
         {
             TraderResource resource = _mapper.Map<TraderAdto, TraderResource>(
-                _traderApplicationService.GetById(id));
+                _traderApplicationService.GetById(id)
+            );
+
+            return new ObjectResult(
+                _resourceBuilder.Create(resource)
+                    .WithResourceMeta()
+                    .Build()
+            );
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(Guid id, [FromBody] TraderResource traderResource)
+        {
+            traderResource.Id = id;
+            
+            TraderResource resource = _mapper.Map<TraderAdto, TraderResource>(
+                _traderApplicationService.Update(_mapper.Map<TraderResource, UpdateTraderAdto>(traderResource))
+            );
 
             return new ObjectResult(
                 _resourceBuilder.Create(resource)

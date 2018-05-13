@@ -30,12 +30,12 @@ namespace Common.Api.Concurrency
             {
                 string concurrencyValue = context.HttpContext.Request.Headers[ConcurrencyHeaders.IfMatch];
 
-                if(concurrencyValue == null) throw new PreConditionFailedException();
+                if (concurrencyValue == null) throw new PreConditionFailedException();
 
-                object resourceObj = context.ActionArguments.Values.OfType<IVersionedTemplate>().SingleOrDefault();
-                if (resourceObj == null) throw new Exception("Request object does not implement IVersionedTemplate");
+                object resourceObj = context.ActionArguments.Values.OfType<IVersionedResource>().SingleOrDefault();
+                if (resourceObj == null) throw new BadRequestException();
 
-                IVersionedTemplate resource = (IVersionedTemplate)resourceObj;
+                IVersionedResource resource = (IVersionedResource)resourceObj;
 
                 resource.Version = ConcurrencyVersionFactory.CreateFromBase64String(concurrencyValue);
             }
