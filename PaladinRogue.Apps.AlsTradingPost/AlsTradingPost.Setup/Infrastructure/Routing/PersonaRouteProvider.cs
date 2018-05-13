@@ -35,21 +35,21 @@ namespace AlsTradingPost.Setup.Infrastructure.Routing
             }
         }
 
-        public bool HasAccessToRoute(string routeName, PersonaFlags routeRestriction)
+        public bool HasAccessToRoute(string routeName, PersonaFlags currentPersonaFlags)
         {
-            return _routes.ContainsKey(routeName) && _routes[routeName].Restriction.HasFlag(routeRestriction);
+            return _routes.ContainsKey(routeName) && currentPersonaFlags.HasFlag(_routes[routeName].Restriction);
         }
         
-        public string GetRouteTemplate<T>(string routeName, PersonaFlags routeRestriction, T routeData)
+        public string GetRouteTemplate<T>(string routeName, PersonaFlags currentPersonaFlags, T routeData)
         {
-            string template = GetRouteTemplate(routeName, routeRestriction);
+            string template = GetRouteTemplate(routeName, currentPersonaFlags);
 
             if (string.IsNullOrEmpty(template))
             {
                 return null;
             }
 
-            Dictionary<string, string> dictionary = typeof(T).GetProperties()
+            Dictionary<string, string> dictionary = routeData.GetType().GetProperties()
                 .Where(p => p.GetValue(routeData) != null)
                 .ToDictionary(
                     p => p.Name.ToCamelCase(),
@@ -91,9 +91,9 @@ namespace AlsTradingPost.Setup.Infrastructure.Routing
             return formattedRouteParts.Join("/");
         }
         
-        private string GetRouteTemplate(string routeName, PersonaFlags routeRestriction)
+        private string GetRouteTemplate(string routeName, PersonaFlags currentPersonaFlags)
         {
-            return HasAccessToRoute(routeName, routeRestriction) ?  _routes[routeName].Template : null;
+            return HasAccessToRoute(routeName, currentPersonaFlags) ?  _routes[routeName].Template : null;
         }
     }
 }

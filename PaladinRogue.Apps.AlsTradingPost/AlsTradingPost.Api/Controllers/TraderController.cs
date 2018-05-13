@@ -52,7 +52,7 @@ namespace AlsTradingPost.Api.Controllers
         }
 
         [HttpGet("{id}", Name = RouteDictionary.TraderGetById)]
-        public IActionResult Post(Guid id)
+        public IActionResult GetById(Guid id)
         {
             TraderResource resource = _mapper.Map<TraderAdto, TraderResource>(
                 _traderApplicationService.GetById(id));
