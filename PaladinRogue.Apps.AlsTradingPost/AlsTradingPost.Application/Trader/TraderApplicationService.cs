@@ -1,6 +1,7 @@
 ﻿using AlsTradingPost.Application.Trader.Interfaces;
 using AlsTradingPost.Application.Trader.Models;
-using AlsTradingPost.Domain.TraderDomain;
+using AlsTradingPost.Domain.TraderDomain.Interfaces;
+using AlsTradingPost.Domain.TraderDomain.Models;
 using AutoMapper;
 using FluentValidation;
 using Common.Application.Validation;

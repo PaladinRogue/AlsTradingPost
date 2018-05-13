@@ -1,4 +1,4 @@
-﻿namespace AlsTradingPost.Domain.TraderDomain
+﻿namespace AlsTradingPost.Domain.TraderDomain.Models
 {
     public class RegisterTraderDdto
     {

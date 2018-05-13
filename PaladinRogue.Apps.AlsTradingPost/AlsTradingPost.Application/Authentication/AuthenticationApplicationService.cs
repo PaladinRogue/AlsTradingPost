@@ -80,6 +80,7 @@ namespace AlsTradingPost.Application.Authentication
 
                 JwtAdto jwt = await _jwtFactory.GenerateJwt<JwtAdto>(
                     ClaimsBuilder.CreateBuilder()
+                        .WithPersonas(_userDomainService.GetUserPersonaFlags(refreshSessionProjection.Id))
                         .WithSubject(refreshSessionProjection.Id)
                         .WithRole(JwtClaims.AppAccess)
                         .Build()

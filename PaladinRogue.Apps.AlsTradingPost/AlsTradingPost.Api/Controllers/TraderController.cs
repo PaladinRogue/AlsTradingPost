@@ -1,4 +1,5 @@
-﻿using AlsTradingPost.Api.Trader;
+﻿using System;
+using AlsTradingPost.Api.Trader;
 using AlsTradingPost.Application.Trader.Interfaces;
 using AlsTradingPost.Application.Trader.Models;
 using AutoMapper;
@@ -14,17 +15,17 @@ namespace AlsTradingPost.Api.Controllers
         private readonly IMapper _mapper;
         private readonly ITraderApplicationService _traderApplicationService;
         private readonly ITemplateBuilder _templateBuilder;
-        private readonly IResourceTemplateBuilder _resourceTemplateBuilder;
+        private readonly IResourceBuilder _resourceBuilder;
 
         public TraderController(IMapper mapper,
             ITraderApplicationService traderApplicationService,
             ITemplateBuilder templateBuilder,
-            IResourceTemplateBuilder resourceTemplateBuilder)
+            IResourceBuilder resourceBuilder)
         {
             _traderApplicationService = traderApplicationService;
             _mapper = mapper;
             _templateBuilder = templateBuilder;
-            _resourceTemplateBuilder = resourceTemplateBuilder;
+            _resourceBuilder = resourceBuilder;
         }
 
         [HttpGet("register/resourceTemplate", Name = RouteDictionary.TraderRegisterResourceTemplate)]
@@ -44,9 +45,8 @@ namespace AlsTradingPost.Api.Controllers
                 _traderApplicationService.Register(_mapper.Map<TraderTemplate, RegisterTraderAdto>(template ?? new TraderTemplate())));
 
             return new ObjectResult(
-                _resourceTemplateBuilder.Create(resource, template)
+                _resourceBuilder.Create(resource)
                     .WithResourceMeta()
-                    .WithTemplateMeta()
                     .Build()
             );
         }

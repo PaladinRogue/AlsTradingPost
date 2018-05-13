@@ -1,4 +1,6 @@
-﻿namespace AlsTradingPost.Domain.TraderDomain
+﻿using AlsTradingPost.Domain.TraderDomain.Models;
+
+namespace AlsTradingPost.Domain.TraderDomain.Interfaces
 {
     public interface ITraderDomainService
     {

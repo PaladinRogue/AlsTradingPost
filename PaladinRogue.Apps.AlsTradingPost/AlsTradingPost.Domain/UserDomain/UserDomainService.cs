@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using AlsTradingPost.Domain.UserDomain.Interfaces;
 using AlsTradingPost.Domain.UserDomain.Models;
 using AlsTradingPost.Resources;
@@ -29,11 +30,16 @@ namespace AlsTradingPost.Domain.UserDomain
             AuthenticatedUserProjection authenticatedUserProjection =
                 existingUser == null ? FirstTimeLogin(loginDdto) : ReturnLogin(loginDdto, existingUser);
 
-            authenticatedUserProjection.Personas = PersonTypeMapper.GetPersonaFlags(
-                _userQueryService.GetUserPersonas(authenticatedUserProjection.Id).Select(u => u.PersonaType).ToArray()
-            );
+            authenticatedUserProjection.Personas = GetUserPersonaFlags(authenticatedUserProjection.Id);
 
             return authenticatedUserProjection;
+        }
+
+        public PersonaFlags GetUserPersonaFlags(Guid userId)
+        {
+            return PersonTypeMapper.GetPersonaFlags(
+                _userQueryService.GetUserPersonas(userId).Select(u => u.PersonaType).ToArray()
+            );
         }
 
         private AuthenticatedUserProjection FirstTimeLogin(LoginDdto loginDdto)
