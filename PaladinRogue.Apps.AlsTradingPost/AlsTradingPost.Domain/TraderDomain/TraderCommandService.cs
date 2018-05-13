@@ -48,5 +48,26 @@ namespace AlsTradingPost.Domain.TraderDomain
                 throw new CreateDomainException(trader, e);
             }
         }
+
+        public TraderProjection Update(UpdateTraderDdto entity)
+        {
+            Trader trader = _mapper.Map<UpdateTraderDdto, Trader>(entity);
+            try
+            {
+                _traderRepository.Update(trader);
+
+                return _mapper.Map<Trader, TraderProjection>(_traderRepository.GetById(trader.Id));
+            }
+            catch (ConcurrencyDomainException e)
+            {
+                _logger.LogCritical(e, "Unable to update trader");
+                throw;
+            }
+            catch (Exception e)
+            {
+                _logger.LogCritical(e, "Unable to update trader");
+                throw new UpdateDomainException(trader, e);
+            }
+        }
     }
 }

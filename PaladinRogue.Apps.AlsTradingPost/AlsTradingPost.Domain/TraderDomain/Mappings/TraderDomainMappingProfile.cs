@@ -15,6 +15,8 @@ namespace AlsTradingPost.Domain.TraderDomain.Mappings
                 .IncludeBase<IVersionedEntity, IVersionedProjection>();
             CreateMap<RegisterTraderDdto, CreateTraderDdto>();
             CreateMap<TraderProjection, RegisteredTraderProjection>();
+            CreateMap<UpdateTraderDdto, Trader>()
+                .IncludeBase<IVersionedDdto, IVersionedEntity>();
         }
     }
 }
