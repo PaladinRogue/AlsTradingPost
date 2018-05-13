@@ -1,6 +1,5 @@
-﻿using System.Linq;
-using AlsTradingPost.Domain.PlayerDomain.Interfaces;
-using AlsTradingPost.Domain.PlayerDomain.Models;
+﻿using System;
+using System.Linq;
 using AlsTradingPost.Domain.UserDomain.Interfaces;
 using AlsTradingPost.Domain.UserDomain.Models;
 using AlsTradingPost.Resources;
@@ -12,18 +11,15 @@ namespace AlsTradingPost.Domain.UserDomain
     {
         private readonly IUserQueryService _userQueryService;
         private readonly IUserCommandService _userCommandService;
-        private readonly IPlayerCommandService _playerCommandService;
         private readonly IMapper _mapper;
 
         public UserDomainService(
             IUserQueryService userQueryService,
             IUserCommandService userCommandService,
-            IPlayerCommandService playerCommandService,
             IMapper mapper)
         {
             _userQueryService = userQueryService;
             _userCommandService = userCommandService;
-            _playerCommandService = playerCommandService;
             _mapper = mapper;
         }
 
@@ -34,11 +30,16 @@ namespace AlsTradingPost.Domain.UserDomain
             AuthenticatedUserProjection authenticatedUserProjection =
                 existingUser == null ? FirstTimeLogin(loginDdto) : ReturnLogin(loginDdto, existingUser);
 
-            authenticatedUserProjection.Personas = PersonTypeMapper.GetPersonaFlags(
-                _userQueryService.GetUserPersonas(authenticatedUserProjection.Id).Select(u => u.PersonaType).ToArray()
-            );
+            authenticatedUserProjection.Personas = GetUserPersonaFlags(authenticatedUserProjection.Id);
 
             return authenticatedUserProjection;
+        }
+
+        public PersonaFlags GetUserPersonaFlags(Guid userId)
+        {
+            return PersonTypeMapper.GetPersonaFlags(
+                _userQueryService.GetUserPersonas(userId).Select(u => u.PersonaType).ToArray()
+            );
         }
 
         private AuthenticatedUserProjection FirstTimeLogin(LoginDdto loginDdto)
@@ -46,8 +47,6 @@ namespace AlsTradingPost.Domain.UserDomain
             CreateUserDdto createUserDdto = _mapper.Map<LoginDdto, CreateUserDdto>(loginDdto);
 
             UserProjection userProjection = _userCommandService.Create(createUserDdto);
-
-            _playerCommandService.Create(_mapper.Map<UserProjection, CreatePlayerDdto>(userProjection));
 
             return _mapper.Map<UserProjection, AuthenticatedUserProjection>(userProjection);
         }

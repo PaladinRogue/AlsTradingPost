@@ -10,7 +10,7 @@ namespace AlsTradingPost.Resources
         private static readonly IDictionary<PersonaType, PersonaFlags> PersonaTypeMap = new Dictionary<PersonaType, PersonaFlags>
         {
             { PersonaType.Admin, PersonaFlags.Admin },
-            { PersonaType.Player, PersonaFlags.Player }
+            { PersonaType.Trader, PersonaFlags.Trader }
         };
 
         public static PersonaFlags GetPersonaFlags(params PersonaType[] types)

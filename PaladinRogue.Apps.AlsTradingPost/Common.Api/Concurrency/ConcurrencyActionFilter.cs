@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Common.Api.Builders;
 using Common.Api.Concurrency.Interfaces;
 using Common.Resources.Concurrency;
 using Common.Setup.Infrastructure.Constants;
@@ -28,12 +30,12 @@ namespace Common.Api.Concurrency
             {
                 string concurrencyValue = context.HttpContext.Request.Headers[ConcurrencyHeaders.IfMatch];
 
-                if(concurrencyValue == null) throw new PreConditionFailedException();
+                if (concurrencyValue == null) throw new PreConditionFailedException();
 
-                object resourceObj = context.ActionArguments.Values.OfType<IVersionedTemplate>().SingleOrDefault();
-                if (resourceObj == null) throw new Exception("Request object does not implement IVersionedTemplate");
+                object resourceObj = context.ActionArguments.Values.OfType<IVersionedResource>().SingleOrDefault();
+                if (resourceObj == null) throw new BadRequestException();
 
-                IVersionedTemplate resource = (IVersionedTemplate)resourceObj;
+                IVersionedResource resource = (IVersionedResource)resourceObj;
 
                 resource.Version = ConcurrencyVersionFactory.CreateFromBase64String(concurrencyValue);
             }
@@ -45,11 +47,18 @@ namespace Common.Api.Concurrency
             {
                 if (context.Result is ObjectResult result)
                 {
-                    if (result.Value is IVersionedResource resource)
+                    if (result.Value is IDictionary<string, IBuiltResource> dictionary)
                     {
-                        string jsonVersion = JsonConvert.SerializeObject(resource.Version);
-                        byte[] plainTextBytes = System.Text.Encoding.UTF8.GetBytes(jsonVersion);
-                        context.HttpContext.Response.Headers[ConcurrencyHeaders.ETag] = Convert.ToBase64String(plainTextBytes);
+                        IBuiltResource builtResource = dictionary.Values.FirstOrDefault();
+                        if (builtResource != null)
+                        {
+                            if (builtResource.Data is IVersionedResource versionedResource)
+                            {
+                                string jsonVersion = JsonConvert.SerializeObject(versionedResource.Version);
+                                byte[] plainTextBytes = System.Text.Encoding.UTF8.GetBytes(jsonVersion);
+                                context.HttpContext.Response.Headers[ConcurrencyHeaders.ETag] = Convert.ToBase64String(plainTextBytes);
+                            }
+                        }
                     }
                 }
             }

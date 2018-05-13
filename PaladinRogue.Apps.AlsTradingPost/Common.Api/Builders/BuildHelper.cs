@@ -60,14 +60,17 @@ namespace Common.Api.Builders
             }
         }
 
-        public static IDictionary<string, object> Build<T>(ResourceBuilderResource<T> resource)
+        public static IDictionary<string, IBuiltResource> Build<T>(ResourceBuilderResource<T> resource)
         {
-            return DictionaryBuilder<string, object>.Create()
-                .Add(resource.Data.TypeName, DictionaryBuilder<string, object>.Create()
-                    .Add(ResourceType.Data, resource.Data.Resource)
-                    .Add(ResourceType.Meta, resource.Meta.Properties.BuildPropertyDictionary())
-                    .Add(ResourceType.Links, resource.Links.BuildLinkDictionary())
-                    .Build())
+            IBuiltResource builtResource = new BuiltResource
+            {
+                Data = resource.Data.Resource,
+                Meta = resource.Meta.Properties.BuildPropertyDictionary(),
+                Links = resource.Links.BuildLinkDictionary()
+            };
+            
+            return DictionaryBuilder<string, IBuiltResource>.Create()
+                .Add(resource.Data.TypeName, builtResource)
                 .Build();
         }
         

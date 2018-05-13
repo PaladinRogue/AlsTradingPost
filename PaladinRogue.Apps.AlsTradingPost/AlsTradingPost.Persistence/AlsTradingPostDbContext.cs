@@ -18,13 +18,13 @@ namespace AlsTradingPost.Persistence
         
         public DbSet<Admin> Admins { get; set; }
 
-        public DbSet<Player> Players { get; set; }
+        public DbSet<Trader> Traders { get; set; }
 
         public DbSet<Character> Characters { get; set; }
 
-        public DbSet<Item> Items { get; set; }
+        public DbSet<MagicItem> MagicItems { get; set; }
 
-        public DbSet<ItemReferenceData> ItemReferenceData { get; set; }
+        public DbSet<MagicItemTemplate> MagicItemTemplates { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

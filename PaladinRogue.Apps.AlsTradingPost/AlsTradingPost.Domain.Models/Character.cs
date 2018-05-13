@@ -1,15 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 using Common.Domain.Models;
 
 namespace AlsTradingPost.Domain.Models
 {
-    public class Character : VersionedEntity
+    public class Character : AggregateRoot
     {
+        [MaxLength(100)]
+        [Required]
         public string Name { get; set; }
+        
+        [MaxLength(20)]
         public string Race { get; set; }
+        
+        [MaxLength(20)]
         public string Class { get; set; }
-        public int Level { get; set; }
-        public List<Item> Items { get; set; }
-        public Player Player { get; set; }
+        
+        public byte Level { get; set; }
+
+        public virtual Trader Trader { get; set; }
     }
 }

@@ -13,18 +13,18 @@ namespace AlsTradingPost.Domain.UserDomain
     public class UserQueryService : IUserQueryService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IPlayerRepository _playerRepository;
+        private readonly ITraderRepository _traderRepository;
         private readonly IAdminRepository _adminRepository;
         private readonly IMapper _mapper;
 
         public UserQueryService(
             IUserRepository userRepository,
-            IPlayerRepository playerRepository,
+            ITraderRepository traderRepository,
             IAdminRepository adminRepository,
             IMapper mapper)
         {
             _userRepository = userRepository;
-            _playerRepository = playerRepository;
+            _traderRepository = traderRepository;
             _adminRepository = adminRepository;
             _mapper = mapper;
         }
@@ -38,7 +38,7 @@ namespace AlsTradingPost.Domain.UserDomain
         {
             List<IPersona> personas = new List<IPersona>
             {
-                _playerRepository.GetById(userid),
+                _traderRepository.GetById(userid),
                 _adminRepository.GetById(userid)
             };
             

@@ -1,8 +1,9 @@
 ﻿using AlsTradingPost.Application.Admin.Mappings;
 using AlsTradingPost.Application.Authentication.Mappings;
+using AlsTradingPost.Application.Trader.Mappings;
 using AlsTradingPost.Domain.AdminDomain.Mappings;
-using AlsTradingPost.Domain.ItemReferenceDataDomain.Mappings;
-using AlsTradingPost.Domain.PlayerDomain.Mappings;
+using AlsTradingPost.Domain.MagicItemTemplateDomain.Mappings;
+using AlsTradingPost.Domain.TraderDomain.Mappings;
 using AlsTradingPost.Domain.UserDomain.Mappings;
 using AutoMapper;
 using Common.Domain.Mappings;
@@ -21,16 +22,17 @@ namespace AlsTradingPost.Setup
         {
             configuration.AddProfile<AdminApplicationMappingProfile>();
             configuration.AddProfile<AuthenticationApplicationMappingProfile>();
+            configuration.AddProfile<TraderApplicationMappingProfile>();
         }
 
         public static void RegisterDomainMappers(IMapperConfigurationExpression configuration)
         {
             configuration.AddProfile<DomainMappingProfile>();
 
-            configuration.AddProfile<ItemReferenceDataDomainMappingProfile>();
+            configuration.AddProfile<MagicItemTemplateMappingProfile>();
             configuration.AddProfile<AdminDomainMappingProfile>();
             configuration.AddProfile<UserDomainMappingProfile>();
-            configuration.AddProfile<PlayerDomainMappingProfile>();
+            configuration.AddProfile<TraderDomainMappingProfile>();
         }
     }
 }

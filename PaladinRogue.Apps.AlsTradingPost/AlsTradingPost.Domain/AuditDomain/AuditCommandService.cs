@@ -1,6 +1,7 @@
 ﻿using System;
 using AlsTradingPost.Domain.AuditDomain.Interfaces;
 using AlsTradingPost.Domain.AuditDomain.Models;
+using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.Persistence;
 using AutoMapper;
 using Common.Domain.Models;
@@ -28,7 +29,7 @@ namespace AlsTradingPost.Domain.AuditDomain
         {
             try
             {
-                Domain.Models.Audit newAudit = _mapper.Map(auditEntity, EntityFactory.CreateEntity<Domain.Models.Audit>());
+                Audit newAudit = _mapper.Map(auditEntity, AggregateFactory.CreateRoot<Audit>());
 
                 newAudit.Timestamp = DateTime.UtcNow;
                 newAudit.EntityId = auditEntity.Entity.Id;

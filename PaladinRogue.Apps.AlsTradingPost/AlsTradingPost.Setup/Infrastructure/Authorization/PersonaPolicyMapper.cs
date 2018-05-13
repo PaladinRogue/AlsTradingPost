@@ -11,7 +11,7 @@ namespace AlsTradingPost.Setup.Infrastructure.Authorization
         static PersonaPolicyMapper()
         {
             PersonaPolicyDictionary.Add(PersonaFlags.Admin, PersonaPolicies.Admin);
-            PersonaPolicyDictionary.Add(PersonaFlags.Player, PersonaPolicies.Player);
+            PersonaPolicyDictionary.Add(PersonaFlags.Trader, PersonaPolicies.Trader);
         }
 
         public static IDictionary<PersonaFlags, string> GetMap()

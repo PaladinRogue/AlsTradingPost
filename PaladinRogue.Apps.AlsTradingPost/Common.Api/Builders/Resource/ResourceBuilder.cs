@@ -35,7 +35,7 @@ namespace Common.Api.Builders.Resource
             return this;
         }
 
-        public IDictionary<string, object> Build()
+        public IDictionary<string, IBuiltResource> Build()
         {
             return BuildHelper.Build(_resource);
         }

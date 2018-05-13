@@ -111,9 +111,12 @@ namespace Persistence.EntityFramework.Repositories
                 else
                 {
                     T existingEntity = (T)existingTrackedEntity.Entity;
-                    foreach (PropertyInfo propertyInfo in typeof(T).GetProperties())
+                    foreach (PropertyInfo propertyInfo in entity.GetType().GetProperties())
                     {
-                        propertyInfo.SetValue(existingEntity, propertyInfo.GetValue(entity));
+                        if (propertyInfo.CanWrite)
+                        {
+                            propertyInfo.SetValue(existingEntity, propertyInfo.GetValue(entity));
+                        }
                     }
                 }
                 

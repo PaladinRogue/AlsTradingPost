@@ -3,6 +3,6 @@
     public enum PersonaType
     {
         Admin,
-        Player
+        Trader
     }
 }

@@ -27,7 +27,7 @@ namespace AlsTradingPost.Domain.AdminDomain
         {
             try
             {
-                Admin newAdmin = _mapper.Map(entity, EntityFactory.CreateEntity<Admin>());
+                Admin newAdmin = _mapper.Map(entity, AggregateFactory.CreateRoot<Admin>());
 
                 _adminRepository.Add(newAdmin);
 

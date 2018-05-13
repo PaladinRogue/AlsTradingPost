@@ -4,7 +4,7 @@ using Common.Domain.Models;
 
 namespace Common.Authentication.Domain.Models
 {
-    public class Session : VersionedEntity
+    public class Session : AggregateRoot
     {
         public Session()
         {

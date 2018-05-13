@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common.Api.Builders.Resource;
-using Common.Api.Links;
 using Common.Api.Meta;
 using Common.Api.Resources;
 
@@ -45,7 +44,7 @@ namespace Common.Api.Builders.Template
             return this;
         }
 
-        public IDictionary<string, object> Build()
+        public IDictionary<string, IBuiltResource> Build()
         {
             return BuildHelper.Build(_template);
         }
