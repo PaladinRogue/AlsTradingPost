@@ -23,5 +23,10 @@ namespace AlsTradingPost.Persistence.Repositories
         {
             RepositoryHelper.Add(_context.Traders, _context, entity);
         }
+
+        public void Update(Trader entity)
+        {
+            RepositoryHelper.Update(_context.Traders, _context, entity);
+        }
     }
 }
