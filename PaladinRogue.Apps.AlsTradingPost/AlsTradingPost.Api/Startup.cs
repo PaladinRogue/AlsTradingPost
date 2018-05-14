@@ -4,6 +4,7 @@ using AutoMapper;
 using Common.Api.Extensions;
 using Common.Domain.DataProtection;
 using Common.Domain.DomainEvents.Interfaces;
+using Common.Domain.Models.DataProtection;
 using Common.Messaging.Message.Interfaces;
 using Common.Setup.Infrastructure.Logging;
 using Microsoft.AspNetCore.Builder;
@@ -31,12 +32,8 @@ namespace AlsTradingPost.Api
                 options.UseCamelCaseJsonOutputFormatter<JsonOutputFormatter>()
                     .UseConcurrencyFilter()
                     .UseValidationExceptionFilter()
-                    .UseAppAccessAuthorizeFilter();
-
-                if (!Environment.IsDevelopment())
-                {
-                    options.RequireHttps();
-                }
+                    .UseAppAccessAuthorizeFilter()
+                    .RequireHttps();
             });
             
             JwtRegistration.RegisterOptions(Configuration, services);
@@ -72,20 +69,12 @@ namespace AlsTradingPost.Api
             DataProtection.SetDataProtector(dataProtector);
 
             loggerFactory.AddLog4Net();
-
-            if (Environment.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                RewriteOptions options = new RewriteOptions()
-                    .AddRedirectToHttps();
-                app.UseRewriter(options);
-            }
+            
+            app.UseHttpsRedirection();
 
             MiddlewareRegistration.Register(app);
-            
+
+            app.UseHsts();
             app.UseAuthentication();
             app.UseMvc();
         }

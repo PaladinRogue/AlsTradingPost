@@ -2,9 +2,9 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Common.Api.HttpClient.Interfaces;
 using Common.Api.Settings;
 using Microsoft.Extensions.Options;
+using IHttpClientFactory = Common.Api.HttpClient.Interfaces.IHttpClientFactory;
 
 namespace Common.Api.HttpClient
 {

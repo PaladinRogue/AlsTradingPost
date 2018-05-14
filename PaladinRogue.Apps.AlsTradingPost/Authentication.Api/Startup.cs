@@ -5,7 +5,9 @@ using AutoMapper;
 using Common.Api.Extensions;
 using Common.Domain.DataProtection;
 using Common.Domain.DomainEvents.Interfaces;
+using Common.Domain.Models.DataProtection;
 using Common.Messaging.Message.Interfaces;
+using Common.Setup;
 using Common.Setup.Infrastructure.Exceptions;
 using Common.Setup.Infrastructure.Logging;
 using Common.Setup.Infrastructure.Middleware;
@@ -37,12 +39,8 @@ namespace Authentication.Api
             {
                 options.UseCamelCaseJsonOutputFormatter<JsonOutputFormatter>()
                     .UseValidationExceptionFilter()
-                    .UseConcurrencyFilter();
-
-                if (!Environment.IsDevelopment())
-                {
-                    options.RequireHttps();
-                }
+                    .UseConcurrencyFilter()
+                    .RequireHttps();
             });
 
             services.Configure<FacebookAuthSettings>(Configuration.GetSection(nameof(FacebookAuthSettings)));
@@ -81,18 +79,14 @@ namespace Authentication.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                RewriteOptions options = new RewriteOptions()
-                    .AddRedirectToHttps();
-                app.UseRewriter(options);
-            }
+
+            app.UseHttpsRedirection();
             
             loggerFactory.AddLog4Net();
             
-            app.UseMiddleware<TransactionPerRequestMiddleware>();
-            app.UseMiddleware<ExceptionMiddleware>();
-
+            MiddlewareRegistration.Register(app);
+            
+            app.UseHsts();
             app.UseMvc();
         }
     }

@@ -8,17 +8,17 @@ namespace Authentication.Api
     {
 	    public static void Main(string[] args)
 	    {
-		    BuildWebHost(args)
+		    CreateWebHostBuilder(args)
+			    .Build()
 			    .ApplyMigrations()
                 .Run();
 	    }
 
-	    public static IWebHost BuildWebHost(string[] args) =>
+	    public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-	            .UseUrls("http://localhost:1002")
+	            .UseUrls("https://localhost:1002")
                 .UseStartup<Startup>()
 	            .UseKestrel()
-	            .UseIISIntegration()
-                .Build();
+	            .UseIISIntegration();
     }
 }

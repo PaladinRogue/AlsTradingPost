@@ -32,7 +32,7 @@ namespace Common.Api
             services.AddMvc(options =>
             {
                 options.Conventions.Add(new ApiExplorerVisibilityEnabledConvention());
-            });
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.Configure<ProxySettings>(Configuration.GetSection(nameof(ProxySettings)));
             services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
