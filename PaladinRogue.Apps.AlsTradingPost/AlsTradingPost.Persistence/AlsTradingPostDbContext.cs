@@ -1,6 +1,7 @@
 ﻿using AlsTradingPost.Domain.Models;
 using Common.Authentication.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Persistence.EntityFramework.Infrastructure.Extensions;
 
 namespace AlsTradingPost.Persistence
 {
@@ -29,6 +30,8 @@ namespace AlsTradingPost.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("dbo");
+            
+            modelBuilder.ProtectSensitiveInformation();
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System.Text;
 using Common.Domain.DataProtection;
+using Common.Domain.Models.DataProtection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using DataProtector = Common.Domain.DataProtection.DataProtector;
 
 namespace Common.Setup
 {

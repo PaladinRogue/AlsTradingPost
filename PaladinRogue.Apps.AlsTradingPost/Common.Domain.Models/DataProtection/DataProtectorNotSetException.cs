@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Domain.DataProtection
+namespace Common.Domain.Models.DataProtection
 {
     public class DataProtectorNotSetException : Exception
     {

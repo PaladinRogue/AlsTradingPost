@@ -25,6 +25,8 @@ namespace AlsTradingPost.Domain.TraderDomain
         {
             CreateTraderDdto newTrader = _mapper.Map<RegisterTraderDdto, CreateTraderDdto>(registerTraderDdto);
 
+            //TODO: Move this to domain
+            //TODO: Validate user exists
             newTrader.Id = _currentUserProvider.Id;
             
             return _mapper.Map<TraderProjection, RegisteredTraderProjection>(_traderCommandService.Create(newTrader));

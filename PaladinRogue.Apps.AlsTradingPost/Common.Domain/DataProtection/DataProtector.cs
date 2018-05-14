@@ -1,4 +1,5 @@
-﻿using Common.Setup.Infrastructure.Encryption.Interfaces;
+﻿using Common.Domain.Models.DataProtection;
+using Common.Setup.Infrastructure.Encryption.Interfaces;
 using Microsoft.Extensions.Options;
 
 namespace Common.Domain.DataProtection
