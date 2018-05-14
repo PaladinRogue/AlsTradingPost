@@ -137,5 +137,5 @@ namespace Authentication.Api.Controllers
 					.Build()
 			);
 		}
-	}
+    }
 }
