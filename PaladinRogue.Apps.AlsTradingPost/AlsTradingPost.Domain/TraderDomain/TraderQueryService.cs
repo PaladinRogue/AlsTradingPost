@@ -1,9 +1,11 @@
 ﻿using System;
 using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.Persistence;
+using AlsTradingPost.Domain.TraderDomain.Events;
 using AlsTradingPost.Domain.TraderDomain.Interfaces;
 using AlsTradingPost.Domain.TraderDomain.Models;
 using AutoMapper;
+using Common.Domain.DomainEvents;
 
 namespace AlsTradingPost.Domain.TraderDomain
 {
@@ -22,7 +24,11 @@ namespace AlsTradingPost.Domain.TraderDomain
 
         public TraderProjection GetById(Guid id)
         {
-           return _mapper.Map<Trader, TraderProjection>(_traderRepository.GetById(id));
+            Trader trader = _traderRepository.GetById(id);
+            
+            DomainEvents.Raise(TraderReadDomainEvent.Create(trader));
+            
+            return _mapper.Map<Trader, TraderProjection>(trader);
         }
     }
 }

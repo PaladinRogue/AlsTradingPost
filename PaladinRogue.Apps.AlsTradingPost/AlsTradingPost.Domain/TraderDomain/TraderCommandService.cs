@@ -1,9 +1,11 @@
 ﻿using System;
 using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.Persistence;
+using AlsTradingPost.Domain.TraderDomain.Events;
 using AlsTradingPost.Domain.TraderDomain.Interfaces;
 using AlsTradingPost.Domain.TraderDomain.Models;
 using AutoMapper;
+using Common.Domain.DomainEvents;
 using Common.Domain.Exceptions;
 using Common.Domain.Models;
 using Microsoft.Extensions.Logging;
@@ -34,6 +36,8 @@ namespace AlsTradingPost.Domain.TraderDomain
                 trader = _mapper.Map(entity, AggregateFactory.CreateRoot<Trader>(entity.Id));
 
                 _traderRepository.Add(trader);
+                
+                DomainEvents.Raise(TraderCreatedDomainEvent.Create(trader));
 
                 return _mapper.Map<Trader, TraderProjection>(_traderRepository.GetById(trader.Id));
             }
@@ -55,6 +59,8 @@ namespace AlsTradingPost.Domain.TraderDomain
             try
             {
                 _traderRepository.Update(trader);
+                
+                DomainEvents.Raise(TraderUpdatedDomainEvent.Create(trader));
 
                 return _mapper.Map<Trader, TraderProjection>(_traderRepository.GetById(trader.Id));
             }

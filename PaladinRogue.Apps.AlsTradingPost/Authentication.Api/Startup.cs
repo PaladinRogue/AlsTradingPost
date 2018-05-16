@@ -3,19 +3,16 @@ using Authentication.Setup;
 using Authentication.Setup.Settings;
 using AutoMapper;
 using Common.Api.Extensions;
-using Common.Domain.DataProtection;
+using Common.Domain.DomainEvents;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Domain.Models.DataProtection;
 using Common.Messaging.Message.Interfaces;
 using Common.Setup;
-using Common.Setup.Infrastructure.Exceptions;
 using Common.Setup.Infrastructure.Logging;
-using Common.Setup.Infrastructure.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MappingRegistration = Authentication.Api.Mappings.MappingRegistration;
@@ -68,12 +65,14 @@ namespace Authentication.Api
             ILoggerFactory loggerFactory,
             IDomainEventHandlerFactory domainEventHandlerFactory,
             IMessageSubscriberFactory messageSubscriberFactory,
-            IDataProtector dataProtector)
+            IDataProtector dataProtector,
+            IPendingDomainEventDirector pendingDomainEventDirector)
         {
             domainEventHandlerFactory.Initialise();
             messageSubscriberFactory.Initialise();
             
             DataProtection.SetDataProtector(dataProtector);
+            DomainEvents.SetPendingDomainEventDirector(pendingDomainEventDirector);
 
             if (Environment.IsDevelopment())
             {

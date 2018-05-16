@@ -2,7 +2,7 @@
 using AlsTradingPost.Setup;
 using AutoMapper;
 using Common.Api.Extensions;
-using Common.Domain.DataProtection;
+using Common.Domain.DomainEvents;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Domain.Models.DataProtection;
 using Common.Messaging.Message.Interfaces;
@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -61,12 +60,14 @@ namespace AlsTradingPost.Api
             ILoggerFactory loggerFactory,
             IDomainEventHandlerFactory domainEventHandlerFactory,
             IMessageSubscriberFactory messageSubscriberFactory,
-            IDataProtector dataProtector)
+            IDataProtector dataProtector,
+            IPendingDomainEventDirector pendingDomainEventDirector)
         {
             domainEventHandlerFactory.Initialise();
             messageSubscriberFactory.Initialise();
             
             DataProtection.SetDataProtector(dataProtector);
+            DomainEvents.SetPendingDomainEventDirector(pendingDomainEventDirector);
 
             loggerFactory.AddLog4Net();
             
