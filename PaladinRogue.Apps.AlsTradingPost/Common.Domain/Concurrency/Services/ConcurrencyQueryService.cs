@@ -10,7 +10,7 @@ using Common.Resources.Concurrency.Interfaces;
 
 namespace Common.Domain.Concurrency.Services
 {
-    public class ConcurrencyQueryService<T> : IConcurrencyQueryService<T> where T : IQueryService<IVersionedProjection>
+    public class ConcurrencyQueryService<T> : IConcurrencyQueryService<T> where T : IGetByIdService<IVersionedProjection>
     {
         private readonly T _queryService;
 

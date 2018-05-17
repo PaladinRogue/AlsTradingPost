@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Common.Domain.Services.Interfaces
 {
-    public interface ISummaryQueryService<T, TOut>
+    public interface IGetQueryService<T, TOut>
     {
         IList<TOut> Get<TOrderByKey, TThenByKey>(Predicate<T> predicate = null,
             Expression<Func<T, TOrderByKey>> orderBy = null,
