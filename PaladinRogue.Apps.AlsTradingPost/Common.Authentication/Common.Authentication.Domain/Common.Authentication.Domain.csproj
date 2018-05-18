@@ -7,7 +7,4 @@
     <ProjectReference Include="..\Common.Authentication.Domain.Models\Common.Authentication.Domain.Models.csproj" />
     <ProjectReference Include="..\Common.Authentication.Resources\Common.Authentication.Resources.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NETCore.App" Version="2.1.0-rc1" />
-  </ItemGroup>
 </Project>

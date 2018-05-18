@@ -5,7 +5,6 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.1.0-rc1-final" />
-    <PackageReference Include="Microsoft.NETCore.App" Version="2.1.0-rc1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Authentication.Domain.Models\Authentication.Domain.Models.csproj" />

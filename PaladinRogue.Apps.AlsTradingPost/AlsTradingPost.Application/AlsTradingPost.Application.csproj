@@ -5,7 +5,6 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="FluentValidation" Version="7.5.2" />
-    <PackageReference Include="Microsoft.NETCore.App" Version="2.1.0-rc1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AlsTradingPost.Domain\AlsTradingPost.Domain.csproj" />

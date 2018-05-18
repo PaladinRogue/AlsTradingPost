@@ -6,7 +6,6 @@
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.0-rc1-final" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.1.0-rc1-final" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.0-rc1-final" />
-    <PackageReference Include="Microsoft.NETCore.App" Version="2.1.0-rc1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common.Setup\Common.Setup.csproj" />
