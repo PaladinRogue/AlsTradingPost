@@ -23,6 +23,7 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Persistence.EntityFramework.Infrastructure.Transactions;
 
 namespace Authentication.Setup
 {
@@ -72,7 +73,8 @@ namespace Authentication.Setup
             services.AddEntityFrameworkSqlServer().AddOptions()
                 .AddDbContext<AuthenticationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Default")));
             services.AddScoped<DbContext>(sp => sp.GetRequiredService<AuthenticationDbContext>());
-		}
+            services.AddScoped<ITransactionManager, EntityFrameworkTransactionManager>();
+        }
 
         public static void RegisterProviders(IServiceCollection services)
         {

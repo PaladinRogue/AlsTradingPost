@@ -38,7 +38,6 @@ namespace Common.Api
             services.Configure<MessagingBusSettings>(Configuration.GetSection(nameof(MessagingBusSettings)));
 
             EventRegistration.RegisterEventHandling(services);
-            ServiceRegistration.RegisterManagers(services);
             MessageRegistration.RegisterRabbitMqMessaging(services);
             ServiceRegistration.RegisterProviders(services);
             ServiceRegistration.RegisterServices(services);

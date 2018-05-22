@@ -11,7 +11,7 @@ namespace Common.Domain.DomainEvents
             _domainEventBus = domainEventBus;
         }
 
-        public void DispatchEvent(IDomainEvent domainEvent)
+        public void DispatchEvent<T>(T domainEvent) where T : IDomainEvent
         {
             _domainEventBus.Publish(domainEvent);
         }

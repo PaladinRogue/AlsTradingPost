@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using AlsTradingPost.Setup;
 using AutoMapper;
 using Common.Api.Extensions;
@@ -23,7 +22,7 @@ namespace AlsTradingPost.Api
         {
         }
 
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             CommonConfigureServices(services);
             
@@ -50,18 +49,17 @@ namespace AlsTradingPost.Api
             ServiceRegistration.RegisterProviders(services);
 
             services.AddAutoMapper(MappingRegistration.RegisterMappers);
+
+            return services.BuildServiceProvider();
         }
 
         public void Configure(IApplicationBuilder app,
             ILoggerFactory loggerFactory,
-            IEnumerable<IDomainEventHandler> domainEventHandlers,
             IMessageSubscriberFactory messageSubscriberFactory,
             IDomainEventDispatcher domainEventDispatcher,
             IDataProtector dataProtector,
             IServiceProvider serviceProvider)
         {
-            EventRegistration.AddHandlers(serviceProvider);
-
             messageSubscriberFactory.Initialise();
             
             DataProtection.SetDataProtector(dataProtector);

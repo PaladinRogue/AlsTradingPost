@@ -24,7 +24,7 @@ namespace Common.Domain.DomainEvents
             }
         }
 
-        public static void Raise(IDomainEvent domainEvent)
+        public static void Raise<T>(T domainEvent) where T : IDomainEvent
         {
             if (DomainEventDispatcher == null)
             {

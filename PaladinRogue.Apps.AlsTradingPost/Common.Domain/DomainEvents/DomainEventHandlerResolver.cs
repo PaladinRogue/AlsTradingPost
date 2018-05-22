@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Common.Domain.DomainEvents.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Common.Domain.DomainEvents
 {
@@ -12,11 +15,17 @@ namespace Common.Domain.DomainEvents
             _serviceProvider = serviceProvider;
         }
 
-        public IDomainEventHandler<IDomainEvent> Resolve(Type handlerType)
+        public IEnumerable<IDomainEventHandler<T>> ResolveAll<T>() where T : IDomainEvent
         {
-             
-                var thing =_serviceProvider.GetService(handlerType);
-            return (IDomainEventHandler<IDomainEvent>) thing;
+            List<IDomainEventHandler<T>> handlers = _serviceProvider.GetServices<IDomainEventHandler<T>>().ToList();
+            foreach (Type @interface in typeof(T).GetInterfaces())
+            {
+                Type type = typeof(IDomainEventHandler<>);
+                Type generic = type.MakeGenericType(@interface);
+                handlers.AddRange(_serviceProvider.GetServices(generic).Cast<IDomainEventHandler<T>>());
+            }
+
+            return handlers;
         }
     }
 }

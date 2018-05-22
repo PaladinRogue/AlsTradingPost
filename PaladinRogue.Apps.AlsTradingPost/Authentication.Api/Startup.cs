@@ -1,4 +1,5 @@
-﻿using Authentication.Setup;
+﻿using System;
+using Authentication.Setup;
 using Authentication.Setup.Settings;
 using AutoMapper;
 using Common.Api.Extensions;
@@ -26,7 +27,7 @@ namespace Authentication.Api
         {
         }
         
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             CommonConfigureServices(services);
 
@@ -52,6 +53,8 @@ namespace Authentication.Api
             ServiceRegistration.RegisterProviders(services);
 
             services.AddAutoMapper(MappingRegistration.RegisterMappers);
+
+            return services.BuildServiceProvider();
         }
 
         public void Configure(IApplicationBuilder app,

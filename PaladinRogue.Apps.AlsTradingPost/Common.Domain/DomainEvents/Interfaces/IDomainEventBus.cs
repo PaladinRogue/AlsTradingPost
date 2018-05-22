@@ -2,14 +2,6 @@
 {
     public interface IDomainEventBus
     {
-        void Publish(IDomainEvent domainEvent);
-
-        void Subscribe<T, TH>()
-            where T : IDomainEvent
-            where TH : IDomainEventHandler<T>;
-
-        void Unsubscribe<T, TH>()
-            where T : IDomainEvent
-            where TH : IDomainEventHandler<T>;
+        void Publish<T>(T domainEvent) where T : IDomainEvent;
     }
 }
