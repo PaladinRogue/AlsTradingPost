@@ -42,6 +42,11 @@ namespace Persistence.EntityFramework.Repositories
             return GetPage(thenByOrderedResults, pageSize, pageOffset, out totalResults);
         }
 
+        public static bool CheckExists<T>(IQueryable<T> results, Guid id) where T : IEntity
+        {
+            return results.Any(e => e.Id == id);
+        }
+
         public static T GetById<T>(IQueryable<T> results, Guid id) where T : IEntity
         {
             try
