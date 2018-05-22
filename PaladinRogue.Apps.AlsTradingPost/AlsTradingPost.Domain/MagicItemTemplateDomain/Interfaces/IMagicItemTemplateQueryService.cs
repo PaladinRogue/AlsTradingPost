@@ -4,7 +4,7 @@ using Common.Domain.Services.Interfaces;
 
 namespace AlsTradingPost.Domain.MagicItemTemplateDomain.Interfaces
 {
-    public interface IMagicItemTemplateQueryService : IPagedSummaryQueryService<MagicItemTemplate, MagicItemTemplatePagedCollectionDdto>
+    public interface IMagicItemTemplateQueryService : IGetPageQueryService<MagicItemTemplate, MagicItemTemplatePagedCollectionDdto>
     {
     }
 }

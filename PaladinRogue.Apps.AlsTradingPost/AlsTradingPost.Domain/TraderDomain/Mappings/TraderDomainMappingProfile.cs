@@ -13,7 +13,8 @@ namespace AlsTradingPost.Domain.TraderDomain.Mappings
             CreateMap<CreateTraderDdto, Trader>();
             CreateMap<Trader, TraderProjection>()
                 .IncludeBase<IVersionedEntity, IVersionedProjection>();
-            CreateMap<RegisterTraderDdto, CreateTraderDdto>();
+            CreateMap<RegisterTraderDdto, CreateTraderDdto>()
+                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.UserId));
             CreateMap<TraderProjection, RegisteredTraderProjection>();
             CreateMap<UpdateTraderDdto, Trader>()
                 .IncludeBase<IVersionedDdto, IVersionedEntity>();

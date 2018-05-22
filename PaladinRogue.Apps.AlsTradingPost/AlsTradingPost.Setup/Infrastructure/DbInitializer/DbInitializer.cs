@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Persistence;
+using Persistence.EntityFramework.Infrastructure.Extensions;
 
 namespace AlsTradingPost.Setup.Infrastructure.DbInitializer
 {

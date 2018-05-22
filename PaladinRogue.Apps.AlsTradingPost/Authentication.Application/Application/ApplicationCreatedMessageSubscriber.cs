@@ -1,11 +1,11 @@
 using Authentication.Domain.ApplicationServices.Interfaces;
 using Authentication.Domain.ApplicationServices.Models;
 using AutoMapper;
+using Common.Application.Transactions;
 using Common.Domain.Exceptions;
 using Common.Messaging.Message;
 using Common.Messaging.Message.Interfaces;
 using Common.Messaging.Messages;
-using Common.Setup.Infrastructure.Transactions;
 using Microsoft.Extensions.Logging;
 
 namespace Authentication.Application.Application
@@ -15,18 +15,18 @@ namespace Authentication.Application.Application
             ApplicationCreatedMessageSubscriber>
     {
         private readonly ILogger<ApplicationCreatedMessageSubscriber> _logger;
-        private readonly ITransactionFactory _transactionFactory;
+        private readonly ITransactionManager _transactionManager;
         private readonly IApplicationCommandService _applicationCommandService;
         private readonly IApplicationQueryService _applicationQueryService;
 
         public ApplicationCreatedMessageSubscriber(ILogger<ApplicationCreatedMessageSubscriber> logger,
             IMessageBus messageBus,
-            ITransactionFactory transactionFactory,
+            ITransactionManager transactionManager,
             IApplicationCommandService applicationCommandService,
             IApplicationQueryService applicationQueryService) : base(messageBus)
         {
             _logger = logger;
-            _transactionFactory = transactionFactory;
+            _transactionManager = transactionManager;
             _applicationCommandService = applicationCommandService;
             _applicationQueryService = applicationQueryService;
         }
@@ -35,7 +35,7 @@ namespace Authentication.Application.Application
         {
             try
             {
-                using (ITransaction transaction = _transactionFactory.Create())
+                using (ITransaction transaction = _transactionManager.Create())
                 {
                     ApplicationProjection applicationProjection = _applicationQueryService.GetByName(message.Name);
                     if (applicationProjection == null)

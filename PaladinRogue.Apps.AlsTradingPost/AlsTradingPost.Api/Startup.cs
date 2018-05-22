@@ -2,13 +2,15 @@
 using AlsTradingPost.Setup;
 using AutoMapper;
 using Common.Api.Extensions;
+using Common.Domain.DomainEvents;
 using Common.Domain.DomainEvents.Interfaces;
+using Common.Domain.Models.DataProtection;
+using Common.Messaging.Message.Interfaces;
 using Common.Setup.Infrastructure.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -29,12 +31,8 @@ namespace AlsTradingPost.Api
                 options.UseCamelCaseJsonOutputFormatter<JsonOutputFormatter>()
                     .UseConcurrencyFilter()
                     .UseValidationExceptionFilter()
-                    .UseAppAccessAuthorizeFilter();
-
-                if (!Environment.IsDevelopment())
-                {
-                    options.RequireHttps();
-                }
+                    .UseAppAccessAuthorizeFilter()
+                    .RequireHttps();
             });
             
             JwtRegistration.RegisterOptions(Configuration, services);
@@ -49,9 +47,6 @@ namespace AlsTradingPost.Api
             ServiceRegistration.RegisterDomainServices(services);
             ServiceRegistration.RegisterPersistenceServices(Configuration, services);
             ServiceRegistration.RegisterProviders(services);
-            
-            Common.Authentication.Setup.ServiceRegistration.RegisterDomainServices(services);
-            Common.Authentication.Setup.ServiceRegistration.RegisterProviders(services);
 
             services.AddAutoMapper(MappingRegistration.RegisterMappers);
 
@@ -60,25 +55,23 @@ namespace AlsTradingPost.Api
 
         public void Configure(IApplicationBuilder app,
             ILoggerFactory loggerFactory,
-            IDomainEventHandlerFactory domainEventHandlerFactory)
+            IMessageSubscriberFactory messageSubscriberFactory,
+            IDomainEventDispatcher domainEventDispatcher,
+            IDataProtector dataProtector,
+            IServiceProvider serviceProvider)
         {
-            domainEventHandlerFactory.Initialise();
+            messageSubscriberFactory.Initialise();
+            
+            DataProtection.SetDataProtector(dataProtector);
+            DomainEvents.SetDomainEventDispatcher(domainEventDispatcher);
 
             loggerFactory.AddLog4Net();
-
-            if (Environment.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                RewriteOptions options = new RewriteOptions()
-                    .AddRedirectToHttps();
-                app.UseRewriter(options);
-            }
-
-            MiddlewareRegistration.Register(app);
             
+            app.UseHttpsRedirection();
+
+            Common.Setup.MiddlewareRegistration.Register(app);
+
+            app.UseHsts();
             app.UseAuthentication();
             app.UseMvc();
         }

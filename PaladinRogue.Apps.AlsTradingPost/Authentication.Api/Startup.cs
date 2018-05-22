@@ -3,16 +3,16 @@ using Authentication.Setup;
 using Authentication.Setup.Settings;
 using AutoMapper;
 using Common.Api.Extensions;
+using Common.Domain.DomainEvents;
 using Common.Domain.DomainEvents.Interfaces;
+using Common.Domain.Models.DataProtection;
 using Common.Messaging.Message.Interfaces;
-using Common.Setup.Infrastructure.Exceptions;
+using Common.Setup;
 using Common.Setup.Infrastructure.Logging;
-using Common.Setup.Infrastructure.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MappingRegistration = Authentication.Api.Mappings.MappingRegistration;
@@ -26,8 +26,7 @@ namespace Authentication.Api
         public Startup(IHostingEnvironment environment) : base(environment)
         {
         }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+        
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             CommonConfigureServices(services);
@@ -36,12 +35,8 @@ namespace Authentication.Api
             {
                 options.UseCamelCaseJsonOutputFormatter<JsonOutputFormatter>()
                     .UseValidationExceptionFilter()
-                    .UseConcurrencyFilter();
-
-                if (!Environment.IsDevelopment())
-                {
-                    options.RequireHttps();
-                }
+                    .UseConcurrencyFilter()
+                    .RequireHttps();
             });
 
             services.Configure<FacebookAuthSettings>(Configuration.GetSection(nameof(FacebookAuthSettings)));
@@ -56,9 +51,6 @@ namespace Authentication.Api
             ServiceRegistration.RegisterDomainServices(services);
             ServiceRegistration.RegisterPersistenceServices(Configuration, services);
             ServiceRegistration.RegisterProviders(services);
-            
-            Common.Authentication.Setup.ServiceRegistration.RegisterDomainServices(services);
-            Common.Authentication.Setup.ServiceRegistration.RegisterProviders(services);
 
             services.AddAutoMapper(MappingRegistration.RegisterMappers);
 
@@ -67,28 +59,27 @@ namespace Authentication.Api
 
         public void Configure(IApplicationBuilder app,
             ILoggerFactory loggerFactory,
-            IDomainEventHandlerFactory domainEventHandlerFactory,
-            IMessageSubscriberFactory messageSubscriberFactory)
+            IMessageSubscriberFactory messageSubscriberFactory,
+            IDataProtector dataProtector,
+            IDomainEventDispatcher domainEventDispatcher)
         {
-            domainEventHandlerFactory.Initialise();
             messageSubscriberFactory.Initialise();
+            
+            DataProtection.SetDataProtector(dataProtector);
+            DomainEvents.SetDomainEventDispatcher(domainEventDispatcher);
 
             if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                RewriteOptions options = new RewriteOptions()
-                    .AddRedirectToHttps();
-                app.UseRewriter(options);
-            }
+
+            app.UseHttpsRedirection();
             
             loggerFactory.AddLog4Net();
             
-            app.UseMiddleware<TransactionPerRequestMiddleware>();
-            app.UseMiddleware<ExceptionMiddleware>();
-
+            MiddlewareRegistration.Register(app);
+            
+            app.UseHsts();
             app.UseMvc();
         }
     }

@@ -1,41 +1,33 @@
 ﻿using System;
 using System.Reflection;
 using Common.Domain.Models.Interfaces;
-using Common.Resources.Concurrency.Interfaces;
 
 namespace Common.Domain.Exceptions
 {
     public class CreateDomainException : DomainException
     {
         public CreateDomainException(IEntity entity, Exception innerException)
-            : base(_formatCreateException(entity.GetType(), entity.Id, null), innerException)
+            : base(_formatCreateException(entity.GetType(), entity.Id), innerException)
         {
         }
         public CreateDomainException(IVersionedEntity entity, Exception innerException)
-            : base(_formatCreateException(entity.GetType(), entity.Id, entity.Version), innerException)
+            : base(_formatCreateException(entity.GetType(), entity.Id), innerException)
         {
         }
 
-        public CreateDomainException(MemberInfo type, Guid id, IConcurrencyVersion version)
-            : base(_formatCreateException(type, id, version.Version))
+        public CreateDomainException(MemberInfo type, Guid id)
+            : base(_formatCreateException(type, id))
         {
         }
 
-        public CreateDomainException(MemberInfo type, Guid id, IConcurrencyVersion version, Exception innerException)
-            : base(_formatCreateException(type, id, version.Version), innerException)
+        public CreateDomainException(MemberInfo type, Guid id, Exception innerException)
+            : base(_formatCreateException(type, id), innerException)
         {
         }
 
-        private static string _formatCreateException(MemberInfo type, Guid id, byte[] version)
+        private static string _formatCreateException(MemberInfo type, Guid id)
         {
-            if (BitConverter.IsLittleEndian)
-            {
-                Array.Reverse(version);
-            }
-
-            string versionText = version == null ? "." : $"and Version: {BitConverter.ToInt32(version, 0)}.";
-
-            return $"Failed to create entity: { type.Name } with Id: { id } { versionText }";
+            return $"Failed to create entity: { type.Name } with Id: { id }";
         }
     }
 }

@@ -3,7 +3,7 @@ using Common.Domain.Services.Interfaces;
 
 namespace Common.Authentication.Domain.SessionDomain.Interfaces
 {
-    public interface ISessionQueryService : IQueryService<SessionProjection>
+    public interface ISessionQueryService : IGetByIdService<SessionProjection>
     {
     }
 }

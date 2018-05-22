@@ -9,7 +9,7 @@ namespace AlsTradingPost.Application.Trader.Mappings
         public TraderApplicationMappingProfile()
         {
             CreateMap<TraderProjection, RegisteredTraderAdto>();
-            CreateMap<RegisterTraderAdto, CreateTraderDdto>();
+            CreateMap<RegisterTraderAdto, RegisterTraderDdto>();
             CreateMap<TraderProjection, TraderAdto>();
             CreateMap<UpdateTraderAdto, UpdateTraderDdto>();
         }

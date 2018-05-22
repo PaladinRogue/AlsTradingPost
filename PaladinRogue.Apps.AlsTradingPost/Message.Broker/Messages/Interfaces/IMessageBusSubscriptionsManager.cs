@@ -25,9 +25,9 @@ namespace Message.Broker.Messages.Interfaces
 
         void Clear();
 
-        IEnumerable<Subscription> GetSubscribersForMessage<T>() where T : IMessage;
+        IEnumerable<MessageSubscription> GetSubscribersForMessage<T>() where T : IMessage;
 
-        IEnumerable<Subscription> GetSubscribersForMessage(string messageName);
+        IEnumerable<MessageSubscription> GetSubscribersForMessage(string messageName);
 
         string GetMessageKey<T>();
     }

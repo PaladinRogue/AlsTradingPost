@@ -1,6 +1,7 @@
-﻿using Authentication.Setup.Infrastructure.DbInitializer;
+﻿using Authentication.Persistence;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Persistence.EntityFramework.Infrastructure.Extensions;
 
 namespace Authentication.Api
 {
@@ -8,17 +9,17 @@ namespace Authentication.Api
     {
 	    public static void Main(string[] args)
 	    {
-		    BuildWebHost(args)
-			    .ApplyMigrations()
+		    CreateWebHostBuilder(args)
+			    .Build()
+			    .ApplyMigrations<AuthenticationDbContext>()
                 .Run();
 	    }
 
-	    public static IWebHost BuildWebHost(string[] args) =>
+	    public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-	            .UseUrls("http://localhost:1002")
+	            .UseUrls("https://localhost:1002")
                 .UseStartup<Startup>()
 	            .UseKestrel()
-	            .UseIISIntegration()
-                .Build();
+	            .UseIISIntegration();
     }
 }

@@ -38,6 +38,7 @@ using Common.Api.HttpClient.Interfaces;
 using Common.Api.Links;
 using Common.Api.Meta;
 using Common.Api.Routing;
+using Common.Application.Transactions;
 using Common.Authentication.Domain.Persistence;
 using Common.Domain.Concurrency;
 using Common.Domain.Concurrency.Interfaces;
@@ -46,13 +47,12 @@ using Common.Domain.Concurrency.Services.Interfaces;
 using Common.Setup.Infrastructure.Authorization;
 using Common.Setup.Infrastructure.Encryption;
 using Common.Setup.Infrastructure.Encryption.Interfaces;
-using Common.Setup.Infrastructure.Transactions;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Persistence.EntityFramework.Transactions;
+using Persistence.EntityFramework.Infrastructure.Transactions;
 
 namespace AlsTradingPost.Setup
 {
@@ -97,6 +97,7 @@ namespace AlsTradingPost.Setup
         public static void RegisterDomainServices(IServiceCollection services)
         {
             services.AddScoped(typeof(IConcurrencyQueryService<>), typeof(ConcurrencyQueryService<>));
+
             services.AddScoped<IAuditCommandService, AuditCommandService>();
 
             services.AddScoped<IUserDomainService, UserDomainService>();
@@ -127,7 +128,7 @@ namespace AlsTradingPost.Setup
             services.AddDbContext<AlsTradingPostDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("Default")));
             services.AddScoped<DbContext>(sp => sp.GetRequiredService<AlsTradingPostDbContext>());
-            services.AddTransient<ITransactionFactory, TransactionFactory>();
+            services.AddScoped<ITransactionManager, EntityFrameworkTransactionManager>();
         }
 
         public static void RegisterProviders(IServiceCollection services)

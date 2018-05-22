@@ -9,14 +9,14 @@ namespace Message.Broker.Messages
 {
     public class InMemoryMessageBusSubscriptionsManager: IMessageBusSubscriptionsManager
     {
-        private readonly Dictionary<string, List<Subscription>> _handlers;
+        private readonly Dictionary<string, List<MessageSubscription>> _handlers;
         private readonly List<Type> _messageTypes;
 
         public event EventHandler<string> OnMessageRemoved;
 
         public InMemoryMessageBusSubscriptionsManager()
         {
-            _handlers = new Dictionary<string, List<Subscription>>();
+            _handlers = new Dictionary<string, List<MessageSubscription>>();
             _messageTypes = new List<Type>();
         }
 
@@ -37,18 +37,18 @@ namespace Message.Broker.Messages
             where T : IMessage
             where TH : IMessageSubscriber<T>
         {
-            Subscription subscriptionToRemove = _findSubscriptionToRemove<T, TH>();
+            MessageSubscription messageSubscriptionToRemove = _findSubscriptionToRemove<T, TH>();
             string messageKey = GetMessageKey<T>();
-            _doRemoveSubscription(messageKey, subscriptionToRemove);
+            _doRemoveSubscription(messageKey, messageSubscriptionToRemove);
         }
 
-        public IEnumerable<Subscription> GetSubscribersForMessage<T>() where T : IMessage
+        public IEnumerable<MessageSubscription> GetSubscribersForMessage<T>() where T : IMessage
         {
             string key = GetMessageKey<T>();
             return GetSubscribersForMessage(key);
         }
 
-        public IEnumerable<Subscription> GetSubscribersForMessage(string messageName) => _handlers[messageName];
+        public IEnumerable<MessageSubscription> GetSubscribersForMessage(string messageName) => _handlers[messageName];
 
         public bool HasSubscriptionsForMessage<T>() where T : IMessage
         {
@@ -69,7 +69,7 @@ namespace Message.Broker.Messages
         {
             if (!HasSubscriptionsForMessage(messageName))
             {
-                _handlers.Add(messageName, new List<Subscription>());
+                _handlers.Add(messageName, new List<MessageSubscription>());
             }
 
             if (_handlers[messageName].Any(s => s.HandlerType == handlerType))
@@ -78,14 +78,14 @@ namespace Message.Broker.Messages
                     $"Handler Type {handlerType.Name} already registered for '{messageName}'", nameof(handlerType));
             }
 
-            _handlers[messageName].Add(Subscription.Create(handlerType, handler));
+            _handlers[messageName].Add(MessageSubscription.Create(handlerType, handler));
         }
         
-        private void _doRemoveSubscription(string messageName, Subscription subscriptionToRemove)
+        private void _doRemoveSubscription(string messageName, MessageSubscription messageSubscriptionToRemove)
         {
-            if (subscriptionToRemove == null) return;
+            if (messageSubscriptionToRemove == null) return;
 
-            _handlers[messageName].Remove(subscriptionToRemove);
+            _handlers[messageName].Remove(messageSubscriptionToRemove);
 
             if (_handlers[messageName].Any()) return;
 
@@ -104,7 +104,7 @@ namespace Message.Broker.Messages
             OnMessageRemoved?.Invoke(this, messageName);
         }
 
-        private Subscription _findSubscriptionToRemove<T, TH>()
+        private MessageSubscription _findSubscriptionToRemove<T, TH>()
             where T : IMessage
             where TH : IMessageSubscriber<T>
         {
@@ -112,7 +112,7 @@ namespace Message.Broker.Messages
             return _dDoFindSubscriptionToRemove(messageKey, typeof(TH));
         }
 
-        private Subscription _dDoFindSubscriptionToRemove(string messageName, Type handlerType)
+        private MessageSubscription _dDoFindSubscriptionToRemove(string messageName, Type handlerType)
         {
             if (!HasSubscriptionsForMessage(messageName))
             {

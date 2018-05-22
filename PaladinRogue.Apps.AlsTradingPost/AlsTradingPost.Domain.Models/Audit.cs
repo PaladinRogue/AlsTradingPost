@@ -1,5 +1,6 @@
 ﻿using System;
 using Common.Domain.Models;
+using Common.Domain.Models.DataProtection;
 
 namespace AlsTradingPost.Domain.Models
 {
@@ -9,6 +10,7 @@ namespace AlsTradingPost.Domain.Models
         
         public Guid EntityId { get; set; }
         
+        [SensitiveInformation]
         public string AuditedObject { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using Common.Domain.Services.Interfaces;
 
 namespace AlsTradingPost.Domain.TraderDomain.Interfaces
 {
-    public interface ITraderQueryService : IQueryService<TraderProjection>
+    public interface ITraderQueryService : IGetByIdService<TraderProjection>
     {
     }
 }

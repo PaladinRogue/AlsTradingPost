@@ -2,8 +2,8 @@
 {
     public static class LinkDictionary
     {
-        public const string AuthenticationFacebook = "Facebook";
-        public const string AuthenticationFacebookTemplate = "FacebookTemplate";
+        public const string AuthenticationLogin = "Login";
+        public const string AuthenticationLoginTemplate = "LoginTemplate";
         public const string AuthenticationRefreshToken = "RefreshToken";
         public const string AuthenticationRefreshTokenTemplate = "RefreshTokenTemplate";
     }

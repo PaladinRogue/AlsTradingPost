@@ -3,7 +3,7 @@ using Common.Domain.Services.Interfaces;
 
 namespace AlsTradingPost.Domain.AdminDomain.Interfaces
 {
-    public interface IAdminQueryService : IQueryService<AdminProjection>
+    public interface IAdminQueryService : IGetByIdService<AdminProjection>
     {
     }
 }

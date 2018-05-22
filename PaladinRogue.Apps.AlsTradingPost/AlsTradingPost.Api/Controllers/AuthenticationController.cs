@@ -3,7 +3,6 @@ using AlsTradingPost.Api.Authentication;
 using AlsTradingPost.Application.Authentication.Interfaces;
 using AlsTradingPost.Application.Authentication.Models;
 using AutoMapper;
-using Common.Api.Authentication;
 using Common.Api.Builders.Resource;
 using Common.Api.Builders.Template;
 using Common.Application.Authentication;

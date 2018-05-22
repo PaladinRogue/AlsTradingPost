@@ -15,7 +15,7 @@ namespace AlsTradingPost.Persistence.Repositories
 
         public void Add(Audit entity)
         {
-            RepositoryHelper.AddUnVersioned(_context.Audits, _context, entity);
+            RepositoryHelper.Add(_context.Audits, _context, entity);
         }
     }
 }

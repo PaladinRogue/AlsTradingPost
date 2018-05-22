@@ -1,8 +1,10 @@
-﻿using AlsTradingPost.Setup.Infrastructure.DbInitializer;
+﻿using AlsTradingPost.Persistence;
+using AlsTradingPost.Setup.Infrastructure.DbInitializer;
 using Common.Api.ApplicationRegistration;
 using Common.Resources.Authentication;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Persistence.EntityFramework.Infrastructure.Extensions;
 
 namespace AlsTradingPost.Api
 {
@@ -10,19 +12,19 @@ namespace AlsTradingPost.Api
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args)
+            CreateWebHostBuilder(args)
+                .Build()
                 .RegisterApplication("AlsTradingPost", AuthenticationProtocol.Facebook)
-                .ApplyMigrations()
+                .ApplyMigrations<AlsTradingPostDbContext>()
                 .SeedData()
                 .Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseUrls("http://localhost:1001")
+                .UseUrls("https://localhost:1001")
                 .UseStartup<Startup>()
                 .UseKestrel()
-                .UseIISIntegration()
-				.Build();
+                .UseIISIntegration();
     }
 }

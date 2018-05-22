@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using AlsTradingPost.Domain.Models.Interfaces;
 using AlsTradingPost.Resources;
 using Common.Domain.Models;
+using Common.Domain.Models.DataProtection;
 
 namespace AlsTradingPost.Domain.Models
 {
@@ -20,11 +21,13 @@ namespace AlsTradingPost.Domain.Models
         }
         
         [Required]
-        [MaxLength(50)]
+        [MaxLength(100)]
+        [SensitiveInformation]
         public string Alias { get; set; }
         
         [Required]
-        [MaxLength(50)]
+        [MaxLength(100)]
+        [SensitiveInformation]
         public string DCI { get; set; }
     }
 }

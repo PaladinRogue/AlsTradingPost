@@ -1,47 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Common.Domain.DomainEvents.Interfaces;
-using Common.Resources;
-using DomainEvent.Broker.Interfaces;
 
 namespace DomainEvent.Broker
 {
     public class DomainEventBus : IDomainEventBus
     {
-        private readonly IDomainEventBusSubscriptionsManager _domainEventBusSubscriptionsManager;
+        private readonly IDomainEventHandlerResolver _domainEventHandlerResolver;
 
-        public DomainEventBus(IDomainEventBusSubscriptionsManager domainEventBusSubscriptionsManager)
+        public DomainEventBus(IDomainEventHandlerResolver domainEventHandlerResolver)
         {
-            _domainEventBusSubscriptionsManager = domainEventBusSubscriptionsManager;
+            _domainEventHandlerResolver = domainEventHandlerResolver;
         }
 
-        public void Publish(IDomainEvent domainEvent)
+        public void Publish<T>(T domainEvent) where T : IDomainEvent
         {
-            Task.FromResult(ProcessDomainEvent(domainEvent.GetType(), domainEvent));
+            ProcessDomainEvent(domainEvent);
         }
 
-        public void Subscribe<T, TH>(Action<T> handler) where T : IDomainEvent where TH : IDomainEventHandler<T>
+        private void ProcessDomainEvent<T>(T domainEvent) where T : IDomainEvent
         {
-            _domainEventBusSubscriptionsManager.AddSubscription<T, TH>(handler);
-        }
-
-        public void Unsubscribe<T, TH>() where T : IDomainEvent where TH : IDomainEventHandler<T>
-        {
-            _domainEventBusSubscriptionsManager.RemoveSubscription<T, TH>();
-        }
-
-        private async Task ProcessDomainEvent(Type domainEventType, IDomainEvent domainEvent)
-        {
-            IEnumerable<Subscription> subscriptions = _domainEventBusSubscriptionsManager.GetSubscribersForDomainEvent(domainEventType, domainEventType.IsClass);
-
-            await Task.Run(() => Parallel.ForEach(subscriptions,
-                subscription => { subscription.Handler.DynamicInvoke(domainEvent); }));
-        }
-
-        public void Dispose()
-        {
-            _domainEventBusSubscriptionsManager.Clear();
+            IEnumerable<IDomainEventHandler<T>> domainEventHandlers = _domainEventHandlerResolver.ResolveAll<T>();
+            foreach (IDomainEventHandler<T> domainEventHandler in domainEventHandlers)
+            {
+                domainEventHandler.Handle(domainEvent);
+            }
         }
     }
 }

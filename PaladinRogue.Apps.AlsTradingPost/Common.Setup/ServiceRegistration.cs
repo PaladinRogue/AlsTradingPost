@@ -13,7 +13,6 @@ namespace Common.Setup
 {
     public class ServiceRegistration
     {
-	    
         public static void RegisterServices(IServiceCollection services)
         {
 	        services.AddSingleton<IEncryptionFactory, EncryptionFactory>();

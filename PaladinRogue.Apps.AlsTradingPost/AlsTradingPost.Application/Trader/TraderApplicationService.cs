@@ -3,6 +3,7 @@ using AlsTradingPost.Application.Trader.Interfaces;
 using AlsTradingPost.Application.Trader.Models;
 using AlsTradingPost.Domain.TraderDomain.Interfaces;
 using AlsTradingPost.Domain.TraderDomain.Models;
+using AlsTradingPost.Resources.Authorization;
 using AutoMapper;
 using Common.Application.Exceptions;
 using FluentValidation;
@@ -24,6 +25,7 @@ namespace AlsTradingPost.Application.Trader
         private readonly IValidator<UpdateTraderAdto> _updateTraderValidator;
         private readonly IConcurrencyQueryService<ITraderQueryService> _concurrencyQueryService;
         private readonly ILogger<TraderApplicationService> _logger;
+        private readonly ICurrentUserProvider _currentUserProvider;
 
         public TraderApplicationService(
             IValidator<RegisterTraderAdto> createTraderValidator,
@@ -33,7 +35,8 @@ namespace AlsTradingPost.Application.Trader
             IValidator<UpdateTraderAdto> updateTraderValidator,
             ITraderCommandService traderCommandService,
             IConcurrencyQueryService<ITraderQueryService> concurrencyQueryService,
-            ILogger<TraderApplicationService> logger)
+            ILogger<TraderApplicationService> logger,
+            ICurrentUserProvider currentUserProvider)
         {
             _registerTraderValidator = createTraderValidator;
             _traderDomainService = traderDomainService;
@@ -43,6 +46,7 @@ namespace AlsTradingPost.Application.Trader
             _traderCommandService = traderCommandService;
             _concurrencyQueryService = concurrencyQueryService;
             _logger = logger;
+            _currentUserProvider = currentUserProvider;
         }
 
         public RegisteredTraderAdto Register(RegisterTraderAdto registerTraderAdto)
@@ -50,7 +54,9 @@ namespace AlsTradingPost.Application.Trader
             _registerTraderValidator.ValidateAndThrow(registerTraderAdto);
             
             RegisterTraderDdto registerTraderDdto = _mapper.Map<RegisterTraderAdto, RegisterTraderDdto>(registerTraderAdto);
-            
+
+            registerTraderDdto.UserId = _currentUserProvider.Id;
+
             return _mapper.Map<RegisteredTraderProjection, RegisteredTraderAdto>(_traderDomainService.Register(registerTraderDdto));
         }
 

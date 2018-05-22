@@ -66,20 +66,6 @@ namespace Persistence.EntityFramework.Repositories
             }
         }
 
-        public static void AddUnVersioned<T>(DbSet<T> dbSet, DbContext context, T entity) where T : class, IEntity
-        {
-            try
-            {
-                dbSet.Add(entity);
-
-                context.SaveChanges();
-            }
-            catch (DbUpdateException e)
-            {
-                throw new CreateDomainException(entity, e);
-            }
-        }
-
         public static void Add<T>(DbSet<T> dbSet, DbContext context, T entity) where T : class, IVersionedEntity
         {
             try

@@ -53,7 +53,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainEvent.Broker", "Commo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlsTradingPost.Resources", "AlsTradingPost.Resources\AlsTradingPost.Resources.csproj", "{21A4A2B0-8677-4742-ACC4-5D6D3E5A476D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence.EntityFramework", "Persistence.EntityFramework\Persistence.EntityFramework.csproj", "{16D63256-EC81-4B21-AE2F-F4439C802251}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence.EntityFramework", "Persistence.EntityFramework\Persistence.EntityFramework.csproj", "{16D63256-EC81-4B21-AE2F-F4439C802251}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Persistence", "Persistence", "{74FCFB3C-5709-4095-9ABF-81462C4F33B1}"
 EndProject
@@ -61,13 +61,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DomainEvents", "DomainEvent
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common.Authentication", "Common.Authentication", "{914E0E82-9C49-466F-8E53-4EFA6051A56F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Authentication.Domain.Models", "Common.Authentication\Common.Authentication.Domain.Models\Common.Authentication.Domain.Models.csproj", "{95133591-30FB-426A-8CC0-942F1EA406CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Authentication.Domain.Models", "Common.Authentication\Common.Authentication.Domain.Models\Common.Authentication.Domain.Models.csproj", "{95133591-30FB-426A-8CC0-942F1EA406CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Authentication.Domain", "Common.Authentication\Common.Authentication.Domain\Common.Authentication.Domain.csproj", "{89B744E4-6DD1-4813-AA88-DD9DE98496FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Authentication.Domain", "Common.Authentication\Common.Authentication.Domain\Common.Authentication.Domain.csproj", "{89B744E4-6DD1-4813-AA88-DD9DE98496FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Authentication.Setup", "Common.Authentication\Common.Authentication.Setup\Common.Authentication.Setup.csproj", "{E8FF058A-3546-43D1-A76B-09B3D5626D3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Authentication.Setup", "Common.Authentication\Common.Authentication.Setup\Common.Authentication.Setup.csproj", "{E8FF058A-3546-43D1-A76B-09B3D5626D3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Authentication.Resources", "Common.Authentication\Common.Authentication.Resources\Common.Authentication.Resources.csproj", "{B2941292-533C-4E7B-951A-60F02E3989BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Authentication.Resources", "Common.Authentication\Common.Authentication.Resources\Common.Authentication.Resources.csproj", "{B2941292-533C-4E7B-951A-60F02E3989BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -202,8 +202,8 @@ Global
 		{B198BE88-E4EE-4412-8739-ECD091954C7B} = {6483DDD2-ED71-4A70-ADAE-708284195A4D}
 		{D3F18D14-4720-4FA1-A537-96C5A383D185} = {6483DDD2-ED71-4A70-ADAE-708284195A4D}
 		{2D011140-ACC4-41FE-BA6C-48183C0B99CA} = {0C931860-D95B-4A2B-824B-F31E34CC8BAE}
-		{16D63256-EC81-4B21-AE2F-F4439C802251} = {74FCFB3C-5709-4095-9ABF-81462C4F33B1}
 		{36D1CA67-D497-4FE4-8C0C-73E0C48B6644} = {ADD72C75-8132-4976-818C-2B6C3E937EA2}
+		{16D63256-EC81-4B21-AE2F-F4439C802251} = {74FCFB3C-5709-4095-9ABF-81462C4F33B1}
 		{95133591-30FB-426A-8CC0-942F1EA406CC} = {914E0E82-9C49-466F-8E53-4EFA6051A56F}
 		{89B744E4-6DD1-4813-AA88-DD9DE98496FC} = {914E0E82-9C49-466F-8E53-4EFA6051A56F}
 		{E8FF058A-3546-43D1-A76B-09B3D5626D3E} = {914E0E82-9C49-466F-8E53-4EFA6051A56F}
