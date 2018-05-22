@@ -3,6 +3,7 @@ using Common.Domain.Exceptions;
 
 namespace Common.Authentication.Domain.SessionDomain.Exceptions
 {
+    [Serializable]
     public class SessionRevokedDomainException : DomainException
     {
         public SessionRevokedDomainException()

@@ -2,6 +2,7 @@
 
 namespace Common.Domain.Exceptions
 {
+    [Serializable]
     public class DomainException : Exception {
         public DomainException()
         { }

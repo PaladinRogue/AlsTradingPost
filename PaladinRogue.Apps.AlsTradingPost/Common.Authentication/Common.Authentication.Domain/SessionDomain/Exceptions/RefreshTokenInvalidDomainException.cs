@@ -3,6 +3,7 @@ using Common.Domain.Exceptions;
 
 namespace Common.Authentication.Domain.SessionDomain.Exceptions
 {
+    [Serializable]
     public class RefreshTokenInvalidDomainException : DomainException
     {
         public RefreshTokenInvalidDomainException()

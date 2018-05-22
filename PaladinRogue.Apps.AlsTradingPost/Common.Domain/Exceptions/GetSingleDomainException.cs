@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 
 namespace Common.Domain.Exceptions
 {
+    [Serializable]
     public class GetSingleDomainException<T> : DomainException
     {
         public GetSingleDomainException(Expression<Func<T, bool>> predicate)
