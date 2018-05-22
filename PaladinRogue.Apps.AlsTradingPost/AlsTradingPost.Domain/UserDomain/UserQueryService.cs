@@ -29,6 +29,11 @@ namespace AlsTradingPost.Domain.UserDomain
             _mapper = mapper;
         }
 
+        public bool CheckExists(Guid id)
+        {
+            return _userRepository.CheckExists(id);
+        }
+
         public UserProjection GetByIdentityId(Guid identityId)
         {
             return _mapper.Map<User, UserProjection>(_userRepository.GetSingle(u => u.IdentityId == identityId));

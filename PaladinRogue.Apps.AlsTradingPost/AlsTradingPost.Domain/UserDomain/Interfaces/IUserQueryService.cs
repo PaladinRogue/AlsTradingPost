@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using AlsTradingPost.Domain.UserDomain.Models;
+using Common.Domain.Services.Interfaces;
 
 namespace AlsTradingPost.Domain.UserDomain.Interfaces
 {
-    public interface IUserQueryService
+    public interface IUserQueryService : ICheckExistsService
     {
         UserProjection GetByIdentityId(Guid identityId);
 
