@@ -1,5 +1,4 @@
 ﻿using AlsTradingPost.Api.Admin;
-using AlsTradingPost.Api.Authentication;
 using AlsTradingPost.Api.MagicItemTemplate;
 using AlsTradingPost.Api.Trader;
 using AutoMapper;

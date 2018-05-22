@@ -1,4 +1,5 @@
-﻿using Common.Domain.Concurrency;
+﻿using Common.Application.Transactions;
+using Common.Domain.Concurrency;
 using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Concurrency.Services;
 using Common.Domain.Concurrency.Services.Interfaces;
@@ -13,7 +14,11 @@ namespace Common.Setup
 {
     public class ServiceRegistration
     {
-	    
+        public static void RegisterManagers(IServiceCollection services)
+        {
+            services.AddTransient<ITransactionManager, TransientTransactionManager>();
+        }
+
         public static void RegisterServices(IServiceCollection services)
         {
 	        services.AddSingleton<IEncryptionFactory, EncryptionFactory>();

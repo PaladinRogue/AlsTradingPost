@@ -4,34 +4,34 @@ namespace Common.Domain.DomainEvents
 {
     public class DomainEvents
     {
-        private static volatile IPendingDomainEventDirector _pendingDomainEventDirector;
+        private static volatile IDomainEventDispatcher _domainEventDispatcher;
 
         protected DomainEvents()
         {
         }
 
-        protected static IPendingDomainEventDirector PendingDomainEventDirector
+        protected static IDomainEventDispatcher DomainEventDispatcher
         {
-            get => _pendingDomainEventDirector;
-            set => _pendingDomainEventDirector = value;
+            get => _domainEventDispatcher;
+            set => _domainEventDispatcher = value;
         }
 
-        public static void SetPendingDomainEventDirector(IPendingDomainEventDirector pendingDomainEventDirector)
+        public static void SetDomainEventDispatcher(IDomainEventDispatcher domainEventDispatcher)
         {
-            if (PendingDomainEventDirector == null)
+            if (DomainEventDispatcher == null)
             {
-                PendingDomainEventDirector = pendingDomainEventDirector;
+                DomainEventDispatcher = domainEventDispatcher;
             }
         }
 
         public static void Raise(IDomainEvent domainEvent)
         {
-            if (PendingDomainEventDirector == null)
+            if (DomainEventDispatcher == null)
             {
-                throw new PendingDomainEventDirectorNotSetException();
+                throw new DomainEventDispatcherNotSetException();
             }
 
-            PendingDomainEventDirector.Add(domainEvent);
+            DomainEventDispatcher.DispatchEvent(domainEvent);
         }
     }
 }

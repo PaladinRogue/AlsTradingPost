@@ -1,9 +1,7 @@
-﻿using System.Threading.Tasks;
-
-namespace Common.Domain.DomainEvents.Interfaces
+﻿namespace Common.Domain.DomainEvents.Interfaces
 {
 	public interface IDomainEventDispatcher
 	{
-		Task DispatchEventsAsync();
+		void DispatchEvent(IDomainEvent domainEvent);
 	}
 }

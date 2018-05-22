@@ -1,6 +1,7 @@
-﻿using Authentication.Setup.Infrastructure.DbInitializer;
+﻿using Authentication.Persistence;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Persistence.EntityFramework.Infrastructure.Extensions;
 
 namespace Authentication.Api
 {
@@ -10,7 +11,7 @@ namespace Authentication.Api
 	    {
 		    CreateWebHostBuilder(args)
 			    .Build()
-			    .ApplyMigrations()
+			    .ApplyMigrations<AuthenticationDbContext>()
                 .Run();
 	    }
 

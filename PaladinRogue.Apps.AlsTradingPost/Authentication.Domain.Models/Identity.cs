@@ -6,7 +6,7 @@ namespace Authentication.Domain.Models
 {
     public class Identity : AggregateRoot
     {
-        [MaxLength(100)]
+        [MaxLength(20)]
         [SensitiveInformation]
         public string AuthenticationId { get; set; }
     }

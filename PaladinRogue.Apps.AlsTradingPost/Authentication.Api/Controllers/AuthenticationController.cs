@@ -6,7 +6,6 @@ using Authentication.Application.Authentication.Interfaces;
 using Authentication.Application.Authentication.Models;
 using Authentication.Setup.Settings;
 using AutoMapper;
-using Common.Api.Authentication;
 using Common.Api.Authentication.FacebookModels;
 using Common.Api.Builders.Resource;
 using Common.Api.Builders.Template;
@@ -25,7 +24,6 @@ namespace Authentication.Api.Controllers
 		private readonly FacebookAuthSettings _fbAuthSettings;
 		private readonly IHttpClientFactory _httpClientFactory;
 		private readonly IAuthenticationApplicationService _authenticationApplicationService;
-		private readonly IResourceTemplateBuilder _resourceTemplateBuilder;
 		private readonly ITemplateBuilder _templateBuilder;
 		private readonly IResourceBuilder _resourceBuilder;
 		private readonly IMapper _mapper;
@@ -34,7 +32,6 @@ namespace Authentication.Api.Controllers
 			IJwtFactory jwtFactory,
 			IHttpClientFactory httpClientFactory,
 			IAuthenticationApplicationService authenticationApplicationService,
-			IResourceTemplateBuilder resourceTemplateBuilder,
 			ITemplateBuilder templateBuilder,
 			IResourceBuilder resourceBuilder,
 			IMapper mapper)
@@ -42,7 +39,6 @@ namespace Authentication.Api.Controllers
 			_fbAuthSettings = fbAuthSettingsAccessor.Value;
 			_httpClientFactory = httpClientFactory;
 			_authenticationApplicationService = authenticationApplicationService;
-			_resourceTemplateBuilder = resourceTemplateBuilder;
 			_templateBuilder = templateBuilder;
 			_resourceBuilder = resourceBuilder;
 			_mapper = mapper;
@@ -103,9 +99,8 @@ namespace Authentication.Api.Controllers
 				});
 
 			return new ObjectResult(
-				_resourceTemplateBuilder.Create(_mapper.Map<ExtendedJwtAdto, FacebookJwtResource>(extendedJwt), template)
+				_resourceBuilder.Create(_mapper.Map<ExtendedJwtAdto, FacebookJwtResource>(extendedJwt))
 					.WithResourceMeta()
-					.WithTemplateMeta()
 					.Build()
 			);
 		}
@@ -131,9 +126,8 @@ namespace Authentication.Api.Controllers
 				});
 
 			return new ObjectResult(
-				_resourceTemplateBuilder.Create(_mapper.Map<JwtAdto, JwtResource>(jwt), template)
+				_resourceBuilder.Create(_mapper.Map<JwtAdto, JwtResource>(jwt))
 					.WithResourceMeta()
-					.WithTemplateMeta()
 					.Build()
 			);
 		}

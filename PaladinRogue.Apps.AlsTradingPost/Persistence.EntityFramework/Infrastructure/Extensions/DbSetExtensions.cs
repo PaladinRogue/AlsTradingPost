@@ -4,7 +4,7 @@ using AutoMapper;
 using Common.Domain.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace AlsTradingPost.Setup.Infrastructure.DbInitializer
+namespace Persistence.EntityFramework.Infrastructure.Extensions
 {
     public static class DbSetExtensions
     {

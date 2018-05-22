@@ -1,11 +1,9 @@
-﻿using Common.Api.Extensions;
-using Common.Api.Routing;
+﻿using Common.Api.Routing;
 using Common.Api.Settings;
 using Common.Setup;
 using Common.Setup.Settings;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,7 +19,8 @@ namespace Common.Api
             IConfigurationBuilder builder = new ConfigurationBuilder()
                 .SetBasePath(environment.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile("secrets.json", optional: false, reloadOnChange: true);
+                .AddJsonFile("secrets.json", optional: false, reloadOnChange: true)
+                .AddEnvironmentVariables();
 
             Configuration = builder.Build();
             Environment = environment;
@@ -39,10 +38,14 @@ namespace Common.Api
             services.Configure<MessagingBusSettings>(Configuration.GetSection(nameof(MessagingBusSettings)));
 
             EventRegistration.RegisterEventHandling(services);
+            ServiceRegistration.RegisterManagers(services);
             MessageRegistration.RegisterRabbitMqMessaging(services);
             ServiceRegistration.RegisterProviders(services);
             ServiceRegistration.RegisterServices(services);
             DataProtectionRegistration.Register(Configuration, services);
+            
+            Common.Authentication.Setup.ServiceRegistration.RegisterDomainServices(services);
+            Common.Authentication.Setup.ServiceRegistration.RegisterProviders(services);
         }
     }
 }

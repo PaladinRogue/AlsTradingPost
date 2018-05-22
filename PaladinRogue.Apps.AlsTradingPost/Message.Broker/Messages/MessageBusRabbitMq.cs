@@ -4,7 +4,6 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using Common.Messaging.Message.Interfaces;
-using Common.Resources;
 using Message.Broker.Connection.Interfaces;
 using Message.Broker.Messages.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -175,7 +174,7 @@ namespace Message.Broker.Messages
         {
             if (_messageBusSubscriptionsManager.HasSubscriptionsForMessage(messageName))
             {
-                IEnumerable<Subscription> subscriptions = _messageBusSubscriptionsManager.GetSubscribersForMessage(messageName);
+                IEnumerable<MessageSubscription> subscriptions = _messageBusSubscriptionsManager.GetSubscribersForMessage(messageName);
 
                 await Task.Run(() => Parallel.ForEach(subscriptions,
                     subscription =>

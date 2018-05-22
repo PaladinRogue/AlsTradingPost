@@ -1,24 +1,20 @@
 ﻿using System;
-using Authentication.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Authentication.Setup.Infrastructure.DbInitializer
+namespace Persistence.EntityFramework.Infrastructure.Extensions
 {
     public static class WebHostExtensions
     {
-        public static IWebHost ApplyMigrations(this IWebHost host)
+        public static IWebHost ApplyMigrations<T>(this IWebHost host) where T: DbContext
         {
             using (IServiceScope scope = host.Services.CreateScope())
             {
                 IServiceProvider serviceProvider = scope.ServiceProvider;
-                AuthenticationDbContext context = serviceProvider.GetService<AuthenticationDbContext>();
+                T context = serviceProvider.GetService<T>();
 
-                if (!context.Database.EnsureCreated())
-                {
-                    context.Database.Migrate();
-                }
+                context.Database.Migrate();
             }
             return host;
         }

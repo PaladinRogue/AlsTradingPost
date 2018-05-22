@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AlsTradingPost.Setup;
 using AutoMapper;
 using Common.Api.Extensions;
@@ -22,7 +23,7 @@ namespace AlsTradingPost.Api
         {
         }
 
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             CommonConfigureServices(services);
             
@@ -47,33 +48,30 @@ namespace AlsTradingPost.Api
             ServiceRegistration.RegisterDomainServices(services);
             ServiceRegistration.RegisterPersistenceServices(Configuration, services);
             ServiceRegistration.RegisterProviders(services);
-            
-            Common.Authentication.Setup.ServiceRegistration.RegisterDomainServices(services);
-            Common.Authentication.Setup.ServiceRegistration.RegisterProviders(services);
 
             services.AddAutoMapper(MappingRegistration.RegisterMappers);
-
-            return services.BuildServiceProvider();
         }
 
         public void Configure(IApplicationBuilder app,
             ILoggerFactory loggerFactory,
-            IDomainEventHandlerFactory domainEventHandlerFactory,
+            IEnumerable<IDomainEventHandler> domainEventHandlers,
             IMessageSubscriberFactory messageSubscriberFactory,
+            IDomainEventDispatcher domainEventDispatcher,
             IDataProtector dataProtector,
-            IPendingDomainEventDirector pendingDomainEventDirector)
+            IServiceProvider serviceProvider)
         {
-            domainEventHandlerFactory.Initialise();
+            EventRegistration.AddHandlers(serviceProvider);
+
             messageSubscriberFactory.Initialise();
             
             DataProtection.SetDataProtector(dataProtector);
-            DomainEvents.SetPendingDomainEventDirector(pendingDomainEventDirector);
+            DomainEvents.SetDomainEventDispatcher(domainEventDispatcher);
 
             loggerFactory.AddLog4Net();
             
             app.UseHttpsRedirection();
 
-            MiddlewareRegistration.Register(app);
+            Common.Setup.MiddlewareRegistration.Register(app);
 
             app.UseHsts();
             app.UseAuthentication();

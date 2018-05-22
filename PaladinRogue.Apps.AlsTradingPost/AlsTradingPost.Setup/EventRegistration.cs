@@ -1,4 +1,5 @@
-﻿using AlsTradingPost.Domain.AuditDomain.Handlers;
+﻿using System;
+using AlsTradingPost.Domain.AuditDomain.Handlers;
 using Common.Domain.DomainEvents.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,9 +9,15 @@ namespace AlsTradingPost.Setup
     {
 	    public static void RegisterHandlers(IServiceCollection services)
 	    {
-		    Common.Setup.EventRegistration.RegisterEventHandling(services);
-
-	        services.AddScoped<IDomainEventHandler, AuditedEventHandler>();
+            services.AddScoped<IDomainEventHandler<IAuditedEvent>, AuditedEventHandler>();
         }
+
+	    public static void AddHandlers(IServiceProvider serviceProvider)
+	    {
+	        foreach (IDomainEventHandler domainEventHandler in serviceProvider.GetServices(typeof(IDomainEventHandler<IAuditedEvent>)))
+	        {
+	            domainEventHandler.Register();
+            }
+	    }
 	}
 }

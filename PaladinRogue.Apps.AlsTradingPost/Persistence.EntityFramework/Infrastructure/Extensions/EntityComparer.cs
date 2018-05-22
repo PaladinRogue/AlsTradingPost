@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using Common.Domain.Models.Interfaces;
 
-namespace AlsTradingPost.Setup.Infrastructure.DbInitializer
+namespace Persistence.EntityFramework.Infrastructure.Extensions
 {
     public class EntityComparer<T> : IEqualityComparer<T> where T : class, IEntity
     {

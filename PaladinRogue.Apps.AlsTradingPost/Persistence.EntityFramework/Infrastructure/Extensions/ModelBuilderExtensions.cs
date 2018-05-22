@@ -18,6 +18,7 @@ namespace Persistence.EntityFramework.Infrastructure.Extensions
                     
                     if (attributes != null && attributes.Any())
                     {
+                        mutableProperty.SetMaxLength(64);
                         mutableProperty.SetValueConverter(SensitiveInformationConverter.Create());
                     }
                 }

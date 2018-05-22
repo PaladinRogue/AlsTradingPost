@@ -1,12 +1,10 @@
-﻿using System;
-
-namespace Common.Domain.DomainEvents.Interfaces
+﻿namespace Common.Domain.DomainEvents.Interfaces
 {
     public interface IDomainEventBus
     {
         void Publish(IDomainEvent domainEvent);
 
-        void Subscribe<T, TH>(Action<T> handler)
+        void Subscribe<T, TH>()
             where T : IDomainEvent
             where TH : IDomainEventHandler<T>;
 

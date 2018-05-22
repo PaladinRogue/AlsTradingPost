@@ -12,10 +12,8 @@ namespace Common.Setup
 	    {
 	        services.AddSingleton<IDomainEventBusSubscriptionsManager, InMemoryDomainEventBusSubscriptionsManager>();
             services.AddSingleton<IDomainEventBus, DomainEventBus>();
-            services.AddSingleton<IDomainEventHandlerFactory, DomainEventHandlerFactory>();
-            
-	        services.AddScoped<IPendingDomainEventDirector, PendingDomainEventDirector>();
-            services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
+            services.AddSingleton<IDomainEventHandlerResolver, DomainEventHandlerResolver>();
+            services.AddSingleton<IDomainEventDispatcher, DomainEventDispatcher>();
         }
     }
 }

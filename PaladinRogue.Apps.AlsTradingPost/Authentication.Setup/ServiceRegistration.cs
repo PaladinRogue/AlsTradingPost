@@ -17,13 +17,12 @@ using Common.Api.HttpClient.Interfaces;
 using Common.Api.Links;
 using Common.Api.Meta;
 using Common.Api.Routing;
+using Common.Application.Transactions;
 using Common.Authentication.Domain.Persistence;
-using Common.Setup.Infrastructure.Transactions;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Persistence.EntityFramework.Transactions;
 
 namespace Authentication.Setup
 {
@@ -50,8 +49,8 @@ namespace Authentication.Setup
         public static void RegisterApplicationServices(IServiceCollection services)
         {
 	        services.AddSingleton<IHttpClientFactory, HttpClientFactory>();
-
-			services.AddScoped<IAuthenticationApplicationService, AuthenticationApplicationService>();
+            
+            services.AddScoped<IAuthenticationApplicationService, AuthenticationApplicationService>();
 		}
 	    
         public static void RegisterDomainServices(IServiceCollection services)
@@ -73,7 +72,6 @@ namespace Authentication.Setup
             services.AddEntityFrameworkSqlServer().AddOptions()
                 .AddDbContext<AuthenticationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Default")));
             services.AddScoped<DbContext>(sp => sp.GetRequiredService<AuthenticationDbContext>());
-            services.AddTransient<ITransactionFactory, TransactionFactory>();
 		}
 
         public static void RegisterProviders(IServiceCollection services)

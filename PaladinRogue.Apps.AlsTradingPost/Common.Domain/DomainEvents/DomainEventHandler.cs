@@ -2,9 +2,8 @@
 
 namespace Common.Domain.DomainEvents
 {
-    public abstract class DomainEventHandler<T, THandler> : IDomainEventHandler, IDomainEventHandler<T>
+    public abstract class DomainEventHandler<T> : IDomainEventHandler<T>
         where T : IDomainEvent
-        where THandler : IDomainEventHandler<T>
     {
         private readonly IDomainEventBus _domainEventBus;
 
@@ -17,7 +16,7 @@ namespace Common.Domain.DomainEvents
 
         public void Register()
         {
-            _domainEventBus.Subscribe<T, THandler>(Handle);
+            _domainEventBus.Subscribe<T, IDomainEventHandler<T>>();
         }
     }
 }

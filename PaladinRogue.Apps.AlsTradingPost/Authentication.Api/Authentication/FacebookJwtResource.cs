@@ -1,15 +1,16 @@
-﻿using Common.Api.Authentication;
-using Common.Api.Links;
+﻿using Common.Api.Links;
 using Common.Api.Meta;
+using Common.Api.Validation.Attributes;
 using Common.Setup.Infrastructure.Constants;
 
 namespace Authentication.Api.Authentication
 {
-    [SelfLink(RouteDictionary.AuthenticationFacebook, HttpVerbs.Get)]
+    [SelfLink(RouteDictionary.AuthenticationFacebook, HttpVerbs.Post)]
     public class FacebookJwtResource : JwtResource
     {
         [ReadOnly]
         [Hidden]
+        [Required]
         public string AccessToken { get; set; }
     }
 }

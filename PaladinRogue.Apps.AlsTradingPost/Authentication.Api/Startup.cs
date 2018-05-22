@@ -1,5 +1,4 @@
-﻿using System;
-using Authentication.Setup;
+﻿using Authentication.Setup;
 using Authentication.Setup.Settings;
 using AutoMapper;
 using Common.Api.Extensions;
@@ -26,9 +25,8 @@ namespace Authentication.Api
         public Startup(IHostingEnvironment environment) : base(environment)
         {
         }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        
+        public void ConfigureServices(IServiceCollection services)
         {
             CommonConfigureServices(services);
 
@@ -52,27 +50,20 @@ namespace Authentication.Api
             ServiceRegistration.RegisterDomainServices(services);
             ServiceRegistration.RegisterPersistenceServices(Configuration, services);
             ServiceRegistration.RegisterProviders(services);
-            
-            Common.Authentication.Setup.ServiceRegistration.RegisterDomainServices(services);
-            Common.Authentication.Setup.ServiceRegistration.RegisterProviders(services);
 
             services.AddAutoMapper(MappingRegistration.RegisterMappers);
-
-            return services.BuildServiceProvider();
         }
 
         public void Configure(IApplicationBuilder app,
             ILoggerFactory loggerFactory,
-            IDomainEventHandlerFactory domainEventHandlerFactory,
             IMessageSubscriberFactory messageSubscriberFactory,
             IDataProtector dataProtector,
-            IPendingDomainEventDirector pendingDomainEventDirector)
+            IDomainEventDispatcher domainEventDispatcher)
         {
-            domainEventHandlerFactory.Initialise();
             messageSubscriberFactory.Initialise();
             
             DataProtection.SetDataProtector(dataProtector);
-            DomainEvents.SetPendingDomainEventDirector(pendingDomainEventDirector);
+            DomainEvents.SetDomainEventDispatcher(domainEventDispatcher);
 
             if (Environment.IsDevelopment())
             {
