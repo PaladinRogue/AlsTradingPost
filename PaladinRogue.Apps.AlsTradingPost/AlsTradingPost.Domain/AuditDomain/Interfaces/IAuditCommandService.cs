@@ -2,7 +2,7 @@
 
 namespace AlsTradingPost.Domain.AuditDomain.Interfaces
 {
-    public interface IAuditCommandService
+    public interface IAuditDomainService
     {
         void AuditEntity(AuditEntityDdto auditEntityDdto);
     }

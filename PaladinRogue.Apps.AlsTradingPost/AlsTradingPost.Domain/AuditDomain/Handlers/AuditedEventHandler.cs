@@ -7,17 +7,16 @@ namespace AlsTradingPost.Domain.AuditDomain.Handlers
 {
     public class AuditedEventHandler : IDomainEventHandler<IAuditedEvent>
     {
-        private readonly IAuditCommandService _auditCommandService;
+        private readonly IAuditDomainService _auditDomainService;
 
-        public AuditedEventHandler(
-            IAuditCommandService auditCommandService)
+        public AuditedEventHandler(IAuditDomainService auditDomainService)
         {
-            _auditCommandService = auditCommandService;
+            _auditDomainService = auditDomainService;
         }
 
         public void Handle(IAuditedEvent auditedEvent)
         {
-             _auditCommandService.AuditEntity(Mapper.Map<IAuditedEvent, AuditEntityDdto>(auditedEvent));
+            _auditDomainService.AuditEntity(Mapper.Map<IAuditedEvent, AuditEntityDdto>(auditedEvent));
         }
     }
 }

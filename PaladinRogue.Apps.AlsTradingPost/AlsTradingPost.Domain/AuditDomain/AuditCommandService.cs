@@ -1,13 +1,10 @@
 ﻿using System;
 using AlsTradingPost.Domain.AuditDomain.Interfaces;
-using AlsTradingPost.Domain.AuditDomain.Models;
 using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.Persistence;
 using AutoMapper;
 using Common.Domain.Exceptions;
-using Common.Domain.Models;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace AlsTradingPost.Domain.AuditDomain
 {
@@ -26,23 +23,18 @@ namespace AlsTradingPost.Domain.AuditDomain
             _logger = logger;
         }
 
-        public void AuditEntity(AuditEntityDdto auditEntity)
+        public Guid Create(Audit entity)
         {
-            Audit newAudit = null;
             try
             {
-                newAudit = _mapper.Map(auditEntity, AggregateFactory.CreateRoot<Audit>());
+                _auditRepository.Add(entity);
 
-                newAudit.Timestamp = DateTime.UtcNow;
-                newAudit.EntityId = auditEntity.Entity.Id;
-                newAudit.AuditedObject = JsonConvert.SerializeObject(auditEntity.Entity, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
-
-                _auditRepository.Add(newAudit);
+                return entity.Id;
             }
             catch (Exception e)
             {
                 _logger.LogCritical(e, "Unable to audit entity");
-                throw new CreateDomainException(newAudit, e);
+                throw new CreateDomainException(entity, e);
             }
         }
     }

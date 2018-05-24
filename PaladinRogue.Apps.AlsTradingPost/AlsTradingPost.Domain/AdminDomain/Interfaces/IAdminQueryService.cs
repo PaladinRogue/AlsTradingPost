@@ -1,9 +1,9 @@
-﻿using AlsTradingPost.Domain.AdminDomain.Models;
-using Common.Domain.Services.Interfaces;
+﻿using AlsTradingPost.Domain.Models;
+using Common.Domain.Services.Domain;
 
 namespace AlsTradingPost.Domain.AdminDomain.Interfaces
 {
-    public interface IAdminQueryService : IGetByIdService<AdminProjection>
+    public interface IAdminQueryService : IGetByIdService<Admin>
     {
     }
 }

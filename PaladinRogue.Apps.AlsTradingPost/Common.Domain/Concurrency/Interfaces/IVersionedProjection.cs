@@ -1,5 +1,5 @@
-﻿using Common.Domain.Services;
-using Common.Domain.Services.Interfaces;
+﻿using Common.Domain.Models;
+using Common.Domain.Services;
 using Common.Resources.Concurrency;
 using Common.Resources.Concurrency.Interfaces;
 

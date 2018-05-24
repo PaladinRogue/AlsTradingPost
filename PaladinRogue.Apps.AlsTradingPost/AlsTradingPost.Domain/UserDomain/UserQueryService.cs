@@ -34,9 +34,9 @@ namespace AlsTradingPost.Domain.UserDomain
             return _userRepository.CheckExists(id);
         }
 
-        public UserProjection GetByIdentityId(Guid identityId)
+        public User GetByIdentityId(Guid identityId)
         {
-            return _mapper.Map<User, UserProjection>(_userRepository.GetSingle(u => u.IdentityId == identityId));
+            return _userRepository.GetSingle(u => u.IdentityId == identityId);
         }
 
         public IEnumerable<UserPersonaProjection> GetUserPersonas(Guid userid)
@@ -48,6 +48,11 @@ namespace AlsTradingPost.Domain.UserDomain
             };
             
             return _mapper.Map<IEnumerable<IPersona>, IEnumerable<UserPersonaProjection>>(personas.Where(p => p != null));
+        }
+
+        public User GetById(Guid id)
+        {
+            return _userRepository.GetById(id);
         }
     }
 }

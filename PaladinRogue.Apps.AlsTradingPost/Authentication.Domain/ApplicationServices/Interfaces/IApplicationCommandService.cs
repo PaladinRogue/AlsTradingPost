@@ -1,10 +1,9 @@
-﻿using Authentication.Domain.ApplicationServices.Models;
-using Common.Domain.Services;
-using Common.Domain.Services.Interfaces;
+﻿using Authentication.Domain.Models;
+using Common.Domain.Services.Command;
 
 namespace Authentication.Domain.ApplicationServices.Interfaces
 {
-    public interface IApplicationCommandService : ICreateCommandService<CreateApplicationDdto, ApplicationProjection>, IUpdateCommandService<UpdateApplicationDdto, ApplicationProjection>
+    public interface IApplicationCommandService : ICreateCommandService<Application>, IUpdateCommandService<Application>
     {
     }
 }

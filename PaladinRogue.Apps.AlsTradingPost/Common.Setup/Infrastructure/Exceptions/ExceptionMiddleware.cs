@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Common.Application.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using ApplicationException = Common.Application.Exceptions.ApplicationException;
 
 namespace Common.Setup.Infrastructure.Exceptions
 {
@@ -34,7 +33,7 @@ namespace Common.Setup.Infrastructure.Exceptions
             {
                 await _next(context);
             }
-            catch (ApplicationException ex)
+            catch (BusinessApplicationException ex)
             {
                 if (context.Response.HasStarted)
                 {

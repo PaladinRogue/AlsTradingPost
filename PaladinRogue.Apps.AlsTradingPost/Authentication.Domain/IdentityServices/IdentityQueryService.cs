@@ -1,9 +1,7 @@
 ﻿using System;
 using Authentication.Domain.IdentityServices.Interfaces;
-using Authentication.Domain.IdentityServices.Models;
 using Authentication.Domain.Models;
 using Authentication.Domain.Persistence;
-using AutoMapper;
 
 namespace Authentication.Domain.IdentityServices
 {
@@ -16,14 +14,14 @@ namespace Authentication.Domain.IdentityServices
 			_identityRepository = identityRepository;
 		}
 
-		public IdentityProjection GetByAuthenticationId(string authenticationId)
+		public Identity GetByAuthenticationId(string authenticationId)
 		{
-			return Mapper.Map<Identity, IdentityProjection>(_identityRepository.GetSingle(i => i.AuthenticationId == authenticationId));
+			return _identityRepository.GetSingle(i => i.AuthenticationId == authenticationId);
 		}
 
-		public IdentityProjection GetById(Guid id)
+		public Identity GetById(Guid id)
 		{
-			return Mapper.Map<Identity, IdentityProjection>(_identityRepository.GetById(id));
+			return _identityRepository.GetById(id);
 		}
 	}
 }

@@ -2,10 +2,8 @@
 using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.Persistence;
 using AlsTradingPost.Domain.UserDomain.Interfaces;
-using AlsTradingPost.Domain.UserDomain.Models;
 using AutoMapper;
 using Common.Domain.Exceptions;
-using Common.Domain.Models;
 using Microsoft.Extensions.Logging;
 
 namespace AlsTradingPost.Domain.UserDomain
@@ -25,16 +23,11 @@ namespace AlsTradingPost.Domain.UserDomain
             _logger = logger;
         }
 
-        public UserProjection Update(UpdateUserDdto entity)
+        public void Update(User entity)
         {
-            User user = null;
             try
             {
-                user = _mapper.Map<UpdateUserDdto, User>(entity);
-
-                _userRepository.Update(user);
-
-                return _mapper.Map<User, UserProjection>(_userRepository.GetById(entity.Id));
+                _userRepository.Update(entity);
             }
             catch (ConcurrencyDomainException e)
             {
@@ -44,20 +37,17 @@ namespace AlsTradingPost.Domain.UserDomain
             catch (Exception e)
             {
                 _logger.LogCritical(e, "Unable to update user");
-                throw new UpdateDomainException(user, e);
+                throw new UpdateDomainException(entity, e);
             }
         }
 
-        public UserProjection Create(CreateUserDdto entity)
+        public Guid Create(User entity)
         {
-            User user = null;
             try
             {
-                user = _mapper.Map(entity, AggregateFactory.CreateRoot<User>());
+                _userRepository.Add(entity);
 
-                _userRepository.Add(user);
-
-                return _mapper.Map<User, UserProjection>(_userRepository.GetById(user.Id));
+                return entity.Id;
             }
             catch (ConcurrencyDomainException e)
             {
@@ -67,7 +57,7 @@ namespace AlsTradingPost.Domain.UserDomain
             catch (Exception e)
             {
                 _logger.LogCritical(e, "Unable to create user");
-                throw new UpdateDomainException(user, e);
+                throw new CreateDomainException(entity, e);
             }
         }
     }

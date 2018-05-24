@@ -15,7 +15,6 @@ using Common.Setup.Infrastructure.Encryption.Interfaces;
 using Common.Application.Validation;
 using FluentValidation;
 using Microsoft.Extensions.Options;
-using ApplicationException = Common.Application.Exceptions.ApplicationException;
 
 namespace Authentication.Application.Authentication
 {
@@ -63,7 +62,7 @@ namespace Authentication.Application.Authentication
 		            .Build()
 	        );
 		    
-		    CreateSessionProjection createSessionProjection = _sessionDomainService.Create(loginIdentityProjection.Id);
+		    SessionProjection createSessionProjection = _sessionDomainService.Create(loginIdentityProjection.Id);
 
 	        jwt.AccessToken = _encryptionFactory.Enrypt(loginAdto.AccessToken, _jwtIssuerOptions.SigningKey);
 		    jwt.RefreshToken = createSessionProjection.RefreshToken;
@@ -95,11 +94,11 @@ namespace Authentication.Application.Authentication
 		    }
 		    catch (SessionRevokedDomainException e)
 		    {
-			    throw new ApplicationException(ExceptionType.Unauthorized, e);
+			    throw new BusinessApplicationException(ExceptionType.Unauthorized, e);
 		    }
 		    catch (RefreshTokenInvalidDomainException e)
 		    {
-			    throw new ApplicationException(ExceptionType.Unauthorized, e);
+			    throw new BusinessApplicationException(ExceptionType.Unauthorized, e);
 		    }
 	    }
     }

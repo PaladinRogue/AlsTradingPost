@@ -1,10 +1,10 @@
-﻿using Authentication.Domain.ApplicationServices.Models;
-using Common.Domain.Services.Interfaces;
+﻿using Authentication.Domain.Models;
+using Common.Domain.Services.Query;
 
 namespace Authentication.Domain.ApplicationServices.Interfaces
 {
-    public interface IApplicationQueryService : IGetByIdService<ApplicationProjection>
+    public interface IApplicationQueryService : IGetByIdQueryService<Application>
     {
-        ApplicationProjection GetByName(string applicationName);
+        Application GetByName(string applicationName);
     }
 }

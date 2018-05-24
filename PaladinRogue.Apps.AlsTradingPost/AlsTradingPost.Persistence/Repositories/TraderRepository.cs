@@ -1,6 +1,7 @@
 ﻿using System;
 using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.Persistence;
+using Common.Resources.Concurrency.Interfaces;
 using Persistence.EntityFramework.Repositories;
 
 namespace AlsTradingPost.Persistence.Repositories
@@ -27,6 +28,11 @@ namespace AlsTradingPost.Persistence.Repositories
         public void Update(Trader entity)
         {
             RepositoryHelper.Update(_context.Traders, _context, entity);
+        }
+
+        public bool CheckConcurrency(Guid id, IConcurrencyVersion version)
+        {
+            return RepositoryHelper.CheckConcurrency(_context.Traders, id, version.Version);
         }
     }
 }

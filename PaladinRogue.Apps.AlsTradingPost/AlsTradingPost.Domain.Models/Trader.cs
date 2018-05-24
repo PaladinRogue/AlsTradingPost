@@ -21,12 +21,12 @@ namespace AlsTradingPost.Domain.Models
         }
         
         [Required]
-        [MaxLength(100)]
+        [MaxLength(50)]
         [SensitiveInformation]
         public string Alias { get; set; }
         
         [Required]
-        [MaxLength(100)]
+        [MaxLength(50)]
         [SensitiveInformation]
         public string DCI { get; set; }
     }

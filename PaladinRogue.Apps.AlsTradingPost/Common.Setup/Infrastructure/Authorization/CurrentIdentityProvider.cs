@@ -4,7 +4,6 @@ using Common.Resources.Extensions;
 using Common.Setup.Infrastructure.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using ApplicationException = Common.Application.Exceptions.ApplicationException;
 
 namespace Common.Setup.Infrastructure.Authorization
 {
@@ -32,7 +31,7 @@ namespace Common.Setup.Infrastructure.Authorization
                     }
                 }
 
-                throw new ApplicationException(ExceptionType.Unauthorized, "Current identity token is not valid");
+                throw new BusinessApplicationException(ExceptionType.Unauthorized, "Current identity token is not valid");
             }
         }
     }

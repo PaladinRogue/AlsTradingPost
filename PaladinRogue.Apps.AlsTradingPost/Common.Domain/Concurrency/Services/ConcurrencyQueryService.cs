@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Linq;
-using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Concurrency.Services.Interfaces;
 using Common.Domain.Exceptions;
-using Common.Domain.Services;
-using Common.Domain.Services.Interfaces;
-using Common.Resources.Concurrency;
+using Common.Domain.Services.Query;
 using Common.Resources.Concurrency.Interfaces;
 
 namespace Common.Domain.Concurrency.Services
 {
-    public class ConcurrencyQueryService<T> : IConcurrencyQueryService<T> where T : IGetByIdService<IVersionedProjection>
+    public class ConcurrencyQueryService<T> : IConcurrencyQueryService<T> where T : ICheckConcurrencyService
     {
         private readonly T _queryService;
 
@@ -21,8 +17,7 @@ namespace Common.Domain.Concurrency.Services
 
         public void CheckConcurrency(Guid id, IConcurrencyVersion version)
         {
-            IVersionedProjection entity = _queryService.GetById(id);
-            if (!entity.Version.Version.SequenceEqual(version.Version))
+            if (!_queryService.CheckConcurrency(id, version))
             {
                 throw new ConcurrencyDomainException(typeof(T), id, version);
             }

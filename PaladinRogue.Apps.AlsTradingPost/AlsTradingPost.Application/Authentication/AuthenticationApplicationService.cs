@@ -61,7 +61,7 @@ namespace AlsTradingPost.Application.Authentication
                     .Build()
             );
 		    
-            CreateSessionProjection createSessionProjection = _sessionDomainService.Create(userProjection.Id);
+            SessionProjection createSessionProjection = _sessionDomainService.Create(userProjection.Id);
             
             jwt.RefreshToken = createSessionProjection.RefreshToken;
             jwt.SessionId = createSessionProjection.Id;
@@ -93,11 +93,11 @@ namespace AlsTradingPost.Application.Authentication
             }
             catch (SessionRevokedDomainException e)
             {
-                throw new ApplicationException(ExceptionType.Unauthorized, e);
+                throw new BusinessApplicationException(ExceptionType.Unauthorized, e);
             }
             catch (RefreshTokenInvalidDomainException e)
             {
-                throw new ApplicationException(ExceptionType.Unauthorized, e);
+                throw new BusinessApplicationException(ExceptionType.Unauthorized, e);
             }
         }
     }

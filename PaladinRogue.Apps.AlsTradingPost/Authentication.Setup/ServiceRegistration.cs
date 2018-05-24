@@ -60,6 +60,7 @@ namespace Authentication.Setup
 			services.AddScoped<IIdentityQueryService, IdentityQueryService>();
 			services.AddScoped<IIdentityCommandService, IdentityCommandService>();
 
+			services.AddScoped<IApplicationDomainService, ApplicationDomainService>();
 			services.AddScoped<IApplicationQueryService, ApplicationQueryService>();
 			services.AddScoped<IApplicationCommandService, ApplicationCommandService>();
 		}

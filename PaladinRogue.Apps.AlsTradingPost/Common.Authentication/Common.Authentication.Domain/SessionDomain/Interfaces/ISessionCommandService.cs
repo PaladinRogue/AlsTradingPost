@@ -1,9 +1,9 @@
-﻿using Common.Authentication.Domain.SessionDomain.Models;
-using Common.Domain.Services.Interfaces;
+﻿using Common.Authentication.Domain.Models;
+using Common.Domain.Services.Command;
 
 namespace Common.Authentication.Domain.SessionDomain.Interfaces
 {
-    public interface ISessionCommandService : ICreateCommandService<CreateSessionDdto, SessionProjection>, IUpdateCommandService<UpdateSessionDdto, SessionProjection>
+    public interface ISessionCommandService : ICreateCommandService<Session>, IUpdateCommandService<Session>
     {
     }
 }

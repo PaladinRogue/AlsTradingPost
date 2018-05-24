@@ -10,12 +10,12 @@ namespace AlsTradingPost.Domain.TraderDomain.Mappings
     {
         public TraderDomainMappingProfile()
         {
-            CreateMap<CreateTraderDdto, Trader>();
             CreateMap<Trader, TraderProjection>()
                 .IncludeBase<IVersionedEntity, IVersionedProjection>();
-            CreateMap<RegisterTraderDdto, CreateTraderDdto>()
+            CreateMap<RegisterTraderDdto, Trader>()
                 .ForMember(d => d.Id, opts => opts.MapFrom(s => s.UserId));
-            CreateMap<TraderProjection, RegisteredTraderProjection>();
+            CreateMap<Trader, RegisteredTraderProjection>()
+                .IncludeBase<IVersionedEntity, IVersionedProjection>();
             CreateMap<UpdateTraderDdto, Trader>()
                 .IncludeBase<IVersionedDdto, IVersionedEntity>();
         }
