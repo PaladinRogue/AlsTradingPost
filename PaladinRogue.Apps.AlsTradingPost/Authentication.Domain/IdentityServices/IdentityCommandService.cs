@@ -1,11 +1,8 @@
 ﻿using System;
 using Authentication.Domain.IdentityServices.Interfaces;
-using Authentication.Domain.IdentityServices.Models;
 using Authentication.Domain.Models;
 using Authentication.Domain.Persistence;
-using AutoMapper;
 using Common.Domain.Exceptions;
-using Common.Domain.Models;
 using Microsoft.Extensions.Logging;
 
 namespace Authentication.Domain.IdentityServices
@@ -21,20 +18,18 @@ namespace Authentication.Domain.IdentityServices
             _logger = logger;
         }
 
-        public IdentityProjection Create(CreateIdentityDdto entity)
+        public Guid Create(Identity entity)
         {
             try
             {
-                Identity newIdentity = Mapper.Map(entity, AggregateFactory.CreateRoot<Identity>());
+                _identityRepository.Add(entity);
 
-                _identityRepository.Add(newIdentity);
-
-                return Mapper.Map<Identity, IdentityProjection>(_identityRepository.GetById(newIdentity.Id));
+                return entity.Id;
             }
             catch (Exception e)
             {
                 _logger.LogCritical(e, "Unable to create admin");
-                throw new DomainException("Unable to create admin");
+                throw new CreateDomainException(entity, e);
             }
         }
     }

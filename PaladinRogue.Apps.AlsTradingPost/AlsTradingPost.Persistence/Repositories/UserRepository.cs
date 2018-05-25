@@ -34,5 +34,10 @@ namespace AlsTradingPost.Persistence.Repositories
         {
             RepositoryHelper.Update(_context.Users, _context, entity);
         }
+
+        public bool CheckExists(Guid id)
+        {
+            return RepositoryHelper.CheckExists(_context.Users, id);
+        }
     }
 }

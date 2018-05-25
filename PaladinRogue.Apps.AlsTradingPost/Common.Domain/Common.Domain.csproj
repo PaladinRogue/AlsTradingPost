@@ -9,4 +9,7 @@
     <ProjectReference Include="..\Common.Domain.Models\Common.Domain.Models.csproj" />
     <ProjectReference Include="..\Common.Resources\Common.Resources.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\Interfaces\" />
+  </ItemGroup>
 </Project>

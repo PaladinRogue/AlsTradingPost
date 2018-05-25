@@ -1,6 +1,9 @@
-﻿using Authentication.Domain.IdentityServices.Interfaces;
+﻿using System;
+using Authentication.Domain.IdentityServices.Interfaces;
 using Authentication.Domain.IdentityServices.Models;
+using Authentication.Domain.Models;
 using AutoMapper;
+using Common.Domain.Models;
 
 namespace Authentication.Domain.IdentityServices
 {
@@ -22,11 +25,16 @@ namespace Authentication.Domain.IdentityServices
 
         public AuthenticatedIdentityProjection Login(LoginDdto loginDdto)
         {
-            IdentityProjection identityProjection =
-                _identityQueryService.GetByAuthenticationId(loginDdto.AuthenticationId) ??
-                _identityCommandService.Create(Mapper.Map<LoginDdto, CreateIdentityDdto>(loginDdto));
-            
-            return _mapper.Map<IdentityProjection, AuthenticatedIdentityProjection>(identityProjection);
+            Identity identity = _identityQueryService.GetByAuthenticationId(loginDdto.AuthenticationId);
+
+            if (identity == null)
+            {
+                Guid identityId = _identityCommandService.Create(Mapper.Map(loginDdto, AggregateFactory.CreateRoot<Identity>()));
+
+                identity = _identityQueryService.GetById(identityId);
+            }
+
+            return _mapper.Map<Identity, AuthenticatedIdentityProjection>(identity);
         }
     }
 }

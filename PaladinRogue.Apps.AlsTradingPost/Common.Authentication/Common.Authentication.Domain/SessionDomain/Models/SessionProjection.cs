@@ -1,9 +1,8 @@
 ﻿using System;
-using Common.Domain.Concurrency;
 
 namespace Common.Authentication.Domain.SessionDomain.Models
 {
-    public class SessionProjection : VersionedProjection
+    public class SessionProjection
     {
         public Guid Id { get; set; }
         public string RefreshToken { get; set; }

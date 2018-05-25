@@ -5,6 +5,7 @@ using Common.Resources.Concurrency.Interfaces;
 
 namespace Common.Domain.Exceptions
 {
+    [Serializable]
     public class DeleteDomainException : DomainException
     {
         public DeleteDomainException(IVersionedEntity entity, Exception innerException)

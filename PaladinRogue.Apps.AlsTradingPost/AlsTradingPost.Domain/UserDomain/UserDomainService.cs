@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
+using AlsTradingPost.Domain.Models;
 using AlsTradingPost.Domain.UserDomain.Interfaces;
 using AlsTradingPost.Domain.UserDomain.Models;
 using AlsTradingPost.Resources;
 using AutoMapper;
+using Common.Domain.Models;
 
 namespace AlsTradingPost.Domain.UserDomain
 {
@@ -25,7 +27,7 @@ namespace AlsTradingPost.Domain.UserDomain
 
         public AuthenticatedUserProjection Login(LoginDdto loginDdto)
         {
-            UserProjection existingUser = _userQueryService.GetByIdentityId(loginDdto.IdentityId);
+            User existingUser = _userQueryService.GetByIdentityId(loginDdto.IdentityId);
 
             AuthenticatedUserProjection authenticatedUserProjection =
                 existingUser == null ? FirstTimeLogin(loginDdto) : ReturnLogin(loginDdto, existingUser);
@@ -44,18 +46,20 @@ namespace AlsTradingPost.Domain.UserDomain
 
         private AuthenticatedUserProjection FirstTimeLogin(LoginDdto loginDdto)
         {
-            CreateUserDdto createUserDdto = _mapper.Map<LoginDdto, CreateUserDdto>(loginDdto);
+            User newUser = _mapper.Map(loginDdto, AggregateFactory.CreateRoot<User>());
 
-            UserProjection userProjection = _userCommandService.Create(createUserDdto);
+            Guid userId = _userCommandService.Create(newUser);
 
-            return _mapper.Map<UserProjection, AuthenticatedUserProjection>(userProjection);
+            return _mapper.Map<User, AuthenticatedUserProjection>(_userQueryService.GetById(userId));
         }
 
-        private AuthenticatedUserProjection ReturnLogin(LoginDdto loginDdto, UserProjection existingUser)
+        private AuthenticatedUserProjection ReturnLogin(LoginDdto loginDdto, User existingUser)
         {
-            UpdateUserDdto existingUserDdto = _mapper.Map<UserProjection, UpdateUserDdto>(existingUser);
-            UpdateUserDdto updateUserDdto = _mapper.Map(loginDdto, existingUserDdto);
-            return _mapper.Map<UserProjection, AuthenticatedUserProjection>(_userCommandService.Update(updateUserDdto));
+            User user = _mapper.Map(loginDdto, existingUser);
+
+            _userCommandService.Update(user);
+            
+            return _mapper.Map<User, AuthenticatedUserProjection>(_userQueryService.GetById(user.Id));
         }
     }
 }

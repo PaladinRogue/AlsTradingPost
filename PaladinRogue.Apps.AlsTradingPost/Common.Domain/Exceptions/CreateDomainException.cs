@@ -4,6 +4,7 @@ using Common.Domain.Models.Interfaces;
 
 namespace Common.Domain.Exceptions
 {
+    [Serializable]
     public class CreateDomainException : DomainException
     {
         public CreateDomainException(IEntity entity, Exception innerException)

@@ -1,9 +1,9 @@
-﻿using AlsTradingPost.Domain.TraderDomain.Models;
-using Common.Domain.Services.Interfaces;
+﻿using AlsTradingPost.Domain.Models;
+using Common.Domain.Services.Command;
 
 namespace AlsTradingPost.Domain.TraderDomain.Interfaces
 {
-    public interface ITraderCommandService : ICreateCommandService<CreateTraderDdto, TraderProjection>, IUpdateCommandService<UpdateTraderDdto, TraderProjection>
+    public interface ITraderCommandService : ICreateCommandService<Trader>, IUpdateCommandService<Trader>
     {
     }
 }

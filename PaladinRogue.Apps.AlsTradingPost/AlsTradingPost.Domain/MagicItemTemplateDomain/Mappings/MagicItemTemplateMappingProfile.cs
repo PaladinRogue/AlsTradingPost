@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using AlsTradingPost.Domain.MagicItemTemplateDomain.Models;
+using AlsTradingPost.Domain.Models;
+using AutoMapper;
 
 namespace AlsTradingPost.Domain.MagicItemTemplateDomain.Mappings
 {
@@ -6,8 +8,7 @@ namespace AlsTradingPost.Domain.MagicItemTemplateDomain.Mappings
     {
         public MagicItemTemplateMappingProfile()
         {
-            CreateMap<Domain.Models.MagicItemTemplate, Domain.Models.MagicItemTemplate>()
-                .ForMember(x => x.Version, opts => opts.Ignore());
+            CreateMap<MagicItemTemplate, MagicItemTemplateSummaryProjection>();
         }
     }
 }

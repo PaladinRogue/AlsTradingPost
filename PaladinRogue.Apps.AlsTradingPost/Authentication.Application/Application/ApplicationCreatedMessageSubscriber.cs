@@ -10,25 +10,20 @@ using Microsoft.Extensions.Logging;
 
 namespace Authentication.Application.Application
 {
-    public class
-        ApplicationCreatedMessageSubscriber : MessageSubscriber<ApplicationCreatedMessage,
-            ApplicationCreatedMessageSubscriber>
+    public class ApplicationCreatedMessageSubscriber : MessageSubscriber<ApplicationCreatedMessage,ApplicationCreatedMessageSubscriber>
     {
         private readonly ILogger<ApplicationCreatedMessageSubscriber> _logger;
         private readonly ITransactionManager _transactionManager;
-        private readonly IApplicationCommandService _applicationCommandService;
-        private readonly IApplicationQueryService _applicationQueryService;
+        private readonly IApplicationDomainService _applicationDomainService;
 
         public ApplicationCreatedMessageSubscriber(ILogger<ApplicationCreatedMessageSubscriber> logger,
             IMessageBus messageBus,
             ITransactionManager transactionManager,
-            IApplicationCommandService applicationCommandService,
-            IApplicationQueryService applicationQueryService) : base(messageBus)
+            IApplicationDomainService applicationDomainService) : base(messageBus)
         {
             _logger = logger;
             _transactionManager = transactionManager;
-            _applicationCommandService = applicationCommandService;
-            _applicationQueryService = applicationQueryService;
+            _applicationDomainService = applicationDomainService;
         }
 
         public override void Handle(ApplicationCreatedMessage message)
@@ -37,17 +32,17 @@ namespace Authentication.Application.Application
             {
                 using (ITransaction transaction = _transactionManager.Create())
                 {
-                    ApplicationProjection applicationProjection = _applicationQueryService.GetByName(message.Name);
+                    ApplicationProjection applicationProjection = _applicationDomainService.GetByName(message.Name);
                     if (applicationProjection == null)
                     {
-                        _applicationCommandService.Create(
+                        _applicationDomainService.Create(
                             Mapper.Map<ApplicationCreatedMessage, CreateApplicationDdto>(message));
                     }
                     else
                     {
                         ApplicationProjection applicationProjectionUpdate = Mapper.Map(message, applicationProjection);
 
-                        _applicationCommandService.Update(
+                        _applicationDomainService.Update(
                             Mapper.Map<ApplicationProjection, UpdateApplicationDdto>(applicationProjectionUpdate));
                     }
 

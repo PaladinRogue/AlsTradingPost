@@ -1,10 +1,9 @@
-﻿using AlsTradingPost.Domain.MagicItemTemplateDomain.Models;
-using AlsTradingPost.Domain.Models;
-using Common.Domain.Services.Interfaces;
+﻿using AlsTradingPost.Domain.Models;
+using Common.Domain.Services.Query;
 
 namespace AlsTradingPost.Domain.MagicItemTemplateDomain.Interfaces
 {
-    public interface IMagicItemTemplateQueryService : IGetPageQueryService<MagicItemTemplate, MagicItemTemplatePagedCollectionDdto>
+    public interface IMagicItemTemplateQueryService : IGetPageQueryService<MagicItemTemplate>
     {
     }
 }

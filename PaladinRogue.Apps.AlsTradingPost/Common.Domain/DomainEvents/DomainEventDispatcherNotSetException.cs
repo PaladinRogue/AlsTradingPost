@@ -2,7 +2,8 @@
 
 namespace Common.Domain.DomainEvents
 {
-    class DomainEventDispatcherNotSetException : Exception
+    [Serializable]
+    public class DomainEventDispatcherNotSetException : Exception
     {
         public DomainEventDispatcherNotSetException()
         {

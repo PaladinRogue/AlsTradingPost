@@ -1,6 +1,5 @@
 ﻿using System;
 using Common.Domain.Concurrency;
-using Common.Domain.Models;
 using Common.Resources.Authentication;
 
 namespace Authentication.Domain.ApplicationServices.Models

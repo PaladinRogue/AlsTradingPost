@@ -61,10 +61,10 @@ namespace Authentication.Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<bool>("IsRevoked");
+
                     b.Property<string>("RefreshToken")
                         .HasMaxLength(100);
-
-                    b.Property<bool>("Revoked");
 
                     b.Property<byte[]>("Version")
                         .IsConcurrencyToken()

@@ -1,11 +1,8 @@
 ﻿using System;
 using Authentication.Domain.ApplicationServices.Interfaces;
-using Authentication.Domain.ApplicationServices.Models;
 using Authentication.Domain.Models;
 using Authentication.Domain.Persistence;
-using AutoMapper;
 using Common.Domain.Exceptions;
-using Common.Domain.Models;
 using Microsoft.Extensions.Logging;
 
 namespace Authentication.Domain.ApplicationServices
@@ -13,40 +10,34 @@ namespace Authentication.Domain.ApplicationServices
     public class ApplicationCommandService : IApplicationCommandService
 	{
         private readonly ILogger<ApplicationCommandService> _logger;
-        private readonly IMapper _mapper;
         private readonly IApplicationRepository _applicationRepository;
 
-        public ApplicationCommandService(IMapper mapper, IApplicationRepository identityRepository, ILogger<ApplicationCommandService> logger)
+        public ApplicationCommandService(IApplicationRepository identityRepository, ILogger<ApplicationCommandService> logger)
         {
             _applicationRepository = identityRepository;
-            _mapper = mapper;
             _logger = logger;
         }
 
-        public ApplicationProjection Create(CreateApplicationDdto entity)
+        public Guid Create(Application entity)
         {
             try
             {
-                Application newApplication = _mapper.Map(entity, AggregateFactory.CreateRoot<Application>());
+                _applicationRepository.Add(entity);
 
-                _applicationRepository.Add(newApplication);
-
-                return _mapper.Map<Application, ApplicationProjection>(_applicationRepository.GetById(newApplication.Id));
+                return entity.Id;
             }
             catch (Exception e)
             {
                 _logger.LogCritical(e, "Unable to create application");
-                throw new DomainException("Unable to create application");
+                throw new CreateDomainException(entity, e);
             }
         }
 
-        public ApplicationProjection Update(UpdateApplicationDdto entity)
+        public void Update(Application entity)
         {
             try
             {
-                _applicationRepository.Update(_mapper.Map<UpdateApplicationDdto, Application>(entity));
-
-                return _mapper.Map<Application, ApplicationProjection>(_applicationRepository.GetById(entity.Id));
+                _applicationRepository.Update(entity);
             }
             catch (ConcurrencyDomainException e)
             {
@@ -56,7 +47,7 @@ namespace Authentication.Domain.ApplicationServices
             catch (Exception e)
             {
                 _logger.LogCritical(e, "Unable to update application");
-                throw new DomainException("Unable to update application");
+                throw new UpdateDomainException(entity, e);
             }
         }
     }

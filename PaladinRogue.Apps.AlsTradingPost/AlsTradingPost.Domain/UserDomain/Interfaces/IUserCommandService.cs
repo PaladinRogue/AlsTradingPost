@@ -1,9 +1,9 @@
-﻿using AlsTradingPost.Domain.UserDomain.Models;
-using Common.Domain.Services.Interfaces;
+﻿using AlsTradingPost.Domain.Models;
+using Common.Domain.Services.Command;
 
 namespace AlsTradingPost.Domain.UserDomain.Interfaces
 {
-    public interface IUserCommandService : IUpdateCommandService<UpdateUserDdto, UserProjection>, ICreateCommandService<CreateUserDdto, UserProjection>
+    public interface IUserCommandService : IUpdateCommandService<User>, ICreateCommandService<User>
     {
     }
 }

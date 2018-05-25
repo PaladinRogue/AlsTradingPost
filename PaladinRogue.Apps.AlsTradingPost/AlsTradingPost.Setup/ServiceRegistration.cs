@@ -1,6 +1,4 @@
-﻿using AlsTradingPost.Application.Admin;
-using AlsTradingPost.Application.Admin.Interfaces;
-using AlsTradingPost.Application.Authentication;
+﻿using AlsTradingPost.Application.Authentication;
 using AlsTradingPost.Application.Authentication.Interfaces;
 using AlsTradingPost.Application.Authentication.Models;
 using AlsTradingPost.Application.Authentication.Validators;
@@ -86,8 +84,6 @@ namespace AlsTradingPost.Setup
             services.AddSingleton<IHttpClientFactory, HttpClientFactory>();
 
             services.AddScoped<IAuthenticationApplicationService, AuthenticationApplicationService>();
-
-            services.AddScoped<IAdminApplicationService, AdminApplicationService>();
             
             services.AddScoped<ITraderApplicationService, TraderApplicationService>();
 
@@ -98,19 +94,21 @@ namespace AlsTradingPost.Setup
         {
             services.AddScoped(typeof(IConcurrencyQueryService<>), typeof(ConcurrencyQueryService<>));
 
+            services.AddScoped<IAuditDomainService, AuditDomainService>();
             services.AddScoped<IAuditCommandService, AuditCommandService>();
 
             services.AddScoped<IUserDomainService, UserDomainService>();
             services.AddScoped<IUserCommandService, UserCommandService>();
             services.AddScoped<IUserQueryService, UserQueryService>();
 
-            services.AddScoped<IAdminCommandService, AdminCommandService>();
+            services.AddScoped<IAdminDomainService, AdminDomainService>();
             services.AddScoped<IAdminQueryService, AdminQueryService>();
             
             services.AddScoped<ITraderDomainService, TraderDomainService>();
             services.AddScoped<ITraderCommandService, TraderCommandService>();
             services.AddScoped<ITraderQueryService, TraderQueryService>();
 
+            services.AddScoped<IMagicItemTemplateDomainService, MagicItemTemplateDomainService>();
             services.AddScoped<IMagicItemTemplateQueryService, MagicItemTemplateQueryService>();
         }
 

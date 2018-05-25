@@ -17,6 +17,6 @@ namespace Common.Authentication.Domain.Models
         
         [MaxLength(100)]
         public string RefreshToken { get; set; }
-        public bool Revoked { get; set; }
+        public bool IsRevoked { get; set; }
     }
 }

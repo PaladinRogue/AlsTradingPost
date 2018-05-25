@@ -10,13 +10,13 @@ namespace AlsTradingPost.Application.MagicItemTemplate
 {
     public class MagicItemTemplateApplicationService : IMagicItemTemplateApplicationService
     {
-        private readonly IMagicItemTemplateQueryService _magicItemTemplateQueryService;
+        private readonly IMagicItemTemplateDomainService _magicItemTemplateDomainService;
         private readonly IValidator<MagicItemTemplateSearchAdto> _magicItemTemplateSearchValidator;
 
-        public MagicItemTemplateApplicationService(IMagicItemTemplateQueryService magicItemTemplateQueryService,
+        public MagicItemTemplateApplicationService(IMagicItemTemplateDomainService magicItemTemplateDomainService,
             IValidator<MagicItemTemplateSearchAdto> magicItemTemplateSearchValidator)
         {
-            _magicItemTemplateQueryService = magicItemTemplateQueryService;
+            _magicItemTemplateDomainService = magicItemTemplateDomainService;
             _magicItemTemplateSearchValidator = magicItemTemplateSearchValidator;
         }
 
@@ -24,7 +24,7 @@ namespace AlsTradingPost.Application.MagicItemTemplate
         {
             _magicItemTemplateSearchValidator.ValidateAndThrow(magicItemTemplateSearchAdto);
             
-            MagicItemTemplatePagedCollectionDdto result = _magicItemTemplateQueryService.GetPage(
+            MagicItemTemplatePagedCollectionDdto result = _magicItemTemplateDomainService.GetPage(
                 Mapper.Map<MagicItemTemplateSearchAdto, MagicItemTemplateSearchDdto>(magicItemTemplateSearchAdto),
                     i => string.IsNullOrEmpty(magicItemTemplateSearchAdto.Name) || i.Name.Contains(magicItemTemplateSearchAdto.Name),
                     magicItemTemplateSearchAdto.OrderBy,

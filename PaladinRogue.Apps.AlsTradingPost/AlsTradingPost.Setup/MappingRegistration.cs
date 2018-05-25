@@ -1,5 +1,4 @@
-﻿using AlsTradingPost.Application.Admin.Mappings;
-using AlsTradingPost.Application.Authentication.Mappings;
+﻿using AlsTradingPost.Application.Authentication.Mappings;
 using AlsTradingPost.Application.Trader.Mappings;
 using AlsTradingPost.Domain.AdminDomain.Mappings;
 using AlsTradingPost.Domain.MagicItemTemplateDomain.Mappings;
@@ -20,7 +19,6 @@ namespace AlsTradingPost.Setup
 
         public static void RegisterApplicationMappers(IMapperConfigurationExpression configuration)
         {
-            configuration.AddProfile<AdminApplicationMappingProfile>();
             configuration.AddProfile<AuthenticationApplicationMappingProfile>();
             configuration.AddProfile<TraderApplicationMappingProfile>();
         }

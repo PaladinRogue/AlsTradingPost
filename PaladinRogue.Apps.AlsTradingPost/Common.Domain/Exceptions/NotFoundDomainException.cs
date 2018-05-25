@@ -2,6 +2,7 @@
 
 namespace Common.Domain.Exceptions
 {
+    [Serializable]
     public class NotFoundDomainException : DomainException {
 	    public NotFoundDomainException(string message) : base(message)
 	    {

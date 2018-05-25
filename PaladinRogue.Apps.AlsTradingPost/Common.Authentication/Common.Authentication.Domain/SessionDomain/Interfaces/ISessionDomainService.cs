@@ -9,6 +9,6 @@ namespace Common.Authentication.Domain.SessionDomain.Interfaces
         /// <exception cref="RefreshTokenInvalidDomainException"></exception>
         /// <exception cref="SessionRevokedDomainException"></exception>
         RefreshSessionProjection Refresh(RefreshSessionDdto refreshSessionDdto);
-        CreateSessionProjection Create(Guid sessionId);
+        SessionProjection Create(Guid sessionId);
     }
 }

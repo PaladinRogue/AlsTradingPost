@@ -2,6 +2,7 @@
 
 namespace Common.Domain.Exceptions
 {
+    [Serializable]
     public class GetByIdDomainException : DomainException
     {
         public GetByIdDomainException(Guid id)

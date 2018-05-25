@@ -8,10 +8,8 @@ namespace Authentication.Domain.IdentityServices.Mappings
     {
         public IdentityDomainMappingProfile()
         {
-            CreateMap<LoginDdto, CreateIdentityDdto>();
-            CreateMap<IdentityProjection, AuthenticatedIdentityProjection>();
-            CreateMap<Identity, IdentityProjection>();
-            CreateMap<CreateIdentityDdto, Identity>();
+            CreateMap<LoginDdto, Identity>();
+            CreateMap<Identity, AuthenticatedIdentityProjection>();
         }
     }
 }

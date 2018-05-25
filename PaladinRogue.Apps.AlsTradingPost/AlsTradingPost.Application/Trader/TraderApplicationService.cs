@@ -1,6 +1,7 @@
 ﻿using System;
 using AlsTradingPost.Application.Trader.Interfaces;
 using AlsTradingPost.Application.Trader.Models;
+using AlsTradingPost.Domain.TraderDomain.Exceptions;
 using AlsTradingPost.Domain.TraderDomain.Interfaces;
 using AlsTradingPost.Domain.TraderDomain.Models;
 using AlsTradingPost.Resources.Authorization;
@@ -10,42 +11,31 @@ using FluentValidation;
 using Common.Application.Validation;
 using Common.Domain.Concurrency.Services.Interfaces;
 using Common.Domain.Exceptions;
-using Microsoft.Extensions.Logging;
-using ApplicationException = Common.Application.Exceptions.ApplicationException;
 
 namespace AlsTradingPost.Application.Trader
 {
     public class TraderApplicationService : ITraderApplicationService
     {
         private readonly ITraderDomainService _traderDomainService;
-        private readonly ITraderCommandService _traderCommandService;
-        private readonly ITraderQueryService _traderQueryService;
         private readonly IMapper _mapper;
         private readonly IValidator<RegisterTraderAdto> _registerTraderValidator;
         private readonly IValidator<UpdateTraderAdto> _updateTraderValidator;
-        private readonly IConcurrencyQueryService<ITraderQueryService> _concurrencyQueryService;
-        private readonly ILogger<TraderApplicationService> _logger;
+        private readonly IConcurrencyQueryService<ITraderQueryService> _traderConcurrencyQueryService;
         private readonly ICurrentUserProvider _currentUserProvider;
 
         public TraderApplicationService(
             IValidator<RegisterTraderAdto> createTraderValidator,
             ITraderDomainService traderDomainService,
             IMapper mapper,
-            ITraderQueryService traderQueryService,
             IValidator<UpdateTraderAdto> updateTraderValidator,
-            ITraderCommandService traderCommandService,
-            IConcurrencyQueryService<ITraderQueryService> concurrencyQueryService,
-            ILogger<TraderApplicationService> logger,
+            IConcurrencyQueryService<ITraderQueryService> traderConcurrencyQueryService,
             ICurrentUserProvider currentUserProvider)
         {
             _registerTraderValidator = createTraderValidator;
             _traderDomainService = traderDomainService;
             _mapper = mapper;
-            _traderQueryService = traderQueryService;
             _updateTraderValidator = updateTraderValidator;
-            _traderCommandService = traderCommandService;
-            _concurrencyQueryService = concurrencyQueryService;
-            _logger = logger;
+            _traderConcurrencyQueryService = traderConcurrencyQueryService;
             _currentUserProvider = currentUserProvider;
         }
 
@@ -56,13 +46,23 @@ namespace AlsTradingPost.Application.Trader
             RegisterTraderDdto registerTraderDdto = _mapper.Map<RegisterTraderAdto, RegisterTraderDdto>(registerTraderAdto);
 
             registerTraderDdto.UserId = _currentUserProvider.Id;
-
-            return _mapper.Map<RegisteredTraderProjection, RegisteredTraderAdto>(_traderDomainService.Register(registerTraderDdto));
+            try
+            {
+                return _mapper.Map<RegisteredTraderProjection, RegisteredTraderAdto>(_traderDomainService.Register(registerTraderDdto));
+            }
+            catch (UserDoesNotExistDomainException e)
+            {
+                throw new BusinessApplicationException(ExceptionType.Unauthorized, BusinessErrorMessages.UserDoesNotExist, e);
+            }
+            catch (TraderAlreadyExistsDomainException e)
+            {
+                throw new BusinessApplicationException(ExceptionType.BadRequest, BusinessErrorMessages.TraderAlreadyExists, e);
+            }
         }
 
         public TraderAdto GetById(Guid id)
         {
-            return _mapper.Map<TraderProjection, TraderAdto>(_traderQueryService.GetById(id));
+            return _mapper.Map<TraderProjection, TraderAdto>(_traderDomainService.GetById(id));
         }
 
         public TraderAdto Update(UpdateTraderAdto updateTraderAdto)
@@ -71,16 +71,15 @@ namespace AlsTradingPost.Application.Trader
 
             try
             {
-                _concurrencyQueryService.CheckConcurrency(updateTraderAdto.Id, updateTraderAdto.Version);
+                _traderConcurrencyQueryService.CheckConcurrency(updateTraderAdto.Id, updateTraderAdto.Version);
 
                 UpdateTraderDdto updateTraderDdto = _mapper.Map<UpdateTraderAdto, UpdateTraderDdto>(updateTraderAdto);
 
-                return _mapper.Map<TraderProjection, TraderAdto>(_traderCommandService.Update(updateTraderDdto));
+                return _mapper.Map<TraderProjection, TraderAdto>(_traderDomainService.Update(updateTraderDdto));
             }
             catch (ConcurrencyDomainException e)
             {
-                _logger.LogInformation(e, "Concurrency exception");
-                throw new ApplicationException(ExceptionType.Concurrency, e);
+                throw new BusinessApplicationException(ExceptionType.Concurrency, e);
             }
         }
     }
