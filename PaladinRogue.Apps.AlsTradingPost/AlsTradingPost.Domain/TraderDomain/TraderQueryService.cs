@@ -25,5 +25,10 @@ namespace AlsTradingPost.Domain.TraderDomain
         {
             return _traderRepository.CheckConcurrency(id, version);
         }
+
+        public bool CheckExists(Guid id)
+        {
+            return _traderRepository.CheckExists(id);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using AlsTradingPost.Application.Trader.Interfaces;
 using AlsTradingPost.Application.Trader.Models;
+using AlsTradingPost.Domain.TraderDomain.Exceptions;
 using AlsTradingPost.Domain.TraderDomain.Interfaces;
 using AlsTradingPost.Domain.TraderDomain.Models;
 using AlsTradingPost.Resources.Authorization;
@@ -10,7 +11,6 @@ using FluentValidation;
 using Common.Application.Validation;
 using Common.Domain.Concurrency.Services.Interfaces;
 using Common.Domain.Exceptions;
-using Microsoft.Extensions.Logging;
 
 namespace AlsTradingPost.Application.Trader
 {
@@ -21,7 +21,6 @@ namespace AlsTradingPost.Application.Trader
         private readonly IValidator<RegisterTraderAdto> _registerTraderValidator;
         private readonly IValidator<UpdateTraderAdto> _updateTraderValidator;
         private readonly IConcurrencyQueryService<ITraderQueryService> _traderConcurrencyQueryService;
-        private readonly ILogger<TraderApplicationService> _logger;
         private readonly ICurrentUserProvider _currentUserProvider;
 
         public TraderApplicationService(
@@ -30,7 +29,6 @@ namespace AlsTradingPost.Application.Trader
             IMapper mapper,
             IValidator<UpdateTraderAdto> updateTraderValidator,
             IConcurrencyQueryService<ITraderQueryService> traderConcurrencyQueryService,
-            ILogger<TraderApplicationService> logger,
             ICurrentUserProvider currentUserProvider)
         {
             _registerTraderValidator = createTraderValidator;
@@ -38,7 +36,6 @@ namespace AlsTradingPost.Application.Trader
             _mapper = mapper;
             _updateTraderValidator = updateTraderValidator;
             _traderConcurrencyQueryService = traderConcurrencyQueryService;
-            _logger = logger;
             _currentUserProvider = currentUserProvider;
         }
 
@@ -49,8 +46,18 @@ namespace AlsTradingPost.Application.Trader
             RegisterTraderDdto registerTraderDdto = _mapper.Map<RegisterTraderAdto, RegisterTraderDdto>(registerTraderAdto);
 
             registerTraderDdto.UserId = _currentUserProvider.Id;
-
-            return _mapper.Map<RegisteredTraderProjection, RegisteredTraderAdto>(_traderDomainService.Register(registerTraderDdto));
+            try
+            {
+                return _mapper.Map<RegisteredTraderProjection, RegisteredTraderAdto>(_traderDomainService.Register(registerTraderDdto));
+            }
+            catch (UserDoesNotExistDomainException e)
+            {
+                throw new BusinessApplicationException(ExceptionType.Unauthorized, BusinessErrorMessages.UserDoesNotExist, e);
+            }
+            catch (TraderAlreadyExistsDomainException e)
+            {
+                throw new BusinessApplicationException(ExceptionType.BadRequest, BusinessErrorMessages.TraderAlreadyExists, e);
+            }
         }
 
         public TraderAdto GetById(Guid id)
@@ -72,7 +79,6 @@ namespace AlsTradingPost.Application.Trader
             }
             catch (ConcurrencyDomainException e)
             {
-                _logger.LogInformation(e, "Concurrency exception");
                 throw new BusinessApplicationException(ExceptionType.Concurrency, e);
             }
         }

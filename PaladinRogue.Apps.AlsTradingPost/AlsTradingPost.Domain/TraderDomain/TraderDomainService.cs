@@ -36,6 +36,11 @@ namespace AlsTradingPost.Domain.TraderDomain
             {
                 throw new UserDoesNotExistDomainException();
             }
+
+            if (_traderQueryService.CheckExists(registerTraderDdto.UserId))
+            {
+                throw new TraderAlreadyExistsDomainException();
+            }
             
             Trader trader = _mapper.Map(registerTraderDdto, AggregateFactory.CreateRoot<Trader>(registerTraderDdto.UserId));
 
