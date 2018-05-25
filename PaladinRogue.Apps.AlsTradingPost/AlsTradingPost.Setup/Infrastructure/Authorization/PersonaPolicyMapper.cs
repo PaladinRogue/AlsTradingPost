@@ -6,15 +6,13 @@ namespace AlsTradingPost.Setup.Infrastructure.Authorization
 {
     public static class PersonaPolicyMapper
     {
-        private static readonly IDictionary<PersonaFlags, string> PersonaPolicyDictionary = new Dictionary<PersonaFlags, string>();
-        
-        static PersonaPolicyMapper()
+        private static readonly IReadOnlyDictionary<PersonaFlags, string> PersonaPolicyDictionary = new Dictionary<PersonaFlags, string>
         {
-            PersonaPolicyDictionary.Add(PersonaFlags.Admin, PersonaPolicies.Admin);
-            PersonaPolicyDictionary.Add(PersonaFlags.Trader, PersonaPolicies.Trader);
-        }
+           [PersonaFlags.Admin]  = PersonaPolicies.Admin,
+           [PersonaFlags.Trader] = PersonaPolicies.Trader
+        };
 
-        public static IDictionary<PersonaFlags, string> GetMap()
+        public static IReadOnlyDictionary<PersonaFlags, string> GetMap()
         {
             return PersonaPolicyDictionary;
         }

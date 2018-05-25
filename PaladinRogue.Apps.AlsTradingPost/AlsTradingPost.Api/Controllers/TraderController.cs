@@ -5,6 +5,7 @@ using AlsTradingPost.Application.Trader.Models;
 using AutoMapper;
 using Common.Api.Builders.Resource;
 using Common.Api.Builders.Template;
+using Common.Application.Authorisation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlsTradingPost.Api.Controllers
@@ -13,16 +14,16 @@ namespace AlsTradingPost.Api.Controllers
     public class TraderController : Controller
     {
         private readonly IMapper _mapper;
-        private readonly ITraderApplicationService _traderApplicationService;
+        private readonly ISecure<ITraderApplicationService> _secureTraderApplicationService;
         private readonly ITemplateBuilder _templateBuilder;
         private readonly IResourceBuilder _resourceBuilder;
 
         public TraderController(IMapper mapper,
-            ITraderApplicationService traderApplicationService,
+            ISecure<ITraderApplicationService> secureTraderApplicationService,
             ITemplateBuilder templateBuilder,
             IResourceBuilder resourceBuilder)
         {
-            _traderApplicationService = traderApplicationService;
+            _secureTraderApplicationService = secureTraderApplicationService;
             _mapper = mapper;
             _templateBuilder = templateBuilder;
             _resourceBuilder = resourceBuilder;
@@ -42,7 +43,7 @@ namespace AlsTradingPost.Api.Controllers
         public IActionResult Post([FromBody] TraderTemplate template)
         {
             TraderResource resource = _mapper.Map<RegisteredTraderAdto, TraderResource>(
-                _traderApplicationService.Register(
+                _secureTraderApplicationService.Service.Register(
                     _mapper.Map<TraderTemplate, RegisterTraderAdto>(template ?? new TraderTemplate())
                 )
             );
@@ -58,7 +59,7 @@ namespace AlsTradingPost.Api.Controllers
         public IActionResult GetById(Guid id)
         {
             TraderResource resource = _mapper.Map<TraderAdto, TraderResource>(
-                _traderApplicationService.GetById(id)
+                _secureTraderApplicationService.Service.GetById(id)
             );
 
             return new ObjectResult(
@@ -74,7 +75,7 @@ namespace AlsTradingPost.Api.Controllers
             traderResource.Id = id;
             
             TraderResource resource = _mapper.Map<TraderAdto, TraderResource>(
-                _traderApplicationService.Update(_mapper.Map<TraderResource, UpdateTraderAdto>(traderResource))
+                _secureTraderApplicationService.Service.Update(_mapper.Map<TraderResource, UpdateTraderAdto>(traderResource))
             );
 
             return new ObjectResult(

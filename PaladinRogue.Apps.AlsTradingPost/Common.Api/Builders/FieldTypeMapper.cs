@@ -5,15 +5,15 @@ namespace Common.Api.Builders
 {
     public static class FieldTypeMapper
     {
-        private static readonly IDictionary<Type, string> FieldTypeMap = new Dictionary<Type, string>
+        private static readonly IReadOnlyDictionary<Type, string> FieldTypeMap = new Dictionary<Type, string>
         {
-            { typeof(int), FieldType.Number },
-            { typeof(int?), FieldType.Number },
-            { typeof(bool), FieldType.Boolean },
-            { typeof(bool?), FieldType.Boolean },
-            { typeof(string), FieldType.String },
-            { typeof(Guid), FieldType.Id },
-            { typeof(Guid?), FieldType.Id }
+            [typeof(int)]    = FieldType.Number,
+            [typeof(int?)]   = FieldType.Number,
+            [typeof(bool)]   = FieldType.Boolean,
+            [typeof(bool?)]  = FieldType.Boolean,
+            [typeof(string)] = FieldType.String,
+            [typeof(Guid)]   = FieldType.Id,
+            [typeof(Guid?)]  = FieldType.Id
         };
 
         public static bool HasFieldType<T>()

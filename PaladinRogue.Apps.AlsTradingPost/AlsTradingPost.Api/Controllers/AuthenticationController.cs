@@ -6,6 +6,7 @@ using AutoMapper;
 using Common.Api.Builders.Resource;
 using Common.Api.Builders.Template;
 using Common.Application.Authentication;
+using Common.Application.Authorisation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,20 +15,20 @@ namespace AlsTradingPost.Api.Controllers
     [Route("api/[controller]")]
     public class AuthenticationController : Controller
     {
-        private readonly IAuthenticationApplicationService _authenticationApplicationService;
+        private readonly ISecure<IAuthenticationApplicationService> _secureAuthenticationApplicationService;
         private readonly IResourceTemplateBuilder _resourceTemplateBuilder;
         private readonly IResourceBuilder _resourceBuilder;
         private readonly ITemplateBuilder _templateBuilder;
         private readonly IMapper _mapper;
 
         public AuthenticationController(
-            IAuthenticationApplicationService authenticationApplicationService,
+            ISecure<IAuthenticationApplicationService> secureAuthenticationApplicationService,
             IResourceTemplateBuilder resourceTemplateBuilder,
             ITemplateBuilder templateBuilder,
             IResourceBuilder resourceBuilder,
             IMapper mapper)
         {
-            _authenticationApplicationService = authenticationApplicationService;
+            _secureAuthenticationApplicationService = secureAuthenticationApplicationService;
             _resourceTemplateBuilder = resourceTemplateBuilder;
             _templateBuilder = templateBuilder;
             _resourceBuilder = resourceBuilder;
@@ -58,7 +59,7 @@ namespace AlsTradingPost.Api.Controllers
         [Route("login", Name = RouteDictionary.AuthenticationLogin)]
         public async Task<IActionResult> PostLogin([FromBody] AuthenticationTemplate template)
         {
-            JwtAdto jwtAdto = await _authenticationApplicationService.LoginAsync(new LoginAdto());
+            JwtAdto jwtAdto = await _secureAuthenticationApplicationService.Service.LoginAsync(new LoginAdto());
 
             return new ObjectResult(
                 _resourceTemplateBuilder.Create(_mapper.Map<JwtAdto, JwtResource>(jwtAdto), template)
@@ -83,7 +84,7 @@ namespace AlsTradingPost.Api.Controllers
         [Route("refreshToken", Name = RouteDictionary.AuthenticationRefreshToken)]
         public async Task<IActionResult> PostRefreshToken([FromBody] RefreshTokenTemplate template)
         {
-            JwtAdto jwt = await _authenticationApplicationService.RefreshTokenAsync(
+            JwtAdto jwt = await _secureAuthenticationApplicationService.Service.RefreshTokenAsync(
                 new RefreshTokenAdto
                 {
                     SessionId = template.SessionId,

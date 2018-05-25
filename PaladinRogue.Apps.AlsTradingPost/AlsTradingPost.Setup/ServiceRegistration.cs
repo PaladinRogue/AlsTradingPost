@@ -36,6 +36,7 @@ using Common.Api.HttpClient.Interfaces;
 using Common.Api.Links;
 using Common.Api.Meta;
 using Common.Api.Routing;
+using Common.Application.Authorisation;
 using Common.Application.Transactions;
 using Common.Authentication.Domain.Persistence;
 using Common.Domain.Concurrency;
@@ -84,10 +85,13 @@ namespace AlsTradingPost.Setup
             services.AddSingleton<IHttpClientFactory, HttpClientFactory>();
 
             services.AddScoped<IAuthenticationApplicationService, AuthenticationApplicationService>();
+            services.AddScoped<ISecure<IAuthenticationApplicationService>, AuthenticationSecurityApplicationService>();
             
             services.AddScoped<ITraderApplicationService, TraderApplicationService>();
+            services.AddScoped<ISecure<ITraderApplicationService>, TraderSecurityApplicationService>();
 
             services.AddScoped<IMagicItemTemplateApplicationService, MagicItemTemplateApplicationService>();
+            services.AddScoped<ISecure<IMagicItemTemplateApplicationService>, MagicItemTemplateSecurityApplicationService>();
         }
 
         public static void RegisterDomainServices(IServiceCollection services)
