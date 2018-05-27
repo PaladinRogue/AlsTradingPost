@@ -1,4 +1,5 @@
 ﻿using System;
+using AlsTradingPost.Application.Trader.Authorisation;
 using AlsTradingPost.Application.Trader.Interfaces;
 using AlsTradingPost.Application.Trader.Models;
 using Common.Application.Authorisation;
@@ -36,7 +37,8 @@ namespace AlsTradingPost.Application.Trader
         public TraderAdto Update(UpdateTraderAdto updateTraderAdto)
         {
             return _securityApplicationService.Secure(() => _traderApplicationService.Update(updateTraderAdto),
-                AuthorisationRule.Create(AuthorisationResource.Trader, AuthorisationAction.Update));
+                AuthorisationRule.Create(AuthorisationResource.Trader, AuthorisationAction.Update),
+                new TraderUpdateAuthorisationContext(updateTraderAdto.Id));
         }
     }
 }

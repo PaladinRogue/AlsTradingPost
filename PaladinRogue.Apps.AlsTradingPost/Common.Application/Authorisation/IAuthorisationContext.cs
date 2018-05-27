@@ -6,6 +6,6 @@ namespace Common.Application.Authorisation
     {
         Type ResourceType { get; }
 
-        Guid ResourceId { get; }
+        Guid? ResourceId { get; }
     }
 }

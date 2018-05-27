@@ -79,7 +79,7 @@ namespace AlsTradingPost.Application.Trader
             }
             catch (ConcurrencyDomainException e)
             {
-                throw new BusinessApplicationException(ExceptionType.Concurrency, e);
+                throw new BusinessApplicationException(ExceptionType.Concurrency, BusinessErrorMessages.InvalidConcurrencyToken, e);
             }
         }
     }

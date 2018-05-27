@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using AlsTradingPost.Application.Authentication.Authorisation;
 using AlsTradingPost.Application.Authentication.Interfaces;
 using AlsTradingPost.Application.Authentication.Models;
 using Common.Application.Authentication;

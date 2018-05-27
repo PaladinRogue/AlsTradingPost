@@ -1,4 +1,4 @@
-﻿namespace AlsTradingPost.Application.Authentication
+﻿namespace AlsTradingPost.Application.Authentication.Authorisation
 {
     public static class AuthenticationAuthorisationAction
     {

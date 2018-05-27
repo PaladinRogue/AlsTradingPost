@@ -48,7 +48,19 @@ namespace AlsTradingPost.Setup.Infrastructure.Authorisation
                     Guid? currentUserId = _httpContextAccessor.CurrentSubject();
                     if (currentUserId.HasValue)
                     {
-                        whoAmI.Add(typeof(Admin), currentUserId.Value);
+                        whoAmI.Add(typeof(User), currentUserId.Value);
+                    }
+
+                    Guid? currentTraderId = _httpContextAccessor.CurrentTrader();
+                    if (currentTraderId.HasValue)
+                    {
+                        whoAmI.Add(typeof(Trader), currentTraderId.Value);
+                    }
+
+                    Guid? currentAdminId = _httpContextAccessor.CurrentAdmin();
+                    if (currentAdminId.HasValue)
+                    {
+                        whoAmI.Add(typeof(Admin), currentAdminId.Value);
                     }
                 }
 

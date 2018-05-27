@@ -61,6 +61,15 @@ namespace AlsTradingPost.Application {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An invalid E-Tag has been provided.
+        /// </summary>
+        internal static string InvalidConcurrencyToken {
+            get {
+                return ResourceManager.GetString("InvalidConcurrencyToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your refresh token is invalid.
         /// </summary>
         internal static string RefreshTokenInvalid {

@@ -46,6 +46,16 @@ namespace AlsTradingPost.Setup.Infrastructure.Authorisation
                 throw new ArgumentNullException(nameof(authorisationContext));
             }
 
+            if (authorisationContext.ResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(authorisationContext.ResourceId));
+            }
+
+            if (authorisationContext.ResourceType == null)
+            {
+                throw new ArgumentNullException(nameof(authorisationContext.ResourceType));
+            }
+
             _currentUserProvider.WhoAmI.TryGetValue(authorisationContext.ResourceType, out Guid resourceId);
 
             return resourceId == authorisationContext.ResourceId;
