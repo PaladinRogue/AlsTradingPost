@@ -25,13 +25,14 @@ namespace AlsTradingPost.Application.Authentication
         public Task<JwtAdto> LoginAsync(LoginAdto loginAdto)
         {
             return _securityApplicationService.Secure(() => _authenticationApplicationService.LoginAsync(loginAdto),
-                new AuthorisationRule());
+                AuthorisationRule.Create(AuthorisationResource.Authentication, AuthenticationAuthorisationAction.Login));
         }
 
         public Task<JwtAdto> RefreshTokenAsync(RefreshTokenAdto refreshTokenAdto)
         {
             return _securityApplicationService.Secure(
-                () => _authenticationApplicationService.RefreshTokenAsync(refreshTokenAdto), new AuthorisationRule());
+                () => _authenticationApplicationService.RefreshTokenAsync(refreshTokenAdto),
+                AuthorisationRule.Create(AuthorisationResource.Authentication, AuthenticationAuthorisationAction.RefreshToken));
         }
     }
 }

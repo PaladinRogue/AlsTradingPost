@@ -2,6 +2,7 @@
 using AlsTradingPost.Application.Trader.Interfaces;
 using AlsTradingPost.Application.Trader.Models;
 using Common.Application.Authorisation;
+using Common.Application.Authorisation.Policy;
 
 namespace AlsTradingPost.Application.Trader
 {
@@ -23,19 +24,19 @@ namespace AlsTradingPost.Application.Trader
         public RegisteredTraderAdto Register(RegisterTraderAdto registerTraderAdto)
         {
             return _securityApplicationService.Secure(() => _traderApplicationService.Register(registerTraderAdto),
-                new AuthorisationRule());
+                AuthorisationRule.Create(AuthorisationResource.Trader, AuthenticationAuthorisationAction.Register));
         }
 
         public TraderAdto GetById(Guid id)
         {
             return _securityApplicationService.Secure(() => _traderApplicationService.GetById(id),
-                new AuthorisationRule());
+                AuthorisationRule.Create(AuthorisationResource.Trader, AuthorisationAction.Get));
         }
 
         public TraderAdto Update(UpdateTraderAdto updateTraderAdto)
         {
             return _securityApplicationService.Secure(() => _traderApplicationService.Update(updateTraderAdto),
-                new AuthorisationRule());
+                AuthorisationRule.Create(AuthorisationResource.Trader, AuthorisationAction.Update));
         }
     }
 }

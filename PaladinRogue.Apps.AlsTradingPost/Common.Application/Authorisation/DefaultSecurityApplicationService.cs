@@ -5,24 +5,24 @@ namespace Common.Application.Authorisation
 {
     public class DefaultSecurityApplicationService : ISecurityApplicationService
     {
-        private readonly IAuthorisationService _authorisationService;
+        private readonly IAuthorisationManager _authorisationManager;
 
-        public DefaultSecurityApplicationService(IAuthorisationService authorisationService)
+        public DefaultSecurityApplicationService(IAuthorisationManager authorisationManager)
         {
-            _authorisationService = authorisationService;
+            _authorisationManager = authorisationManager;
         }
 
         public TOut Secure<TOut>(Func<TOut> function, IAuthorisationRule authorisationRule)
         {
             try
             {
-                _authorisationService.DemandAccess(authorisationRule);
+                _authorisationManager.DemandAccess(authorisationRule);
 
                 return function();
             }
-            catch (AuthorisationDeniedException e)
+            catch (UnauthorizedAccessException e)
             {
-                throw new BusinessApplicationException(ExceptionType.Unauthorized, e);
+                throw new BusinessApplicationException(ExceptionType.Unauthorized, BusinessErrorMessages.NotAuthorised, e);
             }
         }
     }

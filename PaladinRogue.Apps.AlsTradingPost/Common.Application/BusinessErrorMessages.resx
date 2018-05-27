@@ -117,16 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="RefreshTokenInvalid" xml:space="preserve">
-    <value>Your refresh token is invalid</value>
-  </data>
-  <data name="SessionRevoked" xml:space="preserve">
-    <value>Your session has been revoked</value>
-  </data>
-  <data name="TraderAlreadyExists" xml:space="preserve">
-    <value>A trader already exists for yourself</value>
-  </data>
-  <data name="UserDoesNotExist" xml:space="preserve">
-    <value>A user does not exist for yourself</value>
+  <data name="NotAuthorised" xml:space="preserve">
+    <value>You are not authorised to perform this action</value>
   </data>
 </root>

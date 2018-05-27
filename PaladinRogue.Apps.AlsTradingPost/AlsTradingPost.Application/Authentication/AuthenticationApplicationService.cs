@@ -93,11 +93,11 @@ namespace AlsTradingPost.Application.Authentication
             }
             catch (SessionRevokedDomainException e)
             {
-                throw new BusinessApplicationException(ExceptionType.Unauthorized, e);
+                throw new BusinessApplicationException(ExceptionType.Unauthorized, BusinessErrorMessages.SessionRevoked, e);
             }
             catch (RefreshTokenInvalidDomainException e)
             {
-                throw new BusinessApplicationException(ExceptionType.Unauthorized, e);
+                throw new BusinessApplicationException(ExceptionType.Unauthorized, BusinessErrorMessages.RefreshTokenInvalid, e);
             }
         }
     }

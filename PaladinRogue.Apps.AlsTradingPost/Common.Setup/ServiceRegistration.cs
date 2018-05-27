@@ -16,13 +16,13 @@ namespace Common.Setup
     {
         public static void RegisterServices(IServiceCollection services)
         {
-	        services.AddSingleton<IEncryptionFactory, EncryptionFactory>();
-	        services.AddSingleton<IHashFactory, HashFactory>();
+            services.AddSingleton<IEncryptionFactory, EncryptionFactory>();
+            services.AddSingleton<IHashFactory, HashFactory>();
 
             services.AddScoped(typeof(IConcurrencyQueryService<>), typeof(ConcurrencyQueryService<>));
 
             services.AddScoped<ISecurityApplicationService, DefaultSecurityApplicationService>();
-            services.AddScoped<IAuthorisationService, AlwaysDenyAuthorisationService>();
+            services.AddSingleton<IAuthorisationManager, AuthorisationManager>();
         }
 
         public static void RegisterProviders(IServiceCollection services)

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using AlsTradingPost.Resources;
-using AlsTradingPost.Setup.Infrastructure.Authorization;
+using AlsTradingPost.Setup.Infrastructure.Authorisation;
 using Common.Api.Links;
 using Common.Api.Routing;
 using Microsoft.AspNetCore.Http;
@@ -27,7 +27,7 @@ namespace AlsTradingPost.Setup.Infrastructure.Links
                 {
                     Name = linkAttribute.LinkName,
                     AllowVerbs = linkAttribute.HttpVerbs,
-                    Uri = _routeProvider.GetRouteTemplate(linkAttribute.UriName, _httpContextAccessor.CurrentPersona(), data)
+                    Uri = _routeProvider.GetRouteTemplate(linkAttribute.UriName, _httpContextAccessor.CurrentPersonaFlags(), data)
                 })
                 .ToList();
         }

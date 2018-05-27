@@ -1,4 +1,5 @@
-﻿using AlsTradingPost.Application.Authentication;
+﻿using System.IO;
+using AlsTradingPost.Application.Authentication;
 using AlsTradingPost.Application.Authentication.Interfaces;
 using AlsTradingPost.Application.Authentication.Models;
 using AlsTradingPost.Application.Authentication.Validators;
@@ -25,7 +26,7 @@ using AlsTradingPost.Persistence;
 using AlsTradingPost.Persistence.Repositories;
 using AlsTradingPost.Resources;
 using AlsTradingPost.Resources.Authorization;
-using AlsTradingPost.Setup.Infrastructure.Authorization;
+using AlsTradingPost.Setup.Infrastructure.Authorisation;
 using AlsTradingPost.Setup.Infrastructure.Links;
 using AlsTradingPost.Setup.Infrastructure.Routing;
 using Common.Api.Builders;
@@ -37,6 +38,7 @@ using Common.Api.Links;
 using Common.Api.Meta;
 using Common.Api.Routing;
 using Common.Application.Authorisation;
+using Common.Application.Authorisation.Policy;
 using Common.Application.Transactions;
 using Common.Authentication.Domain.Persistence;
 using Common.Domain.Concurrency;
@@ -51,6 +53,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 using Persistence.EntityFramework.Infrastructure.Transactions;
 
 namespace AlsTradingPost.Setup
@@ -141,6 +144,12 @@ namespace AlsTradingPost.Setup
 
             services.AddSingleton<IConcurrencyVersionProvider, ConcurrencyVersionProvider>();
             services.AddSingleton<IRouteProvider<PersonaFlags>, PersonaRouteProvider>();
+        }
+
+        public static void RegisterAuthorisation(IServiceCollection services)
+        {
+            services.AddSingleton<IAuthorisationPolicy, JsonAuthorisationPolicy>();
+            services.AddSingleton<IJsonAuthorisationPolicyProvider>(s => new JsonAuthorisationPolicyProvider(JObject.Parse(File.ReadAllText("authorisationPolicy.json"))));
         }
     }
 }

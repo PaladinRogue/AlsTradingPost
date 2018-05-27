@@ -1,11 +1,13 @@
-﻿namespace Common.Application.Authorisation
+﻿using System;
+
+namespace Common.Application.Authorisation
 {
-    public interface IAuthorisationService
+    public interface IAuthorisationManager
     {
         bool HasAccess(IAuthorisationRule authorisationRule);
 
         /// <param name="authorisationRule"></param>
-        /// <exception cref="AuthorisationDeniedException"></exception>
+        /// <exception cref="UnauthorizedAccessException"></exception>
         void DemandAccess(IAuthorisationRule authorisationRule);
     }
 }

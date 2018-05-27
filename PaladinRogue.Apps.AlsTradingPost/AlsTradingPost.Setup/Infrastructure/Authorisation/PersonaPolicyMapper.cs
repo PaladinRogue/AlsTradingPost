@@ -2,7 +2,7 @@
 using System.Linq;
 using AlsTradingPost.Resources;
 
-namespace AlsTradingPost.Setup.Infrastructure.Authorization
+namespace AlsTradingPost.Setup.Infrastructure.Authorisation
 {
     public static class PersonaPolicyMapper
     {

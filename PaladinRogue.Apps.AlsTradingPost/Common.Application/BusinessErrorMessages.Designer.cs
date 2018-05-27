@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AlsTradingPost.Application {
+namespace Common.Application {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace AlsTradingPost.Application {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AlsTradingPost.Application.BusinessErrorMessages", typeof(BusinessErrorMessages).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Common.Application.BusinessErrorMessages", typeof(BusinessErrorMessages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,38 +61,11 @@ namespace AlsTradingPost.Application {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your refresh token is invalid.
+        ///   Looks up a localized string similar to You are not authorised to perform this action.
         /// </summary>
-        internal static string RefreshTokenInvalid {
+        internal static string NotAuthorised {
             get {
-                return ResourceManager.GetString("RefreshTokenInvalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Your session has been revoked.
-        /// </summary>
-        internal static string SessionRevoked {
-            get {
-                return ResourceManager.GetString("SessionRevoked", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A trader already exists for yourself.
-        /// </summary>
-        internal static string TraderAlreadyExists {
-            get {
-                return ResourceManager.GetString("TraderAlreadyExists", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A user does not exist for yourself.
-        /// </summary>
-        internal static string UserDoesNotExist {
-            get {
-                return ResourceManager.GetString("UserDoesNotExist", resourceCulture);
+                return ResourceManager.GetString("NotAuthorised", resourceCulture);
             }
         }
     }

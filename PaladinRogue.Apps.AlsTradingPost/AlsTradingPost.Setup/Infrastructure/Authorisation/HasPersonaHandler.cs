@@ -4,7 +4,7 @@ using AlsTradingPost.Application.Claims;
 using AlsTradingPost.Resources;
 using Microsoft.AspNetCore.Authorization;
 
-namespace AlsTradingPost.Setup.Infrastructure.Authorization
+namespace AlsTradingPost.Setup.Infrastructure.Authorisation
 {
     public class HasPersonaHandler : AuthorizationHandler<HasPersonaRequirement>
     {

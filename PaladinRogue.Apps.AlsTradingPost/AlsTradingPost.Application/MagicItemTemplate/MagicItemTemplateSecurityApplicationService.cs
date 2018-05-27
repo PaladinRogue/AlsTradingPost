@@ -1,10 +1,12 @@
 ﻿using AlsTradingPost.Application.MagicItemTemplate.Interfaces;
 using AlsTradingPost.Application.MagicItemTemplate.Models;
 using Common.Application.Authorisation;
+using Common.Application.Authorisation.Policy;
 
 namespace AlsTradingPost.Application.MagicItemTemplate
 {
-    public class MagicItemTemplateSecurityApplicationService : ISecure<IMagicItemTemplateApplicationService>, IMagicItemTemplateApplicationService
+    public class MagicItemTemplateSecurityApplicationService : ISecure<IMagicItemTemplateApplicationService>,
+        IMagicItemTemplateApplicationService
     {
         private readonly IMagicItemTemplateApplicationService _magicItemTemplateApplicationService;
         private readonly ISecurityApplicationService _securityApplicationService;
@@ -21,7 +23,9 @@ namespace AlsTradingPost.Application.MagicItemTemplate
 
         public MagicItemTemplatePagedCollectionAdto Search(MagicItemTemplateSearchAdto magicItemTemplateSearchAdto)
         {
-            return _securityApplicationService.Secure(() => _magicItemTemplateApplicationService.Search(magicItemTemplateSearchAdto), new AuthorisationRule());
+            return _securityApplicationService.Secure(
+                () => _magicItemTemplateApplicationService.Search(magicItemTemplateSearchAdto),
+                AuthorisationRule.Create(AuthorisationResource.MagicItemTemplate, AuthorisationAction.Search));
         }
     }
 }
