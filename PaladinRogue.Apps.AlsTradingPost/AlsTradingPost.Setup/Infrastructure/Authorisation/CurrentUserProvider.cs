@@ -14,7 +14,6 @@ namespace AlsTradingPost.Setup.Infrastructure.Authorisation
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly JwtIssuerOptions _jwtIssuerOptions;
-        private IReadOnlyDictionary<Type, Guid> _whoAmI;
 
         public CurrentUserProvider(IHttpContextAccessor httpContextAccessor, IOptions<JwtIssuerOptions> jwtIssuerOptionsAccessor)
         {

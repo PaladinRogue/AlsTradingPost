@@ -18,6 +18,8 @@ using AlsTradingPost.Domain.AuditDomain.Interfaces;
 using AlsTradingPost.Domain.MagicItemTemplateDomain;
 using AlsTradingPost.Domain.MagicItemTemplateDomain.Interfaces;
 using AlsTradingPost.Domain.Persistence;
+using AlsTradingPost.Domain.PersonaDomain;
+using AlsTradingPost.Domain.PersonaDomain.Interfaces;
 using AlsTradingPost.Domain.TraderDomain;
 using AlsTradingPost.Domain.TraderDomain.Interfaces;
 using AlsTradingPost.Domain.UserDomain;
@@ -117,6 +119,9 @@ namespace AlsTradingPost.Setup
 
             services.AddScoped<IMagicItemTemplateDomainService, MagicItemTemplateDomainService>();
             services.AddScoped<IMagicItemTemplateQueryService, MagicItemTemplateQueryService>();
+
+            services.AddScoped<IPersonaDomainService, PersonaDomainService>();
+            services.AddScoped<IPersonaQueryService, PersonaQueryService>();
         }
 
         public static void RegisterPersistenceServices(IConfiguration configuration, IServiceCollection services)

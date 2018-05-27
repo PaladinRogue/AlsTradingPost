@@ -1,5 +1,4 @@
 ﻿using AlsTradingPost.Domain.Models;
-using AlsTradingPost.Domain.Models.Interfaces;
 using AlsTradingPost.Domain.UserDomain.Models;
 using AutoMapper;
 using Common.Domain.Concurrency.Interfaces;
@@ -14,8 +13,6 @@ namespace AlsTradingPost.Domain.UserDomain.Mappings
             CreateMap<LoginDdto, User>();
             CreateMap<User, AuthenticatedUserProjection>()
                 .IncludeBase<IVersionedEntity, IVersionedProjection>();
-            CreateMap<IPersona, UserPersonaProjection>()
-                .ForMember(p => p.PersonaType, opts => opts.MapFrom(p => p.TypeDiscriminator));
         }
     }
 }

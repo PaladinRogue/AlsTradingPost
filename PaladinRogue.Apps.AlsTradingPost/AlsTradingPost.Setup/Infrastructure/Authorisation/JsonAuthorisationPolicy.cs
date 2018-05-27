@@ -41,8 +41,14 @@ namespace AlsTradingPost.Setup.Infrastructure.Authorisation
 
         private bool CheckSelf(IAuthorisationContext authorisationContext)
         {
-            _currentUserProvider.Id;
-            return false;
+            if (authorisationContext == null)
+            {
+                throw new ArgumentNullException(nameof(authorisationContext));
+            }
+
+            _currentUserProvider.WhoAmI.TryGetValue(authorisationContext.ResourceType, out Guid resourceId);
+
+            return resourceId == authorisationContext.ResourceId;
         }
     }
 }

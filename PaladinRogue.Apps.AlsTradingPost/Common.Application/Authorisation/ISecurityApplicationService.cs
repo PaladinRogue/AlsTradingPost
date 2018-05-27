@@ -7,7 +7,8 @@ namespace Common.Application.Authorisation
     {
         /// <param name="function">The method to execute</param>
         /// <param name="authorisationRule">The authorisation rule</param>
+        /// <param name="authorisationContext">The authorisation context</param>
         /// <exception cref="BusinessApplicationException"></exception>
-        TOut Secure<TOut>(Func<TOut> function, IAuthorisationRule authorisationRule);
+        TOut Secure<TOut>(Func<TOut> function, IAuthorisationRule authorisationRule, IAuthorisationContext authorisationContext = null);
     }
 }
