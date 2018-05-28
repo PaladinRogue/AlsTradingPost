@@ -3,6 +3,7 @@ using AlsTradingPost.Api.MagicItemTemplate;
 using AlsTradingPost.Application.MagicItemTemplate.Interfaces;
 using AlsTradingPost.Application.MagicItemTemplate.Models;
 using AlsTradingPost.Setup.Infrastructure.Authorisation;
+using AlsTradingPost.Setup.Infrastructure.Routing;
 using AutoMapper;
 using Common.Api.Builders.Resource;
 using Common.Api.Builders.Template;

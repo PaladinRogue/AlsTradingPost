@@ -1,4 +1,5 @@
-﻿using Common.Api.Links;
+﻿using AlsTradingPost.Setup.Infrastructure.Routing;
+using Common.Api.Links;
 using Common.Api.Resources;
 using Common.Api.Validation.Attributes;
 using Common.Setup.Infrastructure.Constants;

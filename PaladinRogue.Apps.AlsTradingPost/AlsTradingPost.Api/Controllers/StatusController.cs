@@ -1,4 +1,5 @@
 ﻿using AlsTradingPost.Api.Status;
+using AlsTradingPost.Setup.Infrastructure.Routing;
 using Common.Api.Builders.Resource;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

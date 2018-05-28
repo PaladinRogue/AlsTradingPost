@@ -1,4 +1,4 @@
-﻿namespace AlsTradingPost.Api
+﻿namespace AlsTradingPost.Setup.Infrastructure.Links
 {
     public static class LinkDictionary
     {

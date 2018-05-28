@@ -1,4 +1,5 @@
-﻿using Common.Api.Links;
+﻿using AlsTradingPost.Setup.Infrastructure.Routing;
+using Common.Api.Links;
 using Common.Api.Pagination.Interfaces;
 using Common.Api.Sorting;
 using Common.Api.Validation.Attributes;

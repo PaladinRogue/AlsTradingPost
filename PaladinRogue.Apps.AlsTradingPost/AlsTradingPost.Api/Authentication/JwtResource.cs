@@ -1,4 +1,6 @@
 ﻿using System;
+using AlsTradingPost.Setup.Infrastructure.Links;
+using AlsTradingPost.Setup.Infrastructure.Routing;
 using Common.Api.Authentication.Interfaces;
 using Common.Api.Links;
 using Common.Api.Meta;

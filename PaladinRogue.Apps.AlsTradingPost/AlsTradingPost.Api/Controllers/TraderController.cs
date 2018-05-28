@@ -2,6 +2,7 @@
 using AlsTradingPost.Api.Trader;
 using AlsTradingPost.Application.Trader.Interfaces;
 using AlsTradingPost.Application.Trader.Models;
+using AlsTradingPost.Setup.Infrastructure.Routing;
 using AutoMapper;
 using Common.Api.Builders.Resource;
 using Common.Api.Builders.Template;

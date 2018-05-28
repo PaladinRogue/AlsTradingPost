@@ -2,6 +2,7 @@
 using AlsTradingPost.Api.Authentication;
 using AlsTradingPost.Application.Authentication.Interfaces;
 using AlsTradingPost.Application.Authentication.Models;
+using AlsTradingPost.Setup.Infrastructure.Routing;
 using AutoMapper;
 using Common.Api.Builders.Resource;
 using Common.Api.Builders.Template;
