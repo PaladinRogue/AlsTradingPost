@@ -2,7 +2,7 @@
 
 namespace Common.Api.Resources
 {
-    public interface ICollectionResource<T> : IResource where T : ISummaryResource
+    public interface ICollectionResource<T> where T : ISummaryResource
     {
         IList<T> Results { get; set; }
     }

@@ -1,4 +1,4 @@
-﻿namespace AlsTradingPost.Api
+﻿namespace AlsTradingPost.Setup.Infrastructure.Routing
 {
     public static class RouteDictionary
     {

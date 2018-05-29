@@ -1,4 +1,5 @@
-﻿using AlsTradingPost.Application.Authentication;
+﻿using System.IO;
+using AlsTradingPost.Application.Authentication;
 using AlsTradingPost.Application.Authentication.Interfaces;
 using AlsTradingPost.Application.Authentication.Models;
 using AlsTradingPost.Application.Authentication.Validators;
@@ -17,6 +18,8 @@ using AlsTradingPost.Domain.AuditDomain.Interfaces;
 using AlsTradingPost.Domain.MagicItemTemplateDomain;
 using AlsTradingPost.Domain.MagicItemTemplateDomain.Interfaces;
 using AlsTradingPost.Domain.Persistence;
+using AlsTradingPost.Domain.PersonaDomain;
+using AlsTradingPost.Domain.PersonaDomain.Interfaces;
 using AlsTradingPost.Domain.TraderDomain;
 using AlsTradingPost.Domain.TraderDomain.Interfaces;
 using AlsTradingPost.Domain.UserDomain;
@@ -25,7 +28,7 @@ using AlsTradingPost.Persistence;
 using AlsTradingPost.Persistence.Repositories;
 using AlsTradingPost.Resources;
 using AlsTradingPost.Resources.Authorization;
-using AlsTradingPost.Setup.Infrastructure.Authorization;
+using AlsTradingPost.Setup.Infrastructure.Authorisation;
 using AlsTradingPost.Setup.Infrastructure.Links;
 using AlsTradingPost.Setup.Infrastructure.Routing;
 using Common.Api.Builders;
@@ -36,6 +39,8 @@ using Common.Api.HttpClient.Interfaces;
 using Common.Api.Links;
 using Common.Api.Meta;
 using Common.Api.Routing;
+using Common.Application.Authorisation;
+using Common.Application.Authorisation.Policy;
 using Common.Application.Transactions;
 using Common.Authentication.Domain.Persistence;
 using Common.Domain.Concurrency;
@@ -50,6 +55,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 using Persistence.EntityFramework.Infrastructure.Transactions;
 
 namespace AlsTradingPost.Setup
@@ -84,10 +90,13 @@ namespace AlsTradingPost.Setup
             services.AddSingleton<IHttpClientFactory, HttpClientFactory>();
 
             services.AddScoped<IAuthenticationApplicationService, AuthenticationApplicationService>();
+            services.AddScoped<ISecure<IAuthenticationApplicationService>, AuthenticationSecurityApplicationService>();
             
             services.AddScoped<ITraderApplicationService, TraderApplicationService>();
+            services.AddScoped<ISecure<ITraderApplicationService>, TraderSecurityApplicationService>();
 
             services.AddScoped<IMagicItemTemplateApplicationService, MagicItemTemplateApplicationService>();
+            services.AddScoped<ISecure<IMagicItemTemplateApplicationService>, MagicItemTemplateSecurityApplicationService>();
         }
 
         public static void RegisterDomainServices(IServiceCollection services)
@@ -110,6 +119,9 @@ namespace AlsTradingPost.Setup
 
             services.AddScoped<IMagicItemTemplateDomainService, MagicItemTemplateDomainService>();
             services.AddScoped<IMagicItemTemplateQueryService, MagicItemTemplateQueryService>();
+
+            services.AddScoped<IPersonaDomainService, PersonaDomainService>();
+            services.AddScoped<IPersonaQueryService, PersonaQueryService>();
         }
 
         public static void RegisterPersistenceServices(IConfiguration configuration, IServiceCollection services)
@@ -137,6 +149,12 @@ namespace AlsTradingPost.Setup
 
             services.AddSingleton<IConcurrencyVersionProvider, ConcurrencyVersionProvider>();
             services.AddSingleton<IRouteProvider<PersonaFlags>, PersonaRouteProvider>();
+        }
+
+        public static void RegisterAuthorisation(IServiceCollection services)
+        {
+            services.AddSingleton<IAuthorisationPolicy, JsonAuthorisationPolicy>();
+            services.AddSingleton<IJsonAuthorisationPolicyProvider>(s => new JsonAuthorisationPolicyProvider(JObject.Parse(File.ReadAllText("authorisationPolicy.json"))));
         }
     }
 }

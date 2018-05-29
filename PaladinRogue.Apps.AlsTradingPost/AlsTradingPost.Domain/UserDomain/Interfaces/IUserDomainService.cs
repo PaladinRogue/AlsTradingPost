@@ -1,13 +1,9 @@
-﻿using System;
-using AlsTradingPost.Domain.UserDomain.Models;
-using AlsTradingPost.Resources;
+﻿using AlsTradingPost.Domain.UserDomain.Models;
 
 namespace AlsTradingPost.Domain.UserDomain.Interfaces
 {
     public interface IUserDomainService
     {
         AuthenticatedUserProjection Login(LoginDdto loginDdto);
-        
-        PersonaFlags GetUserPersonaFlags(Guid userId);
     }
 }

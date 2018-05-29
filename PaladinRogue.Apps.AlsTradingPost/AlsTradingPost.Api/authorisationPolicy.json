@@ -1,0 +1,26 @@
+﻿{
+    "authentication": {
+        "login": {
+            "restriction": "everyone"
+        },
+        "refreshToken": {
+            "restriction":  "everyone"
+        }     
+    },
+    "trader": {
+        "register": {
+            "restriction": "everyone"
+        },
+        "update": {
+            "restriction": "self"
+        },
+        "get": {
+            "restriction":  "everyone"
+        } 
+    },
+    "magicItemTemplate": {
+        "search": {
+            "restriction":  "everyone" 
+        }
+    } 
+}

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using AlsTradingPost.Resources;
-using AlsTradingPost.Setup.Infrastructure.Authorization;
+using AlsTradingPost.Setup.Infrastructure.Authorisation;
 using Common.Api.Routing;
 using Common.Resources.Extensions;
 using Microsoft.AspNetCore.Authorization;

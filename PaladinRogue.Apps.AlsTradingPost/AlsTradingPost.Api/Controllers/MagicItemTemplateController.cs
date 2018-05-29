@@ -2,10 +2,12 @@
 using AlsTradingPost.Api.MagicItemTemplate;
 using AlsTradingPost.Application.MagicItemTemplate.Interfaces;
 using AlsTradingPost.Application.MagicItemTemplate.Models;
-using AlsTradingPost.Setup.Infrastructure.Authorization;
+using AlsTradingPost.Setup.Infrastructure.Authorisation;
+using AlsTradingPost.Setup.Infrastructure.Routing;
 using AutoMapper;
 using Common.Api.Builders.Resource;
 using Common.Api.Builders.Template;
+using Common.Application.Authorisation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,18 +17,19 @@ namespace AlsTradingPost.Api.Controllers
     [Authorize(PersonaPolicies.Trader)]
     public class MagicItemTemplateController : Controller
     {
-        private readonly IMagicItemTemplateApplicationService _magicItemTemplateApplicationService;
+        private readonly ISecure<IMagicItemTemplateApplicationService> _secureMagicItemTemplateApplicationService;
         private readonly ITemplateBuilder _templateBuilder;
         private readonly ICollectionResourceBuilder<MagicItemTemplateSummaryResource> _collectionResourceBuilder;
 
         public MagicItemTemplateController(
-            IMagicItemTemplateApplicationService magicItemTemplateApplicationService,
+            ISecure<IMagicItemTemplateApplicationService> magicItemTemplateApplicationService,
             ITemplateBuilder templateBuilder,
-            ICollectionResourceBuilder<MagicItemTemplateSummaryResource> collectionResourceBuilder)
+            ICollectionResourceBuilder<MagicItemTemplateSummaryResource> collectionResourceBuilder,
+            ISecure<IMagicItemTemplateApplicationService> secureMagicItemTemplateApplicationService)
         {
-            _magicItemTemplateApplicationService = magicItemTemplateApplicationService;
             _templateBuilder = templateBuilder;
             _collectionResourceBuilder = collectionResourceBuilder;
+            _secureMagicItemTemplateApplicationService = secureMagicItemTemplateApplicationService;
         }
 
         [Route("{id}", Name = RouteDictionary.MagicItemTemplateGetById)]
@@ -34,17 +37,21 @@ namespace AlsTradingPost.Api.Controllers
         {
             return new ObjectResult(null);
         }
-        
+
         [HttpGet(Name = RouteDictionary.MagicItemTemplateGet)]
         public IActionResult Get(MagicItemTemplateSearchTemplate magicItemTemplateSearchTemplate)
         {
-            MagicItemTemplatePagedCollectionAdto result = _magicItemTemplateApplicationService.Search(Mapper.Map<MagicItemTemplateSearchTemplate, MagicItemTemplateSearchAdto>(magicItemTemplateSearchTemplate));
+            MagicItemTemplatePagedCollectionAdto result =
+                _secureMagicItemTemplateApplicationService.Service.Search(
+                    Mapper.Map<MagicItemTemplateSearchTemplate, MagicItemTemplateSearchAdto>(
+                        magicItemTemplateSearchTemplate));
 
             MagicItemTemplatePagedCollectionResource magicItemTemplatePagedCollectionResource =
                 Mapper.Map<MagicItemTemplatePagedCollectionAdto, MagicItemTemplatePagedCollectionResource>(result);
-            
+
             return new ObjectResult(
-                _collectionResourceBuilder.Create(magicItemTemplatePagedCollectionResource, magicItemTemplateSearchTemplate)
+                _collectionResourceBuilder
+                    .Create(magicItemTemplatePagedCollectionResource, magicItemTemplateSearchTemplate)
                     .WithTemplateMeta()
                     .WithResourceMeta()
                     .WithSummaryResourceMeta()

@@ -17,11 +17,16 @@ namespace Common.Api.Links
         public IList<Link> BuildLinks<T>(T data)
         {
             return data.GetType().GetCustomAttributes<LinkAttribute>()
-                .Select(linkAttribute => new Link
+                .GroupBy(linkAttribute => new
                 {
-                    Name = linkAttribute.LinkName,
-                    AllowVerbs = linkAttribute.HttpVerbs,
-                    Uri = _routeProvider.GetRouteTemplate(linkAttribute.UriName, true, data)
+                    linkAttribute.LinkName,
+                    linkAttribute.UriName
+                })
+                .Select(linkAttributeGrouping => new Link
+                {
+                    Name = linkAttributeGrouping.Key.LinkName,
+                    AllowVerbs = linkAttributeGrouping.Select(linkAttribute => linkAttribute.HttpVerb).ToArray(),
+                    Uri = _routeProvider.GetRouteTemplate(linkAttributeGrouping.Key.UriName, true, data)
                 })
                 .ToList();
         }

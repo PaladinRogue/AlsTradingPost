@@ -17,6 +17,7 @@ using Common.Api.HttpClient.Interfaces;
 using Common.Api.Links;
 using Common.Api.Meta;
 using Common.Api.Routing;
+using Common.Application.Authorisation;
 using Common.Application.Transactions;
 using Common.Authentication.Domain.Persistence;
 using FluentValidation;
@@ -51,6 +52,7 @@ namespace Authentication.Setup
         {
 	        services.AddSingleton<IHttpClientFactory, HttpClientFactory>();
             
+            services.AddScoped<ISecure<IAuthenticationApplicationService>, AuthenticationSecurityApplicationService>();
             services.AddScoped<IAuthenticationApplicationService, AuthenticationApplicationService>();
 		}
 	    

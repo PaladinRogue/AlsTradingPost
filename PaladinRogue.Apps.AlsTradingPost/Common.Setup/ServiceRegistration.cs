@@ -1,4 +1,5 @@
-﻿using Common.Domain.Concurrency;
+﻿using Common.Application.Authorisation;
+using Common.Domain.Concurrency;
 using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Concurrency.Services;
 using Common.Domain.Concurrency.Services.Interfaces;
@@ -15,11 +16,14 @@ namespace Common.Setup
     {
         public static void RegisterServices(IServiceCollection services)
         {
-	        services.AddSingleton<IEncryptionFactory, EncryptionFactory>();
-	        services.AddSingleton<IHashFactory, HashFactory>();
+            services.AddSingleton<IEncryptionFactory, EncryptionFactory>();
+            services.AddSingleton<IHashFactory, HashFactory>();
 
             services.AddScoped(typeof(IConcurrencyQueryService<>), typeof(ConcurrencyQueryService<>));
-		}
+
+            services.AddScoped<ISecurityApplicationService, DefaultSecurityApplicationService>();
+            services.AddSingleton<IAuthorisationManager, AuthorisationManager>();
+        }
 
         public static void RegisterProviders(IServiceCollection services)
         {

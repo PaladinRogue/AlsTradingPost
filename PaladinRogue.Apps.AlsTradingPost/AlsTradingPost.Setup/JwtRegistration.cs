@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using AlsTradingPost.Resources;
-using AlsTradingPost.Setup.Infrastructure.Authorization;
+using AlsTradingPost.Setup.Infrastructure.Authorisation;
 using Common.Api.Authentication;
 using Common.Api.Authentication.Constants;
 using Common.Api.Authentication.Interfaces;
