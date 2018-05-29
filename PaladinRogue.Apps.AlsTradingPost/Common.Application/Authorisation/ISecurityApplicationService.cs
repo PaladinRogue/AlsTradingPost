@@ -6,9 +6,8 @@ namespace Common.Application.Authorisation
     public interface ISecurityApplicationService
     {
         /// <param name="function">The method to execute</param>
-        /// <param name="authorisationRule">The authorisation rule</param>
         /// <param name="authorisationContext">The authorisation context</param>
         /// <exception cref="BusinessApplicationException"></exception>
-        TOut Secure<TOut>(Func<TOut> function, IAuthorisationRule authorisationRule, IAuthorisationContext authorisationContext = null);
+        TOut Secure<TOut>(Func<TOut> function, IAuthorisationContext authorisationContext);
     }
 }

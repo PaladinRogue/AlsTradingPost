@@ -25,14 +25,14 @@ namespace Authentication.Application.Authentication
         public Task<ExtendedJwtAdto> LoginAsync(LoginAdto loginAdto)
         {
             return _securityApplicationService.Secure(() => _authenticationApplicationService.LoginAsync(loginAdto),
-                AuthorisationRule.Create(AuthorisationResource.Authentication, AuthenticationAuthorisationAction.Login));
+                DefaultAuthorisationContext.Create(AuthorisationResource.Authentication, AuthenticationAuthorisationAction.Login));
         }
 
         public Task<JwtAdto> RefreshTokenAsync(RefreshTokenAdto refreshTokenAdto)
         {
             return _securityApplicationService.Secure(
                 () => _authenticationApplicationService.RefreshTokenAsync(refreshTokenAdto),
-                AuthorisationRule.Create(AuthorisationResource.Authentication, AuthenticationAuthorisationAction.RefreshToken));
+                DefaultAuthorisationContext.Create(AuthorisationResource.Authentication, AuthenticationAuthorisationAction.RefreshToken));
         }
     }
 }

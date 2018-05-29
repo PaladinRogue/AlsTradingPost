@@ -25,7 +25,7 @@ namespace AlsTradingPost.Application.MagicItemTemplate
         {
             return _securityApplicationService.Secure(
                 () => _magicItemTemplateApplicationService.Search(magicItemTemplateSearchAdto),
-                AuthorisationRule.Create(AuthorisationResource.MagicItemTemplate, AuthorisationAction.Search));
+                DefaultAuthorisationContext.Create(AuthorisationResource.MagicItemTemplate, AuthorisationAction.Search));
         }
     }
 }

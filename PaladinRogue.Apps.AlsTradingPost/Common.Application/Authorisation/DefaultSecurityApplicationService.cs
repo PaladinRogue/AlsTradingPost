@@ -12,11 +12,11 @@ namespace Common.Application.Authorisation
             _authorisationManager = authorisationManager;
         }
 
-        public TOut Secure<TOut>(Func<TOut> function, IAuthorisationRule authorisationRule, IAuthorisationContext authorisationContext)
+        public TOut Secure<TOut>(Func<TOut> function, IAuthorisationContext authorisationContext)
         {
             try
             {
-                _authorisationManager.DemandAccess(authorisationRule, authorisationContext);
+                _authorisationManager.DemandAccess(authorisationContext);
 
                 return function();
             }

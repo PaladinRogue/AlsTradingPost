@@ -4,10 +4,10 @@ namespace Common.Application.Authorisation
 {
     public interface IAuthorisationManager
     {
-        bool HasAccess(IAuthorisationRule authorisationRule, IAuthorisationContext authorisationContext);
+        bool HasAccess(IAuthorisationContext authorisationContext);
 
-        /// <param name="authorisationRule"></param>
+        /// <param name="authorisationContext"></param>
         /// <exception cref="UnauthorizedAccessException"></exception>
-        void DemandAccess(IAuthorisationRule authorisationRule, IAuthorisationContext authorisationContext);
+        void DemandAccess(IAuthorisationContext authorisationContext);
     }
 }

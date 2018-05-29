@@ -2,7 +2,7 @@
 
 namespace Common.Application.Authorisation
 {
-    public interface IAuthorisationContext
+    public interface IAuthorisationContext : IAuthorisationRule
     {
         Type ResourceType { get; }
 

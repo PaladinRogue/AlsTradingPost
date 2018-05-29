@@ -19,9 +19,9 @@ namespace AlsTradingPost.Setup.Infrastructure.Authorisation
             _currentUserProvider = currentUserProvider;
         }
 
-        public bool HasAccess(string resource, string action, IAuthorisationContext authorisationContext)
+        public bool HasAccess(IAuthorisationContext authorisationContext)
         {
-            JToken policy = _jsonAuthorisationPolicyProvider.AuthorisationPolicy[resource][action];
+            JToken policy = _jsonAuthorisationPolicyProvider.AuthorisationPolicy[authorisationContext.Resource][authorisationContext.Action];
 
             JToken restriction = policy[JTokenTypes.Restriction];
 
@@ -56,9 +56,9 @@ namespace AlsTradingPost.Setup.Infrastructure.Authorisation
                 throw new ArgumentNullException(nameof(authorisationContext.ResourceType));
             }
 
-            _currentUserProvider.WhoAmI.TryGetValue(authorisationContext.ResourceType, out Guid resourceId);
+            _currentUserProvider.WhoAmI.TryGetValue(authorisationContext.ResourceType, out Guid entityId);
 
-            return resourceId == authorisationContext.ResourceId;
+            return entityId == authorisationContext.ResourceId;
         }
     }
 }

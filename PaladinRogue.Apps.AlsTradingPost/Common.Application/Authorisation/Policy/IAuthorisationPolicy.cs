@@ -2,6 +2,6 @@
 {
     public interface IAuthorisationPolicy
     {
-        bool HasAccess(string resource, string action, IAuthorisationContext authorisationContext);
+        bool HasAccess(IAuthorisationContext authorisationContext);
     }
 }

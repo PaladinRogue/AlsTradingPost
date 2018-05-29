@@ -1,4 +1,5 @@
 ﻿using System;
+using Common.Application.Authorisation;
 
 namespace Common.Api.Links
 {
@@ -9,13 +10,29 @@ namespace Common.Api.Links
 
         public string UriName { get; }
 
-        public string[] HttpVerbs { get; }
+        public string HttpVerb { get; }
 
-        public LinkAttribute(string linkName, string uriName, params string[] httpVerbs)
+        public Type AuthorisationContextType { get; }
+        
+        public LinkAttribute(string linkName, string uriName, string httpVerb)
         {
             LinkName = linkName;
             UriName = uriName;
-            HttpVerbs = httpVerbs;
+            HttpVerb = httpVerb;
+        }
+
+        public LinkAttribute(string linkName, string uriName, string httpVerb, Type authorisationContextType)
+        {
+            LinkName = linkName;
+            UriName = uriName;
+            HttpVerb = httpVerb;
+
+            if (authorisationContextType.IsInstanceOfType(typeof(IAuthorisationContext)))
+            {
+                throw new ArgumentOutOfRangeException(nameof(authorisationContextType));
+            }
+
+            AuthorisationContextType = authorisationContextType;
         }
     }
 }

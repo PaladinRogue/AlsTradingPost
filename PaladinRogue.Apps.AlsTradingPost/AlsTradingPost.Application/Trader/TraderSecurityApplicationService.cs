@@ -25,19 +25,18 @@ namespace AlsTradingPost.Application.Trader
         public RegisteredTraderAdto Register(RegisterTraderAdto registerTraderAdto)
         {
             return _securityApplicationService.Secure(() => _traderApplicationService.Register(registerTraderAdto),
-                AuthorisationRule.Create(AuthorisationResource.Trader, AuthenticationAuthorisationAction.Register));
+                DefaultAuthorisationContext.Create(AuthorisationResource.Trader, AuthenticationAuthorisationAction.Register));
         }
 
         public TraderAdto GetById(Guid id)
         {
             return _securityApplicationService.Secure(() => _traderApplicationService.GetById(id),
-                AuthorisationRule.Create(AuthorisationResource.Trader, AuthorisationAction.Get));
+                DefaultAuthorisationContext.Create(AuthorisationResource.Trader, AuthorisationAction.Get));
         }
 
         public TraderAdto Update(UpdateTraderAdto updateTraderAdto)
         {
             return _securityApplicationService.Secure(() => _traderApplicationService.Update(updateTraderAdto),
-                AuthorisationRule.Create(AuthorisationResource.Trader, AuthorisationAction.Update),
                 new TraderUpdateAuthorisationContext(updateTraderAdto.Id));
         }
     }

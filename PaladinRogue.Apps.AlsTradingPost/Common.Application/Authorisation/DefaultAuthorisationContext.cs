@@ -2,9 +2,9 @@
 
 namespace Common.Application.Authorisation
 {
-    public class AuthorisationRule : IAuthorisationRule
+    public class DefaultAuthorisationContext : IAuthorisationContext
     {
-        private AuthorisationRule(string authorisationResource, string authorisationAction)
+        private DefaultAuthorisationContext(string authorisationResource, string authorisationAction)
         {
             Action = authorisationAction;
             Resource = authorisationResource;
@@ -12,8 +12,10 @@ namespace Common.Application.Authorisation
 
         public string Resource { get; }
         public string Action { get; }
+        public Type ResourceType => null;
+        public Guid? ResourceId => null;
 
-        public static AuthorisationRule Create(string authorisationResource, string authorisationAction)
+        public static DefaultAuthorisationContext Create(string authorisationResource, string authorisationAction)
         {
             if (string.IsNullOrWhiteSpace(authorisationResource))
             {
@@ -25,7 +27,7 @@ namespace Common.Application.Authorisation
                 throw new ArgumentNullException(nameof(authorisationAction));
             }
 
-            return new AuthorisationRule(authorisationResource, authorisationAction);
+            return new DefaultAuthorisationContext(authorisationResource, authorisationAction);
         }
     }
 }

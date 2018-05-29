@@ -12,14 +12,14 @@ namespace Common.Application.Authorisation
             _authorisationPolicy = authorisationPolicy;
         }
 
-        public bool HasAccess(IAuthorisationRule authorisationRule, IAuthorisationContext authorisationContext)
+        public bool HasAccess(IAuthorisationContext authorisationContext)
         {
-            return _authorisationPolicy.HasAccess(authorisationRule.Resource, authorisationRule.Action, authorisationContext);
+            return _authorisationPolicy.HasAccess(authorisationContext);
         }
 
-        public void DemandAccess(IAuthorisationRule authorisationRule, IAuthorisationContext authorisationContext)
+        public void DemandAccess(IAuthorisationContext authorisationContext)
         {
-            if (!HasAccess(authorisationRule, authorisationContext))
+            if (!HasAccess(authorisationContext))
             {
                 throw new UnauthorizedAccessException();
             }
