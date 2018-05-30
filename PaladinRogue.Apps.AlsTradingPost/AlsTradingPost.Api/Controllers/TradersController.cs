@@ -12,14 +12,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace AlsTradingPost.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class TraderController : Controller
+    public class TradersController : Controller
     {
         private readonly IMapper _mapper;
         private readonly ISecure<ITraderApplicationService> _secureTraderApplicationService;
         private readonly ITemplateBuilder _templateBuilder;
         private readonly IResourceBuilder _resourceBuilder;
 
-        public TraderController(IMapper mapper,
+        public TradersController(IMapper mapper,
             ISecure<ITraderApplicationService> secureTraderApplicationService,
             ITemplateBuilder templateBuilder,
             IResourceBuilder resourceBuilder)

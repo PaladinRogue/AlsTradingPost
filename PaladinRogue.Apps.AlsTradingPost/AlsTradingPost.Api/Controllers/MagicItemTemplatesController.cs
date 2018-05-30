@@ -15,13 +15,13 @@ namespace AlsTradingPost.Api.Controllers
 {
     [Route("api/[controller]")]
     [Authorize(PersonaPolicies.Trader)]
-    public class MagicItemTemplateController : Controller
+    public class MagicItemTemplatesController : Controller
     {
         private readonly ISecure<IMagicItemTemplateApplicationService> _secureMagicItemTemplateApplicationService;
         private readonly ITemplateBuilder _templateBuilder;
         private readonly ICollectionResourceBuilder<MagicItemTemplateSummaryResource> _collectionResourceBuilder;
 
-        public MagicItemTemplateController(
+        public MagicItemTemplatesController(
             ISecure<IMagicItemTemplateApplicationService> magicItemTemplateApplicationService,
             ITemplateBuilder templateBuilder,
             ICollectionResourceBuilder<MagicItemTemplateSummaryResource> collectionResourceBuilder,

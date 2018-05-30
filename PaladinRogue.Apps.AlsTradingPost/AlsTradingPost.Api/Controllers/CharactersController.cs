@@ -3,7 +3,7 @@
 namespace AlsTradingPost.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class CharacterController : Controller
+    public class CharactersController : Controller
     {
     }
 }
