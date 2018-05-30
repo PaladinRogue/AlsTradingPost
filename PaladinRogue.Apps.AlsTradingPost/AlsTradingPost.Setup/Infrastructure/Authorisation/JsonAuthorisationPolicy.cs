@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using AlsTradingPost.Resources.Authorization;
 using Common.Application.Authorisation;
 using Common.Application.Authorisation.Policy;
+using Common.Domain.Models.Interfaces;
 using Newtonsoft.Json.Linq;
 
 namespace AlsTradingPost.Setup.Infrastructure.Authorisation
@@ -10,13 +12,16 @@ namespace AlsTradingPost.Setup.Infrastructure.Authorisation
     {
         private readonly IJsonAuthorisationPolicyProvider _jsonAuthorisationPolicyProvider;
         private readonly ICurrentUserProvider _currentUserProvider;
+        private readonly IResourceOwnerProvider _resourceOwnerProvider;
 
         public JsonAuthorisationPolicy(
             IJsonAuthorisationPolicyProvider jsonAuthorisationPolicyProvider,
-            ICurrentUserProvider currentUserProvider)
+            ICurrentUserProvider currentUserProvider,
+            IResourceOwnerProvider resourceOwnerProvider)
         {
             _jsonAuthorisationPolicyProvider = jsonAuthorisationPolicyProvider;
             _currentUserProvider = currentUserProvider;
+            _resourceOwnerProvider = resourceOwnerProvider;
         }
 
         public bool HasAccess(IAuthorisationContext authorisationContext)
@@ -32,14 +37,14 @@ namespace AlsTradingPost.Setup.Infrastructure.Authorisation
                 case ResourceRestriction.Self:
                     return CheckSelf(authorisationContext);
                 case ResourceRestriction.Owner:
-                    return false;
+                    return CheckOwner(authorisationContext);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(restriction));
 
             }
         }
 
-        private bool CheckSelf(IAuthorisationContext authorisationContext)
+        private void ValidateAuthorisationContext(IAuthorisationContext authorisationContext)
         {
             if (authorisationContext == null)
             {
@@ -55,6 +60,20 @@ namespace AlsTradingPost.Setup.Infrastructure.Authorisation
             {
                 throw new ArgumentNullException(nameof(authorisationContext.ResourceType));
             }
+        }
+
+        private bool CheckOwner(IAuthorisationContext authorisationContext)
+        {
+            ValidateAuthorisationContext(authorisationContext);
+
+            IAggregateOwner aggregateOwner = _resourceOwnerProvider.GetOwner(authorisationContext.ResourceType, authorisationContext.ResourceId.Value);
+
+            return  _currentUserProvider.WhoAmI.Any(i => i.Key == aggregateOwner.AggregateType && i.Value == aggregateOwner.Id);
+        }
+
+        private bool CheckSelf(IAuthorisationContext authorisationContext)
+        {
+            ValidateAuthorisationContext(authorisationContext);
 
             _currentUserProvider.WhoAmI.TryGetValue(authorisationContext.ResourceType, out Guid entityId);
 

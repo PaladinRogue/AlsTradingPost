@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Common.Domain.Models;
+using Common.Domain.Models.Interfaces;
 
 namespace AlsTradingPost.Domain.Models
 {
-    public class Character : AggregateRoot
+    public class Character : AggregateRoot, IOwnedAggregate
     {
         [MaxLength(100)]
         [Required]
@@ -18,5 +20,10 @@ namespace AlsTradingPost.Domain.Models
         public byte Level { get; set; }
 
         public virtual Trader Trader { get; set; }
+
+        public IAggregateOwner GetOwner()
+        {
+            return new AggregateOwner<Trader>(Trader.Id);
+        }
     }
 }
