@@ -11,8 +11,6 @@ namespace Common.Authentication.Setup
         public static void RegisterDomainServices(IServiceCollection services)
         {
             services.AddScoped<ISessionDomainService, SessionDomainService>();
-            services.AddScoped<ISessionCommandService, SessionCommandService>();
-            services.AddScoped<ISessionQueryService, SessionQueryService>();
         }
 
         public static void RegisterProviders(IServiceCollection services)
