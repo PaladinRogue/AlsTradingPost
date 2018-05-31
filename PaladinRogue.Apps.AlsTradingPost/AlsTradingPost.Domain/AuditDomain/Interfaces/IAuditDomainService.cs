@@ -1,9 +1,9 @@
-﻿using AlsTradingPost.Domain.Models;
-using Common.Domain.Services.Command;
+﻿using AlsTradingPost.Domain.AuditDomain.Models;
 
 namespace AlsTradingPost.Domain.AuditDomain.Interfaces
 {
-    public interface IAuditCommandService : ICreateCommandService<Audit>
+    public interface IAuditDomainService
     {
+        void AuditEntity(AuditEntityDdto auditEntity);
     }
 }

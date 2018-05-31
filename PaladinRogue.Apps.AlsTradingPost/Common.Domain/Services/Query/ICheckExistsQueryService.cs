@@ -2,7 +2,7 @@
 
 namespace Common.Domain.Services.Query
 {
-    public interface ICheckExistsService
+    public interface ICheckExistsQueryService
     {
         bool CheckExists(Guid id);
     }

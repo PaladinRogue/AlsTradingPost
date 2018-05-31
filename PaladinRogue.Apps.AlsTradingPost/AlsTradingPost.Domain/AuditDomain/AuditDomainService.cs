@@ -4,6 +4,7 @@ using AlsTradingPost.Domain.AuditDomain.Models;
 using AlsTradingPost.Domain.Models;
 using AutoMapper;
 using Common.Domain.Models;
+using Common.Domain.Services.Command;
 using Newtonsoft.Json;
 
 namespace AlsTradingPost.Domain.AuditDomain
@@ -11,10 +12,10 @@ namespace AlsTradingPost.Domain.AuditDomain
     public class AuditDomainService : IAuditDomainService
     {
         private readonly IMapper _mapper;
-        private readonly IAuditCommandService _auditCommandService;
+        private readonly ICommandService<Audit> _auditCommandService;
 
         public AuditDomainService(IMapper mapper,
-            IAuditCommandService auditCommandService)
+            ICommandService<Audit> auditCommandService)
         {
             _auditCommandService = auditCommandService;
             _mapper = mapper;

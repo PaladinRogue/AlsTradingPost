@@ -6,19 +6,21 @@ using Common.Authentication.Domain.SessionDomain.Interfaces;
 using Common.Authentication.Domain.SessionDomain.Models;
 using Common.Authentication.Resources.RefreshTokens;
 using Common.Domain.Models;
+using Common.Domain.Services.Command;
+using Common.Domain.Services.Query;
 
 namespace Common.Authentication.Domain.SessionDomain
 {
     public class SessionDomainService : ISessionDomainService
     {
-        private readonly ISessionCommandService _sessionCommandService;
-        private readonly ISessionQueryService _sessionQueryService;
+        private readonly ICommandService<Session> _sessionCommandService;
+        private readonly IQueryService<Session> _sessionQueryService;
         private readonly IRefreshTokenProvider _refreshTokenProvider;
         private readonly IMapper _mapper;
 
-        public SessionDomainService(ISessionCommandService sessionCommandService,
+        public SessionDomainService(ICommandService<Session> sessionCommandService,
             IRefreshTokenProvider refreshTokenProvider,
-            ISessionQueryService sessionQueryService,
+            IQueryService<Session> sessionQueryService,
             IMapper mapper)
         {
             _sessionCommandService = sessionCommandService;

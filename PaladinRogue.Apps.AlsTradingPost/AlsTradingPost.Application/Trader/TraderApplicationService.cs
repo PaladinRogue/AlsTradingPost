@@ -20,7 +20,7 @@ namespace AlsTradingPost.Application.Trader
         private readonly IMapper _mapper;
         private readonly IValidator<RegisterTraderAdto> _registerTraderValidator;
         private readonly IValidator<UpdateTraderAdto> _updateTraderValidator;
-        private readonly IConcurrencyQueryService<ITraderQueryService> _traderConcurrencyQueryService;
+        private readonly IConcurrencyService<ITraderDomainService> _traderConcurrencyQueryService;
         private readonly ICurrentUserProvider _currentUserProvider;
 
         public TraderApplicationService(
@@ -28,7 +28,7 @@ namespace AlsTradingPost.Application.Trader
             ITraderDomainService traderDomainService,
             IMapper mapper,
             IValidator<UpdateTraderAdto> updateTraderValidator,
-            IConcurrencyQueryService<ITraderQueryService> traderConcurrencyQueryService,
+            IConcurrencyService<ITraderDomainService> traderConcurrencyQueryService,
             ICurrentUserProvider currentUserProvider)
         {
             _registerTraderValidator = createTraderValidator;

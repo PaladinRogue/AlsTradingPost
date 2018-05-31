@@ -6,6 +6,7 @@
     <PackageReference Include="FluentValidation" Version="7.5.2" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common.Domain\Common.Domain.csproj" />
     <ProjectReference Include="..\Common.Resources\Common.Resources.csproj" />
   </ItemGroup>
   <ItemGroup>

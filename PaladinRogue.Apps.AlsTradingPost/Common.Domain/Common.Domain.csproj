@@ -3,13 +3,15 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Services\Interfaces\**" />
+    <EmbeddedResource Remove="Services\Interfaces\**" />
+    <None Remove="Services\Interfaces\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Domain.Models\Common.Domain.Models.csproj" />
     <ProjectReference Include="..\Common.Resources\Common.Resources.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\Interfaces\" />
   </ItemGroup>
 </Project>

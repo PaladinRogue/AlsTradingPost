@@ -4,25 +4,27 @@ using AlsTradingPost.Domain.TraderDomain.Events;
 using AlsTradingPost.Domain.TraderDomain.Exceptions;
 using AlsTradingPost.Domain.TraderDomain.Interfaces;
 using AlsTradingPost.Domain.TraderDomain.Models;
-using AlsTradingPost.Domain.UserDomain.Interfaces;
 using AutoMapper;
 using Common.Domain.DomainEvents;
 using Common.Domain.Models;
+using Common.Domain.Services.Command;
+using Common.Domain.Services.Query;
+using Common.Resources.Concurrency.Interfaces;
 
 namespace AlsTradingPost.Domain.TraderDomain
 {
     public class TraderDomainService : ITraderDomainService
     {
-        private readonly ITraderCommandService _traderCommandService;
-        private readonly ITraderQueryService _traderQueryService;
-        private readonly IUserQueryService _userQueryService;
+        private readonly ICommandService<Trader> _traderCommandService;
+        private readonly IQueryService<Trader> _traderQueryService;
+        private readonly IQueryService<User> _userQueryService;
         private readonly IMapper _mapper;
 
         public TraderDomainService(
-            ITraderCommandService traderCommandService,
+            ICommandService<Trader> traderCommandService,
             IMapper mapper,
-            IUserQueryService userQueryService,
-            ITraderQueryService traderQueryService)
+            IQueryService<User> userQueryService,
+            IQueryService<Trader> traderQueryService)
         {
             _traderCommandService = traderCommandService;
             _mapper = mapper;
@@ -73,6 +75,11 @@ namespace AlsTradingPost.Domain.TraderDomain
             DomainEvents.Raise(TraderReadDomainEvent.Create(trader));
 
             return _mapper.Map<Trader, TraderProjection>(trader);
+        }
+
+        public bool CheckConcurrency(Guid id, IConcurrencyVersion version)
+        {
+            return _traderQueryService.CheckConcurrency(id, version);
         }
     }
 }

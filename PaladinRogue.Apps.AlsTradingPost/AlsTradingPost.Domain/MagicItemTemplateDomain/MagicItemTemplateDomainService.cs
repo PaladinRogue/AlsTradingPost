@@ -6,15 +6,16 @@ using AlsTradingPost.Domain.MagicItemTemplateDomain.Models;
 using AlsTradingPost.Domain.Models;
 using AutoMapper;
 using Common.Domain.Pagination.Interfaces;
+using Common.Domain.Services.Query;
 
 namespace AlsTradingPost.Domain.MagicItemTemplateDomain
 {
     public class MagicItemTemplateDomainService : IMagicItemTemplateDomainService
     {
-        private readonly IMagicItemTemplateQueryService _magicItemTemplateQueryService;
+        private readonly IQueryService<MagicItemTemplate> _magicItemTemplateQueryService;
         private readonly IMapper _mapper;
 
-        public MagicItemTemplateDomainService(IMagicItemTemplateQueryService magicItemTemplateQueryService,
+        public MagicItemTemplateDomainService(IQueryService<MagicItemTemplate> magicItemTemplateQueryService,
             IMapper mapper)
         {
             _magicItemTemplateQueryService = magicItemTemplateQueryService;
