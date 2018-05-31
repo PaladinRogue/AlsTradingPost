@@ -3,6 +3,8 @@ using Common.Domain.Concurrency;
 using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Concurrency.Services;
 using Common.Domain.Concurrency.Services.Interfaces;
+using Common.Domain.Services.Command;
+using Common.Domain.Services.Query;
 using Common.Setup.Infrastructure.Encryption;
 using Common.Setup.Infrastructure.Encryption.Interfaces;
 using Common.Setup.Infrastructure.Hashing;
@@ -19,7 +21,9 @@ namespace Common.Setup
             services.AddSingleton<IEncryptionFactory, EncryptionFactory>();
             services.AddSingleton<IHashFactory, HashFactory>();
 
-            services.AddScoped(typeof(IConcurrencyQueryService<>), typeof(ConcurrencyQueryService<>));
+            services.AddScoped(typeof(IConcurrencyService<>), typeof(ConcurrencyService<>));
+            services.AddScoped(typeof(ICommandService<>), typeof(CommandService<>));
+            services.AddScoped(typeof(IQueryService<>), typeof(QueryService<>));
 
             services.AddScoped<ISecurityApplicationService, DefaultSecurityApplicationService>();
             services.AddSingleton<IAuthorisationManager, AuthorisationManager>();

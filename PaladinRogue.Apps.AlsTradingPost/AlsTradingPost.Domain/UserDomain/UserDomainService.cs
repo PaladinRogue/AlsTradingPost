@@ -4,18 +4,20 @@ using AlsTradingPost.Domain.UserDomain.Interfaces;
 using AlsTradingPost.Domain.UserDomain.Models;
 using AutoMapper;
 using Common.Domain.Models;
+using Common.Domain.Services.Command;
+using Common.Domain.Services.Query;
 
 namespace AlsTradingPost.Domain.UserDomain
 {
     public class UserDomainService : IUserDomainService
     {
-        private readonly IUserQueryService _userQueryService;
-        private readonly IUserCommandService _userCommandService;
+        private readonly IQueryService<User> _userQueryService;
+        private readonly ICommandService<User> _userCommandService;
         private readonly IMapper _mapper;
 
         public UserDomainService(
-            IUserQueryService userQueryService,
-            IUserCommandService userCommandService,
+            IQueryService<User> userQueryService,
+            ICommandService<User> userCommandService,
             IMapper mapper)
         {
             _userQueryService = userQueryService;
@@ -25,7 +27,7 @@ namespace AlsTradingPost.Domain.UserDomain
 
         public AuthenticatedUserProjection Login(LoginDdto loginDdto)
         {
-            User existingUser = _userQueryService.GetByIdentityId(loginDdto.IdentityId);
+            User existingUser = _userQueryService.GetSingle(u => u.IdentityId == loginDdto.IdentityId);
 
             AuthenticatedUserProjection authenticatedUserProjection =
                 existingUser == null ? FirstTimeLogin(loginDdto) : ReturnLogin(loginDdto, existingUser);

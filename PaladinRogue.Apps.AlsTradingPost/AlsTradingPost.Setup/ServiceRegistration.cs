@@ -17,7 +17,6 @@ using AlsTradingPost.Domain.AuditDomain;
 using AlsTradingPost.Domain.AuditDomain.Interfaces;
 using AlsTradingPost.Domain.MagicItemTemplateDomain;
 using AlsTradingPost.Domain.MagicItemTemplateDomain.Interfaces;
-using AlsTradingPost.Domain.Persistence;
 using AlsTradingPost.Domain.PersonaDomain;
 using AlsTradingPost.Domain.PersonaDomain.Interfaces;
 using AlsTradingPost.Domain.TraderDomain;
@@ -25,7 +24,6 @@ using AlsTradingPost.Domain.TraderDomain.Interfaces;
 using AlsTradingPost.Domain.UserDomain;
 using AlsTradingPost.Domain.UserDomain.Interfaces;
 using AlsTradingPost.Persistence;
-using AlsTradingPost.Persistence.Repositories;
 using AlsTradingPost.Resources;
 using AlsTradingPost.Resources.Authorization;
 using AlsTradingPost.Setup.Infrastructure.Authorisation;
@@ -42,11 +40,9 @@ using Common.Api.Routing;
 using Common.Application.Authorisation;
 using Common.Application.Authorisation.Policy;
 using Common.Application.Transactions;
-using Common.Authentication.Domain.Persistence;
 using Common.Domain.Concurrency;
 using Common.Domain.Concurrency.Interfaces;
-using Common.Domain.Concurrency.Services;
-using Common.Domain.Concurrency.Services.Interfaces;
+using Common.Domain.Persistence;
 using Common.Setup.Infrastructure.Authorization;
 using Common.Setup.Infrastructure.Encryption;
 using Common.Setup.Infrastructure.Encryption.Interfaces;
@@ -57,6 +53,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
 using Persistence.EntityFramework.Infrastructure.Transactions;
+using Persistence.EntityFramework.Repositories;
 
 namespace AlsTradingPost.Setup
 {
@@ -101,39 +98,22 @@ namespace AlsTradingPost.Setup
 
         public static void RegisterDomainServices(IServiceCollection services)
         {
-            services.AddScoped(typeof(IConcurrencyQueryService<>), typeof(ConcurrencyQueryService<>));
-
             services.AddScoped<IAuditDomainService, AuditDomainService>();
-            services.AddScoped<IAuditCommandService, AuditCommandService>();
 
             services.AddScoped<IUserDomainService, UserDomainService>();
-            services.AddScoped<IUserCommandService, UserCommandService>();
-            services.AddScoped<IUserQueryService, UserQueryService>();
 
             services.AddScoped<IAdminDomainService, AdminDomainService>();
-            services.AddScoped<IAdminQueryService, AdminQueryService>();
             
             services.AddScoped<ITraderDomainService, TraderDomainService>();
-            services.AddScoped<ITraderCommandService, TraderCommandService>();
-            services.AddScoped<ITraderQueryService, TraderQueryService>();
 
             services.AddScoped<IMagicItemTemplateDomainService, MagicItemTemplateDomainService>();
-            services.AddScoped<IMagicItemTemplateQueryService, MagicItemTemplateQueryService>();
 
             services.AddScoped<IPersonaDomainService, PersonaDomainService>();
-            services.AddScoped<IPersonaQueryService, PersonaQueryService>();
         }
 
         public static void RegisterPersistenceServices(IConfiguration configuration, IServiceCollection services)
         {
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IAuditRepository, AuditRepository>();
-            services.AddScoped<IAdminRepository, AdminRepository>();
-            services.AddScoped<ITraderRepository, TraderRepository>();
-            services.AddScoped<ICharacterRepository, CharacterRepository>();
-            services.AddScoped<IMagicItemRepository, MagicItemRepository>();
-            services.AddScoped<IMagicItemTemplateRepository, MagicItemTemplateRepository>();
-            services.AddScoped<ISessionRepository, SessionRepository>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             services.AddDbContext<AlsTradingPostDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("Default")));

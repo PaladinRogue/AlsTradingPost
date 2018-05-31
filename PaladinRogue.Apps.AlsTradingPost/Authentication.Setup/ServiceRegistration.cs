@@ -6,9 +6,7 @@ using Authentication.Domain.ApplicationServices;
 using Authentication.Domain.ApplicationServices.Interfaces;
 using Authentication.Domain.IdentityServices;
 using Authentication.Domain.IdentityServices.Interfaces;
-using Authentication.Domain.Persistence;
 using Authentication.Persistence;
-using Authentication.Persistence.Repositories;
 using Common.Api.Builders;
 using Common.Api.Builders.Resource;
 using Common.Api.Builders.Template;
@@ -19,12 +17,13 @@ using Common.Api.Meta;
 using Common.Api.Routing;
 using Common.Application.Authorisation;
 using Common.Application.Transactions;
-using Common.Authentication.Domain.Persistence;
+using Common.Domain.Persistence;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.EntityFramework.Infrastructure.Transactions;
+using Persistence.EntityFramework.Repositories;
 
 namespace Authentication.Setup
 {
@@ -59,19 +58,14 @@ namespace Authentication.Setup
         public static void RegisterDomainServices(IServiceCollection services)
         {
 			services.AddScoped<IIdentityDomainService, IdentityDomainService>();
-			services.AddScoped<IIdentityQueryService, IdentityQueryService>();
-			services.AddScoped<IIdentityCommandService, IdentityCommandService>();
 
 			services.AddScoped<IApplicationDomainService, ApplicationDomainService>();
-			services.AddScoped<IApplicationQueryService, ApplicationQueryService>();
-			services.AddScoped<IApplicationCommandService, ApplicationCommandService>();
 		}
 	    
         public static void RegisterPersistenceServices(IConfiguration configuration, IServiceCollection services)
         {
-	        services.AddScoped<IIdentityRepository, IdentityRepository>();
-			services.AddScoped<IApplicationRepository, ApplicationRepository>();
-			services.AddScoped<ISessionRepository, SessionRepository>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
 
             services.AddEntityFrameworkSqlServer().AddOptions()
                 .AddDbContext<AuthenticationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Default")));

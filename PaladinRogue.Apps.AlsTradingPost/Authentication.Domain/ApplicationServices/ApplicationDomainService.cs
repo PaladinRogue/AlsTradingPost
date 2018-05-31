@@ -3,18 +3,20 @@ using Authentication.Domain.ApplicationServices.Models;
 using Authentication.Domain.Models;
 using AutoMapper;
 using Common.Domain.Models;
+using Common.Domain.Services.Command;
+using Common.Domain.Services.Query;
 
 namespace Authentication.Domain.ApplicationServices
 {
     public class ApplicationDomainService : IApplicationDomainService
 	{
         private readonly IMapper _mapper;
-        private readonly IApplicationCommandService _applicationCommandService;
-        private readonly IApplicationQueryService _applicationQueryService;
+        private readonly ICommandService<Application> _applicationCommandService;
+        private readonly IQueryService<Application> _applicationQueryService;
 
         public ApplicationDomainService(IMapper mapper,
-            IApplicationQueryService applicationQueryService,
-            IApplicationCommandService applicationCommandService)
+            IQueryService<Application> applicationQueryService,
+            ICommandService<Application> applicationCommandService)
         {
             _mapper = mapper;
             _applicationQueryService = applicationQueryService;
@@ -39,7 +41,7 @@ namespace Authentication.Domain.ApplicationServices
 
 	    public ApplicationProjection GetByName(string name)
 	    {
-	        return _mapper.Map<Application, ApplicationProjection>(_applicationQueryService.GetByName(name));
+	        return _mapper.Map<Application, ApplicationProjection>(_applicationQueryService.GetSingle(a => a.Name == name));
         }
 	}
 }

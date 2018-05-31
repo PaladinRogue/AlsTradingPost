@@ -4,18 +4,20 @@ using Authentication.Domain.IdentityServices.Models;
 using Authentication.Domain.Models;
 using AutoMapper;
 using Common.Domain.Models;
+using Common.Domain.Services.Command;
+using Common.Domain.Services.Query;
 
 namespace Authentication.Domain.IdentityServices
 {
     public class IdentityDomainService : IIdentityDomainService
     {
-        private readonly IIdentityCommandService _identityCommandService;
-        private readonly IIdentityQueryService _identityQueryService;
+        private readonly ICommandService<Identity> _identityCommandService;
+        private readonly IQueryService<Identity> _identityQueryService;
         private readonly IMapper _mapper;
         
         public IdentityDomainService(
-            IIdentityQueryService identityQueryService,
-            IIdentityCommandService identityCommandService,
+            IQueryService<Identity> identityQueryService,
+            ICommandService<Identity> identityCommandService,
             IMapper mapper)
         {
             _identityQueryService = identityQueryService;
@@ -25,7 +27,7 @@ namespace Authentication.Domain.IdentityServices
 
         public AuthenticatedIdentityProjection Login(LoginDdto loginDdto)
         {
-            Identity identity = _identityQueryService.GetByAuthenticationId(loginDdto.AuthenticationId);
+            Identity identity = _identityQueryService.GetSingle(i => i.AuthenticationId == loginDdto.AuthenticationId);
 
             if (identity == null)
             {

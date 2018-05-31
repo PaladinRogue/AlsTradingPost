@@ -3,15 +3,16 @@ using AlsTradingPost.Domain.AdminDomain.Interfaces;
 using AlsTradingPost.Domain.AdminDomain.Models;
 using AlsTradingPost.Domain.Models;
 using AutoMapper;
+using Common.Domain.Services.Query;
 
 namespace AlsTradingPost.Domain.AdminDomain
 {
     public class AdminDomainService : IAdminDomainService
     {
-        private readonly IAdminQueryService _adminQueryService;
+        private readonly IQueryService<Admin> _adminQueryService;
         private readonly IMapper _mapper;
 
-        public AdminDomainService(IAdminQueryService adminQueryService, IMapper mapper)
+        public AdminDomainService(IQueryService<Admin> adminQueryService, IMapper mapper)
         {
             _adminQueryService = adminQueryService;
             _mapper = mapper;

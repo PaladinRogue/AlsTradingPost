@@ -1,7 +1,7 @@
 ﻿using System;
 using Common.Resources.Concurrency.Interfaces;
 
-namespace Common.Domain.Services.Query
+namespace Common.Domain.Services.Domain
 {
     public interface ICheckConcurrencyService
     {
