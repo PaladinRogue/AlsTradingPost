@@ -31,6 +31,7 @@ namespace Common.Setup
 
         public static void RegisterProviders(IServiceCollection services)
         {
+	        services.AddSingleton<IResourceOwnerProvider, ResourceOwnerProvider>();
 	        services.AddSingleton<IApiDescriptionGroupCollectionProvider, ApiDescriptionGroupCollectionProvider>();
 	        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IConcurrencyVersionProvider, ConcurrencyVersionProvider>();
