@@ -9,7 +9,6 @@ namespace Common.Api.Builders.Resource
     public class CollectionResourceBuilder<T> : ICollectionResourceBuilder<T> where T : ISummaryResource
     {
         private ResourceBuilderResource<ICollectionResource<T>> _resource;
-        private ResourceBuilderResource<ITemplate> _template;
 
         private ICollectionResource<T> _resourceData;
         private ITemplate _templateData;
@@ -31,8 +30,6 @@ namespace Common.Api.Builders.Resource
             _collectionResources = _buildHelper.BuildCollectionResourceData(_resourceData);
 
             _resource = _buildHelper.BuildResourceBuilder(_resourceData);
-            
-            _template = _buildHelper.BuildResourceBuilder(_templateData);
 
             BuildHelper.AddSelfQueryParams(_resource.Links, _templateData);
             
@@ -45,13 +42,6 @@ namespace Common.Api.Builders.Resource
             return this;
         }
 
-        public ICollectionResourceBuilder<T> WithTemplateMeta()
-        {
-            _metaBuilder.BuildValidationMeta(_template.Meta, _templateData);
-
-            return this;
-        }
-
         public ICollectionResourceBuilder<T> WithResourceMeta()
         {
             _metaBuilder.BuildFieldMeta(_resource.Meta, _resourceData);
@@ -59,29 +49,9 @@ namespace Common.Api.Builders.Resource
             return this;
         }
 
-        public ICollectionResourceBuilder<T> WithSummaryResourceMeta()
+        public IBuiltResource Build()
         {
-            if (_collectionResources.Any() && _resourceData.Results.Any())
-            {
-                _metaBuilder.BuildFieldMeta(_collectionResources.First().Meta, _resourceData.Results.First());
-            }
-
-            return this;
-        }
-
-        public ICollectionResourceBuilder<T> WithSorting()
-        {
-            if (_resourceData.Results.Any())
-            {
-                _metaBuilder.BuildSortingMeta(_template.Meta, _templateData, _resourceData.Results.First().GetType());
-            }
-
-            return this;
-        }
-
-        public IDictionary<string, object> Build()
-        {
-           return CollectionResourceBuilderHelper.Build(_resource, _resourceData, _template, _collectionResources);
+           return CollectionResourceBuilderHelper.Build(_resource, _resourceData, _collectionResources);
         }
     }
 }

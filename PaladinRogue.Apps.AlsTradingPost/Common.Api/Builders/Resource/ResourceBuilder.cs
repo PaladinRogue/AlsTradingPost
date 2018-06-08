@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Common.Api.Meta;
+﻿using Common.Api.Meta;
 using Common.Api.Resources;
 
 namespace Common.Api.Builders.Resource
@@ -35,7 +34,7 @@ namespace Common.Api.Builders.Resource
             return this;
         }
 
-        public IDictionary<string, IBuiltResource> Build()
+        public IBuiltResource Build()
         {
             return BuildHelper.Build(_resource);
         }

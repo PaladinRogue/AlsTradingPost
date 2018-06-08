@@ -26,7 +26,7 @@ namespace Common.Api.Builders
                 p => p.Name,
                 p => DictionaryBuilder<string, object>.Create()
                     .Add(LinkPartType.Href, p.FullUri)
-                    .Add(LinkPartType.AllowVerbs, p.AllowVerbs)
+                    .Add(LinkPartType.Meta, DictionaryBuilder<string, object>.Create().Add(LinkPartType.AllowVerbs, p.AllowVerbs).Build())
                     .Build()
             );
         }

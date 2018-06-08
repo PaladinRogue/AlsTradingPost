@@ -8,7 +8,7 @@ namespace AlsTradingPost.Api.MagicItemTemplate
         public MagicItemTemplateApiMappingProfile()
         {
             CreateMap<MagicItemTemplateSummaryAdto, MagicItemTemplateSummaryResource>();
-            CreateMap<MagicItemTemplatePagedCollectionAdto, MagicItemTemplatePagedCollectionResource>();
+            CreateMap<MagicItemTemplatePagedCollectionAdto, MagicItemTemplates>();
         }
     }
 }

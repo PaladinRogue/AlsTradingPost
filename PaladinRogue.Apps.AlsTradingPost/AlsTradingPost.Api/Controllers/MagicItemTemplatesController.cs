@@ -46,16 +46,13 @@ namespace AlsTradingPost.Api.Controllers
                     Mapper.Map<MagicItemTemplateSearchTemplate, MagicItemTemplateSearchAdto>(
                         magicItemTemplateSearchTemplate));
 
-            MagicItemTemplatePagedCollectionResource magicItemTemplatePagedCollectionResource =
-                Mapper.Map<MagicItemTemplatePagedCollectionAdto, MagicItemTemplatePagedCollectionResource>(result);
+            MagicItemTemplates magicItemTemplates =
+                Mapper.Map<MagicItemTemplatePagedCollectionAdto, MagicItemTemplates>(result);
 
             return new ObjectResult(
                 _collectionResourceBuilder
-                    .Create(magicItemTemplatePagedCollectionResource, magicItemTemplateSearchTemplate)
-                    .WithTemplateMeta()
+                    .Create(magicItemTemplates, magicItemTemplateSearchTemplate)
                     .WithResourceMeta()
-                    .WithSummaryResourceMeta()
-                    .WithSorting()
                     .Build()
             );
         }
@@ -66,6 +63,7 @@ namespace AlsTradingPost.Api.Controllers
             return new ObjectResult(
                 _templateBuilder.Create<MagicItemTemplateSearchTemplate>()
                     .WithTemplateMeta()
+                    .WithSorting<MagicItemTemplateSummaryResource>()
                     .Build()
             );
         }

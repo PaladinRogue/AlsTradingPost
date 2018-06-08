@@ -29,7 +29,7 @@ namespace Common.Api.Builders.Dictionary
         }
     }
 
-    public interface IDictionaryBuilder<TKey, TValue> : IBuilder<TKey, TValue>
+    public interface IDictionaryBuilder<TKey, TValue> : IBuilder<IDictionary<TKey, TValue>>
     {
         IDictionaryBuilder<TKey, TValue> Add(TKey key, TValue value);
     }

@@ -66,7 +66,6 @@ namespace AlsTradingPost.Setup
             services.AddSingleton<IBuildHelper, BuildHelper>();
             services.AddSingleton<ITemplateBuilder, TemplateBuilder>();
             services.AddSingleton<IResourceBuilder, ResourceBuilder>();
-            services.AddSingleton<IResourceTemplateBuilder, ResourceTemplateBuilder>();
             services.AddSingleton(typeof(ICollectionResourceBuilder<>), typeof(CollectionResourceBuilder<>));
         }
 

@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Common.Api.Builders
+﻿namespace Common.Api.Builders
 {
-    public interface IBuilder<TKey, TValue>
+    public interface IBuilder<out T>
     {
-        IDictionary<TKey, TValue> Build();
+        T Build();
     }
 }

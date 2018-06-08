@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Common.Api.Builders.Resource;
 using Common.Api.Meta;
 using Common.Api.Resources;
@@ -44,7 +43,14 @@ namespace Common.Api.Builders.Template
             return this;
         }
 
-        public IDictionary<string, IBuiltResource> Build()
+        public ITemplateBuilder WithSorting<T>() where T : ISummaryResource
+        {
+            _metaBuilder.BuildSortingMeta(_template.Meta, _templateData, typeof(T));
+
+            return this;
+        }
+
+        public IBuiltResource Build()
         {
             return BuildHelper.Build(_template);
         }

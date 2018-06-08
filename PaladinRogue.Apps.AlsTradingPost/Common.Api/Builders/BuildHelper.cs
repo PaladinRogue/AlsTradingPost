@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using Common.Api.Builders.Dictionary;
 using Common.Api.Builders.Resource;
 using Common.Api.Links;
@@ -8,6 +9,7 @@ using Common.Api.Meta;
 using Common.Api.Pagination.Interfaces;
 using Common.Api.Resources;
 using Common.Resources.Extensions;
+using Newtonsoft.Json;
 
 namespace Common.Api.Builders
 {
@@ -60,20 +62,46 @@ namespace Common.Api.Builders
             }
         }
 
-        public static IDictionary<string, IBuiltResource> Build<T>(ResourceBuilderResource<T> resource)
+        public static IBuiltResource Build<T>(ResourceBuilderResource<T> resource)
         {
             IBuiltResource builtResource = new BuiltResource
             {
-                Data = resource.Data.Resource,
+                Data = BuildResourceData(resource.Data),
                 Meta = resource.Meta.Properties.BuildPropertyDictionary(),
                 Links = resource.Links.BuildLinkDictionary()
             };
-            
-            return DictionaryBuilder<string, IBuiltResource>.Create()
-                .Add(resource.Data.TypeName, builtResource)
-                .Build();
+
+            return builtResource;
         }
-        
+
+        public static IBuiltResource BuildCollectionItem<T>(ResourceBuilderResource<T> resource)
+        {
+            IBuiltResource builtResource = new BuiltCollectionResource
+            {
+                Data = BuildResourceData(resource.Data),
+                Links = resource.Links.BuildLinkDictionary()
+            };
+
+            return builtResource;
+        }
+
+        private static object BuildResourceData<T>(Data<T> resourceData)
+        {
+            DictionaryBuilder<string, object> resourceBuilder = DictionaryBuilder<string, object>.Create();
+
+            foreach (PropertyInfo propertyInfo in resourceData.Resource.GetType().GetProperties())
+            {
+                if (!propertyInfo.GetCustomAttributes<JsonIgnoreAttribute>().Any())
+                {
+                    resourceBuilder.Add(propertyInfo.Name, propertyInfo.GetValue(resourceData.Resource));
+                }
+            }
+
+            resourceBuilder.Add(ResourceType.Type, resourceData.TypeName.ToCamelCase());
+
+            return resourceBuilder.Build();
+        }
+
         private static Data<T> BuildData<T>(T resourceData)
         {
             return new Data<T>
@@ -106,7 +134,10 @@ namespace Common.Api.Builders
         
         private static string FormatConventionName(string resourceName)
         {
-            return resourceName.Replace("Template", string.Empty).Replace("Resource", string.Empty);
+            resourceName = Regex.Replace(resourceName, @"Template$", string.Empty);
+            resourceName = Regex.Replace(resourceName, @"Resource$", string.Empty);
+
+            return resourceName;
         }
     }
 }

@@ -34,7 +34,6 @@ namespace Authentication.Setup
 		    services.AddSingleton<IMetaBuilder, MetaBuilder>();
 		    services.AddSingleton<IBuildHelper, BuildHelper>();
 		    services.AddSingleton<ILinkBuilder, DefaultLinkBuilder>();
-		    services.AddSingleton<IResourceTemplateBuilder, ResourceTemplateBuilder>();
 		    services.AddSingleton<ITemplateBuilder, TemplateBuilder>();
 		    services.AddSingleton<IResourceBuilder, ResourceBuilder>();
 	    }

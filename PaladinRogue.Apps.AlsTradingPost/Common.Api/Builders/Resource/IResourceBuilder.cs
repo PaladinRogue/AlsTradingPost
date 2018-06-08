@@ -2,7 +2,7 @@
 
 namespace Common.Api.Builders.Resource
 {
-    public interface IResourceBuilder : IBuilder<string, IBuiltResource>
+    public interface IResourceBuilder : IBuilder<IBuiltResource>
     {
         IResourceBuilder Create(IResource resource);
         IResourceBuilder WithResourceMeta();
