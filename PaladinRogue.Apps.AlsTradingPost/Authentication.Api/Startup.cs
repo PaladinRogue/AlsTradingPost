@@ -35,6 +35,7 @@ namespace Authentication.Api
             {
                 options.UseCamelCaseJsonOutputFormatter<JsonOutputFormatter>()
                     .UseValidationExceptionFilter()
+                    .UseBusinessExceptionFilter()
                     .UseConcurrencyFilter()
                     .RequireHttps();
             });

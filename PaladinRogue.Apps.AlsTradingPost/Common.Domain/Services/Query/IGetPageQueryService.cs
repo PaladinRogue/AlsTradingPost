@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using Common.Domain.Models.Interfaces;
 using Common.Domain.Pagination.Interfaces;
+using Common.Resources.Sorting;
 
 namespace Common.Domain.Services.Query
 {
@@ -10,10 +11,7 @@ namespace Common.Domain.Services.Query
     {
         IEnumerable<T> GetPage(IPaginationDdto paginationDdto,
             out int totalResults,
-            Expression<Func<T, bool>> predicate = null,
-            string orderBy = null,
-            bool orderByAscending = true,
-            string thenBy = null,
-            bool? thenByAscending = null);
+            IList<SortBy> sort,
+            Expression<Func<T, bool>> predicate = null);
     }
 }

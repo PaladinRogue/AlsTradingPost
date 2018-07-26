@@ -122,31 +122,15 @@ namespace Common.Api.Meta
                 where sortableAttribute != null
                 select property.Name.ToCamelCase()).ToList();
 
+            if (!(data is ISortTemplate sortTemplate)) return;
 
-            if (data is IThenByTemplate thenByTemplate)
+            if (sortableFields.Any())
             {
-                IEnumerable<string> thenByFields = sortableFields.Where(x => x != thenByTemplate.OrderBy);
-                
-                if (thenByFields.Any())
+                AddOrUpdatePropertyConstraint(meta, nameof(sortTemplate.Sort), new Constraint
                 {
-                    AddOrUpdatePropertyConstraint(meta, nameof(thenByTemplate.ThenBy), new Constraint
-                    {
-                        Name = FieldMeta.Values,
-                        Value = thenByFields
-                    });
-                }
-            }
-
-            if (data is IOrderByTemplate orderByTemplate)
-            {
-                if (sortableFields.Any())
-                {
-                    AddOrUpdatePropertyConstraint(meta, nameof(orderByTemplate.OrderBy), new Constraint
-                    {
-                        Name = FieldMeta.Values,
-                        Value = sortableFields
-                    });
-                }
+                    Name = FieldMeta.Values,
+                    Value = sortableFields
+                });
             }
         }
 

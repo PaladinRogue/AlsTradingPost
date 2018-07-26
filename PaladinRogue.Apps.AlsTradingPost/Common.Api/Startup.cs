@@ -1,5 +1,8 @@
-﻿using Common.Api.Routing;
+﻿using Common.Api.Pagination;
+using Common.Api.QueryString;
+using Common.Api.Routing;
 using Common.Api.Settings;
+using Common.Api.Sorting;
 using Common.Setup;
 using Common.Setup.Settings;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +34,10 @@ namespace Common.Api
             services.AddMvc(options =>
             {
                 options.Conventions.Add(new ApiExplorerVisibilityEnabledConvention());
+                options.Conventions.Add(new QueryStringSortConvention());
+                options.ModelBinderProviders.Insert(0, new QueryStringSortModelBinderProvider());
+                options.ModelBinderProviders.Insert(0, new QueryStringPageSizeModelBinderProvider());
+                options.ModelBinderProviders.Insert(0, new QueryStringPageOffsetModelBinderProvider());
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.Configure<ProxySettings>(Configuration.GetSection(nameof(ProxySettings)));

@@ -9,6 +9,7 @@ using AutoMapper;
 using Common.Api.Authentication.FacebookModels;
 using Common.Api.Builders.Resource;
 using Common.Api.Builders.Template;
+using Common.Api.Exceptions;
 using Common.Api.HttpClient.Interfaces;
 using Common.Application.Authentication;
 using Common.Application.Authorisation;

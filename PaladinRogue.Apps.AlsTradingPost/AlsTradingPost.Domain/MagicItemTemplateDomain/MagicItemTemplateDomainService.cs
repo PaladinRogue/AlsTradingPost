@@ -7,6 +7,7 @@ using AlsTradingPost.Domain.Models;
 using AutoMapper;
 using Common.Domain.Pagination.Interfaces;
 using Common.Domain.Services.Query;
+using Common.Resources.Sorting;
 
 namespace AlsTradingPost.Domain.MagicItemTemplateDomain
 {
@@ -24,20 +25,14 @@ namespace AlsTradingPost.Domain.MagicItemTemplateDomain
 
         public MagicItemTemplatePagedCollectionDdto GetPage(
             IPaginationDdto paginationDdto,
-            Expression<Func<MagicItemTemplate, bool>> predicate = null,
-            string orderBy = null,
-            bool orderByAscending = true,
-            string thenBy = null,
-            bool? thenByAscending = null)
+            IList<SortBy> sort,
+            Expression<Func<MagicItemTemplate, bool>> predicate = null)
         {
             IEnumerable<MagicItemTemplate> results = _magicItemTemplateQueryService.GetPage(
                 paginationDdto,
                 out int totalResults,
-                predicate,
-                orderBy,
-                orderByAscending,
-                thenBy,
-                thenByAscending
+                sort,
+                predicate
             );
 
             return MagicItemTemplatePagedCollectionDdto.Create(

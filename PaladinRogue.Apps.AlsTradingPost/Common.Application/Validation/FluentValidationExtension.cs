@@ -20,16 +20,15 @@ namespace Common.Application.Validation
         {
             return new ValidationResult
             {
-                ValidationErrors = fluentValidationResult.Errors.GroupBy(e => e.PropertyName).ToDictionary(
-                    gk => gk.Key,
-                    gv => gv.ToDictionary(
-                            k => FormatFluentValidationErrorCode(k.ErrorCode),
-                            v => v.FormattedMessagePlaceholderValues.ToDictionary(
-                                mk => mk.Key,
-                                mv => mv.Value
-                            )
-                        )
-                    )
+                PropertyValidationErrors = fluentValidationResult.Errors.GroupBy(e => e.PropertyName).Select(g => new PropertyValidationError
+                {
+                    PropertyName = g.Key,
+                    ValidationErrors = g.Select(e => new ValidationError
+                    {
+                        ValidationErrorCode = FormatFluentValidationErrorCode(e.ErrorCode),
+                        ValidationMeta = e.FormattedMessagePlaceholderValues.ToDictionary(mk => mk.Key, mv => mv.Value)
+                    })
+                })
             };
         }
 

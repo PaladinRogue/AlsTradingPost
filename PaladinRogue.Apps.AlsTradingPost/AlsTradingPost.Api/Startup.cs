@@ -30,6 +30,7 @@ namespace AlsTradingPost.Api
             {
                 options.UseCamelCaseJsonOutputFormatter<JsonOutputFormatter>()
                     .UseConcurrencyFilter()
+                    .UseBusinessExceptionFilter()
                     .UseValidationExceptionFilter()
                     .UseAppAccessAuthorizeFilter()
                     .RequireHttps();

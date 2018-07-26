@@ -2,6 +2,7 @@
 using System.Buffers;
 using Common.Api.Authentication;
 using Common.Api.Concurrency;
+using Common.Api.Exceptions;
 using Common.Api.Validation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -35,6 +36,13 @@ namespace Common.Api.Extensions
         public static MvcOptions UseConcurrencyFilter(this MvcOptions options)
         {
             options.Filters.Add(new ConcurrencyActionFilter());
+
+            return options;
+        }
+
+        public static MvcOptions UseBusinessExceptionFilter(this MvcOptions options)
+        {
+            options.Filters.Add(new BusinessApplicationExceptionFilter());
 
             return options;
         }

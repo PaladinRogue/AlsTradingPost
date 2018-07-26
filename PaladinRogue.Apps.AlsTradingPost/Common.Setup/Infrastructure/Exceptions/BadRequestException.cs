@@ -2,13 +2,14 @@
 
 namespace Common.Setup.Infrastructure.Exceptions
 {
+    [Serializable]
     public class BadRequestException : Exception
     {
-        public BadRequestException()
+        public BadRequestException() : this(string.Empty)
         {
         }
         
-        public BadRequestException(string message) : base(message)
+        public BadRequestException(string message) : this(message, null)
         {
         }
         
