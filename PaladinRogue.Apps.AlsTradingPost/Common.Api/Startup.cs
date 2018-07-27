@@ -1,8 +1,11 @@
-﻿using Common.Api.Pagination;
+﻿using Common.Api.Exceptions;
+using Common.Api.Formatters;
+using Common.Api.Pagination;
 using Common.Api.QueryString;
 using Common.Api.Routing;
 using Common.Api.Settings;
 using Common.Api.Sorting;
+using Common.Api.Validation;
 using Common.Setup;
 using Common.Setup.Settings;
 using Microsoft.AspNetCore.Hosting;
@@ -43,6 +46,9 @@ namespace Common.Api
             services.Configure<ProxySettings>(Configuration.GetSection(nameof(ProxySettings)));
             services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
             services.Configure<MessagingBusSettings>(Configuration.GetSection(nameof(MessagingBusSettings)));
+            
+            services.AddSingleton<IApplicationErrorFormatter<IFormattedError>, JsonV1ApplicationErrorFormatter>();
+            services.AddSingleton<IValidationErrorFormatter<IFormattedError>, JsonV1ValidationErrorFormatter>();
 
             EventRegistration.RegisterEventHandling(services);
             MessageRegistration.RegisterRabbitMqMessaging(services);

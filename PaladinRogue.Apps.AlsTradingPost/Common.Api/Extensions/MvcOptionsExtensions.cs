@@ -42,14 +42,14 @@ namespace Common.Api.Extensions
 
         public static MvcOptions UseBusinessExceptionFilter(this MvcOptions options)
         {
-            options.Filters.Add(new BusinessApplicationExceptionFilter());
+            options.Filters.Add(typeof(BusinessApplicationExceptionFilter));
 
             return options;
         }
 
         public static MvcOptions UseValidationExceptionFilter(this MvcOptions options)
         {
-            options.Filters.Add(new BusinessValidationRuleApplicationExceptionFilter());
+            options.Filters.Add(typeof(BusinessValidationRuleApplicationExceptionFilter));
 
             return options;
         }
