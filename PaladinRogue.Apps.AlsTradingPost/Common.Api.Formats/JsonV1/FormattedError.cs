@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Common.Api.Exceptions;
 
-namespace Common.Api.Formatters
+namespace Common.Api.Formats.JsonV1
 {
     public class FormattedError : IFormattedError
     {

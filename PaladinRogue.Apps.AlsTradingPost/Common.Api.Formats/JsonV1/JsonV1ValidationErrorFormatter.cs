@@ -2,7 +2,7 @@
 using Common.Api.Validation;
 using Common.Application.Validation;
 
-namespace Common.Api.Formatters
+namespace Common.Api.Formats.JsonV1
 {
     public class JsonV1ValidationErrorFormatter : IValidationErrorFormatter<FormattedError>
     {

@@ -69,6 +69,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Authentication.Setup
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Authentication.Resources", "Common.Authentication\Common.Authentication.Resources\Common.Authentication.Resources.csproj", "{B2941292-533C-4E7B-951A-60F02E3989BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Api.Formats", "Common.Api.Formats\Common.Api.Formats.csproj", "{10B6E523-4259-4679-BB8C-5953D71F2352}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -183,6 +185,10 @@ Global
 		{B2941292-533C-4E7B-951A-60F02E3989BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2941292-533C-4E7B-951A-60F02E3989BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2941292-533C-4E7B-951A-60F02E3989BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10B6E523-4259-4679-BB8C-5953D71F2352}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10B6E523-4259-4679-BB8C-5953D71F2352}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10B6E523-4259-4679-BB8C-5953D71F2352}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10B6E523-4259-4679-BB8C-5953D71F2352}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -208,6 +214,7 @@ Global
 		{89B744E4-6DD1-4813-AA88-DD9DE98496FC} = {914E0E82-9C49-466F-8E53-4EFA6051A56F}
 		{E8FF058A-3546-43D1-A76B-09B3D5626D3E} = {914E0E82-9C49-466F-8E53-4EFA6051A56F}
 		{B2941292-533C-4E7B-951A-60F02E3989BD} = {914E0E82-9C49-466F-8E53-4EFA6051A56F}
+		{10B6E523-4259-4679-BB8C-5953D71F2352} = {6483DDD2-ED71-4A70-ADAE-708284195A4D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6911EF25-A28A-4840-BCB8-4FD4542BCC91}

@@ -1,5 +1,4 @@
 ﻿using Common.Api.Exceptions;
-using Common.Api.Formatters;
 using Common.Api.Pagination;
 using Common.Api.QueryString;
 using Common.Api.Routing;
@@ -12,6 +11,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Common.Api
 {
@@ -41,14 +42,17 @@ namespace Common.Api
                 options.ModelBinderProviders.Insert(0, new QueryStringSortModelBinderProvider());
                 options.ModelBinderProviders.Insert(0, new QueryStringPageSizeModelBinderProvider());
                 options.ModelBinderProviders.Insert(0, new QueryStringPageOffsetModelBinderProvider());
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            })
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.Configure<ProxySettings>(Configuration.GetSection(nameof(ProxySettings)));
             services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
             services.Configure<MessagingBusSettings>(Configuration.GetSection(nameof(MessagingBusSettings)));
-            
-            services.AddSingleton<IApplicationErrorFormatter<IFormattedError>, JsonV1ApplicationErrorFormatter>();
-            services.AddSingleton<IValidationErrorFormatter<IFormattedError>, JsonV1ValidationErrorFormatter>();
 
             EventRegistration.RegisterEventHandling(services);
             MessageRegistration.RegisterRabbitMqMessaging(services);

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using Common.Api.Exceptions;
 
-namespace Common.Api.Formatters
+namespace Common.Api.Formats.JsonV1
 {
     public class JsonV1ApplicationErrorFormatter : IApplicationErrorFormatter<FormattedError>
     {

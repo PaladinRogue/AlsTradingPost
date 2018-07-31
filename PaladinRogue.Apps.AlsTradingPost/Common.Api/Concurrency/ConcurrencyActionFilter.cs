@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Common.Api.Builders;
 using Common.Api.Concurrency.Interfaces;
-using Common.Api.Exceptions;
 using Common.Resources.Concurrency;
 using Common.Setup.Infrastructure.Constants;
 using Common.Setup.Infrastructure.Exceptions;

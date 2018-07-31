@@ -6,7 +6,7 @@ namespace Common.Api.Builders
     public class BuiltCollectionResource : IBuiltResource
     {
         [JsonProperty(ResourceType.Data)]
-        public object Data { get; set; }
+        public BuiltResourceData Data { get; set; }
         
         [JsonProperty(ResourceType.Meta)]
         public IDictionary<string, Dictionary<string, object>> Meta { get; set; }

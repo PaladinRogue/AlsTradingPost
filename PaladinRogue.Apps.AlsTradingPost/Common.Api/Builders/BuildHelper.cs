@@ -9,6 +9,7 @@ using Common.Api.Meta;
 using Common.Api.Pagination.Interfaces;
 using Common.Api.Resources;
 using Common.Resources.Extensions;
+using Microsoft.CodeAnalysis.Operations;
 using Newtonsoft.Json;
 
 namespace Common.Api.Builders
@@ -85,11 +86,12 @@ namespace Common.Api.Builders
             return builtResource;
         }
 
-        private static object BuildResourceData<T>(Data<T> resourceData)
+        private static BuiltResourceData BuildResourceData<T>(Data<T> resourceData)
         {
+
             DictionaryBuilder<string, object> resourceBuilder = DictionaryBuilder<string, object>.Create();
 
-            foreach (PropertyInfo propertyInfo in resourceData.Resource.GetType().GetProperties())
+            foreach (PropertyInfo propertyInfo in resourceData.Resource.GetType().GetProperties().Where(p => p.Name != "Id"))
             {
                 if (!propertyInfo.GetCustomAttributes<JsonIgnoreAttribute>().Any())
                 {
@@ -97,9 +99,12 @@ namespace Common.Api.Builders
                 }
             }
 
-            resourceBuilder.Add(ResourceType.Type, resourceData.TypeName.ToCamelCase());
-
-            return resourceBuilder.Build();
+            return new BuiltResourceData
+            {
+                Type = resourceData.TypeName.ToCamelCase(),
+               // Id = resourceData.Resource.GetType().GetProperty("Id").GetValue(resourceData),
+                Attributes = resourceBuilder.Build()
+            };
         }
 
         private static Data<T> BuildData<T>(T resourceData)

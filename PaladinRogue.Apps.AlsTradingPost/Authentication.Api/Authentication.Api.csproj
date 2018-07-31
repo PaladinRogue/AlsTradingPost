@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Authentication.Application\Authentication.Application.csproj" />
     <ProjectReference Include="..\Authentication.Setup\Authentication.Setup.csproj" />
+    <ProjectReference Include="..\Common.Api.Formats\Common.Api.Formats.csproj" />
     <ProjectReference Include="..\Common.Api\Common.Api.csproj" />
     <ProjectReference Include="..\Common.Authentication\Common.Authentication.Setup\Common.Authentication.Setup.csproj" />
     <ProjectReference Include="..\Common.Resources\Common.Resources.csproj" />

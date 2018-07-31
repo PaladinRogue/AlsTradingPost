@@ -1,7 +1,10 @@
 ﻿using System;
 using AlsTradingPost.Setup;
 using AutoMapper;
+using Common.Api.Exceptions;
 using Common.Api.Extensions;
+using Common.Api.Formats.JsonV1;
+using Common.Api.Validation;
 using Common.Domain.DomainEvents;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Domain.Models.DataProtection;
@@ -10,7 +13,6 @@ using Common.Setup.Infrastructure.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -28,14 +30,17 @@ namespace AlsTradingPost.Api
             
             services.Configure<MvcOptions>(options =>
             {
-                options.UseCamelCaseJsonOutputFormatter<JsonOutputFormatter>()
+                options
                     .UseConcurrencyFilter()
                     .UseBusinessExceptionFilter()
+                    .UseContentTypeFilter()
                     .UseValidationExceptionFilter()
                     .UseAppAccessAuthorizeFilter()
                     .RequireHttps();
             });
             
+            FormatRegistration.ConfigureJsonV1Format(services);
+
             JwtRegistration.RegisterOptions(Configuration, services);
             
             EventRegistration.RegisterHandlers(services);
