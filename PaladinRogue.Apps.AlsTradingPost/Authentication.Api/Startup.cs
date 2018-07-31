@@ -36,7 +36,6 @@ namespace Authentication.Api
                 options
                     .UseConcurrencyFilter()
                     .UseBusinessExceptionFilter()
-                    .UseContentTypeFilter()
                     .UseValidationExceptionFilter()
                     .RequireHttps();
             });

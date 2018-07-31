@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Common.Api.Pagination
+﻿namespace Common.Api.Formats.JsonV1.Paging
 {
     public class PaginationQueryParams
     {

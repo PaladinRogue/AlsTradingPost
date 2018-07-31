@@ -1,4 +1,4 @@
-﻿namespace Common.Api.Formats.JsonV1
+﻿namespace Common.Api.Formats.JsonV1.Formatters
 {
     public class Links
     {

@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Common.Api.Pagination.Interfaces;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace Common.Api.Pagination
+namespace Common.Api.Formats.JsonV1.Paging
 {
-    public class QueryStringPageSizeModelBinder : IModelBinder
+    public class QueryStringPageOffsetModelBinder : IModelBinder
     {
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
@@ -14,12 +14,12 @@ namespace Common.Api.Pagination
                 throw new ArgumentNullException(nameof(bindingContext));
             }
 
-            if (bindingContext.ModelType != typeof(IPaginationTemplate).GetProperty(nameof(IPaginationTemplate.PageSize)).PropertyType)
+            if (bindingContext.ModelType != typeof(IPaginationTemplate).GetProperty(nameof(IPaginationTemplate.PageOffset)).PropertyType)
             {
                 return Task.CompletedTask;
             }
 
-            ValueProviderResult value = bindingContext.ValueProvider.GetValue(PaginationQueryParams.PageSize);
+            ValueProviderResult value = bindingContext.ValueProvider.GetValue(PaginationQueryParams.PageOffset);
 
             bindingContext.Result = ModelBindingResult.Success(int.Parse(value.FirstValue));
 

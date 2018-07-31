@@ -33,7 +33,6 @@ namespace AlsTradingPost.Api
                 options
                     .UseConcurrencyFilter()
                     .UseBusinessExceptionFilter()
-                    .UseContentTypeFilter()
                     .UseValidationExceptionFilter()
                     .UseAppAccessAuthorizeFilter()
                     .RequireHttps();

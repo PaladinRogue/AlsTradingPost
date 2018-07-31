@@ -1,5 +1,9 @@
 ﻿using System.Linq;
 using Common.Api.Exceptions;
+using Common.Api.Formats.JsonV1.Formatters;
+using Common.Api.Formats.JsonV1.Paging;
+using Common.Api.Formats.JsonV1.Sorting;
+using Common.Api.Formats.JsonV1.Filtering;
 using Common.Api.Validation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -27,6 +31,13 @@ namespace Common.Api.Formats.JsonV1
                     options.OutputFormatters.OfType<JsonOutputFormatter>().First();
                 jsonOutputFormatter.SupportedMediaTypes.Clear();
                 jsonOutputFormatter.SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse(JsonV1MediaType));
+
+
+                options.Conventions.Add(new QueryStringSortConvention());
+                options.ModelBinderProviders.Insert(0, new QueryStringFilterModelBinderProvider());
+                options.ModelBinderProviders.Insert(0, new QueryStringSortModelBinderProvider());
+                options.ModelBinderProviders.Insert(0, new QueryStringPageSizeModelBinderProvider());
+                options.ModelBinderProviders.Insert(0, new QueryStringPageOffsetModelBinderProvider());
             });
 
             services.AddSingleton<IApplicationErrorFormatter<IFormattedError>, JsonV1ApplicationErrorFormatter>();

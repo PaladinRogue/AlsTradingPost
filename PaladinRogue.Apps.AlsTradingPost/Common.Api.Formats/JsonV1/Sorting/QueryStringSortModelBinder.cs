@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Common.Api.Sorting;
 using Common.Resources.Sorting;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace Common.Api.Sorting
+namespace Common.Api.Formats.JsonV1.Sorting
 {
     public class QueryStringSortModelBinder : IModelBinder
     {

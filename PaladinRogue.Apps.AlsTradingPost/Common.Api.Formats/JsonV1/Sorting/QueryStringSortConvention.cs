@@ -1,8 +1,9 @@
 ﻿using System.Linq;
+using Common.Api.QueryString;
 using Common.Api.Sorting;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
-namespace Common.Api.QueryString
+namespace Common.Api.Formats.JsonV1.Sorting
 {
     public class QueryStringSortConvention : IActionModelConvention
     {

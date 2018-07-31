@@ -1,8 +1,9 @@
 ﻿using System;
+using Common.Api.Sorting;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 
-namespace Common.Api.Sorting
+namespace Common.Api.Formats.JsonV1.Sorting
 {
     public class QueryStringSortModelBinderProvider : IModelBinderProvider
     {

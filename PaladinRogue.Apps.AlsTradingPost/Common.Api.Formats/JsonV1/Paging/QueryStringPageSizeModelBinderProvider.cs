@@ -3,7 +3,7 @@ using Common.Api.Pagination.Interfaces;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 
-namespace Common.Api.Pagination
+namespace Common.Api.Formats.JsonV1.Paging
 {
     public class QueryStringPageSizeModelBinderProvider : IModelBinderProvider
     {

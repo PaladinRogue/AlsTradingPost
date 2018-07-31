@@ -1,7 +1,6 @@
 ﻿using Common.Api.Authentication;
 using Common.Api.Concurrency;
 using Common.Api.Exceptions;
-using Common.Api.Filters;
 using Common.Api.Validation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,14 +15,7 @@ namespace Common.Api.Extensions
 
             return options;
         }
-
-        public static MvcOptions UseContentTypeFilter(this MvcOptions options)
-        {
-            options.Filters.Add<ContentTypeResourceFilter>();
-
-            return options;
-        }
-
+        
         public static MvcOptions UseBusinessExceptionFilter(this MvcOptions options)
         {
             options.Filters.Add<BusinessApplicationExceptionFilter>();

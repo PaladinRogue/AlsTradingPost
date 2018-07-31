@@ -7,7 +7,7 @@ namespace Common.Api.Formats.JsonV1
     {
         public Guid? Id { get; set; }
 
-        public Links Links { get; set; }
+        public Formatters.Links Links { get; set; }
 
         public int? Status { get; set; }
 

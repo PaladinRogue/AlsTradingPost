@@ -38,10 +38,6 @@ namespace Common.Api
             services.AddMvc(options =>
             {
                 options.Conventions.Add(new ApiExplorerVisibilityEnabledConvention());
-                options.Conventions.Add(new QueryStringSortConvention());
-                options.ModelBinderProviders.Insert(0, new QueryStringSortModelBinderProvider());
-                options.ModelBinderProviders.Insert(0, new QueryStringPageSizeModelBinderProvider());
-                options.ModelBinderProviders.Insert(0, new QueryStringPageOffsetModelBinderProvider());
             })
                 .AddJsonOptions(options =>
                 {
