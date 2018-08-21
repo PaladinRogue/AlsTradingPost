@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Common.Api.Builders;
+using Common.Api.Builders.Resource;
 using Common.Api.Concurrency.Interfaces;
 using Common.Resources.Concurrency;
 using Common.Setup.Infrastructure.Constants;
@@ -14,19 +15,13 @@ namespace Common.Api.Concurrency
 {
     public class ConcurrencyActionFilter : IActionFilter
     {
-        private readonly string[] _onActionExecutingVerbs =
-        {
-            HttpVerbs.Put, HttpVerbs.Delete
-        };
+        private const HttpVerb OnActionExecutingVerbs = HttpVerb.Put | HttpVerb.Delete;
 
-        private readonly string[] _onActionExecutedVerbs =
-        {
-            HttpVerbs.Get, HttpVerbs.Put, HttpVerbs.Post
-        };
+        private const HttpVerb OnActionExecutedVerbs = HttpVerb.Get | HttpVerb.Put | HttpVerb.Post;
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            if (_onActionExecutingVerbs.Contains(context.HttpContext.Request.Method))
+            if (OnActionExecutingVerbs.HasFlag(HttpVerbMapper.GetVerb(context.HttpContext.Request.Method)))
             {
                 string concurrencyValue = context.HttpContext.Request.Headers[ConcurrencyHeaders.IfMatch];
 
@@ -43,21 +38,17 @@ namespace Common.Api.Concurrency
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            if (_onActionExecutedVerbs.Contains(context.HttpContext.Request.Method))
+            if (OnActionExecutedVerbs.HasFlag(HttpVerbMapper.GetVerb(context.HttpContext.Request.Method)))
             {
                 if (context.Result is ObjectResult result)
                 {
-                    if (result.Value is IDictionary<string, IBuiltResource> dictionary)
+                    if (result.Value is BuiltResource builtResource)
                     {
-                        IBuiltResource builtResource = dictionary.Values.FirstOrDefault();
-                        if (builtResource != null)
+                        if (builtResource.Version != null)
                         {
-                            if (builtResource.Data is IVersionedResource versionedResource)
-                            {
-                                string jsonVersion = JsonConvert.SerializeObject(versionedResource.Version);
-                                byte[] plainTextBytes = System.Text.Encoding.UTF8.GetBytes(jsonVersion);
-                                context.HttpContext.Response.Headers[ConcurrencyHeaders.ETag] = Convert.ToBase64String(plainTextBytes);
-                            }
+                            string jsonVersion = JsonConvert.SerializeObject(builtResource.Version);
+                            byte[] plainTextBytes = System.Text.Encoding.UTF8.GetBytes(jsonVersion);
+                            context.HttpContext.Response.Headers[ConcurrencyHeaders.ETag] = Convert.ToBase64String(plainTextBytes);
                         }
                     }
                 }

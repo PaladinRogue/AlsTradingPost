@@ -5,8 +5,8 @@ using Common.Setup.Infrastructure.Constants;
 
 namespace Authentication.Api.Authentication
 {
-    [SelfLink(RouteDictionary.AuthenticationFacebookTemplate, HttpVerbs.Get)]
-    [Link(LinkDictionary.AuthenticationFacebook, RouteDictionary.AuthenticationFacebook, HttpVerbs.Post)]
+    [SelfLink(RouteDictionary.AuthenticationFacebookTemplate, HttpVerb.Get)]
+    [Link(LinkDictionary.AuthenticationFacebook, RouteDictionary.AuthenticationFacebook, HttpVerb.Post)]
     public class AuthenticationTemplate : ITemplate
     {
         [Required]

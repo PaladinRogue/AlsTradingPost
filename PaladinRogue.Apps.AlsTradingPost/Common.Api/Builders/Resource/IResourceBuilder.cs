@@ -1,10 +1,14 @@
-﻿using Common.Api.Resources;
+﻿using Common.Api.Pagination.Interfaces;
+using Common.Api.Resources;
 
 namespace Common.Api.Builders.Resource
 {
-    public interface IResourceBuilder : IBuilder<string, IBuiltResource>
+    public interface IResourceBuilder
     {
-        IResourceBuilder Create(IResource resource);
-        IResourceBuilder WithResourceMeta();
+        BuiltResource Build(IResource resource);
+
+        BuiltCollectionResource Build<T>(ICollectionResource<T> collectionResource, ITemplate template) where T : IResource;
+
+        BuiltCollectionResource Build<T>(IPagedCollectionResource<T> collectionResource, IPaginationTemplate paginationTemplate) where T : IResource;
     }
 }

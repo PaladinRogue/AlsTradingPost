@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Common.Domain.Models.Interfaces;
 using Common.Domain.Persistence;
 using Common.Resources.Concurrency.Interfaces;
+using Common.Resources.Sorting;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.EntityFramework.Repositories
@@ -22,18 +24,9 @@ namespace Persistence.EntityFramework.Repositories
             return RepositoryHelper.GetById(_context.Set<T>(), id);
         }
 
-        public IQueryable<T> GetPage<TOrderByKey>(int pageSize, int pageOffset, out int totalResults, Expression<Func<T, TOrderByKey>> orderBy,
-            bool orderByAscending = true, Expression<Func<T, bool>> predicate = null)
+        public IQueryable<T> GetPage(int pageSize, int pageOffset, out int totalResults, IList<SortBy> sort, Expression<Func<T, bool>> predicate = null)
         {
-            return RepositoryHelper.GetPage(_context.Set<T>(), orderBy, orderByAscending, predicate, pageSize,
-                pageOffset, out totalResults);
-        }
-
-        public IQueryable<T> GetPage<TOrderByKey, TThenByKey>(int pageSize, int pageOffset, out int totalResults, Expression<Func<T, TOrderByKey>> orderBy,
-            bool orderByAscending = true, Expression<Func<T, bool>> predicate = null, Expression<Func<T, TThenByKey>> thenBy = null, bool? thenByAscending = null)
-        {
-            return RepositoryHelper.GetPage(_context.Set<T>(), orderBy, orderByAscending, predicate, thenBy, thenByAscending, pageSize,
-                pageOffset, out totalResults);
+            return RepositoryHelper.GetPage(_context.Set<T>(), pageSize, pageOffset, out totalResults, sort, predicate);
         }
 
         public T GetSingle(Expression<Func<T, bool>> predicate)

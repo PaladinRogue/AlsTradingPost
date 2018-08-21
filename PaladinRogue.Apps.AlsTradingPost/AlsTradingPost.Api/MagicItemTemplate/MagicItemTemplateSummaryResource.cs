@@ -7,8 +7,8 @@ using Common.Setup.Infrastructure.Constants;
 
 namespace AlsTradingPost.Api.MagicItemTemplate
 {
-    [SelfLink(RouteDictionary.MagicItemTemplateGetById, HttpVerbs.Get)]
-    public class MagicItemTemplateSummaryResource : ISummaryResource
+    [SelfLink(RouteDictionary.MagicItemTemplateGetById, HttpVerb.Get)]
+    public class MagicItemTemplateSummaryResource : IEntityResource, ISummaryResource
     {
         [Hidden]
         [ReadOnly]

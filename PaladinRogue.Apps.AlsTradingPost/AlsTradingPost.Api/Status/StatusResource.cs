@@ -5,7 +5,7 @@ using Common.Setup.Infrastructure.Constants;
 
 namespace AlsTradingPost.Api.Status
 {
-    [SelfLink(RouteDictionary.Status, HttpVerbs.Get)]
+    [SelfLink(RouteDictionary.Status, HttpVerb.Get)]
     public class StatusResource : IResource
     {
     }

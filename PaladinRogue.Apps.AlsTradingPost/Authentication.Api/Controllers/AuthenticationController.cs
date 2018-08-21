@@ -8,7 +8,6 @@ using Authentication.Setup.Settings;
 using AutoMapper;
 using Common.Api.Authentication.FacebookModels;
 using Common.Api.Builders.Resource;
-using Common.Api.Builders.Template;
 using Common.Api.HttpClient.Interfaces;
 using Common.Application.Authentication;
 using Common.Application.Authorisation;
@@ -25,7 +24,6 @@ namespace Authentication.Api.Controllers
         private readonly FacebookAuthSettings _fbAuthSettings;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ISecure<IAuthenticationApplicationService> _secureAuthenticationApplicationService;
-        private readonly ITemplateBuilder _templateBuilder;
         private readonly IResourceBuilder _resourceBuilder;
         private readonly IMapper _mapper;
 
@@ -33,14 +31,12 @@ namespace Authentication.Api.Controllers
             IJwtFactory jwtFactory,
             IHttpClientFactory httpClientFactory,
             IAuthenticationApplicationService authenticationApplicationService,
-            ITemplateBuilder templateBuilder,
             IResourceBuilder resourceBuilder,
             IMapper mapper,
             ISecure<IAuthenticationApplicationService> secureAuthenticationApplicationService)
         {
             _fbAuthSettings = fbAuthSettingsAccessor.Value;
             _httpClientFactory = httpClientFactory;
-            _templateBuilder = templateBuilder;
             _resourceBuilder = resourceBuilder;
             _mapper = mapper;
             _secureAuthenticationApplicationService = secureAuthenticationApplicationService;
@@ -50,8 +46,7 @@ namespace Authentication.Api.Controllers
         public IActionResult GetAuthenticationServices()
         {
             return new ObjectResult(
-                _resourceBuilder.Create(new AuthenticationServicesResource())
-                    .Build()
+                _resourceBuilder.Build(new AuthenticationServicesResource())
             );
         }
 
@@ -59,9 +54,7 @@ namespace Authentication.Api.Controllers
         public IActionResult GetAuthenticationTemplate()
         {
             return new ObjectResult(
-                _templateBuilder.Create<AuthenticationTemplate>()
-                    .WithTemplateMeta()
-                    .Build()
+                _resourceBuilder.Build(new AuthenticationTemplate())
             );
         }
 
@@ -101,9 +94,7 @@ namespace Authentication.Api.Controllers
                 });
 
             return new ObjectResult(
-                _resourceBuilder.Create(_mapper.Map<ExtendedJwtAdto, FacebookJwtResource>(extendedJwt))
-                    .WithResourceMeta()
-                    .Build()
+                _resourceBuilder.Build(_mapper.Map<ExtendedJwtAdto, FacebookJwtResource>(extendedJwt))
             );
         }
 
@@ -111,9 +102,7 @@ namespace Authentication.Api.Controllers
         public IActionResult GetRefreshTokenTemplate()
         {
             return new ObjectResult(
-                _templateBuilder.Create<RefreshTokenTemplate>()
-                    .WithTemplateMeta()
-                    .Build()
+                _resourceBuilder.Build(new RefreshTokenTemplate())
             );
         }
 
@@ -128,9 +117,7 @@ namespace Authentication.Api.Controllers
                 });
 
             return new ObjectResult(
-                _resourceBuilder.Create(_mapper.Map<JwtAdto, JwtResource>(jwt))
-                    .WithResourceMeta()
-                    .Build()
+                _resourceBuilder.Build(_mapper.Map<JwtAdto, JwtResource>(jwt))
             );
         }
     }

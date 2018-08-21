@@ -1,4 +1,6 @@
-﻿using Common.Api.Routing;
+﻿using Common.Api.Builders.Resource;
+using Common.Api.Links;
+using Common.Api.Routing;
 using Common.Api.Settings;
 using Common.Setup;
 using Common.Setup.Settings;
@@ -6,6 +8,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Common.Api
 {
@@ -31,11 +35,22 @@ namespace Common.Api
             services.AddMvc(options =>
             {
                 options.Conventions.Add(new ApiExplorerVisibilityEnabledConvention());
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            })
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.Configure<ProxySettings>(Configuration.GetSection(nameof(ProxySettings)));
             services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
             services.Configure<MessagingBusSettings>(Configuration.GetSection(nameof(MessagingBusSettings)));
+
+            services.AddSingleton<ILinkBuilder, LinkBuilder>();
+            services.AddSingleton<IResourceBuilder, DefaultResourceBuilder>();
+            services.AddSingleton<IPagingLinkBuilder, DefaultPagingLinkBuilder>();
+            services.AddSingleton<ISortingLinkBuilder, DefaultSortingLinkBuilder>();
 
             EventRegistration.RegisterEventHandling(services);
             MessageRegistration.RegisterRabbitMqMessaging(services);

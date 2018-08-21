@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Common.Application.Exceptions;
@@ -10,14 +9,6 @@ namespace Common.Setup.Infrastructure.Exceptions
 {
     public class ExceptionMiddleware
     {
-        private static readonly Dictionary<ExceptionType, HttpStatusCode> ExceptionTypeDictionary = new Dictionary<ExceptionType, HttpStatusCode>
-        {
-            { ExceptionType.None, HttpStatusCode.OK },
-            { ExceptionType.Concurrency, HttpStatusCode.PreconditionFailed },
-            { ExceptionType.BadRequest, HttpStatusCode.BadRequest },
-            { ExceptionType.Unauthorized, HttpStatusCode.Unauthorized }
-        };
-
         private readonly RequestDelegate _next;
         private readonly ILogger<ExceptionMiddleware> _logger;
 
@@ -45,7 +36,7 @@ namespace Common.Setup.Infrastructure.Exceptions
                 context.Response.Clear();
 
                 _logger.LogInformation(ex, "Re-written app exception");
-                context.Response.StatusCode = (int) ExceptionTypeDictionary[ex.Type];
+                context.Response.StatusCode = (int)ApplicationExceptionStatusCodeMap.FromApplicationExceptionType(ex.Type);
 
                 await context.Response.WriteAsync(ex.Message);
             }
@@ -54,14 +45,14 @@ namespace Common.Setup.Infrastructure.Exceptions
                 context.Response.Clear();
 
                 _logger.LogInformation(ex, "Re-written pre condition failed exception");
-                context.Response.StatusCode = (int) ExceptionTypeDictionary[ExceptionType.Concurrency];
+                context.Response.StatusCode = (int)ApplicationExceptionStatusCodeMap.FromApplicationExceptionType(ExceptionType.Concurrency);
             }
             catch (BadRequestException ex)
             {
                 context.Response.Clear();
 
                 _logger.LogInformation(ex, "Re-written bad request exception");
-                context.Response.StatusCode = (int) ExceptionTypeDictionary[ExceptionType.BadRequest];
+                context.Response.StatusCode = (int)ApplicationExceptionStatusCodeMap.FromApplicationExceptionType(ExceptionType.BadRequest);
             }
             //at this point we want to catch all uncaught exceptions and return a generic response.
             // ReSharper disable once EmptyGeneralCatchClause

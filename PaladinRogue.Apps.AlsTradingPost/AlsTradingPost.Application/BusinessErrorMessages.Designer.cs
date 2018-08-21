@@ -61,6 +61,15 @@ namespace AlsTradingPost.Application {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You cannot sort by property: {0}.
+        /// </summary>
+        internal static string CannotSortByRequestedProperty {
+            get {
+                return ResourceManager.GetString("CannotSortByRequestedProperty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An invalid E-Tag has been provided.
         /// </summary>
         internal static string InvalidConcurrencyToken {

@@ -1,6 +1,6 @@
 ﻿namespace Common.Api.Resources
 {
-    public interface ITemplate
+    public interface ITemplate : IResource
     {
     }
 }

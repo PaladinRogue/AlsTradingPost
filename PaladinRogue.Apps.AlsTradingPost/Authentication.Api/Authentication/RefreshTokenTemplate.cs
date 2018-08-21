@@ -6,8 +6,8 @@ using Common.Setup.Infrastructure.Constants;
 
 namespace Authentication.Api.Authentication
 {
-    [SelfLink(RouteDictionary.AuthenticationRefreshTokenTemplate, HttpVerbs.Get)]
-    [Link(LinkDictionary.AuthenticationRefreshToken, RouteDictionary.AuthenticationRefreshToken, HttpVerbs.Post)]
+    [SelfLink(RouteDictionary.AuthenticationRefreshTokenTemplate, HttpVerb.Get)]
+    [Link(LinkDictionary.AuthenticationRefreshToken, RouteDictionary.AuthenticationRefreshToken, HttpVerb.Post)]
     public class RefreshTokenTemplate : ITemplate
     {
         [Required]

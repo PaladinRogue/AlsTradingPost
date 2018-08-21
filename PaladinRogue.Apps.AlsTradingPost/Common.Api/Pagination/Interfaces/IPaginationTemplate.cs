@@ -1,8 +1,8 @@
-﻿using Common.Api.Resources;
+﻿using Common.Api.Sorting;
 
 namespace Common.Api.Pagination.Interfaces
 {
-    public interface IPaginationTemplate : ITemplate
+    public interface IPaginationTemplate : ISortTemplate
     {
         int PageOffset { get; set; }
         int PageSize { get; set; }

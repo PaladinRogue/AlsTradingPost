@@ -5,9 +5,9 @@
         public const string Self = "self";
         public const string Create = "create";
         public const string Search = "search";
-        public const string FirstPage = "firstPage";
-        public const string PreviousPage = "previousPage";
-        public const string NextPage = "nextPage";
-        public const string LastPage = "lastPage";
+        public const string FirstPage = "first";
+        public const string PreviousPage = "prev";
+        public const string NextPage = "next";
+        public const string LastPage = "last";
     }
 }

@@ -1,60 +1,45 @@
-﻿using System;
-using System.Buffers;
-using Common.Api.Authentication;
+﻿using Common.Api.Authentication;
 using Common.Api.Concurrency;
+using Common.Api.Exceptions;
 using Common.Api.Validation;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace Common.Api.Extensions
 {
     public static class MvcOptionsExtensions
     {
-        public static MvcOptions UseCamelCaseJsonOutputFormatter<T>(this MvcOptions options) where T : JsonOutputFormatter, IOutputFormatter
+        public static MvcOptions UseConcurrencyFilter(this MvcOptions options)
         {
-            // Remove any json output formatter 
-            options.OutputFormatters.RemoveType<JsonOutputFormatter>();
-
-            // Add custom json output formatter 
-            JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
-
-            T customJsonOutputFormatter = (T)Activator.CreateInstance(typeof(T), jsonSerializerSettings, ArrayPool<char>.Shared);
-
-            options.OutputFormatters.Add(customJsonOutputFormatter);
+            options.Filters.Add<ConcurrencyActionFilter>();
 
             return options;
         }
-
-        public static MvcOptions UseConcurrencyFilter(this MvcOptions options)
+        
+        public static MvcOptions UseBusinessExceptionFilter(this MvcOptions options)
         {
-            options.Filters.Add(new ConcurrencyActionFilter());
+            options.Filters.Add<BusinessApplicationExceptionFilter>();
 
             return options;
         }
 
         public static MvcOptions UseValidationExceptionFilter(this MvcOptions options)
         {
-            options.Filters.Add(new BusinessValidationRuleApplicationExceptionFilter());
+            options.Filters.Add<BusinessValidationRuleApplicationExceptionFilter>();
 
             return options;
         }
 
         public static MvcOptions UseAppAccessAuthorizeFilter(this MvcOptions options)
         {
-            options.Conventions.Add(new AuthorizeAppAccessControllerFilter());
+            options.Conventions.Add(new AuthorizeAppAccessControllerModelConvention());
 
             return options;
         }
 
         public static MvcOptions RequireHttps(this MvcOptions options)
         {
-            options.Filters.Add(new RequireHttpsAttribute());
+            options.Filters.Add<RequireHttpsAttribute>();
 
             return options;
         }

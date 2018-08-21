@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Common.Api.Builders.Dictionary
 {
@@ -25,11 +26,16 @@ namespace Common.Api.Builders.Dictionary
             
         public IDictionary<TKey, TValue> Build()
         {
+            if (!_dictionary.Keys.Any())
+            {
+                return null;
+            }
+            
             return _dictionary;
         }
     }
 
-    public interface IDictionaryBuilder<TKey, TValue> : IBuilder<TKey, TValue>
+    public interface IDictionaryBuilder<TKey, TValue> : IBuilder<IDictionary<TKey, TValue>>
     {
         IDictionaryBuilder<TKey, TValue> Add(TKey key, TValue value);
     }

@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Common.Domain.Exceptions;
 using Common.Domain.Models.Interfaces;
+using Common.Resources.Extensions;
+using Common.Resources.Sorting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
@@ -11,36 +14,22 @@ namespace Persistence.EntityFramework.Repositories
 {
     public static class RepositoryHelper
     {
-        public static IQueryable<T> GetPage<T, TOrderByKey>(
-            IQueryable<T> results,
-            Expression<Func<T, TOrderByKey>> orderBy,
-            bool orderByAscending,
-            Expression<Func<T, bool>> predicate,
-            int pageSize, int pageOffset, out int totalResults) where T : class
+        public static IQueryable<T> GetPage<T>(
+            IQueryable<T> results, 
+            int pageSize, int pageOffset, out int totalResults,
+            IList<SortBy> sort,
+            Expression<Func<T, bool>> predicate = null) where T : IEntity
         {
-            
             IQueryable<T> filteredResults = Filter(results, predicate);
-            IQueryable<T> orderedResults = OrderBy(filteredResults, orderBy, orderByAscending);
+            if (!sort.Any()) return GetPage(filteredResults, pageSize, pageOffset, out totalResults);
 
-            return GetPage(orderedResults, pageSize, pageOffset, out totalResults);
+            SortBy firstSort = sort.First();
+            IOrderedQueryable<T> orderedResults = OrderBy(filteredResults, firstSort.PropertyName.CreatePropertyAccessor<T>(), firstSort.IsAscending);
+            orderedResults = sort.Skip(1).Aggregate(orderedResults, (current, sortBy) => ThenBy(current, sortBy.PropertyName.CreatePropertyAccessor<T>(), sortBy.IsAscending));
+
+            return GetPage(orderedResults ?? filteredResults, pageSize, pageOffset, out totalResults);
         }
 
-        public static IQueryable<T> GetPage<T, TOrderByKey, TThenByKey>(
-            IQueryable<T> results,
-            Expression<Func<T, TOrderByKey>> orderBy,
-            bool orderByAscending,
-            Expression<Func<T, bool>> predicate,
-            Expression<Func<T, TThenByKey>> thenBy,
-            bool? thenByAscending,
-            int pageSize, int pageOffset, out int totalResults) where T : class
-        {
-            
-            IQueryable<T> filteredResults = Filter(results, predicate);
-            IOrderedQueryable<T> orderedResults = OrderBy(filteredResults, orderBy, orderByAscending);
-            IOrderedQueryable<T> thenByOrderedResults = ThenBy(orderedResults, thenBy, thenByAscending);
-
-            return GetPage(thenByOrderedResults, pageSize, pageOffset, out totalResults);
-        }
 
         public static bool CheckExists<T>(IQueryable<T> results, Guid id) where T : IEntity
         {
@@ -175,7 +164,7 @@ namespace Persistence.EntityFramework.Repositories
             return results;
         }
         
-        private static IQueryable<T> GetPage<T>(IQueryable<T> results, int pageSize, int pageOffset, out int totalResults) where T : class
+        private static IQueryable<T> GetPage<T>(IQueryable<T> results, int pageSize, int pageOffset, out int totalResults) where T : IEntity
         {
             totalResults = results.Count();
 

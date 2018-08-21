@@ -5,7 +5,6 @@ using AlsTradingPost.Application.Authentication.Models;
 using AlsTradingPost.Setup.Infrastructure.Routing;
 using AutoMapper;
 using Common.Api.Builders.Resource;
-using Common.Api.Builders.Template;
 using Common.Application.Authentication;
 using Common.Application.Authorisation;
 using Microsoft.AspNetCore.Authorization;
@@ -17,21 +16,15 @@ namespace AlsTradingPost.Api.Controllers
     public class AuthenticationController : Controller
     {
         private readonly ISecure<IAuthenticationApplicationService> _secureAuthenticationApplicationService;
-        private readonly IResourceTemplateBuilder _resourceTemplateBuilder;
         private readonly IResourceBuilder _resourceBuilder;
-        private readonly ITemplateBuilder _templateBuilder;
         private readonly IMapper _mapper;
 
         public AuthenticationController(
             ISecure<IAuthenticationApplicationService> secureAuthenticationApplicationService,
-            IResourceTemplateBuilder resourceTemplateBuilder,
-            ITemplateBuilder templateBuilder,
             IResourceBuilder resourceBuilder,
             IMapper mapper)
         {
             _secureAuthenticationApplicationService = secureAuthenticationApplicationService;
-            _resourceTemplateBuilder = resourceTemplateBuilder;
-            _templateBuilder = templateBuilder;
             _resourceBuilder = resourceBuilder;
             _mapper = mapper;
         }
@@ -41,8 +34,7 @@ namespace AlsTradingPost.Api.Controllers
         public IActionResult GetAuthenticationServices()
         {
             return new ObjectResult(
-                _resourceBuilder.Create(new AuthenticationServicesResource())
-                    .Build()
+                _resourceBuilder.Build(new AuthenticationServicesResource())
             );
         }
 
@@ -51,9 +43,7 @@ namespace AlsTradingPost.Api.Controllers
         public IActionResult GetAuthenticationTemplate()
         {
             return new ObjectResult(
-                _templateBuilder.Create<AuthenticationTemplate>()
-                    .WithTemplateMeta()
-                    .Build()
+                _resourceBuilder.Build(new AuthenticationTemplate())
             );
         }
 
@@ -63,10 +53,7 @@ namespace AlsTradingPost.Api.Controllers
             JwtAdto jwtAdto = await _secureAuthenticationApplicationService.Service.LoginAsync(new LoginAdto());
 
             return new ObjectResult(
-                _resourceTemplateBuilder.Create(_mapper.Map<JwtAdto, JwtResource>(jwtAdto), template)
-                    .WithResourceMeta()
-                    .WithTemplateMeta()
-                    .Build()
+                _resourceBuilder.Build(_mapper.Map<JwtAdto, JwtResource>(jwtAdto))
             );
         }
 
@@ -75,9 +62,7 @@ namespace AlsTradingPost.Api.Controllers
         public IActionResult GetRefreshTokenTemplate()
         {
             return new ObjectResult(
-                _templateBuilder.Create<RefreshTokenTemplate>()
-                    .WithTemplateMeta()
-                    .Build()
+                _resourceBuilder.Build(new RefreshTokenTemplate())
             );
         }
 
@@ -93,10 +78,7 @@ namespace AlsTradingPost.Api.Controllers
                 });
 
             return new ObjectResult(
-                _resourceTemplateBuilder.Create(_mapper.Map<JwtAdto, JwtResource>(jwt), template)
-                    .WithResourceMeta()
-                    .WithTemplateMeta()
-                    .Build()
+                _resourceBuilder.Build(_mapper.Map<JwtAdto, JwtResource>(jwt))
             );
         }
     }

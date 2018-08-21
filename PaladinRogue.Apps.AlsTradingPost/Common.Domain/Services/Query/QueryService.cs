@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using Common.Domain.Models.Interfaces;
 using Common.Domain.Pagination.Interfaces;
 using Common.Domain.Persistence;
+using Common.Domain.Sorting;
 using Common.Resources.Concurrency.Interfaces;
-using Common.Resources.Extensions;
+using Common.Resources.Sorting;
 
 namespace Common.Domain.Services.Query
 {
@@ -30,21 +32,27 @@ namespace Common.Domain.Services.Query
 
         public IEnumerable<T> GetPage(IPaginationDdto paginationDdto,
             out int totalResults,
-            Expression<Func<T, bool>> predicate = null,
-            string orderBy = null,
-            bool orderByAscending = true,
-            string thenBy = null,
-            bool? thenByAscending = null)
+            IList<SortBy> sort,
+            Expression<Func<T, bool>> predicate = null)
         {
+            if (sort != null)
+            {
+                IEnumerable<string> sortableProperties = typeof(T).GetProperties().Where(p => Attribute.IsDefined(p, typeof(SortableAttribute))).Select(p => p.Name.ToLowerInvariant()).ToList();
+                foreach (SortBy sortBy in sort)
+                {
+                    if (!sortableProperties.Contains(sortBy.PropertyName.ToLowerInvariant()))
+                    {
+                        throw new PropertyNotSortableException(sortBy.PropertyName);
+                    }
+                }
+            }
+
             return _repository.GetPage(
                 paginationDdto.PageSize,
                 paginationDdto.PageOffset,
                 out totalResults,
-                orderBy.CreatePropertyAccessor<T>(),
-                orderByAscending,
-                predicate,
-                thenBy.CreatePropertyAccessor<T>(),
-                thenByAscending
+                sort,
+                predicate
             );
         }
 
