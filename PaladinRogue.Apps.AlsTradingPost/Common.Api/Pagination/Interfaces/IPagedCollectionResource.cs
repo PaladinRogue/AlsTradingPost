@@ -2,8 +2,7 @@
 
 namespace Common.Api.Pagination.Interfaces
 {
-    public interface IPagedCollectionResource<T>: ICollectionResource<T> where T : ISummaryResource
+    public interface IPagedCollectionResource<T>: ICollectionResource<T>, IPagedResource
     {
-        int TotalResults { get; set; }
     }
 }

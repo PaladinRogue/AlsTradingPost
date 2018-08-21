@@ -6,8 +6,8 @@ using Common.Setup.Infrastructure.Constants;
 
 namespace AlsTradingPost.Api.Authentication
 {
-    [SelfLink(RouteDictionary.AuthenticationLoginTemplate, HttpVerbs.Get)]
-    [Link(LinkDictionary.AuthenticationLogin, RouteDictionary.AuthenticationLogin, HttpVerbs.Post)]
+    [SelfLink(RouteDictionary.AuthenticationLoginTemplate, HttpVerb.Get)]
+    [Link(LinkDictionary.AuthenticationLogin, RouteDictionary.AuthenticationLogin, HttpVerb.Post)]
     public class AuthenticationTemplate : ITemplate
     {
     }

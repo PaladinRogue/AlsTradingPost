@@ -1,10 +1,8 @@
 ﻿using System;
 using AlsTradingPost.Setup;
 using AutoMapper;
-using Common.Api.Exceptions;
 using Common.Api.Extensions;
-using Common.Api.Formats.JsonV1;
-using Common.Api.Validation;
+using Common.Api.Formats;
 using Common.Domain.DomainEvents;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Domain.Models.DataProtection;

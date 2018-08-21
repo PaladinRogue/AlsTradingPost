@@ -5,7 +5,7 @@ using Common.Setup.Infrastructure.Constants;
 
 namespace AlsTradingPost.Api.MagicItemTemplate
 {
-    [SelfLink(RouteDictionary.MagicItemTemplateGet, HttpVerbs.Get)]
+    [SelfLink(RouteDictionary.MagicItemTemplateGet, HttpVerb.Get)]
     public class MagicItemTemplates : PagedCollectionResource<MagicItemTemplateSummaryResource>
     {
     }

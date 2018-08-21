@@ -7,7 +7,7 @@ using Common.Setup.Infrastructure.Constants;
 
 namespace Authentication.Api.Authentication
 {
-    [Link(LinkDictionary.AuthenticationRefreshToken, RouteDictionary.AuthenticationRefreshToken, HttpVerbs.Post)]
+    [Link(LinkDictionary.AuthenticationRefreshToken, RouteDictionary.AuthenticationRefreshToken, HttpVerb.Post)]
     public class JwtResource : IJwtResource
     {
 	    [ReadOnly]

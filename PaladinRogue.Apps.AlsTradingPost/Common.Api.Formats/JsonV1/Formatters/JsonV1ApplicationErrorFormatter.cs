@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Common.Api.Exceptions;
+using Common.Api.Formats.JsonV1.Formats;
 
 namespace Common.Api.Formats.JsonV1.Formatters
 {

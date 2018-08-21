@@ -6,7 +6,6 @@ using AlsTradingPost.Setup.Infrastructure.Authorisation;
 using AlsTradingPost.Setup.Infrastructure.Routing;
 using AutoMapper;
 using Common.Api.Builders.Resource;
-using Common.Api.Builders.Template;
 using Common.Application.Authorisation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,18 +17,15 @@ namespace AlsTradingPost.Api.Controllers
     public class MagicItemTemplatesController : Controller
     {
         private readonly ISecure<IMagicItemTemplateApplicationService> _secureMagicItemTemplateApplicationService;
-        private readonly ITemplateBuilder _templateBuilder;
-        private readonly ICollectionResourceBuilder<MagicItemTemplateSummaryResource> _collectionResourceBuilder;
+        private readonly IResourceBuilder _resourceBuilder;
 
         public MagicItemTemplatesController(
             ISecure<IMagicItemTemplateApplicationService> magicItemTemplateApplicationService,
-            ITemplateBuilder templateBuilder,
-            ICollectionResourceBuilder<MagicItemTemplateSummaryResource> collectionResourceBuilder,
-            ISecure<IMagicItemTemplateApplicationService> secureMagicItemTemplateApplicationService)
+            ISecure<IMagicItemTemplateApplicationService> secureMagicItemTemplateApplicationService,
+            IResourceBuilder resourceBuilder)
         {
-            _templateBuilder = templateBuilder;
-            _collectionResourceBuilder = collectionResourceBuilder;
             _secureMagicItemTemplateApplicationService = secureMagicItemTemplateApplicationService;
+            _resourceBuilder = resourceBuilder;
         }
 
         [Route("{id}", Name = RouteDictionary.MagicItemTemplateGetById)]
@@ -50,10 +46,7 @@ namespace AlsTradingPost.Api.Controllers
                 Mapper.Map<MagicItemTemplatePagedCollectionAdto, MagicItemTemplates>(result);
 
             return new ObjectResult(
-                _collectionResourceBuilder
-                    .Create(magicItemTemplates, magicItemTemplateSearchTemplate)
-                    .WithResourceMeta()
-                    .Build()
+                _resourceBuilder.Build(magicItemTemplates, magicItemTemplateSearchTemplate)
             );
         }
 
@@ -61,10 +54,7 @@ namespace AlsTradingPost.Api.Controllers
         public IActionResult GetSearchTemplate()
         {
             return new ObjectResult(
-                _templateBuilder.Create<MagicItemTemplateSearchTemplate>()
-                    .WithTemplateMeta()
-                    .WithSorting<MagicItemTemplateSummaryResource>()
-                    .Build()
+                _resourceBuilder.Build(new MagicItemTemplateSearchTemplate())
             );
         }
     }

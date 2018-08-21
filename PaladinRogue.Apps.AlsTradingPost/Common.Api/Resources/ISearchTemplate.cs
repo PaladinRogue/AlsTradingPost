@@ -1,6 +1,6 @@
 ﻿namespace Common.Api.Resources
 {
-    public interface ISearchTemplate
+    public interface ISearchTemplate : ITemplate
     {
     }
 }

@@ -7,13 +7,9 @@ using Authentication.Domain.ApplicationServices.Interfaces;
 using Authentication.Domain.IdentityServices;
 using Authentication.Domain.IdentityServices.Interfaces;
 using Authentication.Persistence;
-using Common.Api.Builders;
-using Common.Api.Builders.Resource;
-using Common.Api.Builders.Template;
 using Common.Api.HttpClient;
 using Common.Api.HttpClient.Interfaces;
 using Common.Api.Links;
-using Common.Api.Meta;
 using Common.Api.Routing;
 using Common.Application.Authorisation;
 using Common.Application.Transactions;
@@ -31,11 +27,7 @@ namespace Authentication.Setup
     {
 	    public static void RegisterBuilders(IServiceCollection services)
 	    {
-		    services.AddSingleton<IMetaBuilder, MetaBuilder>();
-		    services.AddSingleton<IBuildHelper, BuildHelper>();
-		    services.AddSingleton<ILinkBuilder, DefaultLinkBuilder>();
-		    services.AddSingleton<ITemplateBuilder, TemplateBuilder>();
-		    services.AddSingleton<IResourceBuilder, ResourceBuilder>();
+		    services.AddSingleton<ILinkFactory, DefaultLinkFactory>();
 	    }
 
 	    public static void RegisterValidators(IServiceCollection services)

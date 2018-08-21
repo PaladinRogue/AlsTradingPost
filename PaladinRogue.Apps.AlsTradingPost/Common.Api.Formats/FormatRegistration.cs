@@ -1,38 +1,27 @@
-﻿using System.Linq;
-using Common.Api.Exceptions;
+﻿using Common.Api.Exceptions;
+using Common.Api.Formats.JsonV1;
+using Common.Api.Formats.JsonV1.Filtering;
 using Common.Api.Formats.JsonV1.Formatters;
 using Common.Api.Formats.JsonV1.Paging;
 using Common.Api.Formats.JsonV1.Sorting;
-using Common.Api.Formats.JsonV1.Filtering;
 using Common.Api.Validation;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Net.Http.Headers;
+using Microsoft.Extensions.Options;
 
-namespace Common.Api.Formats.JsonV1
+namespace Common.Api.Formats
 {
     public static class FormatRegistration
     {
-        private const string JsonV1MediaType = "application/vnd.api+json";
-
         public static void ConfigureJsonV1Format(IServiceCollection services)
         {
+            services.AddSingleton<IConfigureOptions<MvcOptions>, ConfigureJsonV1MvcOptions>();
+
             services.Configure<MvcOptions>(options =>
             {
                 options.RespectBrowserAcceptHeader = true;
                 options.ReturnHttpNotAcceptable = true;
-
-                JsonInputFormatter jsonInputFormatter = options.InputFormatters.OfType<JsonInputFormatter>().First();
-                jsonInputFormatter.SupportedMediaTypes.Clear();
-                jsonInputFormatter.SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse(JsonV1MediaType));
-
-                JsonOutputFormatter jsonOutputFormatter =
-                    options.OutputFormatters.OfType<JsonOutputFormatter>().First();
-                jsonOutputFormatter.SupportedMediaTypes.Clear();
-                jsonOutputFormatter.SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse(JsonV1MediaType));
-
-
+                
                 options.Conventions.Add(new QueryStringSortConvention());
                 options.ModelBinderProviders.Insert(0, new QueryStringFilterModelBinderProvider());
                 options.ModelBinderProviders.Insert(0, new QueryStringSortModelBinderProvider());

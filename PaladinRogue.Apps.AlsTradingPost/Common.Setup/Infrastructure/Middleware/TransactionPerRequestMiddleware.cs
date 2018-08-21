@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Common.Application.Transactions;
@@ -18,10 +17,7 @@ namespace Common.Setup.Infrastructure.Middleware
             HttpStatusCode.NoContent
         };
 
-        private readonly string[] _transactionalMethods =
-        {
-            HttpVerbs.Put, HttpVerbs.Post, HttpVerbs.Delete
-        };
+        private const HttpVerb TransactionalMethods = HttpVerb.Put | HttpVerb.Post | HttpVerb.Delete;
 
         private readonly RequestDelegate _next;
 
@@ -32,7 +28,7 @@ namespace Common.Setup.Infrastructure.Middleware
 
         public async Task Invoke(HttpContext context, ITransactionManager transactionManager, IMessageDispatcher messageDispatcher)
         {
-            if (_transactionalMethods.Contains(context.Request.Method))
+            if (TransactionalMethods.HasFlag(HttpVerbMapper.GetVerb(context.Request.Method)))
             {
                 using (ITransaction transaction = transactionManager.Create())
                 {

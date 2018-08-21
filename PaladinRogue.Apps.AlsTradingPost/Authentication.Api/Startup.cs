@@ -3,7 +3,7 @@ using Authentication.Setup;
 using Authentication.Setup.Settings;
 using AutoMapper;
 using Common.Api.Extensions;
-using Common.Api.Formats.JsonV1;
+using Common.Api.Formats;
 using Common.Domain.DomainEvents;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Domain.Models.DataProtection;

@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Common.Api.Resources;
 
 namespace Common.Api.Links
 {
     public interface ILinkBuilder
     {
-        IList<Link> BuildLinks<T>(T data);
+        Links BuildLinks(IResource resource, ITemplate template = null);
     }
 }

@@ -4,7 +4,7 @@ using Common.Setup.Infrastructure.Constants;
 
 namespace Authentication.Api.Status
 {
-    [SelfLink(RouteDictionary.Status, HttpVerbs.Get)]
+    [SelfLink(RouteDictionary.Status, HttpVerb.Get)]
     public class StatusResource : IResource
     {
     }

@@ -20,7 +20,7 @@ namespace Authentication.Api.Controllers
         public IActionResult Get()
         {
             return new ObjectResult(
-                _resourceBuilder.Create(new StatusResource()).Build()
+                _resourceBuilder.Build(new StatusResource())
             );
         }
     }

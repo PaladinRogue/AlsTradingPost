@@ -29,13 +29,9 @@ using AlsTradingPost.Resources.Authorization;
 using AlsTradingPost.Setup.Infrastructure.Authorisation;
 using AlsTradingPost.Setup.Infrastructure.Links;
 using AlsTradingPost.Setup.Infrastructure.Routing;
-using Common.Api.Builders;
-using Common.Api.Builders.Resource;
-using Common.Api.Builders.Template;
 using Common.Api.HttpClient;
 using Common.Api.HttpClient.Interfaces;
 using Common.Api.Links;
-using Common.Api.Meta;
 using Common.Api.Routing;
 using Common.Application.Authorisation;
 using Common.Application.Authorisation.Policy;
@@ -61,12 +57,7 @@ namespace AlsTradingPost.Setup
     {
         public static void RegisterBuilders(IServiceCollection services)
         {
-            services.AddSingleton<IMetaBuilder, MetaBuilder>();
-            services.AddSingleton<ILinkBuilder, PersonaLinkBuilder>();
-            services.AddSingleton<IBuildHelper, BuildHelper>();
-            services.AddSingleton<ITemplateBuilder, TemplateBuilder>();
-            services.AddSingleton<IResourceBuilder, ResourceBuilder>();
-            services.AddSingleton(typeof(ICollectionResourceBuilder<>), typeof(CollectionResourceBuilder<>));
+            services.AddSingleton<ILinkFactory, PersonaLinkFactory>();
         }
 
         public static void RegisterValidators(IServiceCollection services)

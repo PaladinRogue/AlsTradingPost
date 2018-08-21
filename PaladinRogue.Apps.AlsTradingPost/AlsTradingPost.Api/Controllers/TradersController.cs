@@ -5,7 +5,6 @@ using AlsTradingPost.Application.Trader.Models;
 using AlsTradingPost.Setup.Infrastructure.Routing;
 using AutoMapper;
 using Common.Api.Builders.Resource;
-using Common.Api.Builders.Template;
 using Common.Application.Authorisation;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,17 +15,14 @@ namespace AlsTradingPost.Api.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ISecure<ITraderApplicationService> _secureTraderApplicationService;
-        private readonly ITemplateBuilder _templateBuilder;
         private readonly IResourceBuilder _resourceBuilder;
 
         public TradersController(IMapper mapper,
             ISecure<ITraderApplicationService> secureTraderApplicationService,
-            ITemplateBuilder templateBuilder,
             IResourceBuilder resourceBuilder)
         {
             _secureTraderApplicationService = secureTraderApplicationService;
             _mapper = mapper;
-            _templateBuilder = templateBuilder;
             _resourceBuilder = resourceBuilder;
         }
 
@@ -34,9 +30,7 @@ namespace AlsTradingPost.Api.Controllers
         public IActionResult GetResourceTemplate()
         {
             return new ObjectResult(
-                _templateBuilder.Create<TraderTemplate>()
-                    .WithTemplateMeta()
-                    .Build()
+                _resourceBuilder.Build(new TraderTemplate())
             );
         }
 
@@ -50,9 +44,7 @@ namespace AlsTradingPost.Api.Controllers
             );
 
             return new ObjectResult(
-                _resourceBuilder.Create(resource)
-                    .WithResourceMeta()
-                    .Build()
+                _resourceBuilder.Build(resource)
             );
         }
 
@@ -64,9 +56,7 @@ namespace AlsTradingPost.Api.Controllers
             );
 
             return new ObjectResult(
-                _resourceBuilder.Create(resource)
-                    .WithResourceMeta()
-                    .Build()
+                _resourceBuilder.Build(resource)
             );
         }
 
@@ -80,9 +70,7 @@ namespace AlsTradingPost.Api.Controllers
             );
 
             return new ObjectResult(
-                _resourceBuilder.Create(resource)
-                    .WithResourceMeta()
-                    .Build()
+                _resourceBuilder.Build(resource)
             );
         }
     }

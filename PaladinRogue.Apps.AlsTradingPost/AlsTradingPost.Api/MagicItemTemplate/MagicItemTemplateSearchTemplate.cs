@@ -3,16 +3,15 @@ using AlsTradingPost.Setup.Infrastructure.Routing;
 using Common.Api.Links;
 using Common.Api.Pagination.Interfaces;
 using Common.Api.Resources;
-using Common.Api.Sorting;
 using Common.Api.Validation.Attributes;
 using Common.Resources.Sorting;
 using Common.Setup.Infrastructure.Constants;
 
 namespace AlsTradingPost.Api.MagicItemTemplate
 {
-    [SelfLink(RouteDictionary.MagicItemTemplateSearchTemplate, HttpVerbs.Get)]
+    [SelfLink(RouteDictionary.MagicItemTemplateSearchTemplate, HttpVerb.Get)]
     [SearchLink(RouteDictionary.MagicItemTemplateGet)]
-    public class MagicItemTemplateSearchTemplate : ISearchTemplate, IPaginationTemplate, ISortTemplate
+    public class MagicItemTemplateSearchTemplate : ISearchTemplate, IPaginationTemplate
     {
         public MagicItemTemplateSearchTemplate()
         {

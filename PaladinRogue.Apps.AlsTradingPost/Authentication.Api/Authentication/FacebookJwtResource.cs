@@ -5,7 +5,7 @@ using Common.Setup.Infrastructure.Constants;
 
 namespace Authentication.Api.Authentication
 {
-    [SelfLink(RouteDictionary.AuthenticationFacebook, HttpVerbs.Post)]
+    [SelfLink(RouteDictionary.AuthenticationFacebook, HttpVerb.Post)]
     public class FacebookJwtResource : JwtResource
     {
         [ReadOnly]

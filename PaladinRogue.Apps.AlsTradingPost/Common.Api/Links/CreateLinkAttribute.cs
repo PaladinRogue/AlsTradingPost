@@ -6,7 +6,7 @@ namespace Common.Api.Links
     public class CreateLinkAttribute : LinkAttribute
     {
         public CreateLinkAttribute(string uriName) 
-            : base(LinkType.Create, uriName, Setup.Infrastructure.Constants.HttpVerbs.Post)
+            : base(LinkType.Create, uriName, Setup.Infrastructure.Constants.HttpVerb.Post)
         {
         }
     }

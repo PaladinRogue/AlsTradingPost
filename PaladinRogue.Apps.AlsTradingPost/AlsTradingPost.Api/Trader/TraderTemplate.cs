@@ -6,7 +6,7 @@ using Common.Setup.Infrastructure.Constants;
 
 namespace AlsTradingPost.Api.Trader
 {
-    [SelfLink(RouteDictionary.TraderRegisterResourceTemplate, HttpVerbs.Get)]
+    [SelfLink(RouteDictionary.TraderRegisterResourceTemplate, HttpVerb.Get)]
     [CreateLink(RouteDictionary.TraderRegister)]
     public class TraderTemplate : ITemplate
     {
