@@ -60,13 +60,12 @@ namespace AlsTradingPost.Setup.Infrastructure.Links
                     }
 
                     IAuthorisationContext authorisationContext =
-                        (IAuthorisationContext)Activator.CreateInstance(linkAttribute.AuthorisationContextType,
-                            resource);
+                        (IAuthorisationContext)Activator.CreateInstance(linkAttribute.AuthorisationContextType, resource);
                     return _authorisationManager.HasAccess(authorisationContext);
                 })
                 .Select(linkAttribute => linkAttribute.HttpVerb)
                 .Aggregate<HttpVerb, HttpVerb>(0, (current, f) => current | f);
-            string uri = _routeProvider.GetRouteTemplate(routeName,
+            string uri = string.IsNullOrWhiteSpace(routeName) ? string.Empty : _routeProvider.GetRouteTemplate(routeName,
                 _httpContextAccessor.CurrentPersonaFlags(), resource);
 
             switch (resource)

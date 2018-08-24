@@ -8,6 +8,11 @@ namespace Common.Api.Links
     {
         public Type AbsoluteLinkProviderType { get; }
 
+        public AbsoluteLinkAttribute(Type absoluteLinkProviderType, string linkName, HttpVerb httpVerb) 
+            : this(absoluteLinkProviderType, linkName, null, httpVerb, null)
+        {
+        }
+
         public AbsoluteLinkAttribute(Type absoluteLinkProviderType, string linkName, string uriName, HttpVerb httpVerb) 
             : this(absoluteLinkProviderType, linkName, uriName, httpVerb, null)
         {

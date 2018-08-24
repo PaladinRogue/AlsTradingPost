@@ -62,7 +62,7 @@ namespace Authentication.Api.Controllers
         public async Task<IActionResult> PostFacebook([FromBody] FacebookAuthenticationTemplate template)
         {
             string appAccessTokenResponse = await _httpClientFactory.GetStringAsync(new Uri(string.Format(
-                    _fbAuthSettings.AccessTokenEndpoint,
+                    _fbAuthSettings.ApplicationAccessTokenEndpoint,
                     _fbAuthSettings.AppId,
                     _fbAuthSettings.AppSecret
                 ))

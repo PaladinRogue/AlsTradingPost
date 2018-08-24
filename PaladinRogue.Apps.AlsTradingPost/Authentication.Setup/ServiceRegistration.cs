@@ -75,6 +75,7 @@ namespace Authentication.Setup
         {
             services.AddSingleton<IRouteProvider<bool>, DefaultRouteProvider>();
             services.AddSingleton<FacebookApplicationLinksProvider>();
+            services.AddSingleton<FacebookAuthenticationAbsoluteLinkProvider>();
         }
 
         public static void RegisterAuthorisation(IServiceCollection services)

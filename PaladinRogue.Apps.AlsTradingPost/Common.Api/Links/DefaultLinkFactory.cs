@@ -34,7 +34,7 @@ namespace Common.Api.Links
         {
             HttpVerb allowVerbs = verbAuthorisationContextTypePairs.Select(a => a.HttpVerb)
                 .Aggregate<HttpVerb, HttpVerb>(0, (current, f) => current | f);
-            string uri = _routeProvider.GetRouteTemplate(routeName, true, resource);
+            string uri = string.IsNullOrWhiteSpace(routeName) ? string.Empty : _routeProvider.GetRouteTemplate(routeName, true, resource);
 
             switch (resource)
             {
