@@ -54,6 +54,7 @@ namespace Authentication.Api
             ServiceRegistration.RegisterDomainServices(services);
             ServiceRegistration.RegisterPersistenceServices(Configuration, services);
             ServiceRegistration.RegisterProviders(services);
+            ServiceRegistration.RegisterAuthorisation(services);
 
             services.AddAutoMapper(MappingRegistration.RegisterMappers);
 

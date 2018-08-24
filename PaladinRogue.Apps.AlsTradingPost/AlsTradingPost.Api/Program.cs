@@ -1,20 +1,33 @@
-﻿using AlsTradingPost.Persistence;
+﻿using System;
+using AlsTradingPost.Persistence;
+using AlsTradingPost.Resources;
 using AlsTradingPost.Setup.Infrastructure.DbInitializer;
+using AlsTradingPost.Setup.Infrastructure.Routing;
 using Common.Api.ApplicationRegistration;
+using Common.Api.Routing;
 using Common.Resources.Authentication;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Persistence.EntityFramework.Infrastructure.Extensions;
 
 namespace AlsTradingPost.Api
 {
     public class Program
     {
+        private const string HostUrl = "https://localhost:1001";
+
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args)
-                .Build()
-                .RegisterApplication("AlsTradingPost", AuthenticationProtocol.Facebook)
+            IWebHost webHost = CreateWebHostBuilder(args)
+                .Build();
+
+            IServiceProvider serviceProvider = webHost.Services;
+            IRouteProvider<PersonaFlags> routeProvider = serviceProvider.GetRequiredService<IRouteProvider<PersonaFlags>>();
+
+            string routeTemplate = routeProvider.GetRouteTemplate<object>(RouteDictionary.AuthenticationLoginTemplate, PersonaFlags.None, null);
+
+            webHost.RegisterApplication("AlsTradingPost", HostUrl + routeTemplate, AuthenticationProtocol.Facebook)
                 .ApplyMigrations<AlsTradingPostDbContext>()
                 .SeedData()
                 .Run();
@@ -22,7 +35,7 @@ namespace AlsTradingPost.Api
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseUrls("https://localhost:1001")
+                .UseUrls(HostUrl)
                 .UseStartup<Startup>()
                 .UseKestrel()
                 .UseIISIntegration();

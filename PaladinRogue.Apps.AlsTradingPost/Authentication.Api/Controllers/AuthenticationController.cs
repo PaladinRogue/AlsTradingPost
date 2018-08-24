@@ -54,12 +54,12 @@ namespace Authentication.Api.Controllers
         public IActionResult GetAuthenticationTemplate()
         {
             return new ObjectResult(
-                _resourceBuilder.Build(new AuthenticationTemplate())
+                _resourceBuilder.Build(new FacebookAuthenticationTemplate())
             );
         }
 
         [Route("facebook", Name = RouteDictionary.AuthenticationFacebook)]
-        public async Task<IActionResult> PostFacebook([FromBody] AuthenticationTemplate template)
+        public async Task<IActionResult> PostFacebook([FromBody] FacebookAuthenticationTemplate template)
         {
             string appAccessTokenResponse = await _httpClientFactory.GetStringAsync(new Uri(string.Format(
                     _fbAuthSettings.AccessTokenEndpoint,

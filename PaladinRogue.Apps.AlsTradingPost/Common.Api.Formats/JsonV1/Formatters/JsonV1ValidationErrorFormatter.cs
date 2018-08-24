@@ -2,6 +2,7 @@
 using Common.Api.Formats.JsonV1.Formats;
 using Common.Api.Validation;
 using Common.Application.Validation;
+using Common.Resources.Extensions;
 
 namespace Common.Api.Formats.JsonV1.Formatters
 {
@@ -13,7 +14,7 @@ namespace Common.Api.Formats.JsonV1.Formatters
             {
                 Errors = validationResult.PropertyValidationErrors.Select(e => new Error
                 {
-                    Code = e.PropertyName,
+                    Code = e.PropertyName.ToCamelCase(),
                     Meta = e.ValidationErrors.ToDictionary(ve => ve.ValidationErrorCode, ve => ve.ValidationMeta as object)
                 })
             };

@@ -41,7 +41,8 @@ namespace AlsTradingPost.Setup.Infrastructure.Links
             string routeName,
             IEnumerable<AuthorisationLink> verbAuthorisationContextTypePairs,
             IResource resource,
-            ITemplate template)
+            ITemplate template,
+            string basePath = null)
         {
 
             HttpVerb allowVerbs = verbAuthorisationContextTypePairs
@@ -88,7 +89,7 @@ namespace AlsTradingPost.Setup.Infrastructure.Links
             {
                 Name = linkName,
                 AllowVerbs = allowVerbs,
-                Uri = uri
+                Uri = basePath == null ? uri : basePath + uri
             };
         }
     }

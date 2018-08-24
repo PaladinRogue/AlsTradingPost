@@ -65,5 +65,25 @@ namespace Common.Domain.Services.Query
         {
             return _repository.CheckExists(id);
         }
+
+        public IEnumerable<T> Get(IList<SortBy> sort, Expression<Func<T, bool>> predicate = null)
+        {
+            if (sort != null)
+            {
+                IEnumerable<string> sortableProperties = typeof(T).GetProperties().Where(p => Attribute.IsDefined(p, typeof(SortableAttribute))).Select(p => p.Name.ToLowerInvariant()).ToList();
+                foreach (SortBy sortBy in sort)
+                {
+                    if (!sortableProperties.Contains(sortBy.PropertyName.ToLowerInvariant()))
+                    {
+                        throw new PropertyNotSortableException(sortBy.PropertyName);
+                    }
+                }
+            }
+
+            return _repository.Get(
+                sort,
+                predicate
+            );
+        }
     }
 }

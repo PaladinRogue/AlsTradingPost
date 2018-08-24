@@ -9,15 +9,17 @@ namespace Common.Api.ApplicationRegistration
 {
     public static class WebHostExtensions
     {
-        public static IWebHost RegisterApplication(this IWebHost webHost, string applicationName, AuthenticationProtocol authenticationProtocols)
+        public static IWebHost RegisterApplication(this IWebHost webHost, string applicationName, string authenticationEndpoint, AuthenticationProtocol authenticationProtocols)
         {
             IServiceProvider serviceProvider = webHost.Services;
 
             IMessageBus messageBus = serviceProvider.GetRequiredService<IMessageBus>();
+
             messageBus.Publish(new ApplicationCreatedMessage
             {
                 Name = applicationName,
-                AuthenticationProtocols = authenticationProtocols
+                AuthenticationProtocols = authenticationProtocols,
+                AuthenticationEndpoint = authenticationEndpoint
             });
 
             return webHost;

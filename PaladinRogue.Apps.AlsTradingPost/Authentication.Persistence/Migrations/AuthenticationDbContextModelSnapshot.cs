@@ -25,6 +25,9 @@ namespace Authentication.Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("AuthenticationEndpoint")
+                        .HasMaxLength(100);
+
                     b.Property<int>("AuthenticationProtocols");
 
                     b.Property<string>("Name")

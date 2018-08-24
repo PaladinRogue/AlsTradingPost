@@ -42,8 +42,7 @@ namespace Authentication.Application.Application
                     {
                         ApplicationProjection applicationProjectionUpdate = Mapper.Map(message, applicationProjection);
 
-                        _applicationDomainService.Update(
-                            Mapper.Map<ApplicationProjection, UpdateApplicationDdto>(applicationProjectionUpdate));
+                        _applicationDomainService.Update(Mapper.Map<ApplicationProjection, UpdateApplicationDdto>(applicationProjectionUpdate));
                     }
 
                     transaction.Commit();

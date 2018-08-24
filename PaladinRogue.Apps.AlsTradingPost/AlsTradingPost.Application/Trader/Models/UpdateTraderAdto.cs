@@ -7,6 +7,6 @@ namespace AlsTradingPost.Application.Trader.Models
     {
         public Guid Id { get; set; }
         public string Alias { get; set; }
-        public string DCI { get; set; }
+        public string Dci { get; set; }
     }
 }

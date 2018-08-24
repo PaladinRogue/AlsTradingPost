@@ -1,10 +1,14 @@
-﻿using Authentication.Domain.ApplicationServices.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using Authentication.Domain.ApplicationServices.Interfaces;
 using Authentication.Domain.ApplicationServices.Models;
 using Authentication.Domain.Models;
 using AutoMapper;
 using Common.Domain.Models;
 using Common.Domain.Services.Command;
 using Common.Domain.Services.Query;
+using Common.Resources.Sorting;
 
 namespace Authentication.Domain.ApplicationServices
 {
@@ -43,5 +47,10 @@ namespace Authentication.Domain.ApplicationServices
 	    {
 	        return _mapper.Map<Application, ApplicationProjection>(_applicationQueryService.GetSingle(a => a.Name == name));
         }
-	}
+
+	    public IEnumerable<ApplicationProjection> Get(IList<SortBy> sort, Expression<Func<Application, bool>> predicate = null)
+	    {
+	        return _mapper.Map<IEnumerable<Application>, IEnumerable<ApplicationProjection>>(_applicationQueryService.Get(sort, predicate));
+	    }
+    }
 }

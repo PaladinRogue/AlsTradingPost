@@ -49,6 +49,11 @@ namespace AlsTradingPost.Setup.Infrastructure.Routing
                 return null;
             }
 
+            if (routeData == null)
+            {
+                return FormatRoute(RouteToCamelCase(template));
+            }
+
             Dictionary<string, string> dictionary = routeData.GetType().GetProperties()
                 .Where(p => p.GetValue(routeData) != null)
                 .ToDictionary(

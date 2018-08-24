@@ -8,6 +8,6 @@ namespace AlsTradingPost.Domain.TraderDomain.Models
 
         public string Alias { get; set; }
         
-        public string DCI { get; set; }
+        public string Dci { get; set; }
     }
 }

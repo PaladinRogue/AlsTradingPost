@@ -29,7 +29,8 @@ namespace Common.Api.Links
             string routeName,
             IEnumerable<AuthorisationLink> verbAuthorisationContextTypePairs,
             IResource resource,
-            ITemplate template)
+            ITemplate template,
+            string basePath = null)
         {
             HttpVerb allowVerbs = verbAuthorisationContextTypePairs.Select(a => a.HttpVerb)
                 .Aggregate<HttpVerb, HttpVerb>(0, (current, f) => current | f);
@@ -55,7 +56,7 @@ namespace Common.Api.Links
             {
                 Name = linkName,
                 AllowVerbs = allowVerbs,
-                Uri = uri
+                Uri = basePath == null ? uri : basePath + uri
             };
         }
     }

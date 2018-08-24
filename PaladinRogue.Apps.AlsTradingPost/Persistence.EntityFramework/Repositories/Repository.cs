@@ -24,6 +24,11 @@ namespace Persistence.EntityFramework.Repositories
             return RepositoryHelper.GetById(_context.Set<T>(), id);
         }
 
+        public IQueryable<T> Get(IList<SortBy> sort, Expression<Func<T, bool>> predicate = null)
+        {
+            return RepositoryHelper.Get(_context.Set<T>(), sort, predicate);
+        }
+
         public IQueryable<T> GetPage(int pageSize, int pageOffset, out int totalResults, IList<SortBy> sort, Expression<Func<T, bool>> predicate = null)
         {
             return RepositoryHelper.GetPage(_context.Set<T>(), pageSize, pageOffset, out totalResults, sort, predicate);

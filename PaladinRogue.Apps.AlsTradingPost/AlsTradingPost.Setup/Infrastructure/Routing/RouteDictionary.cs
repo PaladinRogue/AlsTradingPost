@@ -2,6 +2,7 @@
 {
     public static class RouteDictionary
     {
+        public const string Profile = "Profile";
         public const string Status = "Status";
         public const string AuthenticationServices = "AuthenticationServices";
         public const string AuthenticationLogin = "AuthenticationLogin";

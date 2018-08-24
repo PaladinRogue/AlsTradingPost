@@ -16,6 +16,6 @@ namespace AlsTradingPost.Api.Trader
         
         [MaxLength(50)]
         [Required]
-        public string DCI { get; set; }
+        public string Dci { get; set; }
     }
 }
