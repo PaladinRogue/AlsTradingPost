@@ -39,7 +39,6 @@ namespace AlsTradingPost.Application.MagicItemTemplate
                 );
 
                 return Mapper.Map<MagicItemTemplatePagedCollectionDdto, MagicItemTemplatePagedCollectionAdto>(result);
-
             }
             catch (PropertyNotSortableException e)
             {

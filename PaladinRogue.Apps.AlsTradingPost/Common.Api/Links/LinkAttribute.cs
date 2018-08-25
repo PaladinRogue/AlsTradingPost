@@ -16,10 +16,8 @@ namespace Common.Api.Links
         public Type AuthorisationContextType { get; }
         
         public LinkAttribute(string linkName, string uriName, HttpVerb httpVerb)
+            : this(linkName, uriName, httpVerb, null)
         {
-            LinkName = linkName;
-            UriName = uriName;
-            HttpVerb = httpVerb;
         }
 
         public LinkAttribute(string linkName, string uriName, HttpVerb httpVerb, Type authorisationContextType)
@@ -28,7 +26,7 @@ namespace Common.Api.Links
             UriName = uriName;
             HttpVerb = httpVerb;
 
-            if (authorisationContextType.IsInstanceOfType(typeof(IAuthorisationContext)))
+            if (authorisationContextType != null && !typeof(IAuthorisationContext).IsAssignableFrom(authorisationContextType))
             {
                 throw new ArgumentOutOfRangeException(nameof(authorisationContextType));
             }

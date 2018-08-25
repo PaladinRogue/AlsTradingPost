@@ -14,6 +14,21 @@ namespace Persistence.EntityFramework.Repositories
 {
     public static class RepositoryHelper
     {
+        public static IQueryable<T> Get<T>(
+            IQueryable<T> results, 
+            IList<SortBy> sort,
+            Expression<Func<T, bool>> predicate = null) where T : IEntity
+        {
+            IQueryable<T> filteredResults = Filter(results, predicate);
+            if (sort == null || !sort.Any()) return filteredResults;
+
+            SortBy firstSort = sort.First();
+            IOrderedQueryable<T> orderedResults = OrderBy(filteredResults, firstSort.PropertyName.CreatePropertyAccessor<T>(), firstSort.IsAscending);
+            orderedResults = sort.Skip(1).Aggregate(orderedResults, (current, sortBy) => ThenBy(current, sortBy.PropertyName.CreatePropertyAccessor<T>(), sortBy.IsAscending));
+
+            return orderedResults;
+        }
+
         public static IQueryable<T> GetPage<T>(
             IQueryable<T> results, 
             int pageSize, int pageOffset, out int totalResults,
@@ -21,7 +36,7 @@ namespace Persistence.EntityFramework.Repositories
             Expression<Func<T, bool>> predicate = null) where T : IEntity
         {
             IQueryable<T> filteredResults = Filter(results, predicate);
-            if (!sort.Any()) return GetPage(filteredResults, pageSize, pageOffset, out totalResults);
+            if (sort == null || !sort.Any()) return GetPage(filteredResults, pageSize, pageOffset, out totalResults);
 
             SortBy firstSort = sort.First();
             IOrderedQueryable<T> orderedResults = OrderBy(filteredResults, firstSort.PropertyName.CreatePropertyAccessor<T>(), firstSort.IsAscending);

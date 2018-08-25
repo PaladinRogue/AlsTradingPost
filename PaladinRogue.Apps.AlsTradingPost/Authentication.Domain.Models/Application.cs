@@ -10,5 +10,8 @@ namespace Authentication.Domain.Models
 	    public string Name { get; set; }
 	    
 	    public AuthenticationProtocol AuthenticationProtocols { get; set; }
+
+        [MaxLength(100)]
+        public string AuthenticationEndpoint { get; set; }
     }
 }

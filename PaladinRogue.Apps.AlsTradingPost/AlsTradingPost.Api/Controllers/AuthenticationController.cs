@@ -7,6 +7,7 @@ using AutoMapper;
 using Common.Api.Builders.Resource;
 using Common.Application.Authentication;
 using Common.Application.Authorisation;
+using Common.Setup.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -70,6 +71,11 @@ namespace AlsTradingPost.Api.Controllers
         [Route("refreshToken", Name = RouteDictionary.AuthenticationRefreshToken)]
         public async Task<IActionResult> PostRefreshToken([FromBody] RefreshTokenTemplate template)
         {
+            if (template == null)
+            {
+                throw new BadRequestException();
+            }
+
             JwtAdto jwt = await _secureAuthenticationApplicationService.Service.RefreshTokenAsync(
                 new RefreshTokenAdto
                 {

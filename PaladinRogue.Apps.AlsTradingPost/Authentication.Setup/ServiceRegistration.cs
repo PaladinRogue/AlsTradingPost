@@ -1,4 +1,6 @@
-﻿using Authentication.Application.Authentication;
+﻿using Authentication.Application.Application;
+using Authentication.Application.Application.Interfaces;
+using Authentication.Application.Authentication;
 using Authentication.Application.Authentication.Interfaces;
 using Authentication.Application.Authentication.Models;
 using Authentication.Application.Authentication.Validators;
@@ -7,11 +9,14 @@ using Authentication.Domain.ApplicationServices.Interfaces;
 using Authentication.Domain.IdentityServices;
 using Authentication.Domain.IdentityServices.Interfaces;
 using Authentication.Persistence;
+using Authentication.Setup.Infrastructure.Authorisation;
+using Authentication.Setup.Infrastructure.Links;
 using Common.Api.HttpClient;
 using Common.Api.HttpClient.Interfaces;
 using Common.Api.Links;
 using Common.Api.Routing;
 using Common.Application.Authorisation;
+using Common.Application.Authorisation.Policy;
 using Common.Application.Transactions;
 using Common.Domain.Persistence;
 using FluentValidation;
@@ -44,6 +49,8 @@ namespace Authentication.Setup
             
             services.AddScoped<ISecure<IAuthenticationApplicationService>, AuthenticationSecurityApplicationService>();
             services.AddScoped<IAuthenticationApplicationService, AuthenticationApplicationService>();
+
+            services.AddScoped<IApplicationApplicationKernalService, ApplicationApplicationKernalService>();
 		}
 	    
         public static void RegisterDomainServices(IServiceCollection services)
@@ -67,6 +74,13 @@ namespace Authentication.Setup
         public static void RegisterProviders(IServiceCollection services)
         {
             services.AddSingleton<IRouteProvider<bool>, DefaultRouteProvider>();
+            services.AddSingleton<FacebookApplicationLinksProvider>();
+            services.AddSingleton<FacebookAuthenticationAbsoluteLinkProvider>();
+        }
+
+        public static void RegisterAuthorisation(IServiceCollection services)
+        {
+            services.AddSingleton<IAuthorisationPolicy, AlwaysAllowAuthorisationPolicy>();
         }
     }
 }

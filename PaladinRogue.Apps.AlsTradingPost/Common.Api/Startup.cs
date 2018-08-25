@@ -47,7 +47,7 @@ namespace Common.Api
             services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
             services.Configure<MessagingBusSettings>(Configuration.GetSection(nameof(MessagingBusSettings)));
 
-            services.AddSingleton<ILinkBuilder, LinkBuilder>();
+            services.AddSingleton<ILinkBuilder, DefaultLinkBuilder>();
             services.AddSingleton<IResourceBuilder, DefaultResourceBuilder>();
             services.AddSingleton<IPagingLinkBuilder, DefaultPagingLinkBuilder>();
             services.AddSingleton<ISortingLinkBuilder, DefaultSortingLinkBuilder>();

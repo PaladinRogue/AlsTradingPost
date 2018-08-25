@@ -1,4 +1,5 @@
 ﻿using System;
+using Authentication.Setup.Infrastructure.Links;
 using Common.Api.Authentication.Interfaces;
 using Common.Api.Links;
 using Common.Api.Meta;
@@ -7,7 +8,8 @@ using Common.Setup.Infrastructure.Constants;
 
 namespace Authentication.Api.Authentication
 {
-    [Link(LinkDictionary.AuthenticationRefreshToken, RouteDictionary.AuthenticationRefreshToken, HttpVerb.Post)]
+    [Link(LinkDictionary.AuthenticationRefreshTokenTemplate, RouteDictionary.AuthenticationRefreshTokenTemplate, HttpVerb.Get)]
+    [DynamicLinks(typeof(FacebookApplicationLinksProvider))]
     public class JwtResource : IJwtResource
     {
 	    [ReadOnly]

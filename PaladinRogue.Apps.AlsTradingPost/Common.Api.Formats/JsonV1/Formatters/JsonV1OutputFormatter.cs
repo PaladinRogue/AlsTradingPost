@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Common.Api.Builders.Resource;
+using Common.Api.Exceptions;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
@@ -43,6 +44,10 @@ namespace Common.Api.Formats.JsonV1.Formatters
                 else if (context.Object is BuiltCollectionResource builtCollectionResource)
                 {
                     WriteObject(writer, ResponseFactory.Create(builtCollectionResource, context.HttpContext.Request));
+                }
+                else if(context.Object is IFormattedError formattedError)
+                {
+                    WriteObject(writer, formattedError);
                 }
 
                 await writer.FlushAsync();

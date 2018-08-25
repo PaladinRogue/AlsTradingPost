@@ -1,9 +1,8 @@
 ﻿using AlsTradingPost.Application.Trader.Models;
-using AutoMapper;
 
 namespace AlsTradingPost.Api.Trader
 {
-    public class TraderApiMappingProfile : Profile
+    public class TraderApiMappingProfile : AutoMapper.Profile
     {
         public TraderApiMappingProfile()
         {

@@ -9,7 +9,7 @@ using Common.Setup.Infrastructure.Constants;
 
 namespace AlsTradingPost.Api.Authentication
 {
-    [Link(LinkDictionary.AuthenticationRefreshToken, RouteDictionary.AuthenticationRefreshToken, HttpVerb.Post)]
+    [Link(LinkDictionary.AuthenticationRefreshTokenTemplate, RouteDictionary.AuthenticationRefreshTokenTemplate, HttpVerb.Get)]
     public class JwtResource : IJwtResource
     {
 	    [ReadOnly]

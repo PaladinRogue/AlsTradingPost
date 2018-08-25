@@ -11,7 +11,7 @@ namespace AlsTradingPost.Application.Trader.Validators
                 .MaximumLength(50)
                 .NotEmpty();
             
-            RuleFor(x => x.DCI)
+            RuleFor(x => x.Dci)
                 .MaximumLength(50)
                 .NotEmpty();
         }

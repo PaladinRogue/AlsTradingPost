@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Common.Domain.Models.Interfaces;
+using Common.Resources.Sorting;
 
 namespace Common.Domain.Services.Query
 {
-    public interface IGetQueryService<T, TOut>
+    public interface IGetQueryService<T> where T : IEntity
     {
-        IList<TOut> Get<TOrderByKey, TThenByKey>(Predicate<T> predicate = null,
-            Expression<Func<T, TOrderByKey>> orderBy = null,
-            bool orderByAscending = true,
-            Expression<Func<T, TThenByKey>> thenBy = null,
-            bool? thenByAscending = null);
+        IEnumerable<T> Get(
+            IList<SortBy> sort,
+            Expression<Func<T, bool>> predicate = null);
     }
 }

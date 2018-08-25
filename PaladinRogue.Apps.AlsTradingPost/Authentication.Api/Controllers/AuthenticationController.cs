@@ -54,15 +54,20 @@ namespace Authentication.Api.Controllers
         public IActionResult GetAuthenticationTemplate()
         {
             return new ObjectResult(
-                _resourceBuilder.Build(new AuthenticationTemplate())
+                _resourceBuilder.Build(new FacebookAuthenticationTemplate())
             );
         }
 
         [Route("facebook", Name = RouteDictionary.AuthenticationFacebook)]
-        public async Task<IActionResult> PostFacebook([FromBody] AuthenticationTemplate template)
+        public async Task<IActionResult> PostFacebook([FromBody] FacebookAuthenticationTemplate template)
         {
+            if (template == null)
+            {
+                throw new BadRequestException();
+            }
+
             string appAccessTokenResponse = await _httpClientFactory.GetStringAsync(new Uri(string.Format(
-                    _fbAuthSettings.AccessTokenEndpoint,
+                    _fbAuthSettings.ApplicationAccessTokenEndpoint,
                     _fbAuthSettings.AppId,
                     _fbAuthSettings.AppSecret
                 ))
@@ -109,6 +114,11 @@ namespace Authentication.Api.Controllers
         [Route("refreshToken", Name = RouteDictionary.AuthenticationRefreshToken)]
         public async Task<IActionResult> PostRefreshToken([FromBody] RefreshTokenTemplate template)
         {
+            if (template == null)
+            {
+                throw new BadRequestException();
+            }
+
             JwtAdto jwt = await _secureAuthenticationApplicationService.Service.RefreshTokenAsync(
                 new RefreshTokenAdto
                 {
