@@ -299,3 +299,5 @@ __pycache__/
 /PaladinRogue.Apps.AlsTradingPost/AlsTradingPost.Api/secrets.json
 /PaladinRogue.Apps.AlsTradingPost/Authentication.Api/secrets.json
 *.1
+/DotNet/Apps.AlsTradingPost/AlsTradingPost.Api/secrets.json
+/DotNet/Apps.Authentication/Authentication.Api/secrets.json
