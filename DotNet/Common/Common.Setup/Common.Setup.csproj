@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.1.0-rc1-final" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\DomainEvents\DomainEvent.Broker\DomainEvent.Broker.csproj" />
+    <ProjectReference Include="..\..\Messaging\Message.Broker\Message.Broker.csproj" />
+    <ProjectReference Include="..\Common.Application\Common.Application.csproj" />
+    <ProjectReference Include="..\Common.Domain\Common.Domain.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="RabbitMQ.Client">
+      <HintPath>..\..\..\..\..\Users\cheneyd\.nuget\packages\rabbitmq.client\5.0.1\lib\netstandard1.5\RabbitMQ.Client.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

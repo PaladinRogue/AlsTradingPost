@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
+    <PackageReference Include="FluentValidation" Version="7.5.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common.Authentication\Common.Authentication.Domain\Common.Authentication.Domain.csproj" />
+    <ProjectReference Include="..\..\Common\Common.Api\Common.Api.csproj" />
+    <ProjectReference Include="..\..\Common\Common.Application\Common.Application.csproj" />
+    <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
+    <ProjectReference Include="..\AlsTradingPost.Domain\AlsTradingPost.Domain.csproj" />
+    <ProjectReference Include="..\AlsTradingPost.Resources\AlsTradingPost.Resources.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="BusinessErrorMessages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>BusinessErrorMessages.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="BusinessErrorMessages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>BusinessErrorMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>
