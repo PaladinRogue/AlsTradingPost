@@ -21,6 +21,23 @@ namespace AlsTradingPost.Setup.Infrastructure.Authorisation
             _jwtIssuerOptions = jwtIssuerOptionsAccessor.Value;
         }
 
+        public bool IsAuthenticated
+        {
+            get
+            {
+                if (_httpContextAccessor.CurrentIssuer() == _jwtIssuerOptions.Issuer)
+                {
+                    Guid? currentUserId = _httpContextAccessor.CurrentSubject();
+                    if (currentUserId.HasValue)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
+
         public Guid Id
         {
             get

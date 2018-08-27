@@ -5,8 +5,8 @@ namespace AlsTradingPost.Resources
     [Flags]
     public enum PersonaFlags
     {
-        None,
-        Admin,
-        Trader
+        None = 0,
+        Admin = 1,
+        Trader = 2
     }
 }

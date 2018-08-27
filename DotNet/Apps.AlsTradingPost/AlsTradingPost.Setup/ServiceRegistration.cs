@@ -119,7 +119,7 @@ namespace AlsTradingPost.Setup
 
             services.AddSingleton<IConcurrencyVersionProvider, ConcurrencyVersionProvider>();
             services.AddSingleton<IRouteProvider<PersonaFlags>, PersonaRouteProvider>();
-            services.AddSingleton<AuthenticationAbsoluteLinkProvider>();
+            services.AddSingleton<AuthenticationDynmicLinksProvider>();
         }
 
         public static void RegisterAuthorisation(IServiceCollection services)
