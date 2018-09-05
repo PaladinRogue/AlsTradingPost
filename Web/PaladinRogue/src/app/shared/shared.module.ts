@@ -1,7 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
-import { ApiService } from './services/api.service';
+import { ApiService } from '../common/api/services/api/api.service';
 
 @NgModule({
   declarations: [],
@@ -10,8 +10,7 @@ import { ApiService } from './services/api.service';
   ],
   providers: [
     ApiService
-  ],
-  bootstrap: []
+  ]
 })
 export class SharedModule {
 }
