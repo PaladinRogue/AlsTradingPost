@@ -72,6 +72,11 @@ namespace AlsTradingPost.Domain.TraderDomain
         {
             Trader trader = _traderQueryService.GetById(id);
 
+            if (trader == null)
+            {
+                throw new TraderDoesNotExistDomainException();
+            }
+
             DomainEvents.Raise(TraderReadDomainEvent.Create(trader));
 
             return _mapper.Map<Trader, TraderProjection>(trader);

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using AlsTradingPost.Setup;
 using AutoMapper;
 using Common.Api.Extensions;
 using Common.Api.Formats;
+using Common.Api.NamingMap;
 using Common.Domain.DomainEvents;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Domain.Models.DataProtection;
@@ -53,6 +55,8 @@ namespace AlsTradingPost.Api
             ServiceRegistration.RegisterAuthorisation(services);
 
             services.AddAutoMapper(MappingRegistration.RegisterMappers);
+
+            NamingMapRegistration.Register(services);
 
             return services.BuildServiceProvider();
         }

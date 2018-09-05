@@ -62,7 +62,14 @@ namespace AlsTradingPost.Application.Trader
 
         public TraderAdto GetById(Guid id)
         {
-            return _mapper.Map<TraderProjection, TraderAdto>(_traderDomainService.GetById(id));
+            try
+            {
+                return _mapper.Map<TraderProjection, TraderAdto>(_traderDomainService.GetById(id));
+            }
+            catch (TraderDoesNotExistDomainException e)
+            {
+                throw new BusinessApplicationException(ExceptionType.NotFound, BusinessErrorMessages.TraderAlreadyExists, e);
+            }
         }
 
         public TraderAdto Update(UpdateTraderAdto updateTraderAdto)

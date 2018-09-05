@@ -93,6 +93,10 @@ namespace AlsTradingPost.Application.Authentication
 
                 return jwt;
             }
+            catch (SessionDoesNotExistDomainException e)
+            {
+                throw new BusinessApplicationException(ExceptionType.Unauthorized, e);
+            }
             catch (SessionRevokedDomainException e)
             {
                 throw new BusinessApplicationException(ExceptionType.Unauthorized, BusinessErrorMessages.SessionRevoked, e);
