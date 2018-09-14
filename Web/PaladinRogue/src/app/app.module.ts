@@ -4,20 +4,23 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
+import { DataModule, DataService, HttpDataService } from './common/data';
+import { ErrorHandlersProviderService } from './common/data/services/error-handlers-provider/error-handlers-provider.service';
+import { HttpApiService } from './common/http';
 import {
   CldrDateFormat,
   CldrDateTimeFormat,
+  CldrNumberFormat,
   CldrTimeFormat,
+  DateFormat,
+  DateTimeFormat,
   DEFAULT_LANGUAGE,
-  InternationalizationModule
+  DEFAULT_LOCALE,
+  DEFAULT_TIMEZONE,
+  InternationalizationModule,
+  NumberFormat,
+  TimeFormat
 } from './common/internationalization';
-import { DateFormat } from './common/internationalization/services/date-format/date-format';
-import { DateTimeFormat } from './common/internationalization/services/date-time-format/date-time-format';
-import { CldrNumberFormat } from './common/internationalization/services/number-format/cldr-number-format/cldr-number-format';
-import { NumberFormat } from './common/internationalization/services/number-format/number-format';
-import { TimeFormat } from './common/internationalization/services/time-format/time-format';
-import { DEFAULT_LOCALE } from './common/internationalization/tokens/default-locale.token';
-import { DEFAULT_TIMEZONE } from './common/internationalization/tokens/default-timezone.token';
 import { LoginComponent } from './shared/business-components/login/login.component';
 import { SharedModule } from './shared/shared.module';
 
@@ -30,6 +33,7 @@ import { SharedModule } from './shared/shared.module';
     BrowserModule,
     SharedModule,
     FormsModule,
+    DataModule,
     InternationalizationModule.forRoot({
       backendOptions: {
         loadPath: '/src/locales/{{lng}}/{{ns}}.json'
@@ -77,6 +81,14 @@ import { SharedModule } from './shared/shared.module';
       deps: [HttpClient],
       useFactory: (httpClient: HttpClient): NumberFormat => {
         return new CldrNumberFormat(httpClient, 'node_modules/cldr-numbers-modern');
+      }
+    },
+    {
+      provide: DataService,
+      deps: [HttpApiService, ErrorHandlersProviderService],
+      useFactory: (httpApiService: HttpApiService,
+                   errorHandlersProviderService: ErrorHandlersProviderService): DataService => {
+        return new HttpDataService(httpApiService, errorHandlersProviderService);
       }
     }
   ],

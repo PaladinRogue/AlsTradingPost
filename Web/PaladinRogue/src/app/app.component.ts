@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { Moment } from 'moment';
+import { DataService } from './common/data';
 
 import { IOption } from './common/core';
 import {
@@ -33,22 +34,26 @@ export class AppComponent implements OnInit {
   public localeOptions: Array<IOption>;
   public timezone: string;
   public timezoneOptions: Array<IOption>;
+
   private readonly _localeService: LocaleService;
   private readonly _languageService: LanguageService;
   private readonly _timezoneService: TimezoneService;
+  private readonly _dataService: DataService;
 
   constructor(localeService: LocaleService,
               languageService: LanguageService,
               timezoneService: TimezoneService,
               @Inject(DEFAULT_LANGUAGE) defaultLanguage: string,
               @Inject(DEFAULT_LOCALE) defaultLocale: string,
-              @Inject(DEFAULT_TIMEZONE) defaultTimezone: string) {
+              @Inject(DEFAULT_TIMEZONE) defaultTimezone: string,
+              dataService: DataService) {
     this._localeService = localeService;
     this._languageService = languageService;
     this._timezoneService = timezoneService;
     this.language = defaultLanguage;
     this.locale = defaultLocale;
     this.timezone = defaultTimezone;
+    this._dataService = dataService;
   }
 
   public ngOnInit(): void {
@@ -76,5 +81,13 @@ export class AppComponent implements OnInit {
 
   public setTimezone(): void {
     this._timezoneService.setTimezone(this.timezone);
+  }
+
+  public getData(): void {
+    this._dataService.get({
+      getUrl: (): string => {
+        return '/api/traders/5d6733a6-3f09-4871-8064-a9a09b4e2c00';
+      }
+    });
   }
 }

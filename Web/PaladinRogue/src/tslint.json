@@ -1,6 +1,8 @@
 {
   "extends": "../tslint.json",
   "rules": {
+    "object-literal-shorthand": true,
+    "max-line-length": [true, 160],
     "no-string-literal": true,
     "curly": true,
     "no-any": true,

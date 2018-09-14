@@ -1,0 +1,3 @@
+interface IResourceMeta {
+  totalResults?: number;
+}

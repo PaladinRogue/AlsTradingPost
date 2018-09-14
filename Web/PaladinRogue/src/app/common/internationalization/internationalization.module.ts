@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import * as i18next from 'i18next';
 import { i18n, InitOptions } from 'i18next';
@@ -100,6 +101,7 @@ function initialise_timezone(timezoneService: TimezoneService, defaultTimezoneId
     DateTimeComponent
   ],
   imports: [
+    HttpClientModule,
     CommonModule
   ]
 })

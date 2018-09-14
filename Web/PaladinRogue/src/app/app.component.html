@@ -3,6 +3,8 @@
     <pr-translate [prTranslate]="{ translateId: 'app.title', translateValues: { title: title } }"></pr-translate>
   </h1>
 
+  <button type="button" (click)="getData()">Get some data</button>
+
   <label for="language">Language</label>
   <select class="form-control" id="language"
           [(ngModel)]="language"
