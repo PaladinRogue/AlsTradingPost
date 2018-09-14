@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
-import { CoreModule, JsonParser } from '../core';
+import { APPLICATION_VERSION, CoreModule, JsonParser } from '../core';
 
 import { IStorage } from './interfaces/storage/storage.interface';
 import { JsonParsedStorage } from './services/json-parsed-storage/json-parsed-storage.service';
 import { LocalStorage } from './services/local-storage/local-storage.service';
 import { SessionStorage } from './services/session-storage/session-storage.service';
+import { VersionedStorage } from './services/versioned-storage/versioned-storage.service';
 import { LOCAL_STORAGE } from './tokens/local-storage.token';
 import { SESSION_STORAGE } from './tokens/session-storage.token';
 
@@ -28,17 +29,21 @@ import { SESSION_STORAGE } from './tokens/session-storage.token';
       }
     },
     {
-      deps: [LOCAL_STORAGE, JsonParser],
+      deps: [LOCAL_STORAGE, JsonParser, APPLICATION_VERSION],
       provide: LocalStorage,
-      useFactory(localStorage: IStorage, parser: JsonParser): IStorage {
-        return new JsonParsedStorage(localStorage, parser);
+      useFactory(localStorage: IStorage, parser: JsonParser, version: string): IStorage {
+        const jsonParsedStorage: IStorage = new JsonParsedStorage(localStorage, parser);
+
+        return new VersionedStorage(jsonParsedStorage, version);
       }
     },
     {
-      deps: [SESSION_STORAGE, JsonParser],
+      deps: [SESSION_STORAGE, JsonParser, APPLICATION_VERSION],
       provide: SessionStorage,
-      useFactory(sessionStorage: IStorage, parser: JsonParser): IStorage {
-        return new JsonParsedStorage(sessionStorage, parser);
+      useFactory(sessionStorage: IStorage, parser: JsonParser, version: string): IStorage {
+        const jsonParsedStorage: IStorage = new JsonParsedStorage(sessionStorage, parser);
+
+        return new VersionedStorage(jsonParsedStorage, version);
       }
     }
   ]

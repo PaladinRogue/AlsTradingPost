@@ -2,8 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { ENVIRONMENT } from '../environments/environment';
 
 import { AppComponent } from './app.component';
+import { APPLICATION_VERSION } from './common/core';
 import { DataModule, DataService, HttpDataService } from './common/data';
 import { ErrorHandlersProvider } from './common/data/services/error-handlers-provider/error-handlers.provider';
 import { HttpApiService } from './common/http';
@@ -92,6 +94,10 @@ import { SharedModule } from './shared/shared.module';
                    errorHandlersProviderService: ErrorHandlersProvider): DataService => {
         return new HttpDataService(httpApiService, errorHandlersProviderService);
       }
+    },
+    {
+      provide: APPLICATION_VERSION,
+      useValue: ENVIRONMENT.version
     }
   ],
   bootstrap: [
