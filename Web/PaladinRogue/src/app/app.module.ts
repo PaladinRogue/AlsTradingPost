@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { DataModule, DataService, HttpDataService } from './common/data';
-import { ErrorHandlersProviderService } from './common/data/services/error-handlers-provider/error-handlers-provider.service';
+import { ErrorHandlersProvider } from './common/data/services/error-handlers-provider/error-handlers.provider';
 import { HttpApiService } from './common/http';
 import {
   CldrDateFormat,
@@ -21,6 +21,7 @@ import {
   NumberFormat,
   TimeFormat
 } from './common/internationalization';
+import { StorageModule } from './common/storage';
 import { LoginComponent } from './shared/business-components/login/login.component';
 import { SharedModule } from './shared/shared.module';
 
@@ -34,6 +35,7 @@ import { SharedModule } from './shared/shared.module';
     SharedModule,
     FormsModule,
     DataModule,
+    StorageModule,
     InternationalizationModule.forRoot({
       backendOptions: {
         loadPath: '/src/locales/{{lng}}/{{ns}}.json'
@@ -85,9 +87,9 @@ import { SharedModule } from './shared/shared.module';
     },
     {
       provide: DataService,
-      deps: [HttpApiService, ErrorHandlersProviderService],
+      deps: [HttpApiService, ErrorHandlersProvider],
       useFactory: (httpApiService: HttpApiService,
-                   errorHandlersProviderService: ErrorHandlersProviderService): DataService => {
+                   errorHandlersProviderService: ErrorHandlersProvider): DataService => {
         return new HttpDataService(httpApiService, errorHandlersProviderService);
       }
     }

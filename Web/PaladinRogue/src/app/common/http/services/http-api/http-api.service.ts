@@ -5,7 +5,7 @@ import { ICollectionResourceResponse } from '../../interfaces/collection-resourc
 import { IErrorResponse } from '../../interfaces/error-response/error-response.interface';
 import { IHttpResponse } from '../../interfaces/http-response/http-response.interface';
 import { IResourceResponse } from '../../interfaces/resource-response/resource-response.interface';
-import { HttpErrorHandlersProviderService } from '../http-error-handlers-provider/http-error-handlers-provider.service';
+import { HttpErrorHandlersProvider } from '../http-error-handlers-provider/http-error-handlers.provider';
 import { IHttpErrorHandler } from '../http-error-handlers/interfaces/http-error-handler.interface';
 import { HttpError } from '../http-error/http-error';
 import { HttpRequestFactory } from '../http-request-factory/http-request-factory.service';
@@ -15,11 +15,11 @@ import { HttpService } from '../http/http.service';
 export class HttpApiService {
   private readonly _httpService: HttpService;
   private readonly _httpRequestFactory: HttpRequestFactory;
-  private readonly _httpErrorHandlersProviderService: HttpErrorHandlersProviderService;
+  private readonly _httpErrorHandlersProviderService: HttpErrorHandlersProvider;
 
   constructor(httpService: HttpService,
               httpRequestFactory: HttpRequestFactory,
-              httpErrorHandlersProviderService: HttpErrorHandlersProviderService) {
+              httpErrorHandlersProviderService: HttpErrorHandlersProvider) {
     this._httpService = httpService;
     this._httpRequestFactory = httpRequestFactory;
     this._httpErrorHandlersProviderService = httpErrorHandlersProviderService;

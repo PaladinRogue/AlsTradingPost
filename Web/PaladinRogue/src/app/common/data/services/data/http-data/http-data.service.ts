@@ -8,7 +8,7 @@ import { ErrorType } from '../../../constants/error-type/error-type.constant';
 import { CollectionResource } from '../../collection-resource/collection-resource';
 import { ICollectionResource } from '../../collection-resource/collection-resource.interface';
 import { DataError } from '../../data-error/data-error';
-import { ErrorHandlersProviderService } from '../../error-handlers-provider/error-handlers-provider.service';
+import { ErrorHandlersProvider } from '../../error-handlers-provider/error-handlers.provider';
 import { IErrorHandler } from '../../error-handlers/interfaces/error-handler.interface';
 import { ILink } from '../../link/link.interface';
 import { Resource } from '../../resource/resource';
@@ -18,10 +18,10 @@ import { DataService } from '../data.service';
 @Injectable()
 export class HttpDataService implements DataService {
   private readonly _httpApiService: HttpApiService;
-  private readonly _errorHandlersProviderService: ErrorHandlersProviderService;
+  private readonly _errorHandlersProviderService: ErrorHandlersProvider;
 
   constructor(httpApiService: HttpApiService,
-              errorHandlersProviderService: ErrorHandlersProviderService) {
+              errorHandlersProviderService: ErrorHandlersProvider) {
     this._httpApiService = httpApiService;
     this._errorHandlersProviderService = errorHandlersProviderService;
   }

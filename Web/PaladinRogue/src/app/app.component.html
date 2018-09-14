@@ -3,92 +3,113 @@
     <pr-translate [prTranslate]="{ translateId: 'app.title', translateValues: { title: title } }"></pr-translate>
   </h1>
 
-  <button type="button" (click)="getData()">Get some data</button>
-
-  <label for="language">Language</label>
-  <select class="form-control" id="language"
-          [(ngModel)]="language"
-          (change)="setLanguage()">
-    <option *ngFor="let option of languageOptions"
-            [value]="option.value">{{ option.label }}
-    </option>
-  </select>
-
-  <label for="locale">Locale</label>
-  <select class="form-control" id="locale"
-          [(ngModel)]="locale"
-          (change)="setLocale()">
-    <option *ngFor="let option of localeOptions"
-            [value]="option.value">{{ option.label }}
-    </option>
-  </select>
-
-  <label for="timezone">Timezone</label>
-  <select class="form-control" id="timezone"
-          [(ngModel)]="timezone"
-          (change)="setTimezone()">
-    <option *ngFor="let option of timezoneOptions"
-            [value]="option.value">{{ option.label }}
-    </option>
-  </select>
-
-  <h2>Dates</h2>
-  <p>
-    <pr-date [prDate]="date" prDateFormat="full"></pr-date>
-  </p>
-  <p>
-    <pr-date [prDate]="date" prDateFormat="long"></pr-date>
-  </p>
-  <p>
-    <pr-date [prDate]="date" prDateFormat="medium"></pr-date>
-  </p>
-  <p>
-    <pr-date [prDate]="date"></pr-date>
-  </p>
-
-  <h2>Times</h2>
-  <p>
-    <pr-time [prTime]="date" prTimeFormat="full"></pr-time>
-  </p>
-  <p>
-    <pr-time [prTime]="date" prTimeFormat="long"></pr-time>
-  </p>
-  <p>
-    <pr-time [prTime]="date" prTimeFormat="medium"></pr-time>
-  </p>
-  <p>
-    <pr-time [prTime]="date"></pr-time>
-  </p>
-
-  <h2>Date Times</h2>
-  <p>
-    <pr-date-time [prDateTime]="date" prDateTimeFormat="full"></pr-date-time>
-  </p>
-  <p>
-    <pr-date-time [prDateTime]="date" prDateTimeFormat="long"></pr-date-time>
-  </p>
-  <p>
-    <pr-date-time [prDateTime]="date" prDateTimeFormat="medium"></pr-date-time>
-  </p>
-  <p>
-    <pr-date-time [prDateTime]="date"></pr-date-time>
-  </p>
-
-  <h2>Numbers</h2>
-  <div *ngFor="let number of numbers">
-    <p>
-      <pr-number [prNumber]="number"></pr-number>
-    </p>
-    <p>
-      <pr-number [prNumber]="number" [prNumberPrecision]="1"></pr-number>
-    </p>
-    <p>
-      <pr-number [prNumber]="number" [prNumberPrecision]="2"></pr-number>
-    </p>
-    <p>
-      <pr-number [prNumber]="number" [prNumberPrecision]="3"></pr-number>
-    </p>
+  <div>
+    <button type="button" (click)="getData()">Get some data</button>
   </div>
+
+  <div>
+    <input [(ngModel)]="localData" >
+    <button type="button" (click)="saveLocalData()">Save local data</button>
+    <button type="button" (click)="getLocalData()">Get local data</button>
+  </div>
+
+  <div>
+    <input [(ngModel)]="sessionData" >
+    <button type="button" (click)="saveSessionData()">Save session data</button>
+    <button type="button" (click)="getSessionData()">Get session data</button>
+  </div>
+
+  <div>
+    <label for="language">Language</label>
+    <select class="form-control" id="language"
+            [(ngModel)]="language"
+            (change)="setLanguage()">
+      <option *ngFor="let option of languageOptions"
+              [value]="option.value">{{ option.label }}
+      </option>
+    </select>
+  </div>
+
+  <div>
+    <label for="locale">Locale</label>
+    <select class="form-control" id="locale"
+            [(ngModel)]="locale"
+            (change)="setLocale()">
+      <option *ngFor="let option of localeOptions"
+              [value]="option.value">{{ option.label }}
+      </option>
+    </select>
+  </div>
+
+  <div>
+    <label for="timezone">Timezone</label>
+    <select class="form-control" id="timezone"
+            [(ngModel)]="timezone"
+            (change)="setTimezone()">
+      <option *ngFor="let option of timezoneOptions"
+              [value]="option.value">{{ option.label }}
+      </option>
+    </select>
+  </div>
+
+  <div>
+    <h2>Dates</h2>
+    <p>
+      <pr-date [prDate]="date" prDateFormat="full"></pr-date>
+    </p>
+    <p>
+      <pr-date [prDate]="date" prDateFormat="long"></pr-date>
+    </p>
+    <p>
+      <pr-date [prDate]="date" prDateFormat="medium"></pr-date>
+    </p>
+    <p>
+      <pr-date [prDate]="date"></pr-date>
+    </p>
+
+    <h2>Times</h2>
+    <p>
+      <pr-time [prTime]="date" prTimeFormat="full"></pr-time>
+    </p>
+    <p>
+      <pr-time [prTime]="date" prTimeFormat="long"></pr-time>
+    </p>
+    <p>
+      <pr-time [prTime]="date" prTimeFormat="medium"></pr-time>
+    </p>
+    <p>
+      <pr-time [prTime]="date"></pr-time>
+    </p>
+
+    <h2>Date Times</h2>
+    <p>
+      <pr-date-time [prDateTime]="date" prDateTimeFormat="full"></pr-date-time>
+    </p>
+    <p>
+      <pr-date-time [prDateTime]="date" prDateTimeFormat="long"></pr-date-time>
+    </p>
+    <p>
+      <pr-date-time [prDateTime]="date" prDateTimeFormat="medium"></pr-date-time>
+    </p>
+    <p>
+      <pr-date-time [prDateTime]="date"></pr-date-time>
+    </p>
+
+    <h2>Numbers</h2>
+    <div *ngFor="let number of numbers">
+      <p>
+        <pr-number [prNumber]="number"></pr-number>
+      </p>
+      <p>
+        <pr-number [prNumber]="number" [prNumberPrecision]="1"></pr-number>
+      </p>
+      <p>
+        <pr-number [prNumber]="number" [prNumberPrecision]="2"></pr-number>
+      </p>
+      <p>
+        <pr-number [prNumber]="number" [prNumberPrecision]="3"></pr-number>
+      </p>
+    </div>
+  </div>
+
 </div>
-
-

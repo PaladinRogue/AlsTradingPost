@@ -10,7 +10,12 @@
     "no-string-literal": true,
     "curly": true,
     "no-any": true,
-    "member-access": true,
+    "member-access": [
+      true,
+      "check-accessor",
+      "check-constructor",
+      "check-parameter-property"
+    ],
     "no-empty-interface": true,
     "no-consecutive-blank-lines": true,
     "prefer-readonly": true,

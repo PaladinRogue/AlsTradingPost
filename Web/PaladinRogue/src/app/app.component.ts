@@ -1,17 +1,11 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { Moment } from 'moment';
-import { DataService } from './common/data';
 
 import { IOption } from './common/core';
-import {
-  DEFAULT_LANGUAGE,
-  DEFAULT_LOCALE,
-  DEFAULT_TIMEZONE,
-  LanguageService,
-  LocaleService,
-  TimezoneService
-} from './common/internationalization';
+import { DataService } from './common/data';
+import { DEFAULT_LANGUAGE, DEFAULT_LOCALE, DEFAULT_TIMEZONE, LanguageService, LocaleService, TimezoneService } from './common/internationalization';
+import { LocalStorage, SessionStorage } from './common/storage';
 
 @Component({
   selector: 'pr-root',
@@ -35,18 +29,26 @@ export class AppComponent implements OnInit {
   public timezone: string;
   public timezoneOptions: Array<IOption>;
 
+  public localData: string;
+  public sessionData: string;
+
   private readonly _localeService: LocaleService;
   private readonly _languageService: LanguageService;
   private readonly _timezoneService: TimezoneService;
   private readonly _dataService: DataService;
 
-  constructor(localeService: LocaleService,
-              languageService: LanguageService,
-              timezoneService: TimezoneService,
-              @Inject(DEFAULT_LANGUAGE) defaultLanguage: string,
-              @Inject(DEFAULT_LOCALE) defaultLocale: string,
-              @Inject(DEFAULT_TIMEZONE) defaultTimezone: string,
-              dataService: DataService) {
+  private readonly _localStorage: LocalStorage;
+  private readonly _sessionStorage: SessionStorage;
+
+  public constructor(localeService: LocaleService,
+                     languageService: LanguageService,
+                     timezoneService: TimezoneService,
+                     @Inject(DEFAULT_LANGUAGE) defaultLanguage: string,
+                     @Inject(DEFAULT_LOCALE) defaultLocale: string,
+                     @Inject(DEFAULT_TIMEZONE) defaultTimezone: string,
+                     dataService: DataService,
+                     localStorage: LocalStorage,
+                     sessionStorage: SessionStorage) {
     this._localeService = localeService;
     this._languageService = languageService;
     this._timezoneService = timezoneService;
@@ -54,6 +56,8 @@ export class AppComponent implements OnInit {
     this.locale = defaultLocale;
     this.timezone = defaultTimezone;
     this._dataService = dataService;
+    this._localStorage = localStorage;
+    this._sessionStorage = sessionStorage;
   }
 
   public ngOnInit(): void {
@@ -89,5 +93,21 @@ export class AppComponent implements OnInit {
         return '/api/traders/5d6733a6-3f09-4871-8064-a9a09b4e2c00';
       }
     });
+  }
+
+  public getLocalData(): void {
+    this.localData = this._localStorage.get('test');
+  }
+
+  public saveLocalData(): void {
+    this._localStorage.set('test', this.localData);
+  }
+
+  public getSessionData(): void {
+    this.sessionData = this._sessionStorage.get('test');
+  }
+
+  public saveSessionData(): void {
+    this._sessionStorage.set('test', this.sessionData);
   }
 }

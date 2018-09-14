@@ -6,7 +6,7 @@ import { ErrorHandlersService } from '../error-handlers/error-handlers.service';
 import { IErrorHandler } from '../error-handlers/interfaces/error-handler.interface';
 
 @Injectable()
-export class ErrorHandlersProviderService {
+export class ErrorHandlersProvider {
   private readonly _errorHandlersService: ErrorHandlersService;
 
   constructor(errorHandlersService: ErrorHandlersService) {

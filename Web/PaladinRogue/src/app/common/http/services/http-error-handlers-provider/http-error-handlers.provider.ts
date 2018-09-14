@@ -6,7 +6,7 @@ import { HttpErrorHandlersService } from '../http-error-handlers/http-error-hand
 import { IHttpErrorHandler } from '../http-error-handlers/interfaces/http-error-handler.interface';
 
 @Injectable()
-export class HttpErrorHandlersProviderService {
+export class HttpErrorHandlersProvider {
   private readonly _httpErrorHandlersService: HttpErrorHandlersService;
 
   constructor(httpErrorHandlersService: HttpErrorHandlersService) {

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { SecurityModule } from '../security';
 
 import { HttpApiService } from './services/http-api/http-api.service';
-import { HttpErrorHandlersProviderService } from './services/http-error-handlers-provider/http-error-handlers-provider.service';
+import { HttpErrorHandlersProvider } from './services/http-error-handlers-provider/http-error-handlers.provider';
 import { HttpErrorHandlersService } from './services/http-error-handlers/http-error-handlers.service';
 import { HttpRequestFactory } from './services/http-request-factory/http-request-factory.service';
 import { HttpService } from './services/http/http.service';
@@ -18,7 +18,7 @@ import { HttpService } from './services/http/http.service';
   providers: [
     HttpApiService,
     HttpErrorHandlersService,
-    HttpErrorHandlersProviderService,
+    HttpErrorHandlersProvider,
     HttpRequestFactory,
     HttpService
   ]

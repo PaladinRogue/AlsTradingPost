@@ -6,5 +6,5 @@ import { NgModule } from '@angular/core';
   imports: [],
   providers: []
 })
-export class TranslateModule {
+export class TextModule {
 }
