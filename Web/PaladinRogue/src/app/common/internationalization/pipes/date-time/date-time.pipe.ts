@@ -1,6 +1,7 @@
 import { OnDestroy, Pipe, PipeTransform } from '@angular/core';
 import { Moment } from 'moment';
-import { BehaviorSubject, Observable, Subject, Unsubscribable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { DateFormatType } from '../../services/date/constants/date-format-type.constant';
 import { DateService } from '../../services/date/date.service';
@@ -15,9 +16,9 @@ export class DateTimePipe implements PipeTransform, OnDestroy {
   private readonly _localeService: LocaleService;
   private readonly _timezoneService: TimezoneService;
   private readonly _transformObservable: Observable<string>;
-  private readonly _localeSubscription: Unsubscribable;
-  private readonly _timezoneSubscription: Unsubscribable;
   private readonly _transformSubject: Subject<string>;
+
+  private readonly _onDestroy: Subject<void> = new Subject();
 
   private _date: Moment;
   private _format: DateFormatType;
@@ -30,11 +31,15 @@ export class DateTimePipe implements PipeTransform, OnDestroy {
     this._timezoneService = timezoneService;
     this._transformSubject = new BehaviorSubject<string>('');
 
-    this._localeSubscription = this._localeService.localeChanged$.subscribe(() => {
+    this._localeService.localeChanged$.pipe(
+      takeUntil(this._onDestroy)
+    ).subscribe(() => {
       this._updateDate();
     });
 
-    this._timezoneSubscription = this._timezoneService.timezoneChanged$.subscribe(() => {
+    this._timezoneService.timezoneChanged$.pipe(
+      takeUntil(this._onDestroy)
+    ).subscribe(() => {
       this._updateDate();
     });
 
@@ -51,8 +56,7 @@ export class DateTimePipe implements PipeTransform, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this._localeSubscription.unsubscribe();
-    this._timezoneSubscription.unsubscribe();
+    this._onDestroy.next();
   }
 
   private _updateDate(): void {

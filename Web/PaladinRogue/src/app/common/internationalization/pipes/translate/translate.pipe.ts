@@ -1,5 +1,6 @@
 import { OnDestroy, Pipe, PipeTransform } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, Unsubscribable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { LanguageService } from '../../services/language/language.service';
 import { TranslateService } from '../../services/translate/translate.service';
@@ -11,9 +12,10 @@ import { ITranslate } from '../../services/translation/interfaces/translate.inte
 export class TranslatePipe implements PipeTransform, OnDestroy {
   private readonly _translateService: TranslateService;
   private readonly _languageService: LanguageService;
-  private readonly _languageSubscription: Unsubscribable;
   private readonly _transformObservable: Observable<string>;
   private readonly _transformSubject: Subject<string>;
+
+  private readonly _onDestroy: Subject<void> = new Subject();
 
   private _value: ITranslate;
 
@@ -23,7 +25,9 @@ export class TranslatePipe implements PipeTransform, OnDestroy {
     this._languageService = languageService;
     this._transformSubject = new BehaviorSubject<string>('');
 
-    this._languageSubscription = this._languageService.languageChanged$.subscribe(() => {
+    this._languageService.languageChanged$.pipe(
+      takeUntil(this._onDestroy)
+    ).subscribe(() => {
       this._updateTranslation();
     });
 
@@ -39,7 +43,7 @@ export class TranslatePipe implements PipeTransform, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this._languageSubscription.unsubscribe();
+    this._onDestroy.next();
   }
 
   private _updateTranslation(): void {

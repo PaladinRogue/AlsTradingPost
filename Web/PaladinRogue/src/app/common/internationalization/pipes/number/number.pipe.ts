@@ -1,5 +1,6 @@
-import { OnDestroy, OnInit, Pipe, PipeTransform } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, Unsubscribable } from 'rxjs';
+import { OnDestroy, Pipe, PipeTransform } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { LocaleService } from '../../services/locale/locale.service';
 import { NumberService } from '../../services/number/number.service';
@@ -11,8 +12,9 @@ export class NumberPipe implements PipeTransform, OnDestroy {
   private readonly _numberService: NumberService;
   private readonly _localeService: LocaleService;
   private readonly _transformObservable: Observable<string>;
-  private readonly _localeSubscription: Unsubscribable;
   private readonly _transformSubject: Subject<string>;
+
+  private readonly _onDestroy: Subject<void> = new Subject();
 
   private _number: number;
   private _precision: number;
@@ -23,7 +25,9 @@ export class NumberPipe implements PipeTransform, OnDestroy {
     this._localeService = localeService;
     this._transformSubject = new BehaviorSubject<string>('');
 
-    this._localeSubscription = this._localeService.localeChanged$.subscribe(() => {
+    this._localeService.localeChanged$.pipe(
+      takeUntil(this._onDestroy)
+    ).subscribe(() => {
       this._transformSubject.next(this._numberService.format(this._number, this._precision));
     });
 
@@ -40,6 +44,6 @@ export class NumberPipe implements PipeTransform, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this._localeSubscription.unsubscribe();
+    this._onDestroy.next();
   }
 }
