@@ -17,9 +17,9 @@ export class HttpApiService {
   private readonly _httpRequestFactory: HttpRequestFactory;
   private readonly _httpErrorHandlersProviderService: HttpErrorHandlersProvider;
 
-  constructor(httpService: HttpService,
-              httpRequestFactory: HttpRequestFactory,
-              httpErrorHandlersProviderService: HttpErrorHandlersProvider) {
+  public constructor(httpService: HttpService,
+                     httpRequestFactory: HttpRequestFactory,
+                     httpErrorHandlersProviderService: HttpErrorHandlersProvider) {
     this._httpService = httpService;
     this._httpRequestFactory = httpRequestFactory;
     this._httpErrorHandlersProviderService = httpErrorHandlersProviderService;

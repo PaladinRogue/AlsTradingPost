@@ -8,13 +8,13 @@ import { IHttpResponse } from '../../interfaces/http-response/http-response.inte
 
 @Injectable()
 export class HttpService {
-  private _httpClient: HttpClient;
+  private readonly _httpClient: HttpClient;
 
-  constructor(httpClient: HttpClient) {
+  public constructor(httpClient: HttpClient) {
     this._httpClient = httpClient;
   }
 
-  public json<T>(httpRequest: IHttpRequest<any>): Promise<IHttpResponse<T>> { // tslint:disable-line no-any
+  public json<T>(httpRequest: IHttpRequest<any>): Promise<IHttpResponse<T>> {
     return this._httpClient.request<T>(httpRequest.method, httpRequest.url, {
       body: httpRequest.body,
       headers: httpRequest.headers.getAll(),

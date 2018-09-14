@@ -106,7 +106,7 @@ function initialise_timezone(timezoneService: TimezoneService, defaultTimezoneId
   ]
 })
 export class InternationalizationModule {
-  constructor(@Optional() @SkipSelf() translateModule: InternationalizationModule) {
+  public constructor(@Optional() @SkipSelf() translateModule: InternationalizationModule) {
     if (translateModule) {
       throw new Error('Use forRoot in the main module only, for other dependencies use the forChild method');
     }

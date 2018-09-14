@@ -11,7 +11,7 @@ export class LocaleService {
   private readonly _localeChangedSubject: Subject<string>;
   private readonly _localeDependantServices: Array<ILocaleDependant> = [];
 
-  constructor() {
+   public constructor() {
     this._localeChangedSubject = new Subject<string>();
     this.localeChanged$ = this._localeChangedSubject.asObservable();
   }

@@ -1,7 +1,7 @@
 import { reduce } from 'lodash';
 
 export class LdmlToMomentDateFormatAdapter {
-  private _tokensMap: { [ldmlToken: string]: string } = {
+  private readonly _tokensMap: { [ldmlToken: string]: string } = {
     yyyy: 'YYYY',
     yy: 'YY',
     y: 'YYYY',

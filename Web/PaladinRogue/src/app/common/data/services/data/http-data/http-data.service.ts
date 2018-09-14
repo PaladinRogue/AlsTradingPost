@@ -20,7 +20,7 @@ export class HttpDataService implements DataService {
   private readonly _httpApiService: HttpApiService;
   private readonly _errorHandlersProviderService: ErrorHandlersProvider;
 
-  constructor(httpApiService: HttpApiService,
+  public constructor(httpApiService: HttpApiService,
               errorHandlersProviderService: ErrorHandlersProvider) {
     this._httpApiService = httpApiService;
     this._errorHandlersProviderService = errorHandlersProviderService;

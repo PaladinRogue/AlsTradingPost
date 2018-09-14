@@ -6,7 +6,7 @@ import { ILink } from './link.interface';
 export class Link implements ILink {
   private readonly _href: string;
   private readonly _methods: Array<Method>;
-  private readonly _params: IDict<any>; // tslint:disable=line no-any
+  private readonly _params: IDict<any>;
 
   private constructor(href: string, methods: Array<Method>) {
     this._href = href;

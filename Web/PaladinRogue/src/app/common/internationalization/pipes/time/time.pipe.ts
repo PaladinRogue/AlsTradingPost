@@ -23,9 +23,9 @@ export class TimePipe implements PipeTransform, OnDestroy {
   private _date: Moment;
   private _format: DateFormatType;
 
-  constructor(dateService: DateService,
-              localeService: LocaleService,
-              timezoneService: TimezoneService) {
+  public constructor(dateService: DateService,
+                     localeService: LocaleService,
+                     timezoneService: TimezoneService) {
     this._dateService = dateService;
     this._localeService = localeService;
     this._timezoneService = timezoneService;

@@ -15,7 +15,7 @@ export class CldrNumberFormat implements NumberFormat, ILocaleDependant {
   private _numberFormat: INumberFormatMap;
   private _symbolFormat: INumberFormatSymbolMap;
 
-  constructor(httpClient: HttpClient, cldrNumberFormatBasePath: string) {
+  public constructor(httpClient: HttpClient, cldrNumberFormatBasePath: string) {
     this._httpClient = httpClient;
     this._cldrNumberFormatBasePath = cldrNumberFormatBasePath;
   }

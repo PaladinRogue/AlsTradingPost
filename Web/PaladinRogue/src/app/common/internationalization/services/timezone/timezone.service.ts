@@ -13,7 +13,7 @@ export class TimezoneService {
 
   private _timezoneId: string;
 
-  constructor() {
+  public constructor() {
     this._timezoneChangedSubject = new Subject<string>();
     this.timezoneChanged$ = this._timezoneChangedSubject.asObservable();
   }

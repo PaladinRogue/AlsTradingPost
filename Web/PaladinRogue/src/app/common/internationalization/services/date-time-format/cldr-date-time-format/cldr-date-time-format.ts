@@ -2,9 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import '../../../../text/string-extensions/string-extensions';
-import {
-  LdmlToMomentDateFormatAdapter
-} from '../../date-format-adapters/ldml-moment-date-format-adapter/ldml-to-moment-date-format.adapter';
+import { LdmlToMomentDateFormatAdapter } from '../../date-format-adapters/ldml-moment-date-format-adapter/ldml-to-moment-date-format.adapter';
 import { DateFormat } from '../../date-format/date-format';
 import { TimeFormat } from '../../time-format/time-format';
 import { DateTimeFormat } from '../date-time-format';
@@ -21,10 +19,10 @@ export class CldrDateTimeFormat implements DateTimeFormat {
   private readonly _timeFormat: TimeFormat;
   private readonly _ldmlToMomentDateFormatAdapter: LdmlToMomentDateFormatAdapter;
 
-  constructor(httpClient: HttpClient,
-              cldrDateTimeFormatBasePath: string,
-              dateFormat: DateFormat,
-              timeFormat: TimeFormat) {
+  public constructor(httpClient: HttpClient,
+                     cldrDateTimeFormatBasePath: string,
+                     dateFormat: DateFormat,
+                     timeFormat: TimeFormat) {
     this._httpClient = httpClient;
     this._cldrDateTimeFormatBasePath = cldrDateTimeFormatBasePath;
     this._dateFormat = dateFormat;

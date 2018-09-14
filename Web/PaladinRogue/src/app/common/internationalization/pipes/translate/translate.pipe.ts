@@ -19,8 +19,8 @@ export class TranslatePipe implements PipeTransform, OnDestroy {
 
   private _value: ITranslate;
 
-  constructor(translationService: TranslateService,
-              languageService: LanguageService) {
+  public constructor(translationService: TranslateService,
+                     languageService: LanguageService) {
     this._translateService = translationService;
     this._languageService = languageService;
     this._transformSubject = new BehaviorSubject<string>('');

@@ -9,7 +9,7 @@ import { IErrorHandler } from '../error-handlers/interfaces/error-handler.interf
 export class ErrorHandlersProvider {
   private readonly _errorHandlersService: ErrorHandlersService;
 
-  constructor(errorHandlersService: ErrorHandlersService) {
+  public constructor(errorHandlersService: ErrorHandlersService) {
     this._errorHandlersService = errorHandlersService;
   }
 

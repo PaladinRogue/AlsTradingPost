@@ -7,7 +7,7 @@ import { NumberFormatPart } from './constants/number-format-part.constant';
 export class NumberService {
   private readonly _numberFormat: NumberFormat;
 
-  constructor(numberFormat: NumberFormat) {
+  public constructor(numberFormat: NumberFormat) {
     this._numberFormat = numberFormat;
   }
 

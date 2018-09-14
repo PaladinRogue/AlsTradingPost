@@ -19,8 +19,8 @@ export class NumberPipe implements PipeTransform, OnDestroy {
   private _number: number;
   private _precision: number;
 
-  constructor(numberService: NumberService,
-              localeService: LocaleService) {
+  public constructor(numberService: NumberService,
+                     localeService: LocaleService) {
     this._numberService = numberService;
     this._localeService = localeService;
     this._transformSubject = new BehaviorSubject<string>('');

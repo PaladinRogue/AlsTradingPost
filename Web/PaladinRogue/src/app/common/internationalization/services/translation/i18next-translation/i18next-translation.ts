@@ -13,9 +13,9 @@ export class I18nextTranslation implements Translation {
   private readonly _i18next: i18n;
   private readonly _translateConfig: InitOptions;
 
-  constructor(@Inject(i18nToken) i18next: i18n,
-              @Inject(i18nXHRToken) backend: Backend,
-              @Inject(i18nConfigToken) translateConfig: InitOptions) {
+  public constructor(@Inject(i18nToken) i18next: i18n,
+                     @Inject(i18nXHRToken) backend: Backend,
+                     @Inject(i18nConfigToken) translateConfig: InitOptions) {
     this._i18next = i18next;
     this._translateConfig = translateConfig;
 

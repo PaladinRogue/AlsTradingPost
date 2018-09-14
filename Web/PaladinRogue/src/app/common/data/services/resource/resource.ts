@@ -5,7 +5,7 @@ import { ILink } from '../link/link.interface';
 import { IResource } from './resource.interface';
 
 export class Resource implements IResource {
-  public attributes: IDict<any>; // tslint:disable-line no-any
+  public attributes: IDict<any>;
 
   private readonly _links: IDict<ILink>;
 

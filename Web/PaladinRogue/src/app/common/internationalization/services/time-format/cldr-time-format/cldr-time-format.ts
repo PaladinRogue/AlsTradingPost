@@ -16,7 +16,7 @@ export class CldrTimeFormat implements TimeFormat {
 
   private _timeFormat: ITimeFormatMap;
 
-  constructor(httpClient: HttpClient, cldrTimeFormatBasePath: string) {
+  public constructor(httpClient: HttpClient, cldrTimeFormatBasePath: string) {
     this._httpClient = httpClient;
     this._cldrTimeFormatBasePath = cldrTimeFormatBasePath;
     this._ldmlToMomentDateFormatAdapter = LdmlToMomentDateFormatAdapter.create();

@@ -11,7 +11,7 @@ export class LanguageService {
   private readonly _languageChangedSubject: Subject<string>;
   private readonly _languageDependantServices: Array<ILanguageDependant> = [];
 
-  constructor() {
+  public constructor() {
     this._languageChangedSubject = new Subject<string>();
     this.languageChanged$ = this._languageChangedSubject.asObservable();
   }

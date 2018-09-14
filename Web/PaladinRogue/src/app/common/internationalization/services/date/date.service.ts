@@ -4,7 +4,6 @@ import { Moment } from 'moment';
 
 import { DateFormat } from '../date-format/date-format';
 import { DateTimeFormat } from '../date-time-format/date-time-format';
-import { LocaleService } from '../locale/locale.service';
 import { TimeFormat } from '../time-format/time-format';
 import { TimezoneService } from '../timezone/timezone.service';
 import { DateFormatType } from './constants/date-format-type.constant';
@@ -16,10 +15,10 @@ export class DateService {
   private readonly _dateTimeFormat: DateTimeFormat;
   private readonly _timezoneService: TimezoneService;
 
-  constructor(dateFormat: DateFormat,
-              timeFormat: TimeFormat,
-              dateTimeFormat: DateTimeFormat,
-              timezoneService: TimezoneService) {
+  public constructor(dateFormat: DateFormat,
+                     timeFormat: TimeFormat,
+                     dateTimeFormat: DateTimeFormat,
+                     timezoneService: TimezoneService) {
     this._dateFormat = dateFormat;
     this._timeFormat = timeFormat;
     this._dateTimeFormat = dateTimeFormat;

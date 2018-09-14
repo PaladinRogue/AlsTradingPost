@@ -16,7 +16,7 @@ export class CldrDateFormat implements DateFormat {
 
   private _dateFormat: IDateFormatMap;
 
-  constructor(httpClient: HttpClient, cldrDateFormatBasePath: string) {
+  public constructor(httpClient: HttpClient, cldrDateFormatBasePath: string) {
     this._httpClient = httpClient;
     this._cldrDateFormatBasePath = cldrDateFormatBasePath;
     this._ldmlToMomentDateFormatAdapter = LdmlToMomentDateFormatAdapter.create();

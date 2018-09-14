@@ -2,7 +2,7 @@ import { IDict } from '../../../core';
 
 export interface IResourceData {
   id: string;
-  attributes: IDict<any>; // tslint:disable-line no-any
+  attributes: IDict<any>;
   type: string;
   meta: IDict<IAttributeMeta>;
 }

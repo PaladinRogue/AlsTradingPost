@@ -9,7 +9,7 @@ import { IHttpErrorHandler } from '../http-error-handlers/interfaces/http-error-
 export class HttpErrorHandlersProvider {
   private readonly _httpErrorHandlersService: HttpErrorHandlersService;
 
-  constructor(httpErrorHandlersService: HttpErrorHandlersService) {
+  public constructor(httpErrorHandlersService: HttpErrorHandlersService) {
     this._httpErrorHandlersService = httpErrorHandlersService;
   }
 

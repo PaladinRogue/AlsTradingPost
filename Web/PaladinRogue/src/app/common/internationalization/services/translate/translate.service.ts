@@ -7,7 +7,7 @@ import { Translation } from '../translation/translation';
 export class TranslateService {
   private readonly _translation: Translation;
 
-  constructor(translation: Translation) {
+  public constructor(translation: Translation) {
     this._translation = translation;
   }
 
