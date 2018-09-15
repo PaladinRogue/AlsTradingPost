@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AlsTradingPost.Api.Controllers
 {
-    [Route("api/[controller]")]
     public class TradersController : Controller
     {
         private readonly IMapper _mapper;

@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AlsTradingPost.Api.Controllers
 {
-    [Route("api/[controller]")]
     public class AuthenticationController : Controller
     {
         private readonly ISecure<IAuthenticationApplicationService> _secureAuthenticationApplicationService;

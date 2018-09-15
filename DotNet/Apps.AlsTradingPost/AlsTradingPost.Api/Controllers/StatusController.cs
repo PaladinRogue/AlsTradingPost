@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AlsTradingPost.Api.Controllers
 {
-    [Route("api/[controller]")]
     public class StatusController : Controller
     {
         private readonly IResourceBuilder _resourceBuilder;

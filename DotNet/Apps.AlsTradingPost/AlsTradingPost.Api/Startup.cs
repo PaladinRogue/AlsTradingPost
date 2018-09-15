@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using AlsTradingPost.Setup;
 using AutoMapper;
 using Common.Api.Extensions;
 using Common.Api.Formats;
-using Common.Api.NamingMap;
 using Common.Domain.DomainEvents;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Domain.Models.DataProtection;
@@ -26,7 +24,7 @@ namespace AlsTradingPost.Api
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            CommonConfigureServices(services);
+            CommonConfigureServices(services, "als", 1);
             
             services.Configure<MvcOptions>(options =>
             {

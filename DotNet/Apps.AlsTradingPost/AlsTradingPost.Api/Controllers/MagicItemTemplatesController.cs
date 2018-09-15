@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AlsTradingPost.Api.Controllers
 {
-    [Route("api/[controller]")]
     [Authorize(PersonaPolicies.Trader)]
     public class MagicItemTemplatesController : Controller
     {

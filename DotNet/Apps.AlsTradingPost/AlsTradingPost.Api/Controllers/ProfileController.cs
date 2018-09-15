@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AlsTradingPost.Api.Controllers
 {
-    [Route("api/[controller]")]
     public class ProfileController : Controller
     {
         private readonly IResourceBuilder _resourceBuilder;
