@@ -1,0 +1,7 @@
+@import "../../../../../theme/size";
+@import "../../../../../theme/colour";
+
+:host {
+  font-size: $icon-size-medium;
+  color: $default-icon-colour;
+}

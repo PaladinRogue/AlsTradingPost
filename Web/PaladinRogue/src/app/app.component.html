@@ -1,7 +1,5 @@
 <div>
-  <h1>
-    <pr-translate [prTranslate]="{ translateId: 'app.title', translateValues: { title: title } }"></pr-translate>
-  </h1>
+  <router-outlet></router-outlet>
 
   <div>
     <button type="button" (click)="getData()">Get some data</button>
@@ -17,10 +15,6 @@
     <input [(ngModel)]="sessionData" >
     <button type="button" (click)="saveSessionData()">Save session data</button>
     <button type="button" (click)="getSessionData()">Get session data</button>
-  </div>
-
-  <div>
-    <router-outlet></router-outlet>
   </div>
 
   <div>

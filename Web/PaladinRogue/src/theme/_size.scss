@@ -1,0 +1,11 @@
+
+$icon-size-small: 24px;
+$icon-size-medium: 30px;
+$icon-size-large: 36px;
+
+@mixin size-setup($size) {
+  height: $size;
+  width: $size;
+  min-height: $size;
+  min-width: $size;
+}

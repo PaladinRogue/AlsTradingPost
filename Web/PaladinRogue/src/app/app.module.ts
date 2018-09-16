@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ENVIRONMENT } from '../environments/environment';
-import { AppRoutingModule } from './app-routing/app-routing.module';
+import { FontAwesomeIconRepository, IconRepository } from './common/media';
+import { RoutingModule } from './routing/routing.module';
 
 import { AppComponent } from './app.component';
 import { APPLICATION_VERSION } from './common/core';
@@ -29,6 +31,14 @@ import { HomeModule } from './home/home.module';
 import { LoginComponent } from './shared/business-components/login/login.component';
 import { SharedModule } from './shared/shared.module';
 
+import { faHome } from '@fortawesome/free-solid-svg-icons';
+
+function initialise_icons(iconRepository: IconRepository): () => void {
+  return (): void => {
+    iconRepository.addIcon(faHome);
+  };
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,15 +46,16 @@ import { SharedModule } from './shared/shared.module';
   ],
   imports: [
     HomeModule,
-    AppRoutingModule,
+    RoutingModule,
     BrowserModule,
     SharedModule,
     FormsModule,
     DataModule,
     StorageModule,
+    BrowserAnimationsModule,
     InternationalizationModule.forRoot({
       backendOptions: {
-        loadPath: '/src/locales/{{lng}}/{{ns}}.json'
+        loadPath: '/src/assets/locales/{{lng}}/{{ns}}.json'
       }
     })
   ],
@@ -102,6 +113,18 @@ import { SharedModule } from './shared/shared.module';
     {
       provide: APPLICATION_VERSION,
       useValue: ENVIRONMENT.version
+    },
+    {
+      provide: IconRepository,
+      useFactory: (): IconRepository => {
+        return new FontAwesomeIconRepository();
+      }
+    },
+    {
+      provide: APP_INITIALIZER,
+      deps: [IconRepository],
+      useFactory: initialise_icons,
+      multi: true
     }
   ],
   bootstrap: [

@@ -13,7 +13,6 @@ import { LocalStorage, SessionStorage } from './common/storage';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
-  public title: string = 'PaladinRogue';
   public date: Moment = moment();
   public numbers: Array<number> = [
     12.45,

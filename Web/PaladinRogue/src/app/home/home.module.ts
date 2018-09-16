@@ -1,20 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { InternationalizationModule } from '../common/internationalization';
+import { PlaygroundModule } from '../playground/playground.module';
 
-import { HOME_ROUTES } from './home.routes';
-import { LandingPageComponent } from './presentation-components/landing-page/landing-page.component';
-import { ProfileResolver } from './resolvers/profile/profile.resolver';
+import { HOME_ROUTES } from './routing/home.routes';
+import { LandingPageComponent } from './business-components/landing-page/landing-page.component';
 
 @NgModule({
   imports: [
+    PlaygroundModule,
+    InternationalizationModule.forChild(),
     RouterModule.forChild(HOME_ROUTES)
   ],
   exports: [],
   declarations: [
     LandingPageComponent
   ],
-  providers: [
-    ProfileResolver
-  ]
+  providers: []
 })
 export class HomeModule {}

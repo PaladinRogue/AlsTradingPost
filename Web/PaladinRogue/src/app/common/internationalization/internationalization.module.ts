@@ -140,38 +140,38 @@ export class InternationalizationModule {
         },
         {
           provide: APP_INITIALIZER,
-          useFactory: initialise_translations,
           deps: [LanguageService, Translation],
+          useFactory: initialise_translations,
           multi: true
         },
         {
           provide: APP_INITIALIZER,
-          useFactory: initialise_locales,
           deps: [LocaleService, DateFormat, TimeFormat, DateTimeFormat, NumberFormat, MomentService],
+          useFactory: initialise_locales,
           multi: true
         },
         {
           provide: APP_INITIALIZER,
-          useFactory: initialise_timezones,
           deps: [TimezoneService, MomentService],
+          useFactory: initialise_timezones,
           multi: true
         },
         {
           provide: APP_INITIALIZER,
-          useFactory: initialise_locale,
           deps: [LocaleService, DEFAULT_LOCALE],
+          useFactory: initialise_locale,
           multi: true
         },
         {
           provide: APP_INITIALIZER,
-          useFactory: initialise_language,
           deps: [LanguageService, DEFAULT_LANGUAGE],
+          useFactory: initialise_language,
           multi: true
         },
         {
           provide: APP_INITIALIZER,
-          useFactory: initialise_timezone,
           deps: [TimezoneService, DEFAULT_TIMEZONE],
+          useFactory: initialise_timezone,
           multi: true
         },
         LdmlToMomentDateFormatAdapter,

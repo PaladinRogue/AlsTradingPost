@@ -1,0 +1,11 @@
+{
+  "app": {
+    "title": "Welcome to {{ title }}!",
+    "playground": {
+      "title": "Playground",
+      "icon": {
+        "title": "Icons"
+      }
+    }
+  }
+}
