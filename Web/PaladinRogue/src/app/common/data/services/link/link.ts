@@ -13,7 +13,7 @@ export class Link implements ILink {
     this._methods = methods;
   }
 
-  public static create(href: string, methods: Array<Method>): Link {
+  public static create(href: string, ...methods: Array<Method>): Link {
     return new Link(href, methods);
   }
 

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { ENVIRONMENT } from '../environments/environment';
+import { AppRoutingModule } from './app-routing/app-routing.module';
 
 import { AppComponent } from './app.component';
 import { APPLICATION_VERSION } from './common/core';
@@ -24,6 +25,7 @@ import {
   TimeFormat
 } from './common/internationalization';
 import { StorageModule } from './common/storage';
+import { HomeModule } from './home/home.module';
 import { LoginComponent } from './shared/business-components/login/login.component';
 import { SharedModule } from './shared/shared.module';
 
@@ -33,6 +35,8 @@ import { SharedModule } from './shared/shared.module';
     LoginComponent
   ],
   imports: [
+    HomeModule,
+    AppRoutingModule,
     BrowserModule,
     SharedModule,
     FormsModule,

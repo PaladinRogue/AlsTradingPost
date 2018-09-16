@@ -7,7 +7,7 @@ import { IEnvironment } from './environment.interface';
 export const ENVIRONMENT: IEnvironment = {
   isProduction: false,
   version: '1.0.0',
-  applicationEndpoint: '/api/als/profile'
+  profileEndpoint: '/api/v1/als/profile'
 };
 
 /*

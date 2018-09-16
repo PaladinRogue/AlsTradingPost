@@ -1,5 +1,5 @@
 {
-  "/api/*": {
+  "/api/v1/als/*": {
     "target": "https://localhost:1001",
     "secure": false,
     "logLevel": "debug",

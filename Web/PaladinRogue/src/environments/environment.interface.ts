@@ -1,5 +1,5 @@
 export interface IEnvironment {
   isProduction: boolean;
   version: string;
-  applicationEndpoint: string;
+  profileEndpoint: string;
 }
