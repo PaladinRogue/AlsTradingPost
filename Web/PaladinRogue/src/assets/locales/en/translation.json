@@ -6,6 +6,23 @@
       "icon": {
         "title": "Icons"
       }
+    },
+    "als": {
+      "title": "Als trading post"
+    }
+  },
+  "noContent": {
+    "label": "Nothing to see here"
+  },
+  "playground": {
+    "routes": {
+      "home": "Home",
+      "icons": "Icons",
+      "dates": "Dates",
+      "times": "Times",
+      "dateTimes": "Date times",
+      "numbers": "Numbers",
+      "storage": "Storage"
     }
   }
 }

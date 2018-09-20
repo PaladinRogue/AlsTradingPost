@@ -3,9 +3,9 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { ENVIRONMENT } from '../environments/environment';
-import { FontAwesomeIconRepository, IconRepository } from './common/media';
-import { RoutingModule } from './routing/routing.module';
 
 import { AppComponent } from './app.component';
 import { APPLICATION_VERSION } from './common/core';
@@ -26,12 +26,12 @@ import {
   NumberFormat,
   TimeFormat
 } from './common/internationalization';
+import { FontAwesomeIconRepository, IconRepository } from './common/media';
 import { StorageModule } from './common/storage';
 import { HomeModule } from './home/home.module';
+import { RoutingModule } from './routing/routing.module';
 import { LoginComponent } from './shared/business-components/login/login.component';
 import { SharedModule } from './shared/shared.module';
-
-import { faHome } from '@fortawesome/free-solid-svg-icons';
 
 function initialise_icons(iconRepository: IconRepository): () => void {
   return (): void => {

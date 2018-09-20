@@ -1,0 +1,9 @@
+@import "../../../../../theme/colour";
+
+:host {
+  .PrSideNav {
+    &--active {
+      border-left: 2px solid $navigation-active-colour;
+    }
+  }
+}

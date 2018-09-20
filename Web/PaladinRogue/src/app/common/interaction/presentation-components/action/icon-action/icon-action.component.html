@@ -1,0 +1,23 @@
+<ng-container [ngSwitch]="actionType$ | async">
+  <a mat-mini-fab
+     [color]="prActionStyle"
+     class="PrAction-route"
+     [routerLink]="prAction.route"
+     [queryParams]="prAction.routeParams"
+     *ngSwitchCase="actionTypes.ROUTE">
+    <pr-icon class="PrIcon--small" [prIcon]="prActionIcon"></pr-icon>
+  </a>
+  <button mat-mini-fab
+          [color]="prActionStyle"
+          class="PrAction-action"
+          (click)="action()"
+          *ngSwitchCase="actionTypes.ACTION">
+    <pr-icon class="PrIcon--small" [prIcon]="prActionIcon"></pr-icon>
+  </button>
+  <button mat-fab
+          disabled
+          class="PrAction-noAction"
+       *ngSwitchCase="actionTypes.NONE">
+    <pr-icon class="PrIcon--small" [prIcon]="prActionIcon"></pr-icon>
+  </button>
+</ng-container>

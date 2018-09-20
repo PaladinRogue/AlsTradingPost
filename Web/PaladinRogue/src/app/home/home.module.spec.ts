@@ -1,13 +1,13 @@
-import { AppRoutingModule } from './home.module';
+import { HomeModule } from './home.module';
 
-describe('AppRoutingModule', () => {
-  let appRoutingModule: AppRoutingModule;
+describe('HomeModule', () => {
+  let homeModule: HomeModule;
 
   beforeEach(() => {
-    appRoutingModule = new AppRoutingModule();
+    homeModule = new HomeModule();
   });
 
   it('should create an instance', () => {
-    expect(appRoutingModule).toBeTruthy();
+    expect(homeModule).toBeTruthy();
   });
 });

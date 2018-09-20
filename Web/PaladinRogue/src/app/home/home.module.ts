@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AlsTradingPostModule } from '../als-trading-post/als-trading-post.module';
 import { InternationalizationModule } from '../common/internationalization';
 import { PlaygroundModule } from '../playground/playground.module';
 
@@ -8,6 +9,7 @@ import { LandingPageComponent } from './business-components/landing-page/landing
 
 @NgModule({
   imports: [
+    AlsTradingPostModule,
     PlaygroundModule,
     InternationalizationModule.forChild(),
     RouterModule.forChild(HOME_ROUTES)

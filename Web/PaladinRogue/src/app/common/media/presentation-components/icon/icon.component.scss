@@ -4,4 +4,10 @@
 :host {
   font-size: $icon-size-medium;
   color: $default-icon-colour;
+
+  &.PrIcon {
+    &--small {
+      font-size: $icon-size-small;
+    }
+  }
 }

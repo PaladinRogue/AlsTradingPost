@@ -1,0 +1,13 @@
+<h2>Local storage</h2>
+<div>
+  <input [(ngModel)]="localData" >
+  <button type="button" (click)="saveLocalData()">Save local data</button>
+  <button type="button" (click)="getLocalData()">Get local data</button>
+</div>
+
+<h2>Session storage</h2>
+<div>
+  <input [(ngModel)]="sessionData" >
+  <button type="button" (click)="saveSessionData()">Save session data</button>
+  <button type="button" (click)="getSessionData()">Get session data</button>
+</div>

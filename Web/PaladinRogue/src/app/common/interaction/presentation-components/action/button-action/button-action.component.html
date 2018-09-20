@@ -1,0 +1,27 @@
+<ng-container [ngSwitch]="actionType$ | async">
+  <a mat-raised-button
+     [color]="prActionStyle"
+     class="PrAction-route"
+     [routerLink]="prAction.route"
+     [queryParams]="prAction.routeParams"
+     *ngSwitchCase="actionTypes.ROUTE">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </a>
+  <button mat-raised-button
+          [color]="prActionStyle"
+          class="PrAction-action"
+          (click)="action()"
+          *ngSwitchCase="actionTypes.ACTION">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </button>
+  <button mat-raised-button
+          disabled
+          class="PrAction-noAction"
+       *ngSwitchCase="actionTypes.NONE">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </button>
+</ng-container>
+
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>

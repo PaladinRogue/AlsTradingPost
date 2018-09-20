@@ -19,3 +19,6 @@ export { DateFormat } from './services/date-format/date-format';
 export { DateTimeFormat } from './services/date-time-format/date-time-format';
 export { NumberFormat } from './services/number-format/number-format';
 export { TimeFormat } from './services/time-format/time-format';
+
+export { ITranslate } from './services/translation/interfaces/translate.interface';
+export { ITranslateOptions } from './services/translation/interfaces/translate-options.interface';

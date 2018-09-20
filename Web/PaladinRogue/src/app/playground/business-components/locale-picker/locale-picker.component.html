@@ -1,0 +1,32 @@
+<div>
+  <label for="language">Language</label>
+  <select class="form-control" id="language"
+          [(ngModel)]="language"
+          (change)="setLanguage()">
+    <option *ngFor="let option of languageOptions"
+            [value]="option.value">{{ option.label }}
+    </option>
+  </select>
+</div>
+
+<div>
+  <label for="locale">Locale</label>
+  <select class="form-control" id="locale"
+          [(ngModel)]="locale"
+          (change)="setLocale()">
+    <option *ngFor="let option of localeOptions"
+            [value]="option.value">{{ option.label }}
+    </option>
+  </select>
+</div>
+
+<div>
+  <label for="timezone">Timezone</label>
+  <select class="form-control" id="timezone"
+          [(ngModel)]="timezone"
+          (change)="setTimezone()">
+    <option *ngFor="let option of timezoneOptions"
+            [value]="option.value">{{ option.label }}
+    </option>
+  </select>
+</div>

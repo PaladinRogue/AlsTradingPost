@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { IRoute } from '../../interfaces/route.interface';
 
 @Component({
   selector: 'pr-side-nav',
@@ -7,4 +8,6 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SideNavComponent {
+  @Input()
+  public prSideNavRoutes: Array<IRoute>;
 }

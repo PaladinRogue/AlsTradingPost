@@ -1,8 +1,19 @@
-<mat-sidenav-container>
-  <mat-sidenav #drawer mode="side" opened>
-    <ng-content select="prSideDrawerLayoutDrawer"></ng-content>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <ng-content select="prSideDrawerLayoutContent"></ng-content>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<mat-drawer-container class="PrSideDrawerLayout-container">
+  <mat-drawer class="PrSideDrawerLayout-drawer" mode="side" opened>
+    <ng-content select="pr-drawer"></ng-content>
+
+    <pr-icon-action class="PrSideDrawerLayout-close"
+                    [prAction]="closeAction"
+                    prActionIcon="angle-left">
+    </pr-icon-action>
+  </mat-drawer>
+  <mat-drawer-content class="PrSideDrawerLayout-content">
+    <pr-icon-action class="PrSideDrawerLayout-open"
+                    *ngIf="isClosed$ | async"
+                    [prAction]="openAction"
+                    prActionIcon="angle-right">
+    </pr-icon-action>
+
+    <ng-content select="pr-drawer-content"></ng-content>
+  </mat-drawer-content>
+</mat-drawer-container>

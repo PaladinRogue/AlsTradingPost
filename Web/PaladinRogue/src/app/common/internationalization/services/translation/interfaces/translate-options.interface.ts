@@ -1,3 +1,3 @@
-export interface ITrnslateOptions {
+export interface ITranslateOptions {
   [key: string]: any;
 }

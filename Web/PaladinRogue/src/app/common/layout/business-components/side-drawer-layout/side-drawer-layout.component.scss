@@ -1,0 +1,28 @@
+:host {
+  .PrSideDrawerLayout {
+    &-drawer {
+      min-width: 300px;
+    }
+
+    &-content {
+      min-height: 200px;
+    }
+
+    &-close,
+    &-open {
+      margin: 5px;
+    }
+
+    &-close {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    &-open {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+}
