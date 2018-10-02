@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef } from '@angular/core';
 
 import { ActionComponent } from '../action.component';
 
@@ -9,7 +9,7 @@ import { ActionComponent } from '../action.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ButtonActionComponent extends ActionComponent {
-  public constructor() {
-    super();
+  public constructor(hostElement: ElementRef) {
+    super(hostElement);
   }
 }

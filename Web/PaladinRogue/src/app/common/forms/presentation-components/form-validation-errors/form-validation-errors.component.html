@@ -1,0 +1,4 @@
+<ng-container *ngFor="let validationError of prFormValidationErrors">
+  <pr-icon class="PrFormValidationErrors-icon PrIcon--xxsmall" prIcon="exclamation-triangle"></pr-icon>
+  <pr-translate [prTranslate]="validationError.message"></pr-translate>
+</ng-container>

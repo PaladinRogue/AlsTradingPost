@@ -1,10 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Route } from '@angular/router/src/config';
-import { map, get, filter } from 'lodash';
+import { filter, get, map } from 'lodash';
+import { IAction } from '../../../common/interaction';
 import { ITranslate } from '../../../common/internationalization';
+import { ModalService } from '../../../common/modal';
+import { IRoute, SideNavService } from '../../../common/navigation';
 
-import { IRoute } from '../../../common/navigation';
+import { SettingsModalComponent } from '../settings-modal/settings-modal.component';
 
 @Component({
   selector: 'pr-playground-landing-page',
@@ -14,15 +17,26 @@ import { IRoute } from '../../../common/navigation';
 })
 export class PlaygroundLandingPageComponent implements OnInit {
   public routes: Array<IRoute>;
+  public toggleSideNavAction: IAction;
 
   private readonly _router: Router;
+  private readonly _sideNavService: SideNavService;
+  private readonly _modalService: ModalService;
 
-  public constructor(router: Router) {
+  public constructor(router: Router,
+                     sideNavService: SideNavService,
+                     modalService: ModalService) {
     this._router = router;
+    this._sideNavService = sideNavService;
+    this._modalService = modalService;
   }
 
   public ngOnInit(): void {
-    this.routes = map(filter(get(this._router.config, ['0', 'children', '0', 'children']), (route: Route): boolean => {
+    this.toggleSideNavAction = {
+      action: (): void => this._sideNavService.toggle()
+    };
+
+    this.routes = map(filter(get(this._router.config, ['1', 'children']), (route: Route): boolean => {
       return !!route.path;
     }), (route: Route): IRoute => {
       return {
@@ -31,6 +45,19 @@ export class PlaygroundLandingPageComponent implements OnInit {
         routeParams: route.data
       };
     });
+  }
+
+  public get settingsModal(): IAction {
+    return {
+      action: (): void => {
+        this._modalService.openDefault({
+          title: {
+            translateId: 'settings.modal.title'
+          },
+          contentComponent: SettingsModalComponent
+        });
+      }
+    };
   }
 
   private _mapRouteToTranslation(route: Route): ITranslate {

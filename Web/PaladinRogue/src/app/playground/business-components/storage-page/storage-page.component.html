@@ -1,13 +1,19 @@
-<h2>Local storage</h2>
-<div>
-  <input [(ngModel)]="localData" >
-  <button type="button" (click)="saveLocalData()">Save local data</button>
-  <button type="button" (click)="getLocalData()">Get local data</button>
-</div>
+<pr-card class="PrStoragePage-card">
+  <pr-card-header [prCardHeaderTitle]="{ translateId: 'Local storage' }">
+  </pr-card-header>
+  <pr-form-input [prFormInput]="localDataInput"></pr-form-input>
+  <pr-card-actions>
+    <pr-button-action [prAction]="saveLocalDataAction">Save local data</pr-button-action>
+    <pr-button-action [prAction]="getLocalDataAction">Get local data</pr-button-action>
+  </pr-card-actions>
+</pr-card>
 
-<h2>Session storage</h2>
-<div>
-  <input [(ngModel)]="sessionData" >
-  <button type="button" (click)="saveSessionData()">Save session data</button>
-  <button type="button" (click)="getSessionData()">Get session data</button>
-</div>
+<pr-card class="PrStoragePage-card">
+  <pr-card-header [prCardHeaderTitle]="{ translateId: 'Session storage' }">
+  </pr-card-header>
+  <pr-form-input [prFormInput]="sessionDataInput"></pr-form-input>
+  <pr-card-actions>
+    <pr-button-action [prAction]="saveSessionDataAction">Save session data</pr-button-action>
+    <pr-button-action [prAction]="getSessionDataAction">Get session data</pr-button-action>
+  </pr-card-actions>
+</pr-card>

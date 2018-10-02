@@ -1,0 +1,7 @@
+<mat-form-field class="PrFormInputText-container">
+  <input matInput [placeholder]="labelText" [formControl]="formInput.getFormControl()">
+  <mat-hint *ngIf="formInput.hasPlaceholder()" align="start"><pr-translate [prTranslate]="formInput.getPlaceholder()"></pr-translate></mat-hint>
+  <mat-error *ngIf="(formInput.validationErrors$ | async) as validationErrors">
+    <pr-form-validation-errors [prFormValidationErrors]="validationErrors"></pr-form-validation-errors>
+  </mat-error>
+</mat-form-field>

@@ -1,4 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+
+import { FormInputText, InputFactory, InputType } from '../../../common/forms';
+import { IAction } from '../../../common/interaction';
 import { LocalStorage, SessionStorage } from '../../../common/storage';
 
 @Component({
@@ -7,9 +10,17 @@ import { LocalStorage, SessionStorage } from '../../../common/storage';
   styleUrls: ['./storage-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class StoragePageComponent {
+export class StoragePageComponent implements OnInit {
   public localData: string;
   public sessionData: string;
+
+  public localDataInput: FormInputText;
+  public sessionDataInput: FormInputText;
+
+  public saveLocalDataAction: IAction;
+  public getLocalDataAction: IAction;
+  public saveSessionDataAction: IAction;
+  public getSessionDataAction: IAction;
 
   private readonly _localStorage: LocalStorage;
   private readonly _sessionStorage: SessionStorage;
@@ -20,19 +31,57 @@ export class StoragePageComponent {
     this._sessionStorage = sessionStorage;
   }
 
-  public getLocalData(): void {
-    this.localData = this._localStorage.get('test');
-  }
+  public ngOnInit(): void {
+    this.localDataInput = InputFactory.create({
+      label: {
+        translateId: 'some.title'
+      },
+      type: InputType.TEXT,
+      isDisabled: false,
+      getValue: (): string => {
+        return this.localData;
+      },
+      setValue: (value: string): void => {
+        this.localData = value;
+      }
+    });
 
-  public saveLocalData(): void {
-    this._localStorage.set('test', this.localData);
-  }
+    this.sessionDataInput = InputFactory.create({
+      label: {
+        translateId: 'some.title.other'
+      },
+      type: InputType.TEXT,
+      isDisabled: false,
+      getValue: (): string => {
+        return this.sessionData;
+      },
+      setValue: (value: string): void => {
+        this.sessionData = value;
+      }
+    });
 
-  public getSessionData(): void {
-    this.sessionData = this._sessionStorage.get('test');
-  }
+    this.saveLocalDataAction = {
+      action: (): void => {
+        this._localStorage.set('test', this.localData || '');
+      }
+    };
 
-  public saveSessionData(): void {
-    this._sessionStorage.set('test', this.sessionData);
+    this.saveSessionDataAction = {
+      action: (): void => {
+        this._sessionStorage.set('test', this.sessionData || '');
+      }
+    };
+
+    this.getLocalDataAction = {
+      action: (): void => {
+        this.localDataInput.setValue(this._localStorage.get('test'));
+      }
+    };
+
+    this.getSessionDataAction = {
+      action: (): void => {
+        this.sessionDataInput.setValue(this._sessionStorage.get('test'));
+      }
+    };
   }
 }

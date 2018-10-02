@@ -2,7 +2,15 @@ $default-font-colour: #1e1e1e;
 $default-icon-colour: #1e1e1e;
 
 $colour-black: #1e1e1e;
-$colour-grey: #818181;
-$colour-purple: #812b61;
+$colour-grey-dark: #383838;
+$colour-grey: #4f4f4f;
+$colour-grey-light: #e3e3e3;
+$colour-purple: #673ab7;
+$colour-blue: #3f51b5;
+$colour-red: #f44336;
+
+$colour-primary: $colour-purple;
+$colour-secondary: $colour-blue;
+$colour-warning: $colour-red;
 
 $navigation-active-colour: $colour-purple;

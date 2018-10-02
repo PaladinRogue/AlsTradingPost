@@ -49,9 +49,7 @@ function initialise_icons(iconRepository: IconRepository): () => void {
     RoutingModule,
     BrowserModule,
     SharedModule,
-    FormsModule,
     DataModule,
-    StorageModule,
     BrowserAnimationsModule,
     InternationalizationModule.forRoot({
       backendOptions: {

@@ -1,0 +1,44 @@
+@import "../../../../theme/theme";
+
+:host {
+  .PrPlaygroundLandingPage {
+    &-header {
+      display: flex;
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      z-index: 101;
+    }
+
+    &-sideNav {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    &-settings,
+    &-profile,
+    &-menu {
+      padding: 0 $default-spacing-mobile;
+    }
+
+    &-profile {
+      background-color: white;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      color: $colour-primary;
+      box-sizing: border-box;
+      border-bottom: 1px solid $colour-primary;
+    }
+
+    &-title {
+      flex: 1 0 auto;
+    }
+  }
+}

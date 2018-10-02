@@ -1,0 +1,11 @@
+<div class="PrDefaultModal-header">
+  <h2 class="PrDefaultModal-title" mat-dialog-title>
+    <pr-translate [prTranslate]="defaultModalConfig.title"></pr-translate>
+  </h2>
+  <pr-icon-action class="PrDefaultModal-close"
+                  prActionIcon="times"
+                  [prAction]="closeAction"></pr-icon-action>
+</div>
+<mat-dialog-content>
+  <ng-template #contentContainer></ng-template>
+</mat-dialog-content>

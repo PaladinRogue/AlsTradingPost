@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { JsonParser } from '../../../core';
 
 import { IStorage } from '../../interfaces/storage/storage.interface';
-import { JsonParser } from '../../../core/services/json-parser/json.parser';
 
 @Injectable()
 export class JsonParsedStorage implements IStorage {

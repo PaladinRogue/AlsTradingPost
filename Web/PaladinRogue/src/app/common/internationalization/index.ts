@@ -14,6 +14,7 @@ export { DEFAULT_TIMEZONE } from './tokens/default-timezone.token';
 export { LanguageService } from './services/language/language.service';
 export { LocaleService } from './services/locale/locale.service';
 export { TimezoneService } from './services/timezone/timezone.service';
+export { TranslateService } from './services/translate/translate.service';
 
 export { DateFormat } from './services/date-format/date-format';
 export { DateTimeFormat } from './services/date-time-format/date-time-format';

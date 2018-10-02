@@ -1,10 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/theming';
+@import './theme/theme';
 
 @include mat-core();
 
-$primary: mat-palette($mat-lime, 500);
-$accent: mat-palette($mat-lime, 500, A200, A400);
+$primary: mat-palette($mat-deep-purple, 500);
+$accent: mat-palette($mat-indigo, 500, A200, A400);
 $warn: mat-palette($mat-red, 500);
 
 $config: mat-typography-config();
@@ -14,10 +15,30 @@ $theme: mat-light-theme($primary, $accent, $warn);
 @include angular-material-theme($theme);
 
 body {
+  margin: 0;
   font-family: mat-font-family($config);
   font-weight: normal;
 }
 
-h1, h2, h3, h4 {
+.mat-dialog-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  @include media-tablet {
+    position: relative;
+  }
+}
+
+.mat-tab-label {
+  width: 50%;
+}
+
+h1,
+h2,
+h3,
+h4 {
   font-weight: normal;
 }

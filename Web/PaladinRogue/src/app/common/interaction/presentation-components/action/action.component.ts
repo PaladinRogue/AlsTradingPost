@@ -1,8 +1,7 @@
-import { Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ElementRef, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { has } from 'lodash';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
-import { ActionStyle } from './constants/action-style.constant';
 import { ActionType } from './constants/action-type.constant';
 import { IActionAction } from './interfaces/action-action.interface';
 import { IActionRoute } from './interfaces/action-route.interface';
@@ -12,17 +11,32 @@ export abstract class ActionComponent implements OnChanges {
   @Input()
   public prAction: IAction;
 
-  @Input()
-  public prActionStyle: ActionStyle;
-
   public readonly actionType$: Observable<ActionType>;
   public actionTypes: typeof ActionType = ActionType;
 
   private readonly _actionTypeSubject: Subject<ActionType>;
+  protected readonly _hostElement: ElementRef;
 
-  protected constructor() {
+  protected constructor(hostElement: ElementRef) {
+    this._hostElement = hostElement;
+
     this._actionTypeSubject = new BehaviorSubject<ActionType>(ActionType.NONE);
     this.actionType$ = this._actionTypeSubject.asObservable();
+  }
+
+  public get isRaised(): boolean {
+    return this._hostElement.nativeElement.classList.contains('PrAction--raised');
+  }
+
+  public get colourPalette(): string {
+    if (this._hostElement.nativeElement.classList.contains('PrAction--primary')) {
+      return 'primary';
+    } else if (this._hostElement.nativeElement.classList.contains('PrAction--accent')) {
+      return 'accent';
+    } else if (this._hostElement.nativeElement.classList.contains('PrAction--warning')) {
+      return 'warn';
+    }
+    return '';
   }
 
   public ngOnChanges(changes: SimpleChanges): void {

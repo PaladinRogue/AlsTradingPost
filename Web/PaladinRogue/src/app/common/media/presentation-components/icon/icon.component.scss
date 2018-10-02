@@ -1,11 +1,17 @@
-@import "../../../../../theme/size";
-@import "../../../../../theme/colour";
+@import "../../../../../theme/theme";
 
 :host {
   font-size: $icon-size-medium;
-  color: $default-icon-colour;
 
   &.PrIcon {
+    &--xxsmall {
+      font-size: $icon-size-xxsmall;
+    }
+
+    &--xsmall {
+      font-size: $icon-size-xsmall;
+    }
+
     &--small {
       font-size: $icon-size-small;
     }

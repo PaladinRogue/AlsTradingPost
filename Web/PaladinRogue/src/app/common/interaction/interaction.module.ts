@@ -1,6 +1,6 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule, MatProgressSpinnerModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { IconRepository, MediaModule } from '../media';
 
@@ -8,6 +8,7 @@ import { ButtonActionComponent } from './presentation-components/action/button-a
 import { IconActionComponent } from './presentation-components/action/icon-action/icon-action.component';
 
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { LoadingSpinnerComponent } from './presentation-components/loading-spinner/loading-spinner.component';
 
 function initialise_icons(iconRepository: IconRepository): () => void {
   return (): void => {
@@ -19,16 +20,19 @@ function initialise_icons(iconRepository: IconRepository): () => void {
   imports: [
     MediaModule,
     MatButtonModule,
+    MatProgressSpinnerModule,
     RouterModule,
     CommonModule
   ],
   declarations: [
     ButtonActionComponent,
-    IconActionComponent
+    IconActionComponent,
+    LoadingSpinnerComponent
   ],
   exports: [
     ButtonActionComponent,
-    IconActionComponent
+    IconActionComponent,
+    LoadingSpinnerComponent
   ],
   providers: [
     {

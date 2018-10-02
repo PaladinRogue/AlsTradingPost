@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input } from '@angular/core';
 
 import { ActionComponent } from '../action.component';
 
@@ -12,7 +12,7 @@ export class IconActionComponent extends ActionComponent {
   @Input()
   public prActionIcon: string;
 
-  public constructor() {
-    super();
+  public constructor(hostElement: ElementRef) {
+    super(hostElement);
   }
 }

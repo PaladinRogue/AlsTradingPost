@@ -9,44 +9,42 @@ import { PlaygroundLandingPageComponent } from '../business-components/playgroun
 import { StoragePageComponent } from '../business-components/storage-page/storage-page.component';
 import { TimePageComponent } from '../business-components/time-page/time-page.component';
 
-export const PLAYGROUND_ROUTES: Array<Route> = [
-  {
-    path: 'playground',
-    component: PlaygroundLandingPageComponent,
-    children: [
-      {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'prefix'
-      },
-      {
-        path: 'home',
-        component: NoContentComponent
-      },
-      {
-        path: 'icons',
-        component: IconPageComponent
-      },
-      {
-        path: 'dates',
-        component: DatePageComponent
-      },
-      {
-        path: 'times',
-        component: TimePageComponent
-      },
-      {
-        path: 'dateTimes',
-        component: DateTimePageComponent
-      },
-      {
-        path: 'numbers',
-        component: NumberPageComponent
-      },
-      {
-        path: 'storage',
-        component: StoragePageComponent
-      }
-    ]
-  },
-];
+export const PLAYGROUND_ROUTE: Route = {
+  path: 'playground',
+  component: PlaygroundLandingPageComponent,
+  children: [
+    {
+      path: '',
+      redirectTo: 'home',
+      pathMatch: 'prefix'
+    },
+    {
+      path: 'home',
+      component: NoContentComponent
+    },
+    {
+      path: 'icons',
+      component: IconPageComponent
+    },
+    {
+      path: 'dates',
+      component: DatePageComponent
+    },
+    {
+      path: 'times',
+      component: TimePageComponent
+    },
+    {
+      path: 'dateTimes',
+      component: DateTimePageComponent
+    },
+    {
+      path: 'numbers',
+      component: NumberPageComponent
+    },
+    {
+      path: 'storage',
+      component: StoragePageComponent
+    }
+  ]
+};

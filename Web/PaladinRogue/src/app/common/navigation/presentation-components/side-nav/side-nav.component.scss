@@ -1,9 +1,27 @@
-@import "../../../../../theme/colour";
+@import "../../../../../theme/theme";
 
 :host {
   .PrSideNav {
+    &-drawer {
+      min-width: 200px;
+    }
+
+    &-container {
+      flex: 1 0 auto;
+      margin-top: 56px;
+
+      @include media-tablet {
+        margin-top: 64px;
+      }
+    }
+
     &--active {
       border-left: 2px solid $navigation-active-colour;
+    }
+
+    &-content {
+      display: block;
+      padding: $default-spacing;
     }
   }
 }

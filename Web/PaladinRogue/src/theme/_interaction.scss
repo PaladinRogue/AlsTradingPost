@@ -1,0 +1,8 @@
+
+@mixin element-states() {
+  :hover,
+  :focus,
+  :active {
+    @content;
+  }
+}
