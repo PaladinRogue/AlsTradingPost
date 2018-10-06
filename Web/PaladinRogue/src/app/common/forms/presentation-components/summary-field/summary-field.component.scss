@@ -1,0 +1,21 @@
+@import "../../../../../theme/theme";
+
+:host {
+  display: block;
+  padding-bottom: 1.25em;
+
+  .PrSummaryField {
+    &-label {
+      display: block;
+      font-size: $font-size-xxsmall;
+      color: $colour-form-label;
+      margin-bottom: 8px;
+    }
+
+    &-value {
+      font-size: $font-size-input;
+      margin-bottom: 10px;
+      line-height: 1.125;
+    }
+  }
+}

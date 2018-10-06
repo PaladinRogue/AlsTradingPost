@@ -1,0 +1,15 @@
+<pr-card>
+  <pr-card-header [prCardHeaderTitle]="{ translateId: 'Dates' }"></pr-card-header>
+  <pr-summary-field [prSummaryFieldLabel]="{ translateId: 'date.full.label' }">
+    <pr-date [prDate]="date" prDateFormat="full"></pr-date>
+  </pr-summary-field>
+  <pr-summary-field [prSummaryFieldLabel]="{ translateId: 'date.long.label' }">
+    <pr-date [prDate]="date" prDateFormat="long"></pr-date>
+  </pr-summary-field>
+  <pr-summary-field [prSummaryFieldLabel]="{ translateId: 'date.medium.label' }">
+    <pr-date [prDate]="date" prDateFormat="medium"></pr-date>
+  </pr-summary-field>
+  <pr-summary-field [prSummaryFieldLabel]="{ translateId: 'date.short.label' }">
+    <pr-date [prDate]="date"></pr-date>
+  </pr-summary-field>
+</pr-card>

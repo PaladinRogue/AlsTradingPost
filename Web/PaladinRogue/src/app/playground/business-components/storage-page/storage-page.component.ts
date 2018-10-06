@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
-import { FormInputText, InputFactory, InputType } from '../../../common/forms';
+import { FormInputText, FieldFactory, FieldType } from '../../../common/forms';
 import { IAction } from '../../../common/interaction';
 import { LocalStorage, SessionStorage } from '../../../common/storage';
 
 @Component({
-  selector: 'pr-storage',
+  selector: 'pr-storage-page',
   templateUrl: './storage-page.component.html',
   styleUrls: ['./storage-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -32,11 +32,10 @@ export class StoragePageComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.localDataInput = InputFactory.create({
+    this.localDataInput = FieldFactory.create({
       label: {
         translateId: 'some.title'
       },
-      type: InputType.TEXT,
       isDisabled: false,
       getValue: (): string => {
         return this.localData;
@@ -44,13 +43,12 @@ export class StoragePageComponent implements OnInit {
       setValue: (value: string): void => {
         this.localData = value;
       }
-    });
+    }, FieldType.TEXT);
 
-    this.sessionDataInput = InputFactory.create({
+    this.sessionDataInput = FieldFactory.create({
       label: {
         translateId: 'some.title.other'
       },
-      type: InputType.TEXT,
       isDisabled: false,
       getValue: (): string => {
         return this.sessionData;
@@ -58,7 +56,7 @@ export class StoragePageComponent implements OnInit {
       setValue: (value: string): void => {
         this.sessionData = value;
       }
-    });
+    }, FieldType.TEXT);
 
     this.saveLocalDataAction = {
       action: (): void => {

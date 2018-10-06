@@ -1,0 +1,14 @@
+<mat-form-field class="PrFormSelect-container">
+  <mat-select [placeholder]="labelText"
+              [formControl]="formField.formControl"
+              [required]="formField.isRequired">
+    <mat-option class="PrFormSelect-emptyOption"></mat-option>
+    <mat-option *ngFor="let option of formField.options" [value]="option.value">
+      {{ option.label }}
+    </mat-option>
+  </mat-select>
+  <mat-hint *ngIf="formField.hasPlaceholder" align="start"><pr-translate [prTranslate]="formField.placeholder"></pr-translate></mat-hint>
+  <mat-error *ngIf="(formField.validationErrors$ | async) as validationErrors">
+    <pr-form-validation-errors [prFormValidationErrors]="validationErrors"></pr-form-validation-errors>
+  </mat-error>
+</mat-form-field>

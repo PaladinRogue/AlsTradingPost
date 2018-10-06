@@ -1,0 +1,16 @@
+<pr-card>
+  <pr-card-header [prCardHeaderTitle]="{ translateId: 'Times' }"></pr-card-header>
+
+  <pr-summary-field [prSummaryFieldLabel]="{ translateId: 'time.full.label' }">
+    <pr-time [prTime]="date" prTimeFormat="full"></pr-time>
+  </pr-summary-field>
+  <pr-summary-field [prSummaryFieldLabel]="{ translateId: 'time.long.label' }">
+    <pr-time [prTime]="date" prTimeFormat="long"></pr-time>
+  </pr-summary-field>
+  <pr-summary-field [prSummaryFieldLabel]="{ translateId: 'time.medium.label' }">
+    <pr-time [prTime]="date" prTimeFormat="medium"></pr-time>
+  </pr-summary-field>
+  <pr-summary-field [prSummaryFieldLabel]="{ translateId: 'time.short.label' }">
+    <pr-time [prTime]="date"></pr-time>
+  </pr-summary-field>
+</pr-card>

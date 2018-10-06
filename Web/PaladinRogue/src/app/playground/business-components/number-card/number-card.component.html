@@ -1,0 +1,17 @@
+<pr-card>
+  <pr-card-header [prCardHeaderTitle]="{ translateId: 'Numbers' }"></pr-card-header>
+  <div *ngFor="let number of numbers">
+    <pr-summary-field [prSummaryFieldLabel]="{ translateId: 'time.precision.zero.label' }">
+      <pr-number [prNumber]="number"></pr-number>
+    </pr-summary-field>
+    <pr-summary-field [prSummaryFieldLabel]="{ translateId: 'time.precision.one.label' }">
+      <pr-number [prNumber]="number" [prNumberPrecision]="1"></pr-number>
+    </pr-summary-field>
+    <pr-summary-field [prSummaryFieldLabel]="{ translateId: 'time.precision.two.label' }">
+      <pr-number [prNumber]="number" [prNumberPrecision]="2"></pr-number>
+    </pr-summary-field>
+    <pr-summary-field [prSummaryFieldLabel]="{ translateId: 'number.precision.three.label' }">
+      <pr-number [prNumber]="number" [prNumberPrecision]="3"></pr-number>
+    </pr-summary-field>
+  </div>
+</pr-card>

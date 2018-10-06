@@ -1,7 +1,9 @@
 <mat-card>
   <ng-content select="pr-card-header"></ng-content>
 
-  <ng-content></ng-content>
+  <div class="PrCard-content">
+    <ng-content></ng-content>
+  </div>
 
   <mat-card-actions *ngIf="cardActions" align="end">
     <ng-content select="pr-card-actions"></ng-content>

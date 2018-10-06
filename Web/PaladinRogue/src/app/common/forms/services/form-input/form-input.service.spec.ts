@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FormInputService } from './form-input.service';
+import { FormInput } from './form-input.service';
 
-describe('FormInputService', () => {
+describe('FormInput', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: FormInputService = TestBed.get(FormInputService);
+    const service: FormInput<any, any> = TestBed.get(FormInput);
     expect(service).toBeTruthy();
   });
 });

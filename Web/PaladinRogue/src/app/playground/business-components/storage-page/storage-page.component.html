@@ -1,7 +1,7 @@
 <pr-card class="PrStoragePage-card">
   <pr-card-header [prCardHeaderTitle]="{ translateId: 'Local storage' }">
   </pr-card-header>
-  <pr-form-input [prFormInput]="localDataInput"></pr-form-input>
+  <pr-form-field [prFormField]="localDataInput"></pr-form-field>
   <pr-card-actions>
     <pr-button-action [prAction]="saveLocalDataAction">Save local data</pr-button-action>
     <pr-button-action [prAction]="getLocalDataAction">Get local data</pr-button-action>
@@ -11,7 +11,7 @@
 <pr-card class="PrStoragePage-card">
   <pr-card-header [prCardHeaderTitle]="{ translateId: 'Session storage' }">
   </pr-card-header>
-  <pr-form-input [prFormInput]="sessionDataInput"></pr-form-input>
+  <pr-form-field [prFormField]="sessionDataInput"></pr-form-field>
   <pr-card-actions>
     <pr-button-action [prAction]="saveSessionDataAction">Save session data</pr-button-action>
     <pr-button-action [prAction]="getSessionDataAction">Get session data</pr-button-action>

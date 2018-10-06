@@ -1,0 +1,11 @@
+@import '../../../../theme/theme';
+
+:host {
+  @include layout-column;
+
+  .PrFormsPage {
+    &-card {
+      @include layout-column-item(4);
+    }
+  }
+}

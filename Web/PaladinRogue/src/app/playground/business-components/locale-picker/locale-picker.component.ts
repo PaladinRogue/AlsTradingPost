@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
-
-import { IOption } from '../../../common/core';
+import { FieldFactory, FieldType, FormSelect } from '../../../common/forms';
 import { DEFAULT_LANGUAGE, DEFAULT_LOCALE, DEFAULT_TIMEZONE, LanguageService, LocaleService, TimezoneService } from '../../../common/internationalization';
 
 @Component({
@@ -10,12 +9,9 @@ import { DEFAULT_LANGUAGE, DEFAULT_LOCALE, DEFAULT_TIMEZONE, LanguageService, Lo
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LocalePickerComponent implements OnInit {
-  public language: string;
-  public languageOptions: Array<IOption>;
-  public locale: string;
-  public localeOptions: Array<IOption>;
-  public timezone: string;
-  public timezoneOptions: Array<IOption>;
+  public languageSelect: FormSelect;
+  public localeSelect: FormSelect;
+  public timezoneSelect: FormSelect;
 
   private readonly _localeService: LocaleService;
   private readonly _languageService: LanguageService;
@@ -23,42 +19,59 @@ export class LocalePickerComponent implements OnInit {
 
   public constructor(localeService: LocaleService,
                      languageService: LanguageService,
-                     timezoneService: TimezoneService,
-                     @Inject(DEFAULT_LANGUAGE) defaultLanguage: string,
-                     @Inject(DEFAULT_LOCALE) defaultLocale: string,
-                     @Inject(DEFAULT_TIMEZONE) defaultTimezone: string) {
+                     timezoneService: TimezoneService) {
     this._localeService = localeService;
     this._languageService = languageService;
     this._timezoneService = timezoneService;
-    this.language = defaultLanguage;
-    this.locale = defaultLocale;
-    this.timezone = defaultTimezone;
   }
 
   public ngOnInit(): void {
-    this.languageOptions = [
-      { value: 'en', label: 'English' },
-      { value: 'de', label: 'German' },
-    ];
-    this.localeOptions = [
-      { value: 'en-GB', label: 'English - UK' },
-      { value: 'de', label: 'German' },
-    ];
-    this.timezoneOptions = [
-      { value: 'Europe/London', label: 'English - UK' },
-      { value: 'Europe/Berlin', label: 'German' },
-    ];
-  }
+    this.languageSelect = FieldFactory.create({
+      label: {
+        translateId: 'locale.language.label'
+      },
+      getValue: (): string => {
+        return this._languageService.getlanguage();
+      },
+      setValue: (value: string): void => {
+        this._languageService.setLanguage(value);
+      },
+      options: [
+        { value: 'en', label: 'English' },
+        { value: 'de', label: 'German' },
+      ]
+    }, FieldType.SELECT);
 
-  public setLanguage(): void {
-    this._languageService.setLanguage(this.language);
-  }
+    this.localeSelect = FieldFactory.create({
+      label: {
+        translateId: 'locale.locale.label'
+      },
+      getValue: (): string => {
+        return this._localeService.getLocale();
+      },
+      setValue: (value: string): void => {
+        this._localeService.setLocale(value);
+      },
+      options: [
+        { value: 'en-GB', label: 'English - UK' },
+        { value: 'de', label: 'German' },
+      ]
+    }, FieldType.SELECT);
 
-  public setLocale(): void {
-    this._localeService.setLocale(this.locale);
-  }
-
-  public setTimezone(): void {
-    this._timezoneService.setTimezone(this.timezone);
+    this.timezoneSelect = FieldFactory.create({
+      label: {
+        translateId: 'locale.timezone.label'
+      },
+      getValue: (): string => {
+        return this._timezoneService.getTimezone();
+      },
+      setValue: (value: string): void => {
+        this._timezoneService.setTimezone(value);
+      },
+      options: [
+        { value: 'Europe/London', label: 'English - UK' },
+        { value: 'Europe/Berlin', label: 'German' },
+      ]
+    }, FieldType.SELECT);
   }
 }

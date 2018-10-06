@@ -11,12 +11,20 @@ export class LocaleService {
   private readonly _localeChangedSubject: Subject<string>;
   private readonly _localeDependantServices: Array<ILocaleDependant> = [];
 
+  private _localeId: string;
+
    public constructor() {
     this._localeChangedSubject = new Subject<string>();
     this.localeChanged$ = this._localeChangedSubject.asObservable();
   }
 
+  public getLocale(): string {
+    return this._localeId;
+  }
+
   public async setLocale(localeId: string): Promise<void> {
+     this._localeId = localeId;
+
     const setLocalePromises: Array<Promise<void>> = map(this._localeDependantServices, (service: ILocaleDependant): Promise<void> => {
       return service.setLocale(localeId);
     });

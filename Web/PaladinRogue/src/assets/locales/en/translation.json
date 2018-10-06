@@ -17,12 +17,18 @@
   "playground": {
     "routes": {
       "home": "Home",
-      "icons": "Icons",
-      "dates": "Dates",
-      "times": "Times",
-      "dateTimes": "Date times",
-      "numbers": "Numbers",
+      "layout": "Layout",
+      "media": "Media",
+      "forms": "Forms",
+      "localization": "Localization",
       "storage": "Storage"
+    }
+  },
+  "form": {
+    "input": {
+      "max": {
+        "hint": "{{ count }} / {{ maxLength }}"
+      }
     }
   }
 }

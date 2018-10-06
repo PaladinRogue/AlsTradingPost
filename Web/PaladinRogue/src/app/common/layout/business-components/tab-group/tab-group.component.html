@@ -4,7 +4,9 @@
       <ng-template mat-tab-label>
         <pr-translate [prTranslate]="tab.prTabTitle"></pr-translate>
       </ng-template>
-      <ng-container [ngTemplateOutlet]="tab.tabViewContent"></ng-container>
+      <div class="PrTabGroup-content">
+        <ng-container [ngTemplateOutlet]="tab.tabViewContent"></ng-container>
+      </div>
     </mat-tab>
   </ng-container>
 </mat-tab-group>

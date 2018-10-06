@@ -1,0 +1,9 @@
+@import "../../../../../theme/theme";
+
+:host {
+  .PrTabGroup{
+    &-content {
+      padding: $default-spacing;
+    }
+  }
+}

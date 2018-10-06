@@ -1,15 +1,4 @@
-import { Observable } from 'rxjs';
-import { ITranslate } from '../../../../internationalization';
+import { IFormFieldConfig } from '../../form-field/interfaces/form-field-config.interface';
 
-import { InputType } from '../../../constants/input-type.constant';
-
-export interface IFormInputConfig<T> {
-  type: InputType;
-  label: ITranslate;
-  placeholder?: ITranslate;
-  isDisabled: boolean | Observable<boolean>;
-
-  getValue(): T;
-
-  setValue(value: T): void;
+export interface IFormInputConfig<T> extends IFormFieldConfig<T> {
 }

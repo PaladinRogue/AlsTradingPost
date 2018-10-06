@@ -1,0 +1,13 @@
+@import "../../../../theme/theme";
+
+:host {
+  .PrLayoutPage {
+    &-container {
+      @include layout-column;
+    }
+
+    &-card {
+      @include layout-column-item(8);
+    }
+  }
+}

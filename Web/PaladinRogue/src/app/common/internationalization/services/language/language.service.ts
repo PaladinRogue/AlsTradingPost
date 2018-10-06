@@ -11,12 +11,20 @@ export class LanguageService {
   private readonly _languageChangedSubject: Subject<string>;
   private readonly _languageDependantServices: Array<ILanguageDependant> = [];
 
+  private _languageId: string;
+
   public constructor() {
     this._languageChangedSubject = new Subject<string>();
     this.languageChanged$ = this._languageChangedSubject.asObservable();
   }
 
+  public getlanguage(): string {
+    return this._languageId;
+  }
+
   public async setLanguage(languageId: string): Promise<void> {
+    this._languageId = languageId;
+
     const setLanguagePromises: Array<Promise<void>> = map(this._languageDependantServices, (service: ILanguageDependant): Promise<void> => {
       return service.setLanguage(languageId);
     });

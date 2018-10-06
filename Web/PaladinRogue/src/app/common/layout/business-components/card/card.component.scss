@@ -7,4 +7,8 @@
   @include media-tablet {
     padding: $default-spacing;
   }
+
+  &-content {
+    display: block;
+  }
 }

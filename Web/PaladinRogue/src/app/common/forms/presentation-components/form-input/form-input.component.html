@@ -1,0 +1,19 @@
+<mat-form-field class="PrFormInput-container">
+  <input matInput [type]="formField.fieldType"
+         [placeholder]="labelText"
+         [formControl]="formField.formControl"
+         [required]="formField.isRequired"
+         [attr.min]="formField.min"
+         [attr.max]="formField.max"
+         [attr.minlength]="formField.minLength"
+         [attr.maxLength]="formField.maxLength">
+  <mat-hint *ngIf="formField.hasPlaceholder" align="start">
+    <pr-translate [prTranslate]="formField.placeholder"></pr-translate>
+  </mat-hint>
+  <mat-hint *ngIf="formField.maxLength" align="end">
+    <pr-translate [prTranslate]="{ translateId: 'form.input.max.hint', translateValues: { count: formField.formControl.value.length, maxLength: formField.maxLength } }"></pr-translate>
+  </mat-hint>
+  <mat-error *ngIf="(formField.validationErrors$ | async) as validationErrors">
+    <pr-form-validation-errors [prFormValidationErrors]="validationErrors"></pr-form-validation-errors>
+  </mat-error>
+</mat-form-field>
