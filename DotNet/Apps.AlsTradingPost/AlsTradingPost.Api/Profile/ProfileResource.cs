@@ -7,7 +7,7 @@ using Common.Setup.Infrastructure.Constants;
 namespace AlsTradingPost.Api.Profile
 {
     [SelfLink(RouteDictionary.Profile, HttpVerb.Get)]
-    [DynamicLinks(typeof(AuthenticationDynmicLinksProvider))]
+    [Link(RouteDictionary.AuthenticationServices, LinkDictionary.AuthenticationServices, HttpVerb.Get)]
     public class ProfileResource : IResource
     {
     }

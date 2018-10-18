@@ -95,7 +95,7 @@ namespace AlsTradingPost.Application.Authentication
             }
             catch (SessionDoesNotExistDomainException e)
             {
-                throw new BusinessApplicationException(ExceptionType.Unauthorized, e);
+                throw new BusinessApplicationException(ExceptionType.NotFound, e);
             }
             catch (SessionRevokedDomainException e)
             {
