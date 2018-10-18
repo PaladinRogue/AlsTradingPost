@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FieldFactory, FieldType, FormSelect } from '../../../common/forms';
-import { DEFAULT_LANGUAGE, DEFAULT_LOCALE, DEFAULT_TIMEZONE, LanguageService, LocaleService, TimezoneService } from '../../../common/internationalization';
+import { LanguageService, LocaleService, TimezoneService } from '../../../common/internationalization';
 
 @Component({
   selector: 'pr-locale-picker',
@@ -27,6 +27,7 @@ export class LocalePickerComponent implements OnInit {
 
   public ngOnInit(): void {
     this.languageSelect = FieldFactory.create({
+      name: 'language',
       label: {
         translateId: 'locale.language.label'
       },
@@ -43,6 +44,7 @@ export class LocalePickerComponent implements OnInit {
     }, FieldType.SELECT);
 
     this.localeSelect = FieldFactory.create({
+      name: 'locale',
       label: {
         translateId: 'locale.locale.label'
       },
@@ -59,6 +61,7 @@ export class LocalePickerComponent implements OnInit {
     }, FieldType.SELECT);
 
     this.timezoneSelect = FieldFactory.create({
+      name: 'timezone',
       label: {
         translateId: 'locale.timezone.label'
       },

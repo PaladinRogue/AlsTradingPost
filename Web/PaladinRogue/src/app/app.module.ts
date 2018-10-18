@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -27,7 +26,6 @@ import {
   TimeFormat
 } from './common/internationalization';
 import { FontAwesomeIconRepository, IconRepository } from './common/media';
-import { StorageModule } from './common/storage';
 import { HomeModule } from './home/home.module';
 import { RoutingModule } from './routing/routing.module';
 import { LoginComponent } from './shared/business-components/login/login.component';

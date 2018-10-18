@@ -4,30 +4,23 @@ import {
   ComponentFactory,
   ComponentFactoryResolver,
   ComponentRef,
-  Inject,
   OnDestroy,
   OnInit,
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { IAction } from '../../../interaction';
+import { ITranslate } from '../../../internationalization';
 
 import { ModalContentComponent } from '../../business-components/modal-content/modal-content.component';
-import { ModalInstanceProvider } from '../../services/modal-instance-provider/modal-instance.provider';
 import { DefaultModal } from '../../services/modal-instance/default-modal/default-modal';
-import { IDefaultModalConfig } from './interfaces/default-modal-config.interface';
 
 @Component({
   selector: 'pr-default-modal',
   templateUrl: './default-modal.component.html',
   styleUrls: ['./default-modal.component.scss'],
   providers: [
-    {
-      provide: DefaultModal,
-      deps: [ModalInstanceProvider],
-      useFactory: (modalInstanceProvider: ModalInstanceProvider): DefaultModal => modalInstanceProvider.getDefault()
-    }
+    DefaultModal
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -35,34 +28,34 @@ export class DefaultModalComponent implements OnInit, OnDestroy {
   @ViewChild('contentContainer', { read: ViewContainerRef })
   public contentContainer: ViewContainerRef;
 
-  public closeAction: IAction;
   public componentRef: ComponentRef<ModalContentComponent<any>>;
 
-  public readonly defaultModalConfig: IDefaultModalConfig<any>;
-
+  public readonly defaultModal: DefaultModal;
   private readonly _componentFactoryResolver: ComponentFactoryResolver;
-  private readonly _defaultModal: MatDialogRef<DefaultModalComponent>;
 
-  public constructor(defaultModal: MatDialogRef<DefaultModalComponent>,
-                     @Inject(MAT_DIALOG_DATA) defaultModalConfig: IDefaultModalConfig<any>,
+  public constructor(defaultModal: DefaultModal,
                      componentFactoryResolver: ComponentFactoryResolver) {
-    this._defaultModal = defaultModal;
-    this.defaultModalConfig = defaultModalConfig;
+    this.defaultModal = defaultModal;
     this._componentFactoryResolver = componentFactoryResolver;
   }
 
-  public ngOnInit(): void {
-    this.closeAction = {
+  public get closeAction(): IAction {
+    return {
       action: (): void => {
-        this._defaultModal.close();
+        this.defaultModal.close();
       }
     };
+  }
 
+  public get title(): ITranslate {
+    return this.defaultModal.getTitle();
+  }
+
+  public ngOnInit(): void {
     const componentFactory: ComponentFactory<ModalContentComponent<any>> =
-      this._componentFactoryResolver.resolveComponentFactory(this.defaultModalConfig.contentComponent);
+      this._componentFactoryResolver.resolveComponentFactory(this.defaultModal.getContentComponent());
 
     this.componentRef = this.contentContainer.createComponent(componentFactory);
-    this.componentRef.instance.data = this.defaultModalConfig.contentComponentData;
   }
 
   public ngOnDestroy(): void {

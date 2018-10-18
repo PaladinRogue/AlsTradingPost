@@ -5,8 +5,9 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { InteractionModule } from '../interaction';
 import { InternationalizationModule } from '../internationalization';
 import { IconRepository } from '../media';
+import { BlankModalComponent } from './business-components/blank-modal/blank-modal.component';
+import { ConfirmationModalComponent } from './business-components/confirmation-modal/confirmation-modal.component';
 import { DefaultModalComponent } from './business-components/default-modal/default-modal.component';
-import { ModalInstanceProvider } from './services/modal-instance-provider/modal-instance.provider';
 import { ModalService } from './services/modal/modal.service';
 
 function initialise_icons(iconRepository: IconRepository): () => void {
@@ -23,10 +24,14 @@ function initialise_icons(iconRepository: IconRepository): () => void {
     CommonModule
   ],
   declarations: [
-    DefaultModalComponent
+    DefaultModalComponent,
+    ConfirmationModalComponent,
+    BlankModalComponent
   ],
   entryComponents: [
-    DefaultModalComponent
+    DefaultModalComponent,
+    ConfirmationModalComponent,
+    BlankModalComponent
   ],
   providers: [
     ModalService,
@@ -37,7 +42,6 @@ function initialise_icons(iconRepository: IconRepository): () => void {
         autoFocus: true
       }
     },
-    ModalInstanceProvider,
     {
       provide: APP_INITIALIZER,
       deps: [IconRepository],

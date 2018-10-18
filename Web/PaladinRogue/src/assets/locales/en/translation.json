@@ -21,7 +21,8 @@
       "media": "Media",
       "forms": "Forms",
       "localization": "Localization",
-      "storage": "Storage"
+      "storage": "Storage",
+      "modal": "Modals"
     }
   },
   "form": {

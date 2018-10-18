@@ -37,6 +37,10 @@ export abstract class FormField<TConfig extends IFormFieldConfig<TModelValue>, T
     });
   }
 
+  public get name(): string {
+    return get(this._fieldConfig, 'name');
+  }
+
   public get label(): ITranslate {
     return get(this._fieldConfig, 'label');
   }
@@ -55,6 +59,10 @@ export abstract class FormField<TConfig extends IFormFieldConfig<TModelValue>, T
 
   public get validators(): Array<IValidator> {
     return get(this._fieldConfig, 'validators', []);
+  }
+
+  public get value(): TModelValue {
+    return this._formControl.value;
   }
 
   public setValue(value: TModelValue): void {

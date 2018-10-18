@@ -11,7 +11,7 @@
     <pr-translate [prTranslate]="formField.placeholder"></pr-translate>
   </mat-hint>
   <mat-hint *ngIf="formField.maxLength" align="end">
-    <pr-translate [prTranslate]="{ translateId: 'form.input.max.hint', translateValues: { count: formField.formControl.value.length, maxLength: formField.maxLength } }"></pr-translate>
+    <pr-translate [prTranslate]="{ translateId: 'form.input.max.hint', translateValues: { count: formField.value.length, maxLength: formField.maxLength } }"></pr-translate>
   </mat-hint>
   <mat-error *ngIf="(formField.validationErrors$ | async) as validationErrors">
     <pr-form-validation-errors [prFormValidationErrors]="validationErrors"></pr-form-validation-errors>

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ContentChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild } from '@angular/core';
 import { ActionsComponent } from '../actions/actions.component';
 import { FooterComponent } from '../footer/footer.component';
 

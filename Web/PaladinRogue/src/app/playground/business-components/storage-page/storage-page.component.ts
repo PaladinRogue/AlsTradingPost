@@ -33,6 +33,7 @@ export class StoragePageComponent implements OnInit {
 
   public ngOnInit(): void {
     this.localDataInput = FieldFactory.create({
+      name: 'localData',
       label: {
         translateId: 'some.title'
       },
@@ -46,6 +47,7 @@ export class StoragePageComponent implements OnInit {
     }, FieldType.TEXT);
 
     this.sessionDataInput = FieldFactory.create({
+      name: 'sessionData',
       label: {
         translateId: 'some.title.other'
       },

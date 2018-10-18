@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Route } from '@angular/router/src/config';
 import { filter, get, map } from 'lodash';
+import { UnsavedChangesService } from '../../../common/forms/services/unsaved-changes/unsaved-changes.service';
 import { IAction } from '../../../common/interaction';
 import { ITranslate } from '../../../common/internationalization';
 import { ModalService } from '../../../common/modal';
@@ -22,13 +23,29 @@ export class PlaygroundLandingPageComponent implements OnInit {
   private readonly _router: Router;
   private readonly _sideNavService: SideNavService;
   private readonly _modalService: ModalService;
+  private readonly _unsavedChangesService: UnsavedChangesService;
 
   public constructor(router: Router,
                      sideNavService: SideNavService,
-                     modalService: ModalService) {
+                     modalService: ModalService,
+                     unsavedChangesService: UnsavedChangesService) {
     this._router = router;
     this._sideNavService = sideNavService;
     this._modalService = modalService;
+    this._unsavedChangesService = unsavedChangesService;
+  }
+
+  public get settingsModal(): IAction {
+    return {
+      action: (): void => {
+        this._modalService.openDefault({
+          title: {
+            translateId: 'settings.modal.title'
+          },
+          contentComponent: SettingsModalComponent
+        });
+      }
+    };
   }
 
   public ngOnInit(): void {
@@ -45,19 +62,6 @@ export class PlaygroundLandingPageComponent implements OnInit {
         routeParams: route.data
       };
     });
-  }
-
-  public get settingsModal(): IAction {
-    return {
-      action: (): void => {
-        this._modalService.openDefault({
-          title: {
-            translateId: 'settings.modal.title'
-          },
-          contentComponent: SettingsModalComponent
-        });
-      }
-    };
   }
 
   private _mapRouteToTranslation(route: Route): ITranslate {

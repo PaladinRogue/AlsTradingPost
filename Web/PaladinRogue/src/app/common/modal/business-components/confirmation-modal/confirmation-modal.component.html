@@ -1,0 +1,11 @@
+<mat-dialog-content>
+  <pr-translate [prTranslate]="message"></pr-translate>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <pr-button-action [prAction]="declineAction">
+    <pr-translate [prTranslate]="declineLabel"></pr-translate>
+  </pr-button-action>
+  <pr-button-action [prAction]="confirmAction">
+    <pr-translate [prTranslate]="confirmLabel"></pr-translate>
+  </pr-button-action>
+</mat-dialog-actions>

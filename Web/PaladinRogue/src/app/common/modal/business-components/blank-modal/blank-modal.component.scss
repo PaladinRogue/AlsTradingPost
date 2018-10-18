@@ -1,0 +1,10 @@
+@import "../../../../../theme/theme";
+
+:host {
+  display: block;
+
+  @include media-tablet {
+    min-width: $media-screen-min-width-s;
+    position: relative;
+  }
+}

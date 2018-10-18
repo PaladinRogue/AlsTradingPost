@@ -9,3 +9,4 @@ export { FormInputText } from './services/form-input/form-input-text/form-input-
 export { FormInputNumber } from './services/form-input/form-input-number/form-input-number.service';
 export { FormInputPassword } from './services/form-input/form-input-password/form-input-password.service';
 export { FormSelect } from './services/form-select/form-select.service';
+export { Form } from './services/form/form.service';

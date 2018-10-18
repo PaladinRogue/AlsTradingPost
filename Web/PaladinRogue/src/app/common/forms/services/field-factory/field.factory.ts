@@ -1,5 +1,6 @@
 import { FieldType } from '../../constants/field-type.constant';
 import { FormField } from '../form-field/form-field.service';
+import { IFormFieldConfig } from '../form-field/interfaces/form-field-config.interface';
 import { FormInputNumber } from '../form-input/form-input-number/form-input-number.service';
 import { IFormInputNumberConfig } from '../form-input/form-input-number/interfaces/form-input-number-config.interface';
 import { FormInputPassword } from '../form-input/form-input-password/form-input-password.service';
@@ -14,9 +15,10 @@ export class FieldFactory {
   public static create(config: IFormInputNumberConfig, type: FieldType.NUMBER): FormInputNumber;
   public static create(config: IFormInputPasswordConfig, type: FieldType.PASSWORD): FormInputPassword;
   public static create(config: IFormSelectConfig, type: FieldType.SELECT): FormSelect;
+  public static create(config: IFormFieldConfig<any>): FormField<IFormFieldConfig<any>, any>;
 
-  public static create(config: any, type: FieldType): FormField<any, any> {
-    switch (type) {
+  public static create(config: IFormFieldConfig<any>, type?: FieldType): FormField<IFormFieldConfig<any>, any> {
+    switch (config.type || type) {
       case FieldType.NUMBER:
         return FormInputNumber.create(config);
       case FieldType.TEXT:
@@ -24,7 +26,7 @@ export class FieldFactory {
       case FieldType.PASSWORD:
         return FormInputPassword.create(config);
       case FieldType.SELECT:
-        return FormSelect.create(config);
+        return FormSelect.create(config as IFormSelectConfig);
     }
   }
 }

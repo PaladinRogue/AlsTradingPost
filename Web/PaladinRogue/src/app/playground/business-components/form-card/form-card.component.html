@@ -1,0 +1,15 @@
+<form [prForm]="form"
+      [formGroup]="form.fieldGroup"
+      (ngSubmit)="form.save()">
+  <pr-card>
+    <pr-card-header [prCardHeaderTitle]="{ translateId: 'form.card.title' }"></pr-card-header>
+
+    <pr-form-field *ngFor="let field of form.fields" [prFormField]="field"></pr-form-field>
+
+    <pr-actions>
+      <pr-submit class="PrForm-save"
+                 [prSubmitIsDisabled]="!form.canSave"
+                 [prSubmitLabel]="{ translateId: 'form.action.save' }"></pr-submit>
+    </pr-actions>
+  </pr-card>
+</form>

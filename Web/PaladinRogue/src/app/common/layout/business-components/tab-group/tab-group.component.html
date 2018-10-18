@@ -5,7 +5,7 @@
         <pr-translate [prTranslate]="tab.prTabTitle"></pr-translate>
       </ng-template>
       <div class="PrTabGroup-content">
-        <ng-container [ngTemplateOutlet]="tab.tabViewContent"></ng-container>
+        <ng-container *ngTemplateOutlet="tab.tabViewContent"></ng-container>
       </div>
     </mat-tab>
   </ng-container>

@@ -21,6 +21,7 @@ export class InputsCardComponent implements OnInit {
 
   public ngOnInit(): void {
     this.textInput = FieldFactory.create({
+      name: 'text',
       label: {
         translateId: 'inputs.field.text.label'
       },
@@ -34,6 +35,7 @@ export class InputsCardComponent implements OnInit {
     }, FieldType.TEXT);
 
     this.passwordInput = FieldFactory.create({
+      name: 'password',
       label: {
         translateId: 'inputs.field.password.label'
       },
@@ -47,6 +49,7 @@ export class InputsCardComponent implements OnInit {
     }, FieldType.PASSWORD);
 
     this.numberInput = FieldFactory.create({
+      name: 'number',
       label: {
         translateId: 'inputs.field.number.label'
       },
@@ -60,6 +63,7 @@ export class InputsCardComponent implements OnInit {
     }, FieldType.NUMBER);
 
     this.optionSelect = FieldFactory.create({
+      name: 'option',
       label: {
         translateId: 'inputs.field.option.label'
       },

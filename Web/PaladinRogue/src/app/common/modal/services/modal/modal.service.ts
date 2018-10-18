@@ -1,40 +1,38 @@
 import { Injectable } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
-import { BehaviorSubject, noop, Observable, Subject } from 'rxjs';
-import { DefaultModalComponent } from '../../business-components/default-modal/default-modal.component';
+import { Observable } from 'rxjs';
+import { IBlankModalConfig } from '../../business-components/blank-modal/interfaces/blank-modal-config.interface';
+import { IConfirmationModalConfig } from '../../business-components/confirmation-modal/interfaces/confirmation-modal-config.interface';
 import { IDefaultModalConfig } from '../../business-components/default-modal/interfaces/default-modal-config.interface';
-import { ModalInstanceProvider } from '../modal-instance-provider/modal-instance.provider';
+import { BlankModal } from '../modal-instance/blank-modal/blank-modal';
+import { ConfirmationModal } from '../modal-instance/confirmation-modal/confirmation-modal';
 import { DefaultModal } from '../modal-instance/default-modal/default-modal';
-import { ModalInstance } from '../modal-instance/modal-instance';
+import { BlankModalService } from './blank-modal/blank-modal.service';
+import { ConfirmationModalService } from './confirmation-modal/confirmation-modal.service';
+import { DefaultModalService } from './default-modal/default-modal.service';
 
 @Injectable()
 export class ModalService {
-  private readonly _dialog: MatDialog;
-  private readonly _modalInstanceProvider: ModalInstanceProvider;
+  private readonly _defaultModalService: DefaultModalService;
+  private readonly _blankModalService: BlankModalService;
+  private readonly _confirmationModalService: ConfirmationModalService;
 
-  private _modalSubject: Subject<ModalInstance<any, any>>;
-
-  public constructor(dialog: MatDialog,
-                     modalInstanceProvider: ModalInstanceProvider) {
-    this._dialog = dialog;
-    this._modalInstanceProvider = modalInstanceProvider;
+  public constructor(defaultModalService: DefaultModalService,
+                     blankModalService: BlankModalService,
+                     confirmationModalService: ConfirmationModalService) {
+    this._defaultModalService = defaultModalService;
+    this._blankModalService = blankModalService;
+    this._confirmationModalService = confirmationModalService;
   }
 
   public openDefault<TContentData>(config: IDefaultModalConfig<TContentData>): Observable<DefaultModal> {
-    const modal: MatDialogRef<DefaultModalComponent, void> = this._dialog.open(DefaultModalComponent, {
-      data: config
-    });
+    return this._defaultModalService.open(config);
+  }
 
-    modal.afterOpen().subscribe(noop, noop, () => {
-      this._modalSubject.complete();
-    });
+  public openBlank<TContentData>(config: IBlankModalConfig<TContentData>): Observable<BlankModal> {
+    return this._blankModalService.open(config);
+  }
 
-    const defaultModal: DefaultModal = DefaultModal.create(modal);
-
-    this._modalInstanceProvider.register(defaultModal);
-
-    this._modalSubject = new BehaviorSubject(defaultModal);
-
-    return this._modalSubject.asObservable();
+  public openConfirmation(config: IConfirmationModalConfig): Observable<ConfirmationModal> {
+    return this._confirmationModalService.open(config);
   }
 }
