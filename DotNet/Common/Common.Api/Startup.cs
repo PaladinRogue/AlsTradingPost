@@ -1,4 +1,5 @@
-﻿using Common.Api.Builders.Resource;
+﻿using System;
+using Common.Api.Builders.Resource;
 using Common.Api.Links;
 using Common.Api.Routing;
 using Common.Api.Settings;
@@ -29,7 +30,7 @@ namespace Common.Api
             Configuration = builder.Build();
             Environment = environment;
         }
-        
+
         public void CommonConfigureServices(IServiceCollection services)
         {
             services.AddMvc(options =>

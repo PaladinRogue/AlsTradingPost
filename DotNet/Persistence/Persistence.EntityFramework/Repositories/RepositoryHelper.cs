@@ -80,6 +80,7 @@ namespace Persistence.EntityFramework.Repositories
             }
         }
 
+        [Obsolete]
         public static void Add<T>(DbSet<T> dbSet, DbContext context, T entity) where T : class, IVersionedEntity
         {
             try
@@ -98,6 +99,7 @@ namespace Persistence.EntityFramework.Repositories
             }
         }
 
+        [Obsolete]
         public static void Update<T>(DbSet<T> dbSet, DbContext context, T entity) where T : class, IVersionedEntity
         {
             try
@@ -131,7 +133,8 @@ namespace Persistence.EntityFramework.Repositories
                 throw new UpdateDomainException(entity, e);
             }
         }
-
+        
+        [Obsolete]
         public static void Delete<T>(DbSet<T> dbSet, DbContext context, Guid id) where T : class, IVersionedEntity
         {
             T entity = GetById(dbSet, id);

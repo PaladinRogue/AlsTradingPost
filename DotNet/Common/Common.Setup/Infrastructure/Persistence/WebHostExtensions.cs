@@ -3,19 +3,20 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Persistence.EntityFramework.Infrastructure.Extensions
+namespace Common.Setup.Infrastructure.Persistence
 {
     public static class WebHostExtensions
     {
-        public static IWebHost ApplyMigrations<T>(this IWebHost host) where T: DbContext
+        public static IWebHost ApplyMigrations(this IWebHost host)
         {
             using (IServiceScope scope = host.Services.CreateScope())
             {
                 IServiceProvider serviceProvider = scope.ServiceProvider;
-                T context = serviceProvider.GetService<T>();
+                DbContext context = serviceProvider.GetService<DbContext>();
 
                 context.Database.Migrate();
             }
+
             return host;
         }
     }

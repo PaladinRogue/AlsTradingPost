@@ -2,6 +2,6 @@
 {
     public interface IVersionedEntity : IEntity
     {
-        byte[] Version { get; set; }
+        byte[] Version { get; }
     }
 }

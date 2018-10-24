@@ -39,16 +39,21 @@ namespace Persistence.EntityFramework.Repositories
             return RepositoryHelper.GetSingle(_context.Set<T>(), predicate);
         }
 
+        [Obsolete]
         public void Update(T entity)
         {
             RepositoryHelper.Update(_context.Set<T>(), _context, entity);
         }
 
+
+        [Obsolete]
         public void Add(T entity)
         {
             RepositoryHelper.Add(_context.Set<T>(), _context, entity);
         }
 
+
+        [Obsolete]
         public void Delete(Guid id)
         {
             RepositoryHelper.Delete(_context.Set<T>(), _context, id);

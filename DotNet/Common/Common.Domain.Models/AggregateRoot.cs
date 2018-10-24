@@ -11,9 +11,9 @@ namespace Common.Domain.Models
             Id = Guid.NewGuid();
         }
 
-        public Guid Id { get; set; }
+        public Guid Id { get; protected set; }
 
         [Timestamp]
-        public byte[] Version { get; set; }
+        public byte[] Version { get; protected set; }
     }
 }

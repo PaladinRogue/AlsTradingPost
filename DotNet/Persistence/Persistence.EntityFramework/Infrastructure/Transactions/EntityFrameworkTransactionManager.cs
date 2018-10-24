@@ -17,7 +17,7 @@ namespace Persistence.EntityFramework.Infrastructure.Transactions
         {
             IDbContextTransaction dbContextTransaction = _dbContext.Database.BeginTransaction();
 
-            return EntityFrameworkTransaction.Create(dbContextTransaction);
+            return EntityFrameworkTransaction.Create(_dbContext, dbContextTransaction);
         }
     }
 }

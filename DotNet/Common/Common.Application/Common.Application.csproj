@@ -3,7 +3,7 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="7.5.2" />
+    <PackageReference Include="FluentValidation" Version="8.0.100" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Domain\Common.Domain.csproj" />

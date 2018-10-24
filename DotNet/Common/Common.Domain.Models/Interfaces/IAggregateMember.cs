@@ -1,6 +1,7 @@
 ﻿namespace Common.Domain.Models.Interfaces
 {
-    public interface IAggregateMember : IEntity
+    public interface IAggregateMember
     {
+        IAggregateRoot AggregateRoot { get; }
     }
 }

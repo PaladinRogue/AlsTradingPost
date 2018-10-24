@@ -2,11 +2,10 @@
 using System.Net;
 using System.Threading.Tasks;
 using Common.Application.Transactions;
-using Common.Messaging.Message.Interfaces;
 using Common.Setup.Infrastructure.Constants;
 using Microsoft.AspNetCore.Http;
 
-namespace Common.Setup.Infrastructure.Middleware
+namespace Common.Setup.Infrastructure.Transactions
 {
     public class TransactionPerRequestMiddleware
     {
@@ -26,7 +25,7 @@ namespace Common.Setup.Infrastructure.Middleware
             _next = next;
         }
 
-        public async Task Invoke(HttpContext context, ITransactionManager transactionManager, IMessageDispatcher messageDispatcher)
+        public async Task Invoke(HttpContext context, ITransactionManager transactionManager)
         {
             if (TransactionalMethods.HasFlag(HttpVerbMapper.GetVerb(context.Request.Method)))
             {
@@ -37,8 +36,6 @@ namespace Common.Setup.Infrastructure.Middleware
                     if (SuccesStatusCodes.Contains((HttpStatusCode)context.Response.StatusCode))
                     {
                         transaction.Commit();
-
-                        await messageDispatcher.DispatchMessagesAsync();
                     }
                     else
                     {
@@ -49,11 +46,6 @@ namespace Common.Setup.Infrastructure.Middleware
             else
             {
                 await _next.Invoke(context);
-
-                if (SuccesStatusCodes.Contains((HttpStatusCode)context.Response.StatusCode))
-                {
-                    await messageDispatcher.DispatchMessagesAsync();
-                }
             }
         }
     }
