@@ -1,6 +1,4 @@
-﻿using Common.Authentication.Domain.SessionDomain;
-using Common.Authentication.Domain.SessionDomain.Interfaces;
-using Common.Authentication.Resources.RefreshTokens;
+﻿using Common.Authentication.Resources.RefreshTokens;
 using Common.Authentication.Setup.Infrastructure.RefreshTokens;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,7 +8,6 @@ namespace Common.Authentication.Setup
     {
         public static void RegisterDomainServices(IServiceCollection services)
         {
-            services.AddScoped<ISessionDomainService, SessionDomainService>();
         }
 
         public static void RegisterProviders(IServiceCollection services)

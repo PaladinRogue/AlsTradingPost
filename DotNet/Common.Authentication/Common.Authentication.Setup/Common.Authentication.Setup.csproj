@@ -9,7 +9,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
-    <ProjectReference Include="..\Common.Authentication.Domain\Common.Authentication.Domain.csproj" />
     <ProjectReference Include="..\Common.Authentication.Resources\Common.Authentication.Resources.csproj" />
   </ItemGroup>
 </Project>

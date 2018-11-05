@@ -4,14 +4,16 @@ using ApplicationManager.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ApplicationManager.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationManagerDbContext))]
-    partial class ApplicationManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181030104016_RemoveApplicationAuthServiceLinkAddPasswordIdentities")]
+    partial class RemoveApplicationAuthServiceLinkAddPasswordIdentities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,7 +61,7 @@ namespace ApplicationManager.Persistence.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("AuthenticationService");
                 });
 
-            modelBuilder.Entity("ApplicationManager.Domain.AuthenticationServices.Identities.PasswordIdentity", b =>
+            modelBuilder.Entity("ApplicationManager.Domain.Identities.PasswordIdentity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -69,49 +71,13 @@ namespace ApplicationManager.Persistence.Migrations
                     b.Property<string>("Identifier")
                         .HasMaxLength(40);
 
-                    b.Property<Guid?>("IdentityId");
-
                     b.Property<string>("Password");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AuthenticationGrantTypePasswordId");
 
-                    b.HasIndex("IdentityId");
-
                     b.ToTable("PasswordIdentity");
-                });
-
-            modelBuilder.Entity("ApplicationManager.Domain.Identities.Identity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<Guid?>("SessionId1");
-
-                    b.Property<byte[]>("Version")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SessionId1");
-
-                    b.ToTable("Identities");
-                });
-
-            modelBuilder.Entity("ApplicationManager.Domain.Identities.Sessions.Session", b =>
-                {
-                    b.Property<Guid>("Id");
-
-                    b.Property<bool>("IsRevoked");
-
-                    b.Property<string>("RefreshToken")
-                        .HasMaxLength(100);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Session");
                 });
 
             modelBuilder.Entity("ApplicationManager.Domain.AuthenticationServices.AuthenticationGrantTypeClientCredential", b =>
@@ -136,6 +102,16 @@ namespace ApplicationManager.Persistence.Migrations
                     b.HasDiscriminator().HasValue("AuthenticationGrantTypeClientCredential");
                 });
 
+            modelBuilder.Entity("ApplicationManager.Domain.AuthenticationServices.AuthenticationGrantTypeEveryone", b =>
+                {
+                    b.HasBaseType("ApplicationManager.Domain.AuthenticationServices.AuthenticationService");
+
+
+                    b.ToTable("AuthenticationGrantTypeEveryone");
+
+                    b.HasDiscriminator().HasValue("AuthenticationGrantTypeEveryone");
+                });
+
             modelBuilder.Entity("ApplicationManager.Domain.AuthenticationServices.AuthenticationGrantTypePassword", b =>
                 {
                     b.HasBaseType("ApplicationManager.Domain.AuthenticationServices.AuthenticationService");
@@ -146,40 +122,11 @@ namespace ApplicationManager.Persistence.Migrations
                     b.HasDiscriminator().HasValue("AuthenticationGrantTypePassword");
                 });
 
-            modelBuilder.Entity("ApplicationManager.Domain.AuthenticationServices.AuthenticationGrantTypeRefreshToken", b =>
-                {
-                    b.HasBaseType("ApplicationManager.Domain.AuthenticationServices.AuthenticationService");
-
-
-                    b.ToTable("AuthenticationGrantTypeRefreshToken");
-
-                    b.HasDiscriminator().HasValue("AuthenticationGrantTypeRefreshToken");
-                });
-
-            modelBuilder.Entity("ApplicationManager.Domain.AuthenticationServices.Identities.PasswordIdentity", b =>
+            modelBuilder.Entity("ApplicationManager.Domain.Identities.PasswordIdentity", b =>
                 {
                     b.HasOne("ApplicationManager.Domain.AuthenticationServices.AuthenticationGrantTypePassword", "AuthenticationGrantTypePassword")
                         .WithMany("PasswordIdentities")
                         .HasForeignKey("AuthenticationGrantTypePasswordId");
-
-                    b.HasOne("ApplicationManager.Domain.Identities.Identity", "Identity")
-                        .WithMany()
-                        .HasForeignKey("IdentityId");
-                });
-
-            modelBuilder.Entity("ApplicationManager.Domain.Identities.Identity", b =>
-                {
-                    b.HasOne("ApplicationManager.Domain.Identities.Sessions.Session", "Session")
-                        .WithMany()
-                        .HasForeignKey("SessionId1");
-                });
-
-            modelBuilder.Entity("ApplicationManager.Domain.Identities.Sessions.Session", b =>
-                {
-                    b.HasOne("ApplicationManager.Domain.Identities.Identity", "Identity")
-                        .WithOne()
-                        .HasForeignKey("ApplicationManager.Domain.Identities.Sessions.Session", "Id")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

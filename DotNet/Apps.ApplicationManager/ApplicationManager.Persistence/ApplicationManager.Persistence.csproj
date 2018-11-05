@@ -15,6 +15,9 @@
     <Compile Remove="Migrations\20181022115720_InitialSetup.cs" />
     <Compile Remove="Migrations\20181022122024_InitialSetup.cs" />
     <Compile Remove="Migrations\20181022122256_InitialSetup.cs" />
+    <Compile Remove="Migrations\20181030102808_RemoveApplicationAuthServiceLinkAddPasswordIdentities.cs" />
+    <Compile Remove="Migrations\20181030103152_RemoveApplicationAuthServiceLinkAddPasswordIdentities.cs" />
+    <Compile Remove="Migrations\20181030103834_RemoveApplicationAuthServiceLinkAddPasswordIdentities.cs" />
   </ItemGroup>
 
   <ItemGroup>

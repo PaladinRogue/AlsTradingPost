@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Common.Authentication.Domain.SessionDomain.Mappings;
 using Common.Domain.Mappings;
 
 namespace ApplicationManager.Setup
@@ -19,7 +18,6 @@ namespace ApplicationManager.Setup
         public static void RegisterDomainMappers(IMapperConfigurationExpression configuration)
         {
             configuration.AddProfile<DomainMappingProfile>();
-            configuration.AddProfile<SessionDomainMappingProfile>();
         }
     }
 }

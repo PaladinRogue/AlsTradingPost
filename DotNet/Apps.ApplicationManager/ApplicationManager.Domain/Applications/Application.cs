@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using Common.Domain.Models;
+using Common.Domain.Models.Interfaces;
 
 namespace ApplicationManager.Domain.Applications
 {
-    public class Application : AggregateRoot
+    public class Application : VersionedEntity, IAggregateRoot
     {
-        private readonly ISet<ApplicationAuthenticationService> _applicationAuthenticationServices = new HashSet<ApplicationAuthenticationService>();
-
         protected Application()
         {
         }
+
         protected Application(CreateApplicationDdto createApplicationDdto)
         {
             Name = createApplicationDdto.Name;
@@ -27,9 +26,7 @@ namespace ApplicationManager.Domain.Applications
 
         [MaxLength(20)]
         public string SystemName { get; protected set; }
-
-        public IEnumerable<ApplicationAuthenticationService> ApplicationAuthenticationServices => _applicationAuthenticationServices;
-
+        
         public void Change(ChangeApplictionDdto changeApplictionDdto)
         {
             Name = changeApplictionDdto.Name;

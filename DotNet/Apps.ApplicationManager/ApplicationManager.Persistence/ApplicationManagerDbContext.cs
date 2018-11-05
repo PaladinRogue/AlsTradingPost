@@ -1,5 +1,8 @@
 ﻿using ApplicationManager.Domain.Applications;
 using ApplicationManager.Domain.AuthenticationServices;
+using ApplicationManager.Domain.AuthenticationServices.Identities;
+using ApplicationManager.Domain.Identities;
+using ApplicationManager.Domain.Identities.Sessions;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityFramework.Infrastructure.Extensions;
 
@@ -13,15 +16,27 @@ namespace ApplicationManager.Persistence
 
         public DbSet<Application> Applications { get; set; }
 
-        public DbSet<ApplicationAuthenticationService> ApplicationAuthenticationServices { get; set; }
-
         public DbSet<AuthenticationService> AuthenticationServices { get; set; }
+
+        public DbSet<Identity> Identities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("dbo");
+            modelBuilder.HasDefaultSchema("apps");
 
             modelBuilder.ProtectSensitiveInformation();
+
+            modelBuilder.Entity<PasswordIdentity>()
+                .ToTable("PasswordIdentites");
+
+            modelBuilder.Entity<Session>()
+                .ToTable("Sessions");
+
+            modelBuilder.Entity<AuthenticationService>()
+                .HasDiscriminator(a => a.Discriminator);
+
+            modelBuilder.Entity<AuthenticationGrantTypeRefreshToken>()
+                .HasBaseType<AuthenticationService>();
 
             modelBuilder.Entity<AuthenticationGrantTypePassword>()
                 .HasBaseType<AuthenticationService>();
@@ -29,13 +44,10 @@ namespace ApplicationManager.Persistence
             modelBuilder.Entity<AuthenticationGrantTypeClientCredential>()
                 .HasBaseType<AuthenticationService>();
 
-            modelBuilder.Entity<ApplicationAuthenticationService>()
-                .HasKey(a => new { a.ApplicationId, a.AuthenticationServiceId });
-
-            modelBuilder.Entity<ApplicationAuthenticationService>()
-                .HasOne<AuthenticationService>()
-                .WithMany()
-                .HasForeignKey(a => a.AuthenticationServiceId);
+            modelBuilder.Entity<Identity>()
+                .HasOne<Session>()
+                .WithOne(s => s.Identity)
+                .HasForeignKey<Identity>(i => i.Id);
         }
     }
 }
