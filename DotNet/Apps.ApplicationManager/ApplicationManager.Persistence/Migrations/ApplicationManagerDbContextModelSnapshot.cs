@@ -45,7 +45,7 @@ namespace ApplicationManager.Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Discriminator")
+                    b.Property<string>("Type")
                         .IsRequired();
 
                     b.Property<byte[]>("Version")
@@ -56,7 +56,7 @@ namespace ApplicationManager.Persistence.Migrations
 
                     b.ToTable("AuthenticationServices");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("AuthenticationService");
+                    b.HasDiscriminator<string>("Type").HasValue("AuthenticationService");
                 });
 
             modelBuilder.Entity("ApplicationManager.Domain.AuthenticationServices.Identities.PasswordIdentity", b =>
@@ -79,15 +79,12 @@ namespace ApplicationManager.Persistence.Migrations
 
                     b.HasIndex("IdentityId");
 
-                    b.ToTable("PasswordIdentity");
+                    b.ToTable("PasswordIdentites");
                 });
 
             modelBuilder.Entity("ApplicationManager.Domain.Identities.Identity", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<Guid?>("SessionId1");
+                    b.Property<Guid>("Id");
 
                     b.Property<byte[]>("Version")
                         .IsConcurrencyToken()
@@ -95,14 +92,15 @@ namespace ApplicationManager.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SessionId1");
-
                     b.ToTable("Identities");
                 });
 
             modelBuilder.Entity("ApplicationManager.Domain.Identities.Sessions.Session", b =>
                 {
-                    b.Property<Guid>("Id");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid?>("IdentityId");
 
                     b.Property<bool>("IsRevoked");
 
@@ -111,7 +109,9 @@ namespace ApplicationManager.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Session");
+                    b.HasIndex("IdentityId");
+
+                    b.ToTable("Sessions");
                 });
 
             modelBuilder.Entity("ApplicationManager.Domain.AuthenticationServices.AuthenticationGrantTypeClientCredential", b =>
@@ -170,16 +170,16 @@ namespace ApplicationManager.Persistence.Migrations
             modelBuilder.Entity("ApplicationManager.Domain.Identities.Identity", b =>
                 {
                     b.HasOne("ApplicationManager.Domain.Identities.Sessions.Session", "Session")
-                        .WithMany()
-                        .HasForeignKey("SessionId1");
+                        .WithOne()
+                        .HasForeignKey("ApplicationManager.Domain.Identities.Identity", "Id")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ApplicationManager.Domain.Identities.Sessions.Session", b =>
                 {
                     b.HasOne("ApplicationManager.Domain.Identities.Identity", "Identity")
-                        .WithOne()
-                        .HasForeignKey("ApplicationManager.Domain.Identities.Sessions.Session", "Id")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("IdentityId");
                 });
 #pragma warning restore 612, 618
         }

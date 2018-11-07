@@ -6,7 +6,7 @@ namespace ApplicationManager.Domain.AuthenticationServices
 {
     public class AuthenticationGrantTypeClientCredential : AuthenticationService
     {
-        public override string Discriminator
+        public override string Type
         {
             get => "CLIENT_CREDENTIAL";
             protected set => throw new NotSupportedException();

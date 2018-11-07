@@ -9,7 +9,7 @@ namespace ApplicationManager.Domain.AuthenticationServices
 {
     public class AuthenticationGrantTypePassword : AuthenticationService
     {
-        public override string Discriminator
+        public override string Type
         {
             get => "PASSWORD";
             protected set => throw new NotSupportedException();

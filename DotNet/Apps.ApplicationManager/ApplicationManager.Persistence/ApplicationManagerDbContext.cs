@@ -33,7 +33,7 @@ namespace ApplicationManager.Persistence
                 .ToTable("Sessions");
 
             modelBuilder.Entity<AuthenticationService>()
-                .HasDiscriminator(a => a.Discriminator);
+                .HasDiscriminator(a => a.Type);
 
             modelBuilder.Entity<AuthenticationGrantTypeRefreshToken>()
                 .HasBaseType<AuthenticationService>();
@@ -44,9 +44,9 @@ namespace ApplicationManager.Persistence
             modelBuilder.Entity<AuthenticationGrantTypeClientCredential>()
                 .HasBaseType<AuthenticationService>();
 
-            modelBuilder.Entity<Identity>()
-                .HasOne<Session>()
-                .WithOne(s => s.Identity)
+            modelBuilder.Entity<Session>()
+                .HasOne<Identity>()
+                .WithOne(s => s.Session)
                 .HasForeignKey<Identity>(i => i.Id);
         }
     }

@@ -4,7 +4,7 @@ namespace ApplicationManager.Domain.AuthenticationServices
 {
     public class AuthenticationGrantTypeRefreshToken : AuthenticationService
     {
-        public override string Discriminator
+        public override string Type
         {
             get => "REFRESH_TOKEN";
             protected set => throw new NotSupportedException();

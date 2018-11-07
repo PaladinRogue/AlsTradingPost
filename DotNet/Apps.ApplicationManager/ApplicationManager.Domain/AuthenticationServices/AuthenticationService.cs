@@ -5,6 +5,6 @@ namespace ApplicationManager.Domain.AuthenticationServices
 {
     public abstract class AuthenticationService : VersionedEntity, IAggregateRoot
     {
-        public abstract string Discriminator { get; protected set; }
+        public abstract string Type { get; protected set; }
     }
 }

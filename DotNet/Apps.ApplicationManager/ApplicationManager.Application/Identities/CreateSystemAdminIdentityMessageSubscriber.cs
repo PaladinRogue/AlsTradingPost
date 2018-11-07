@@ -1,3 +1,4 @@
+using ApplicationManager.ApplicationServices.Applications;
 using ApplicationManager.ApplicationServices.Applications.Interfaces;
 using ApplicationManager.ApplicationServices.Applications.Models;
 using AutoMapper;
@@ -7,19 +8,19 @@ using Common.Messaging.Message.Interfaces;
 using Common.Messaging.Messages;
 using Microsoft.Extensions.Logging;
 
-namespace ApplicationManager.ApplicationServices.Applications
+namespace ApplicationManager.ApplicationServices.Identities
 {
-    public class RegisterApplicationMessageSubscriber : MessageSubscriber<CreateSystemAdminIdentityMessage, RegisterApplicationMessageSubscriber>
+    public class CreateSystemAdminIdentityMessageSubscriber : MessageSubscriber<CreateSystemAdminIdentityMessage, CreateSystemAdminIdentityMessageSubscriber>
     {
-        private readonly ILogger<RegisterApplicationMessageSubscriber> _logger;
+        private readonly ILogger<CreateSystemAdminIdentityMessageSubscriber> _logger;
 
         private readonly IMapper _mapper;
 
         private readonly IRegisterApplicationKernalService _registerApplicationKernalService;
 
-        public RegisterApplicationMessageSubscriber(
+        public CreateSystemAdminIdentityMessageSubscriber(
             IMessageBus messageBus,
-            ILogger<RegisterApplicationMessageSubscriber> logger,
+            ILogger<CreateSystemAdminIdentityMessageSubscriber> logger,
             IRegisterApplicationKernalService registerApplicationKernalService,
             IMapper mapper) : base(messageBus)
         {

@@ -39,6 +39,8 @@ namespace ApplicationManager.Api
                     .RequireHttps();
             });
 
+            SettingRegistration.RegisterSystemAdminIdentitySettings(Configuration, services);
+
             FormatRegistration.ConfigureJsonV1Format(services);
             
             JwtRegistration.RegisterOptions(Configuration, services);
