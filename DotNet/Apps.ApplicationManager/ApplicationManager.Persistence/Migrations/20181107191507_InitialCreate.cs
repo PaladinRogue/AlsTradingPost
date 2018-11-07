@@ -46,6 +46,19 @@ namespace ApplicationManager.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Identities",
+                schema: "apps",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Version = table.Column<byte[]>(rowVersion: true, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Identities", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PasswordIdentites",
                 schema: "apps",
                 columns: table => new
@@ -66,6 +79,13 @@ namespace ApplicationManager.Persistence.Migrations
                         principalTable: "AuthenticationServices",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PasswordIdentites_Identities_IdentityId",
+                        column: x => x.IdentityId,
+                        principalSchema: "apps",
+                        principalTable: "Identities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -76,29 +96,16 @@ namespace ApplicationManager.Persistence.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     RefreshToken = table.Column<string>(maxLength: 100, nullable: true),
                     IsRevoked = table.Column<bool>(nullable: false),
-                    IdentityId = table.Column<Guid>(nullable: true)
+                    IdentityId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sessions", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Identities",
-                schema: "apps",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Version = table.Column<byte[]>(rowVersion: true, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Identities", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Identities_Sessions_Id",
-                        column: x => x.Id,
+                        name: "FK_Sessions_Identities_IdentityId",
+                        column: x => x.IdentityId,
                         principalSchema: "apps",
-                        principalTable: "Sessions",
+                        principalTable: "Identities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -119,36 +126,12 @@ namespace ApplicationManager.Persistence.Migrations
                 name: "IX_Sessions_IdentityId",
                 schema: "apps",
                 table: "Sessions",
-                column: "IdentityId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_PasswordIdentites_Identities_IdentityId",
-                schema: "apps",
-                table: "PasswordIdentites",
                 column: "IdentityId",
-                principalSchema: "apps",
-                principalTable: "Identities",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Sessions_Identities_IdentityId",
-                schema: "apps",
-                table: "Sessions",
-                column: "IdentityId",
-                principalSchema: "apps",
-                principalTable: "Identities",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Identities_Sessions_Id",
-                schema: "apps",
-                table: "Identities");
-
             migrationBuilder.DropTable(
                 name: "Applications",
                 schema: "apps");
@@ -158,11 +141,11 @@ namespace ApplicationManager.Persistence.Migrations
                 schema: "apps");
 
             migrationBuilder.DropTable(
-                name: "AuthenticationServices",
+                name: "Sessions",
                 schema: "apps");
 
             migrationBuilder.DropTable(
-                name: "Sessions",
+                name: "AuthenticationServices",
                 schema: "apps");
 
             migrationBuilder.DropTable(

@@ -44,10 +44,10 @@ namespace ApplicationManager.Persistence
             modelBuilder.Entity<AuthenticationGrantTypeClientCredential>()
                 .HasBaseType<AuthenticationService>();
 
-            modelBuilder.Entity<Session>()
-                .HasOne<Identity>()
-                .WithOne(s => s.Session)
-                .HasForeignKey<Identity>(i => i.Id);
+            modelBuilder.Entity<Identity>()
+                .HasOne(i => i.Session)
+                .WithOne(s => s.Identity)
+                .HasForeignKey<Session>(s => s.IdentityId);
         }
     }
 }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApplicationManager.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationManagerDbContext))]
-    [Migration("20181105153845_InitialCreate")]
+    [Migration("20181107191507_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -86,7 +86,8 @@ namespace ApplicationManager.Persistence.Migrations
 
             modelBuilder.Entity("ApplicationManager.Domain.Identities.Identity", b =>
                 {
-                    b.Property<Guid>("Id");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<byte[]>("Version")
                         .IsConcurrencyToken()
@@ -102,7 +103,7 @@ namespace ApplicationManager.Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("IdentityId");
+                    b.Property<Guid>("IdentityId");
 
                     b.Property<bool>("IsRevoked");
 
@@ -111,7 +112,8 @@ namespace ApplicationManager.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdentityId");
+                    b.HasIndex("IdentityId")
+                        .IsUnique();
 
                     b.ToTable("Sessions");
                 });
@@ -169,19 +171,12 @@ namespace ApplicationManager.Persistence.Migrations
                         .HasForeignKey("IdentityId");
                 });
 
-            modelBuilder.Entity("ApplicationManager.Domain.Identities.Identity", b =>
-                {
-                    b.HasOne("ApplicationManager.Domain.Identities.Sessions.Session", "Session")
-                        .WithOne()
-                        .HasForeignKey("ApplicationManager.Domain.Identities.Identity", "Id")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("ApplicationManager.Domain.Identities.Sessions.Session", b =>
                 {
                     b.HasOne("ApplicationManager.Domain.Identities.Identity", "Identity")
-                        .WithMany()
-                        .HasForeignKey("IdentityId");
+                        .WithOne("Session")
+                        .HasForeignKey("ApplicationManager.Domain.Identities.Sessions.Session", "IdentityId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
