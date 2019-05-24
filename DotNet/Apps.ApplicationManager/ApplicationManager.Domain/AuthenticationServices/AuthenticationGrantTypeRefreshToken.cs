@@ -6,7 +6,7 @@ namespace ApplicationManager.Domain.AuthenticationServices
     {
         public override string Type
         {
-            get => "REFRESH_TOKEN";
+            get => AuthenticationGrantTypes.RefreshToken;
             protected set => throw new NotSupportedException();
         }
 

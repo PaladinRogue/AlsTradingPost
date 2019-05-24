@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Security.Cryptography;
-using Common.Setup.Infrastructure.Encryption.Interfaces;
+using Common.Resources.Encryption;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 

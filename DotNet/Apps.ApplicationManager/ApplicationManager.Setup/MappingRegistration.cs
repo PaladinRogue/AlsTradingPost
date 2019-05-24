@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Common.Domain.Mappings;
+using Common.ApplicationServices.Mappings;
 
 namespace ApplicationManager.Setup
 {

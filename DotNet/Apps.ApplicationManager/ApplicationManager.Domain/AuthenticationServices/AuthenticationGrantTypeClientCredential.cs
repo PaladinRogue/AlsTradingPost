@@ -8,7 +8,7 @@ namespace ApplicationManager.Domain.AuthenticationServices
     {
         public override string Type
         {
-            get => "CLIENT_CREDENTIAL";
+            get => AuthenticationGrantTypes.ClientCredential;
             protected set => throw new NotSupportedException();
         }
 

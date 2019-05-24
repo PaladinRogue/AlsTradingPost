@@ -19,10 +19,9 @@ namespace ApplicationManager.Setup.Infrastructure.IdentityRegistration
             IOptions<SystemAdminIdentitySettings> systemAdminIdentitySettingsAccessor = serviceProvider.GetRequiredService<IOptions<SystemAdminIdentitySettings>>();
             SystemAdminIdentitySettings systemAdminIdentitySettings = systemAdminIdentitySettingsAccessor.Value;
 
-            messageBus.Publish(new CreateSystemAdminIdentityMessage
+            messageBus.Publish(new CreatePasswordIdentityMessage
             {
-                Identifier = systemAdminIdentitySettings.Identifier,
-                Password = systemAdminIdentitySettings.Password
+                Identifier = systemAdminIdentitySettings.Email
             });
 
             return webHost;

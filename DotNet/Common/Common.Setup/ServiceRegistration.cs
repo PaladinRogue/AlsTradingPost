@@ -1,12 +1,14 @@
 ﻿using Common.Application.Authorisation;
-using Common.Domain.Concurrency;
-using Common.Domain.Concurrency.Interfaces;
-using Common.Domain.Concurrency.Services;
-using Common.Domain.Concurrency.Services.Interfaces;
-using Common.Domain.Services.Command;
-using Common.Domain.Services.Query;
+using Common.Application.Authorisation.Policy;
+using Common.ApplicationServices.Concurrency;
+using Common.ApplicationServices.Concurrency.Interfaces;
+using Common.ApplicationServices.Concurrency.Services;
+using Common.ApplicationServices.Concurrency.Services.Interfaces;
+using Common.ApplicationServices.Services.Command;
+using Common.ApplicationServices.Services.Query;
+using Common.Resources.Encryption;
+using Common.Setup.Infrastructure.Authorisation;
 using Common.Setup.Infrastructure.Encryption;
-using Common.Setup.Infrastructure.Encryption.Interfaces;
 using Common.Setup.Infrastructure.Hashing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -35,6 +37,11 @@ namespace Common.Setup
 	        services.AddSingleton<IApiDescriptionGroupCollectionProvider, ApiDescriptionGroupCollectionProvider>();
 	        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IConcurrencyVersionProvider, ConcurrencyVersionProvider>();
+        }
+
+        public static void RegisterAuthorisation(IServiceCollection services)
+        {
+            services.AddSingleton<IAuthorisationPolicy, AlwaysDenyAuthorisationPolicy>();
         }
     }
 }

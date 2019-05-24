@@ -3,6 +3,7 @@ using ApplicationManager.ApplicationServices.AuthenticationServices.Interfaces;
 using ApplicationManager.ApplicationServices.AuthenticationServices.Models;
 using ApplicationManager.Domain.AuthenticationServices;
 using Common.Application.Transactions;
+using Common.ApplicationServices.Services.Command;
 using Common.Domain.Persistence;
 
 namespace ApplicationManager.ApplicationServices.AuthenticationServices
@@ -11,13 +12,13 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
     {
         private readonly ITransactionManager _transactionManager;
 
-        private readonly IRepository<AuthenticationService> _repository;
+        private readonly ICommandService<AuthenticationService> _commandService;
 
         public CreateAuthenticationServiceCommand(ITransactionManager transactionManager,
-            IRepository<AuthenticationService> repository)
+            ICommandService<AuthenticationService> commandService)
         {
             _transactionManager = transactionManager;
-            _repository = repository;
+            _commandService = commandService;
         }
 
         public Guid Everyone()
@@ -27,7 +28,7 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
                 AuthenticationGrantTypeRefreshToken authenticationGrantTypeEveryone =
                     AuthenticationGrantTypeRefreshToken.Create();
 
-                _repository.Add(authenticationGrantTypeEveryone);
+                _commandService.Create(authenticationGrantTypeEveryone);
 
                 transaction.Commit();
 
@@ -42,7 +43,7 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
                 AuthenticationGrantTypePassword authenticationGrantTypePassword =
                     AuthenticationGrantTypePassword.Create();
 
-                _repository.Add(authenticationGrantTypePassword);
+                _commandService.Create(authenticationGrantTypePassword);
 
                 transaction.Commit();
 
@@ -66,7 +67,7 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
                         ValidateAccessTokenUrl = createAuthenticationGrantTypeClientCredentialAdto.ValidateAccessTokenUrl
                     });
 
-                _repository.Add(authenticationGrantTypeClientCredential);
+                _commandService.Create(authenticationGrantTypeClientCredential);
 
                 transaction.Commit();
 

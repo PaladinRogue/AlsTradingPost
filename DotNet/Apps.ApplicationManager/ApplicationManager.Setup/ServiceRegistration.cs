@@ -43,7 +43,8 @@ namespace ApplicationManager.Setup
 	    
         public static void RegisterPersistenceServices(IConfiguration configuration, IServiceCollection services)
         {
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(ICommandRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IQueryRepository<>), typeof(Repository<>));
 
 
             services.AddEntityFrameworkSqlServer().AddOptions()

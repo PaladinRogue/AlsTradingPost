@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ApplicationManager.ApplicationServices.Applications
 {
-    public class RegisterApplicationMessageSubscriber : MessageSubscriber<CreateSystemAdminIdentityMessage, RegisterApplicationMessageSubscriber>
+    public class RegisterApplicationMessageSubscriber : MessageSubscriber<RegisterApplicationMessage, RegisterApplicationMessageSubscriber>
     {
         private readonly ILogger<RegisterApplicationMessageSubscriber> _logger;
 
@@ -28,11 +28,11 @@ namespace ApplicationManager.ApplicationServices.Applications
             _mapper = mapper;
         }
 
-        public override void Handle(CreateSystemAdminIdentityMessage message)
+        public override void Handle(RegisterApplicationMessage message)
         {
             try
             {
-                _registerApplicationKernalService.Register(_mapper.Map<CreateSystemAdminIdentityMessage, RegisterApplicationAdto>(message));
+                _registerApplicationKernalService.Register(_mapper.Map<RegisterApplicationMessage, RegisterApplicationAdto>(message));
             }
             catch (BusinessApplicationException e)
             {
