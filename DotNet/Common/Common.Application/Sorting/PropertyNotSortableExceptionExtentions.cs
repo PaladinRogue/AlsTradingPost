@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
-using Common.Application.Sorting;
 using Common.Domain.Sorting;
+using Common.Domain.Validation;
 
-namespace Common.Application.Validation
+namespace Common.Application.Sorting
 {
-    public class ValidationResult
+    public static class PropertyNotSortableExceptionExtentions
     {
-        public IEnumerable<PropertyValidationError> PropertyValidationErrors { get; set; }
-
-        public static ValidationResult CreateFromException(PropertyNotSortableException exception)
+        public static ValidationResult CreateFromException(this PropertyNotSortableException exception)
         {
             return new ValidationResult
             {

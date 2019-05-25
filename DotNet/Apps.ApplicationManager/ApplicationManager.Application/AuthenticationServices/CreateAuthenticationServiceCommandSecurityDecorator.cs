@@ -20,6 +20,7 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
         }
 
         public ICreateAuthenticationServiceCommand Service => this;
+
         public Guid Everyone()
         {
             return _securityApplicationService.Secure(

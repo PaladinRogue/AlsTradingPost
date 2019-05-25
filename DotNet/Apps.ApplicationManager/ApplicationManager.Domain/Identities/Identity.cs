@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
-using ApplicationManager.Domain.AuthenticationServices.Identities;
+using System.Linq;
+using ApplicationManager.Domain.AuthenticationServices;
+using ApplicationManager.Domain.Identities.AuthenticationIdentities;
 using ApplicationManager.Domain.Identities.Sessions;
 using Common.Domain.Models;
 using Common.Domain.Models.DataProtection;
@@ -13,6 +15,8 @@ namespace ApplicationManager.Domain.Identities
         {
         }
 
+        private readonly ISet<AuthenticationIdentity> _authenticationIdentities = new HashSet<AuthenticationIdentity>();
+
         public static Identity Create()
         {
             return new Identity();
@@ -20,20 +24,32 @@ namespace ApplicationManager.Domain.Identities
 
         public Session Session { get; protected set; }
 
-        public IEnumerable<PasswordIdentity> PasswordIdentities => _passwordIdentities;
+        public IEnumerable<AuthenticationIdentity> AuthenticationIdentities => _authenticationIdentities;
 
-        public PasswordIdentity Create(
-            Identity identity,
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <exception cref="PasswordIdentityExistsDomainException"></exception>
+        /// <param name="authenticationGrantTypePassword"></param>
+        /// <param name="createPasswordIdentityDdto"></param>
+        internal void CreatePasswordIdentity(
+            AuthenticationGrantTypePassword authenticationGrantTypePassword,
             CreatePasswordIdentityDdto createPasswordIdentityDdto)
         {
-            return PasswordIdentity.Create(identity, this, createPasswordIdentityDdto);
+            if (AuthenticationIdentities.Any(i => i.Type == AuthenticationIdentityTypes.Password))
+            {
+                throw new PasswordIdentityExistsDomainException();
+            }
+
+            _authenticationIdentities.Add(PasswordIdentity.Create(this, authenticationGrantTypePassword, createPasswordIdentityDdto));
         }
 
         public bool Validate(ValidatePasswordIdentityDdto validatePasswordIdentityDdto)
         {
-            return _passwordIdentities.Any(p =>
-                p.Identifier == validatePasswordIdentityDdto.Identifier &&
-                p.Password == DataProtection.Protect(validatePasswordIdentityDdto.Password));
+            return _authenticationIdentities.Any(p =>
+                p.Type == AuthenticationIdentityTypes.Password &&
+                (p as PasswordIdentity)?.Identifier == validatePasswordIdentityDdto.Identifier &&
+                (p as PasswordIdentity)?.Password == DataProtection.Protect(validatePasswordIdentityDdto.Password));
         }
     }
 }

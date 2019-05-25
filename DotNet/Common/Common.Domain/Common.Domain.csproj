@@ -4,6 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="FluentValidation" Version="8.0.100" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Domain.Models\Common.Domain.Models.csproj" />

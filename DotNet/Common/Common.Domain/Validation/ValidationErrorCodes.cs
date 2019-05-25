@@ -1,4 +1,4 @@
-﻿namespace Common.Application.Validation
+﻿namespace Common.Domain.Validation
 {
     public static class ValidationErrorCodes
     {

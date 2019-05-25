@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Common.Application.Exceptions;
+using Common.Domain.Exceptions;
 using FluentValidation;
 
-namespace Common.Application.Validation
+namespace Common.Domain.Validation
 {
     public static class FluentValidationExtension
     {
@@ -12,7 +12,7 @@ namespace Common.Application.Validation
 
             if (!validator.Validate(@object).IsValid)
             {
-                throw new BusinessValidationRuleApplicationException(validationResult.Format());
+                throw new DomainValidationRuleException(validationResult.Format());
             }
         }
 

@@ -4,7 +4,6 @@ using ApplicationManager.ApplicationServices.AuthenticationServices.Models;
 using ApplicationManager.Domain.AuthenticationServices;
 using Common.Application.Transactions;
 using Common.ApplicationServices.Services.Command;
-using Common.Domain.Persistence;
 
 namespace ApplicationManager.ApplicationServices.AuthenticationServices
 {

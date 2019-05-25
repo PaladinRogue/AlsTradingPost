@@ -1,4 +1,4 @@
-﻿namespace ApplicationManager.Domain.AuthenticationServices.Identities
+﻿namespace ApplicationManager.Domain.Identities.AuthenticationIdentities
 {
     public class ValidatePasswordIdentityDdto
     {

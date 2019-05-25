@@ -1,7 +1,7 @@
 ﻿using ApplicationManager.Domain.Applications;
 using ApplicationManager.Domain.AuthenticationServices;
-using ApplicationManager.Domain.AuthenticationServices.Identities;
 using ApplicationManager.Domain.Identities;
+using ApplicationManager.Domain.Identities.AuthenticationIdentities;
 using ApplicationManager.Domain.Identities.Sessions;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityFramework.Infrastructure.Extensions;

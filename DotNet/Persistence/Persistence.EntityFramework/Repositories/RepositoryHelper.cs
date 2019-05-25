@@ -23,8 +23,8 @@ namespace Persistence.EntityFramework.Repositories
             if (sort == null || !sort.Any()) return filteredResults;
 
             SortBy firstSort = sort.First();
-            IOrderedQueryable<T> orderedResults = OrderBy(filteredResults, firstSort.PropertyName.CreatePropertyAccessor<T>(), firstSort.IsAscending);
-            orderedResults = sort.Skip(1).Aggregate(orderedResults, (current, sortBy) => ThenBy(current, sortBy.PropertyName.CreatePropertyAccessor<T>(), sortBy.IsAscending));
+            IOrderedQueryable<T> orderedResults = OrderBy(filteredResults, firstSort.PropertyName.CreatePropertyAccessor<T, object>(), firstSort.IsAscending);
+            orderedResults = sort.Skip(1).Aggregate(orderedResults, (current, sortBy) => ThenBy(current, sortBy.PropertyName.CreatePropertyAccessor<T, object>(), sortBy.IsAscending));
 
             return orderedResults;
         }
@@ -39,8 +39,8 @@ namespace Persistence.EntityFramework.Repositories
             if (sort == null || !sort.Any()) return GetPage(filteredResults, pageSize, pageOffset, out totalResults);
 
             SortBy firstSort = sort.First();
-            IOrderedQueryable<T> orderedResults = OrderBy(filteredResults, firstSort.PropertyName.CreatePropertyAccessor<T>(), firstSort.IsAscending);
-            orderedResults = sort.Skip(1).Aggregate(orderedResults, (current, sortBy) => ThenBy(current, sortBy.PropertyName.CreatePropertyAccessor<T>(), sortBy.IsAscending));
+            IOrderedQueryable<T> orderedResults = OrderBy(filteredResults, firstSort.PropertyName.CreatePropertyAccessor<T, object>(), firstSort.IsAscending);
+            orderedResults = sort.Skip(1).Aggregate(orderedResults, (current, sortBy) => ThenBy(current, sortBy.PropertyName.CreatePropertyAccessor<T, object>(), sortBy.IsAscending));
 
             return GetPage(orderedResults ?? filteredResults, pageSize, pageOffset, out totalResults);
         }

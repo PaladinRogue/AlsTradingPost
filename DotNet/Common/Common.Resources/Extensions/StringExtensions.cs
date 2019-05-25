@@ -17,7 +17,7 @@ namespace Common.Resources.Extensions
             return source != null && toCheck != null && source.IndexOf(toCheck, comp) >= 0;
         }
 
-        public static Expression<Func<TIn, object>> CreatePropertyAccessor<TIn>(this string propertyName)
+        public static Expression<Func<TIn, TOut>> CreatePropertyAccessor<TIn, TOut>(this string propertyName)
         {
             if (string.IsNullOrEmpty(propertyName))
             {
@@ -26,7 +26,7 @@ namespace Common.Resources.Extensions
 
             ParameterExpression param = Expression.Parameter(typeof(TIn));
             MemberExpression body = Expression.PropertyOrField(param, propertyName);
-            return Expression.Lambda<Func<TIn, object>>(body, param);
+            return Expression.Lambda<Func<TIn, TOut>>(body, param);
         }
         
         public static string Format(this string str, IDictionary<string, string> parameters)  

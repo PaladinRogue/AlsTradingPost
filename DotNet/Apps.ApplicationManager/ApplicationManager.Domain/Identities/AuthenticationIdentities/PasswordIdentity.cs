@@ -1,13 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
-using ApplicationManager.Domain.Identities;
-using Common.Domain.Models;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using ApplicationManager.Domain.AuthenticationServices;
 using Common.Domain.Models.DataProtection;
-using Common.Domain.Models.Interfaces;
 
-namespace ApplicationManager.Domain.AuthenticationServices.Identities
+namespace ApplicationManager.Domain.Identities.AuthenticationIdentities
 {
-    public class PasswordIdentity : Entity, IAggregateMember
+    public class PasswordIdentity : AuthenticationIdentity
     {
+        public override string Type
+        {
+            get => AuthenticationIdentityTypes.Password;
+            protected set => throw new NotSupportedException();
+        }
+
         protected PasswordIdentity()
         {
         }
@@ -19,8 +24,7 @@ namespace ApplicationManager.Domain.AuthenticationServices.Identities
         {
             Identity = identity;
             AuthenticationGrantTypePassword = authenticationGrantTypePassword;
-            Identifier = createPasswordIdentityDdto.Identifier;
-            Password = createPasswordIdentityDdto.Password;
+            EmailAddress = createPasswordIdentityDdto.EmailAddress;
         }
 
         internal static PasswordIdentity Create(
@@ -28,8 +32,16 @@ namespace ApplicationManager.Domain.AuthenticationServices.Identities
             AuthenticationGrantTypePassword authenticationGrantTypePassword,
             CreatePasswordIdentityDdto createPasswordIdentityDdto) 
         {
-            return new PasswordIdentity(identity, authenticationGrantTypePassword, createPasswordIdentityDdto);
+            PasswordIdentity passwordIdentity = new PasswordIdentity(identity, authenticationGrantTypePassword, createPasswordIdentityDdto);
+
+            return passwordIdentity;
         }
+
+        [MaxLength(255)]
+        [EmailAddress]
+        [Required]
+        [SensitiveInformation]
+        public string EmailAddress { get; protected set; }
 
         [MaxLength(40)]
         [SensitiveInformation]
@@ -38,10 +50,6 @@ namespace ApplicationManager.Domain.AuthenticationServices.Identities
         [SensitiveInformation]
         public string Password { get; protected set; }
 
-        public Identity Identity { get; protected set; }
-
         public AuthenticationGrantTypePassword AuthenticationGrantTypePassword { get; protected set; }
-
-        public IAggregateRoot AggregateRoot => AuthenticationGrantTypePassword;
     }
 }

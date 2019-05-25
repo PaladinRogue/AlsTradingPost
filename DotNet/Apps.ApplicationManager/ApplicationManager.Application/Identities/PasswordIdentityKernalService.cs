@@ -1,8 +1,8 @@
 ﻿using System;
 using ApplicationManager.ApplicationServices.Identities.Interfaces;
 using ApplicationManager.ApplicationServices.Identities.Models;
-using ApplicationManager.Domain.AuthenticationServices.Identities;
 using ApplicationManager.Domain.Identities;
+using ApplicationManager.Domain.Identities.AuthenticationIdentities;
 using Common.Application.Transactions;
 using Common.ApplicationServices.Services.Command;
 

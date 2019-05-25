@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Common.Application.Validation
+namespace Common.Domain.Validation
 {
     public class PropertyValidationError
     {

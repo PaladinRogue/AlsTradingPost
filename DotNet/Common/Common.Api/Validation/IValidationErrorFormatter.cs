@@ -1,5 +1,5 @@
 ﻿using Common.Api.Exceptions;
-using Common.Application.Validation;
+using Common.Domain.Validation;
 
 namespace Common.Api.Validation
 {
