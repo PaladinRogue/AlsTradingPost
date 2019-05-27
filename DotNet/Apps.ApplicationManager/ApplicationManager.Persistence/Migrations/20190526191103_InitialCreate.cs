@@ -59,31 +59,34 @@ namespace ApplicationManager.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PasswordIdentites",
+                name: "AuthenticationIdentities",
                 schema: "apps",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Identifier = table.Column<string>(maxLength: 40, nullable: true),
-                    Password = table.Column<string>(nullable: true),
+                    Type = table.Column<string>(nullable: false),
                     IdentityId = table.Column<Guid>(nullable: true),
-                    AuthenticationGrantTypePasswordId = table.Column<Guid>(nullable: true)
+                    Identifier = table.Column<string>(maxLength: 40, nullable: true),
+                    Password = table.Column<string>(maxLength: 40, nullable: true),
+                    AuthenticationGrantTypePasswordId = table.Column<Guid>(nullable: true),
+                    EmailAddress = table.Column<string>(maxLength: 255, nullable: true),
+                    Token = table.Column<string>(maxLength: 40, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PasswordIdentites", x => x.Id);
+                    table.PrimaryKey("PK_AuthenticationIdentities", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PasswordIdentites_AuthenticationServices_AuthenticationGrantTypePasswordId",
-                        column: x => x.AuthenticationGrantTypePasswordId,
-                        principalSchema: "apps",
-                        principalTable: "AuthenticationServices",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_PasswordIdentites_Identities_IdentityId",
+                        name: "FK_AuthenticationIdentities_Identities_IdentityId",
                         column: x => x.IdentityId,
                         principalSchema: "apps",
                         principalTable: "Identities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AuthenticationIdentities_AuthenticationServices_AuthenticationGrantTypePasswordId",
+                        column: x => x.AuthenticationGrantTypePasswordId,
+                        principalSchema: "apps",
+                        principalTable: "AuthenticationServices",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -111,16 +114,16 @@ namespace ApplicationManager.Persistence.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_PasswordIdentites_AuthenticationGrantTypePasswordId",
+                name: "IX_AuthenticationIdentities_IdentityId",
                 schema: "apps",
-                table: "PasswordIdentites",
-                column: "AuthenticationGrantTypePasswordId");
+                table: "AuthenticationIdentities",
+                column: "IdentityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PasswordIdentites_IdentityId",
+                name: "IX_AuthenticationIdentities_AuthenticationGrantTypePasswordId",
                 schema: "apps",
-                table: "PasswordIdentites",
-                column: "IdentityId");
+                table: "AuthenticationIdentities",
+                column: "AuthenticationGrantTypePasswordId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sessions_IdentityId",
@@ -137,7 +140,7 @@ namespace ApplicationManager.Persistence.Migrations
                 schema: "apps");
 
             migrationBuilder.DropTable(
-                name: "PasswordIdentites",
+                name: "AuthenticationIdentities",
                 schema: "apps");
 
             migrationBuilder.DropTable(

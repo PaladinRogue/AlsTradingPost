@@ -24,7 +24,7 @@ namespace ApplicationManager.Domain.Identities.AuthenticationIdentities
         {
             Identity = identity;
             AuthenticationGrantTypePassword = authenticationGrantTypePassword;
-            EmailAddress = createPasswordIdentityDdto.EmailAddress;
+            Password = createPasswordIdentityDdto.Password;
         }
 
         internal static PasswordIdentity Create(
@@ -32,21 +32,15 @@ namespace ApplicationManager.Domain.Identities.AuthenticationIdentities
             AuthenticationGrantTypePassword authenticationGrantTypePassword,
             CreatePasswordIdentityDdto createPasswordIdentityDdto) 
         {
-            PasswordIdentity passwordIdentity = new PasswordIdentity(identity, authenticationGrantTypePassword, createPasswordIdentityDdto);
-
-            return passwordIdentity;
+            return new PasswordIdentity(identity, authenticationGrantTypePassword, createPasswordIdentityDdto);
         }
 
-        [MaxLength(255)]
-        [EmailAddress]
-        [Required]
-        [SensitiveInformation]
-        public string EmailAddress { get; protected set; }
-
         [MaxLength(40)]
+        [Required]
         [SensitiveInformation]
         public string Identifier { get; protected set; }
 
+        [MaxLength(40)]
         [SensitiveInformation]
         public string Password { get; protected set; }
 

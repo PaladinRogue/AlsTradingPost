@@ -10,7 +10,7 @@ namespace ApplicationManager.Setup
 	    public static void RegisterSubscribers(IServiceCollection services)
 	    {
 	        services.AddScoped<IMessageSubscriber, RegisterApplicationMessageSubscriber>();
-	        services.AddScoped<IMessageSubscriber, CreatePasswordIdentityMessageSubscriber>();
+	        services.AddScoped<IMessageSubscriber, CreateTwoFactorAuthenticationIdentityMessageSubscriber>();
         }
 	}
 }

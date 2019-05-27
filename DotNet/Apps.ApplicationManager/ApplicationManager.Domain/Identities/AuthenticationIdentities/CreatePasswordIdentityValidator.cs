@@ -6,9 +6,14 @@ namespace ApplicationManager.Domain.Identities.AuthenticationIdentities
     {
         public CreatePasswordIdentityValidator()
         {
-            RuleFor(i => i.EmailAddress)
+            RuleFor(i => i.Identifier)
                 .NotEmpty()
-                .EmailAddress();
+                .MaximumLength(40);
+
+            RuleFor(i => i.Password)
+                .NotEmpty()
+                .Equal(i => i.ConfirmPassword)
+                .MaximumLength(40);
         }
     }
 }

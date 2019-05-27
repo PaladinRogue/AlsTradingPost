@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Common.Messaging.Message.Interfaces;
 using Message.Broker.Connection.Interfaces;
 using Message.Broker.Messages.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Polly;
@@ -24,6 +25,7 @@ namespace Message.Broker.Messages
         private readonly IRabbitMqPersistentConnection _persistentConnection;
         private readonly JsonSerializerSettings _settings;
         private readonly IMessageBusSubscriptionsManager _messageBusSubscriptionsManager;
+        private readonly IServiceProvider _serviceProvider;
         private IModel _consumerChannel;
         private readonly int _retryCount;
         private string _queueName;
@@ -31,11 +33,12 @@ namespace Message.Broker.Messages
         public MessageBusRabbitMq(IRabbitMqPersistentConnection persistentConnection,
             IMessageBusSubscriptionsManager messageBusSubscriptionsManager,
             ILogger<MessageBusRabbitMq> logger,
-            int retryCount = 5)
+            IServiceProvider serviceProvider, int retryCount = 5)
         {
             _persistentConnection = persistentConnection;
             _messageBusSubscriptionsManager = messageBusSubscriptionsManager;
             _logger = logger;
+            _serviceProvider = serviceProvider;
 
             _consumerChannel = CreateConsumerChannel();
             _settings = new JsonSerializerSettings
@@ -176,12 +179,22 @@ namespace Message.Broker.Messages
             {
                 IEnumerable<MessageSubscription> subscriptions = _messageBusSubscriptionsManager.GetSubscribersForMessage(messageName);
 
-                await Task.Run(() => Parallel.ForEach(subscriptions,
-                    subscription =>
+                foreach (MessageSubscription messageSubscription in subscriptions)
+                {
+                    using (_serviceProvider.CreateScope())
                     {
-                        IMessage message = JsonConvert.DeserializeObject<IMessage>(serializedMessage, _settings);
-                        subscription.Handler.DynamicInvoke(message);
-                    }));
+                        try
+                        {
+                            IMessage message =
+                                JsonConvert.DeserializeObject<IMessage>(serializedMessage, _settings);
+                            messageSubscription.Handler.DynamicInvoke(message);
+                        }
+                        catch (Exception e)
+                        {
+                            _logger.LogCritical(e, "Unable to handle message", messageName, serializedMessage);
+                        }
+                    }
+                }
             }
         }
 

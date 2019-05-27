@@ -1,10 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
 namespace Common.Resources.Extensions
 {
+    public static class String
+    {
+        private static readonly Random _random = new Random();
+
+        public static string Random(int length)
+        {
+            const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[_random.Next(s.Length)]).ToArray());
+        }
+
+    }
+
     public static class StringExtensions
     {
         public static string ToCamelCase(this string str)

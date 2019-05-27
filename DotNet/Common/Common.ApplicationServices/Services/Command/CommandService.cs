@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Common.ApplicationServices.Services.Command
 {
-    public class CommandService<T> : ICommandService<T> where T : IVersionedEntity
+    public class CommandService<T> : ICommandService<T> where T : IAggregateRoot
     {
         private readonly ILogger<CommandService<T>> _logger;
         private readonly ICommandRepository<T> _commandRepository;

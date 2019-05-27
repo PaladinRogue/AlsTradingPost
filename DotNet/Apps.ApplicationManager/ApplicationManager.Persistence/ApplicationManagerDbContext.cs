@@ -26,8 +26,8 @@ namespace ApplicationManager.Persistence
 
             modelBuilder.ProtectSensitiveInformation();
 
-            modelBuilder.Entity<PasswordIdentity>()
-                .ToTable("PasswordIdentites");
+            modelBuilder.Entity<AuthenticationIdentity>()
+                .ToTable("AuthenticationIdentities");
 
             modelBuilder.Entity<Session>()
                 .ToTable("Sessions");
@@ -43,6 +43,15 @@ namespace ApplicationManager.Persistence
 
             modelBuilder.Entity<AuthenticationGrantTypeClientCredential>()
                 .HasBaseType<AuthenticationService>();
+
+            modelBuilder.Entity<AuthenticationIdentity>()
+                .HasDiscriminator(a => a.Type);
+
+            modelBuilder.Entity<PasswordIdentity>()
+                .HasBaseType<AuthenticationIdentity>();
+
+            modelBuilder.Entity<TwoFactorAuthenticationIdentity>()
+                .HasBaseType<AuthenticationIdentity>();
 
             modelBuilder.Entity<Identity>()
                 .HasOne(i => i.Session)

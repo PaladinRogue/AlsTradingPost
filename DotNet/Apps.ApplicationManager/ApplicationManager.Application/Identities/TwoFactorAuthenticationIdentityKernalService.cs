@@ -1,37 +1,33 @@
-﻿using System;
-using ApplicationManager.ApplicationServices.Identities.Interfaces;
+﻿using ApplicationManager.ApplicationServices.Identities.Interfaces;
 using ApplicationManager.ApplicationServices.Identities.Models;
 using ApplicationManager.Domain.Identities;
-using ApplicationManager.Domain.Identities.AuthenticationIdentities;
 using Common.Application.Transactions;
 using Common.ApplicationServices.Services.Command;
 
 namespace ApplicationManager.ApplicationServices.Identities
 {
-    public class PasswordIdentityKernalService : IPasswordIdentityKernalService
+    public class TwoFactorAuthenticationIdentityKernalService : ITwoFactorAuthenticationIdentityKernalService
     {
         private readonly ICommandService<Identity> _identityCommandService;
 
-        private readonly ICommandService<PasswordIdentity> _passwordIdentityCommandService;
-
         private readonly ITransactionManager _transactionManager;
 
-        public PasswordIdentityKernalService(
+        public TwoFactorAuthenticationIdentityKernalService(
             ICommandService<Identity> identityCommandService,
-            ITransactionManager transactionManager,
-            ICommandService<PasswordIdentity> passwordIdentityCommandService)
+            ITransactionManager transactionManager)
         {
             _identityCommandService = identityCommandService;
             _transactionManager = transactionManager;
-            _passwordIdentityCommandService = passwordIdentityCommandService;
         }
 
-        public void Create(CreatePasswordIdentityAdto createPasswordIdentityAdto)
+        public void Create(CreateTwoFactorAuthenticationIdentityAdto createTwoFactorAuthenticationIdentityAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
                 Identity identity = Identity.Create();
                 _identityCommandService.Create(identity);
+
+                transaction.Commit();
             }
         }
     }

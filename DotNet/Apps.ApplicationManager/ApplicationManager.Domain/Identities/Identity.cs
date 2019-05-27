@@ -44,6 +44,22 @@ namespace ApplicationManager.Domain.Identities
             _authenticationIdentities.Add(PasswordIdentity.Create(this, authenticationGrantTypePassword, createPasswordIdentityDdto));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <exception cref="TwoFactorAuthenticationIdentityExistsDomainException"></exception>
+        /// <param name="createTwoFactorAuthenticationIdentityDdto"></param>
+        internal void CreateTwoFactorAuthenticationIdentity(
+            CreateTwoFactorAuthenticationIdentityDdto createTwoFactorAuthenticationIdentityDdto)
+        {
+            if (AuthenticationIdentities.Any(i => i.Type == AuthenticationIdentityTypes.TwoFactor))
+            {
+                throw new TwoFactorAuthenticationIdentityExistsDomainException();
+            }
+
+            _authenticationIdentities.Add(TwoFactorAuthenticationIdentity.Create(this, createTwoFactorAuthenticationIdentityDdto));
+        }
+
         public bool Validate(ValidatePasswordIdentityDdto validatePasswordIdentityDdto)
         {
             return _authenticationIdentities.Any(p =>

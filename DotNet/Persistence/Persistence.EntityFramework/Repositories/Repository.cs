@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.EntityFramework.Repositories
 {
-    public class Repository<T> : ICommandRepository<T>, IQueryRepository<T> where T : class, IVersionedEntity
+    public class Repository<T> : ICommandRepository<T>, IQueryRepository<T> where T : class, IAggregateRoot
     {
         private readonly DbContext _context;
 

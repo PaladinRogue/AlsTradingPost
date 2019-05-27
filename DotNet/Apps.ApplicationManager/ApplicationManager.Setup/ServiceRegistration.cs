@@ -1,5 +1,7 @@
 ﻿using ApplicationManager.ApplicationServices.Applications;
 using ApplicationManager.ApplicationServices.Applications.Interfaces;
+using ApplicationManager.ApplicationServices.Identities;
+using ApplicationManager.ApplicationServices.Identities.Interfaces;
 using ApplicationManager.Persistence;
 using ApplicationManager.Setup.Infrastructure.Authorisation;
 using Common.Api.HttpClient;
@@ -35,6 +37,7 @@ namespace ApplicationManager.Setup
 	        services.AddSingleton<IHttpClientFactory, HttpClientFactory>();
 
             services.AddScoped<IRegisterApplicationKernalService, RegisterApplicationKernalService>();
+            services.AddScoped<ITwoFactorAuthenticationIdentityKernalService, TwoFactorAuthenticationIdentityKernalService>();
         }
 	    
         public static void RegisterDomainServices(IServiceCollection services)

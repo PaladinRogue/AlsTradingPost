@@ -51,12 +51,13 @@ namespace Common.Setup
 	            ILogger<MessageBusRabbitMq> logger = sp.GetRequiredService<ILogger<MessageBusRabbitMq>>();
 	            MessagingBusSettings messageBusSettings = sp.GetRequiredService<IOptions<MessagingBusSettings>>().Value;
 
+                IServiceProvider serviceProvider = sp.GetRequiredService<IServiceProvider>();
                 IMessageBusSubscriptionsManager eventBusSubcriptionsManager = sp.GetRequiredService<IMessageBusSubscriptionsManager>();
                 IRabbitMqPersistentConnection rabbitMqPersistentConnection = sp.GetRequiredService<IRabbitMqPersistentConnection>();
 
 	            int retryCount = messageBusSettings.RetryCount ?? 5;
                 
-                return new MessageBusRabbitMq(rabbitMqPersistentConnection, eventBusSubcriptionsManager, logger, retryCount);
+                return new MessageBusRabbitMq(rabbitMqPersistentConnection, eventBusSubcriptionsManager, logger, serviceProvider, retryCount);
 	        });
 
             services.AddSingleton<IMessageSubscriberFactory, MessageSubscriberFactory>();

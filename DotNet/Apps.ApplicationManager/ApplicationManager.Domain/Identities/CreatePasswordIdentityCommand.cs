@@ -14,7 +14,7 @@ namespace ApplicationManager.Domain.Identities
             _validator = validator;
         }
 
-        public void Create(
+        public void Execute(
             Identity identity,
             AuthenticationGrantTypePassword authenticationGrantTypePassword,
             CreatePasswordIdentityDdto createPasswordIdentityDdto)
@@ -23,13 +23,5 @@ namespace ApplicationManager.Domain.Identities
 
             identity.CreatePasswordIdentity(authenticationGrantTypePassword, createPasswordIdentityDdto);
         }
-    }
-
-    public interface ICreatePasswordIdentityCommand
-    {
-        void Create(
-            Identity identity,
-            AuthenticationGrantTypePassword authenticationGrantTypePassword,
-            CreatePasswordIdentityDdto createPasswordIdentityDdto);
     }
 }

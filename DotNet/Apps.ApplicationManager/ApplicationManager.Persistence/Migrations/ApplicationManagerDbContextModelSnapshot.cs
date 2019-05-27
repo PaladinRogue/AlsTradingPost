@@ -59,27 +59,23 @@ namespace ApplicationManager.Persistence.Migrations
                     b.HasDiscriminator<string>("Type").HasValue("AuthenticationService");
                 });
 
-            modelBuilder.Entity("ApplicationManager.Domain.AuthenticationServices.Identities.PasswordIdentity", b =>
+            modelBuilder.Entity("ApplicationManager.Domain.Identities.AuthenticationIdentities.AuthenticationIdentity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("AuthenticationGrantTypePasswordId");
-
-                    b.Property<string>("Identifier")
-                        .HasMaxLength(40);
-
                     b.Property<Guid?>("IdentityId");
 
-                    b.Property<string>("Password");
+                    b.Property<string>("Type")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AuthenticationGrantTypePasswordId");
-
                     b.HasIndex("IdentityId");
 
-                    b.ToTable("PasswordIdentites");
+                    b.ToTable("AuthenticationIdentities");
+
+                    b.HasDiscriminator<string>("Type").HasValue("AuthenticationIdentity");
                 });
 
             modelBuilder.Entity("ApplicationManager.Domain.Identities.Identity", b =>
@@ -158,14 +154,45 @@ namespace ApplicationManager.Persistence.Migrations
                     b.HasDiscriminator().HasValue("AuthenticationGrantTypeRefreshToken");
                 });
 
-            modelBuilder.Entity("ApplicationManager.Domain.AuthenticationServices.Identities.PasswordIdentity", b =>
+            modelBuilder.Entity("ApplicationManager.Domain.Identities.AuthenticationIdentities.PasswordIdentity", b =>
                 {
-                    b.HasOne("ApplicationManager.Domain.AuthenticationServices.AuthenticationGrantTypePassword", "AuthenticationGrantTypePassword")
-                        .WithMany("PasswordIdentities")
-                        .HasForeignKey("AuthenticationGrantTypePasswordId");
+                    b.HasBaseType("ApplicationManager.Domain.Identities.AuthenticationIdentities.AuthenticationIdentity");
 
+                    b.Property<Guid?>("AuthenticationGrantTypePasswordId");
+
+                    b.Property<string>("Identifier")
+                        .IsRequired()
+                        .HasMaxLength(40);
+
+                    b.Property<string>("Password")
+                        .HasMaxLength(40);
+
+                    b.HasIndex("AuthenticationGrantTypePasswordId");
+
+                    b.ToTable("PasswordIdentity");
+
+                    b.HasDiscriminator().HasValue("PasswordIdentity");
+                });
+
+            modelBuilder.Entity("ApplicationManager.Domain.Identities.AuthenticationIdentities.TwoFactorAuthenticationIdentity", b =>
+                {
+                    b.HasBaseType("ApplicationManager.Domain.Identities.AuthenticationIdentities.AuthenticationIdentity");
+
+                    b.Property<string>("EmailAddress")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Token")
+                        .HasMaxLength(40);
+
+                    b.ToTable("TwoFactorAuthenticationIdentity");
+
+                    b.HasDiscriminator().HasValue("TwoFactorAuthenticationIdentity");
+                });
+
+            modelBuilder.Entity("ApplicationManager.Domain.Identities.AuthenticationIdentities.AuthenticationIdentity", b =>
+                {
                     b.HasOne("ApplicationManager.Domain.Identities.Identity", "Identity")
-                        .WithMany()
+                        .WithMany("AuthenticationIdentities")
                         .HasForeignKey("IdentityId");
                 });
 
@@ -175,6 +202,13 @@ namespace ApplicationManager.Persistence.Migrations
                         .WithOne("Session")
                         .HasForeignKey("ApplicationManager.Domain.Identities.Sessions.Session", "IdentityId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ApplicationManager.Domain.Identities.AuthenticationIdentities.PasswordIdentity", b =>
+                {
+                    b.HasOne("ApplicationManager.Domain.AuthenticationServices.AuthenticationGrantTypePassword", "AuthenticationGrantTypePassword")
+                        .WithMany()
+                        .HasForeignKey("AuthenticationGrantTypePasswordId");
                 });
 #pragma warning restore 612, 618
         }
