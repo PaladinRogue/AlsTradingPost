@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ApplicationManager.Domain.Applications.Events;
+using Common.Domain.DomainEvents;
 using Common.Domain.Models;
 using Common.Domain.Models.Interfaces;
 
@@ -18,7 +20,11 @@ namespace ApplicationManager.Domain.Applications
 
         public static Application Create(CreateApplicationDdto createApplicationDdto) 
         {
-            return new Application(createApplicationDdto);
+            var application =  new Application(createApplicationDdto);
+
+            DomainEvents.Raise(ApplicationCreatedDomainEvent.Create(application));
+
+            return application;
         }
 
         [MaxLength(20)]

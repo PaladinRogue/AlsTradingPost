@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using EventRegistration = ApplicationManager.Setup.EventRegistration;
 using MappingRegistration = ApplicationManager.Api.Mappings.MappingRegistration;
 using MessageRegistration = ApplicationManager.Setup.MessageRegistration;
 using ServiceRegistration = ApplicationManager.Setup.ServiceRegistration;
@@ -46,7 +47,9 @@ namespace ApplicationManager.Api
             JwtRegistration.RegisterOptions(Configuration, services);
             
             MessageRegistration.RegisterSubscribers(services);
-            
+
+            EventRegistration.RegisterHandlers(services);
+
             ServiceRegistration.RegisterBuilders(services);
             ServiceRegistration.RegisterValidators(services);
             ServiceRegistration.RegisterApplicationServices(services);

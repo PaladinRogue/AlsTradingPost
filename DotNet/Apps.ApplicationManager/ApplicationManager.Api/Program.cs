@@ -1,5 +1,4 @@
-﻿using ApplicationManager.Setup.Infrastructure.IdentityRegistration;
-using Common.Api.ApplicationRegistration;
+﻿using Common.Api.ApplicationRegistration;
 using Common.Setup.Infrastructure.Messaging;
 using Common.Setup.Infrastructure.Persistence;
 using Microsoft.AspNetCore;
@@ -16,7 +15,6 @@ namespace ApplicationManager.Api
 			    .ApplyMigrations()
 		        .InitialiseMessaging()
 		        .RegisterApplication("Application manager", "apps")
-		        .CreateSystemAdminIdentity()
                 .Run();
 	    }
 

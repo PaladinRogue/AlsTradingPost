@@ -37,11 +37,13 @@ namespace ApplicationManager.ApplicationServices.Applications
                 {
                     try
                     {
-                        _commandService.Create(Application.Create(new CreateApplicationDdto
+                        application = Application.Create(new CreateApplicationDdto
                         {
                             Name = registerApplicationAdto.Name,
                             SystemName = registerApplicationAdto.SystemName
-                        }));
+                        });
+
+                        _commandService.Create(application);
                     }
                     catch (CreateDomainException e)
                     {

@@ -2,6 +2,8 @@
 using ApplicationManager.ApplicationServices.Applications.Interfaces;
 using ApplicationManager.ApplicationServices.Identities;
 using ApplicationManager.ApplicationServices.Identities.Interfaces;
+using ApplicationManager.Domain.Identities;
+using ApplicationManager.Domain.Identities.AuthenticationIdentities;
 using ApplicationManager.Persistence;
 using ApplicationManager.Setup.Infrastructure.Authorisation;
 using Common.Api.HttpClient;
@@ -30,6 +32,8 @@ namespace ApplicationManager.Setup
 	    public static void RegisterValidators(IServiceCollection services)
 	    {
 		    ValidatorOptions.LanguageManager.Enabled = false;
+
+	        services.AddScoped<IValidator<CreateTwoFactorAuthenticationIdentityDdto>, CreateTwoFactorAuthenticationIdentityValidator>();
 	    }
 	    
         public static void RegisterApplicationServices(IServiceCollection services)
@@ -37,12 +41,13 @@ namespace ApplicationManager.Setup
 	        services.AddSingleton<IHttpClientFactory, HttpClientFactory>();
 
             services.AddScoped<IRegisterApplicationKernalService, RegisterApplicationKernalService>();
-            services.AddScoped<ITwoFactorAuthenticationIdentityKernalService, TwoFactorAuthenticationIdentityKernalService>();
+            services.AddScoped<ICreateAdminAuthenticationIdentityKernalService, CreateAdminAuthenticationIdentityKernalService>();
         }
 	    
         public static void RegisterDomainServices(IServiceCollection services)
         {
-		}
+            services.AddScoped<ICreateTwoFactorAuthenticationIdentityCommand, CreateTwoFactorAuthenticationIdentityCommand>();
+        }
 	    
         public static void RegisterPersistenceServices(IConfiguration configuration, IServiceCollection services)
         {

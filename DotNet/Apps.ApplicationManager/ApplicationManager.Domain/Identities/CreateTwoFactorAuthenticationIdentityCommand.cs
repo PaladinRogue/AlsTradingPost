@@ -1,5 +1,4 @@
-﻿using ApplicationManager.Domain.AuthenticationServices;
-using ApplicationManager.Domain.Identities.AuthenticationIdentities;
+﻿using ApplicationManager.Domain.Identities.AuthenticationIdentities;
 using Common.Domain.Validation;
 using FluentValidation;
 

@@ -1,4 +1,4 @@
-﻿namespace ApplicationManager.Setup.Infrastructure.Settings
+﻿namespace ApplicationManager.ApplicationServices.Identities.Settings
 {
     public class SystemAdminIdentitySettings
     {
