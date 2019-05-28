@@ -25,6 +25,9 @@
     <Compile Remove="Migrations\20181107183241_InitialCreate.cs" />
     <Compile Remove="Migrations\20181107183422_InitialCreate.cs" />
     <Compile Remove="Migrations\20181107184932_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190527203849_test.cs" />
+    <Compile Remove="Migrations\20190528080611_UpdateMaxLengths.cs" />
+    <Compile Remove="Migrations\20190528083308_UpdateFieldLengthConstraintsForEncryptedData.cs" />
   </ItemGroup>
 
   <ItemGroup>

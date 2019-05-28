@@ -36,21 +36,26 @@ namespace ApplicationManager.Persistence
                 .HasDiscriminator(a => a.Type);
 
             modelBuilder.Entity<AuthenticationGrantTypeRefreshToken>()
+                .ProtectSensitiveInformation()
                 .HasBaseType<AuthenticationService>();
 
             modelBuilder.Entity<AuthenticationGrantTypePassword>()
+                .ProtectSensitiveInformation()
                 .HasBaseType<AuthenticationService>();
 
             modelBuilder.Entity<AuthenticationGrantTypeClientCredential>()
+                .ProtectSensitiveInformation()
                 .HasBaseType<AuthenticationService>();
 
             modelBuilder.Entity<AuthenticationIdentity>()
                 .HasDiscriminator(a => a.Type);
 
             modelBuilder.Entity<PasswordIdentity>()
+               .ProtectSensitiveInformation()
                 .HasBaseType<AuthenticationIdentity>();
 
             modelBuilder.Entity<TwoFactorAuthenticationIdentity>()
+                .ProtectSensitiveInformation()
                 .HasBaseType<AuthenticationIdentity>();
 
             modelBuilder.Entity<Identity>()

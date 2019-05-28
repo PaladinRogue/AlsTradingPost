@@ -11,17 +11,12 @@ namespace ApplicationManager.Domain.Identities.Sessions
         {
         }
         
-        public Session(Guid id)
-        {
-            Id = id;
-        }
-        
         [MaxLength(100)]
         public string RefreshToken { get; protected set; }
 
         public bool IsRevoked { get; protected set; }
 
-        public Guid IdentityId { get; protected set ; }
+        public Guid IdentityId { get; protected set; }
 
         public Identity Identity { get; protected set; }
 

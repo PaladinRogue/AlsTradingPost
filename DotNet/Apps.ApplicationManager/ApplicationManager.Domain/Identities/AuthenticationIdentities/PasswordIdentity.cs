@@ -35,7 +35,7 @@ namespace ApplicationManager.Domain.Identities.AuthenticationIdentities
             return new PasswordIdentity(identity, authenticationGrantTypePassword, createPasswordIdentityDdto);
         }
 
-        [MaxLength(40)]
+        [MaxLength(254)]
         [Required]
         [SensitiveInformation]
         public string Identifier { get; protected set; }

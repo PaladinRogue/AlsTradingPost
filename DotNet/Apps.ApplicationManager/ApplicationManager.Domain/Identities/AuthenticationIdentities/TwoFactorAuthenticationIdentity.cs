@@ -33,7 +33,7 @@ namespace ApplicationManager.Domain.Identities.AuthenticationIdentities
             return new TwoFactorAuthenticationIdentity(identity, createTwoFactorAuthenticationIdentityDdto);
         }
 
-        [MaxLength(255)]
+        [MaxLength(254)]
         [EmailAddress]
         [SensitiveInformation]
         public string EmailAddress { get; protected set; }
