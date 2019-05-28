@@ -20,7 +20,7 @@ namespace ApplicationManager.Domain.Applications
 
         public static Application Create(CreateApplicationDdto createApplicationDdto) 
         {
-            var application =  new Application(createApplicationDdto);
+            Application application = new Application(createApplicationDdto);
 
             DomainEvents.Raise(ApplicationCreatedDomainEvent.Create(application));
 

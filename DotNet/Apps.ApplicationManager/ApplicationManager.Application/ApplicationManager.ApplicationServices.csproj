@@ -16,8 +16,4 @@
     </Reference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Identities\Models\" />
-  </ItemGroup>
-
 </Project>
