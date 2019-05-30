@@ -3,7 +3,7 @@ using ApplicationManager.ApplicationServices.AuthenticationServices.Interfaces;
 using ApplicationManager.ApplicationServices.AuthenticationServices.Models;
 using ApplicationManager.Domain.AuthenticationServices;
 using Common.Application.Transactions;
-using Common.ApplicationServices.Services.Command;
+using Common.Domain.Persistence;
 
 namespace ApplicationManager.ApplicationServices.AuthenticationServices
 {
@@ -11,43 +11,18 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
     {
         private readonly ITransactionManager _transactionManager;
 
-        private readonly ICommandService<AuthenticationService> _commandService;
+        private readonly ICreateAuthenticationGrantTypeClientCredentialCommand _createAuthenticationGrantTypeClientCredentialCommand;
 
-        public CreateAuthenticationServiceCommand(ITransactionManager transactionManager,
-            ICommandService<AuthenticationService> commandService)
+        private readonly ICommandRepository<AuthenticationService> _commandRepository;
+
+        public CreateAuthenticationServiceCommand(
+            ITransactionManager transactionManager,
+            ICreateAuthenticationGrantTypeClientCredentialCommand createAuthenticationGrantTypeClientCredentialCommand,
+            ICommandRepository<AuthenticationService> commandRepository)
         {
             _transactionManager = transactionManager;
-            _commandService = commandService;
-        }
-
-        public Guid Everyone()
-        {
-            using (ITransaction transaction = _transactionManager.Create())
-            {
-                AuthenticationGrantTypeRefreshToken authenticationGrantTypeEveryone =
-                    AuthenticationGrantTypeRefreshToken.Create();
-
-                _commandService.Create(authenticationGrantTypeEveryone);
-
-                transaction.Commit();
-
-                return authenticationGrantTypeEveryone.Id;
-            }
-        }
-
-        public Guid Password()
-        {
-            using (ITransaction transaction = _transactionManager.Create())
-            {
-                AuthenticationGrantTypePassword authenticationGrantTypePassword =
-                    AuthenticationGrantTypePassword.Create();
-
-                _commandService.Create(authenticationGrantTypePassword);
-
-                transaction.Commit();
-
-                return authenticationGrantTypePassword.Id;
-            }
+            _createAuthenticationGrantTypeClientCredentialCommand = createAuthenticationGrantTypeClientCredentialCommand;
+            _commandRepository = commandRepository;
         }
 
         public Guid ClientCredential(
@@ -56,7 +31,7 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
             using (ITransaction transaction = _transactionManager.Create())
             {
                 AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential =
-                    AuthenticationGrantTypeClientCredential.Create(new CreateAuthenticationGrantTypeClientCredentialDdto
+                    _createAuthenticationGrantTypeClientCredentialCommand.Execute(new CreateAuthenticationGrantTypeClientCredentialDdto
                     {
                         Name = createAuthenticationGrantTypeClientCredentialAdto.Name,
                         ClientId = createAuthenticationGrantTypeClientCredentialAdto.ClientId,
@@ -66,7 +41,7 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
                         ValidateAccessTokenUrl = createAuthenticationGrantTypeClientCredentialAdto.ValidateAccessTokenUrl
                     });
 
-                _commandService.Create(authenticationGrantTypeClientCredential);
+                _commandRepository.Add(authenticationGrantTypeClientCredential);
 
                 transaction.Commit();
 

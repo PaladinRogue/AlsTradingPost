@@ -1,4 +1,4 @@
-﻿using ApplicationManager.ApplicationServices.Identities.Settings;
+﻿using Common.Api.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

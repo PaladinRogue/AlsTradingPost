@@ -21,20 +21,6 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
 
         public ICreateAuthenticationServiceCommand Service => this;
 
-        public Guid Everyone()
-        {
-            return _securityApplicationService.Secure(
-                () => _createAuthenticationServiceCommand.Everyone(),
-                DefaultAuthorisationContext.Create(AuthorisationResource.AuthenticationService, AuthorisationAction.Create));
-        }
-
-        public Guid Password()
-        {
-            return _securityApplicationService.Secure(
-                () => _createAuthenticationServiceCommand.Password(),
-                DefaultAuthorisationContext.Create(AuthorisationResource.AuthenticationService, AuthorisationAction.Create));
-        }
-
         public Guid ClientCredential(
             CreateAuthenticationGrantTypeClientCredentialAdto createAuthenticationGrantTypeClientCredentialAdto)
         {

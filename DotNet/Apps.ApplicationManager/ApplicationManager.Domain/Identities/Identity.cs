@@ -2,7 +2,9 @@
 using System.Linq;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities.AuthenticationIdentities;
+using ApplicationManager.Domain.Identities.Events;
 using ApplicationManager.Domain.Identities.Sessions;
+using Common.Domain.DomainEvents;
 using Common.Domain.Models;
 using Common.Domain.Models.DataProtection;
 using Common.Domain.Models.Interfaces;
@@ -17,7 +19,7 @@ namespace ApplicationManager.Domain.Identities
 
         private readonly ISet<AuthenticationIdentity> _authenticationIdentities = new HashSet<AuthenticationIdentity>();
 
-        public static Identity Create()
+        internal static Identity Create()
         {
             return new Identity();
         }
@@ -57,10 +59,15 @@ namespace ApplicationManager.Domain.Identities
                 throw new TwoFactorAuthenticationIdentityExistsDomainException();
             }
 
-            _authenticationIdentities.Add(TwoFactorAuthenticationIdentity.Create(this, createTwoFactorAuthenticationIdentityDdto));
+            TwoFactorAuthenticationIdentity twoFactorAuthenticationIdentity =
+                TwoFactorAuthenticationIdentity.Create(this, createTwoFactorAuthenticationIdentityDdto);
+
+            _authenticationIdentities.Add(twoFactorAuthenticationIdentity);
+
+            DomainEvents.Raise(TwoFactorAuthenticationIdentityCreatedDomainEvent.Create(twoFactorAuthenticationIdentity));
         }
 
-        public bool Validate(ValidatePasswordIdentityDdto validatePasswordIdentityDdto)
+        internal bool Validate(ValidatePasswordIdentityDdto validatePasswordIdentityDdto)
         {
             return _authenticationIdentities.Any(p =>
                 p.Type == AuthenticationIdentityTypes.Password &&

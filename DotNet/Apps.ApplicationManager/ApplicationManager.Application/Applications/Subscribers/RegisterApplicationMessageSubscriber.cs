@@ -7,7 +7,7 @@ using Common.Messaging.Message.Interfaces;
 using Common.Messaging.Messages;
 using Microsoft.Extensions.Logging;
 
-namespace ApplicationManager.ApplicationServices.Applications
+namespace ApplicationManager.ApplicationServices.Applications.Subscribers
 {
     public class RegisterApplicationMessageSubscriber : MessageSubscriber<RegisterApplicationMessage, RegisterApplicationMessageSubscriber>
     {

@@ -156,7 +156,7 @@ namespace Message.Broker.Messages
                 string messageKey = ea.RoutingKey;
                 string message = Encoding.UTF8.GetString(ea.Body);
 
-                await ProcessMessage(messageKey, message);
+                ProcessMessage(messageKey, message);
             };
 
             channel.BasicConsume(
@@ -173,7 +173,7 @@ namespace Message.Broker.Messages
             return channel;
         }
 
-        private async Task ProcessMessage(string messageName, string serializedMessage)
+        private void ProcessMessage(string messageName, string serializedMessage)
         {
             if (_messageBusSubscriptionsManager.HasSubscriptionsForMessage(messageName))
             {

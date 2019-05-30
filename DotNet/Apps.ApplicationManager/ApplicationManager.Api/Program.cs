@@ -14,7 +14,7 @@ namespace ApplicationManager.Api
 			    .Build()
 			    .ApplyMigrations()
 		        .InitialiseMessaging()
-		        .RegisterApplication("Application manager", "apps")
+		        .RegisterApplication()
                 .Run();
 	    }
 

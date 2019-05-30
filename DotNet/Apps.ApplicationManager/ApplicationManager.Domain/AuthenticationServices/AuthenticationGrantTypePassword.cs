@@ -14,7 +14,7 @@ namespace ApplicationManager.Domain.AuthenticationServices
         {
         }
 
-        public static AuthenticationGrantTypePassword Create()
+        internal static AuthenticationGrantTypePassword Create()
         {
             return new AuthenticationGrantTypePassword();
         }

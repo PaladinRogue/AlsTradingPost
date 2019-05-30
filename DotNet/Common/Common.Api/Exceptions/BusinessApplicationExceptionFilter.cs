@@ -31,7 +31,7 @@ namespace Common.Api.Exceptions
                     case ExceptionType.BadRequest:
                         context.Result = new BadRequestObjectResult(_applicationErrorFormatter.Format(applicationError));
                         break;
-                    case ExceptionType.None:
+                    case ExceptionType.Unknown:
                     case ExceptionType.Concurrency:
                     case ExceptionType.Unauthorized:
                         context.Result = new StatusCodeResult((int)applicationError.HttpStatusCode);

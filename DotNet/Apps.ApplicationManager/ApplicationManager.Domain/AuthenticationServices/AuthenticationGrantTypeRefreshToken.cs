@@ -14,7 +14,7 @@ namespace ApplicationManager.Domain.AuthenticationServices
         {
         }
 
-        public static AuthenticationGrantTypeRefreshToken Create()
+        internal static AuthenticationGrantTypeRefreshToken Create()
         {
             return new AuthenticationGrantTypeRefreshToken();
         }

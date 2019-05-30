@@ -5,10 +5,6 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices.Interfac
 {
     public interface ICreateAuthenticationServiceCommand
     {
-        Guid Everyone();
-
-        Guid Password();
-
         Guid ClientCredential(CreateAuthenticationGrantTypeClientCredentialAdto createAuthenticationGrantTypeClientCredentialAdto);
     }
 }

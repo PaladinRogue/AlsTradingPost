@@ -1,7 +1,4 @@
-﻿using ApplicationManager.ApplicationServices.Identities.Handlers;
-using ApplicationManager.Domain.Applications.Events;
-using Common.Domain.DomainEvents.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace ApplicationManager.Setup
 {
@@ -9,7 +6,6 @@ namespace ApplicationManager.Setup
     {
         public static void RegisterHandlers(IServiceCollection services)
         {
-            services.AddScoped<IDomainEventHandler<ApplicationCreatedDomainEvent>, CreateAdminIdentityWhenApplicationCreatedDomainEventHandler>();
         }
     }
 }

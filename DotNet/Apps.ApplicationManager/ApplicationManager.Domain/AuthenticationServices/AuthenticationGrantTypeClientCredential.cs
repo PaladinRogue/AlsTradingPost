@@ -41,7 +41,7 @@ namespace ApplicationManager.Domain.AuthenticationServices
 
         public string ValidateAccessTokenUrl { get; protected set; }
 
-        public static AuthenticationGrantTypeClientCredential Create(
+        internal static AuthenticationGrantTypeClientCredential Create(
             CreateAuthenticationGrantTypeClientCredentialDdto createAuthenticationGrantTypeClientCredentialDdto)
         {
             return new AuthenticationGrantTypeClientCredential(createAuthenticationGrantTypeClientCredentialDdto);

@@ -2,7 +2,7 @@
 {
     public enum ExceptionType
     {
-        None,
+        Unknown,
         BadRequest,
         Concurrency,
         Unauthorized

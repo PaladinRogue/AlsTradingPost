@@ -1,6 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using ApplicationManager.Domain.Applications.Events;
-using Common.Domain.DomainEvents;
 using Common.Domain.Models;
 using Common.Domain.Models.Interfaces;
 
@@ -18,25 +16,22 @@ namespace ApplicationManager.Domain.Applications
             SystemName = createApplicationDdto.SystemName;
         }
 
-        public static Application Create(CreateApplicationDdto createApplicationDdto) 
+        internal static Application Create(CreateApplicationDdto createApplicationDdto) 
         {
-            Application application = new Application(createApplicationDdto);
-
-            DomainEvents.Raise(ApplicationCreatedDomainEvent.Create(application));
-
-            return application;
+            return new Application(createApplicationDdto);
         }
 
-        [MaxLength(20)]
+        [MaxLength(40)]
+        [Required]
         public string Name { get; protected set; }
 
         [MaxLength(20)]
+        [Required]
         public string SystemName { get; protected set; }
         
-        public void Change(ChangeApplictionDdto changeApplictionDdto)
+        internal void Change(ChangeApplicationDdto changeApplicationDdto)
         {
-            Name = changeApplictionDdto.Name;
-            SystemName = changeApplictionDdto.SystemName;
+            Name = changeApplicationDdto.Name;
         }
     }
 }

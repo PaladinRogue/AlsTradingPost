@@ -1,4 +1,4 @@
-﻿using ApplicationManager.ApplicationServices.Applications;
+﻿using ApplicationManager.ApplicationServices.Applications.Subscribers;
 using Common.Messaging.Message.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
