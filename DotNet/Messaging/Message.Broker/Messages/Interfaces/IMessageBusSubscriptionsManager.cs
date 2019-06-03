@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Common.Messaging.Message;
 using Common.Messaging.Message.Interfaces;
+using Common.Messaging.Subscribers;
 using Common.Resources;
 
 namespace Message.Broker.Messages.Interfaces

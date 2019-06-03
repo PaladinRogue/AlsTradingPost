@@ -2,6 +2,7 @@
 using ApplicationManager.ApplicationServices.Applications.Interfaces;
 using ApplicationManager.ApplicationServices.Identities;
 using ApplicationManager.ApplicationServices.Identities.Interfaces;
+using ApplicationManager.Domain.Applications;
 using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.AuthenticationIdentities;
 using ApplicationManager.Persistence;
@@ -34,6 +35,8 @@ namespace ApplicationManager.Setup
 		    ValidatorOptions.LanguageManager.Enabled = false;
 
 	        services.AddScoped<IValidator<CreateTwoFactorAuthenticationIdentityDdto>, CreateTwoFactorAuthenticationIdentityValidator>();
+	        services.AddScoped<IValidator<ChangeApplicationDdto>, ChangeApplicationValidator>();
+	        services.AddScoped<IValidator<CreateApplicationDdto>, CreateApplicationValidator>();
 	    }
 	    
         public static void RegisterApplicationServices(IServiceCollection services)
@@ -47,13 +50,15 @@ namespace ApplicationManager.Setup
         public static void RegisterDomainServices(IServiceCollection services)
         {
             services.AddScoped<ICreateTwoFactorAuthenticationIdentityCommand, CreateTwoFactorAuthenticationIdentityCommand>();
+            services.AddScoped<ICreateIdentityCommand, CreateIdentityCommand>();
+            services.AddScoped<IChangeApplicationCommand, ChangeApplicationCommand>();
+            services.AddScoped<ICreateApplicationCommand, CreateApplicationCommand>();
         }
 	    
         public static void RegisterPersistenceServices(IConfiguration configuration, IServiceCollection services)
         {
             services.AddScoped(typeof(ICommandRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IQueryRepository<>), typeof(Repository<>));
-
 
             services.AddEntityFrameworkSqlServer().AddOptions()
                 .AddDbContext<ApplicationManagerDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Default")));

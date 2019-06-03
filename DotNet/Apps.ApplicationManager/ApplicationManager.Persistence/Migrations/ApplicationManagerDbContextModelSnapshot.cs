@@ -16,7 +16,7 @@ namespace ApplicationManager.Persistence.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("apps")
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -26,9 +26,11 @@ namespace ApplicationManager.Persistence.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name")
-                        .HasMaxLength(20);
+                        .IsRequired()
+                        .HasMaxLength(40);
 
                     b.Property<string>("SystemName")
+                        .IsRequired()
                         .HasMaxLength(20);
 
                     b.Property<byte[]>("Version")
@@ -131,8 +133,6 @@ namespace ApplicationManager.Persistence.Migrations
 
                     b.Property<string>("ValidateAccessTokenUrl");
 
-                    b.ToTable("AuthenticationGrantTypeClientCredential");
-
                     b.HasDiscriminator().HasValue("AuthenticationGrantTypeClientCredential");
                 });
 
@@ -140,18 +140,12 @@ namespace ApplicationManager.Persistence.Migrations
                 {
                     b.HasBaseType("ApplicationManager.Domain.AuthenticationServices.AuthenticationService");
 
-
-                    b.ToTable("AuthenticationGrantTypePassword");
-
                     b.HasDiscriminator().HasValue("AuthenticationGrantTypePassword");
                 });
 
             modelBuilder.Entity("ApplicationManager.Domain.AuthenticationServices.AuthenticationGrantTypeRefreshToken", b =>
                 {
                     b.HasBaseType("ApplicationManager.Domain.AuthenticationServices.AuthenticationService");
-
-
-                    b.ToTable("AuthenticationGrantTypeRefreshToken");
 
                     b.HasDiscriminator().HasValue("AuthenticationGrantTypeRefreshToken");
                 });
@@ -171,8 +165,6 @@ namespace ApplicationManager.Persistence.Migrations
 
                     b.HasIndex("AuthenticationGrantTypePasswordId");
 
-                    b.ToTable("PasswordIdentity");
-
                     b.HasDiscriminator().HasValue("PasswordIdentity");
                 });
 
@@ -185,8 +177,6 @@ namespace ApplicationManager.Persistence.Migrations
 
                     b.Property<string>("Token")
                         .HasMaxLength(1024);
-
-                    b.ToTable("TwoFactorAuthenticationIdentity");
 
                     b.HasDiscriminator().HasValue("TwoFactorAuthenticationIdentity");
                 });

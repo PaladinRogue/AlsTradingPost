@@ -1,5 +1,5 @@
 ﻿
-namespace Common.Resources.Concurrency.Interfaces
+namespace Common.Domain.Concurrency.Interfaces
 {
     public interface IConcurrencyVersion
     {

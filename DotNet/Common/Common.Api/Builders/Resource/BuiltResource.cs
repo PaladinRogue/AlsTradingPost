@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Common.Resources.Concurrency.Interfaces;
+using Common.ApplicationServices.Concurrency.Interfaces;
+using Common.Domain.Concurrency.Interfaces;
 
 namespace Common.Api.Builders.Resource
 {

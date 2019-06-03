@@ -5,6 +5,7 @@ using Common.Application.Exceptions;
 using Common.Messaging.Message;
 using Common.Messaging.Message.Interfaces;
 using Common.Messaging.Messages;
+using Common.Messaging.Subscribers;
 using Microsoft.Extensions.Logging;
 
 namespace ApplicationManager.ApplicationServices.Applications.Subscribers

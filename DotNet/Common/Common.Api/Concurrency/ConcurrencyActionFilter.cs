@@ -2,7 +2,7 @@
 using System.Linq;
 using Common.Api.Builders.Resource;
 using Common.Api.Concurrency.Interfaces;
-using Common.Resources.Concurrency;
+using Common.ApplicationServices.Concurrency;
 using Common.Setup.Infrastructure.Constants;
 using Common.Setup.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Mvc;

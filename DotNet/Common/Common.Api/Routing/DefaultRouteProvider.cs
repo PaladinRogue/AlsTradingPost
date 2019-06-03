@@ -2,7 +2,6 @@
 using System.Linq;
 using Common.Resources.Extensions;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Common.Api.Routing
 {
@@ -64,7 +63,7 @@ namespace Common.Api.Routing
 
             IEnumerable<string> formattedRouteParts = routeParts.Select(s => s.ToCamelCase());
             
-            return formattedRouteParts.Join("/");
+            return string.Join("/", formattedRouteParts);
         }
         
         private string GetRouteTemplate(string routeName)

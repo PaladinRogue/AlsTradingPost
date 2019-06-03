@@ -1,23 +1,26 @@
 ﻿using System.Threading.Tasks;
 using Common.Messaging.Message.Interfaces;
 
-namespace Common.Messaging.Message
+namespace Common.Messaging.Dispatchers
 {
 	public class MessageDispatcher : IMessageDispatcher
 	{
 		private readonly IPendingMessageProvider _pendingMessageProvider;
-		private readonly IMessageBus _messageBus;
 
-		public MessageDispatcher(IPendingMessageProvider pendingMessageProvider, IMessageBus messageBus)
+		private readonly IMessageSender _messageSender;
+
+		public MessageDispatcher(
+		    IPendingMessageProvider pendingMessageProvider,
+		    IMessageSender messageSender)
 		{
 		    _pendingMessageProvider = pendingMessageProvider;
-		    _messageBus = messageBus;
+		    _messageSender = messageSender;
 		}
 
 		public async Task DispatchMessagesAsync()
 		{
 			await Task.Run(() => Parallel.ForEach(_pendingMessageProvider.GetAll(),
-				message => { _messageBus.Publish(message); }));
+				message => { _messageSender.Send(message); }));
 		}
 	}
 }

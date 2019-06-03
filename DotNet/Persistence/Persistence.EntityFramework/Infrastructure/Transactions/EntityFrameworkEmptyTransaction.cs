@@ -18,8 +18,7 @@ namespace Persistence.EntityFramework.Infrastructure.Transactions
         }
 
         public void Dispose()
-        {
-            _dbContextTransaction.Dispose();
+        { 
         }
 
         public void Commit()

@@ -8,20 +8,20 @@ namespace ApplicationManager.Api
 {
     public class Program
     {
-	    public static void Main(string[] args)
-	    {
-		    CreateWebHostBuilder(args)
-			    .Build()
-			    .ApplyMigrations()
-		        .InitialiseMessaging()
-		        .RegisterApplication()
+        public static void Main(string[] args)
+        {
+            CreateWebHostBuilder(args)
+                .Build()
+                .ApplyMigrations()
+                .InitialiseMessaging()
+                .RegisterApplication()
                 .Run();
-	    }
+        }
 
-	    public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-	            .UseKestrel()
-	            .UseIISIntegration();
+                .UseKestrel()
+                .UseIISIntegration();
     }
 }

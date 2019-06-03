@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Common.Messaging.Message;
 using Common.Messaging.Message.Interfaces;
+using Common.Messaging.Subscribers;
 using Message.Broker.Messages.Interfaces;
 
 namespace Message.Broker.Messages

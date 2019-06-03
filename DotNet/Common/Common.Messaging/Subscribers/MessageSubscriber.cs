@@ -1,6 +1,6 @@
 ﻿using Common.Messaging.Message.Interfaces;
 
-namespace Common.Messaging.Message
+namespace Common.Messaging.Subscribers
 {
     public abstract class MessageSubscriber<T, TSubscriber> : IMessageSubscriber, IMessageSubscriber<T>
         where T: IMessage

@@ -1,4 +1,5 @@
 ﻿using System;
+using Common.Messaging.Subscribers;
 
 namespace Common.Messaging.Message.Interfaces
 {

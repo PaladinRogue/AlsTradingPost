@@ -1,5 +1,4 @@
 ﻿using Common.Domain.Models;
-using Common.Resources.Concurrency.Interfaces;
 
 namespace Common.Domain.Concurrency.Interfaces
 {

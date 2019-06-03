@@ -1,4 +1,4 @@
-﻿namespace Common.Messaging.Message.Interfaces
+﻿namespace Common.Messaging.Subscribers
 {
     public interface IMessageSubscriberFactory
     {

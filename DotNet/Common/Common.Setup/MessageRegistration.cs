@@ -1,6 +1,9 @@
 ﻿using System;
+using Common.Messaging.Dispatchers;
 using Common.Messaging.Message;
 using Common.Messaging.Message.Interfaces;
+using Common.Messaging.Serialisers;
+using Common.Messaging.Subscribers;
 using Common.Setup.Settings;
 using Message.Broker.Connection;
 using Message.Broker.Connection.Interfaces;
@@ -54,18 +57,25 @@ namespace Common.Setup
                 IServiceProvider serviceProvider = sp.GetRequiredService<IServiceProvider>();
                 IMessageBusSubscriptionsManager eventBusSubcriptionsManager = sp.GetRequiredService<IMessageBusSubscriptionsManager>();
                 IRabbitMqPersistentConnection rabbitMqPersistentConnection = sp.GetRequiredService<IRabbitMqPersistentConnection>();
+                IMessageReciever messageReciever = sp.GetRequiredService<IMessageReciever>();
+                IMessageSerialiser messageSerialiser = sp.GetRequiredService<IMessageSerialiser>();
 
 	            int retryCount = messageBusSettings.RetryCount ?? 5;
                 
-                return new MessageBusRabbitMq(rabbitMqPersistentConnection, eventBusSubcriptionsManager, logger, serviceProvider, retryCount);
+                return new MessageBusRabbitMq(rabbitMqPersistentConnection, eventBusSubcriptionsManager, logger, serviceProvider, messageReciever, messageSerialiser, retryCount);
 	        });
 
             services.AddSingleton<IMessageSubscriberFactory, MessageSubscriberFactory>();
+	        services.AddSingleton<IMessageSerialiser, JsonMessageSerialiser>();
 
-	        PendingMessageDirector pendingMessageDirector = new PendingMessageDirector();
-            services.AddScoped<IPendingMessageContainer>(sp => pendingMessageDirector);
-		    services.AddScoped<IPendingMessageProvider>(sp => pendingMessageDirector);
+            services.AddSingleton<PendingMessageDirector>();
+            services.AddScoped<IPendingMessageContainer>(sp => sp.GetRequiredService<PendingMessageDirector>());
+		    services.AddScoped<IPendingMessageProvider>(sp => sp.GetRequiredService<PendingMessageDirector>());
+
 			services.AddScoped<IMessageDispatcher, MessageDispatcher>();
+            services.AddScoped<IMessageReciever, MessageReciever>();
+			services.AddScoped<IMessageSender, MessageSender>();
+			services.AddScoped<IMessageFactory, MessageFactory>();
 	    }
     }
 }

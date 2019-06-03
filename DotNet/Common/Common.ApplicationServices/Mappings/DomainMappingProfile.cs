@@ -10,10 +10,10 @@ namespace Common.ApplicationServices.Mappings
         public DomainMappingProfile()
         {
             CreateMap<IVersionedEntity, IVersionedProjection>()
-                .ForMember(dest => dest.Version, opts => opts.ResolveUsing<OutboundConcurrencyTokenResolver>());
+                .ForMember(dest => dest.Version, opts => opts.MapFrom<OutboundConcurrencyTokenResolver>());
 
             CreateMap<IVersionedDdto, IVersionedEntity>()
-                .ForMember(dest => dest.Version, opts => opts.ResolveUsing<InboundConcurrencyTokenResolver>());
+                .ForMember(dest => dest.Version, opts => opts.MapFrom<InboundConcurrencyTokenResolver>());
         }
     }
 }

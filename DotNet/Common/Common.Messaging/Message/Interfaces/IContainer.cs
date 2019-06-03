@@ -1,5 +1,5 @@
 ﻿
-namespace Common.Resources.Interfaces
+namespace Common.Messaging.Message.Interfaces
 {
     public interface IContainer<in T>
 	{

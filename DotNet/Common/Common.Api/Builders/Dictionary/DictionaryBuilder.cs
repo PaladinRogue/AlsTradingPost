@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore.Internal;
+using System.Linq;
 
 namespace Common.Api.Builders.Dictionary
 {

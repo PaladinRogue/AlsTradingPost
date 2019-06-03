@@ -1,7 +1,8 @@
 ﻿using System;
+using Common.ApplicationServices.Concurrency.Interfaces;
 using Common.ApplicationServices.Concurrency.Services.Interfaces;
+using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Exceptions;
-using Common.Resources.Concurrency.Interfaces;
 
 namespace Common.ApplicationServices.Concurrency.Services
 {

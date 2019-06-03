@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Common.Messaging.Message.Interfaces;
 
-namespace Common.Messaging.Message
+namespace Common.Messaging.Subscribers
 {
     public class MessageSubscriberFactory : IMessageSubscriberFactory
 	{

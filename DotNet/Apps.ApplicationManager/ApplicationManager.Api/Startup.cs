@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using EventRegistration = ApplicationManager.Setup.EventRegistration;
-using MappingRegistration = ApplicationManager.Api.Mappings.MappingRegistration;
 using MessageRegistration = ApplicationManager.Setup.MessageRegistration;
 using ServiceRegistration = ApplicationManager.Setup.ServiceRegistration;
 
@@ -58,7 +57,7 @@ namespace ApplicationManager.Api
             ServiceRegistration.RegisterProviders(services);
             ServiceRegistration.RegisterAuthorisation(services);
 
-            services.AddAutoMapper(MappingRegistration.RegisterMappers);
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             return services.BuildServiceProvider();
         }

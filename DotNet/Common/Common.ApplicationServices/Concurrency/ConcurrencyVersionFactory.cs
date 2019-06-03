@@ -1,8 +1,9 @@
-﻿using Common.Domain.Models.Interfaces;
-using Common.Resources.Concurrency.Interfaces;
+﻿using Common.ApplicationServices.Concurrency.Interfaces;
+using Common.Domain.Concurrency.Interfaces;
+using Common.Domain.Models.Interfaces;
 using Newtonsoft.Json;
 
-namespace Common.Resources.Concurrency
+namespace Common.ApplicationServices.Concurrency
 {
     public static class ConcurrencyVersionFactory
     {

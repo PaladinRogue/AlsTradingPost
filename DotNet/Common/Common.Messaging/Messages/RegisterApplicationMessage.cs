@@ -4,7 +4,7 @@ namespace Common.Messaging.Messages
 {
     public class RegisterApplicationMessage : IMessage
     {
-        protected RegisterApplicationMessage(string name, string systemName, string adminEmailAddress)
+        public RegisterApplicationMessage(string name, string systemName, string adminEmailAddress)
         {
             Name = name;
             SystemName = systemName;
@@ -16,6 +16,8 @@ namespace Common.Messaging.Messages
             return new RegisterApplicationMessage(name, systemName, adminEmailAddress);
         }
 
+        public string Type => nameof(RegisterApplicationMessage);
+        
         public string Name { get; set; }
 
         public string SystemName { get; set; }

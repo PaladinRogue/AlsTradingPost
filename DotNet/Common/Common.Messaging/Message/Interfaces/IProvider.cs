@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Common.Resources.Interfaces
+namespace Common.Messaging.Message.Interfaces
 {
     public interface IProvider<out T>
 	{

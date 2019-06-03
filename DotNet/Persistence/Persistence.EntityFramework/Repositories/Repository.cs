@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Common.ApplicationServices.Concurrency.Interfaces;
+using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Models.Interfaces;
 using Common.Domain.Persistence;
-using Common.Resources.Concurrency.Interfaces;
 using Common.Resources.Sorting;
 using Microsoft.EntityFrameworkCore;
 

@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using Common.Application.Transactions;
+using Common.Messaging.Dispatchers;
 using Common.Messaging.Message.Interfaces;
 using Microsoft.AspNetCore.Http;
 

@@ -14,7 +14,7 @@ namespace Common.Api.ApplicationRegistration
         {
             IServiceProvider serviceProvider = webHost.Services;
 
-            IMessageBus messageBus = serviceProvider.GetRequiredService<IMessageBus>();
+            IMessageSender messageSender = serviceProvider.GetRequiredService<IMessageSender>();
 
             IOptions<SystemAdminIdentitySettings> systemAdminIdentitySettingsAccessor =
                 serviceProvider.GetRequiredService<IOptions<SystemAdminIdentitySettings>>();
@@ -26,8 +26,9 @@ namespace Common.Api.ApplicationRegistration
 
             AppSettings appSettings = appSettingsAccessor.Value;
 
-            messageBus.Publish(RegisterApplicationMessage.Create(appSettings.Name, appSettings.SystemName,
-                systemAdminIdentitySettings.Email));
+            messageSender.Send(
+                    RegisterApplicationMessage.Create(appSettings.Name, appSettings.SystemName, systemAdminIdentitySettings.Email)
+                );
 
             return webHost;
         }

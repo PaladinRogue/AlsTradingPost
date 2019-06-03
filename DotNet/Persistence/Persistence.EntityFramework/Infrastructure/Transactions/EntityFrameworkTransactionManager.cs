@@ -15,14 +15,12 @@ namespace Persistence.EntityFramework.Infrastructure.Transactions
 
         public ITransaction Create()
         {
-            IDbContextTransaction dbContextTransaction = _dbContext.Database.CurrentTransaction ?? _dbContext.Database.BeginTransaction();
-
             if (_dbContext.Database.CurrentTransaction != null)
             {
-                return EntityFrameworkEmptyTransaction.Create(dbContextTransaction);
+                return EntityFrameworkEmptyTransaction.Create(_dbContext.Database.CurrentTransaction);
             }
 
-            return EntityFrameworkTransaction.Create(_dbContext, dbContextTransaction);
+            return EntityFrameworkTransaction.Create(_dbContext, _dbContext.Database.BeginTransaction());
         }
     }
 }

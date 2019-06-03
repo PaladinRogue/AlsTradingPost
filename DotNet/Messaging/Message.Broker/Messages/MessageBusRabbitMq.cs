@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
+using Common.Messaging.Message;
 using Common.Messaging.Message.Interfaces;
+using Common.Messaging.Serialisers;
+using Common.Messaging.Subscribers;
 using Message.Broker.Connection.Interfaces;
 using Message.Broker.Messages.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Polly;
 using Polly.Retry;
 using RabbitMQ.Client;
@@ -23,9 +24,10 @@ namespace Message.Broker.Messages
 
         private readonly ILogger<MessageBusRabbitMq> _logger;
         private readonly IRabbitMqPersistentConnection _persistentConnection;
-        private readonly JsonSerializerSettings _settings;
         private readonly IMessageBusSubscriptionsManager _messageBusSubscriptionsManager;
         private readonly IServiceProvider _serviceProvider;
+        private readonly IMessageReciever _messageReciever;
+        private readonly IMessageSerialiser _messageSerialiser;
         private IModel _consumerChannel;
         private readonly int _retryCount;
         private string _queueName;
@@ -33,18 +35,19 @@ namespace Message.Broker.Messages
         public MessageBusRabbitMq(IRabbitMqPersistentConnection persistentConnection,
             IMessageBusSubscriptionsManager messageBusSubscriptionsManager,
             ILogger<MessageBusRabbitMq> logger,
-            IServiceProvider serviceProvider, int retryCount = 5)
+            IServiceProvider serviceProvider,
+            IMessageReciever messageReciever,
+            IMessageSerialiser messageSerialiser,
+            int retryCount = 5)
         {
             _persistentConnection = persistentConnection;
             _messageBusSubscriptionsManager = messageBusSubscriptionsManager;
             _logger = logger;
             _serviceProvider = serviceProvider;
+            _messageReciever = messageReciever;
+            _messageSerialiser = messageSerialiser;
 
             _consumerChannel = CreateConsumerChannel();
-            _settings = new JsonSerializerSettings
-            {
-                TypeNameHandling = TypeNameHandling.All
-            };
             _retryCount = retryCount;
             _messageBusSubscriptionsManager.OnMessageRemoved += SubscriptionManagerOnMessageRemoved;
         }
@@ -85,20 +88,17 @@ namespace Message.Broker.Messages
 
             using (IModel channel = _persistentConnection.CreateModel())
             {
-                string messageName = message.GetType().Name;
-
                 channel.ExchangeDeclare(
                     exchange: BrokerName,
                     type: "direct");
 
-                string serializedMessage = JsonConvert.SerializeObject(message, _settings);
-                byte[] body = Encoding.UTF8.GetBytes(serializedMessage);
+                byte[] body = Encoding.UTF8.GetBytes(_messageSerialiser.Serialise(message));
 
                 policy.Execute(() =>
                 {
                     channel.BasicPublish(
                         exchange: BrokerName,
-                        routingKey: messageName,
+                        routingKey: message.Type,
                         basicProperties: null,
                         body: body);
                 });
@@ -151,7 +151,7 @@ namespace Message.Broker.Messages
             _queueName = channel.QueueDeclare().QueueName;
 
             EventingBasicConsumer consumer = new EventingBasicConsumer(channel);
-            consumer.Received += async (model, ea) =>
+            consumer.Received += (model, ea) =>
             {
                 string messageKey = ea.RoutingKey;
                 string message = Encoding.UTF8.GetString(ea.Body);
@@ -173,7 +173,7 @@ namespace Message.Broker.Messages
             return channel;
         }
 
-        private void ProcessMessage(string messageName, string serializedMessage)
+        private void ProcessMessage(string messageName, string serialisedMessage)
         {
             if (_messageBusSubscriptionsManager.HasSubscriptionsForMessage(messageName))
             {
@@ -185,13 +185,11 @@ namespace Message.Broker.Messages
                     {
                         try
                         {
-                            IMessage message =
-                                JsonConvert.DeserializeObject<IMessage>(serializedMessage, _settings);
-                            messageSubscription.Handler.DynamicInvoke(message);
+                            _messageReciever.Recieve(_messageSerialiser.Deserialise(serialisedMessage), messageSubscription);
                         }
                         catch (Exception e)
                         {
-                            _logger.LogCritical(e, "Unable to handle message", messageName, serializedMessage);
+                            _logger.LogCritical(e, "Unable to handle message", messageName, serialisedMessage);
                         }
                     }
                 }

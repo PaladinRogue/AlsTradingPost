@@ -1,5 +1,6 @@
 ﻿using Common.Api.Resources;
-using Common.Resources.Concurrency.Interfaces;
+using Common.ApplicationServices.Concurrency.Interfaces;
+using Common.Domain.Concurrency.Interfaces;
 
 namespace Common.Api.Concurrency.Interfaces
 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using Common.Messaging.Message.Interfaces;
+using Common.Messaging.Subscribers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
