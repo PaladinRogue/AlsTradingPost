@@ -4,7 +4,12 @@ namespace Common.Messaging.Messages
 {
     public class RegisterApplicationMessage : IMessage
     {
-        public RegisterApplicationMessage(string name, string systemName, string adminEmailAddress)
+        protected RegisterApplicationMessage()
+        {
+            
+        }
+        
+        protected RegisterApplicationMessage(string name, string systemName, string adminEmailAddress)
         {
             Name = name;
             SystemName = systemName;

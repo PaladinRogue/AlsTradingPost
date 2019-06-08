@@ -24,9 +24,9 @@ namespace ApplicationManager.Domain.Identities
             return new Identity();
         }
 
-        public Session Session { get; protected set; }
+        public virtual Session Session { get; protected set; }
 
-        public IEnumerable<AuthenticationIdentity> AuthenticationIdentities => _authenticationIdentities;
+        public virtual IEnumerable<AuthenticationIdentity> AuthenticationIdentities => _authenticationIdentities;
 
         /// <summary>
         /// 

@@ -56,6 +56,7 @@ namespace ApplicationManager.Api
             ServiceRegistration.RegisterPersistenceServices(Configuration, services);
             ServiceRegistration.RegisterProviders(services);
             ServiceRegistration.RegisterAuthorisation(services);
+            ServiceRegistration.RegisterNotifications(services);
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

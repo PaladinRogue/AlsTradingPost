@@ -38,7 +38,7 @@ namespace Common.Application.Authorisation
                 return ownedAggregate.GetOwner();
             }
 
-            throw new ArgumentException("The resource tybe specified is not and owned aggregate");
+            throw new ArgumentException("The resource type specified is not an owned aggregate");
         }
     }
 }

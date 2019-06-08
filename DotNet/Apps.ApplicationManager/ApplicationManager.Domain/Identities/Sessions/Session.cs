@@ -18,7 +18,7 @@ namespace ApplicationManager.Domain.Identities.Sessions
 
         public Guid IdentityId { get; protected set; }
 
-        public Identity Identity { get; protected set; }
+        public virtual Identity Identity { get; protected set; }
 
         public IAggregateRoot AggregateRoot => Identity;
     }

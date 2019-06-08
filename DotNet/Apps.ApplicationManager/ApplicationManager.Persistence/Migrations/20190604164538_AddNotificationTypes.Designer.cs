@@ -4,14 +4,16 @@ using ApplicationManager.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ApplicationManager.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationManagerDbContext))]
-    partial class ApplicationManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190604164538_AddNotificationTypes")]
+    partial class AddNotificationTypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,24 +116,26 @@ namespace ApplicationManager.Persistence.Migrations
                     b.ToTable("Sessions");
                 });
 
-            modelBuilder.Entity("ApplicationManager.Domain.NotificationTypes.NotificationChannelTemplate", b =>
+            modelBuilder.Entity("ApplicationManager.Domain.NotificationTypes.ChannelTemplate", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<Guid>("NotificationTypeChannelId");
 
-                    b.Property<string>("Type")
-                        .IsRequired();
+                    b.Property<string>("Type");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NotificationTypeChannelId")
                         .IsUnique();
 
-                    b.ToTable("NotificationChannelTemplates");
+                    b.ToTable("ChannelTemplates");
 
-                    b.HasDiscriminator<string>("Type").HasValue("NotificationChannelTemplate");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("ChannelTemplate");
                 });
 
             modelBuilder.Entity("ApplicationManager.Domain.NotificationTypes.NotificationType", b =>
@@ -233,15 +237,15 @@ namespace ApplicationManager.Persistence.Migrations
                     b.HasDiscriminator().HasValue("TwoFactorAuthenticationIdentity");
                 });
 
-            modelBuilder.Entity("ApplicationManager.Domain.NotificationTypes.EmailNotificationChannelTemplate", b =>
+            modelBuilder.Entity("ApplicationManager.Domain.NotificationTypes.EmailChannelTemplate", b =>
                 {
-                    b.HasBaseType("ApplicationManager.Domain.NotificationTypes.NotificationChannelTemplate");
+                    b.HasBaseType("ApplicationManager.Domain.NotificationTypes.ChannelTemplate");
 
                     b.Property<string>("Subject");
 
                     b.Property<string>("Template");
 
-                    b.HasDiscriminator().HasValue("EmailNotificationChannelTemplate");
+                    b.HasDiscriminator().HasValue("EmailChannelTemplate");
                 });
 
             modelBuilder.Entity("ApplicationManager.Domain.Identities.AuthenticationIdentities.AuthenticationIdentity", b =>
@@ -259,11 +263,11 @@ namespace ApplicationManager.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("ApplicationManager.Domain.NotificationTypes.NotificationChannelTemplate", b =>
+            modelBuilder.Entity("ApplicationManager.Domain.NotificationTypes.ChannelTemplate", b =>
                 {
                     b.HasOne("ApplicationManager.Domain.NotificationTypes.NotificationTypeChannel", "NotificationTypeChannel")
-                        .WithOne("NotificationChannelTemplate")
-                        .HasForeignKey("ApplicationManager.Domain.NotificationTypes.NotificationChannelTemplate", "NotificationTypeChannelId")
+                        .WithOne("ChannelTemplate")
+                        .HasForeignKey("ApplicationManager.Domain.NotificationTypes.ChannelTemplate", "NotificationTypeChannelId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

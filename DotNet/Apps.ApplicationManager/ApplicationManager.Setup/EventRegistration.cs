@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using ApplicationManager.ApplicationServices.NotificationTypes.Handlers;
+using ApplicationManager.Domain.Identities.Events;
+using Common.Domain.DomainEvents.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ApplicationManager.Setup
 {
@@ -6,6 +9,9 @@ namespace ApplicationManager.Setup
     {
         public static void RegisterHandlers(IServiceCollection services)
         {
+            services
+                .AddScoped<IDomainEventHandler<TwoFactorAuthenticationIdentityCreatedDomainEvent>,
+                    SendNotificationWhenTwoFactorAuthenticationIdentityCreatedDomainEventHandler>();
         }
     }
 }

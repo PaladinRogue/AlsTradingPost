@@ -44,6 +44,6 @@ namespace ApplicationManager.Domain.Identities.AuthenticationIdentities
         [SensitiveInformation]
         public string Password { get; protected set; }
 
-        public AuthenticationGrantTypePassword AuthenticationGrantTypePassword { get; protected set; }
+        public virtual AuthenticationGrantTypePassword AuthenticationGrantTypePassword { get; protected set; }
     }
 }

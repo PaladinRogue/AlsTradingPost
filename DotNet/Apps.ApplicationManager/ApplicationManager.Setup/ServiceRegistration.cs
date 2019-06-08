@@ -2,10 +2,14 @@
 using ApplicationManager.ApplicationServices.Applications.Interfaces;
 using ApplicationManager.ApplicationServices.Identities;
 using ApplicationManager.ApplicationServices.Identities.Interfaces;
+using ApplicationManager.ApplicationServices.Notifications;
+using ApplicationManager.ApplicationServices.Notifications.Audience;
+using ApplicationManager.ApplicationServices.Notifications.Emails;
 using ApplicationManager.Domain.Applications;
 using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.AuthenticationIdentities;
 using ApplicationManager.Persistence;
+using ApplicationManager.Persistence.Identities;
 using ApplicationManager.Setup.Infrastructure.Authorisation;
 using Common.Api.HttpClient;
 using Common.Api.HttpClient.Interfaces;
@@ -45,6 +49,8 @@ namespace ApplicationManager.Setup
 
             services.AddScoped<IRegisterApplicationKernalService, RegisterApplicationKernalService>();
             services.AddScoped<ICreateAdminAuthenticationIdentityKernalService, CreateAdminAuthenticationIdentityKernalService>();
+            services.AddScoped<ISendNotificationKernalService, SendNotificationKernalService>();
+            services.AddScoped<ISendTwoFactorAuthenticationNotificationKernalService, SendTwoFactorAuthenticationNotificationKernalService>();
         }
 	    
         public static void RegisterDomainServices(IServiceCollection services)
@@ -57,11 +63,15 @@ namespace ApplicationManager.Setup
 	    
         public static void RegisterPersistenceServices(IConfiguration configuration, IServiceCollection services)
         {
+            services.AddScoped<IGetTwoFactorAuthenticationIdentityByIdentityQuery, GetTwoFactorAuthenticationIdentityByIdentityQuery>();
+            
             services.AddScoped(typeof(ICommandRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IQueryRepository<>), typeof(Repository<>));
 
             services.AddEntityFrameworkSqlServer().AddOptions()
-                .AddDbContext<ApplicationManagerDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Default")));
+                .AddDbContext<ApplicationManagerDbContext>(options => 
+	                options.UseLazyLoadingProxies()
+	                .UseSqlServer(configuration.GetConnectionString("Default")));
             services.AddScoped<DbContext>(sp => sp.GetRequiredService<ApplicationManagerDbContext>());
             services.AddScoped<ITransactionManager, EntityFrameworkTransactionManager>();
         }
@@ -74,6 +84,14 @@ namespace ApplicationManager.Setup
         public static void RegisterAuthorisation(IServiceCollection services)
         {
             services.AddSingleton<IAuthorisationPolicy, AlwaysAllowAuthorisationPolicy>();
+        }
+
+        public static void RegisterNotifications(IServiceCollection services)
+        {
+	        services.AddScoped<IEmailBuilder, EmailBuilder>();
+	        services.AddScoped<IChannelAudienceResolverProvider, ChannelAudienceResolverProvider>();
+	        services.AddScoped<IChannelAudienceResolver, TwoFactorAuthenticationEmailChannelResolver>();
+	        services.AddScoped<IEmailNotificationSender, LocalDevelopmentEmailNotificationSender>();
         }
     }
 }

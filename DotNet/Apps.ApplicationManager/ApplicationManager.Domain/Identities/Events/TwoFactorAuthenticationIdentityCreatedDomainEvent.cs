@@ -10,7 +10,7 @@ namespace ApplicationManager.Domain.Identities.Events
             TwoFactorAuthenticationIdentity = twoFactorAuthenticationIdentity;
         }
 
-        public TwoFactorAuthenticationIdentity TwoFactorAuthenticationIdentity { get; set; }
+        public TwoFactorAuthenticationIdentity TwoFactorAuthenticationIdentity { get; }
 
         public static TwoFactorAuthenticationIdentityCreatedDomainEvent Create(TwoFactorAuthenticationIdentity twoFactorAuthenticationIdentity)
         {

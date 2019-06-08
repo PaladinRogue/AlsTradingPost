@@ -45,7 +45,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Authentication.Setup
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Authentication.Resources", "..\Common.Authentication\Common.Authentication.Resources\Common.Authentication.Resources.csproj", "{3AB030F8-8813-4FC7-867F-170F6B7366C9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationManager.ApplicationServices", "ApplicationManager.Application\ApplicationManager.ApplicationServices.csproj", "{BEE1801D-B717-4CDE-8019-673F31CA819F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationManager.ApplicationServices", "ApplicationManager.ApplicationServices\ApplicationManager.ApplicationServices.csproj", "{BEE1801D-B717-4CDE-8019-673F31CA819F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationManager.Setup", "ApplicationManager.Setup\ApplicationManager.Setup.csproj", "{B9A8D7E9-56AD-4875-9FD2-6DFA73213710}"
 EndProject

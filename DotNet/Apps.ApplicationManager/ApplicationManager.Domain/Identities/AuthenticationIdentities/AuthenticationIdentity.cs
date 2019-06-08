@@ -7,7 +7,7 @@ namespace ApplicationManager.Domain.Identities.AuthenticationIdentities
     {
         public abstract string Type { get; protected set; }
         
-        public Identity Identity { get; protected set; }
+        public virtual Identity Identity { get; protected set; }
 
         public IAggregateRoot AggregateRoot => Identity;
     }

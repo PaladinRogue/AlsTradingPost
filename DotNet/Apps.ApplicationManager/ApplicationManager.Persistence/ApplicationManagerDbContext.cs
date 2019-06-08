@@ -1,8 +1,10 @@
-﻿using ApplicationManager.Domain.Applications;
+﻿using ApplicationManager.ApplicationServices.Identities.Interfaces;
+using ApplicationManager.Domain.Applications;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.AuthenticationIdentities;
 using ApplicationManager.Domain.Identities.Sessions;
+using ApplicationManager.Domain.NotificationTypes;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityFramework.Infrastructure.Extensions;
 
@@ -19,6 +21,8 @@ namespace ApplicationManager.Persistence
         public DbSet<AuthenticationService> AuthenticationServices { get; set; }
 
         public DbSet<Identity> Identities { get; set; }
+
+        public DbSet<NotificationType> NotificationTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -51,7 +55,7 @@ namespace ApplicationManager.Persistence
                 .HasDiscriminator(a => a.Type);
 
             modelBuilder.Entity<PasswordIdentity>()
-               .ProtectSensitiveInformation()
+                .ProtectSensitiveInformation()
                 .HasBaseType<AuthenticationIdentity>();
 
             modelBuilder.Entity<TwoFactorAuthenticationIdentity>()
@@ -62,6 +66,25 @@ namespace ApplicationManager.Persistence
                 .HasOne(i => i.Session)
                 .WithOne(s => s.Identity)
                 .HasForeignKey<Session>(s => s.IdentityId);
+
+            modelBuilder.Entity<NotificationTypeChannel>()
+                .ToTable("NotificationTypeChannels");
+
+            modelBuilder.Entity<NotificationChannelTemplate>()
+                .ToTable("NotificationChannelTemplates")
+                .HasDiscriminator(a => a.Type);
+
+            modelBuilder.Entity<EmailChannelTemplate>()
+                .HasBaseType<NotificationChannelTemplate>();
+
+            modelBuilder.Entity<NotificationTypeChannel>()
+                .HasOne(i => i.NotificationChannelTemplate)
+                .WithOne(s => s.NotificationTypeChannel)
+                .HasForeignKey<NotificationChannelTemplate>(s => s.NotificationTypeChannelId);
+            
+            modelBuilder.Query<TwoFactorAuthenticationIdentityProjection>()
+                .ProtectSensitiveInformation()
+                .ToView("TwoFactorAuthenticationIdentityProjection");
         }
     }
 }
