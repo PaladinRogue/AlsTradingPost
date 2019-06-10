@@ -7,12 +7,6 @@ namespace ApplicationManager.Domain.Identities.AuthenticationIdentities
 {
     public class PasswordIdentity : AuthenticationIdentity
     {
-        public override string Type
-        {
-            get => AuthenticationIdentityTypes.Password;
-            protected set => throw new NotSupportedException();
-        }
-
         protected PasswordIdentity()
         {
         }

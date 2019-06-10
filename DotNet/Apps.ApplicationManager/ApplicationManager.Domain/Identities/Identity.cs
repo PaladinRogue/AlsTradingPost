@@ -38,7 +38,7 @@ namespace ApplicationManager.Domain.Identities
             AuthenticationGrantTypePassword authenticationGrantTypePassword,
             CreatePasswordIdentityDdto createPasswordIdentityDdto)
         {
-            if (AuthenticationIdentities.Any(i => i.Type == AuthenticationIdentityTypes.Password))
+            if (AuthenticationIdentities.Any(i => i is PasswordIdentity))
             {
                 throw new PasswordIdentityExistsDomainException();
             }
@@ -54,7 +54,7 @@ namespace ApplicationManager.Domain.Identities
         internal void CreateTwoFactorAuthenticationIdentity(
             CreateTwoFactorAuthenticationIdentityDdto createTwoFactorAuthenticationIdentityDdto)
         {
-            if (AuthenticationIdentities.Any(i => i.Type == AuthenticationIdentityTypes.TwoFactor))
+            if (AuthenticationIdentities.Any(i => i is TwoFactorAuthenticationIdentity))
             {
                 throw new TwoFactorAuthenticationIdentityExistsDomainException();
             }
@@ -70,9 +70,9 @@ namespace ApplicationManager.Domain.Identities
         internal bool Validate(ValidatePasswordIdentityDdto validatePasswordIdentityDdto)
         {
             return _authenticationIdentities.Any(p =>
-                p.Type == AuthenticationIdentityTypes.Password &&
-                (p as PasswordIdentity)?.Identifier == validatePasswordIdentityDdto.Identifier &&
-                (p as PasswordIdentity)?.Password == DataProtection.Protect(validatePasswordIdentityDdto.Password));
+                p is PasswordIdentity identity &&
+                identity.Identifier == validatePasswordIdentityDdto.Identifier &&
+                identity.Password == DataProtection.Protect(validatePasswordIdentityDdto.Password));
         }
     }
 }

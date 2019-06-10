@@ -1,5 +1,4 @@
-﻿using ApplicationManager.Domain.NotificationTypes;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ApplicationManager.Persistence.Migrations
 {
@@ -13,7 +12,7 @@ namespace ApplicationManager.Persistence.Migrations
                     ,[Type])
                     VALUES
                     ('ED3AB96C-8F45-45E8-8880-D9F46C075BEC'
-                    ,'{NotificationTypes.EmailTwoFactorAuthentication}')
+                    ,'{Domain.NotificationTypes.NotificationTypes.EmailTwoFactorAuthentication}')
 
                 INSERT INTO [apps].[NotificationTypeChannels]
                     ([Id]

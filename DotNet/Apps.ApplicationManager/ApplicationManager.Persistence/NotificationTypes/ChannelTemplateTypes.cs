@@ -1,4 +1,4 @@
-namespace ApplicationManager.Domain.NotificationTypes
+namespace ApplicationManager.Persistence.NotificationTypes
 {
     public static class ChannelTemplateTypes
     {

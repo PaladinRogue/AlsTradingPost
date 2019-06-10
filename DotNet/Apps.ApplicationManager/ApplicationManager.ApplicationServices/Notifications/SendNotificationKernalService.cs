@@ -23,7 +23,7 @@ namespace ApplicationManager.ApplicationServices.Notifications
         private readonly IEmailNotificationSender _emailNotificationSender;
         
         private readonly IEmailBuilder _emailBuilder;
-
+        
         public SendNotificationKernalService(
             ILogger<SendNotificationKernalService> logger,
             IQueryRepository<NotificationType> queryRepository,
@@ -48,6 +48,7 @@ namespace ApplicationManager.ApplicationServices.Notifications
                 {
                     NotificationType notificationType =
                         _queryRepository.GetSingle(n => n.Type == sendNotificationAdto.NotificationType);
+                    
                     if (notificationType != null)
                     {
                         foreach (NotificationTypeChannel notificationTypeChannel in notificationType
@@ -65,14 +66,15 @@ namespace ApplicationManager.ApplicationServices.Notifications
                                 case ChannelType.Email:
                                     foreach (string emailAddress in emailAddresses)
                                     {
-                                        EmailChannelTemplate emailChannelTemplate =
-                                            (notificationTypeChannel.NotificationChannelTemplate as
-                                                EmailChannelTemplate);
+                                        if (!(notificationTypeChannel.NotificationChannelTemplate is EmailChannelTemplate emailChannelTemplate))
+                                        {
+                                            throw new NullReferenceException("No template defined for channel");
+                                        }
 
                                         EmailAdto emailAdto = _emailBuilder.Build(new BuildEmailAdto
                                         {
-                                            EmailTemplate = emailChannelTemplate?.Template,
-                                            Subject = emailChannelTemplate?.Subject,
+                                            EmailTemplate = emailChannelTemplate.Template,
+                                            Subject = emailChannelTemplate.Subject,
                                             PropertyBag = sendNotificationAdto.PropertyBag
                                         });
 
@@ -98,7 +100,7 @@ namespace ApplicationManager.ApplicationServices.Notifications
                             }
                         }
                     }
-
+                    
                     transaction.Commit();
                 }
                 catch (BusinessApplicationException e)

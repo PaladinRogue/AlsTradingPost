@@ -7,8 +7,13 @@ namespace ApplicationManager.Domain.Identities.Sessions
 {
     public class Session : Entity, IAggregateMember
     {
-        public Session()
+        protected Session()
         {
+        }
+
+        public static Session Create()
+        {
+            return new Session();
         }
         
         [MaxLength(100)]

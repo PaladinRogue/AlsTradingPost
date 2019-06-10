@@ -20,7 +20,7 @@ namespace ApplicationManager.ApplicationServices.Notifications.Emails
             
             foreach ((string key, string value) in buildEmailAdto.PropertyBag)
             {
-                htmlBody.Replace($"{{{key}}}", value, StringComparison.OrdinalIgnoreCase);
+                htmlBody = htmlBody.Replace($"{{{{{key}}}}}", value, StringComparison.OrdinalIgnoreCase);
             }
             
             return new EmailAdto

@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace ApplicationManager.Domain.NotificationTypes
@@ -8,17 +7,11 @@ namespace ApplicationManager.Domain.NotificationTypes
         protected EmailChannelTemplate()
         {
         }
-        
-        public override string Type
-        {
-            get => ChannelTemplateTypes.Email;
-            protected set => throw new NotSupportedException();
-        }
 
         [Required]
-        public string Template { get; set; }
+        public string Template { get; protected set; }
 
         [Required]
-        public string Subject { get; set; }
+        public string Subject { get; protected set; }
     }
 }

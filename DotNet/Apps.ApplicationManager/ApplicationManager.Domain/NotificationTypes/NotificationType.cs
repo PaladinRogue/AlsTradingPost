@@ -10,7 +10,7 @@ namespace ApplicationManager.Domain.NotificationTypes
         {
         }
 
-        private  readonly ISet<NotificationTypeChannel> _notificationTypeChannels = new HashSet<NotificationTypeChannel>();
+        private readonly ISet<NotificationTypeChannel> _notificationTypeChannels = new HashSet<NotificationTypeChannel>();
 
         public string Type { get; protected set; }
         

@@ -5,8 +5,6 @@ namespace ApplicationManager.Domain.Identities.AuthenticationIdentities
 {
     public abstract class AuthenticationIdentity : Entity, IAggregateMember
     {
-        public abstract string Type { get; protected set; }
-        
         public virtual Identity Identity { get; protected set; }
 
         public IAggregateRoot AggregateRoot => Identity;

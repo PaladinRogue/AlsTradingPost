@@ -5,6 +5,8 @@ using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.AuthenticationIdentities;
 using ApplicationManager.Domain.Identities.Sessions;
 using ApplicationManager.Domain.NotificationTypes;
+using ApplicationManager.Persistence.Identities;
+using ApplicationManager.Persistence.NotificationTypes;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityFramework.Infrastructure.Extensions;
 
@@ -52,7 +54,9 @@ namespace ApplicationManager.Persistence
                 .HasBaseType<AuthenticationService>();
 
             modelBuilder.Entity<AuthenticationIdentity>()
-                .HasDiscriminator(a => a.Type);
+                .HasDiscriminator<string>("Type")
+                .HasValue<PasswordIdentity>(AuthenticationIdentityTypes.Password)
+                .HasValue<TwoFactorAuthenticationIdentity>(AuthenticationIdentityTypes.TwoFactor);
 
             modelBuilder.Entity<PasswordIdentity>()
                 .ProtectSensitiveInformation()
@@ -72,7 +76,8 @@ namespace ApplicationManager.Persistence
 
             modelBuilder.Entity<NotificationChannelTemplate>()
                 .ToTable("NotificationChannelTemplates")
-                .HasDiscriminator(a => a.Type);
+                .HasDiscriminator<string>("Type")
+                .HasValue<EmailChannelTemplate>(ChannelTemplateTypes.Email);
 
             modelBuilder.Entity<EmailChannelTemplate>()
                 .HasBaseType<NotificationChannelTemplate>();
@@ -80,7 +85,7 @@ namespace ApplicationManager.Persistence
             modelBuilder.Entity<NotificationTypeChannel>()
                 .HasOne(i => i.NotificationChannelTemplate)
                 .WithOne(s => s.NotificationTypeChannel)
-                .HasForeignKey<NotificationChannelTemplate>(s => s.NotificationTypeChannelId);
+                .HasForeignKey<NotificationChannelTemplate>("NotificationTypeChannelId");
             
             modelBuilder.Query<TwoFactorAuthenticationIdentityProjection>()
                 .ProtectSensitiveInformation()

@@ -7,12 +7,6 @@ namespace ApplicationManager.Domain.Identities.AuthenticationIdentities
 {
     public class TwoFactorAuthenticationIdentity : AuthenticationIdentity
     {
-        public override string Type
-        {
-            get => AuthenticationIdentityTypes.TwoFactor;
-            protected set => throw new NotSupportedException();
-        }
-
         protected TwoFactorAuthenticationIdentity()
         {
         }
