@@ -21,8 +21,6 @@ namespace ApplicationManager.Domain.Identities.Sessions
 
         public bool IsRevoked { get; protected set; }
 
-        public Guid IdentityId { get; protected set; }
-
         public virtual Identity Identity { get; protected set; }
 
         public IAggregateRoot AggregateRoot => Identity;

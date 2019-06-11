@@ -6,7 +6,8 @@ using Common.Api.Formats;
 using Common.Domain.DomainEvents;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Domain.Models.DataProtection;
-using Common.Messaging.Message.Interfaces;
+using Common.Messaging.Infrastructure;
+using Common.Messaging.Infrastructure.Interfaces;
 using Common.Setup;
 using Common.Setup.Infrastructure.Logging;
 using Microsoft.AspNetCore.Builder;
@@ -67,10 +68,11 @@ namespace ApplicationManager.Api
             ILoggerFactory loggerFactory,
             IDataProtector dataProtector,
             IDomainEventDispatcher domainEventDispatcher, 
-            IMessageBus messageBus)
+            IMessageSender messageSender)
         {
             DataProtection.SetDataProtector(dataProtector);
             DomainEvents.SetDomainEventDispatcher(domainEventDispatcher);
+            Message.SetMessageSender(messageSender);
 
             if (Environment.IsDevelopment())
             {

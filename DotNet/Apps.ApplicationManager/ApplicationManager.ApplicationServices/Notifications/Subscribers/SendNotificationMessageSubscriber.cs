@@ -1,3 +1,4 @@
+using Common.Messaging.Infrastructure.Interfaces;
 using Common.Messaging.Message.Interfaces;
 using Common.Messaging.Messages;
 using Common.Messaging.Subscribers;

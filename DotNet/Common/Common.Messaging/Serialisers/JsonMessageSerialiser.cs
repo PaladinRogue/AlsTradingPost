@@ -1,4 +1,5 @@
-﻿using Common.Messaging.Message.Interfaces;
+﻿using Common.Messaging.Infrastructure.Interfaces;
+using Common.Messaging.Message.Interfaces;
 using Newtonsoft.Json;
 
 namespace Common.Messaging.Serialisers

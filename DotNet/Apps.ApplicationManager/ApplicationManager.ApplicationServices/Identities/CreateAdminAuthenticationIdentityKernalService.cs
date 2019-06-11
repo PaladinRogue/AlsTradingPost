@@ -7,6 +7,8 @@ using Common.Application.Exceptions;
 using Common.Application.Transactions;
 using Common.Domain.Exceptions;
 using Common.Domain.Persistence;
+using Common.Messaging.Infrastructure;
+using Common.Messaging.Messages;
 
 namespace ApplicationManager.ApplicationServices.Identities
 {
@@ -49,6 +51,8 @@ namespace ApplicationManager.ApplicationServices.Identities
                     _createTwoFactorAuthenticationIdentityCommand.Execute(identity,
                         _mapper.Map<CreateAdminAuthenticationIdentityAdto, CreateTwoFactorAuthenticationIdentityDdto>(
                             createAdminAuthenticationIdentityAdto));
+                    
+                    Message.Send(AdminIdentityCreatedMessage.Create(createAdminAuthenticationIdentityAdto.ApplicationSystemName, identity.Id));
                 }
                 catch (DomainValidationRuleException e)
                 {

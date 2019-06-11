@@ -99,7 +99,7 @@ namespace ApplicationManager.Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid>("IdentityId");
+                    b.Property<Guid?>("IdentityId");
 
                     b.Property<bool>("IsRevoked");
 
@@ -109,7 +109,8 @@ namespace ApplicationManager.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IdentityId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[IdentityId] IS NOT NULL");
 
                     b.ToTable("Sessions");
                 });
@@ -167,6 +168,24 @@ namespace ApplicationManager.Persistence.Migrations
                     b.ToTable("NotificationTypeChannels");
                 });
 
+            modelBuilder.Entity("ApplicationManager.Domain.Users.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid?>("IdentityId");
+
+                    b.Property<byte[]>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdentityId");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("ApplicationManager.Domain.AuthenticationServices.AuthenticationGrantTypeClientCredential", b =>
                 {
                     b.HasBaseType("ApplicationManager.Domain.AuthenticationServices.AuthenticationService");
@@ -218,7 +237,7 @@ namespace ApplicationManager.Persistence.Migrations
 
                     b.HasIndex("AuthenticationGrantTypePasswordId");
 
-                    b.HasDiscriminator().HasValue("PasswordIdentity");
+                    b.HasDiscriminator().HasValue("PASSWORD");
                 });
 
             modelBuilder.Entity("ApplicationManager.Domain.Identities.AuthenticationIdentities.TwoFactorAuthenticationIdentity", b =>
@@ -231,7 +250,7 @@ namespace ApplicationManager.Persistence.Migrations
                     b.Property<string>("Token")
                         .HasMaxLength(1024);
 
-                    b.HasDiscriminator().HasValue("TwoFactorAuthenticationIdentity");
+                    b.HasDiscriminator().HasValue("TWO_FACTOR");
                 });
 
             modelBuilder.Entity("ApplicationManager.Domain.NotificationTypes.EmailChannelTemplate", b =>
@@ -258,8 +277,7 @@ namespace ApplicationManager.Persistence.Migrations
                 {
                     b.HasOne("ApplicationManager.Domain.Identities.Identity", "Identity")
                         .WithOne("Session")
-                        .HasForeignKey("ApplicationManager.Domain.Identities.Sessions.Session", "IdentityId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ApplicationManager.Domain.Identities.Sessions.Session", "IdentityId");
                 });
 
             modelBuilder.Entity("ApplicationManager.Domain.NotificationTypes.NotificationChannelTemplate", b =>
@@ -274,6 +292,13 @@ namespace ApplicationManager.Persistence.Migrations
                     b.HasOne("ApplicationManager.Domain.NotificationTypes.NotificationType", "NotificationType")
                         .WithMany("NotificationTypeChannels")
                         .HasForeignKey("NotificationTypeId");
+                });
+
+            modelBuilder.Entity("ApplicationManager.Domain.Users.User", b =>
+                {
+                    b.HasOne("ApplicationManager.Domain.Identities.Identity", "Identity")
+                        .WithMany()
+                        .HasForeignKey("IdentityId");
                 });
 
             modelBuilder.Entity("ApplicationManager.Domain.Identities.AuthenticationIdentities.PasswordIdentity", b =>

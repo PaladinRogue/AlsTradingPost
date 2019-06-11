@@ -1,5 +1,6 @@
 ﻿using ApplicationManager.ApplicationServices.Applications.Subscribers;
 using ApplicationManager.ApplicationServices.Notifications.Subscribers;
+using ApplicationManager.ApplicationServices.Users.Subscribers;
 using Common.Messaging.Message.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +12,7 @@ namespace ApplicationManager.Setup
 	    {
 	        services.AddScoped<IMessageSubscriber, RegisterApplicationMessageSubscriber>();
 	        services.AddScoped<IMessageSubscriber, SendNotificationMessageSubscriber>();
+	        services.AddScoped<IMessageSubscriber, AdminIdentityCreatedMessageSubscriber>();
         }
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Common.Messaging.Infrastructure.Interfaces;
 using Common.Messaging.Message.Interfaces;
 
 namespace Common.Messaging.Dispatchers

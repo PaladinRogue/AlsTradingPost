@@ -5,6 +5,7 @@ using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.AuthenticationIdentities;
 using ApplicationManager.Domain.Identities.Sessions;
 using ApplicationManager.Domain.NotificationTypes;
+using ApplicationManager.Domain.Users;
 using ApplicationManager.Persistence.Identities;
 using ApplicationManager.Persistence.NotificationTypes;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,8 @@ namespace ApplicationManager.Persistence
         public DbSet<Identity> Identities { get; set; }
 
         public DbSet<NotificationType> NotificationTypes { get; set; }
+
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -69,7 +72,7 @@ namespace ApplicationManager.Persistence
             modelBuilder.Entity<Identity>()
                 .HasOne(i => i.Session)
                 .WithOne(s => s.Identity)
-                .HasForeignKey<Session>(s => s.IdentityId);
+                .HasForeignKey<Session>("IdentityId");
 
             modelBuilder.Entity<NotificationTypeChannel>()
                 .ToTable("NotificationTypeChannels");
@@ -90,6 +93,9 @@ namespace ApplicationManager.Persistence
             modelBuilder.Query<TwoFactorAuthenticationIdentityProjection>()
                 .ProtectSensitiveInformation()
                 .ToView("TwoFactorAuthenticationIdentityProjection");
+
+            modelBuilder.Entity<User>()
+                .ToTable("Users");
         }
     }
 }

@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainEvent.Broker", "..\Do
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messaging", "Messaging", "{4802E3E9-E628-490A-BE87-033AE0A624FD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Message.Broker", "..\Messaging\Message.Broker\Message.Broker.csproj", "{73A11DDF-FA0E-4EDE-901C-ABFEF63EC498}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Messaging.Broker", "..\Messaging\Messaging.Broker\Messaging.Broker.csproj", "{73A11DDF-FA0E-4EDE-901C-ABFEF63EC498}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Messaging", "..\Common\Common.Messaging\Common.Messaging.csproj", "{029F2E12-BDB3-4170-8070-1A99626FD141}"
 EndProject

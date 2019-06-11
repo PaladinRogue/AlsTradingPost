@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using Common.Application.Transactions;
+using Common.Messaging.Infrastructure;
+using Common.Messaging.Infrastructure.Interfaces;
 using Common.Messaging.Message.Interfaces;
 using Common.Messaging.Messages;
 
@@ -7,15 +9,11 @@ namespace ApplicationManager.ApplicationServices.Notifications
 {
     public class SendTwoFactorAuthenticationNotificationKernalService : ISendTwoFactorAuthenticationNotificationKernalService
     {
-        private readonly IMessageSender _messageSender;
-
         private readonly ITransactionManager _transactionManager;
 
         public SendTwoFactorAuthenticationNotificationKernalService(
-            IMessageSender messageSender,
             ITransactionManager transactionManager)
         {
-            _messageSender = messageSender;
             _transactionManager = transactionManager;
         }
 
@@ -23,7 +21,7 @@ namespace ApplicationManager.ApplicationServices.Notifications
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
-                _messageSender.Send(SendNotificationMessage.Create(
+                Message.Send(SendNotificationMessage.Create(
                     Domain.NotificationTypes.NotificationTypes.EmailTwoFactorAuthentication,
                     sendTwoFactorAuthenticationNotificationAdto.IdentityId,
                     new Dictionary<string, string>

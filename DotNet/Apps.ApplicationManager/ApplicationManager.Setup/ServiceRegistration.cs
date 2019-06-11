@@ -5,9 +5,11 @@ using ApplicationManager.ApplicationServices.Identities.Interfaces;
 using ApplicationManager.ApplicationServices.Notifications;
 using ApplicationManager.ApplicationServices.Notifications.Audience;
 using ApplicationManager.ApplicationServices.Notifications.Emails;
+using ApplicationManager.ApplicationServices.Users;
 using ApplicationManager.Domain.Applications;
 using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.AuthenticationIdentities;
+using ApplicationManager.Domain.Users;
 using ApplicationManager.Persistence;
 using ApplicationManager.Persistence.Identities;
 using ApplicationManager.Setup.Infrastructure.Authorisation;
@@ -51,6 +53,7 @@ namespace ApplicationManager.Setup
             services.AddScoped<ICreateAdminAuthenticationIdentityKernalService, CreateAdminAuthenticationIdentityKernalService>();
             services.AddScoped<ISendNotificationKernalService, SendNotificationKernalService>();
             services.AddScoped<ISendTwoFactorAuthenticationNotificationKernalService, SendTwoFactorAuthenticationNotificationKernalService>();
+            services.AddScoped<ICreateAdminUserApplicationKernalService, CreateAdminUserApplicationKernalService>();
         }
 	    
         public static void RegisterDomainServices(IServiceCollection services)
@@ -59,6 +62,7 @@ namespace ApplicationManager.Setup
             services.AddScoped<ICreateIdentityCommand, CreateIdentityCommand>();
             services.AddScoped<IChangeApplicationCommand, ChangeApplicationCommand>();
             services.AddScoped<ICreateApplicationCommand, CreateApplicationCommand>();
+            services.AddScoped<ICreateUserCommand, CreateUserCommand>();
         }
 	    
         public static void RegisterPersistenceServices(IConfiguration configuration, IServiceCollection services)

@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using Common.Api.Settings;
 using Common.Application.Authentication;
+using Common.Setup.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
