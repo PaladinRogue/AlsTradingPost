@@ -1,11 +1,12 @@
 ﻿using Common.Api.Builders.Resource;
+using Common.Api.Routing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApplicationManager.Api.Status
 {
-    [Route("[controller]")]
-    public class StatusController : Controller
+    [DefaultControllerRoute("status")]
+    public class StatusController : ControllerBase 
     {
         private readonly IResourceBuilder _resourceBuilder;
 

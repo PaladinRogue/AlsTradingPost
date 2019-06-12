@@ -19,6 +19,7 @@ using EventRegistration = ApplicationManager.Setup.EventRegistration;
 using MessageRegistration = ApplicationManager.Setup.MessageRegistration;
 using ServiceRegistration = ApplicationManager.Setup.ServiceRegistration;
 
+[assembly: ApiController]
 namespace ApplicationManager.Api
 {
     public class Startup : Common.Api.Startup

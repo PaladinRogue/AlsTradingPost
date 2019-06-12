@@ -14,12 +14,6 @@ namespace Common.Api.Formats.JsonV1.Formatters
     {
         private const string JsonV1MediaType = "application/vnd.api+json";
 
-        public override Task<InputFormatterResult> ReadRequestBodyAsync(InputFormatterContext context,
-            Encoding encoding)
-        {
-            return base.ReadRequestBodyAsync(context, encoding);
-        }
-
         public JsonV1InputFormatter(ILogger logger,
             JsonSerializerSettings serializerSettings,
             ArrayPool<char> charPool,
