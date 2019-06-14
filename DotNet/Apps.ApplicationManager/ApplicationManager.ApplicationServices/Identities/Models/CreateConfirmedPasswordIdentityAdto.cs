@@ -1,8 +1,10 @@
 using System;
+using Common.Application.Concurrency;
+using Common.Domain.Concurrency.Interfaces;
 
 namespace ApplicationManager.ApplicationServices.Identities.Models
 {
-    public class CreateConfirmedPasswordIdentityAdto
+    public class CreateConfirmedPasswordIdentityAdto : IInboundVersionedAdto
     {
         public Guid IdentityId { get; set; }
 
@@ -13,5 +15,7 @@ namespace ApplicationManager.ApplicationServices.Identities.Models
         public string Password { get; set; }
 
         public string ConfirmPassword { get; set; }
+
+        public IConcurrencyVersion Version { get; set; }
     }
 }

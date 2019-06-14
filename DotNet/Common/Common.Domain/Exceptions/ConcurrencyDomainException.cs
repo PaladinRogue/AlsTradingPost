@@ -11,7 +11,11 @@ namespace Common.Domain.Exceptions
         public ConcurrencyDomainException(IVersionedEntity entity, Exception innerException)
             : base(_formatConcurrencyException(entity.GetType(), entity.Id, entity.Version), innerException)
         {
-            
+        }
+
+        public ConcurrencyDomainException()
+            : base("No concurrency token has been provided")
+        {
         }
 
         public ConcurrencyDomainException(MemberInfo type, Guid id, IConcurrencyVersion version)

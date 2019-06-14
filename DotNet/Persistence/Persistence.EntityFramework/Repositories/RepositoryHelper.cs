@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Exceptions;
 using Common.Domain.Models.Interfaces;
 using Common.Resources.Extensions;
@@ -51,9 +52,21 @@ namespace Persistence.EntityFramework.Repositories
             return Filter(results, predicate).Any();
         }
 
-        public static bool CheckConcurrency<T>(IQueryable<T> results, Guid id, byte[] version) where T : IVersionedEntity
+        public static T GetWithConcurrencyCheck<T>(IQueryable<T> results, Guid id, IConcurrencyVersion version) where T : IVersionedEntity
         {
-            return results.Any(e => e.Id == id && e.Version == version);
+            if (version == null)
+            {
+                throw new ConcurrencyDomainException();
+            }
+
+            try
+            {
+                return results.Single(e => e.Id == id && e.Version == version.Version);
+            }
+            catch (InvalidOperationException)
+            {
+                throw new ConcurrencyDomainException(typeof(T), id, version);
+            }
         }
 
         public static T GetById<T>(IQueryable<T> results, Guid id) where T : IEntity

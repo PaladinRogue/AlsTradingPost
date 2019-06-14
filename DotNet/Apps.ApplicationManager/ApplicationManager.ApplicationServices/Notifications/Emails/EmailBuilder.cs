@@ -1,6 +1,6 @@
 using System;
-using System.Globalization;
-using System.Runtime.CompilerServices;
+using System.Linq;
+using Common.Resources.Extensions;
 
 namespace ApplicationManager.ApplicationServices.Notifications.Emails
 {
@@ -18,12 +18,7 @@ namespace ApplicationManager.ApplicationServices.Notifications.Emails
                 throw new ArgumentNullException(nameof(buildEmailAdto.EmailTemplate));
             }
 
-            string htmlBody = buildEmailAdto.EmailTemplate;
-
-            foreach ((string key, string value) in buildEmailAdto.PropertyBag)
-            {
-                htmlBody = htmlBody.Replace($"{{{key}}}", value, StringComparison.OrdinalIgnoreCase);
-            }
+            string htmlBody = buildEmailAdto.EmailTemplate.Format(buildEmailAdto.PropertyBag.ToDictionary(p => p.Key, p => p.Value));
 
             return new EmailAdto
             {

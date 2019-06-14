@@ -1,5 +1,4 @@
-﻿using Common.ApplicationServices.Concurrency.Interfaces;
-using Common.Domain.Concurrency.Interfaces;
+﻿using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Models.Interfaces;
 using Newtonsoft.Json;
 

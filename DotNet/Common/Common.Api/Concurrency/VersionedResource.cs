@@ -1,7 +1,6 @@
 ﻿using System;
 using Common.Api.Concurrency.Interfaces;
 using Common.Api.Meta;
-using Common.ApplicationServices.Concurrency.Interfaces;
 using Common.Domain.Concurrency.Interfaces;
 using Newtonsoft.Json;
 

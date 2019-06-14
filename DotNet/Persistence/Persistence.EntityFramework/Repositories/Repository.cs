@@ -59,9 +59,9 @@ namespace Persistence.EntityFramework.Repositories
             return RepositoryHelper.CheckExists(_context.Set<T>(), predicate);
         }
 
-        public bool CheckConcurrency(Guid id, IConcurrencyVersion version)
+        public T GetWithConcurrencyCheck(Guid id, IConcurrencyVersion version)
         {
-            return RepositoryHelper.CheckConcurrency(_context.Set<T>(), id, version.Version);
+            return RepositoryHelper.GetWithConcurrencyCheck(_context.Set<T>(), id, version);
         }
     }
 }

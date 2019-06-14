@@ -24,6 +24,12 @@ namespace ApplicationManager.ApplicationServices.Identities
             _identityApplicationService = identityApplicationService;
         }
 
+        public IdentityAdto Get(GetIdentityAdto getIdentityAdto)
+        {
+            return _securityApplicationService.Secure(() => _identityApplicationService.Get(getIdentityAdto),
+                DefaultAuthorisationContext.Create(AuthorisationResource.Identity, AuthorisationAction.Get));
+        }
+
         public PasswordIdentityAdto CreateConfirmedPasswordIdentity(CreateConfirmedPasswordIdentityAdto createConfirmedPasswordIdentityAdto)
         {
             return _securityApplicationService.Secure(() => _identityApplicationService.CreateConfirmedPasswordIdentity(createConfirmedPasswordIdentityAdto),

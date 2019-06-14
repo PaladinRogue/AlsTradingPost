@@ -24,12 +24,12 @@ namespace Common.Api.Links
             _sortingLinkBuilder = sortingLinkBuilder;
         }
 
-        public ILink Create(
+        public ILink Create<TResource, TTemplate>(
             string linkName,
             string routeName,
             IEnumerable<AuthorisationLink> verbAuthorisationContextTypePairs,
-            IResource resource,
-            ITemplate template,
+            TResource resource,
+            TTemplate template,
             string basePath = null)
         {
             HttpVerb allowVerbs = verbAuthorisationContextTypePairs.Select(a => a.HttpVerb)

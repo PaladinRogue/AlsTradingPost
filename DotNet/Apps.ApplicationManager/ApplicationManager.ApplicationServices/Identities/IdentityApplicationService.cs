@@ -5,6 +5,8 @@ using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.AddConfirmedPassword;
 using Common.Application.Exceptions;
 using Common.Application.Transactions;
+using Common.ApplicationServices.Concurrency;
+using Common.Domain.Exceptions;
 using Common.Domain.Persistence;
 
 namespace ApplicationManager.ApplicationServices.Identities
@@ -19,16 +21,41 @@ namespace ApplicationManager.ApplicationServices.Identities
 
         private readonly ICommandRepository<Identity> _identityCommandRepository;
 
+        private readonly IQueryRepository<Identity> _identityQueryRepository;
+
         public IdentityApplicationService(
             ITransactionManager transactionManager,
             IAddConfirmedPasswordIdentityCommand addConfirmedPasswordIdentityCommand,
             ICommandRepository<Identity> identityCommandRepository,
-            ICommandRepository<AuthenticationService> authenticationServiceCommandRepository)
+            ICommandRepository<AuthenticationService> authenticationServiceCommandRepository,
+            IQueryRepository<Identity> identityQueryRepository)
         {
             _transactionManager = transactionManager;
             _addConfirmedPasswordIdentityCommand = addConfirmedPasswordIdentityCommand;
             _identityCommandRepository = identityCommandRepository;
             _authenticationServiceCommandRepository = authenticationServiceCommandRepository;
+            _identityQueryRepository = identityQueryRepository;
+        }
+
+        public IdentityAdto Get(GetIdentityAdto getIdentityAdto)
+        {
+            using (ITransaction transaction = _transactionManager.Create())
+            {
+                Identity identity = _identityQueryRepository.GetById(getIdentityAdto.Id);
+
+                if (identity == null)
+                {
+                    throw new BusinessApplicationException(ExceptionType.NotFound, "Identity does not exist");
+                }
+
+                transaction.Commit();
+
+                return new IdentityAdto
+                {
+                    Id = identity.Id,
+                    Version = ConcurrencyVersionFactory.CreateFromEntity(identity)
+                };
+            }
         }
 
         public PasswordIdentityAdto CreateConfirmedPasswordIdentity(CreateConfirmedPasswordIdentityAdto createConfirmedPasswordIdentityAdto)
@@ -40,38 +67,45 @@ namespace ApplicationManager.ApplicationServices.Identities
 
             using (ITransaction transaction = _transactionManager.Create())
             {
-                AuthenticationService authenticationService = _authenticationServiceCommandRepository.GetSingle(s => s is AuthenticationGrantTypePassword);
-
-                if (!(authenticationService is AuthenticationGrantTypePassword authenticationGrantTypePassword))
+                try
                 {
-                    throw new BusinessApplicationException(ExceptionType.BadRequest, "Password identities are not configured");
+                    Identity identity = _identityCommandRepository.GetWithConcurrencyCheck(createConfirmedPasswordIdentityAdto.IdentityId, createConfirmedPasswordIdentityAdto.Version);
+
+                    AuthenticationService authenticationService = _authenticationServiceCommandRepository.GetSingle(s => s is AuthenticationGrantTypePassword);
+
+                    if (!(authenticationService is AuthenticationGrantTypePassword authenticationGrantTypePassword))
+                    {
+                        throw new BusinessApplicationException(ExceptionType.BadRequest, "Password identities are not configured");
+                    }
+
+                    PasswordIdentity passwordIdentity = _addConfirmedPasswordIdentityCommand.Execute(identity, authenticationGrantTypePassword, new AddConfirmedPasswordIdentityDdto
+                    {
+                        Token = createConfirmedPasswordIdentityAdto.Token,
+                        Identifier = createConfirmedPasswordIdentityAdto.Identifier,
+                        Password = createConfirmedPasswordIdentityAdto.Password,
+                        ConfirmPassword = createConfirmedPasswordIdentityAdto.ConfirmPassword
+                    });
+
+                    _identityCommandRepository.Update(identity);
+
+                    transaction.Commit();
+
+                    return new PasswordIdentityAdto
+                    {
+                        Id = passwordIdentity.Id,
+                        Identifier = passwordIdentity.Identifier,
+                        Password = passwordIdentity.PasswordMask,
+                        Version = ConcurrencyVersionFactory.CreateFromEntity(identity)
+                    };
                 }
-
-                Identity identity = _identityCommandRepository.GetById(createConfirmedPasswordIdentityAdto.IdentityId);
-
-                if (identity == null)
+                catch (ConcurrencyDomainException)
                 {
-                    throw new BusinessApplicationException(ExceptionType.NotFound, "No identity exists for given id");
+                    throw new BusinessApplicationException(ExceptionType.Concurrency, "Concurrency check failed");
                 }
-
-                PasswordIdentity passwordIdentity = _addConfirmedPasswordIdentityCommand.Execute(identity, authenticationGrantTypePassword, new AddConfirmedPasswordIdentityDdto
+                catch (DomainValidationRuleException e)
                 {
-                    Token = createConfirmedPasswordIdentityAdto.Token,
-                    Identifier = createConfirmedPasswordIdentityAdto.Identifier,
-                    Password = createConfirmedPasswordIdentityAdto.Password,
-                    ConfirmPassword = createConfirmedPasswordIdentityAdto.ConfirmPassword
-                });
-
-                _identityCommandRepository.Update(identity);
-
-                transaction.Commit();
-
-                return new PasswordIdentityAdto
-                {
-                    Id = passwordIdentity.Id,
-                    Identifier = passwordIdentity.Identifier,
-                    Password = passwordIdentity.PasswordMask
-                };
+                    throw new BusinessValidationRuleApplicationException(e.ValidationResult);
+                }
             }
         }
     }

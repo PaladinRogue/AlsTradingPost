@@ -1,5 +1,7 @@
-﻿using ApplicationManager.Domain.AuthenticationServices;
+﻿using System.Collections.Generic;
+using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities.Queries;
+using Common.Domain.Exceptions;
 using Common.Domain.Validation;
 using FluentValidation;
 
@@ -26,7 +28,16 @@ namespace ApplicationManager.Domain.Identities.AddConfirmedPassword
         {
             _validator.ValidateAndThrow(addConfirmedPasswordIdentityDdto);
 
-            _passwordIdentityIdentifierIsUniqueQuery.Run(addConfirmedPasswordIdentityDdto.Identifier);
+            if (!_passwordIdentityIdentifierIsUniqueQuery.Run(addConfirmedPasswordIdentityDdto.Identifier))
+            {
+                throw new DomainValidationRuleException(new ValidationResult
+                {
+                    PropertyValidationErrors = new List<PropertyValidationError>
+                    {
+                        PropertyValidationErrorFactory.Create(nameof(addConfirmedPasswordIdentityDdto.Identifier), addConfirmedPasswordIdentityDdto.Identifier, ValidationErrorCodes.NotUnique)
+                    }
+                });
+            }
 
             return identity.AddConfirmedPasswordIdentity(authenticationGrantTypePassword, addConfirmedPasswordIdentityDdto);
         }

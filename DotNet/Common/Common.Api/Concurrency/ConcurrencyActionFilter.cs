@@ -3,6 +3,7 @@ using System.Linq;
 using Common.Api.Builders.Resource;
 using Common.Api.Concurrency.Interfaces;
 using Common.ApplicationServices.Concurrency;
+using Common.Domain.Concurrency.Interfaces;
 using Common.Setup.Infrastructure.Constants;
 using Common.Setup.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,7 @@ namespace Common.Api.Concurrency
 {
     public class ConcurrencyActionFilter : IActionFilter
     {
-        private const HttpVerb OnActionExecutingVerbs = HttpVerb.Put | HttpVerb.Delete;
+        private const HttpVerb OnActionExecutingVerbs = HttpVerb.Put | HttpVerb.Post | HttpVerb.Delete;
 
         private const HttpVerb OnActionExecutedVerbs = HttpVerb.Get | HttpVerb.Put | HttpVerb.Post;
 
@@ -25,10 +26,10 @@ namespace Common.Api.Concurrency
 
                 if (concurrencyValue == null) throw new PreConditionFailedException();
 
-                object resourceObj = context.ActionArguments.Values.OfType<IVersionedResource>().SingleOrDefault();
+                object resourceObj = context.ActionArguments.Values.OfType<IVersioned<IConcurrencyVersion>>().SingleOrDefault();
                 if (resourceObj == null) throw new BadRequestException();
 
-                IVersionedResource resource = (IVersionedResource)resourceObj;
+                IVersioned<IConcurrencyVersion> resource = (IVersioned<IConcurrencyVersion>)resourceObj;
 
                 resource.Version = ConcurrencyVersionFactory.CreateFromBase64String(concurrencyValue);
             }

@@ -1,6 +1,4 @@
-﻿
-using Common.ApplicationServices.Concurrency.Interfaces;
-using Common.Domain.Concurrency.Interfaces;
+﻿using Common.Domain.Concurrency.Interfaces;
 
 namespace Common.ApplicationServices.Concurrency
 {

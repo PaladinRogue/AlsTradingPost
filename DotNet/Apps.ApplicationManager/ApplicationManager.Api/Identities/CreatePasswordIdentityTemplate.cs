@@ -1,3 +1,4 @@
+using Common.Api.Concurrency;
 using Common.Api.Links;
 using Common.Api.Resources;
 using Common.Api.Validation.Attributes;
@@ -7,13 +8,8 @@ namespace ApplicationManager.Api.Identities
 {
     [ResourceType(ResourceTypes.PasswordIdentity)]
     [SelfLink(RouteDictionary.IdentityPasswordResourceTemplate, HttpVerb.Get)]
-    public class CreatePasswordIdentityTemplate : IResource
+    public class CreatePasswordIdentityTemplate : VersionedTemplate
     {
-        public CreatePasswordIdentityTemplate(string token)
-        {
-            Token = token;
-        }
-
         [Required]
         public string Token { get; set; }
 

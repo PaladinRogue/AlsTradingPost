@@ -27,9 +27,18 @@ namespace ApplicationManager.Api.Identities
         [HttpGet("{identityId}/password/resourceTemplate", Name = RouteDictionary.IdentityPasswordResourceTemplate)]
         public IActionResult Get(Guid identityId, [FromQuery]string token)
         {
-            return Ok(
-                _resourceBuilder.Build(new CreatePasswordIdentityTemplate(token))
-            );
+            IdentityAdto identityAdto = _identityApplicationService.Get(new GetIdentityAdto
+            {
+                Id = identityId
+            });
+
+            BuiltResource builtResource = _resourceBuilder.Build(new CreatePasswordIdentityTemplate
+            {
+                Token = token,
+                Version = identityAdto.Version
+            });
+
+            return Ok(builtResource);
         }
 
         [AllowAnonymous]
@@ -42,7 +51,8 @@ namespace ApplicationManager.Api.Identities
                 Identifier = template.Identifier,
                 Password = template.Password,
                 ConfirmPassword = template.ConfirmPassword,
-                Token = template.Token
+                Token = template.Token,
+                Version = template.Version
             });
 
             return CreatedAtRoute(RouteDictionary.IdentityPassword, new { identityId }, passwordIdentityAdto);

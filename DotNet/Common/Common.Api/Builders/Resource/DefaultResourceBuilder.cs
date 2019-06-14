@@ -8,6 +8,7 @@ using Common.Api.Meta;
 using Common.Api.Pagination.Interfaces;
 using Common.Api.Resources;
 using Common.Api.Validation.Attributes;
+using Common.Domain.Concurrency.Interfaces;
 
 namespace Common.Api.Builders.Resource
 {
@@ -49,7 +50,7 @@ namespace Common.Api.Builders.Resource
                     }
                 }),
                 Links = _linkBuilder.BuildLinks(resource),
-                Version = resource is IVersionedResource versionedResource ? versionedResource.Version : null
+                Version = resource is IVersioned<IConcurrencyVersion> versionedResource ? versionedResource.Version : null
             };
         }
 
