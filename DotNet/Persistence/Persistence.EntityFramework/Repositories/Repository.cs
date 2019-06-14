@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Common.ApplicationServices.Concurrency.Interfaces;
 using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Models.Interfaces;
 using Common.Domain.Persistence;
@@ -55,9 +54,9 @@ namespace Persistence.EntityFramework.Repositories
             RepositoryHelper.Delete(_context.Set<T>(), _context, id);
         }
 
-        public bool CheckExists(Guid id)
+        public bool CheckExists(Expression<Func<T, bool>> predicate)
         {
-            return RepositoryHelper.CheckExists(_context.Set<T>(), id);
+            return RepositoryHelper.CheckExists(_context.Set<T>(), predicate);
         }
 
         public bool CheckConcurrency(Guid id, IConcurrencyVersion version)

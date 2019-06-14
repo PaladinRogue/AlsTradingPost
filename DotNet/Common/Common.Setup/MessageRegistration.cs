@@ -1,11 +1,12 @@
 ﻿using System;
-using Common.Messaging.Dispatchers;
 using Common.Messaging.Infrastructure;
+using Common.Messaging.Infrastructure.DeQueuers;
+using Common.Messaging.Infrastructure.Directors;
+using Common.Messaging.Infrastructure.Dispatchers;
 using Common.Messaging.Infrastructure.Interfaces;
-using Common.Messaging.Message;
-using Common.Messaging.Message.Interfaces;
-using Common.Messaging.Serialisers;
-using Common.Messaging.Subscribers;
+using Common.Messaging.Infrastructure.Senders;
+using Common.Messaging.Infrastructure.Serialisers;
+using Common.Messaging.Infrastructure.Subscribers;
 using Common.Setup.Settings;
 using Messaging.Broker.Connection;
 using Messaging.Broker.Connection.Interfaces;
@@ -56,15 +57,14 @@ namespace Common.Setup
 	            ILogger<MessageBusRabbitMq> logger = sp.GetRequiredService<ILogger<MessageBusRabbitMq>>();
 	            MessagingBusSettings messageBusSettings = sp.GetRequiredService<IOptions<MessagingBusSettings>>().Value;
 
-                IServiceProvider serviceProvider = sp.GetRequiredService<IServiceProvider>();
                 IMessageBusSubscriptionsManager eventBusSubcriptionsManager = sp.GetRequiredService<IMessageBusSubscriptionsManager>();
                 IRabbitMqPersistentConnection rabbitMqPersistentConnection = sp.GetRequiredService<IRabbitMqPersistentConnection>();
-                IMessageReciever messageReciever = sp.GetRequiredService<IMessageReciever>();
+                IMessageDeQueuer messageDeQueuer = sp.GetRequiredService<IMessageDeQueuer>();
                 IMessageSerialiser messageSerialiser = sp.GetRequiredService<IMessageSerialiser>();
 
 	            int retryCount = messageBusSettings.RetryCount ?? 5;
-                
-                return new MessageBusRabbitMq(rabbitMqPersistentConnection, eventBusSubcriptionsManager, logger, serviceProvider, messageReciever, messageSerialiser, retryCount);
+
+                return new MessageBusRabbitMq(rabbitMqPersistentConnection, eventBusSubcriptionsManager, logger, messageDeQueuer, messageSerialiser, retryCount);
 	        });
 
             services.AddSingleton<IMessageSubscriberFactory, MessageSubscriberFactory>();
@@ -75,7 +75,7 @@ namespace Common.Setup
 		    services.AddScoped<IPendingMessageProvider>(sp => sp.GetRequiredService<PendingMessageDirector>());
 
 			services.AddScoped<IMessageDispatcher, MessageDispatcher>();
-            services.AddScoped<IMessageReciever, MessageReciever>();
+            services.AddScoped<IMessageDeQueuer, MessageDeQueuer>();
 			services.AddScoped<IMessageSender, MessageSender>();
 			services.AddScoped<IMessageFactory, MessageFactory>();
 	    }

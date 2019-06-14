@@ -8,6 +8,7 @@ using Common.Domain.DomainEvents.Interfaces;
 using Common.Domain.Models.DataProtection;
 using Common.Messaging.Infrastructure;
 using Common.Messaging.Infrastructure.Interfaces;
+using Common.Messaging.Infrastructure.Senders;
 using Common.Setup;
 using Common.Setup.Infrastructure.Logging;
 using Microsoft.AspNetCore.Builder;

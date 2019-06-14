@@ -1,4 +1,4 @@
-﻿using ApplicationManager.ApplicationServices.NotificationTypes.Handlers;
+﻿using ApplicationManager.ApplicationServices.Identities.TwoFactor;
 using ApplicationManager.Domain.Identities.Events;
 using Common.Domain.DomainEvents.Interfaces;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
-using ApplicationManager.ApplicationServices.Identities.Interfaces;
+using ApplicationManager.ApplicationServices.Identities.Models;
+using ApplicationManager.Domain.Identities.Projections;
+using ApplicationManager.Domain.Identities.Queries;
 using ApplicationManager.Domain.NotificationTypes;
 
 namespace ApplicationManager.ApplicationServices.Notifications.Audience
@@ -17,9 +19,9 @@ namespace ApplicationManager.ApplicationServices.Notifications.Audience
         }
 
         public ChannelType ChannelType => ChannelType.Email;
-        
-        public string NotificationType => Domain.NotificationTypes.NotificationTypes.EmailTwoFactorAuthentication;
-        
+
+        public string NotificationType => NotificationTypes.EmailTwoFactorAuthentication;
+
         public IEnumerable<string> GetAudience(Guid identifier)
         {
             TwoFactorAuthenticationIdentityProjection twoFactorAuthenticationIdentityProjection = _getTwoFactorAuthenticationIdentityByIdentityQuery.Execute(identifier);

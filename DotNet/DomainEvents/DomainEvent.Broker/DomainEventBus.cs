@@ -22,6 +22,7 @@ namespace DomainEvent.Broker
             IEnumerable<IDomainEventHandler<T>> domainEventHandlers = _domainEventHandlerResolver.ResolveAll<T>();
             foreach (IDomainEventHandler<T> domainEventHandler in domainEventHandlers)
             {
+                //TODO Make async?
                 domainEventHandler.Handle(domainEvent);
             }
         }

@@ -8,10 +8,11 @@ namespace Common.Setup.Infrastructure.Exceptions
     {
         private static readonly Dictionary<ExceptionType, HttpStatusCode> ExceptionTypeDictionary = new Dictionary<ExceptionType, HttpStatusCode>
         {
-            { ExceptionType.Unknown, HttpStatusCode.OK },
+            { ExceptionType.Unknown, HttpStatusCode.InternalServerError },
             { ExceptionType.Concurrency, HttpStatusCode.PreconditionFailed },
             { ExceptionType.BadRequest, HttpStatusCode.BadRequest },
-            { ExceptionType.Unauthorized, HttpStatusCode.Unauthorized }
+            { ExceptionType.Unauthorized, HttpStatusCode.Unauthorized },
+            { ExceptionType.NotFound, HttpStatusCode.NotFound }
         };
 
         public static HttpStatusCode FromApplicationExceptionType(ExceptionType exceptionType)

@@ -23,7 +23,7 @@ namespace Common.Api.Builders.Resource
         public BuiltResource Build(IResource resource)
         {
             Type resourceType = resource.GetType();
-            IEnumerable<PropertyInfo> properties = resource.GetType().GetProperties().Where(p => 
+            IEnumerable<PropertyInfo> properties = resourceType.GetProperties().Where(p =>
                 p.Name != nameof(IEntityResource.Id) && p.Name != nameof(IVersionedResource.Version) );
 
             return new BuiltResource
@@ -52,7 +52,7 @@ namespace Common.Api.Builders.Resource
                 Version = resource is IVersionedResource versionedResource ? versionedResource.Version : null
             };
         }
-        
+
         public BuiltCollectionResource Build<T>(ICollectionResource<T> collectionResource, ITemplate template) where T: IResource
         {
             BuiltCollectionResource builtCollectionResource = new BuiltCollectionResource

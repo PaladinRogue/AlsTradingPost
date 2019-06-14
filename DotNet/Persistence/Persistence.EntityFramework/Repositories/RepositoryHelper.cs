@@ -15,7 +15,7 @@ namespace Persistence.EntityFramework.Repositories
     public static class RepositoryHelper
     {
         public static IQueryable<T> Get<T>(
-            IQueryable<T> results, 
+            IQueryable<T> results,
             IList<SortBy> sort,
             Expression<Func<T, bool>> predicate = null) where T : IEntity
         {
@@ -30,7 +30,7 @@ namespace Persistence.EntityFramework.Repositories
         }
 
         public static IQueryable<T> GetPage<T>(
-            IQueryable<T> results, 
+            IQueryable<T> results,
             int pageSize, int pageOffset, out int totalResults,
             IList<SortBy> sort,
             Expression<Func<T, bool>> predicate = null) where T : IEntity
@@ -46,9 +46,9 @@ namespace Persistence.EntityFramework.Repositories
         }
 
 
-        public static bool CheckExists<T>(IQueryable<T> results, Guid id) where T : IEntity
+        public static bool CheckExists<T>(IQueryable<T> results, Expression<Func<T, bool>> predicate) where T : IEntity
         {
-            return results.Any(e => e.Id == id);
+            return Filter(results, predicate).Any();
         }
 
         public static bool CheckConcurrency<T>(IQueryable<T> results, Guid id, byte[] version) where T : IVersionedEntity
@@ -119,7 +119,7 @@ namespace Persistence.EntityFramework.Repositories
                         }
                     }
                 }
-                
+
                 context.SaveChanges();
             }
             catch (DbUpdateConcurrencyException e)
@@ -131,7 +131,7 @@ namespace Persistence.EntityFramework.Repositories
                 throw new UpdateDomainException(entity, e);
             }
         }
-        
+
         public static void Delete<T>(DbSet<T> dbSet, DbContext context, Guid id) where T : class, IVersionedEntity
         {
             T entity = GetById(dbSet, id);
@@ -151,7 +151,7 @@ namespace Persistence.EntityFramework.Repositories
                 throw new DeleteDomainException(entity, e);
             }
         }
-        
+
         private static IQueryable<T> Filter<T>(IQueryable<T> results, Expression<Func<T, bool>> predicate)
         {
             return predicate != null ? results.Where(predicate) : results;
@@ -178,7 +178,7 @@ namespace Persistence.EntityFramework.Repositories
 
             return results;
         }
-        
+
         private static IQueryable<T> GetPage<T>(IQueryable<T> results, int pageSize, int pageOffset, out int totalResults) where T : IEntity
         {
             totalResults = results.Count();

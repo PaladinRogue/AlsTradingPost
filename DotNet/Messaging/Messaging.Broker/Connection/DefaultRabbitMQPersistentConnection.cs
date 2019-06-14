@@ -30,6 +30,11 @@ namespace Messaging.Broker.Connection
 
         public bool IsConnected => _connection != null && _connection.IsOpen && !_disposed;
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
         public IModel CreateModel()
         {
             if (!IsConnected)
@@ -73,7 +78,7 @@ namespace Messaging.Broker.Connection
                 policy.Execute(() =>
                 {
                     _connection = _connectionFactory
-                          .CreateConnection();
+                        .CreateConnection();
                 });
 
                 if (IsConnected)
@@ -86,12 +91,10 @@ namespace Messaging.Broker.Connection
 
                     return true;
                 }
-                else
-                {
-                    _logger.LogCritical("FATAL ERROR: RabbitMQ connections could not be created and opened");
 
-                    return false;
-                }
+                _logger.LogCritical("FATAL ERROR: RabbitMQ connections could not be created and opened");
+
+                return false;
             }
         }
 

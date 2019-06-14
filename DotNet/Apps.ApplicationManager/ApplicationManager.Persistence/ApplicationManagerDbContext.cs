@@ -1,11 +1,11 @@
-﻿using ApplicationManager.ApplicationServices.Identities.Interfaces;
+﻿using ApplicationManager.ApplicationServices.Identities.Models;
 using ApplicationManager.Domain.Applications;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities;
-using ApplicationManager.Domain.Identities.AuthenticationIdentities;
-using ApplicationManager.Domain.Identities.Sessions;
+using ApplicationManager.Domain.Identities.Projections;
 using ApplicationManager.Domain.NotificationTypes;
 using ApplicationManager.Domain.Users;
+using ApplicationManager.Persistence.AuthenticationServices;
 using ApplicationManager.Persistence.Identities;
 using ApplicationManager.Persistence.NotificationTypes;
 using Microsoft.EntityFrameworkCore;
@@ -42,7 +42,10 @@ namespace ApplicationManager.Persistence
                 .ToTable("Sessions");
 
             modelBuilder.Entity<AuthenticationService>()
-                .HasDiscriminator(a => a.Type);
+                .HasDiscriminator<string>("Type")
+                .HasValue<AuthenticationGrantTypePassword>(AuthenticationGrantTypes.Password)
+                .HasValue<AuthenticationGrantTypeClientCredential>(AuthenticationGrantTypes.ClientCredential)
+                .HasValue<AuthenticationGrantTypeRefreshToken>(AuthenticationGrantTypes.RefreshToken);
 
             modelBuilder.Entity<AuthenticationGrantTypeRefreshToken>()
                 .ProtectSensitiveInformation()
@@ -62,6 +65,7 @@ namespace ApplicationManager.Persistence
                 .HasValue<TwoFactorAuthenticationIdentity>(AuthenticationIdentityTypes.TwoFactor);
 
             modelBuilder.Entity<PasswordIdentity>()
+                .Ignore(p => p.PasswordMask)
                 .ProtectSensitiveInformation()
                 .HasBaseType<AuthenticationIdentity>();
 
@@ -89,7 +93,7 @@ namespace ApplicationManager.Persistence
                 .HasOne(i => i.NotificationChannelTemplate)
                 .WithOne(s => s.NotificationTypeChannel)
                 .HasForeignKey<NotificationChannelTemplate>("NotificationTypeChannelId");
-            
+
             modelBuilder.Query<TwoFactorAuthenticationIdentityProjection>()
                 .ProtectSensitiveInformation()
                 .ToView("TwoFactorAuthenticationIdentityProjection");

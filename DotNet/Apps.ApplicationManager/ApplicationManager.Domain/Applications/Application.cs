@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ApplicationManager.Domain.Applications.Models;
 using Common.Domain.Models;
 using Common.Domain.Models.Interfaces;
 

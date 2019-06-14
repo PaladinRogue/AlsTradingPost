@@ -1,7 +1,6 @@
 ﻿using ApplicationManager.ApplicationServices.Applications.Subscribers;
-using ApplicationManager.ApplicationServices.Notifications.Subscribers;
-using ApplicationManager.ApplicationServices.Users.Subscribers;
-using Common.Messaging.Message.Interfaces;
+using ApplicationManager.ApplicationServices.Subscribers;
+using Common.Messaging.Infrastructure.Subscribers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ApplicationManager.Setup

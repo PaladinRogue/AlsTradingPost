@@ -5,6 +5,7 @@
         Unknown,
         BadRequest,
         Concurrency,
-        Unauthorized
+        Unauthorized,
+        NotFound
     }
 }

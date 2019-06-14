@@ -2,7 +2,7 @@
 
 namespace Common.Domain.Persistence
 {
-    public interface IQueryRepository<T> : IGetById<T>, IGetPage<T>, IGet<T>, IGetSingle<T>, ICheckExists, ICheckConcurrency where T : IVersionedEntity
+    public interface IQueryRepository<T> : IGetByIdQuery<T>, IGetPageQuery<T>, IGetQuery<T>, IGetSingleQuery<T>, ICheckExistsQuery<T>, ICheckConcurrencyQuery where T : IVersionedEntity
     {
     }
 }

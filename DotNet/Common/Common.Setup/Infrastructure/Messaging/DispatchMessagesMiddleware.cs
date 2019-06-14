@@ -2,8 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using Common.Application.Transactions;
-using Common.Messaging.Dispatchers;
-using Common.Messaging.Message.Interfaces;
+using Common.Messaging.Infrastructure.Dispatchers;
 using Microsoft.AspNetCore.Http;
 
 namespace Common.Setup.Infrastructure.Messaging

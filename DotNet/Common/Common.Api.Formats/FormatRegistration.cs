@@ -21,7 +21,7 @@ namespace Common.Api.Formats
             {
                 options.RespectBrowserAcceptHeader = true;
                 options.ReturnHttpNotAcceptable = true;
-                
+
                 options.Conventions.Add(new QueryStringSortConvention());
                 options.ModelBinderProviders.Insert(0, new QueryStringFilterModelBinderProvider());
                 options.ModelBinderProviders.Insert(0, new QueryStringSortModelBinderProvider());

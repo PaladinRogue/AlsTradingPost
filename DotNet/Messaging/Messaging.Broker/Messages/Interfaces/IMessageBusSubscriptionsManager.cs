@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Common.Messaging.Infrastructure;
 using Common.Messaging.Infrastructure.Interfaces;
-using Common.Messaging.Subscribers;
+using Common.Messaging.Infrastructure.Subscribers;
 
 namespace Messaging.Broker.Messages.Interfaces
 {

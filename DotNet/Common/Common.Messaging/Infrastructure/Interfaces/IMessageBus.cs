@@ -1,5 +1,5 @@
 ﻿using System;
-using Common.Messaging.Subscribers;
+using Common.Messaging.Infrastructure.Subscribers;
 
 namespace Common.Messaging.Infrastructure.Interfaces
 {

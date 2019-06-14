@@ -15,7 +15,7 @@ namespace Common.Api.Formats.JsonV1.Formatters
     {
         private const string JsonV1MediaType = "application/vnd.api+json";
 
-        public JsonV1OutputFormatter(JsonSerializerSettings serializerSettings, ArrayPool<char> charPool) 
+        public JsonV1OutputFormatter(JsonSerializerSettings serializerSettings, ArrayPool<char> charPool)
             : base(serializerSettings, charPool)
         {
             SupportedMediaTypes.Clear();
@@ -37,17 +37,17 @@ namespace Common.Api.Formats.JsonV1.Formatters
             TextWriter writer = context.WriterFactory(context.HttpContext.Response.Body, selectedEncoding);
             try
             {
-                if (context.Object is BuiltResource builtResource)
+                switch (context.Object)
                 {
-                    WriteObject(writer, ResponseFactory.Create(builtResource, context.HttpContext.Request));
-                }
-                else if (context.Object is BuiltCollectionResource builtCollectionResource)
-                {
-                    WriteObject(writer, ResponseFactory.Create(builtCollectionResource, context.HttpContext.Request));
-                }
-                else if(context.Object is IFormattedError formattedError)
-                {
-                    WriteObject(writer, formattedError);
+                    case BuiltResource builtResource:
+                        WriteObject(writer, ResponseFactory.Create(builtResource, context.HttpContext.Request));
+                        break;
+                    case BuiltCollectionResource builtCollectionResource:
+                        WriteObject(writer, ResponseFactory.Create(builtCollectionResource, context.HttpContext.Request));
+                        break;
+                    case IFormattedError formattedError:
+                        WriteObject(writer, formattedError);
+                        break;
                 }
 
                 await writer.FlushAsync();

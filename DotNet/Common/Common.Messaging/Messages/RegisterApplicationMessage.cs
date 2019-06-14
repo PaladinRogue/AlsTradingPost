@@ -1,5 +1,4 @@
 ﻿using Common.Messaging.Infrastructure.Interfaces;
-using Common.Messaging.Message.Interfaces;
 
 namespace Common.Messaging.Messages
 {

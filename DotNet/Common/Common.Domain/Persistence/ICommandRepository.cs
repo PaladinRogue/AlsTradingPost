@@ -2,7 +2,7 @@
 
 namespace Common.Domain.Persistence
 {
-    public interface ICommandRepository<in T> : IUpdate<T>, IAdd<T>, IDelete where T : IAggregateRoot
+    public interface ICommandRepository<T> : IUpdateCommand<T>, IAddCommand<T>, IDelete, IGetByIdQuery<T>, IGetSingleQuery<T> where T : IAggregateRoot
     {
     }
 }

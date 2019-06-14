@@ -1,8 +1,11 @@
 ﻿using ApplicationManager.ApplicationServices.Applications.Interfaces;
 using ApplicationManager.ApplicationServices.Applications.Models;
-using ApplicationManager.ApplicationServices.Identities.Interfaces;
+using ApplicationManager.ApplicationServices.Identities;
+using ApplicationManager.ApplicationServices.Identities.Admin;
 using ApplicationManager.ApplicationServices.Identities.Models;
 using ApplicationManager.Domain.Applications;
+using ApplicationManager.Domain.Applications.Commands;
+using ApplicationManager.Domain.Applications.Models;
 using Common.Application.Exceptions;
 using Common.Application.Transactions;
 using Common.Domain.Exceptions;

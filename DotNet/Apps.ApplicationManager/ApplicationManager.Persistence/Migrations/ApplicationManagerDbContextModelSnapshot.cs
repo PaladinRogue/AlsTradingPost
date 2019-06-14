@@ -205,21 +205,21 @@ namespace ApplicationManager.Persistence.Migrations
 
                     b.Property<string>("ValidateAccessTokenUrl");
 
-                    b.HasDiscriminator().HasValue("AuthenticationGrantTypeClientCredential");
+                    b.HasDiscriminator().HasValue("CLIENT_CREDENTIAL");
                 });
 
             modelBuilder.Entity("ApplicationManager.Domain.AuthenticationServices.AuthenticationGrantTypePassword", b =>
                 {
                     b.HasBaseType("ApplicationManager.Domain.AuthenticationServices.AuthenticationService");
 
-                    b.HasDiscriminator().HasValue("AuthenticationGrantTypePassword");
+                    b.HasDiscriminator().HasValue("PASSWORD");
                 });
 
             modelBuilder.Entity("ApplicationManager.Domain.AuthenticationServices.AuthenticationGrantTypeRefreshToken", b =>
                 {
                     b.HasBaseType("ApplicationManager.Domain.AuthenticationServices.AuthenticationService");
 
-                    b.HasDiscriminator().HasValue("AuthenticationGrantTypeRefreshToken");
+                    b.HasDiscriminator().HasValue("REFRESH_TOKEN");
                 });
 
             modelBuilder.Entity("ApplicationManager.Domain.Identities.AuthenticationIdentities.PasswordIdentity", b =>

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
 using Common.Messaging.Infrastructure;
+using Common.Messaging.Infrastructure.DeQueuers;
 using Common.Messaging.Infrastructure.Interfaces;
-using Common.Messaging.Serialisers;
-using Common.Messaging.Subscribers;
+using Common.Messaging.Infrastructure.Serialisers;
+using Common.Messaging.Infrastructure.Subscribers;
 using Messaging.Broker.Connection.Interfaces;
 using Messaging.Broker.Messages.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Retry;
@@ -25,26 +25,24 @@ namespace Messaging.Broker.Messages
         private readonly ILogger<MessageBusRabbitMq> _logger;
         private readonly IRabbitMqPersistentConnection _persistentConnection;
         private readonly IMessageBusSubscriptionsManager _messageBusSubscriptionsManager;
-        private readonly IServiceProvider _serviceProvider;
-        private readonly IMessageReciever _messageReciever;
+        private readonly IMessageDeQueuer _messageDeQueuer;
         private readonly IMessageSerialiser _messageSerialiser;
         private IModel _consumerChannel;
         private readonly int _retryCount;
         private string _queueName;
 
-        public MessageBusRabbitMq(IRabbitMqPersistentConnection persistentConnection,
+        public MessageBusRabbitMq(
+            IRabbitMqPersistentConnection persistentConnection,
             IMessageBusSubscriptionsManager messageBusSubscriptionsManager,
             ILogger<MessageBusRabbitMq> logger,
-            IServiceProvider serviceProvider,
-            IMessageReciever messageReciever,
+            IMessageDeQueuer messageDeQueuer,
             IMessageSerialiser messageSerialiser,
             int retryCount = 5)
         {
             _persistentConnection = persistentConnection;
             _messageBusSubscriptionsManager = messageBusSubscriptionsManager;
             _logger = logger;
-            _serviceProvider = serviceProvider;
-            _messageReciever = messageReciever;
+            _messageDeQueuer = messageDeQueuer;
             _messageSerialiser = messageSerialiser;
 
             _consumerChannel = CreateConsumerChannel();
@@ -78,7 +76,7 @@ namespace Messaging.Broker.Messages
         {
             if (!_persistentConnection.IsConnected)
             {
-                _persistentConnection.TryConnect();
+                if (!CanConnect()) return;
             }
 
             RetryPolicy policy = Policy.Handle<BrokerUnreachableException>()
@@ -118,7 +116,7 @@ namespace Messaging.Broker.Messages
 
             if (!_persistentConnection.IsConnected)
             {
-                _persistentConnection.TryConnect();
+                if (!CanConnect()) return;
             }
 
             using (IModel channel = _persistentConnection.CreateModel())
@@ -139,7 +137,7 @@ namespace Messaging.Broker.Messages
         {
             if (!_persistentConnection.IsConnected)
             {
-                _persistentConnection.TryConnect();
+                if (!CanConnect()) return null;
             }
 
             IModel channel = _persistentConnection.CreateModel();
@@ -175,25 +173,28 @@ namespace Messaging.Broker.Messages
 
         private void ProcessMessage(string messageName, string serialisedMessage)
         {
-            if (_messageBusSubscriptionsManager.HasSubscriptionsForMessage(messageName))
+            if (!_messageBusSubscriptionsManager.HasSubscriptionsForMessage(messageName))
             {
-                IEnumerable<MessageSubscription> subscriptions = _messageBusSubscriptionsManager.GetSubscribersForMessage(messageName);
-
-                foreach (MessageSubscription messageSubscription in subscriptions)
-                {
-                    using (_serviceProvider.CreateScope())
-                    {
-                        try
-                        {
-                            _messageReciever.Recieve(_messageSerialiser.Deserialise(serialisedMessage), messageSubscription);
-                        }
-                        catch (Exception e)
-                        {
-                            _logger.LogCritical(e, "Unable to handle message", messageName, serialisedMessage);
-                        }
-                    }
-                }
+                return;
             }
+
+            IEnumerable<MessageSubscription> subscriptions = _messageBusSubscriptionsManager.GetSubscribersForMessage(messageName);
+            _messageDeQueuer.DeQueue(_messageSerialiser.Deserialise(serialisedMessage), subscriptions);
+        }
+
+        private bool CanConnect()
+        {
+            try
+            {
+                _persistentConnection.TryConnect();
+            }
+            catch (Exception e)
+            {
+                _logger.LogCritical("Unable to connect to RabbitMQ", e);
+                return false;
+            }
+
+            return true;
         }
 
         public void Dispose()

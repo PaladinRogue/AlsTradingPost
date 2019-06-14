@@ -6,6 +6,13 @@ namespace Common.Domain.Validation
 {
     public static class FluentValidationExtension
     {
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="validator"></param>
+        /// <param name="object"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <exception cref="DomainValidationRuleException"></exception>
         public static void ValidateAndThrow<T>(this IValidator<T> validator, T @object)
         {
             FluentValidation.Results.ValidationResult validationResult = validator.Validate(@object);

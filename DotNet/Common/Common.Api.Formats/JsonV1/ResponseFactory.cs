@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using Common.Api.Builders.Dictionary;
 using Common.Api.Builders.Resource;
 using Common.Api.Formats.JsonV1.Formats;
 using Common.Api.Headers;
 using Common.Api.Links;
+using Common.Api.Resources;
 using Common.Resources.Extensions;
 using Microsoft.AspNetCore.Http;
 using Link = Common.Api.Formats.JsonV1.Formats.Link;
@@ -30,7 +30,7 @@ namespace Common.Api.Formats.JsonV1
             {
                 Data = new Data
                 {
-                    Type = _formatTypeName(builtResource.Type),
+                    Type = GetResourceTypeName(builtResource.Type),
                     Id = builtResource.Id,
                     Attributes = attributeBuilder.Build(),
                     Meta = _buildMeta(builtResource.Properties, includeExtendedMeta)
@@ -69,7 +69,7 @@ namespace Common.Api.Formats.JsonV1
 
                         return new Data
                         {
-                            Type = _formatTypeName(r.Type),
+                            Type = GetResourceTypeName(r.Type),
                             Id = r.Id,
                             Attributes = attributeBuilder.Build(),
                             Links = _buildLinks(r.Links),
@@ -130,7 +130,7 @@ namespace Common.Api.Formats.JsonV1
                     propertyMetaBuilder.Add(MetaType.MinLenth, property.ValidationConstraints.MinLenth);
                 }
             }
-            
+
             return propertyMetaBuilder.Build();
         }
 
@@ -177,11 +177,9 @@ namespace Common.Api.Formats.JsonV1
             return linkBuilder.Build();
         }
 
-        private static string _formatTypeName(MemberInfo type)
+        private static string GetResourceTypeName(MemberInfo argType)
         {
-            Regex regex = new Regex(@"(resource|template)$", RegexOptions.IgnoreCase);
-
-            return regex.Replace(type.Name, string.Empty).ToCamelCase();
+            return argType.GetCustomAttributes<ResourceTypeAttribute>().FirstOrDefault()?.Type ?? argType.Name.ToCamelCase();
         }
     }
 }

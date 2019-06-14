@@ -1,4 +1,6 @@
 ﻿using System;
+using ApplicationManager.ApplicationServices.Identities;
+using ApplicationManager.ApplicationServices.Identities.Models;
 using Common.Api.Builders.Resource;
 using Common.Api.Routing;
 using Microsoft.AspNetCore.Authorization;
@@ -7,22 +9,43 @@ using Microsoft.AspNetCore.Mvc;
 namespace ApplicationManager.Api.Identities
 {
     [DefaultControllerRoute("identities")]
-    public class IdentityController : ControllerBase 
+    public class IdentityController : ControllerBase
     {
         private readonly IResourceBuilder _resourceBuilder;
 
-        public IdentityController(IResourceBuilder resourceBuilder)
+        private readonly IIdentityApplicationService _identityApplicationService;
+
+        public IdentityController(
+            IResourceBuilder resourceBuilder,
+            IIdentityApplicationService identityApplicationService)
         {
             _resourceBuilder = resourceBuilder;
+            _identityApplicationService = identityApplicationService;
         }
 
         [AllowAnonymous]
         [HttpGet("{identityId}/password/resourceTemplate", Name = RouteDictionary.IdentityPasswordResourceTemplate)]
         public IActionResult Get(Guid identityId, [FromQuery]string token)
         {
-            return new ObjectResult(
-                _resourceBuilder.Build(new CreatePasswordIdentityResource(token))
+            return Ok(
+                _resourceBuilder.Build(new CreatePasswordIdentityTemplate(token))
             );
+        }
+
+        [AllowAnonymous]
+        [HttpPost("{identityId}/password", Name = RouteDictionary.IdentityPassword)]
+        public IActionResult Post(Guid identityId, CreatePasswordIdentityTemplate template)
+        {
+            PasswordIdentityAdto passwordIdentityAdto = _identityApplicationService.CreateConfirmedPasswordIdentity(new CreateConfirmedPasswordIdentityAdto
+            {
+                IdentityId = identityId,
+                Identifier = template.Identifier,
+                Password = template.Password,
+                ConfirmPassword = template.ConfirmPassword,
+                Token = template.Token
+            });
+
+            return CreatedAtRoute(RouteDictionary.IdentityPassword, new { identityId }, passwordIdentityAdto);
         }
     }
 }

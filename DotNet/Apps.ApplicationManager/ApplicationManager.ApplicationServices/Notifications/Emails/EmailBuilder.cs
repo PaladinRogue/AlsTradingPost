@@ -1,4 +1,6 @@
 using System;
+using System.Globalization;
+using System.Runtime.CompilerServices;
 
 namespace ApplicationManager.ApplicationServices.Notifications.Emails
 {
@@ -10,19 +12,19 @@ namespace ApplicationManager.ApplicationServices.Notifications.Emails
             {
                 throw new ArgumentNullException(nameof(buildEmailAdto));
             }
-            
+
             if (buildEmailAdto.EmailTemplate == null)
             {
                 throw new ArgumentNullException(nameof(buildEmailAdto.EmailTemplate));
             }
-            
+
             string htmlBody = buildEmailAdto.EmailTemplate;
-            
+
             foreach ((string key, string value) in buildEmailAdto.PropertyBag)
             {
-                htmlBody = htmlBody.Replace($"{{{{{key}}}}}", value, StringComparison.OrdinalIgnoreCase);
+                htmlBody = htmlBody.Replace($"{{{key}}}", value, StringComparison.OrdinalIgnoreCase);
             }
-            
+
             return new EmailAdto
             {
                 Subject = buildEmailAdto.Subject,

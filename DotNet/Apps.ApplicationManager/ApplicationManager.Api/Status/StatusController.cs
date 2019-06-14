@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ApplicationManager.Api.Status
 {
     [DefaultControllerRoute("status")]
-    public class StatusController : ControllerBase 
+    public class StatusController : ControllerBase
     {
         private readonly IResourceBuilder _resourceBuilder;
 
@@ -19,7 +19,7 @@ namespace ApplicationManager.Api.Status
         [HttpGet("", Name = RouteDictionary.Status)]
         public IActionResult Get()
         {
-            return new ObjectResult(
+            return Ok(
                 _resourceBuilder.Build(new StatusResource())
             );
         }

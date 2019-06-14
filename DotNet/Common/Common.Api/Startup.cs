@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Common.Api.Builders.Resource;
+﻿using Common.Api.Builders.Resource;
 using Common.Api.Links;
 using Common.Api.Routing;
 using Common.Api.Settings;
@@ -18,7 +17,7 @@ namespace Common.Api
     {
         public IHostingEnvironment Environment { get; }
         public IConfiguration Configuration { get; }
-        
+
         public Startup(IHostingEnvironment environment)
         {
             IConfigurationBuilder builder = new ConfigurationBuilder()
@@ -58,9 +57,9 @@ namespace Common.Api
             ServiceRegistration.RegisterProviders(services);
             ServiceRegistration.RegisterServices(services);
             ServiceRegistration.RegisterAuthorisation(services);
-        
+
             DataProtectionRegistration.Register(Configuration, services);
-            
+
             Common.Authentication.Setup.ServiceRegistration.RegisterDomainServices(services);
             Common.Authentication.Setup.ServiceRegistration.RegisterProviders(services);
         }

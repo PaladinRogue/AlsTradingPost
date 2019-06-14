@@ -1,17 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using ApplicationManager.Domain.AuthenticationServices.Models;
 using Common.Domain.Models.DataProtection;
 
 namespace ApplicationManager.Domain.AuthenticationServices
 {
     public class AuthenticationGrantTypeClientCredential : AuthenticationService
     {
-        public override string Type
-        {
-            get => AuthenticationGrantTypes.ClientCredential;
-            protected set => throw new NotSupportedException();
-        }
-
         protected AuthenticationGrantTypeClientCredential()
         {
         }
@@ -25,7 +20,7 @@ namespace ApplicationManager.Domain.AuthenticationServices
             GrantAccessTokenUrl = createAuthenticationGrantTypeClientCredentialDdto.GrantAccessTokenUrl;
             ValidateAccessTokenUrl = createAuthenticationGrantTypeClientCredentialDdto.ValidateAccessTokenUrl;
         }
-        
+
         [MaxLength(20)]
         public string Name { get; protected set; }
 

@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
-using ApplicationManager.ApplicationServices.Identities.Interfaces;
+using ApplicationManager.ApplicationServices.Identities.Models;
+using ApplicationManager.Domain.Identities.Projections;
+using ApplicationManager.Domain.Identities.Queries;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationManager.Persistence.Identities

@@ -1,7 +1,7 @@
 ﻿using System;
 using Common.Api.Settings;
 using Common.Messaging.Infrastructure.Interfaces;
-using Common.Messaging.Message.Interfaces;
+using Common.Messaging.Infrastructure.Senders;
 using Common.Messaging.Messages;
 using Common.Setup.Settings;
 using Microsoft.AspNetCore.Hosting;

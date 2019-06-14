@@ -1,7 +1,7 @@
 ﻿using System;
 using Common.Domain.Models.DataProtection;
 using Common.Messaging.Infrastructure.Interfaces;
-using Common.Messaging.Serialisers;
+using Common.Messaging.Infrastructure.Serialisers;
 
 namespace Common.Messaging.Infrastructure
 {

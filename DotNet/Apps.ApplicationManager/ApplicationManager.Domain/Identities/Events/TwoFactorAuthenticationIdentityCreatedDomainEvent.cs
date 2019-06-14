@@ -1,5 +1,4 @@
-﻿using ApplicationManager.Domain.Identities.AuthenticationIdentities;
-using Common.Domain.DomainEvents.Interfaces;
+﻿using Common.Domain.DomainEvents.Interfaces;
 
 namespace ApplicationManager.Domain.Identities.Events
 {
