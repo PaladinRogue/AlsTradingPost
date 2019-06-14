@@ -45,11 +45,4 @@
     <ProjectReference Include="..\ApplicationManager.ApplicationServices\ApplicationManager.ApplicationServices.csproj" />
     <ProjectReference Include="..\ApplicationManager.Domain\ApplicationManager.Domain.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.EntityFrameworkCore.SqlServer">
-      <HintPath>..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.entityframeworkcore.sqlserver\2.2.0\lib\netstandard2.0\Microsoft.EntityFrameworkCore.SqlServer.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>
