@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using ApplicationManager.Domain.Applications.Models;
+using ApplicationManager.Domain.Applications.Change;
+using ApplicationManager.Domain.Applications.Create;
 using Common.Domain.Models;
 using Common.Domain.Models.Interfaces;
 

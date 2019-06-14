@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using ApplicationManager.Domain.AuthenticationServices.Models;
+using ApplicationManager.Domain.AuthenticationServices.CreateClientCredential;
 using Common.Domain.Models.DataProtection;
 
 namespace ApplicationManager.Domain.AuthenticationServices

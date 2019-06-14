@@ -1,25 +1,24 @@
 ﻿using ApplicationManager.ApplicationServices.Applications;
-using ApplicationManager.ApplicationServices.Applications.Interfaces;
+using ApplicationManager.ApplicationServices.Applications.Register;
 using ApplicationManager.ApplicationServices.Identities;
-using ApplicationManager.ApplicationServices.Identities.Admin;
+using ApplicationManager.ApplicationServices.Identities.CreateAdmin;
 using ApplicationManager.ApplicationServices.Identities.TwoFactor;
 using ApplicationManager.ApplicationServices.Notifications;
-using ApplicationManager.ApplicationServices.Notifications.Audience;
+using ApplicationManager.ApplicationServices.Notifications.Audiences;
 using ApplicationManager.ApplicationServices.Notifications.Emails;
 using ApplicationManager.ApplicationServices.Notifications.Send;
 using ApplicationManager.ApplicationServices.Users;
 using ApplicationManager.ApplicationServices.Users.CreateAdmin;
 using ApplicationManager.Domain.Applications;
-using ApplicationManager.Domain.Applications.Commands;
-using ApplicationManager.Domain.Applications.Models;
-using ApplicationManager.Domain.Applications.Validators;
+using ApplicationManager.Domain.Applications.Change;
+using ApplicationManager.Domain.Applications.Create;
 using ApplicationManager.Domain.Identities;
-using ApplicationManager.Domain.Identities.Commands;
-using ApplicationManager.Domain.Identities.Models;
+using ApplicationManager.Domain.Identities.AddConfirmedPassword;
+using ApplicationManager.Domain.Identities.AddTwoFactor;
+using ApplicationManager.Domain.Identities.Create;
 using ApplicationManager.Domain.Identities.Queries;
-using ApplicationManager.Domain.Identities.Validators;
 using ApplicationManager.Domain.Users;
-using ApplicationManager.Domain.Users.Commands;
+using ApplicationManager.Domain.Users.Create;
 using ApplicationManager.Persistence;
 using ApplicationManager.Persistence.Identities;
 using ApplicationManager.Setup.Infrastructure.Authorisation;
@@ -50,7 +49,7 @@ namespace ApplicationManager.Setup
 	    {
 		    ValidatorOptions.LanguageManager.Enabled = false;
 
-	        services.AddScoped<IValidator<AddTwoFactorAuthenticationIdentityDdto>, CreateTwoFactorAuthenticationIdentityValidator>();
+	        services.AddScoped<IValidator<AddTwoFactorAuthenticationIdentityDdto>, AddTwoFactorAuthenticationIdentityValidator>();
 	        services.AddScoped<IValidator<ChangeApplicationDdto>, ChangeApplicationValidator>();
 	        services.AddScoped<IValidator<CreateApplicationDdto>, CreateApplicationValidator>();
 	        services.AddScoped<IValidator<AddConfirmedPasswordIdentityDdto>, AddConfirmedPasswordIdentityValidator>();

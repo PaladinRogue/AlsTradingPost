@@ -1,8 +1,7 @@
 using ApplicationManager.ApplicationServices.Users.Models;
 using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Users;
-using ApplicationManager.Domain.Users.Commands;
-using ApplicationManager.Domain.Users.Models;
+using ApplicationManager.Domain.Users.Create;
 using Common.Application.Exceptions;
 using Common.Application.Transactions;
 using Common.Domain.Exceptions;

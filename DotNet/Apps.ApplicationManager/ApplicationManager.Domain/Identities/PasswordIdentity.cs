@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using ApplicationManager.Domain.AuthenticationServices;
-using ApplicationManager.Domain.Identities.Models;
+using ApplicationManager.Domain.Identities.AddConfirmedPassword;
 using Common.Domain.Models.DataProtection;
 
 namespace ApplicationManager.Domain.Identities

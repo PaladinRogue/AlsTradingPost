@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using ApplicationManager.ApplicationServices.Notifications.Audience;
+using ApplicationManager.ApplicationServices.Notifications.Audiences;
 using ApplicationManager.ApplicationServices.Notifications.Emails;
 using ApplicationManager.Domain.NotificationTypes;
 using Common.Application.Exceptions;

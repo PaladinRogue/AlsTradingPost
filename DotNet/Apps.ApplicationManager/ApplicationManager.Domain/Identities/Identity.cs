@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ApplicationManager.Domain.AuthenticationServices;
+using ApplicationManager.Domain.Identities.AddConfirmedPassword;
+using ApplicationManager.Domain.Identities.AddTwoFactor;
 using ApplicationManager.Domain.Identities.Events;
-using ApplicationManager.Domain.Identities.Exceptions;
-using ApplicationManager.Domain.Identities.Models;
+using ApplicationManager.Domain.Identities.ValidatePassword;
+using ApplicationManager.Domain.Identities.ValidateTwoFactor;
 using Common.Domain.DomainEvents;
 using Common.Domain.Models;
 using Common.Domain.Models.DataProtection;

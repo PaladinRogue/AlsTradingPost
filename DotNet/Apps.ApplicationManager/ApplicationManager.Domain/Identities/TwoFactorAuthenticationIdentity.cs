@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using ApplicationManager.Domain.Identities.Models;
+using ApplicationManager.Domain.Identities.AddTwoFactor;
 using Common.Domain.Models.DataProtection;
 using String = Common.Resources.Extensions.String;
 
