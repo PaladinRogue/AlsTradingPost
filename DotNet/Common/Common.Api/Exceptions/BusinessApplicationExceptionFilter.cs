@@ -34,6 +34,7 @@ namespace Common.Api.Exceptions
                     case ExceptionType.Unknown:
                     case ExceptionType.Concurrency:
                     case ExceptionType.Unauthorized:
+                    case ExceptionType.Conflict:
                     case ExceptionType.NotFound:
                         context.Result = new StatusCodeResult((int)applicationError.HttpStatusCode);
                         break;

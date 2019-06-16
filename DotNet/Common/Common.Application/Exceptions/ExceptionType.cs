@@ -6,6 +6,7 @@
         BadRequest,
         Concurrency,
         Unauthorized,
+        Conflict,
         NotFound
     }
 }

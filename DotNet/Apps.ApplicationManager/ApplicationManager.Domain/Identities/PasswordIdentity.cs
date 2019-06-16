@@ -20,6 +20,7 @@ namespace ApplicationManager.Domain.Identities
         {
             Identity = identity;
             AuthenticationGrantTypePassword = authenticationGrantTypePassword;
+            Identifier = addConfirmedPasswordIdentityDdto.Identifier;
             Password = addConfirmedPasswordIdentityDdto.Password;
         }
 

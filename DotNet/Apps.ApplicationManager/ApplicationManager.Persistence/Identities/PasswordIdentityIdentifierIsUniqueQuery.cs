@@ -16,7 +16,9 @@ namespace ApplicationManager.Persistence.Identities
 
         public bool Run(string identifier)
         {
-            return _queryRepository.CheckExists(i => i.AuthenticationIdentities.Any(ai => (ai is PasswordIdentity) && (ai as PasswordIdentity).Identifier == identifier));
+            bool areAny = _queryRepository.AreAny(i => i.AuthenticationIdentities.OfType<PasswordIdentity>().Any(p => p.Identifier == identifier));
+
+            return !areAny;
         }
     }
 }

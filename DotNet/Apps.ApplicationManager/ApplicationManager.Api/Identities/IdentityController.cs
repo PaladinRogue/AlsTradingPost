@@ -24,7 +24,7 @@ namespace ApplicationManager.Api.Identities
         }
 
         [AllowAnonymous]
-        [HttpGet("{identityId}/password/resourceTemplate", Name = RouteDictionary.IdentityPasswordResourceTemplate)]
+        [HttpGet("{identityId}/password/resourceTemplate", Name = RouteDictionary.PasswordIdentityResourceTemplate)]
         public IActionResult Get(Guid identityId, [FromQuery]string token)
         {
             IdentityAdto identityAdto = _identityApplicationService.Get(new GetIdentityAdto
@@ -32,17 +32,15 @@ namespace ApplicationManager.Api.Identities
                 Id = identityId
             });
 
-            BuiltResource builtResource = _resourceBuilder.Build(new CreatePasswordIdentityTemplate
+            return Ok(_resourceBuilder.Build(new CreatePasswordIdentityTemplate
             {
                 Token = token,
                 Version = identityAdto.Version
-            });
-
-            return Ok(builtResource);
+            }));
         }
 
         [AllowAnonymous]
-        [HttpPost("{identityId}/password", Name = RouteDictionary.IdentityPassword)]
+        [HttpPost("{identityId}/password", Name = RouteDictionary.PasswordIdentity)]
         public IActionResult Post(Guid identityId, CreatePasswordIdentityTemplate template)
         {
             PasswordIdentityAdto passwordIdentityAdto = _identityApplicationService.CreateConfirmedPasswordIdentity(new CreateConfirmedPasswordIdentityAdto
@@ -55,7 +53,13 @@ namespace ApplicationManager.Api.Identities
                 Version = template.Version
             });
 
-            return CreatedAtRoute(RouteDictionary.IdentityPassword, new { identityId }, passwordIdentityAdto);
+            return CreatedAtRoute(RouteDictionary.PasswordIdentity, new { identityId }, _resourceBuilder.Build(new PasswordIdentityResource
+            {
+                Id = passwordIdentityAdto.Id,
+                Identifier = passwordIdentityAdto.Identifier,
+                Password = passwordIdentityAdto.Password,
+                Version = passwordIdentityAdto.Version
+            }));
         }
     }
 }

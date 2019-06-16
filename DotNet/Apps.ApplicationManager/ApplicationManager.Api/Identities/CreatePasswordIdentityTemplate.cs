@@ -7,7 +7,7 @@ using Common.Setup.Infrastructure.Constants;
 namespace ApplicationManager.Api.Identities
 {
     [ResourceType(ResourceTypes.PasswordIdentity)]
-    [SelfLink(RouteDictionary.IdentityPasswordResourceTemplate, HttpVerb.Get)]
+    [SelfLink(RouteDictionary.PasswordIdentityResourceTemplate, HttpVerb.Get)]
     public class CreatePasswordIdentityTemplate : VersionedTemplate
     {
         [Required]

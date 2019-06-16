@@ -3,6 +3,7 @@ using ApplicationManager.ApplicationServices.Identities.Models;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.AddConfirmedPassword;
+using ApplicationManager.Domain.Identities.ValidateTwoFactor;
 using Common.Application.Exceptions;
 using Common.Application.Transactions;
 using Common.ApplicationServices.Concurrency;
@@ -97,6 +98,14 @@ namespace ApplicationManager.ApplicationServices.Identities
                         Password = passwordIdentity.PasswordMask,
                         Version = ConcurrencyVersionFactory.CreateFromEntity(identity)
                     };
+                }
+                catch (PasswordIdentityExistsDomainException)
+                {
+                    throw new BusinessApplicationException(ExceptionType.Conflict, "Password already set");
+                }
+                catch (InvalidTwoFactorTokenDomainException)
+                {
+                    throw new BusinessApplicationException(ExceptionType.Unauthorized, "Two factor token is not recognized");
                 }
                 catch (ConcurrencyDomainException)
                 {

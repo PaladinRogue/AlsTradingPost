@@ -42,10 +42,10 @@ namespace Common.Resources.Extensions
             return Expression.Lambda<Func<TIn, TOut>>(body, param);
         }
 
-        public static string Format(this string str, IDictionary<string, string> parameters)
+        public static string Format<T>(this string str, IDictionary<string, T> parameters)
         {
             return parameters
-                .Aggregate(str, (current, kv) => current.Replace($"{{{kv.Key}}}", kv.Value ?? "", StringComparison.OrdinalIgnoreCase));
+                .Aggregate(str, (current, kv) => current.Replace($"{{{kv.Key}}}", kv.Value?.ToString() ?? "", StringComparison.OrdinalIgnoreCase));
         }
     }
 }

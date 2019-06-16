@@ -44,22 +44,16 @@ namespace Common.Api.Routing
                 return null;
             }
 
-            IEnumerable<Dictionary<string, string>> dictionaries = new List<Dictionary<string, string>>
-            {
-                typeof(TRouteData).GetProperties()
-                    .Where(p => p.GetValue(routeData) != null)
-                    .ToDictionary(
-                        p => p.Name.ToCamelCase(),
-                        p => p.GetValue(routeData).ToString()
-                    ),
-                _httpContextAccessor.HttpContext.GetRouteData().Values.ToDictionary(r => r.Key, r=> r.Value.ToString())
-            };
+            Dictionary<string,string> routeDataDictionary = typeof(TRouteData).GetProperties()
+                .Where(p => p.GetValue(routeData) != null)
+                .ToDictionary(
+                    p => p.Name.ToCamelCase(),
+                    p => p.GetValue(routeData).ToString()
+                );
 
-            Dictionary<string,string> dictionary = dictionaries.SelectMany(dict => dict)
-                .ToLookup(pair => pair.Key, pair => pair.Value)
-                .ToDictionary(group => group.Key, group => group.First());
+            RouteValueDictionary httpContextRouteData = _httpContextAccessor.HttpContext.GetRouteData().Values;
 
-            return FormatRoute(RouteToCamelCase(template).Format(dictionary));
+            return FormatRoute(RouteToCamelCase(template).Format(routeDataDictionary).Format(httpContextRouteData));
         }
 
         public bool HasAccessToRoute(string routeName, bool routeRestriction)

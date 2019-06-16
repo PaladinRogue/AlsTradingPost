@@ -97,7 +97,7 @@ namespace ApplicationManager.Domain.Identities
         {
             return _authenticationIdentities.SingleOrDefault(p =>
                     p is TwoFactorAuthenticationIdentity identity &&
-                    identity.Token == DataProtection.Protect(validateTwoFactorIdentityDdto.Token)) as
+                    identity.Token == validateTwoFactorIdentityDdto.Token) as
                 TwoFactorAuthenticationIdentity;
         }
 

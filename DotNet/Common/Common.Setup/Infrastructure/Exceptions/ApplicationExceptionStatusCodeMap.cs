@@ -12,6 +12,7 @@ namespace Common.Setup.Infrastructure.Exceptions
             { ExceptionType.Concurrency, HttpStatusCode.PreconditionFailed },
             { ExceptionType.BadRequest, HttpStatusCode.BadRequest },
             { ExceptionType.Unauthorized, HttpStatusCode.Unauthorized },
+            { ExceptionType.Conflict, HttpStatusCode.Conflict },
             { ExceptionType.NotFound, HttpStatusCode.NotFound }
         };
 

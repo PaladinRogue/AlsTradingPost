@@ -54,7 +54,7 @@ namespace Persistence.EntityFramework.Repositories
             RepositoryHelper.Delete(_context.Set<T>(), _context, id);
         }
 
-        public bool CheckExists(Expression<Func<T, bool>> predicate)
+        public bool AreAny(Expression<Func<T, bool>> predicate)
         {
             return RepositoryHelper.CheckExists(_context.Set<T>(), predicate);
         }

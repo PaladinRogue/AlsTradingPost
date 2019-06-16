@@ -1,5 +1,4 @@
-﻿using ApplicationManager.ApplicationServices.Identities.Models;
-using ApplicationManager.Domain.Applications;
+﻿using ApplicationManager.Domain.Applications;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.Projections;
