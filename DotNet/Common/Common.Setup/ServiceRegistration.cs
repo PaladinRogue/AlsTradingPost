@@ -1,8 +1,9 @@
-﻿using Common.Application.Authorisation;
-using Common.Application.Authorisation.Policy;
-using Common.ApplicationServices.Services.Query;
+﻿using Common.ApplicationServices.Services.Query;
+using Common.Authorisation;
+using Common.Authorisation.Manager;
+using Common.Authorisation.Policies;
+using Common.Authorisation.Policies.Deny;
 using Common.Resources.Encryption;
-using Common.Setup.Infrastructure.Authorisation;
 using Common.Setup.Infrastructure.Encryption;
 using Common.Setup.Infrastructure.Hashing;
 using Microsoft.AspNetCore.Http;

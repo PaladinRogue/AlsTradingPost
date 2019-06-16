@@ -1,7 +1,8 @@
 ﻿using System;
 using Common.Application.Exceptions;
+using Common.Authorisation.Manager;
 
-namespace Common.Application.Authorisation
+namespace Common.Authorisation
 {
     public class DefaultSecurityApplicationService : ISecurityApplicationService
     {
@@ -22,7 +23,7 @@ namespace Common.Application.Authorisation
             }
             catch (UnauthorizedAccessException e)
             {
-                throw new BusinessApplicationException(ExceptionType.Unauthorized, BusinessErrorMessages.NotAuthorised, e);
+                throw new BusinessApplicationException(ExceptionType.Unauthorized, "You are not authorised to perform this action", e);
             }
         }
     }

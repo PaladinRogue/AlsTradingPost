@@ -4,6 +4,7 @@
     {
         public const string Status = "Status";
         public const string PasswordIdentityResourceTemplate = "PasswordIdentityResourceTemplate";
-        public const string PasswordIdentity = "PasswordIdentity";
+        public const string PostPasswordIdentity = "PostPasswordIdentity";
+        public const string GetPasswordIdentity = "GetPasswordIdentity";
     }
 }

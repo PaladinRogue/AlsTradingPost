@@ -1,4 +1,4 @@
-﻿namespace Common.Application.Authorisation.Policy
+﻿namespace Common.Authorisation.Policies.Json
 {
     public static class JTokenTypes
     {

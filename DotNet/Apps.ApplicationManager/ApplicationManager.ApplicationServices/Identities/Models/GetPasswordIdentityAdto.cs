@@ -2,8 +2,8 @@ using System;
 
 namespace ApplicationManager.ApplicationServices.Identities.Models
 {
-    public class GetIdentityAdto
+    public class GetPasswordIdentityAdto
     {
-        public Guid Id { get; set; }
+        public Guid IdentityId { get; set; }
     }
 }

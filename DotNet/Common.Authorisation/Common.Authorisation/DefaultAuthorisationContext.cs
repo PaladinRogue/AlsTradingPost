@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Application.Authorisation
+namespace Common.Authorisation
 {
     public class DefaultAuthorisationContext : IAuthorisationContext
     {

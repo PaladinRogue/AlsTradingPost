@@ -4,7 +4,7 @@ using Common.ApplicationServices.Services.Query;
 using Common.Domain.Models.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Common.Application.Authorisation
+namespace Common.Authorisation
 {
     public class ResourceOwnerProvider : IResourceOwnerProvider
     {

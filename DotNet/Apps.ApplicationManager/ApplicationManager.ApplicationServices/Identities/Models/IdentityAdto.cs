@@ -2,7 +2,7 @@ using System;
 using Common.Application.Concurrency;
 using Common.Domain.Concurrency.Interfaces;
 
-namespace ApplicationManager.ApplicationServices.Identities
+namespace ApplicationManager.ApplicationServices.Identities.Models
 {
     public class IdentityAdto : IOutboundVersionedAdto
     {

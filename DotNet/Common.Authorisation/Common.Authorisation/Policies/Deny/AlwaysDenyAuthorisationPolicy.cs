@@ -1,7 +1,4 @@
-﻿using Common.Application.Authorisation;
-using Common.Application.Authorisation.Policy;
-
-namespace Common.Setup.Infrastructure.Authorisation
+﻿namespace Common.Authorisation.Policies.Deny
 {
     public class AlwaysDenyAuthorisationPolicy : IAuthorisationPolicy
     {

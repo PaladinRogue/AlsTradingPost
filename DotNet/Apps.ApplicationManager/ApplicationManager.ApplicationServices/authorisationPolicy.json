@@ -1,0 +1,10 @@
+{
+  "identity": {
+    "update": {
+      "restriction": "self"
+    },
+    "get": {
+      "restriction":  "self"
+    }
+  }
+}

@@ -10,6 +10,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Common.Authorisation\Common.Authorisation\Common.Authorisation.csproj" />
     <ProjectReference Include="..\..\DomainEvents\DomainEvent.Broker\DomainEvent.Broker.csproj" />
     <ProjectReference Include="..\..\Messaging\Messaging.Broker\Messaging.Broker.csproj" />
     <ProjectReference Include="..\Common.Application\Common.Application.csproj" />

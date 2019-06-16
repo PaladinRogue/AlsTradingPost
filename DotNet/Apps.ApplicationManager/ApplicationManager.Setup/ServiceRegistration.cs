@@ -1,38 +1,35 @@
-﻿using ApplicationManager.ApplicationServices.Applications;
+﻿using System.IO;
 using ApplicationManager.ApplicationServices.Applications.Register;
 using ApplicationManager.ApplicationServices.Identities;
 using ApplicationManager.ApplicationServices.Identities.CreateAdmin;
 using ApplicationManager.ApplicationServices.Identities.TwoFactor;
-using ApplicationManager.ApplicationServices.Notifications;
 using ApplicationManager.ApplicationServices.Notifications.Audiences;
 using ApplicationManager.ApplicationServices.Notifications.Emails;
 using ApplicationManager.ApplicationServices.Notifications.Send;
-using ApplicationManager.ApplicationServices.Users;
 using ApplicationManager.ApplicationServices.Users.CreateAdmin;
-using ApplicationManager.Domain.Applications;
 using ApplicationManager.Domain.Applications.Change;
 using ApplicationManager.Domain.Applications.Create;
-using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.AddConfirmedPassword;
 using ApplicationManager.Domain.Identities.AddTwoFactor;
 using ApplicationManager.Domain.Identities.Create;
 using ApplicationManager.Domain.Identities.Queries;
-using ApplicationManager.Domain.Users;
 using ApplicationManager.Domain.Users.Create;
 using ApplicationManager.Persistence;
 using ApplicationManager.Persistence.Identities;
-using ApplicationManager.Setup.Infrastructure.Authorisation;
 using Common.Api.HttpClient;
 using Common.Api.HttpClient.Interfaces;
 using Common.Api.Links;
 using Common.Api.Routing;
-using Common.Application.Authorisation.Policy;
 using Common.Application.Transactions;
+using Common.Authorisation.Policies;
+using Common.Authorisation.Policies.Json;
 using Common.Domain.Persistence;
+using Common.Setup.Infrastructure.Authorisation;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 using Persistence.EntityFramework.Infrastructure.Transactions;
 using Persistence.EntityFramework.Repositories;
 
@@ -98,11 +95,13 @@ namespace ApplicationManager.Setup
         public static void RegisterProviders(IServiceCollection services)
         {
             services.AddSingleton<IRouteProvider<bool>, DefaultRouteProvider>();
+            services.AddSingleton<ICurrentIdentityProvider, CurrentIdentityProvider>();
         }
 
         public static void RegisterAuthorisation(IServiceCollection services)
         {
-            services.AddSingleton<IAuthorisationPolicy, AlwaysAllowAuthorisationPolicy>();
+	        services.AddSingleton<IAuthorisationPolicy, JsonAuthorisationPolicy>();
+	        services.AddSingleton<IJsonAuthorisationPolicyProvider>(s => new JsonAuthorisationPolicyProvider(JObject.Parse(File.ReadAllText("authorisationPolicy.json"))));
         }
 
         public static void RegisterNotifications(IServiceCollection services)

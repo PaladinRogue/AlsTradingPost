@@ -1,12 +1,5 @@
-using System;
 using ApplicationManager.ApplicationServices.Identities.Models;
-using ApplicationManager.Domain.AuthenticationServices;
-using ApplicationManager.Domain.Identities;
-using Common.Application.Authorisation;
-using Common.Application.Authorisation.Policy;
-using Common.Application.Exceptions;
-using Common.Application.Transactions;
-using Common.Domain.Persistence;
+using Common.Authorisation;
 
 namespace ApplicationManager.ApplicationServices.Identities
 {
@@ -34,6 +27,12 @@ namespace ApplicationManager.ApplicationServices.Identities
         {
             return _securityApplicationService.Secure(() => _identityApplicationService.CreateConfirmedPasswordIdentity(createConfirmedPasswordIdentityAdto),
                 DefaultAuthorisationContext.Create(AuthorisationResource.Identity, AuthorisationAction.Update));
+        }
+
+        public PasswordIdentityAdto GetPasswordIdentity(GetPasswordIdentityAdto getPasswordIdentityAdto)
+        {
+            return _securityApplicationService.Secure(() => _identityApplicationService.GetPasswordIdentity(getPasswordIdentityAdto),
+                DefaultAuthorisationContext.Create(AuthorisationResource.Identity, AuthorisationAction.Get));
         }
     }
 }

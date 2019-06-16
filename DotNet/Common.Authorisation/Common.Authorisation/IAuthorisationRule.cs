@@ -1,5 +1,5 @@
 ﻿
-namespace Common.Application.Authorisation
+namespace Common.Authorisation
 {
     public interface IAuthorisationRule
     {

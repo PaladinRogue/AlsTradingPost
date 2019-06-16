@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Application.Authorisation
+namespace Common.Authorisation
 {
     public interface IAuthorisationContext : IAuthorisationRule
     {

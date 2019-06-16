@@ -2,6 +2,6 @@
 {
     public static class JwtClaimIdentifiers
     {
-        public static readonly string Rol = "rol";
+        public const string Rol = "rol";
     }
 }

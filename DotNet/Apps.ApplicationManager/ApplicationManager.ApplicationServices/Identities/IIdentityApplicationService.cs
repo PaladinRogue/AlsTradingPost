@@ -7,5 +7,7 @@ namespace ApplicationManager.ApplicationServices.Identities
         IdentityAdto Get(GetIdentityAdto getIdentityAdto);
 
         PasswordIdentityAdto CreateConfirmedPasswordIdentity(CreateConfirmedPasswordIdentityAdto createConfirmedPasswordIdentityAdto);
+
+        PasswordIdentityAdto GetPasswordIdentity(GetPasswordIdentityAdto getPasswordIdentityAdto);
     }
 }

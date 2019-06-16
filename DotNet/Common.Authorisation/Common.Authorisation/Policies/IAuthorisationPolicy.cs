@@ -1,4 +1,4 @@
-﻿namespace Common.Application.Authorisation.Policy
+﻿namespace Common.Authorisation.Policies
 {
     public interface IAuthorisationPolicy
     {

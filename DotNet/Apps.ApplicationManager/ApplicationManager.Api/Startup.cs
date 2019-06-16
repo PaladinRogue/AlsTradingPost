@@ -28,7 +28,7 @@ namespace ApplicationManager.Api
         public Startup(IHostingEnvironment environment) : base(environment)
         {
         }
-        
+
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             CommonConfigureServices(services);
@@ -39,15 +39,16 @@ namespace ApplicationManager.Api
                     .UseConcurrencyFilter()
                     .UseBusinessExceptionFilter()
                     .UseValidationExceptionFilter()
+                    .UseAppAccessAuthorizeFilter()
                     .RequireHttps();
             });
 
             SettingRegistration.RegisterSystemAdminIdentitySettings(Configuration, services);
 
             FormatRegistration.ConfigureJsonV1Format(services);
-            
+
             JwtRegistration.RegisterOptions(Configuration, services);
-            
+
             MessageRegistration.RegisterSubscribers(services);
 
             EventRegistration.RegisterHandlers(services);
@@ -69,7 +70,7 @@ namespace ApplicationManager.Api
         public void Configure(IApplicationBuilder app,
             ILoggerFactory loggerFactory,
             IDataProtector dataProtector,
-            IDomainEventDispatcher domainEventDispatcher, 
+            IDomainEventDispatcher domainEventDispatcher,
             IMessageSender messageSender)
         {
             DataProtection.SetDataProtector(dataProtector);
@@ -80,9 +81,9 @@ namespace ApplicationManager.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             loggerFactory.AddLog4Net();
-            
+
             MiddlewareRegistration.Register(app);
 
             app.UseHttpsRedirection();

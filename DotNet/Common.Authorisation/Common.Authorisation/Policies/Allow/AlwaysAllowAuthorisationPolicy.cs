@@ -1,7 +1,4 @@
-﻿using Common.Application.Authorisation;
-using Common.Application.Authorisation.Policy;
-
-namespace ApplicationManager.Setup.Infrastructure.Authorisation
+﻿namespace Common.Authorisation.Policies.Allow
 {
     public class AlwaysAllowAuthorisationPolicy : IAuthorisationPolicy
     {

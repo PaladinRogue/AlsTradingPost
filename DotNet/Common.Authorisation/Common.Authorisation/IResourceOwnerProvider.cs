@@ -1,7 +1,7 @@
 ﻿using System;
 using Common.Domain.Models.Interfaces;
 
-namespace Common.Application.Authorisation
+namespace Common.Authorisation
 {
     public interface IResourceOwnerProvider
     {

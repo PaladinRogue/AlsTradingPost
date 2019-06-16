@@ -25,7 +25,7 @@ namespace ApplicationManager.Api.Identities
 
         [AllowAnonymous]
         [HttpGet("{identityId}/password/resourceTemplate", Name = RouteDictionary.PasswordIdentityResourceTemplate)]
-        public IActionResult Get(Guid identityId, [FromQuery]string token)
+        public IActionResult GetPasswordIdentityResourceTemplate(Guid identityId, [FromQuery]string token)
         {
             IdentityAdto identityAdto = _identityApplicationService.Get(new GetIdentityAdto
             {
@@ -40,7 +40,7 @@ namespace ApplicationManager.Api.Identities
         }
 
         [AllowAnonymous]
-        [HttpPost("{identityId}/password", Name = RouteDictionary.PasswordIdentity)]
+        [HttpPost("{identityId}/password", Name = RouteDictionary.PostPasswordIdentity)]
         public IActionResult Post(Guid identityId, CreatePasswordIdentityTemplate template)
         {
             PasswordIdentityAdto passwordIdentityAdto = _identityApplicationService.CreateConfirmedPasswordIdentity(new CreateConfirmedPasswordIdentityAdto
@@ -53,9 +53,24 @@ namespace ApplicationManager.Api.Identities
                 Version = template.Version
             });
 
-            return CreatedAtRoute(RouteDictionary.PasswordIdentity, new { identityId }, _resourceBuilder.Build(new PasswordIdentityResource
+            return CreatedAtRoute(RouteDictionary.GetPasswordIdentity, new { identityId }, _resourceBuilder.Build(new PasswordIdentityResource
             {
-                Id = passwordIdentityAdto.Id,
+                Identifier = passwordIdentityAdto.Identifier,
+                Password = passwordIdentityAdto.Password,
+                Version = passwordIdentityAdto.Version
+            }));
+        }
+
+        [HttpGet("{identityId}/password", Name = RouteDictionary.GetPasswordIdentity)]
+        public IActionResult GetPasswordIdentity(Guid identityId)
+        {
+            PasswordIdentityAdto passwordIdentityAdto = _identityApplicationService.GetPasswordIdentity(new GetPasswordIdentityAdto
+            {
+                IdentityId = identityId
+            });
+
+            return Ok(_resourceBuilder.Build(new PasswordIdentityResource
+            {
                 Identifier = passwordIdentityAdto.Identifier,
                 Password = passwordIdentityAdto.Password,
                 Version = passwordIdentityAdto.Version

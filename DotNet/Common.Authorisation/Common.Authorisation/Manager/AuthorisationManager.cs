@@ -1,7 +1,7 @@
 ﻿using System;
-using Common.Application.Authorisation.Policy;
+using Common.Authorisation.Policies;
 
-namespace Common.Application.Authorisation
+namespace Common.Authorisation.Manager
 {
     public class AuthorisationManager : IAuthorisationManager
     {

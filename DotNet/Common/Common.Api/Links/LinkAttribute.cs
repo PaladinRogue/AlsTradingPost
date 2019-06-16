@@ -1,5 +1,5 @@
 ﻿using System;
-using Common.Application.Authorisation;
+using Common.Authorisation;
 using Common.Setup.Infrastructure.Constants;
 
 namespace Common.Api.Links

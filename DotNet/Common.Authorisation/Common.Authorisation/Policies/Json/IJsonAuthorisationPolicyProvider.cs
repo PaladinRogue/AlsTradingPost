@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace Common.Application.Authorisation.Policy
+namespace Common.Authorisation.Policies.Json
 {
     public interface IJsonAuthorisationPolicyProvider
     {

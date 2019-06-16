@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using ApplicationManager.ApplicationServices.Identities.Models;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities;
@@ -93,7 +95,6 @@ namespace ApplicationManager.ApplicationServices.Identities
 
                     return new PasswordIdentityAdto
                     {
-                        Id = passwordIdentity.Id,
                         Identifier = passwordIdentity.Identifier,
                         Password = passwordIdentity.PasswordMask,
                         Version = ConcurrencyVersionFactory.CreateFromEntity(identity)
@@ -115,6 +116,30 @@ namespace ApplicationManager.ApplicationServices.Identities
                 {
                     throw new BusinessValidationRuleApplicationException(e.ValidationResult);
                 }
+            }
+        }
+
+        public PasswordIdentityAdto GetPasswordIdentity(GetPasswordIdentityAdto getPasswordIdentityAdto)
+        {
+            using (ITransaction transaction = _transactionManager.Create())
+            {
+                Identity identity = _identityQueryRepository.GetById(getPasswordIdentityAdto.IdentityId);
+
+                PasswordIdentity passwordIdentity = identity.AuthenticationIdentities.OfType<PasswordIdentity>().SingleOrDefault();
+
+                if (passwordIdentity == null)
+                {
+                    throw new BusinessApplicationException(ExceptionType.NotFound, "Password not set for identity");
+                }
+
+                transaction.Commit();
+
+                return new PasswordIdentityAdto
+                {
+                    Identifier = passwordIdentity.Identifier,
+                    Password = passwordIdentity.PasswordMask,
+                    Version = ConcurrencyVersionFactory.CreateFromEntity(identity)
+                };
             }
         }
     }
