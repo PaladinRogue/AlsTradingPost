@@ -10,18 +10,27 @@ namespace ApplicationManager.Domain.Identities
         {
         }
 
-        public static Session Create()
+        protected Session(Identity identity)
         {
-            return new Session();
+            Identity = identity;
+            IsRevoked = false;
         }
-        
-        [MaxLength(100)]
-        public string RefreshToken { get; protected set; }
+
+        internal static Session Create(Identity identity)
+        {
+            return new Session(identity);
+        }
 
         public bool IsRevoked { get; protected set; }
 
+        [Required]
         public virtual Identity Identity { get; protected set; }
 
         public IAggregateRoot AggregateRoot => Identity;
+
+        internal void Reinstate()
+        {
+            IsRevoked = false;
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace ApplicationManager.Persistence.Identities
             _applicationManagerDbContext = applicationManagerDbContext;
         }
 
-        public TwoFactorAuthenticationIdentityProjection Execute(Guid identityId)
+        public TwoFactorAuthenticationIdentityProjection Run(Guid identityId)
         {
             return _applicationManagerDbContext.Query<TwoFactorAuthenticationIdentityProjection>()
                 .FromSql($"SELECT * FROM [apps].[AuthenticationIdentities] WHERE [IdentityId] = {identityId}")

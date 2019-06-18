@@ -4,11 +4,9 @@ using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities.AddConfirmedPassword;
 using ApplicationManager.Domain.Identities.AddTwoFactor;
 using ApplicationManager.Domain.Identities.Events;
-using ApplicationManager.Domain.Identities.ValidatePassword;
 using ApplicationManager.Domain.Identities.ValidateTwoFactor;
 using Common.Domain.DomainEvents;
 using Common.Domain.Models;
-using Common.Domain.Models.DataProtection;
 using Common.Domain.Models.Interfaces;
 
 namespace ApplicationManager.Domain.Identities
@@ -101,22 +99,24 @@ namespace ApplicationManager.Domain.Identities
                 TwoFactorAuthenticationIdentity;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="validatePasswordIdentityDdto"></param>
-        /// <exception cref="InvalidPasswordDomainException"></exception>
-        internal void ValidatePassword(ValidatePasswordIdentityDdto validatePasswordIdentityDdto)
+        internal void Login()
         {
-            bool validTPassword = _authenticationIdentities.Any(p =>
-                p is PasswordIdentity identity &&
-                identity.Identifier == validatePasswordIdentityDdto.Identifier &&
-                identity.Password == DataProtection.Protect(validatePasswordIdentityDdto.Password));
+            Session session = Session ?? Session.Create(this);
 
-            if (!validTPassword)
+            session.Reinstate();
+        }
+
+        internal RefreshTokenIdentity CreateRefreshToken(AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken)
+        {
+            RefreshTokenIdentity refreshTokenIdentity = _authenticationIdentities.OfType<RefreshTokenIdentity>().SingleOrDefault();
+            if (refreshTokenIdentity != null)
             {
-                throw new InvalidPasswordDomainException();
+                _authenticationIdentities.Remove(refreshTokenIdentity);
             }
+
+            _authenticationIdentities.Add(RefreshTokenIdentity.Create(this, authenticationGrantTypeRefreshToken));
+
+            return refreshTokenIdentity;
         }
     }
 }

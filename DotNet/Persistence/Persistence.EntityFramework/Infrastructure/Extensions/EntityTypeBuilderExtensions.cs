@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 using Common.Domain.Models.DataProtection;
+using Common.Domain.Persistence;
+using Common.Resources;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -18,7 +20,7 @@ namespace Persistence.EntityFramework.Infrastructure.Extensions
                 {
                     IMutableProperty mutableProperty = entityTypeBuilder.Property(propertyInfo.Name).Metadata;
 
-                    mutableProperty.SetMaxLength(1024);
+                    mutableProperty.SetMaxLength(FieldSizes.Protected);
                     mutableProperty.SetValueConverter(SensitiveInformationConverter.Create());
                 }
             }

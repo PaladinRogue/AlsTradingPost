@@ -4,6 +4,7 @@ using Common.Authorisation.Manager;
 using Common.Authorisation.Policies;
 using Common.Authorisation.Policies.Deny;
 using Common.Resources.Encryption;
+using Common.Resources.Hashing;
 using Common.Setup.Infrastructure.Encryption;
 using Common.Setup.Infrastructure.Hashing;
 using Microsoft.AspNetCore.Http;
@@ -16,8 +17,8 @@ namespace Common.Setup
     {
         public static void RegisterServices(IServiceCollection services)
         {
-            services.AddSingleton<IEncryptionFactory, EncryptionFactory>();
-            services.AddSingleton<IHashFactory, HashFactory>();
+            services.AddSingleton<IEncryptionFactory, AesEncryptionFactory>();
+            services.AddSingleton<IHashFactory, Sha256HashFactory>();
 
             services.AddScoped(typeof(IQueryService<>), typeof(QueryService<>));
 

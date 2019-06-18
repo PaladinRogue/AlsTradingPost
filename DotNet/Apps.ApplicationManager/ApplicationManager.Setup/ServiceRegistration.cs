@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using ApplicationManager.ApplicationServices.Applications.Register;
+using ApplicationManager.ApplicationServices.Authentication;
 using ApplicationManager.ApplicationServices.Identities;
 using ApplicationManager.ApplicationServices.Identities.CreateAdmin;
 using ApplicationManager.ApplicationServices.Identities.TwoFactor;
@@ -12,6 +13,7 @@ using ApplicationManager.Domain.Applications.Create;
 using ApplicationManager.Domain.Identities.AddConfirmedPassword;
 using ApplicationManager.Domain.Identities.AddTwoFactor;
 using ApplicationManager.Domain.Identities.Create;
+using ApplicationManager.Domain.Identities.Login;
 using ApplicationManager.Domain.Identities.Queries;
 using ApplicationManager.Domain.Users.Create;
 using ApplicationManager.Persistence;
@@ -50,6 +52,7 @@ namespace ApplicationManager.Setup
 	        services.AddScoped<IValidator<ChangeApplicationDdto>, ChangeApplicationValidator>();
 	        services.AddScoped<IValidator<CreateApplicationDdto>, CreateApplicationValidator>();
 	        services.AddScoped<IValidator<AddConfirmedPasswordIdentityDdto>, AddConfirmedPasswordIdentityValidator>();
+	        services.AddScoped<IValidator<LoginCommandDdto>, LoginCommandValidator>();
 	    }
 
         public static void RegisterApplicationServices(IServiceCollection services)
@@ -63,6 +66,7 @@ namespace ApplicationManager.Setup
             services.AddScoped<ICreateAdminUserApplicationKernalService, CreateAdminUserApplicationKernalService>();
             services.AddScoped<IIdentityApplicationService, IdentityApplicationServiceSecurityDecorator>();
             services.AddScoped<IIdentityApplicationService, IdentityApplicationService>();
+            services.AddScoped<IAuthenticationApplicationService, AuthenticationApplicationService>();
         }
 
         public static void RegisterDomainServices(IServiceCollection services)
@@ -74,12 +78,14 @@ namespace ApplicationManager.Setup
             services.AddScoped<ICreateUserCommand, CreateUserCommand>();
             services.AddScoped<ICreateUserCommand, CreateUserCommand>();
             services.AddScoped<IAddConfirmedPasswordIdentityCommand, AddConfirmedPasswordIdentityCommand>();
+            services.AddScoped<ILoginCommand, LoginCommand>();
         }
 
         public static void RegisterPersistenceServices(IConfiguration configuration, IServiceCollection services)
         {
             services.AddScoped<IGetTwoFactorAuthenticationIdentityByIdentityQuery, GetTwoFactorAuthenticationIdentityByIdentityQuery>();
             services.AddScoped<IPasswordIdentityIdentifierIsUniqueQuery, PasswordIdentityIdentifierIsUniqueQuery>();
+            services.AddScoped<IGetIdentityByIdentifierAndPasswordQuery, GetIdentityByIdentifierAndPasswordQuery>();
 
             services.AddScoped(typeof(ICommandRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IQueryRepository<>), typeof(Repository<>));

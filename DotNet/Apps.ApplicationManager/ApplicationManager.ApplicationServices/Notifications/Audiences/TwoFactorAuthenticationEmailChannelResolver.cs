@@ -23,7 +23,7 @@ namespace ApplicationManager.ApplicationServices.Notifications.Audiences
 
         public IEnumerable<string> GetAudience(Guid identifier)
         {
-            TwoFactorAuthenticationIdentityProjection twoFactorAuthenticationIdentityProjection = _getTwoFactorAuthenticationIdentityByIdentityQuery.Execute(identifier);
+            TwoFactorAuthenticationIdentityProjection twoFactorAuthenticationIdentityProjection = _getTwoFactorAuthenticationIdentityByIdentityQuery.Run(identifier);
 
             return new List<string>
             {

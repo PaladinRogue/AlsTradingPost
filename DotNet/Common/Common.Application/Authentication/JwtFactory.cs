@@ -19,12 +19,13 @@ namespace Common.Application.Authentication
 			ThrowIfInvalidOptions(_jwtIssuerOptions);
 	    }
 
-	    public async Task<T> GenerateJwt<T>(ClaimsIdentity identity) where T : IJwtAdto
+	    public async Task<T> GenerateJwt<T>(ClaimsIdentity identity, Guid sessionId) where T : IJwtAdto
 	    {
 	        T jwt = Activator.CreateInstance<T>();
 
 	        jwt.AuthToken = await GenerateEncodedToken(identity);
 	        jwt.ExpiresIn = (int) _jwtIssuerOptions.ValidFor.TotalSeconds;
+	        jwt.SessionId = sessionId;
 
 	        return jwt;
 	    }

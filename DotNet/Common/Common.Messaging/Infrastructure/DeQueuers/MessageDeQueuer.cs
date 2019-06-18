@@ -37,6 +37,7 @@ namespace Common.Messaging.Infrastructure.DeQueuers
 
         public void DeQueue(IMessage message, IEnumerable<MessageSubscription> messageSubscriptions)
         {
+            //TODO check this -> One transaction per handler?
             if (message is IPreparedMessage preparedMessage)
             {
                 using (_serviceProvider.CreateScope())

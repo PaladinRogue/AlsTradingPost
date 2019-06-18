@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace Common.Setup.Infrastructure.Encryption
 {
-    public class EncryptionFactory : IEncryptionFactory
+    public class AesEncryptionFactory : IEncryptionFactory
     {
 	    public string Enrypt<T>(T data, SymmetricSecurityKey securityKey)
 	    {
@@ -15,7 +15,7 @@ namespace Common.Setup.Infrastructure.Encryption
 		    byte[] encrypted;
 
 		    byte[] keyBytes = securityKey.Key;
-		    
+
 		    using (Aes aesAlg = Aes.Create())
 		    {
 			    if (aesAlg == null)
@@ -54,7 +54,7 @@ namespace Common.Setup.Infrastructure.Encryption
 
 		    if (fullCipher == null || fullCipher.Length <= 0)
 			    throw new ArgumentNullException(nameof(cipherText));
-            
+
             string plaintext;
 		    byte[] keyBytes = securityKey.Key;
 

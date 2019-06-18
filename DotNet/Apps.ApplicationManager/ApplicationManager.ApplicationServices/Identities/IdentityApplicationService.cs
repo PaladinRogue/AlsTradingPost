@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using ApplicationManager.ApplicationServices.Identities.Models;
 using ApplicationManager.Domain.AuthenticationServices;
@@ -96,7 +95,7 @@ namespace ApplicationManager.ApplicationServices.Identities
                     return new PasswordIdentityAdto
                     {
                         Identifier = passwordIdentity.Identifier,
-                        Password = passwordIdentity.PasswordMask,
+                        Password = passwordIdentity.Password,
                         Version = ConcurrencyVersionFactory.CreateFromEntity(identity)
                     };
                 }
@@ -137,7 +136,7 @@ namespace ApplicationManager.ApplicationServices.Identities
                 return new PasswordIdentityAdto
                 {
                     Identifier = passwordIdentity.Identifier,
-                    Password = passwordIdentity.PasswordMask,
+                    Password = passwordIdentity.Password,
                     Version = ConcurrencyVersionFactory.CreateFromEntity(identity)
                 };
             }

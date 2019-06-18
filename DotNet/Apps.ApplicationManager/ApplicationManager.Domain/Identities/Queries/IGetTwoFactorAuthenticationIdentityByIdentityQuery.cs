@@ -5,6 +5,6 @@ namespace ApplicationManager.Domain.Identities.Queries
 {
     public interface IGetTwoFactorAuthenticationIdentityByIdentityQuery
     {
-        TwoFactorAuthenticationIdentityProjection Execute(Guid identityId);
+        TwoFactorAuthenticationIdentityProjection Run(Guid identityId);
     }
 }

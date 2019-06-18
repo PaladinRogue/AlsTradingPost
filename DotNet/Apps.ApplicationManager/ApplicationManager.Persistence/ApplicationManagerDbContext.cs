@@ -7,8 +7,10 @@ using ApplicationManager.Domain.Users;
 using ApplicationManager.Persistence.AuthenticationServices;
 using ApplicationManager.Persistence.Identities;
 using ApplicationManager.Persistence.NotificationTypes;
+using Common.Domain.Models.PasswordProtection;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityFramework.Infrastructure.Extensions;
+using Identity = ApplicationManager.Domain.Identities.Identity;
 
 namespace ApplicationManager.Persistence
 {
@@ -61,14 +63,20 @@ namespace ApplicationManager.Persistence
             modelBuilder.Entity<AuthenticationIdentity>()
                 .HasDiscriminator<string>("Type")
                 .HasValue<PasswordIdentity>(AuthenticationIdentityTypes.Password)
-                .HasValue<TwoFactorAuthenticationIdentity>(AuthenticationIdentityTypes.TwoFactor);
+                .HasValue<TwoFactorAuthenticationIdentity>(AuthenticationIdentityTypes.TwoFactor)
+                .HasValue<RefreshTokenIdentity>(AuthenticationIdentityTypes.RefreshToken);
 
             modelBuilder.Entity<PasswordIdentity>()
-                .Ignore(p => p.PasswordMask)
+                .Ignore(p => p.Password)
+                .HasBaseType<AuthenticationIdentity>()
+                .ProtectSensitiveInformation()
+                .OwnsOne(typeof(ProtectedPassword), "ProtectedPassword");
+
+            modelBuilder.Entity<TwoFactorAuthenticationIdentity>()
                 .ProtectSensitiveInformation()
                 .HasBaseType<AuthenticationIdentity>();
 
-            modelBuilder.Entity<TwoFactorAuthenticationIdentity>()
+            modelBuilder.Entity<RefreshTokenIdentity>()
                 .ProtectSensitiveInformation()
                 .HasBaseType<AuthenticationIdentity>();
 

@@ -6,8 +6,8 @@ using Common.Api.Formats;
 using Common.Domain.DomainEvents;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Domain.Models.DataProtection;
+using Common.Domain.Models.PasswordProtection;
 using Common.Messaging.Infrastructure;
-using Common.Messaging.Infrastructure.Interfaces;
 using Common.Messaging.Infrastructure.Senders;
 using Common.Setup;
 using Common.Setup.Infrastructure.Logging;
@@ -71,11 +71,13 @@ namespace ApplicationManager.Api
             ILoggerFactory loggerFactory,
             IDataProtector dataProtector,
             IDomainEventDispatcher domainEventDispatcher,
-            IMessageSender messageSender)
+            IMessageSender messageSender,
+            IPasswordProtector passwordProtector)
         {
             DataProtection.SetDataProtector(dataProtector);
             DomainEvents.SetDomainEventDispatcher(domainEventDispatcher);
             Message.SetMessageSender(messageSender);
+            PasswordProtection.SetPasswordProtector(passwordProtector);
 
             if (Environment.IsDevelopment())
             {

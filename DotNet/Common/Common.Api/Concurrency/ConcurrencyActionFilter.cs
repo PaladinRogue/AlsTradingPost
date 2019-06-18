@@ -22,16 +22,16 @@ namespace Common.Api.Concurrency
         {
             if (OnActionExecutingVerbs.HasFlag(HttpVerbMapper.GetVerb(context.HttpContext.Request.Method)))
             {
+                IVersioned<IConcurrencyVersion> resource = context.ActionArguments.Values.OfType<IVersioned<IConcurrencyVersion>>().SingleOrDefault();
+
                 string concurrencyValue = context.HttpContext.Request.Headers[ConcurrencyHeaders.IfMatch];
 
-                if (concurrencyValue == null) throw new PreConditionFailedException();
+                if (concurrencyValue == null && resource != null) throw new PreConditionFailedException();
 
-                object resourceObj = context.ActionArguments.Values.OfType<IVersioned<IConcurrencyVersion>>().SingleOrDefault();
-                if (resourceObj == null) throw new BadRequestException();
-
-                IVersioned<IConcurrencyVersion> resource = (IVersioned<IConcurrencyVersion>)resourceObj;
-
-                resource.Version = ConcurrencyVersionFactory.CreateFromBase64String(concurrencyValue);
+                if (resource != null)
+                {
+                    resource.Version = ConcurrencyVersionFactory.CreateFromBase64String(concurrencyValue);
+                }
             }
         }
 

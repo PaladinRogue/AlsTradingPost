@@ -2,12 +2,15 @@
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities.AddConfirmedPassword;
 using Common.Domain.Models.DataProtection;
+using Common.Domain.Models.PasswordProtection;
+using Common.Resources;
 
 namespace ApplicationManager.Domain.Identities
 {
     public class PasswordIdentity : AuthenticationIdentity
     {
         private const byte MaskLength = 8;
+        private readonly string _passwordMask = new string('*', MaskLength);
 
         protected PasswordIdentity()
         {
@@ -32,17 +35,25 @@ namespace ApplicationManager.Domain.Identities
             return new PasswordIdentity(identity, authenticationGrantTypePassword, addConfirmedPasswordIdentityDdto);
         }
 
-        [MaxLength(254)]
+        [MaxLength(FieldSizes.Extended)]
         [Required]
         [SensitiveInformation]
         public string Identifier { get; protected set; }
 
-        [MaxLength(40)]
-        [SensitiveInformation]
-        public string Password { get; protected set; }
+        public string Password
+        {
+            get => _passwordMask;
+            protected set => ProtectedPassword = PasswordProtection.Protect(value);
+        }
 
-        public string PasswordMask { get; } = new string('*', MaskLength);
+        [Required]
+        protected virtual ProtectedPassword ProtectedPassword { get; set; }
 
         public virtual AuthenticationGrantTypePassword AuthenticationGrantTypePassword { get; protected set; }
+
+        public bool CheckPassword(string password)
+        {
+            return ProtectedPassword.Hash == PasswordProtection.Protect(password, ProtectedPassword.Salt).Hash;
+        }
     }
 }
