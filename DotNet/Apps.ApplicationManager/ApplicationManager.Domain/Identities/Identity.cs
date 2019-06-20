@@ -101,9 +101,9 @@ namespace ApplicationManager.Domain.Identities
 
         internal void Login()
         {
-            Session session = Session ?? Session.Create(this);
+            Session = Session ?? Session.Create(this);
 
-            session.Reinstate();
+            Session.Reinstate();
         }
 
         internal RefreshTokenIdentity CreateRefreshToken(AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken)

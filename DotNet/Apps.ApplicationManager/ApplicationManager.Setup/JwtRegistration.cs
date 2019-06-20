@@ -5,12 +5,13 @@ using ApplicationManager.ApplicationServices.Claims;
 using ApplicationManager.Setup.Infrastructure.Authorisation;
 using Common.Application.Authentication;
 using Common.Setup.Settings;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using JwtClaimIdentifiers = Common.Application.Claims.Constants.JwtClaimIdentifiers;
+using Microsoft.AspNetCore.Authorization;
+using CommonJwtClaimIdentifiers = Common.Application.Claims.Constants.JwtClaimIdentifiers;
+using CommonJwtClaims = Common.Api.Authentication.Constants.JwtClaims;
 
 namespace ApplicationManager.Setup
 {
@@ -22,26 +23,20 @@ namespace ApplicationManager.Setup
 		    IConfigurationSection appSettingsSection = configuration.GetSection(nameof(AppSettings));
             appSettingsSection.Bind(appSettings);
 
-            services.AddScoped<IJwtFactory, JwtFactory>();
+            JwtIssuerOptions jwtIssuerOptions = new JwtIssuerOptions();
+            IConfigurationSection jwtIssuerOptionsSection = configuration.GetSection(nameof(JwtIssuerOptions));
 
-			IConfigurationSection jwtAppSettingOptions = configuration.GetSection(nameof(JwtIssuerOptions));
+            jwtIssuerOptionsSection.Bind(jwtIssuerOptions);
 
 		    SymmetricSecurityKey signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(appSettings.Secret));
 
             services.Configure<JwtIssuerOptions>(options =>
 			{
-				options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
-				options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
+				options.Issuer = jwtIssuerOptions.Issuer;
+				options.Audience = jwtIssuerOptions.Audience;
 				options.SigningKey = signingKey;
 			    options.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
             });
-
-            JwtIssuerOptions jwtIssuerOptions = new JwtIssuerOptions();
-            IConfigurationSection jwtIssuerOptionsSection = configuration.GetSection(nameof(JwtIssuerOptions));
-
-		    jwtIssuerOptionsSection.Bind(jwtIssuerOptions);
-
-		    services.AddScoped<IJwtFactory, JwtFactory>();
 
             TokenValidationParameters tokenValidationParameters = new TokenValidationParameters
 		    {
@@ -59,7 +54,7 @@ namespace ApplicationManager.Setup
 		        {
 		            signingKey
                 },
-		        RequireExpirationTime = false,
+		        RequireExpirationTime = true,
 		        ValidateLifetime = true,
 		        ClockSkew = TimeSpan.Zero
 		    };
@@ -68,7 +63,6 @@ namespace ApplicationManager.Setup
 		    {
 		        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
 		        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-
 		    }).AddJwtBearer(configureOptions =>
 		    {
 		        configureOptions.TokenValidationParameters = tokenValidationParameters;
@@ -77,11 +71,13 @@ namespace ApplicationManager.Setup
 
 		    services.AddAuthorization(options =>
 		    {
-		        options.AddPolicy(Common.Api.Authentication.Constants.JwtClaims.AppAccess, policy => policy.RequireClaim(JwtClaimIdentifiers.Rol, Common.Api.Authentication.Constants.JwtClaims.AppAccess));
+		        options.AddPolicy(CommonJwtClaims.AppAccess, policy => policy.RequireClaim(CommonJwtClaimIdentifiers.Rol, CommonJwtClaims.AppAccess));
 		        options.AddPolicy(JwtClaims.IsUser, policy => policy.Requirements.Add(new IsUserRequirement()));
 		    });
 
             services.AddSingleton<IAuthorizationHandler, IsUserAuthorizationHandler>();
+
+			services.AddScoped<IJwtFactory, JwtFactory>();
 		}
     }
 }

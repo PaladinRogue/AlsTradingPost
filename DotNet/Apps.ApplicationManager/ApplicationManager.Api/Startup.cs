@@ -88,6 +88,7 @@ namespace ApplicationManager.Api
 
             MiddlewareRegistration.Register(app);
 
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseHsts();
             app.UseMvc();

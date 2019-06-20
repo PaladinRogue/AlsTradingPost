@@ -37,7 +37,6 @@ namespace ApplicationManager.Domain.Identities
 
         [MaxLength(FieldSizes.Extended)]
         [Required]
-        [SensitiveInformation]
         public string Identifier { get; protected set; }
 
         public string Password

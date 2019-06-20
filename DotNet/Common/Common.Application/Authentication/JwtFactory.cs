@@ -38,7 +38,6 @@ namespace Common.Application.Authentication
 				new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtIssuerOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64)
             }.Concat(identity.Claims);
 
-			// Create the JWT security token and encode it.
 		    JwtSecurityToken jwt = new JwtSecurityToken(
 		        issuer: _jwtIssuerOptions.Issuer,
 		        audience: _jwtIssuerOptions.Audience,
