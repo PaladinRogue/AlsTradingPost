@@ -5,8 +5,9 @@ using Common.Setup.Infrastructure.Constants;
 
 namespace ApplicationManager.Api.Identities
 {
-    [ResourceType(ResourceTypes.PasswordIdentity)]
+    [ResourceType(ResourceTypes.Password)]
     [SelfLink(RouteDictionary.GetPasswordIdentity, HttpVerb.Get)]
+    [Link(LinkDictionary.ChangePassword, RouteDictionary.ChangePasswordResourceTemplate, HttpVerb.Get)]
     public class PasswordIdentityResource : VersionedResource
     {
         public string Identifier { get; set; }

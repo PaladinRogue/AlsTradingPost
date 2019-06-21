@@ -4,6 +4,7 @@ using ApplicationManager.ApplicationServices.Identities.Models;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.AddConfirmedPassword;
+using ApplicationManager.Domain.Identities.ChangePassword;
 using ApplicationManager.Domain.Identities.ValidateTwoFactor;
 using Common.Application.Exceptions;
 using Common.Application.Transactions;
@@ -25,22 +26,28 @@ namespace ApplicationManager.ApplicationServices.Identities
 
         private readonly IQueryRepository<Identity> _identityQueryRepository;
 
+        private readonly IChangePasswordCommand _changePasswordCommand;
+
         public IdentityApplicationService(
             ITransactionManager transactionManager,
             IAddConfirmedPasswordIdentityCommand addConfirmedPasswordIdentityCommand,
             ICommandRepository<Identity> identityCommandRepository,
             ICommandRepository<AuthenticationService> authenticationServiceCommandRepository,
-            IQueryRepository<Identity> identityQueryRepository)
+            IQueryRepository<Identity> identityQueryRepository,
+            IChangePasswordCommand changePasswordCommand)
         {
             _transactionManager = transactionManager;
             _addConfirmedPasswordIdentityCommand = addConfirmedPasswordIdentityCommand;
             _identityCommandRepository = identityCommandRepository;
             _authenticationServiceCommandRepository = authenticationServiceCommandRepository;
             _identityQueryRepository = identityQueryRepository;
+            _changePasswordCommand = changePasswordCommand;
         }
 
         public IdentityAdto Get(GetIdentityAdto getIdentityAdto)
         {
+            if (getIdentityAdto == null) throw new ArgumentNullException(nameof(getIdentityAdto));
+
             using (ITransaction transaction = _transactionManager.Create())
             {
                 Identity identity = _identityQueryRepository.GetById(getIdentityAdto.Id);
@@ -62,10 +69,7 @@ namespace ApplicationManager.ApplicationServices.Identities
 
         public PasswordIdentityAdto CreateConfirmedPasswordIdentity(CreateConfirmedPasswordIdentityAdto createConfirmedPasswordIdentityAdto)
         {
-            if (createConfirmedPasswordIdentityAdto == null)
-            {
-                throw new ArgumentNullException(nameof(createConfirmedPasswordIdentityAdto));
-            }
+            if (createConfirmedPasswordIdentityAdto == null) throw new ArgumentNullException(nameof(createConfirmedPasswordIdentityAdto));
 
             using (ITransaction transaction = _transactionManager.Create())
             {
@@ -120,9 +124,16 @@ namespace ApplicationManager.ApplicationServices.Identities
 
         public PasswordIdentityAdto GetPasswordIdentity(GetPasswordIdentityAdto getPasswordIdentityAdto)
         {
+            if (getPasswordIdentityAdto == null) throw new ArgumentNullException(nameof(getPasswordIdentityAdto));
+
             using (ITransaction transaction = _transactionManager.Create())
             {
                 Identity identity = _identityQueryRepository.GetById(getPasswordIdentityAdto.IdentityId);
+
+                if (identity == null)
+                {
+                    throw new BusinessApplicationException(ExceptionType.NotFound, "Identity does not exist");
+                }
 
                 PasswordIdentity passwordIdentity = identity.AuthenticationIdentities.OfType<PasswordIdentity>().SingleOrDefault();
 
@@ -139,6 +150,51 @@ namespace ApplicationManager.ApplicationServices.Identities
                     Password = passwordIdentity.Password,
                     Version = ConcurrencyVersionFactory.CreateFromEntity(identity)
                 };
+            }
+        }
+
+        public PasswordIdentityAdto ChangePassword(ChangePasswordAdto changePasswordAdto)
+        {
+            if (changePasswordAdto == null) throw new ArgumentNullException(nameof(changePasswordAdto));
+
+            using (ITransaction transaction = _transactionManager.Create())
+            {
+                try
+                {
+                    Identity identity = _identityCommandRepository.GetWithConcurrencyCheck(changePasswordAdto.IdentityId, changePasswordAdto.Version);
+
+                    if (identity == null)
+                    {
+                        throw new BusinessApplicationException(ExceptionType.NotFound, "Identity does not exist");
+                    }
+
+                    _changePasswordCommand.Execute(identity, new ChangePasswordDdto
+                    {
+                        Password = changePasswordAdto.Password,
+                        ConfirmPassword = changePasswordAdto.ConfirmPassword
+                    });
+
+                    _identityCommandRepository.Update(identity);
+
+                    transaction.Commit();
+
+                    return GetPasswordIdentity(new GetPasswordIdentityAdto
+                    {
+                        IdentityId = identity.Id
+                    });
+                }
+                catch (PasswordNotSetDomainException e)
+                {
+                    throw new BusinessApplicationException(ExceptionType.NotFound, e);
+                }
+                catch (ConcurrencyDomainException e)
+                {
+                    throw new BusinessApplicationException(ExceptionType.Concurrency, e);
+                }
+                catch (DomainValidationRuleException e)
+                {
+                    throw new BusinessValidationRuleApplicationException(e.ValidationResult);
+                }
             }
         }
     }

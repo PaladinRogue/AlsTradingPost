@@ -76,5 +76,38 @@ namespace ApplicationManager.Api.Identities
                 Version = passwordIdentityAdto.Version
             }));
         }
+
+        [HttpGet("{identityId}/password/change/resourceTemplate", Name = RouteDictionary.ChangePasswordResourceTemplate)]
+        public IActionResult ChangePasswordResourceTemplate(Guid identityId)
+        {
+            IdentityAdto identityAdto = _identityApplicationService.Get(new GetIdentityAdto
+            {
+                Id = identityId
+            });
+
+            return Ok(_resourceBuilder.Build(new ChangePasswordIdentityTemplate
+            {
+                Version = identityAdto.Version
+            }));
+        }
+
+        [HttpPost("{identityId}/password/change", Name = RouteDictionary.ChangePassword)]
+        public IActionResult ChangePassword(Guid identityId, ChangePasswordIdentityTemplate template)
+        {
+            PasswordIdentityAdto passwordIdentityAdto = _identityApplicationService.ChangePassword(new ChangePasswordAdto
+            {
+                IdentityId = identityId,
+                Password = template.Password,
+                ConfirmPassword = template.ConfirmPassword,
+                Version = template.Version
+            });
+
+            return Ok(_resourceBuilder.Build(new PasswordIdentityResource
+            {
+                Identifier = passwordIdentityAdto.Identifier,
+                Password = passwordIdentityAdto.Password,
+                Version = passwordIdentityAdto.Version
+            }));
+        }
     }
 }

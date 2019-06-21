@@ -28,7 +28,6 @@ namespace ApplicationManager.Domain.Identities.Login
 
             if (identity == null)
             {
-                //TODO bad request with a message
                 throw new DomainValidationRuleException(new ValidationResult
                 {
                     PropertyValidationErrors = new List<PropertyValidationError>

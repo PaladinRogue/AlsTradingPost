@@ -9,5 +9,7 @@ namespace ApplicationManager.ApplicationServices.Identities
         PasswordIdentityAdto CreateConfirmedPasswordIdentity(CreateConfirmedPasswordIdentityAdto createConfirmedPasswordIdentityAdto);
 
         PasswordIdentityAdto GetPasswordIdentity(GetPasswordIdentityAdto getPasswordIdentityAdto);
+
+        PasswordIdentityAdto ChangePassword(ChangePasswordAdto changePasswordAdto);
     }
 }

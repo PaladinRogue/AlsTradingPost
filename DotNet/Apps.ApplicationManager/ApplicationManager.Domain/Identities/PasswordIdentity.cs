@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities.AddConfirmedPassword;
-using Common.Domain.Models.DataProtection;
+using ApplicationManager.Domain.Identities.ChangePassword;
+using ApplicationManager.Domain.Identities.CheckPassword;
 using Common.Domain.Models.PasswordProtection;
 using Common.Resources;
 
@@ -50,9 +51,14 @@ namespace ApplicationManager.Domain.Identities
 
         public virtual AuthenticationGrantTypePassword AuthenticationGrantTypePassword { get; protected set; }
 
-        public bool CheckPassword(string password)
+        internal bool CheckPassword(CheckPasswordDdto checkPasswordDdto)
         {
-            return ProtectedPassword.Hash == PasswordProtection.Protect(password, ProtectedPassword.Salt).Hash;
+            return ProtectedPassword == PasswordProtection.Protect(checkPasswordDdto.Password, ProtectedPassword.Salt);
+        }
+
+        internal void ChangePassword(ChangePasswordDdto changePasswordDdto)
+        {
+            ProtectedPassword = PasswordProtection.Protect(changePasswordDdto.Password);
         }
     }
 }

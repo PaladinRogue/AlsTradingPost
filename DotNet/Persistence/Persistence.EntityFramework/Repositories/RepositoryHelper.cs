@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Exceptions;
 using Common.Domain.Models.Interfaces;
 using Common.Resources.Extensions;
 using Common.Resources.Sorting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Persistence.EntityFramework.Repositories
 {
@@ -115,23 +113,7 @@ namespace Persistence.EntityFramework.Repositories
         {
             try
             {
-                EntityEntry existingTrackedEntity = context.ChangeTracker.Entries<T>().SingleOrDefault(e => e.Entity.Id == entity.Id);
-
-                if (existingTrackedEntity == null)
-                {
-                    dbSet.Update(entity);
-                }
-                else
-                {
-                    T existingEntity = (T)existingTrackedEntity.Entity;
-                    foreach (PropertyInfo propertyInfo in entity.GetType().GetProperties())
-                    {
-                        if (propertyInfo.CanWrite)
-                        {
-                            propertyInfo.SetValue(existingEntity, propertyInfo.GetValue(entity));
-                        }
-                    }
-                }
+                dbSet.Update(entity);
 
                 context.SaveChanges();
             }

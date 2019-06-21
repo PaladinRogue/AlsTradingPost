@@ -3,6 +3,7 @@ using System.Linq;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities.AddConfirmedPassword;
 using ApplicationManager.Domain.Identities.AddTwoFactor;
+using ApplicationManager.Domain.Identities.ChangePassword;
 using ApplicationManager.Domain.Identities.Events;
 using ApplicationManager.Domain.Identities.ValidateTwoFactor;
 using Common.Domain.DomainEvents;
@@ -104,6 +105,18 @@ namespace ApplicationManager.Domain.Identities
             Session = Session ?? Session.Create(this);
 
             Session.Reinstate();
+        }
+
+        internal void ChangePassword(ChangePasswordDdto changePasswordDdto)
+        {
+            PasswordIdentity passwordIdentity = AuthenticationIdentities.OfType<PasswordIdentity>().SingleOrDefault();
+
+            if (passwordIdentity == null)
+            {
+                throw new PasswordNotSetDomainException();
+            }
+
+            passwordIdentity.ChangePassword(changePasswordDdto);
         }
 
         internal RefreshTokenIdentity CreateRefreshToken(AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken)

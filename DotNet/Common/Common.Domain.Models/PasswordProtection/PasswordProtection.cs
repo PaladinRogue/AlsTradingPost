@@ -22,14 +22,14 @@ namespace Common.Domain.Models.PasswordProtection
             }
         }
 
-        public static ProtectedPassword Protect<T>(T data, string salt = null)
+        public static ProtectedPassword Protect<T>(T password, string salt = null)
         {
             if (PasswordProtector == null)
             {
                 throw new PasswordProtectorNotSetException();
             }
 
-            return PasswordProtector.Protect(data, salt);
+            return PasswordProtector.Protect(password, salt);
         }
     }
 }

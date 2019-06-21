@@ -12,7 +12,7 @@ namespace Common.Domain.Models
             if (obj == null)
                 return false;
 
-            if (GetType() != obj.GetType())
+            if (GetType().BaseType != obj.GetType())
                 return false;
 
             ValueObject valueObject = (ValueObject)obj;

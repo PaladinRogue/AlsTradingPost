@@ -12,6 +12,8 @@ using ApplicationManager.Domain.Applications.Change;
 using ApplicationManager.Domain.Applications.Create;
 using ApplicationManager.Domain.Identities.AddConfirmedPassword;
 using ApplicationManager.Domain.Identities.AddTwoFactor;
+using ApplicationManager.Domain.Identities.ChangePassword;
+using ApplicationManager.Domain.Identities.CheckPassword;
 using ApplicationManager.Domain.Identities.Create;
 using ApplicationManager.Domain.Identities.Login;
 using ApplicationManager.Domain.Identities.Queries;
@@ -44,17 +46,6 @@ namespace ApplicationManager.Setup
 		    services.AddSingleton<ILinkFactory, DefaultLinkFactory>();
 	    }
 
-	    public static void RegisterValidators(IServiceCollection services)
-	    {
-		    ValidatorOptions.LanguageManager.Enabled = false;
-
-	        services.AddScoped<IValidator<AddTwoFactorAuthenticationIdentityDdto>, AddTwoFactorAuthenticationIdentityValidator>();
-	        services.AddScoped<IValidator<ChangeApplicationDdto>, ChangeApplicationValidator>();
-	        services.AddScoped<IValidator<CreateApplicationDdto>, CreateApplicationValidator>();
-	        services.AddScoped<IValidator<AddConfirmedPasswordIdentityDdto>, AddConfirmedPasswordIdentityValidator>();
-	        services.AddScoped<IValidator<LoginCommandDdto>, LoginCommandValidator>();
-	    }
-
         public static void RegisterApplicationServices(IServiceCollection services)
         {
 	        services.AddSingleton<IHttpClientFactory, HttpClientFactory>();
@@ -69,6 +60,19 @@ namespace ApplicationManager.Setup
             services.AddScoped<IAuthenticationApplicationService, AuthenticationApplicationService>();
         }
 
+	    public static void RegisterValidators(IServiceCollection services)
+	    {
+		    ValidatorOptions.LanguageManager.Enabled = false;
+
+	        services.AddScoped<IValidator<AddTwoFactorAuthenticationIdentityDdto>, AddTwoFactorAuthenticationIdentityValidator>();
+	        services.AddScoped<IValidator<ChangeApplicationDdto>, ChangeApplicationValidator>();
+	        services.AddScoped<IValidator<CreateApplicationDdto>, CreateApplicationValidator>();
+	        services.AddScoped<IValidator<AddConfirmedPasswordIdentityDdto>, AddConfirmedPasswordIdentityValidator>();
+	        services.AddScoped<IValidator<LoginCommandDdto>, LoginCommandValidator>();
+	        services.AddScoped<IValidator<CheckPasswordDdto>, CheckPasswordValidator>();
+	        services.AddScoped<IValidator<ChangePasswordDdto>, ChangePasswordValidator>();
+	    }
+
         public static void RegisterDomainServices(IServiceCollection services)
         {
             services.AddScoped<IAddTwoFactorAuthenticationIdentityCommand, AddTwoFactorAuthenticationIdentityCommand>();
@@ -79,6 +83,8 @@ namespace ApplicationManager.Setup
             services.AddScoped<ICreateUserCommand, CreateUserCommand>();
             services.AddScoped<IAddConfirmedPasswordIdentityCommand, AddConfirmedPasswordIdentityCommand>();
             services.AddScoped<ILoginCommand, LoginCommand>();
+            services.AddScoped<ICheckPasswordCommand, CheckPasswordCommand>();
+            services.AddScoped<IChangePasswordCommand, ChangePasswordCommand>();
         }
 
         public static void RegisterPersistenceServices(IConfiguration configuration, IServiceCollection services)
