@@ -9,6 +9,8 @@
         public const string GetPasswordIdentity = "GetPasswordIdentity";
         public const string ChangePasswordResourceTemplate = "ChangePasswordResourceTemplate";
         public const string ChangePassword = "ChangePassword";
+        public const string RegisterPasswordResourceTemplate = "RegisterPasswordResourceTemplate";
+        public const string RegisterPassword = "RegisterPassword";
 
         public const string AuthenticatePasswordResourceTemplate = "AuthenticatePasswordResourceTemplate";
         public const string AuthenticatePassword = "AuthenticatePassword";

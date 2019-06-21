@@ -17,6 +17,7 @@ using ApplicationManager.Domain.Identities.CheckPassword;
 using ApplicationManager.Domain.Identities.Create;
 using ApplicationManager.Domain.Identities.Login;
 using ApplicationManager.Domain.Identities.Queries;
+using ApplicationManager.Domain.Identities.RegisterPassword;
 using ApplicationManager.Domain.Users.Create;
 using ApplicationManager.Persistence;
 using ApplicationManager.Persistence.Identities;
@@ -71,6 +72,7 @@ namespace ApplicationManager.Setup
 	        services.AddScoped<IValidator<LoginCommandDdto>, LoginCommandValidator>();
 	        services.AddScoped<IValidator<CheckPasswordDdto>, CheckPasswordValidator>();
 	        services.AddScoped<IValidator<ChangePasswordDdto>, ChangePasswordValidator>();
+	        services.AddScoped<IValidator<RegisterPasswordDdto>, RegisterPasswordValidator>();
 	    }
 
         public static void RegisterDomainServices(IServiceCollection services)
@@ -85,6 +87,7 @@ namespace ApplicationManager.Setup
             services.AddScoped<ILoginCommand, LoginCommand>();
             services.AddScoped<ICheckPasswordCommand, CheckPasswordCommand>();
             services.AddScoped<IChangePasswordCommand, ChangePasswordCommand>();
+            services.AddScoped<IRegisterPasswordCommand, RegisterPasswordCommand>();
         }
 
         public static void RegisterPersistenceServices(IConfiguration configuration, IServiceCollection services)

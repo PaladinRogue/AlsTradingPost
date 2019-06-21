@@ -5,7 +5,7 @@ namespace Common.Api.Builders.Resource
 {
     public interface IResourceBuilder
     {
-        BuiltResource Build(IResource resource);
+        BuiltResource Build<TResource>(TResource resource) where TResource: IResource;
 
         BuiltCollectionResource Build<T>(ICollectionResource<T> collectionResource, ITemplate template) where T : IResource;
 

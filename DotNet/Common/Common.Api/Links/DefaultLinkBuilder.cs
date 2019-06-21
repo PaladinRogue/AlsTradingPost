@@ -25,7 +25,12 @@ namespace Common.Api.Links
             _services = services;
         }
 
-        public Links BuildLinks(IResource resource, ITemplate template = null)
+        public Links BuildLinks<TResource>(TResource resource) where TResource : IResource
+        {
+            return BuildLinks<TResource, ITemplate>(resource, null);
+        }
+
+        public Links BuildLinks<TResource, TTemplate>(TResource resource, TTemplate template) where TResource : IResource where TTemplate : ITemplate
         {
             IList<ILink> links = resource.GetType().GetCustomAttributes<LinkAttribute>()
                 .GroupBy(linkAttribute => new

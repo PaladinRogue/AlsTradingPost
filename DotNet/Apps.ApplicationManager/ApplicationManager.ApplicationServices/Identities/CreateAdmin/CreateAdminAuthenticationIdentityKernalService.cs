@@ -50,7 +50,7 @@ namespace ApplicationManager.ApplicationServices.Identities.CreateAdmin
                     _addTwoFactorAuthenticationIdentityCommand.Execute(identity,
                         _mapper.Map<CreateAdminAuthenticationIdentityAdto, AddTwoFactorAuthenticationIdentityDdto>(
                             createAdminAuthenticationIdentityAdto));
-                    
+
                     Message.Send(AdminIdentityCreatedMessage.Create(createAdminAuthenticationIdentityAdto.ApplicationSystemName, identity.Id));
                 }
                 catch (DomainValidationRuleException e)

@@ -1,27 +1,27 @@
-﻿using Common.Messaging.Infrastructure.Interfaces;
+﻿using Common.Messaging.Infrastructure.Directors;
+using Common.Messaging.Infrastructure.Interfaces;
 
 namespace Common.Messaging.Infrastructure.Senders
 {
     public class MessageSender : IMessageSender
     {
-
-        private readonly IMessageBus _messageBus;
+        private readonly IPendingMessageContainer _pendingMessageContainer;
 
         private readonly IMessageFactory _messageFactory;
 
         public MessageSender(
-            IMessageBus messageBus,
-            IMessageFactory messageFactory)
+            IMessageFactory messageFactory,
+            IPendingMessageContainer pendingMessageContainer)
         {
-            _messageBus = messageBus;
             _messageFactory = messageFactory;
+            _pendingMessageContainer = pendingMessageContainer;
         }
 
         public void Send(IMessage message)
         {
             IPreparedMessage preparedMessage = _messageFactory.Create(message);
 
-            _messageBus.Publish(preparedMessage);
+            _pendingMessageContainer.Add(preparedMessage);
         }
     }
 }

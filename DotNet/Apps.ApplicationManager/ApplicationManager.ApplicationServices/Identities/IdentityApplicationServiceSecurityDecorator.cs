@@ -40,5 +40,11 @@ namespace ApplicationManager.ApplicationServices.Identities
             return _securityApplicationService.Secure(() => _identityApplicationService.ChangePassword(changePasswordAdto),
                 DefaultAuthorisationContext.Create(AuthorisationResource.Identity, AuthorisationAction.Update));
         }
+
+        public PasswordIdentityAdto RegisterPassword(RegisterPasswordAdto registerPasswordAdto)
+        {
+            return _securityApplicationService.Secure(() => _identityApplicationService.RegisterPassword(registerPasswordAdto),
+                DefaultAuthorisationContext.Create(AuthorisationResource.Identity, AuthorisationAction.Create));
+        }
     }
 }

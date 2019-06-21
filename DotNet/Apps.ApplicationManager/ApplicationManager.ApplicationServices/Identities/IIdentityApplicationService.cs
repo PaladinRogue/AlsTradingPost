@@ -11,5 +11,7 @@ namespace ApplicationManager.ApplicationServices.Identities
         PasswordIdentityAdto GetPasswordIdentity(GetPasswordIdentityAdto getPasswordIdentityAdto);
 
         PasswordIdentityAdto ChangePassword(ChangePasswordAdto changePasswordAdto);
+
+        PasswordIdentityAdto RegisterPassword(RegisterPasswordAdto registerPasswordAdto);
     }
 }

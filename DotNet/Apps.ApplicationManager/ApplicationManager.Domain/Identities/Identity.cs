@@ -4,7 +4,10 @@ using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities.AddConfirmedPassword;
 using ApplicationManager.Domain.Identities.AddTwoFactor;
 using ApplicationManager.Domain.Identities.ChangePassword;
+using ApplicationManager.Domain.Identities.CreatePassword;
+using ApplicationManager.Domain.Identities.CreateTwoFactor;
 using ApplicationManager.Domain.Identities.Events;
+using ApplicationManager.Domain.Identities.RegisterPassword;
 using ApplicationManager.Domain.Identities.ValidateTwoFactor;
 using Common.Domain.DomainEvents;
 using Common.Domain.Models;
@@ -59,7 +62,11 @@ namespace ApplicationManager.Domain.Identities
 
             _authenticationIdentities.Remove(twoFactorAuthenticationIdentity);
 
-            PasswordIdentity passwordIdentity = PasswordIdentity.Create(this, authenticationGrantTypePassword, addConfirmedPasswordIdentityDdto);
+            PasswordIdentity passwordIdentity = PasswordIdentity.Create(this, authenticationGrantTypePassword, new CreatePasswordIdentityDdto
+            {
+                Identifier = addConfirmedPasswordIdentityDdto.Identifier,
+                Password = addConfirmedPasswordIdentityDdto.Password
+            });
 
             _authenticationIdentities.Add(passwordIdentity);
 
@@ -79,11 +86,12 @@ namespace ApplicationManager.Domain.Identities
                 throw new TwoFactorAuthenticationIdentityExistsDomainException();
             }
 
-            TwoFactorAuthenticationIdentity twoFactorAuthenticationIdentity = TwoFactorAuthenticationIdentity.Create(this, addTwoFactorAuthenticationIdentityDdto);
+            TwoFactorAuthenticationIdentity twoFactorAuthenticationIdentity = TwoFactorAuthenticationIdentity.Create(this, new CreateTwoFactorAuthenticationIdentityDdto
+            {
+                EmailAddress = addTwoFactorAuthenticationIdentityDdto.EmailAddress
+            });
 
             _authenticationIdentities.Add(twoFactorAuthenticationIdentity);
-
-            DomainEvents.Raise(TwoFactorAuthenticationIdentityCreatedDomainEvent.Create(twoFactorAuthenticationIdentity));
         }
 
         /// <summary>
@@ -117,6 +125,26 @@ namespace ApplicationManager.Domain.Identities
             }
 
             passwordIdentity.ChangePassword(changePasswordDdto);
+        }
+
+        internal PasswordIdentity RegisterPassword(
+            AuthenticationGrantTypePassword authenticationGrantTypePassword,
+            RegisterPasswordDdto registerPasswordDdto)
+        {
+            PasswordIdentity passwordIdentity = PasswordIdentity.Create(this, authenticationGrantTypePassword, new CreatePasswordIdentityDdto
+            {
+                Identifier = registerPasswordDdto.Identifier,
+                Password = registerPasswordDdto.Password
+            });
+
+            _authenticationIdentities.Add(passwordIdentity);
+
+            _authenticationIdentities.Add(TwoFactorAuthenticationIdentity.Create(this, new CreateTwoFactorAuthenticationIdentityDdto
+            {
+                EmailAddress = registerPasswordDdto.EmailAddress
+            }));
+
+            return passwordIdentity;
         }
 
         internal RefreshTokenIdentity CreateRefreshToken(AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken)

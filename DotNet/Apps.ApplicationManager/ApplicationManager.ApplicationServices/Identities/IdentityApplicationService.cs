@@ -5,6 +5,8 @@ using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.AddConfirmedPassword;
 using ApplicationManager.Domain.Identities.ChangePassword;
+using ApplicationManager.Domain.Identities.Create;
+using ApplicationManager.Domain.Identities.RegisterPassword;
 using ApplicationManager.Domain.Identities.ValidateTwoFactor;
 using Common.Application.Exceptions;
 using Common.Application.Transactions;
@@ -28,13 +30,19 @@ namespace ApplicationManager.ApplicationServices.Identities
 
         private readonly IChangePasswordCommand _changePasswordCommand;
 
+        private readonly IRegisterPasswordCommand _registerPasswordCommand;
+
+        private readonly ICreateIdentityCommand _createIdentityCommand;
+
         public IdentityApplicationService(
             ITransactionManager transactionManager,
             IAddConfirmedPasswordIdentityCommand addConfirmedPasswordIdentityCommand,
             ICommandRepository<Identity> identityCommandRepository,
             ICommandRepository<AuthenticationService> authenticationServiceCommandRepository,
             IQueryRepository<Identity> identityQueryRepository,
-            IChangePasswordCommand changePasswordCommand)
+            IChangePasswordCommand changePasswordCommand,
+            IRegisterPasswordCommand registerPasswordCommand,
+            ICreateIdentityCommand createIdentityCommand)
         {
             _transactionManager = transactionManager;
             _addConfirmedPasswordIdentityCommand = addConfirmedPasswordIdentityCommand;
@@ -42,6 +50,8 @@ namespace ApplicationManager.ApplicationServices.Identities
             _authenticationServiceCommandRepository = authenticationServiceCommandRepository;
             _identityQueryRepository = identityQueryRepository;
             _changePasswordCommand = changePasswordCommand;
+            _registerPasswordCommand = registerPasswordCommand;
+            _createIdentityCommand = createIdentityCommand;
         }
 
         public IdentityAdto Get(GetIdentityAdto getIdentityAdto)
@@ -77,14 +87,7 @@ namespace ApplicationManager.ApplicationServices.Identities
                 {
                     Identity identity = _identityCommandRepository.GetWithConcurrencyCheck(createConfirmedPasswordIdentityAdto.IdentityId, createConfirmedPasswordIdentityAdto.Version);
 
-                    AuthenticationService authenticationService = _authenticationServiceCommandRepository.GetSingle(s => s is AuthenticationGrantTypePassword);
-
-                    if (!(authenticationService is AuthenticationGrantTypePassword authenticationGrantTypePassword))
-                    {
-                        throw new BusinessApplicationException(ExceptionType.BadRequest, "Password identities are not configured");
-                    }
-
-                    PasswordIdentity passwordIdentity = _addConfirmedPasswordIdentityCommand.Execute(identity, authenticationGrantTypePassword, new AddConfirmedPasswordIdentityDdto
+                    PasswordIdentity passwordIdentity = _addConfirmedPasswordIdentityCommand.Execute(identity, GetAuthenticationGrantTypePassword(), new AddConfirmedPasswordIdentityDdto
                     {
                         Token = createConfirmedPasswordIdentityAdto.Token,
                         Identifier = createConfirmedPasswordIdentityAdto.Identifier,
@@ -196,6 +199,53 @@ namespace ApplicationManager.ApplicationServices.Identities
                     throw new BusinessValidationRuleApplicationException(e.ValidationResult);
                 }
             }
+        }
+
+        public PasswordIdentityAdto RegisterPassword(RegisterPasswordAdto registerPasswordAdto)
+        {
+            using (ITransaction transaction = _transactionManager.Create())
+            {
+                try
+                {
+                    Identity identity = _createIdentityCommand.Execute();
+
+                    PasswordIdentity passwordIdentity = _registerPasswordCommand.Execute(identity, GetAuthenticationGrantTypePassword(), new RegisterPasswordDdto
+                    {
+                        Identifier = registerPasswordAdto.Identifier,
+                        Password = registerPasswordAdto.Password,
+                        ConfirmPassword = registerPasswordAdto.ConfirmPassword,
+                        EmailAddress = registerPasswordAdto.EmailAddress
+                    });
+
+                    _identityCommandRepository.Add(identity);
+
+                    transaction.Commit();
+
+                    return new PasswordIdentityAdto
+                    {
+                        IdentityId = identity.Id,
+                        Identifier = passwordIdentity.Identifier,
+                        Password = passwordIdentity.Password,
+                        Version = ConcurrencyVersionFactory.CreateFromEntity(identity)
+                    };
+                }
+                catch (DomainValidationRuleException e)
+                {
+                    throw new BusinessValidationRuleApplicationException(e.ValidationResult);
+                }
+            }
+        }
+
+        private AuthenticationGrantTypePassword GetAuthenticationGrantTypePassword()
+        {
+            AuthenticationService authenticationService = _authenticationServiceCommandRepository.GetSingle(s => s is AuthenticationGrantTypePassword);
+
+            if (!(authenticationService is AuthenticationGrantTypePassword authenticationGrantTypePassword))
+            {
+                throw new BusinessApplicationException(ExceptionType.BadRequest, "Password identities are not configured");
+            }
+
+            return authenticationGrantTypePassword;
         }
     }
 }

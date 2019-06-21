@@ -1,3 +1,4 @@
+using System;
 using Common.Api.Concurrency;
 using Common.Api.Links;
 using Common.Api.Resources;
@@ -10,6 +11,9 @@ namespace ApplicationManager.Api.Identities
     [Link(LinkDictionary.ChangePassword, RouteDictionary.ChangePasswordResourceTemplate, HttpVerb.Get)]
     public class PasswordIdentityResource : VersionedResource
     {
+        [Ignore]
+        public Guid IdentityId { get; set; }
+
         public string Identifier { get; set; }
 
         public string Password { get; set; }

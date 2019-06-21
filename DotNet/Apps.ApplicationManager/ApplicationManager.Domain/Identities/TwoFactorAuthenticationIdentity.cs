@@ -1,5 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using ApplicationManager.Domain.Identities.AddTwoFactor;
+using ApplicationManager.Domain.Identities.CreateTwoFactor;
+using ApplicationManager.Domain.Identities.Events;
+using Common.Domain.DomainEvents;
 using Common.Domain.Models.DataProtection;
 using String = Common.Resources.Extensions.String;
 
@@ -11,20 +14,24 @@ namespace ApplicationManager.Domain.Identities
         {
         }
 
-        protected TwoFactorAuthenticationIdentity(
+        internal TwoFactorAuthenticationIdentity(
             Identity identity,
-            AddTwoFactorAuthenticationIdentityDdto addTwoFactorAuthenticationIdentityDdto)
+            CreateTwoFactorAuthenticationIdentityDdto createTwoFactorAuthenticationIdentityDdto)
         {
             Identity = identity;
-            EmailAddress = addTwoFactorAuthenticationIdentityDdto.EmailAddress;
+            EmailAddress = createTwoFactorAuthenticationIdentityDdto.EmailAddress;
             Token = String.Random(40);
         }
 
         internal static TwoFactorAuthenticationIdentity Create(
             Identity identity,
-            AddTwoFactorAuthenticationIdentityDdto addTwoFactorAuthenticationIdentityDdto)
+            CreateTwoFactorAuthenticationIdentityDdto createTwoFactorAuthenticationIdentityDdto)
         {
-            return new TwoFactorAuthenticationIdentity(identity, addTwoFactorAuthenticationIdentityDdto);
+            TwoFactorAuthenticationIdentity twoFactorAuthenticationIdentity = new TwoFactorAuthenticationIdentity(identity, createTwoFactorAuthenticationIdentityDdto);
+
+            DomainEvents.Raise(TwoFactorAuthenticationIdentityCreatedDomainEvent.Create(twoFactorAuthenticationIdentity));
+
+            return twoFactorAuthenticationIdentity;
         }
 
         [MaxLength(254)]

@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using ApplicationManager.Domain.AuthenticationServices;
-using ApplicationManager.Domain.Identities.AddConfirmedPassword;
 using ApplicationManager.Domain.Identities.ChangePassword;
 using ApplicationManager.Domain.Identities.CheckPassword;
+using ApplicationManager.Domain.Identities.CreatePassword;
 using Common.Domain.Models.PasswordProtection;
 using Common.Resources;
 
@@ -17,23 +17,23 @@ namespace ApplicationManager.Domain.Identities
         {
         }
 
-        protected PasswordIdentity(
+        internal PasswordIdentity(
             Identity identity,
             AuthenticationGrantTypePassword authenticationGrantTypePassword,
-            AddConfirmedPasswordIdentityDdto addConfirmedPasswordIdentityDdto)
+            CreatePasswordIdentityDdto createPasswordIdentityDdto)
         {
             Identity = identity;
             AuthenticationGrantTypePassword = authenticationGrantTypePassword;
-            Identifier = addConfirmedPasswordIdentityDdto.Identifier;
-            Password = addConfirmedPasswordIdentityDdto.Password;
+            Identifier = createPasswordIdentityDdto.Identifier;
+            Password = createPasswordIdentityDdto.Password;
         }
 
         internal static PasswordIdentity Create(
             Identity identity,
             AuthenticationGrantTypePassword authenticationGrantTypePassword,
-            AddConfirmedPasswordIdentityDdto addConfirmedPasswordIdentityDdto)
+            CreatePasswordIdentityDdto createPasswordIdentityDdto)
         {
-            return new PasswordIdentity(identity, authenticationGrantTypePassword, addConfirmedPasswordIdentityDdto);
+            return new PasswordIdentity(identity, authenticationGrantTypePassword, createPasswordIdentityDdto);
         }
 
         [MaxLength(FieldSizes.Extended)]

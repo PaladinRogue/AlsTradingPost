@@ -21,7 +21,7 @@ namespace Common.Api.Builders.Resource
             _linkBuilder = linkBuilder;
         }
 
-        public BuiltResource Build(IResource resource)
+        public BuiltResource Build<TResource>(TResource resource) where TResource: IResource
         {
             Type resourceType = resource.GetType();
             IEnumerable<PropertyInfo> properties = resourceType.GetProperties().Where(p =>
@@ -31,7 +31,7 @@ namespace Common.Api.Builders.Resource
             {
                 Id = resource is IEntityResource entityResource ? entityResource.Id : (Guid?)null,
                 Type = resourceType,
-                Properties = properties.Select(p => new Property
+                Properties = properties.Where(p => !p.GetCustomAttributes<IgnoreAttribute>().Any()).Select(p => new Property
                 {
                     Type = p.PropertyType,
                     Name = p.Name,
@@ -58,7 +58,7 @@ namespace Common.Api.Builders.Resource
         {
             BuiltCollectionResource builtCollectionResource = new BuiltCollectionResource
             {
-                BuiltResources = collectionResource.Results.Select(r => Build(r)),
+                BuiltResources = collectionResource.Results.Select(Build),
                 Links = _linkBuilder.BuildLinks(collectionResource, template)
             };
 
@@ -70,7 +70,7 @@ namespace Common.Api.Builders.Resource
             BuiltCollectionResource builtCollectionResource = new BuiltCollectionResource
             {
                 TotalResults = pagedCollectionResource.TotalResults,
-                BuiltResources = pagedCollectionResource.Results.Select(r => Build(r)),
+                BuiltResources = pagedCollectionResource.Results.Select(Build),
                 Links = _linkBuilder.BuildLinks(pagedCollectionResource, paginationTemplate)
             };
 

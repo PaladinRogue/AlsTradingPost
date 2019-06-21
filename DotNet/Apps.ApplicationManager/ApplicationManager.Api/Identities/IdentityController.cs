@@ -109,5 +109,33 @@ namespace ApplicationManager.Api.Identities
                 Version = passwordIdentityAdto.Version
             }));
         }
+
+        [AllowAnonymous]
+        [HttpGet("password/resourceTemplate", Name = RouteDictionary.RegisterPasswordResourceTemplate)]
+        public IActionResult RegisterPasswordResourceTemplate()
+        {
+            return Ok(_resourceBuilder.Build(new RegisterPasswordIdentityTemplate()));
+        }
+
+        [AllowAnonymous]
+        [HttpPost("password", Name = RouteDictionary.RegisterPassword)]
+        public IActionResult RegisterPassword(RegisterPasswordIdentityTemplate template)
+        {
+            PasswordIdentityAdto passwordIdentityAdto = _identityApplicationService.RegisterPassword(new RegisterPasswordAdto
+            {
+                Identifier = template.Identifier,
+                Password = template.Password,
+                ConfirmPassword = template.ConfirmPassword,
+                EmailAddress = template.EmailAddress
+            });
+
+            return CreatedAtRoute(RouteDictionary.GetPasswordIdentity, new { passwordIdentityAdto.IdentityId }, _resourceBuilder.Build(new PasswordIdentityResource
+            {
+                IdentityId = passwordIdentityAdto.IdentityId,
+                Identifier = passwordIdentityAdto.Identifier,
+                Password = passwordIdentityAdto.Password,
+                Version = passwordIdentityAdto.Version
+            }));
+        }
     }
 }
