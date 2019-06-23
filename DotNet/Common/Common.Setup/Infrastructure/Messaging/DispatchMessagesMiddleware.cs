@@ -23,7 +23,7 @@ namespace Common.Setup.Infrastructure.Messaging
             _next = next;
         }
 
-        public async Task Invoke(HttpContext context, ITransactionManager transactionManager, IMessageDispatcher messageDispatcher)
+        public async Task Invoke(HttpContext context, IMessageDispatcher messageDispatcher)
         {
             await _next.Invoke(context);
 

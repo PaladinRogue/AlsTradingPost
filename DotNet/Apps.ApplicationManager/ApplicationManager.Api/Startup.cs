@@ -6,7 +6,6 @@ using Common.Api.Formats;
 using Common.Domain.DomainEvents;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Domain.Models.DataProtection;
-using Common.Domain.Models.PasswordProtection;
 using Common.Messaging.Infrastructure;
 using Common.Messaging.Infrastructure.Senders;
 using Common.Setup;
@@ -72,12 +71,12 @@ namespace ApplicationManager.Api
             IDataProtector dataProtector,
             IDomainEventDispatcher domainEventDispatcher,
             IMessageSender messageSender,
-            IPasswordProtector passwordProtector)
+            IDataHasher dataHasher)
         {
             DataProtection.SetDataProtector(dataProtector);
+            DataProtection.SetDataHasher(dataHasher);
             DomainEvents.SetDomainEventDispatcher(domainEventDispatcher);
             Message.SetMessageSender(messageSender);
-            PasswordProtection.SetPasswordProtector(passwordProtector);
 
             if (Environment.IsDevelopment())
             {

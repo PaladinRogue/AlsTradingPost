@@ -20,7 +20,7 @@ namespace ApplicationManager.ApplicationServices.Notifications.Audiences
             try
             {
                 IChannelAudienceResolver channelAudienceResolver = _channelAudienceResolvers.SingleOrDefault(r =>
-                    r.ChannelType == channelType && r.NotificationType == notificationType);
+                    r.ChannelType == channelType && r.NotificationTypes.Any(n => n == notificationType));
 
                 if (channelAudienceResolver == null)
                 {

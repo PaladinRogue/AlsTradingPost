@@ -7,7 +7,7 @@ using ApplicationManager.Domain.Users;
 using ApplicationManager.Persistence.AuthenticationServices;
 using ApplicationManager.Persistence.Identities;
 using ApplicationManager.Persistence.NotificationTypes;
-using Common.Domain.Models.PasswordProtection;
+using Common.Setup.Infrastructure.Hashing;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityFramework.Infrastructure.Extensions;
 using Identity = ApplicationManager.Domain.Identities.Identity;
@@ -70,7 +70,7 @@ namespace ApplicationManager.Persistence
                 .Ignore(p => p.Password)
                 .HasBaseType<AuthenticationIdentity>()
                 .ProtectSensitiveInformation()
-                .OwnsOne(typeof(ProtectedPassword), "ProtectedPassword");
+                .OwnsOne(typeof(HashSet), "PasswordHash");
 
             modelBuilder.Entity<TwoFactorAuthenticationIdentity>()
                 .ProtectSensitiveInformation()

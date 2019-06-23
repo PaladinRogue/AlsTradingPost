@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Common.Messaging.Infrastructure.Directors;
-using Common.Messaging.Infrastructure.Senders;
+using Common.Messaging.Infrastructure.Interfaces;
 
 namespace Common.Messaging.Infrastructure.Dispatchers
 {
@@ -8,20 +8,23 @@ namespace Common.Messaging.Infrastructure.Dispatchers
 	{
 		private readonly IPendingMessageProvider _pendingMessageProvider;
 
-		private readonly IMessageSender _messageSender;
+		private readonly IMessageBus _messageBus;
 
 		public MessageDispatcher(
 		    IPendingMessageProvider pendingMessageProvider,
-		    IMessageSender messageSender)
+		    IMessageBus messageBus)
 		{
 		    _pendingMessageProvider = pendingMessageProvider;
-		    _messageSender = messageSender;
+		    _messageBus = messageBus;
 		}
 
 		public async Task DispatchMessagesAsync()
 		{
 			await Task.Run(() => Parallel.ForEach(_pendingMessageProvider.GetAll(),
-				message => { _messageSender.Send(message); }));
+				message =>
+				{
+					_messageBus.Publish(message);
+				}));
 		}
 	}
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Common.Application.Exceptions;
 using Common.Application.Transactions;
 using Common.Domain.Models.DataProtection;
+using Common.Messaging.Infrastructure.Dispatchers;
 using Common.Messaging.Infrastructure.Interfaces;
 using Common.Messaging.Infrastructure.Serialisers;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +20,10 @@ namespace Common.Messaging.Infrastructure.DeQueuers
         private readonly IMessageSerialiser _messageSerialiser;
 
         private readonly IServiceProvider _serviceProvider;
+
         private readonly ITransactionManager _transactionManager;
+
+        private IMessageDispatcher _messageDispatcher;
 
         public MessageDeQueuer(
             IDataProtector dataProtector,
@@ -48,8 +52,7 @@ namespace Common.Messaging.Infrastructure.DeQueuers
                         {
                             if (_dataProtector.Unprotect<Guid>(preparedMessage.SecurityToken) != preparedMessage.Id)
                             {
-                                throw new BusinessApplicationException(ExceptionType.Unknown,
-                                    "Unable to verify sender of message");
+                                throw new BusinessApplicationException(ExceptionType.Unknown, "Unable to verify sender of message");
                             }
 
                             string unprotectedMessage = _dataProtector.Unprotect<string>(preparedMessage.Payload);
@@ -59,6 +62,10 @@ namespace Common.Messaging.Infrastructure.DeQueuers
                             {
                                 messageSubscription.Handler.DynamicInvoke(deserialisedMessage);
                             }
+
+                            _messageDispatcher = _serviceProvider.GetRequiredService<IMessageDispatcher>();
+
+                            _messageDispatcher.DispatchMessagesAsync();
 
                             transaction.Commit();
                         }

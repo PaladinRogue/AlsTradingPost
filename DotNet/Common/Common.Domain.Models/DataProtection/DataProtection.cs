@@ -1,8 +1,12 @@
-﻿namespace Common.Domain.Models.DataProtection
+﻿using Common.Setup.Infrastructure.Hashing;
+
+namespace Common.Domain.Models.DataProtection
 {
     public class DataProtection
     {
         private static volatile IDataProtector _dataProtector;
+
+        private static volatile IDataHasher _dataHasher;
 
         protected DataProtection()
         {
@@ -12,6 +16,20 @@
         {
             get => _dataProtector;
             set => _dataProtector = value;
+        }
+
+        protected static IDataHasher DataHasher
+        {
+            get => _dataHasher;
+            set => _dataHasher = value;
+        }
+
+        public static void SetDataHasher(IDataHasher dataHasher)
+        {
+            if (DataHasher == null)
+            {
+                DataHasher = dataHasher;
+            }
         }
 
         public static void SetDataProtector(IDataProtector dataProtector)
@@ -40,6 +58,16 @@
             }
 
             return DataProtector.Unprotect<T>(data);
+        }
+
+        public static HashSet Hash(string data, string salt = null)
+        {
+            if (DataHasher == null)
+            {
+                throw new HashFactoryNotSetException();
+            }
+
+            return DataHasher.Hash(data, salt);
         }
     }
 }

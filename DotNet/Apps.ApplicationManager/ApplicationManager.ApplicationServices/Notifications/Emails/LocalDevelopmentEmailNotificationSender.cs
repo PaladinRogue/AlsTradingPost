@@ -14,8 +14,8 @@ namespace ApplicationManager.ApplicationServices.Notifications.Emails
         public LocalDevelopmentEmailNotificationSender(ILogger<LocalDevelopmentEmailNotificationSender> logger)
         {
             _logger = logger;
-            _devInboxPath = Path.Combine("C:\\Projects\\PaladinRogue", "LocalEmailInbox", "Dev");
-            Directory.CreateDirectory(this._devInboxPath);
+            _devInboxPath = Path.Combine(Directory.GetCurrentDirectory(), "LocalEmailInbox", "Dev");
+            Directory.CreateDirectory(_devInboxPath);
         }
 
         public void Send(SendEmailNotificationAdto sendEmailNotificationAdto)
@@ -26,8 +26,9 @@ namespace ApplicationManager.ApplicationServices.Notifications.Emails
                 {
                     message.From = new MailAddress(sendEmailNotificationAdto.From);
                     message.Body = sendEmailNotificationAdto.HtmlBody;
+                    message.Subject = sendEmailNotificationAdto.Subject;
                     message.IsBodyHtml = true;
-                    sendEmailNotificationAdto.Recipients.ToList<string>().ForEach(new Action<string>(message.To.Add));
+                    sendEmailNotificationAdto.Recipients.ToList().ForEach(message.To.Add);
                     using (SmtpClient smtpClient = new SmtpClient("developmentHost"))
                     {
                         smtpClient.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;

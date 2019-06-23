@@ -6,10 +6,8 @@ using ApplicationManager.Domain.Identities.AddTwoFactor;
 using ApplicationManager.Domain.Identities.ChangePassword;
 using ApplicationManager.Domain.Identities.CreatePassword;
 using ApplicationManager.Domain.Identities.CreateTwoFactor;
-using ApplicationManager.Domain.Identities.Events;
 using ApplicationManager.Domain.Identities.RegisterPassword;
 using ApplicationManager.Domain.Identities.ValidateTwoFactor;
-using Common.Domain.DomainEvents;
 using Common.Domain.Models;
 using Common.Domain.Models.Interfaces;
 
@@ -88,7 +86,8 @@ namespace ApplicationManager.Domain.Identities
 
             TwoFactorAuthenticationIdentity twoFactorAuthenticationIdentity = TwoFactorAuthenticationIdentity.Create(this, new CreateTwoFactorAuthenticationIdentityDdto
             {
-                EmailAddress = addTwoFactorAuthenticationIdentityDdto.EmailAddress
+                EmailAddress = addTwoFactorAuthenticationIdentityDdto.EmailAddress,
+                TwoFactorAuthenticationType = TwoFactorAuthenticationTypes.ForgotPassword
             });
 
             _authenticationIdentities.Add(twoFactorAuthenticationIdentity);
@@ -141,7 +140,8 @@ namespace ApplicationManager.Domain.Identities
 
             _authenticationIdentities.Add(TwoFactorAuthenticationIdentity.Create(this, new CreateTwoFactorAuthenticationIdentityDdto
             {
-                EmailAddress = registerPasswordDdto.EmailAddress
+                EmailAddress = registerPasswordDdto.EmailAddress,
+                TwoFactorAuthenticationType = TwoFactorAuthenticationTypes.ConfirmIdentity
             }));
 
             return passwordIdentity;

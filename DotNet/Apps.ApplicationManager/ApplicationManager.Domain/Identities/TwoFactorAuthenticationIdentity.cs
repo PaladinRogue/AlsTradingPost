@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using ApplicationManager.Domain.Identities.AddTwoFactor;
 using ApplicationManager.Domain.Identities.CreateTwoFactor;
 using ApplicationManager.Domain.Identities.Events;
 using Common.Domain.DomainEvents;
@@ -20,6 +19,7 @@ namespace ApplicationManager.Domain.Identities
         {
             Identity = identity;
             EmailAddress = createTwoFactorAuthenticationIdentityDdto.EmailAddress;
+            TwoFactorAuthenticationType = createTwoFactorAuthenticationIdentityDdto.TwoFactorAuthenticationType;
             Token = String.Random(40);
         }
 
@@ -42,5 +42,7 @@ namespace ApplicationManager.Domain.Identities
         [MaxLength(40)]
         [SensitiveInformation]
         public string Token { get; protected set; }
+
+        public string TwoFactorAuthenticationType { get; protected set; }
     }
 }

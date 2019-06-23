@@ -19,7 +19,11 @@ namespace ApplicationManager.ApplicationServices.Notifications.Audiences
 
         public ChannelType ChannelType => ChannelType.Email;
 
-        public string NotificationType => NotificationTypes.EmailTwoFactorAuthentication;
+        public IEnumerable<string> NotificationTypes { get; } = new List<string>
+        {
+            NotificationNames.ConfirmIdentity,
+            NotificationNames.ForgotPassword
+        };
 
         public IEnumerable<string> GetAudience(Guid identifier)
         {

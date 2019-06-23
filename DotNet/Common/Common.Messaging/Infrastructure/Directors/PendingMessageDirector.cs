@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Common.Messaging.Infrastructure.Interfaces;
 
 namespace Common.Messaging.Infrastructure.Directors
@@ -19,7 +20,11 @@ namespace Common.Messaging.Infrastructure.Directors
 
 	    public IEnumerable<IMessage> GetAll()
 	    {
-		    return _messages;
+		    IList<IMessage> messages =  _messages.ToList();
+
+		    _messages.Clear();
+
+		    return messages;
 	    }
     }
 }

@@ -7,9 +7,9 @@ namespace ApplicationManager.ApplicationServices.Notifications.Audiences
     public interface IChannelAudienceResolver
     {
         ChannelType ChannelType { get; }
-        
-        string NotificationType { get; }
-        
+
+        IEnumerable<string> NotificationTypes { get; }
+
         IEnumerable<string> GetAudience(Guid identifier);
     }
 }

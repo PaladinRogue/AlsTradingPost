@@ -1,5 +1,6 @@
 ﻿using System;
 using Common.Api.Settings;
+using Common.Messaging.Infrastructure.Dispatchers;
 using Common.Messaging.Infrastructure.Interfaces;
 using Common.Messaging.Infrastructure.Senders;
 using Common.Messaging.Messages;
@@ -18,6 +19,8 @@ namespace Common.Api.ApplicationRegistration
 
             IMessageSender messageSender = serviceProvider.GetRequiredService<IMessageSender>();
 
+            IMessageDispatcher messageDispatcher = serviceProvider.GetRequiredService<IMessageDispatcher>();
+
             IOptions<SystemAdminIdentitySettings> systemAdminIdentitySettingsAccessor =
                 serviceProvider.GetRequiredService<IOptions<SystemAdminIdentitySettings>>();
 
@@ -31,6 +34,8 @@ namespace Common.Api.ApplicationRegistration
             messageSender.Send(
                     RegisterApplicationMessage.Create(appSettings.Name, appSettings.SystemName, systemAdminIdentitySettings.Email)
                 );
+
+            messageDispatcher.DispatchMessagesAsync();
 
             return webHost;
         }

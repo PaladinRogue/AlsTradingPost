@@ -6,13 +6,13 @@ namespace ApplicationManager.Persistence.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql($@"
+            migrationBuilder.Sql(@"
                 INSERT INTO [apps].[NotificationTypes]
                     ([Id]
                     ,[Type])
                     VALUES
                     ('ED3AB96C-8F45-45E8-8880-D9F46C075BEC'
-                    ,'{Domain.NotificationTypes.NotificationTypes.EmailTwoFactorAuthentication}')
+                    ,'EMAIL_TWO_FACTOR_AUTHENTICATION')
 
                 INSERT INTO [apps].[NotificationTypeChannels]
                     ([Id]
