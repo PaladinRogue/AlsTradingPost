@@ -1,5 +1,5 @@
 ﻿using System;
-using Common.Application.Exceptions;
+using Common.ApplicationServices.Exceptions;
 
 namespace Common.Authorisation
 {

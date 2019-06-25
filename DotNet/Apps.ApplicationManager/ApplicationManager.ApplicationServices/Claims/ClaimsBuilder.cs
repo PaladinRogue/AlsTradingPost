@@ -3,7 +3,7 @@ using System.Security.Claims;
 
 namespace ApplicationManager.ApplicationServices.Claims
 {
-    public class ClaimsBuilder : Common.Application.Claims.ClaimsBuilder
+    public class ClaimsBuilder : Common.ApplicationServices.Claims.ClaimsBuilder
     {
         protected ClaimsBuilder()
         {

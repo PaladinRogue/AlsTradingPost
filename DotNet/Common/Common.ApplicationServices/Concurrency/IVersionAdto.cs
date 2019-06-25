@@ -1,4 +1,4 @@
-﻿namespace Common.Application.Concurrency
+﻿namespace Common.ApplicationServices.Concurrency
 {
     public interface IVersionAdto<T>
     {

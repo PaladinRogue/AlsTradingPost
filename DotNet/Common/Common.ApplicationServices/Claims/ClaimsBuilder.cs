@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Common.Application.Claims.Constants;
+using Common.ApplicationServices.Claims.Constants;
 
-namespace Common.Application.Claims
+namespace Common.ApplicationServices.Claims
 {
     public class ClaimsBuilder
     {

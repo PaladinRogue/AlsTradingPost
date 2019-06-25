@@ -1,5 +1,5 @@
 using System;
-using Common.Application.Concurrency;
+using Common.ApplicationServices.Concurrency;
 using Common.Domain.Concurrency.Interfaces;
 
 namespace ApplicationManager.ApplicationServices.Identities.Models

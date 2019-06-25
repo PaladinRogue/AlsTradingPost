@@ -6,7 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 
-namespace Common.Application.Authentication
+namespace Common.ApplicationServices.Authentication
 {
 	public class JwtFactory : IJwtFactory
 	{

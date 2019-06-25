@@ -1,4 +1,4 @@
-﻿namespace Common.Application.Claims.Constants
+﻿namespace Common.ApplicationServices.Claims.Constants
 {
     public static class JwtClaimIdentifiers
     {

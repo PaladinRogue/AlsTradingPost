@@ -1,6 +1,6 @@
 ﻿using System.Transactions;
 
-namespace Common.Application.Transactions
+namespace Common.ApplicationServices.Transactions
 {
     public class TransientTransactionManager : ITransactionManager
     {

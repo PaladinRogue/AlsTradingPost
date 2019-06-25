@@ -1,6 +1,6 @@
 ﻿using Common.Domain.Concurrency.Interfaces;
 
-namespace Common.Application.Concurrency
+namespace Common.ApplicationServices.Concurrency
 {
     public interface IInboundVersionedAdto : IVersionAdto<IConcurrencyVersion>
     {

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using Common.Application.Transactions;
 using Common.Messaging.Infrastructure.Dispatchers;
 using Microsoft.AspNetCore.Http;
 

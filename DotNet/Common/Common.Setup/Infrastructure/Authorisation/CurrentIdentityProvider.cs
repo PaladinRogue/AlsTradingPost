@@ -1,6 +1,6 @@
 ﻿using System;
-using Common.Application.Authentication;
-using Common.Application.Exceptions;
+using Common.ApplicationServices.Authentication;
+using Common.ApplicationServices.Exceptions;
 using Common.Resources.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;

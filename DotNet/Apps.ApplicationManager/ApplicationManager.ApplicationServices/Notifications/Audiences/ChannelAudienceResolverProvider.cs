@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ApplicationManager.Domain.NotificationTypes;
-using Common.Application.Exceptions;
+using Common.ApplicationServices.Exceptions;
 
 namespace ApplicationManager.ApplicationServices.Notifications.Audiences
 {

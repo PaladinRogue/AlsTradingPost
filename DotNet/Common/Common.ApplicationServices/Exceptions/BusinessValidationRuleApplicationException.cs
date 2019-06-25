@@ -1,7 +1,7 @@
 ﻿using System;
 using Common.Domain.Validation;
 
-namespace Common.Application.Exceptions
+namespace Common.ApplicationServices.Exceptions
 {
     public class BusinessValidationRuleApplicationException : Exception 
     {

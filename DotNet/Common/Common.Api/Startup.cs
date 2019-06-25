@@ -59,9 +59,6 @@ namespace Common.Api
             ServiceRegistration.RegisterAuthorisation(services);
 
             DataProtectionRegistration.Register(Configuration, services);
-
-            Common.Authentication.Setup.ServiceRegistration.RegisterDomainServices(services);
-            Common.Authentication.Setup.ServiceRegistration.RegisterProviders(services);
         }
     }
 }

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Common.Application.Transactions;
+using Common.ApplicationServices.Transactions;
 using Common.Messaging.Infrastructure;
 using Common.Messaging.Messages;
 

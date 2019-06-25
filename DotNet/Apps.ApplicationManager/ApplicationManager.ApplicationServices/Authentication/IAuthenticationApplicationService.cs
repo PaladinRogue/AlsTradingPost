@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices.Authentication.Models;
-using Common.Application.Authentication;
+using Common.ApplicationServices.Authentication;
 
 namespace ApplicationManager.ApplicationServices.Authentication
 {

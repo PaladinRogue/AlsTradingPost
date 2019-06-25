@@ -2,8 +2,8 @@
 using ApplicationManager.Domain.Applications;
 using ApplicationManager.Domain.Applications.Change;
 using ApplicationManager.Domain.Applications.Create;
-using Common.Application.Exceptions;
-using Common.Application.Transactions;
+using Common.ApplicationServices.Exceptions;
+using Common.ApplicationServices.Transactions;
 using Common.Domain.Exceptions;
 using Common.Domain.Persistence;
 

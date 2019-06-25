@@ -1,6 +1,6 @@
 using ApplicationManager.ApplicationServices.Applications.Register;
 using AutoMapper;
-using Common.Application.Exceptions;
+using Common.ApplicationServices.Exceptions;
 using Common.Messaging.Infrastructure.Interfaces;
 using Common.Messaging.Infrastructure.Subscribers;
 using Common.Messaging.Messages;

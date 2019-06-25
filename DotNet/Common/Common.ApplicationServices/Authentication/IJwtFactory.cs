@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Common.Application.Authentication
+namespace Common.ApplicationServices.Authentication
 {
     public interface IJwtFactory
     {

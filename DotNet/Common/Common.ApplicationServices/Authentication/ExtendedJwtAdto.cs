@@ -1,4 +1,4 @@
-﻿namespace Common.Application.Authentication
+﻿namespace Common.ApplicationServices.Authentication
 {
     public class ExtendedJwtAdto : JwtAdto
     {

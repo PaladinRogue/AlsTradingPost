@@ -1,4 +1,4 @@
-﻿namespace Common.Application.Pagination.Interfaces
+﻿namespace Common.ApplicationServices.Pagination.Interfaces
 {
     public interface IPaginationAdto
     {

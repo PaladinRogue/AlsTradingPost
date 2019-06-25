@@ -3,7 +3,7 @@ using ApplicationManager.ApplicationServices.Authentication;
 using ApplicationManager.ApplicationServices.Authentication.Models;
 using Common.Api.Builders.Resource;
 using Common.Api.Routing;
-using Common.Application.Authentication;
+using Common.ApplicationServices.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

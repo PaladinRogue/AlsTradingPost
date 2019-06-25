@@ -2,8 +2,8 @@ using ApplicationManager.ApplicationServices.Users.Models;
 using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Users;
 using ApplicationManager.Domain.Users.Create;
-using Common.Application.Exceptions;
-using Common.Application.Transactions;
+using Common.ApplicationServices.Exceptions;
+using Common.ApplicationServices.Transactions;
 using Common.Domain.Exceptions;
 using Common.Domain.Persistence;
 

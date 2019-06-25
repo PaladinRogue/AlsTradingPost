@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Application.Authentication
+namespace Common.ApplicationServices.Authentication
 {
     public interface IJwtAdto
     {

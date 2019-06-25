@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Common.Application.Pagination.Interfaces
+namespace Common.ApplicationServices.Pagination.Interfaces
 {
     public interface IPagedCollectionAdto<T>
     {

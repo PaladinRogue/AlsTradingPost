@@ -1,6 +1,6 @@
 using System;
 
-namespace Common.Application.Exceptions
+namespace Common.ApplicationServices.Exceptions
 {
     public class BusinessApplicationException : Exception
     {

@@ -2,7 +2,7 @@
 using Common.Domain.Sorting;
 using Common.Domain.Validation;
 
-namespace Common.Application.Sorting
+namespace Common.ApplicationServices.Sorting
 {
     public static class PropertyNotSortableExceptionExtentions
     {

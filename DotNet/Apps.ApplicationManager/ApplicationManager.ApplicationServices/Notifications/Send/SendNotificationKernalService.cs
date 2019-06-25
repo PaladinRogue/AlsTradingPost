@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using ApplicationManager.ApplicationServices.Notifications.Audiences;
 using ApplicationManager.ApplicationServices.Notifications.Emails;
 using ApplicationManager.Domain.NotificationTypes;
-using Common.Application.Exceptions;
-using Common.Application.Transactions;
+using Common.ApplicationServices.Exceptions;
+using Common.ApplicationServices.Transactions;
 using Common.Domain.Persistence;
 using Microsoft.Extensions.Logging;
 

@@ -10,9 +10,9 @@ using ApplicationManager.Domain.Identities.ForgotPassword;
 using ApplicationManager.Domain.Identities.RegisterPassword;
 using ApplicationManager.Domain.Identities.ResetPassword;
 using ApplicationManager.Domain.Identities.ValidateToken;
-using Common.Application.Exceptions;
-using Common.Application.Transactions;
 using Common.ApplicationServices.Concurrency;
+using Common.ApplicationServices.Exceptions;
+using Common.ApplicationServices.Transactions;
 using Common.Domain.Exceptions;
 using Common.Domain.Persistence;
 

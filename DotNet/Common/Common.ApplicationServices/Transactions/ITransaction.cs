@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Application.Transactions
+namespace Common.ApplicationServices.Transactions
 {
     public interface ITransaction : IDisposable
     {

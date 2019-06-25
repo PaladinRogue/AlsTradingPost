@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Common.Application.Pagination.Interfaces;
+using Common.ApplicationServices.Pagination.Interfaces;
 
-namespace Common.Application.Pagination
+namespace Common.ApplicationServices.Pagination
 {
     public class PagedCollectionAdto<T> : IPagedCollectionAdto<T>
     {

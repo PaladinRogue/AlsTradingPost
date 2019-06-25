@@ -1,4 +1,4 @@
-﻿namespace Common.Application.Exceptions
+﻿namespace Common.ApplicationServices.Exceptions
 {
     public enum ExceptionType
     {
