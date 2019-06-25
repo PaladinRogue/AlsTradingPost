@@ -4,13 +4,17 @@
     {
         public const string Status = "Status";
 
-        public const string PasswordIdentityResourceTemplate = "PasswordIdentityResourceTemplate";
-        public const string PostPasswordIdentity = "PostPasswordIdentity";
+        public const string ForgotPasswordResourceTemplate = "ForgotPasswordResourceTemplate";
+        public const string ForgotPassword = "ForgotPassword";
+        public const string ResetPasswordResourceTemplate = "ResetPasswordResourceTemplate";
+        public const string ResetPassword = "ResetPassword";
         public const string GetPasswordIdentity = "GetPasswordIdentity";
         public const string ChangePasswordResourceTemplate = "ChangePasswordResourceTemplate";
         public const string ChangePassword = "ChangePassword";
         public const string RegisterPasswordResourceTemplate = "RegisterPasswordResourceTemplate";
         public const string RegisterPassword = "RegisterPassword";
+        public const string ConfirmIdentityResourceTemplate = "ConfirmIdentityResourceTemplate";
+        public const string ConfirmIdentity = "ConfirmIdentity";
 
         public const string AuthenticatePasswordResourceTemplate = "AuthenticatePasswordResourceTemplate";
         public const string AuthenticatePassword = "AuthenticatePassword";

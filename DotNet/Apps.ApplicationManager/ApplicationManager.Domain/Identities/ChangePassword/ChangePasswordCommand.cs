@@ -5,18 +5,21 @@ namespace ApplicationManager.Domain.Identities.ChangePassword
 {
     public class ChangePasswordCommand : IChangePasswordCommand
     {
-        private readonly IValidator<ChangePasswordDdto> _validator;
+        private readonly IValidator<ChangePasswordCommandDdto> _validator;
 
-        public ChangePasswordCommand(IValidator<ChangePasswordDdto> validator)
+        public ChangePasswordCommand(IValidator<ChangePasswordCommandDdto> validator)
         {
             _validator = validator;
         }
 
-        public void Execute(Identity identity, ChangePasswordDdto changePasswordDdto)
+        public void Execute(Identity identity, ChangePasswordCommandDdto changePasswordCommandDdto)
         {
-            _validator.ValidateAndThrow(changePasswordDdto);
+            _validator.ValidateAndThrow(changePasswordCommandDdto);
 
-            identity.ChangePassword(changePasswordDdto);
+            identity.ChangePassword(new ChangePasswordDdto
+            {
+                Password = changePasswordCommandDdto.Password
+            });
         }
     }
 }

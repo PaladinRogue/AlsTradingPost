@@ -4,6 +4,6 @@ namespace ApplicationManager.Domain.Identities.CreateTwoFactor
     {
         public string EmailAddress { get; set; }
 
-        public string TwoFactorAuthenticationType { get; set; }
+        public TwoFactorAuthenticationType TwoFactorAuthenticationType { get; set; }
     }
 }

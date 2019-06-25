@@ -1,6 +1,4 @@
 using Common.Domain.Models.DataProtection;
-using Common.Resources.Hashing;
-using Common.Setup.Infrastructure.Hashing;
 
 namespace Common.Domain.DataProtection
 {

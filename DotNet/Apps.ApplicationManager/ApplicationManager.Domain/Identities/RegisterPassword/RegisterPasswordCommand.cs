@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities.Queries;
@@ -9,34 +10,39 @@ namespace ApplicationManager.Domain.Identities.RegisterPassword
 {
     public class RegisterPasswordCommand : IRegisterPasswordCommand
     {
-        private readonly IValidator<RegisterPasswordDdto> _validator;
+        private readonly IValidator<RegisterPasswordCommandDdto> _validator;
 
         private readonly IPasswordIdentityIdentifierIsUniqueQuery _passwordIdentityIdentifierIsUniqueQuery;
 
         public RegisterPasswordCommand(
-            IValidator<RegisterPasswordDdto> validator,
+            IValidator<RegisterPasswordCommandDdto> validator,
             IPasswordIdentityIdentifierIsUniqueQuery passwordIdentityIdentifierIsUniqueQuery)
         {
             _validator = validator;
             _passwordIdentityIdentifierIsUniqueQuery = passwordIdentityIdentifierIsUniqueQuery;
         }
 
-        public PasswordIdentity Execute(Identity identity, AuthenticationGrantTypePassword authenticationGrantTypePassword, RegisterPasswordDdto registerPasswordDdto)
+        public PasswordIdentity Execute(Identity identity, AuthenticationGrantTypePassword authenticationGrantTypePassword, RegisterPasswordCommandDdto registerPasswordCommandDdto)
         {
-            _validator.ValidateAndThrow(registerPasswordDdto);
+            _validator.ValidateAndThrow(registerPasswordCommandDdto);
 
-            if (!_passwordIdentityIdentifierIsUniqueQuery.Run(registerPasswordDdto.Identifier))
+            if (!_passwordIdentityIdentifierIsUniqueQuery.Run(registerPasswordCommandDdto.Identifier))
             {
                 throw new DomainValidationRuleException(new ValidationResult
                 {
                     PropertyValidationErrors = new List<PropertyValidationError>
                     {
-                        PropertyValidationErrorFactory.Create(nameof(registerPasswordDdto.Identifier), registerPasswordDdto.Identifier, ValidationErrorCodes.NotUnique)
+                        PropertyValidationErrorFactory.Create(nameof(registerPasswordCommandDdto.Identifier), registerPasswordCommandDdto.Identifier, ValidationErrorCodes.NotUnique)
                     }
                 });
             }
 
-            return identity.RegisterPassword(authenticationGrantTypePassword, registerPasswordDdto);
+            return identity.RegisterPassword(authenticationGrantTypePassword, new RegisterPasswordDdto
+            {
+                Identifier = registerPasswordCommandDdto.Identifier,
+                Password = registerPasswordCommandDdto.Password,
+                EmailAddress = registerPasswordCommandDdto.EmailAddress
+            });
         }
     }
 }

@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using ApplicationManager.ApplicationServices.Identities.Models;
 using ApplicationManager.Domain.Identities.Projections;
 using ApplicationManager.Domain.Identities.Queries;
 using Microsoft.EntityFrameworkCore;
@@ -19,9 +18,9 @@ namespace ApplicationManager.Persistence.Identities
         public TwoFactorAuthenticationIdentityProjection Run(Guid identityId)
         {
             return _applicationManagerDbContext.Query<TwoFactorAuthenticationIdentityProjection>()
-                .FromSql($"SELECT * FROM [apps].[AuthenticationIdentities] WHERE [IdentityId] = {identityId}")
+                .FromSql($"SELECT * FROM [apps].[AuthenticationIdentities] WHERE [TYPE] = {AuthenticationIdentityTypes.TwoFactor} AND [IdentityId] = {identityId}")
                 .AsNoTracking()
-                .ToList().SingleOrDefault();
+                .ToList().FirstOrDefault();
         }
     }
 }

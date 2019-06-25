@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices.Authentication.Models;
@@ -57,9 +58,19 @@ namespace ApplicationManager.ApplicationServices.Authentication
                         claimsBuilder.WithUser(user.Id);
                     }
 
-                    ClaimsIdentity claimsIdentity = claimsBuilder.WithSubject(identity.Id)
-                        .WithRole(JwtClaims.AppAccess)
-                        .Build();
+                    claimsBuilder.WithSubject(identity.Id);
+
+                    if (identity.AuthenticationIdentities.Any(i => i is TwoFactorAuthenticationIdentity authenticationIdentity
+                                                                   && authenticationIdentity.TwoFactorAuthenticationType == TwoFactorAuthenticationType.ConfirmIdentity))
+                    {
+                        claimsBuilder.WithRole(JwtClaims.RestrictedAppAccess);
+                    }
+                    else
+                    {
+                        claimsBuilder.WithRole(JwtClaims.AppAccess);
+                    }
+
+                    ClaimsIdentity claimsIdentity = claimsBuilder.Build();
 
                     transaction.Commit();
 

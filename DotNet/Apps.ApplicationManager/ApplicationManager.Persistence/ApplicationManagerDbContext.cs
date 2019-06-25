@@ -7,6 +7,7 @@ using ApplicationManager.Domain.Users;
 using ApplicationManager.Persistence.AuthenticationServices;
 using ApplicationManager.Persistence.Identities;
 using ApplicationManager.Persistence.NotificationTypes;
+using Common.Domain.Models.DataProtection;
 using Common.Setup.Infrastructure.Hashing;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityFramework.Infrastructure.Extensions;
@@ -84,6 +85,9 @@ namespace ApplicationManager.Persistence
                 .HasOne(i => i.Session)
                 .WithOne(s => s.Identity)
                 .HasForeignKey<Session>("IdentityId");
+
+            modelBuilder.Entity<Identity>()
+                .Ignore(i => i.EmailAddress);
 
             modelBuilder.Entity<NotificationTypeChannel>()
                 .ToTable("NotificationTypeChannels");

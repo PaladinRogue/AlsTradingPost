@@ -26,5 +26,19 @@ namespace Common.Authorisation
                 throw new BusinessApplicationException(ExceptionType.Unauthorized, "You are not authorised to perform this action", e);
             }
         }
+
+        public void Secure(Action action, IAuthorisationContext authorisationContext)
+        {
+            try
+            {
+                _authorisationManager.DemandAccess(authorisationContext);
+
+                action();
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                throw new BusinessApplicationException(ExceptionType.Unauthorized, "You are not authorised to perform this action", e);
+            }
+        }
     }
 }

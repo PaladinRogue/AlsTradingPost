@@ -5,7 +5,6 @@ using ApplicationManager.Domain.Identities.CheckPassword;
 using ApplicationManager.Domain.Identities.CreatePassword;
 using Common.Domain.Models.DataProtection;
 using Common.Resources;
-using Common.Setup.Infrastructure.Hashing;
 
 namespace ApplicationManager.Domain.Identities
 {
@@ -18,7 +17,7 @@ namespace ApplicationManager.Domain.Identities
         {
         }
 
-        internal PasswordIdentity(
+        private PasswordIdentity(
             Identity identity,
             AuthenticationGrantTypePassword authenticationGrantTypePassword,
             CreatePasswordIdentityDdto createPasswordIdentityDdto)

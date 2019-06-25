@@ -89,7 +89,8 @@ namespace Common.Api.Formats.JsonV1.Formatters
 
                     if (string.IsNullOrWhiteSpace(model.Data.Type) || model.Data.Type != expectedType)
                     {
-                        throw new BadRequestException();
+                        //TODO proper response require here, prob in the exception middleware
+                        throw new BadRequestException($"Model type is not expected for this request");
                     }
 
                     return InputFormatterResult.Success(model.Data.Attributes.ToObject(modelType));

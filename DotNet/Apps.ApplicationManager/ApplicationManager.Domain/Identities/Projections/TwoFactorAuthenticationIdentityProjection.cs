@@ -6,8 +6,5 @@ namespace ApplicationManager.Domain.Identities.Projections
     {
         [SensitiveInformation]
         public string EmailAddress { get; set; }
-
-        [SensitiveInformation]
-        public string Token { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace ApplicationManager.Domain.Identities
         {
         }
 
-        protected RefreshTokenIdentity(
+        private RefreshTokenIdentity(
             Identity identity,
             AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken)
         {

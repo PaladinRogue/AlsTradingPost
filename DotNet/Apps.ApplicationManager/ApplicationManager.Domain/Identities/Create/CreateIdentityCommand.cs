@@ -2,9 +2,12 @@
 {
     public class CreateIdentityCommand : ICreateIdentityCommand
     {
-        public Identity Execute()
+        public Identity Execute(CreateIdentityCommandDdto createIdentityCommandDdto)
         {
-            return Identity.Create();
+            return Identity.Create(new CreateIdentityDdto
+            {
+                EmailAddress = createIdentityCommandDdto.EmailAddress
+            });
         }
     }
 }

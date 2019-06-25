@@ -1,6 +1,4 @@
-﻿using Common.Setup.Infrastructure.Hashing;
-
-namespace Common.Domain.Models.DataProtection
+﻿namespace Common.Domain.Models.DataProtection
 {
     public class DataProtection
     {
@@ -64,7 +62,7 @@ namespace Common.Domain.Models.DataProtection
         {
             if (DataHasher == null)
             {
-                throw new HashFactoryNotSetException();
+                throw new DataHasherNotSetException();
             }
 
             return DataHasher.Hash(data, salt);

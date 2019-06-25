@@ -9,6 +9,7 @@
     <ProjectReference Include="..\..\Common\Common.Api\Common.Api.csproj" />
     <ProjectReference Include="..\..\Common\Common.Application\Common.Application.csproj" />
     <ProjectReference Include="..\..\Common\Common.Messaging\Common.Messaging.csproj" />
+    <ProjectReference Include="..\..\Common\Common.Resources\Common.Resources.csproj" />
     <ProjectReference Include="..\ApplicationManager.Domain\ApplicationManager.Domain.csproj" />
   </ItemGroup>
 </Project>

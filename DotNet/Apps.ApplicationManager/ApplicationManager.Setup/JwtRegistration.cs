@@ -72,6 +72,7 @@ namespace ApplicationManager.Setup
 		    services.AddAuthorization(options =>
 		    {
 		        options.AddPolicy(CommonJwtClaims.AppAccess, policy => policy.RequireClaim(CommonJwtClaimIdentifiers.Rol, CommonJwtClaims.AppAccess));
+		        options.AddPolicy(CommonJwtClaims.RestrictedAppAccess, policy => policy.RequireClaim(CommonJwtClaimIdentifiers.Rol, CommonJwtClaims.RestrictedAppAccess));
 		        options.AddPolicy(JwtClaims.IsUser, policy => policy.Requirements.Add(new IsUserRequirement()));
 		    });
 

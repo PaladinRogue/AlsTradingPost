@@ -16,6 +16,26 @@ namespace Common.Resources.Extensions
                 .Select(s => s[_random.Next(s.Length)]).ToArray());
         }
 
+        public static string RandomSpecial(int length)
+        {
+            const string chars = "!£$%^&*()_+-=[]{}'#@~,.<>?";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[_random.Next(s.Length)]).ToArray());
+        }
+
+        public static string RandomChar(int length)
+        {
+            const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[_random.Next(s.Length)]).ToArray());
+        }
+
+        public static string RandomNumeric(int length)
+        {
+            const string chars = "0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[_random.Next(s.Length)]).ToArray());
+        }
     }
 
     public static class StringExtensions

@@ -2,7 +2,7 @@
 {
     public static class JwtClaims
     {
-        public static readonly string AppAccess = "AppAccess";
-        public static readonly string RestrictedAppAccess = "RestrictedAppAccess";
+        public const string AppAccess = "AppAccess";
+        public const string RestrictedAppAccess = "RestrictedAppAccess";
     }
 }

@@ -1,11 +1,10 @@
 using System.Text.RegularExpressions;
-using ApplicationManager.Domain.Identities.AddConfirmedPassword;
 using Common.Resources;
 using FluentValidation;
 
 namespace ApplicationManager.Domain.Identities.RegisterPassword
 {
-    public class RegisterPasswordValidator : AbstractValidator<RegisterPasswordDdto>
+    public class RegisterPasswordValidator : AbstractValidator<RegisterPasswordCommandDdto>
     {
         public RegisterPasswordValidator()
         {

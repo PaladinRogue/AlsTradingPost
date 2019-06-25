@@ -1,11 +1,10 @@
 using System.Text.RegularExpressions;
-using ApplicationManager.Domain.Identities.AddConfirmedPassword;
 using Common.Resources;
 using FluentValidation;
 
 namespace ApplicationManager.Domain.Identities.ChangePassword
 {
-    public class ChangePasswordValidator : AbstractValidator<ChangePasswordDdto>
+    public class ChangePasswordValidator : AbstractValidator<ChangePasswordCommandDdto>
     {
         public ChangePasswordValidator()
         {

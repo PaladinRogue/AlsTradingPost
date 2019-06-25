@@ -23,9 +23,21 @@ namespace ApplicationManager.ApplicationServices.Identities
                 DefaultAuthorisationContext.Create(AuthorisationResource.Identity, AuthorisationAction.Get));
         }
 
-        public PasswordIdentityAdto CreateConfirmedPasswordIdentity(CreateConfirmedPasswordIdentityAdto createConfirmedPasswordIdentityAdto)
+        public void ResetPassword(ResetPasswordAdto resetPasswordAdto)
         {
-            return _securityApplicationService.Secure(() => _identityApplicationService.CreateConfirmedPasswordIdentity(createConfirmedPasswordIdentityAdto),
+            _securityApplicationService.Secure(() => { _identityApplicationService.ResetPassword(resetPasswordAdto); },
+                DefaultAuthorisationContext.Create(AuthorisationResource.Identity, AuthorisationAction.Create));
+        }
+
+        public void ForgotPassword(ForgotPasswordAdto forgotPasswordAdto)
+        {
+            _securityApplicationService.Secure(() => { _identityApplicationService.ForgotPassword(forgotPasswordAdto); },
+                DefaultAuthorisationContext.Create(AuthorisationResource.Identity, AuthorisationAction.Create));
+        }
+
+        public void ConfirmIdentity(ConfirmIdentityAdto confirmIdentityAdto)
+        {
+            _securityApplicationService.Secure(() => { _identityApplicationService.ConfirmIdentity(confirmIdentityAdto); },
                 DefaultAuthorisationContext.Create(AuthorisationResource.Identity, AuthorisationAction.Update));
         }
 

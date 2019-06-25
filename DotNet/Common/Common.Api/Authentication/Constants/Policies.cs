@@ -2,6 +2,7 @@
 {
     public class Policies
     {
-        public static readonly string AppAccess = JwtClaims.AppAccess;
+        public const string AppAccess = JwtClaims.AppAccess;
+        public const string RestrictedAppAccess = JwtClaims.RestrictedAppAccess;
     }
 }

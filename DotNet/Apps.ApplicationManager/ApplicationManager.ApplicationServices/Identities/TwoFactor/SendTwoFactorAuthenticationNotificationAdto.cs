@@ -1,4 +1,5 @@
 using System;
+using ApplicationManager.Domain.Identities;
 
 namespace ApplicationManager.ApplicationServices.Identities.TwoFactor
 {
@@ -8,6 +9,6 @@ namespace ApplicationManager.ApplicationServices.Identities.TwoFactor
 
         public string Token { get; set; }
 
-        public string TwoFactorAuthenticationType { get; set; }
+        public TwoFactorAuthenticationType TwoFactorAuthenticationType { get; set; }
     }
 }

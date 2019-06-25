@@ -10,7 +10,7 @@ namespace ApplicationManager.Domain.Identities
         {
         }
 
-        protected Session(Identity identity)
+        private Session(Identity identity)
         {
             Identity = identity;
             IsRevoked = false;

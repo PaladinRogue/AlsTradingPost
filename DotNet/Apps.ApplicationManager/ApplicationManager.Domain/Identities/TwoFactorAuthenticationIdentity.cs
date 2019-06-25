@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using ApplicationManager.Domain.Identities.CreateTwoFactor;
 using ApplicationManager.Domain.Identities.Events;
+using ApplicationManager.Domain.Identities.ValidateToken;
 using Common.Domain.DomainEvents;
 using Common.Domain.Models.DataProtection;
+using Common.Resources;
 using String = Common.Resources.Extensions.String;
 
 namespace ApplicationManager.Domain.Identities
@@ -13,7 +15,7 @@ namespace ApplicationManager.Domain.Identities
         {
         }
 
-        internal TwoFactorAuthenticationIdentity(
+        private TwoFactorAuthenticationIdentity(
             Identity identity,
             CreateTwoFactorAuthenticationIdentityDdto createTwoFactorAuthenticationIdentityDdto)
         {
@@ -34,15 +36,22 @@ namespace ApplicationManager.Domain.Identities
             return twoFactorAuthenticationIdentity;
         }
 
+        [Required]
         [MaxLength(254)]
         [EmailAddress]
         [SensitiveInformation]
         public string EmailAddress { get; protected set; }
 
-        [MaxLength(40)]
-        [SensitiveInformation]
-        public string Token { get; protected set; }
+        [Required]
+        [MaxLength(FieldSizes.Protected)]
+        public string Token { get; set; }
 
-        public string TwoFactorAuthenticationType { get; protected set; }
+        [Required]
+        public TwoFactorAuthenticationType TwoFactorAuthenticationType { get; protected set; }
+
+        internal bool ValidateToken(ValidateTokenDdto validateTokenDdto)
+        {
+            return Token == validateTokenDdto.Token;
+        }
     }
 }

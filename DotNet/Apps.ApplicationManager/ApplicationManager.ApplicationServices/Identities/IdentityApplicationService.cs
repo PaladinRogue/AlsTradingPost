@@ -3,11 +3,13 @@ using System.Linq;
 using ApplicationManager.ApplicationServices.Identities.Models;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities;
-using ApplicationManager.Domain.Identities.AddConfirmedPassword;
 using ApplicationManager.Domain.Identities.ChangePassword;
+using ApplicationManager.Domain.Identities.ConfirmIdentity;
 using ApplicationManager.Domain.Identities.Create;
+using ApplicationManager.Domain.Identities.ForgotPassword;
 using ApplicationManager.Domain.Identities.RegisterPassword;
-using ApplicationManager.Domain.Identities.ValidateTwoFactor;
+using ApplicationManager.Domain.Identities.ResetPassword;
+using ApplicationManager.Domain.Identities.ValidateToken;
 using Common.Application.Exceptions;
 using Common.Application.Transactions;
 using Common.ApplicationServices.Concurrency;
@@ -20,7 +22,7 @@ namespace ApplicationManager.ApplicationServices.Identities
     {
         private readonly ITransactionManager _transactionManager;
 
-        private readonly IAddConfirmedPasswordIdentityCommand _addConfirmedPasswordIdentityCommand;
+        private readonly IResetPasswordCommand _resetPasswordCommand;
 
         private readonly ICommandRepository<AuthenticationService> _authenticationServiceCommandRepository;
 
@@ -34,24 +36,32 @@ namespace ApplicationManager.ApplicationServices.Identities
 
         private readonly ICreateIdentityCommand _createIdentityCommand;
 
+        private readonly IForgotPasswordCommand _forgotPasswordCommand;
+
+        private readonly IConfirmIdentityCommand _confirmIdentityCommand;
+
         public IdentityApplicationService(
             ITransactionManager transactionManager,
-            IAddConfirmedPasswordIdentityCommand addConfirmedPasswordIdentityCommand,
+            IResetPasswordCommand resetPasswordCommand,
             ICommandRepository<Identity> identityCommandRepository,
             ICommandRepository<AuthenticationService> authenticationServiceCommandRepository,
             IQueryRepository<Identity> identityQueryRepository,
             IChangePasswordCommand changePasswordCommand,
             IRegisterPasswordCommand registerPasswordCommand,
-            ICreateIdentityCommand createIdentityCommand)
+            ICreateIdentityCommand createIdentityCommand,
+            IForgotPasswordCommand forgotPasswordCommand,
+            IConfirmIdentityCommand confirmIdentityCommand)
         {
             _transactionManager = transactionManager;
-            _addConfirmedPasswordIdentityCommand = addConfirmedPasswordIdentityCommand;
+            _resetPasswordCommand = resetPasswordCommand;
             _identityCommandRepository = identityCommandRepository;
             _authenticationServiceCommandRepository = authenticationServiceCommandRepository;
             _identityQueryRepository = identityQueryRepository;
             _changePasswordCommand = changePasswordCommand;
             _registerPasswordCommand = registerPasswordCommand;
             _createIdentityCommand = createIdentityCommand;
+            _forgotPasswordCommand = forgotPasswordCommand;
+            _confirmIdentityCommand = confirmIdentityCommand;
         }
 
         public IdentityAdto Get(GetIdentityAdto getIdentityAdto)
@@ -77,34 +87,24 @@ namespace ApplicationManager.ApplicationServices.Identities
             }
         }
 
-        public PasswordIdentityAdto CreateConfirmedPasswordIdentity(CreateConfirmedPasswordIdentityAdto createConfirmedPasswordIdentityAdto)
+        public void ResetPassword(ResetPasswordAdto resetPasswordAdto)
         {
-            if (createConfirmedPasswordIdentityAdto == null) throw new ArgumentNullException(nameof(createConfirmedPasswordIdentityAdto));
+            if (resetPasswordAdto == null) throw new ArgumentNullException(nameof(resetPasswordAdto));
 
             using (ITransaction transaction = _transactionManager.Create())
             {
                 try
                 {
-                    Identity identity = _identityCommandRepository.GetWithConcurrencyCheck(createConfirmedPasswordIdentityAdto.IdentityId, createConfirmedPasswordIdentityAdto.Version);
-
-                    PasswordIdentity passwordIdentity = _addConfirmedPasswordIdentityCommand.Execute(identity, GetAuthenticationGrantTypePassword(), new AddConfirmedPasswordIdentityDdto
+                    Identity identity = _resetPasswordCommand.Execute(new ResetPasswordCommandDdto
                     {
-                        Token = createConfirmedPasswordIdentityAdto.Token,
-                        Identifier = createConfirmedPasswordIdentityAdto.Identifier,
-                        Password = createConfirmedPasswordIdentityAdto.Password,
-                        ConfirmPassword = createConfirmedPasswordIdentityAdto.ConfirmPassword
+                        Token = resetPasswordAdto.Token,
+                        Password = resetPasswordAdto.Password,
+                        ConfirmPassword = resetPasswordAdto.ConfirmPassword
                     });
 
                     _identityCommandRepository.Update(identity);
 
                     transaction.Commit();
-
-                    return new PasswordIdentityAdto
-                    {
-                        Identifier = passwordIdentity.Identifier,
-                        Password = passwordIdentity.Password,
-                        Version = ConcurrencyVersionFactory.CreateFromEntity(identity)
-                    };
                 }
                 catch (PasswordIdentityExistsDomainException)
                 {
@@ -117,6 +117,73 @@ namespace ApplicationManager.ApplicationServices.Identities
                 catch (ConcurrencyDomainException)
                 {
                     throw new BusinessApplicationException(ExceptionType.Concurrency, "Concurrency check failed");
+                }
+                catch (DomainValidationRuleException e)
+                {
+                    throw new BusinessValidationRuleApplicationException(e.ValidationResult);
+                }
+            }
+        }
+
+        public void ForgotPassword(ForgotPasswordAdto forgotPasswordAdto)
+        {
+            if (forgotPasswordAdto == null) throw new ArgumentNullException(nameof(forgotPasswordAdto));
+
+            using (ITransaction transaction = _transactionManager.Create())
+            {
+                try
+                {
+                    Identity identity = _forgotPasswordCommand.Execute(new ForgotPasswordCommandDdto
+                    {
+                        EmailAddress = forgotPasswordAdto.EmailAddress
+                    });
+
+                    if (identity == null)
+                    {
+                        return;
+                    }
+
+                    _identityCommandRepository.Update(identity);
+
+                    transaction.Commit();
+                }
+                catch (PasswordNotSetDomainException)
+                {
+                }
+                catch (DomainValidationRuleException e)
+                {
+                    throw new BusinessValidationRuleApplicationException(e.ValidationResult);
+                }
+            }
+        }
+
+        public void ConfirmIdentity(ConfirmIdentityAdto confirmIdentityAdto)
+        {
+            if (confirmIdentityAdto == null) throw new ArgumentNullException(nameof(confirmIdentityAdto));
+
+            using (ITransaction transaction = _transactionManager.Create())
+            {
+                try
+                {
+                    Identity identity = _identityCommandRepository.GetWithConcurrencyCheck(confirmIdentityAdto.IdentityId, confirmIdentityAdto.Version);
+
+                    if (identity == null)
+                    {
+                        throw new BusinessApplicationException(ExceptionType.Concurrency, "No identity found to confirm identity");
+                    }
+
+                    _confirmIdentityCommand.Execute(identity, new ConfirmIdentityCommandDdto
+                    {
+                        Token = confirmIdentityAdto.Token
+                    });
+
+                    _identityCommandRepository.Update(identity);
+
+                    transaction.Commit();
+                }
+                catch (InvalidTwoFactorTokenDomainException)
+                {
+                    throw new BusinessApplicationException(ExceptionType.Unauthorized, "Token invalid for identity");
                 }
                 catch (DomainValidationRuleException e)
                 {
@@ -171,7 +238,7 @@ namespace ApplicationManager.ApplicationServices.Identities
                         throw new BusinessApplicationException(ExceptionType.NotFound, "Identity does not exist");
                     }
 
-                    _changePasswordCommand.Execute(identity, new ChangePasswordDdto
+                    _changePasswordCommand.Execute(identity, new ChangePasswordCommandDdto
                     {
                         Password = changePasswordAdto.Password,
                         ConfirmPassword = changePasswordAdto.ConfirmPassword
@@ -203,13 +270,18 @@ namespace ApplicationManager.ApplicationServices.Identities
 
         public PasswordIdentityAdto RegisterPassword(RegisterPasswordAdto registerPasswordAdto)
         {
+            if (registerPasswordAdto == null) throw new ArgumentNullException(nameof(registerPasswordAdto));
+
             using (ITransaction transaction = _transactionManager.Create())
             {
                 try
                 {
-                    Identity identity = _createIdentityCommand.Execute();
+                    Identity identity = _createIdentityCommand.Execute(new CreateIdentityCommandDdto
+                    {
+                        EmailAddress = registerPasswordAdto.EmailAddress
+                    });
 
-                    PasswordIdentity passwordIdentity = _registerPasswordCommand.Execute(identity, GetAuthenticationGrantTypePassword(), new RegisterPasswordDdto
+                    PasswordIdentity passwordIdentity = _registerPasswordCommand.Execute(identity, GetAuthenticationGrantTypePassword(), new RegisterPasswordCommandDdto
                     {
                         Identifier = registerPasswordAdto.Identifier,
                         Password = registerPasswordAdto.Password,

@@ -10,14 +10,15 @@ using ApplicationManager.ApplicationServices.Notifications.Send;
 using ApplicationManager.ApplicationServices.Users.CreateAdmin;
 using ApplicationManager.Domain.Applications.Change;
 using ApplicationManager.Domain.Applications.Create;
-using ApplicationManager.Domain.Identities.AddConfirmedPassword;
-using ApplicationManager.Domain.Identities.AddTwoFactor;
 using ApplicationManager.Domain.Identities.ChangePassword;
 using ApplicationManager.Domain.Identities.CheckPassword;
+using ApplicationManager.Domain.Identities.ConfirmIdentity;
 using ApplicationManager.Domain.Identities.Create;
+using ApplicationManager.Domain.Identities.ForgotPassword;
 using ApplicationManager.Domain.Identities.Login;
 using ApplicationManager.Domain.Identities.Queries;
 using ApplicationManager.Domain.Identities.RegisterPassword;
+using ApplicationManager.Domain.Identities.ResetPassword;
 using ApplicationManager.Domain.Users.Create;
 using ApplicationManager.Persistence;
 using ApplicationManager.Persistence.Identities;
@@ -65,29 +66,32 @@ namespace ApplicationManager.Setup
 	    {
 		    ValidatorOptions.LanguageManager.Enabled = false;
 
-	        services.AddScoped<IValidator<AddTwoFactorAuthenticationIdentityDdto>, AddTwoFactorAuthenticationIdentityValidator>();
 	        services.AddScoped<IValidator<ChangeApplicationDdto>, ChangeApplicationValidator>();
 	        services.AddScoped<IValidator<CreateApplicationDdto>, CreateApplicationValidator>();
-	        services.AddScoped<IValidator<AddConfirmedPasswordIdentityDdto>, AddConfirmedPasswordIdentityValidator>();
+	        services.AddScoped<IValidator<ResetPasswordCommandDdto>, ResetPasswordValidator>();
 	        services.AddScoped<IValidator<LoginCommandDdto>, LoginCommandValidator>();
 	        services.AddScoped<IValidator<CheckPasswordDdto>, CheckPasswordValidator>();
-	        services.AddScoped<IValidator<ChangePasswordDdto>, ChangePasswordValidator>();
-	        services.AddScoped<IValidator<RegisterPasswordDdto>, RegisterPasswordValidator>();
+	        services.AddScoped<IValidator<ChangePasswordCommandDdto>, ChangePasswordValidator>();
+	        services.AddScoped<IValidator<RegisterPasswordCommandDdto>, RegisterPasswordValidator>();
+	        services.AddScoped<IValidator<ConfirmIdentityCommandDdto>, ConfirmIdentityValidator>();
+	        services.AddScoped<IValidator<ForgotPasswordCommandDdto>, ForgotPasswordValidator>();
+	        services.AddScoped<IValidator<CreateIdentityCommandDdto>, CreateIdentityValidator>();
 	    }
 
         public static void RegisterDomainServices(IServiceCollection services)
         {
-            services.AddScoped<IAddTwoFactorAuthenticationIdentityCommand, AddTwoFactorAuthenticationIdentityCommand>();
             services.AddScoped<ICreateIdentityCommand, CreateIdentityCommand>();
             services.AddScoped<IChangeApplicationCommand, ChangeApplicationCommand>();
             services.AddScoped<ICreateApplicationCommand, CreateApplicationCommand>();
             services.AddScoped<ICreateUserCommand, CreateUserCommand>();
             services.AddScoped<ICreateUserCommand, CreateUserCommand>();
-            services.AddScoped<IAddConfirmedPasswordIdentityCommand, AddConfirmedPasswordIdentityCommand>();
+            services.AddScoped<IResetPasswordCommand, ResetPasswordCommand>();
             services.AddScoped<ILoginCommand, LoginCommand>();
             services.AddScoped<ICheckPasswordCommand, CheckPasswordCommand>();
             services.AddScoped<IChangePasswordCommand, ChangePasswordCommand>();
             services.AddScoped<IRegisterPasswordCommand, RegisterPasswordCommand>();
+            services.AddScoped<IConfirmIdentityCommand, ConfirmIdentityCommand>();
+            services.AddScoped<IForgotPasswordCommand, ForgotPasswordCommand>();
         }
 
         public static void RegisterPersistenceServices(IConfiguration configuration, IServiceCollection services)
@@ -95,6 +99,8 @@ namespace ApplicationManager.Setup
             services.AddScoped<IGetTwoFactorAuthenticationIdentityByIdentityQuery, GetTwoFactorAuthenticationIdentityByIdentityQuery>();
             services.AddScoped<IPasswordIdentityIdentifierIsUniqueQuery, PasswordIdentityIdentifierIsUniqueQuery>();
             services.AddScoped<IGetIdentityByIdentifierAndPasswordQuery, GetIdentityByIdentifierAndPasswordQuery>();
+            services.AddScoped<IGetIdentityByEmailAddressQuery, GetIdentityByEmailAddressQuery>();
+            services.AddScoped<IGetIdentityByForgotPasswordTokenQuery, GetIdentityByForgotPasswordTokenQuery>();
 
             services.AddScoped(typeof(ICommandRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IQueryRepository<>), typeof(Repository<>));

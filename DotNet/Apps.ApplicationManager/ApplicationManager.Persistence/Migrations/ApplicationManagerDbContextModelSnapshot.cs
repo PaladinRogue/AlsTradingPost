@@ -85,6 +85,10 @@ namespace ApplicationManager.Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("EmailAddressHash")
+                        .IsRequired()
+                        .HasMaxLength(1024);
+
                     b.Property<byte[]>("Version")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
@@ -253,12 +257,14 @@ namespace ApplicationManager.Persistence.Migrations
                     b.HasBaseType("ApplicationManager.Domain.Identities.AuthenticationIdentity");
 
                     b.Property<string>("EmailAddress")
+                        .IsRequired()
                         .HasMaxLength(1024);
 
                     b.Property<string>("Token")
+                        .IsRequired()
                         .HasMaxLength(1024);
 
-                    b.Property<string>("TwoFactorAuthenticationType");
+                    b.Property<int>("TwoFactorAuthenticationType");
 
                     b.HasDiscriminator().HasValue("TWO_FACTOR");
                 });

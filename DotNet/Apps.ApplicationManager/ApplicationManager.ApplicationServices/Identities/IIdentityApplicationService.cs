@@ -6,7 +6,11 @@ namespace ApplicationManager.ApplicationServices.Identities
     {
         IdentityAdto Get(GetIdentityAdto getIdentityAdto);
 
-        PasswordIdentityAdto CreateConfirmedPasswordIdentity(CreateConfirmedPasswordIdentityAdto createConfirmedPasswordIdentityAdto);
+        void ResetPassword(ResetPasswordAdto resetPasswordAdto);
+
+        void ForgotPassword(ForgotPasswordAdto forgotPasswordAdto);
+
+        void ConfirmIdentity(ConfirmIdentityAdto confirmIdentityAdto);
 
         PasswordIdentityAdto GetPasswordIdentity(GetPasswordIdentityAdto getPasswordIdentityAdto);
 

@@ -20,7 +20,7 @@ namespace ApplicationManager.ApplicationServices.Identities.TwoFactor
             using (ITransaction transaction = _transactionManager.Create())
             {
                 Message.Send(SendNotificationMessage.Create(
-                    sendTwoFactorAuthenticationNotificationAdto.TwoFactorAuthenticationType,
+                    TwoFactorAuthenticationNotificationMap.ForType(sendTwoFactorAuthenticationNotificationAdto.TwoFactorAuthenticationType),
                     sendTwoFactorAuthenticationNotificationAdto.IdentityId,
                     new Dictionary<string, string>
                     {

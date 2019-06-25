@@ -1,6 +1,7 @@
 ﻿using System;
 using ApplicationManager.ApplicationServices.Identities;
 using ApplicationManager.ApplicationServices.Identities.Models;
+using Common.Api.Authentication;
 using Common.Api.Builders.Resource;
 using Common.Api.Routing;
 using Microsoft.AspNetCore.Authorization;
@@ -24,41 +25,46 @@ namespace ApplicationManager.Api.Identities
         }
 
         [AllowAnonymous]
-        [HttpGet("{identityId}/password/resourceTemplate", Name = RouteDictionary.PasswordIdentityResourceTemplate)]
-        public IActionResult GetPasswordIdentityResourceTemplate(Guid identityId, [FromQuery]string token)
+        [HttpGet("password/reset/resourceTemplate", Name = RouteDictionary.ResetPasswordResourceTemplate)]
+        public IActionResult GetResetPasswordResourceTemplate([FromQuery]string token)
         {
-            IdentityAdto identityAdto = _identityApplicationService.Get(new GetIdentityAdto
+            return Ok(_resourceBuilder.Build(new ResetPasswordTemplate
             {
-                Id = identityId
-            });
-
-            return Ok(_resourceBuilder.Build(new CreatePasswordIdentityTemplate
-            {
-                Token = token,
-                Version = identityAdto.Version
+                Token = token
             }));
         }
 
         [AllowAnonymous]
-        [HttpPost("{identityId}/password", Name = RouteDictionary.PostPasswordIdentity)]
-        public IActionResult Post(Guid identityId, CreatePasswordIdentityTemplate template)
+        [HttpPost("password/reset", Name = RouteDictionary.ResetPassword)]
+        public IActionResult Post(ResetPasswordTemplate template)
         {
-            PasswordIdentityAdto passwordIdentityAdto = _identityApplicationService.CreateConfirmedPasswordIdentity(new CreateConfirmedPasswordIdentityAdto
+            _identityApplicationService.ResetPassword(new ResetPasswordAdto
             {
-                IdentityId = identityId,
-                Identifier = template.Identifier,
                 Password = template.Password,
                 ConfirmPassword = template.ConfirmPassword,
-                Token = template.Token,
-                Version = template.Version
+                Token = template.Token
             });
 
-            return CreatedAtRoute(RouteDictionary.GetPasswordIdentity, new { identityId }, _resourceBuilder.Build(new PasswordIdentityResource
+            return Accepted(_resourceBuilder.Build(new ResetPasswordResource()));
+        }
+
+        [AllowAnonymous]
+        [HttpGet("password/forgot/resourceTemplate", Name = RouteDictionary.ForgotPasswordResourceTemplate)]
+        public IActionResult GetForgotPasswordResourceTemplate()
+        {
+            return Ok(_resourceBuilder.Build(new ForgotPasswordTemplate()));
+        }
+
+        [AllowAnonymous]
+        [HttpPost("password/forgot", Name = RouteDictionary.ForgotPassword)]
+        public IActionResult Post(ForgotPasswordTemplate template)
+        {
+            _identityApplicationService.ForgotPassword(new ForgotPasswordAdto
             {
-                Identifier = passwordIdentityAdto.Identifier,
-                Password = passwordIdentityAdto.Password,
-                Version = passwordIdentityAdto.Version
-            }));
+                EmailAddress = template.EmailAddress
+            });
+
+            return Accepted(_resourceBuilder.Build(new ForgotPasswordResource()));
         }
 
         [HttpGet("{identityId}/password", Name = RouteDictionary.GetPasswordIdentity)]
@@ -102,12 +108,42 @@ namespace ApplicationManager.Api.Identities
                 Version = template.Version
             });
 
-            return Ok(_resourceBuilder.Build(new PasswordIdentityResource
+            return CreatedAtRoute(RouteDictionary.GetPasswordIdentity, new { identityId }, _resourceBuilder.Build(new PasswordIdentityResource
             {
                 Identifier = passwordIdentityAdto.Identifier,
                 Password = passwordIdentityAdto.Password,
                 Version = passwordIdentityAdto.Version
             }));
+        }
+
+        [AllowRestrictedAppAccess]
+        [HttpGet("{identityId}/confirm/resourceTemplate", Name = RouteDictionary.ConfirmIdentityResourceTemplate)]
+        public IActionResult ConfirmIdentityResourceTemplate(Guid identityId, [FromQuery]string token)
+        {
+            IdentityAdto identityAdto = _identityApplicationService.Get(new GetIdentityAdto
+            {
+                Id = identityId,
+            });
+
+            return Ok(_resourceBuilder.Build(new ConfirmIdentityTemplate
+            {
+                Version = identityAdto.Version,
+                Token = token
+            }));
+        }
+
+        [AllowRestrictedAppAccess]
+        [HttpPost("{identityId}/confirm", Name = RouteDictionary.ConfirmIdentity)]
+        public IActionResult ChangePassword(Guid identityId, ConfirmIdentityTemplate template)
+        {
+            _identityApplicationService.ConfirmIdentity(new ConfirmIdentityAdto
+            {
+                IdentityId = identityId,
+                Token = template.Token,
+                Version = template.Version
+            });
+
+            return Accepted(_resourceBuilder.Build(new ConfirmIdentityResource()));
         }
 
         [AllowAnonymous]

@@ -1,110 +1,132 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using ApplicationManager.Domain.AuthenticationServices;
-using ApplicationManager.Domain.Identities.AddConfirmedPassword;
-using ApplicationManager.Domain.Identities.AddTwoFactor;
 using ApplicationManager.Domain.Identities.ChangePassword;
+using ApplicationManager.Domain.Identities.ConfirmIdentity;
+using ApplicationManager.Domain.Identities.Create;
 using ApplicationManager.Domain.Identities.CreatePassword;
 using ApplicationManager.Domain.Identities.CreateTwoFactor;
+using ApplicationManager.Domain.Identities.ForgotPassword;
 using ApplicationManager.Domain.Identities.RegisterPassword;
-using ApplicationManager.Domain.Identities.ValidateTwoFactor;
+using ApplicationManager.Domain.Identities.ResetPassword;
+using ApplicationManager.Domain.Identities.ValidateToken;
 using Common.Domain.Models;
+using Common.Domain.Models.DataProtection;
 using Common.Domain.Models.Interfaces;
+using Common.Resources;
 
 namespace ApplicationManager.Domain.Identities
 {
     public class Identity : VersionedEntity, IAggregateRoot
     {
+        private const byte MaskLength = 20;
+        private readonly string _emailMask = new string('*', MaskLength);
+
         protected Identity()
         {
         }
 
+        private Identity(CreateIdentityDdto createIdentityDdto)
+        {
+            EmailAddress = createIdentityDdto.EmailAddress;
+        }
+
         private readonly ISet<AuthenticationIdentity> _authenticationIdentities = new HashSet<AuthenticationIdentity>();
 
-        internal static Identity Create()
+        internal static Identity Create(CreateIdentityDdto createIdentityDdto)
         {
-            return new Identity();
+            return new Identity(createIdentityDdto);
         }
 
         public virtual Session Session { get; protected set; }
 
+        public string EmailAddress
+        {
+            get => _emailMask;
+            protected set => EmailAddressHash = DataProtection.Hash(value, StaticSalts.EmailAddress).Hash;
+        }
+
+        [Required]
+        [MaxLength(FieldSizes.Protected)]
+        public string EmailAddressHash { get; set; }
+
         public virtual IEnumerable<AuthenticationIdentity> AuthenticationIdentities => _authenticationIdentities;
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="authenticationGrantTypePassword"></param>
-        /// <param name="addConfirmedPasswordIdentityDdto"></param>
-        /// <returns></returns>
-        /// <exception cref="PasswordIdentityExistsDomainException"></exception>
-        /// <exception cref="InvalidTwoFactorTokenDomainException"></exception>
-        internal PasswordIdentity AddConfirmedPasswordIdentity(
-            AuthenticationGrantTypePassword authenticationGrantTypePassword,
-            AddConfirmedPasswordIdentityDdto addConfirmedPasswordIdentityDdto)
+        internal void ResetPassword(ResetPasswordDdto resetPasswordDdto)
         {
-            if (AuthenticationIdentities.Any(i => i is PasswordIdentity))
+            PasswordIdentity passwordIdentity = AuthenticationIdentities.OfType<PasswordIdentity>().SingleOrDefault();
+
+            if (passwordIdentity == null)
             {
-                throw new PasswordIdentityExistsDomainException();
+                throw new PasswordNotSetDomainException();
             }
 
-            TwoFactorAuthenticationIdentity twoFactorAuthenticationIdentity = GetTwoFactor(
-                new ValidateTwoFactorIdentityDdto
-                {
-                    Token = addConfirmedPasswordIdentityDdto.Token
-                });
+            TwoFactorAuthenticationIdentity twoFactorAuthenticationIdentity =
+                AuthenticationIdentities.OfType<TwoFactorAuthenticationIdentity>().SingleOrDefault(t =>
+                    t.TwoFactorAuthenticationType == TwoFactorAuthenticationType.ForgotPassword);
 
             if (twoFactorAuthenticationIdentity == null)
             {
                 throw new InvalidTwoFactorTokenDomainException();
             }
 
-            _authenticationIdentities.Remove(twoFactorAuthenticationIdentity);
-
-            PasswordIdentity passwordIdentity = PasswordIdentity.Create(this, authenticationGrantTypePassword, new CreatePasswordIdentityDdto
+            bool validToken = twoFactorAuthenticationIdentity.ValidateToken(new ValidateTokenDdto
             {
-                Identifier = addConfirmedPasswordIdentityDdto.Identifier,
-                Password = addConfirmedPasswordIdentityDdto.Password
+                Token = resetPasswordDdto.Token
             });
 
-            _authenticationIdentities.Add(passwordIdentity);
-
-            return passwordIdentity;
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="addTwoFactorAuthenticationIdentityDdto"></param>
-        /// <exception cref="TwoFactorAuthenticationIdentityExistsDomainException"></exception>
-        internal void AddTwoFactorAuthenticationIdentity(
-            AddTwoFactorAuthenticationIdentityDdto addTwoFactorAuthenticationIdentityDdto)
-        {
-            if (AuthenticationIdentities.Any(i => i is TwoFactorAuthenticationIdentity))
+            if (!validToken)
             {
-                throw new TwoFactorAuthenticationIdentityExistsDomainException();
+                throw new InvalidTwoFactorTokenDomainException();
             }
 
-            TwoFactorAuthenticationIdentity twoFactorAuthenticationIdentity = TwoFactorAuthenticationIdentity.Create(this, new CreateTwoFactorAuthenticationIdentityDdto
-            {
-                EmailAddress = addTwoFactorAuthenticationIdentityDdto.EmailAddress,
-                TwoFactorAuthenticationType = TwoFactorAuthenticationTypes.ForgotPassword
-            });
+            _authenticationIdentities.Remove(twoFactorAuthenticationIdentity);
 
-            _authenticationIdentities.Add(twoFactorAuthenticationIdentity);
+            passwordIdentity.ChangePassword(new ChangePasswordDdto
+            {
+                Password = resetPasswordDdto.Password
+            });
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="validateTwoFactorIdentityDdto"></param>
-        /// <exception cref="InvalidTwoFactorTokenDomainException"></exception>
-        private TwoFactorAuthenticationIdentity GetTwoFactor(
-            ValidateTwoFactorIdentityDdto validateTwoFactorIdentityDdto)
+        internal void ConfirmIdentity(ConfirmIdentityDdto confirmIdentityDdto)
         {
-            return _authenticationIdentities.SingleOrDefault(p =>
-                    p is TwoFactorAuthenticationIdentity identity &&
-                    identity.Token == validateTwoFactorIdentityDdto.Token) as
-                TwoFactorAuthenticationIdentity;
+            TwoFactorAuthenticationIdentity twoFactorAuthenticationIdentity =
+                AuthenticationIdentities.OfType<TwoFactorAuthenticationIdentity>().SingleOrDefault(t =>
+                    t.TwoFactorAuthenticationType == TwoFactorAuthenticationType.ConfirmIdentity);
+
+            if (twoFactorAuthenticationIdentity == null)
+            {
+                throw new InvalidTwoFactorTokenDomainException();
+            }
+
+            bool validToken = twoFactorAuthenticationIdentity.ValidateToken(new ValidateTokenDdto
+            {
+                Token = confirmIdentityDdto.Token
+            });
+
+            if (!validToken)
+            {
+                throw new InvalidTwoFactorTokenDomainException();
+            }
+
+            _authenticationIdentities.Remove(twoFactorAuthenticationIdentity);
+        }
+
+        internal void ForgotPassword(ForgotPasswordDdto forgotPasswordDdto)
+        {
+            PasswordIdentity passwordIdentity = AuthenticationIdentities.OfType<PasswordIdentity>().SingleOrDefault();
+
+            if (passwordIdentity == null)
+            {
+                throw new PasswordNotSetDomainException();
+            }
+
+            _authenticationIdentities.Add(TwoFactorAuthenticationIdentity.Create(this, new CreateTwoFactorAuthenticationIdentityDdto
+            {
+                EmailAddress = forgotPasswordDdto.EmailAddress,
+                TwoFactorAuthenticationType = TwoFactorAuthenticationType.ForgotPassword
+            }));
         }
 
         internal void Login()
@@ -130,6 +152,11 @@ namespace ApplicationManager.Domain.Identities
             AuthenticationGrantTypePassword authenticationGrantTypePassword,
             RegisterPasswordDdto registerPasswordDdto)
         {
+            if (AuthenticationIdentities.Any(i => i is PasswordIdentity))
+            {
+                throw new PasswordIdentityExistsDomainException();
+            }
+
             PasswordIdentity passwordIdentity = PasswordIdentity.Create(this, authenticationGrantTypePassword, new CreatePasswordIdentityDdto
             {
                 Identifier = registerPasswordDdto.Identifier,
@@ -141,7 +168,7 @@ namespace ApplicationManager.Domain.Identities
             _authenticationIdentities.Add(TwoFactorAuthenticationIdentity.Create(this, new CreateTwoFactorAuthenticationIdentityDdto
             {
                 EmailAddress = registerPasswordDdto.EmailAddress,
-                TwoFactorAuthenticationType = TwoFactorAuthenticationTypes.ConfirmIdentity
+                TwoFactorAuthenticationType = TwoFactorAuthenticationType.ConfirmIdentity
             }));
 
             return passwordIdentity;

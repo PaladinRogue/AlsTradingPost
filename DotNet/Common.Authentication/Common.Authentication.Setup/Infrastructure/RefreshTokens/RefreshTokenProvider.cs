@@ -1,5 +1,5 @@
 ﻿using Common.Authentication.Resources.RefreshTokens;
-using Common.Resources.Hashing;
+using Common.Domain.Models.DataProtection;
 using Common.Setup.Infrastructure.Hashing;
 
 namespace Common.Authentication.Setup.Infrastructure.RefreshTokens
