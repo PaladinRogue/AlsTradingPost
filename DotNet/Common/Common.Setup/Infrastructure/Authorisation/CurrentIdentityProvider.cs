@@ -1,7 +1,7 @@
 ﻿using System;
+using Common.Application.Authentication;
 using Common.Application.Exceptions;
 using Common.Resources.Extensions;
-using Common.Setup.Infrastructure.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
@@ -10,25 +10,27 @@ namespace Common.Setup.Infrastructure.Authorisation
     public class CurrentIdentityProvider : ICurrentIdentityProvider
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly JwtAuthenticationIssuerOptions _jwtAuthenticationIssuerOptionsAccessor;
+        private readonly JwtIssuerOptions _jwtIssuerOptions;
 
-        public CurrentIdentityProvider(IHttpContextAccessor httpContextAccessor, IOptions<JwtAuthenticationIssuerOptions> jwtAuthenticationIssuerOptionsAccessor)
+        public CurrentIdentityProvider(IHttpContextAccessor httpContextAccessor, IOptions<JwtIssuerOptions> jwtIssuerOptionsAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
-            _jwtAuthenticationIssuerOptionsAccessor = jwtAuthenticationIssuerOptionsAccessor.Value;
+            _jwtIssuerOptions = jwtIssuerOptionsAccessor.Value;
         }
 
         public Guid Id
         {
             get
             {
-                if (_httpContextAccessor.CurrentIssuer() == _jwtAuthenticationIssuerOptionsAccessor.Issuer)
+                if (_httpContextAccessor.CurrentIssuer() != _jwtIssuerOptions.Issuer)
                 {
-                    Guid? currentUserId = _httpContextAccessor.CurrentSubject();
-                    if (currentUserId.HasValue)
-                    {
-                        return currentUserId.Value;
-                    }
+                    throw new BusinessApplicationException(ExceptionType.Unauthorized, "Current identity token is not valid");
+                }
+
+                Guid? currentIdentityId = _httpContextAccessor.CurrentSubject();
+                if (currentIdentityId.HasValue)
+                {
+                    return currentIdentityId.Value;
                 }
 
                 throw new BusinessApplicationException(ExceptionType.Unauthorized, "Current identity token is not valid");

@@ -11,8 +11,11 @@ namespace Common.Authorisation
         }
 
         public string Resource { get; }
+
         public string Action { get; }
+
         public Type ResourceType => null;
+
         public Guid? ResourceId => null;
 
         public static DefaultAuthorisationContext Create(string authorisationResource, string authorisationAction)

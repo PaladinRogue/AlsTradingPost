@@ -1,3 +1,4 @@
+using ApplicationManager.ApplicationServices.Identities.Authorisation;
 using ApplicationManager.ApplicationServices.Identities.Models;
 using Common.Authorisation;
 
@@ -20,7 +21,7 @@ namespace ApplicationManager.ApplicationServices.Identities
         public IdentityAdto Get(GetIdentityAdto getIdentityAdto)
         {
             return _securityApplicationService.Secure(() => _identityApplicationService.Get(getIdentityAdto),
-                DefaultAuthorisationContext.Create(AuthorisationResource.Identity, AuthorisationAction.Get));
+                IdentityAuthorisationContext.Create(getIdentityAdto.Id, AuthorisationAction.Get));
         }
 
         public void ResetPassword(ResetPasswordAdto resetPasswordAdto)
@@ -38,19 +39,19 @@ namespace ApplicationManager.ApplicationServices.Identities
         public void ConfirmIdentity(ConfirmIdentityAdto confirmIdentityAdto)
         {
             _securityApplicationService.Secure(() => { _identityApplicationService.ConfirmIdentity(confirmIdentityAdto); },
-                DefaultAuthorisationContext.Create(AuthorisationResource.Identity, AuthorisationAction.Update));
+                IdentityAuthorisationContext.Create(confirmIdentityAdto.IdentityId, AuthorisationAction.Update));
         }
 
         public PasswordIdentityAdto GetPasswordIdentity(GetPasswordIdentityAdto getPasswordIdentityAdto)
         {
             return _securityApplicationService.Secure(() => _identityApplicationService.GetPasswordIdentity(getPasswordIdentityAdto),
-                DefaultAuthorisationContext.Create(AuthorisationResource.Identity, AuthorisationAction.Get));
+                IdentityAuthorisationContext.Create(getPasswordIdentityAdto.IdentityId, AuthorisationAction.Get));
         }
 
         public PasswordIdentityAdto ChangePassword(ChangePasswordAdto changePasswordAdto)
         {
             return _securityApplicationService.Secure(() => _identityApplicationService.ChangePassword(changePasswordAdto),
-                DefaultAuthorisationContext.Create(AuthorisationResource.Identity, AuthorisationAction.Update));
+                IdentityAuthorisationContext.Create(changePasswordAdto.IdentityId, AuthorisationAction.Update));
         }
 
         public PasswordIdentityAdto RegisterPassword(RegisterPasswordAdto registerPasswordAdto)

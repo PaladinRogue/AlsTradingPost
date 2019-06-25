@@ -22,11 +22,13 @@ using ApplicationManager.Domain.Identities.ResetPassword;
 using ApplicationManager.Domain.Users.Create;
 using ApplicationManager.Persistence;
 using ApplicationManager.Persistence.Identities;
+using ApplicationManager.Setup.Infrastructure.Authorisation;
 using Common.Api.HttpClient;
 using Common.Api.HttpClient.Interfaces;
 using Common.Api.Links;
 using Common.Api.Routing;
 using Common.Application.Transactions;
+using Common.Authorisation;
 using Common.Authorisation.Policies;
 using Common.Authorisation.Policies.Json;
 using Common.Domain.Persistence;
@@ -57,9 +59,12 @@ namespace ApplicationManager.Setup
             services.AddScoped<ISendNotificationKernalService, SendNotificationKernalService>();
             services.AddScoped<ISendTwoFactorAuthenticationNotificationKernalService, SendTwoFactorAuthenticationNotificationKernalService>();
             services.AddScoped<ICreateAdminUserApplicationKernalService, CreateAdminUserApplicationKernalService>();
-            services.AddScoped<IIdentityApplicationService, IdentityApplicationServiceSecurityDecorator>();
-            services.AddScoped<IIdentityApplicationService, IdentityApplicationService>();
-            services.AddScoped<IAuthenticationApplicationService, AuthenticationApplicationService>();
+
+            services.AddScoped<IdentityApplicationService>();
+
+            services.RegisterApplicationService<IIdentityApplicationService, IdentityApplicationService, IdentityApplicationServiceSecurityDecorator>();
+
+            services.RegisterApplicationService<IAuthenticationApplicationService, AuthenticationApplicationService, AuthenticationApplicationServiceSecurityDecorator>();
         }
 
 	    public static void RegisterValidators(IServiceCollection services)
@@ -122,6 +127,7 @@ namespace ApplicationManager.Setup
         public static void RegisterAuthorisation(IServiceCollection services)
         {
 	        services.AddSingleton<IAuthorisationPolicy, JsonAuthorisationPolicy>();
+	        services.AddSingleton<ISelfProvider, SelfIdentityProvider>();
 	        services.AddSingleton<IJsonAuthorisationPolicyProvider>(s => new JsonAuthorisationPolicyProvider(JObject.Parse(File.ReadAllText("authorisationPolicy.json"))));
         }
 
