@@ -1,4 +1,9 @@
 {
+  "authenticate": {
+    "create": {
+      "restriction": "everyone"
+    }
+  },
   "identity": {
     "create": {
       "restriction": "everyone"

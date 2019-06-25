@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApplicationManager.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationManagerDbContext))]
-    [Migration("20190620172156_MakeVersionValueGenerated")]
-    partial class MakeVersionValueGenerated
+    [Migration("20190625193708_AddConfirmAndForgotPasswordNotifications")]
+    partial class AddConfirmAndForgotPasswordNotifications
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,9 +35,7 @@ namespace ApplicationManager.Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(20);
 
-                    b.Property<byte[]>("Version")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
+                    b.Property<int>("Version");
 
                     b.HasKey("Id");
 
@@ -52,9 +50,7 @@ namespace ApplicationManager.Persistence.Migrations
                     b.Property<string>("Type")
                         .IsRequired();
 
-                    b.Property<byte[]>("Version")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
+                    b.Property<int>("Version");
 
                     b.HasKey("Id");
 
@@ -87,9 +83,11 @@ namespace ApplicationManager.Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<byte[]>("Version")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
+                    b.Property<string>("EmailAddressHash")
+                        .IsRequired()
+                        .HasMaxLength(1024);
+
+                    b.Property<int>("Version");
 
                     b.HasKey("Id");
 
@@ -141,9 +139,7 @@ namespace ApplicationManager.Persistence.Migrations
 
                     b.Property<string>("Type");
 
-                    b.Property<byte[]>("Version")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
+                    b.Property<int>("Version");
 
                     b.HasKey("Id");
 
@@ -173,9 +169,7 @@ namespace ApplicationManager.Persistence.Migrations
 
                     b.Property<Guid?>("IdentityId");
 
-                    b.Property<byte[]>("Version")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
+                    b.Property<int>("Version");
 
                     b.HasKey("Id");
 
@@ -255,10 +249,14 @@ namespace ApplicationManager.Persistence.Migrations
                     b.HasBaseType("ApplicationManager.Domain.Identities.AuthenticationIdentity");
 
                     b.Property<string>("EmailAddress")
+                        .IsRequired()
                         .HasMaxLength(1024);
 
                     b.Property<string>("Token")
+                        .IsRequired()
                         .HasMaxLength(1024);
+
+                    b.Property<int>("TwoFactorAuthenticationType");
 
                     b.HasDiscriminator().HasValue("TWO_FACTOR");
                 });
@@ -319,25 +317,21 @@ namespace ApplicationManager.Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("AuthenticationGrantTypePasswordId");
 
-                    b.OwnsOne("Common.Domain.Models.PasswordProtection.ProtectedPassword", "ProtectedPassword", b1 =>
+                    b.OwnsOne("Common.Domain.Models.DataProtection.HashSet", "PasswordHash", b1 =>
                         {
                             b1.Property<Guid>("PasswordIdentityId");
 
-                            b1.Property<string>("Hash")
-                                .IsRequired()
-                                .HasMaxLength(1024);
+                            b1.Property<string>("Hash");
 
-                            b1.Property<string>("Salt")
-                                .IsRequired()
-                                .HasMaxLength(255);
+                            b1.Property<string>("Salt");
 
                             b1.HasKey("PasswordIdentityId");
 
                             b1.ToTable("AuthenticationIdentities","apps");
 
                             b1.HasOne("ApplicationManager.Domain.Identities.PasswordIdentity")
-                                .WithOne("ProtectedPassword")
-                                .HasForeignKey("Common.Domain.Models.PasswordProtection.ProtectedPassword", "PasswordIdentityId")
+                                .WithOne("PasswordHash")
+                                .HasForeignKey("Common.Domain.Models.DataProtection.HashSet", "PasswordIdentityId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
                 });

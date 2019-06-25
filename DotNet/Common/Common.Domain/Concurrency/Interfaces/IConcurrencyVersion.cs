@@ -3,6 +3,8 @@ namespace Common.Domain.Concurrency.Interfaces
 {
     public interface IConcurrencyVersion
     {
-        byte[] Version { get; set; }
+        int Version { get; set; }
+
+        string ToString();
     }
 }

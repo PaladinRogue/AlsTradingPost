@@ -1,4 +1,5 @@
-﻿using Common.Domain.Concurrency.Interfaces;
+﻿using System;
+using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Models.Interfaces;
 using Newtonsoft.Json;
 
@@ -8,7 +9,8 @@ namespace Common.ApplicationServices.Concurrency
     {
         public static IConcurrencyVersion CreateFromBase64String(string entityTagValue)
         {
-            byte[] base64EncodedBytes = System.Convert.FromBase64String(entityTagValue);
+            //TODO Catch here
+            byte[] base64EncodedBytes = Convert.FromBase64String(entityTagValue);
             string stringConcurrencyVersion = System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
             return JsonConvert.DeserializeObject<ConcurrencyVersion>(stringConcurrencyVersion);
         }

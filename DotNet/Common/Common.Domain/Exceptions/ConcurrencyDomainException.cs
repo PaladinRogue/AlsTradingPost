@@ -28,14 +28,9 @@ namespace Common.Domain.Exceptions
         {
         }
 
-        private static string _formatConcurrencyException(MemberInfo type, Guid id, byte[] version)
+        private static string _formatConcurrencyException(MemberInfo type, Guid id, int version)
         {
-            if (BitConverter.IsLittleEndian)
-            {
-                Array.Reverse(version);
-            }
-
-            return $"Concurrency check failed for entity: { type.Name } with Id: { id } and Version: { BitConverter.ToInt32(version, 0) }";
+            return $"Concurrency check failed for entity: { type.Name } with Id: { id } and Version: { version.ToString() }";
         }
     }
 }

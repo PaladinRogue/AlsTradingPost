@@ -4,6 +4,11 @@ namespace Common.ApplicationServices.Concurrency
 {
     public class ConcurrencyVersion : IConcurrencyVersion
     {
-        public byte[] Version { get; set; }
+        public int Version { get; set; }
+
+        public override string ToString()
+        {
+            return Version.ToString();
+        }
     }
 }

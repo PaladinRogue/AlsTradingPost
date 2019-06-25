@@ -1,21 +1,19 @@
 ﻿using ApplicationManager.Domain.Applications;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities;
-using ApplicationManager.Domain.Identities.Projections;
 using ApplicationManager.Domain.NotificationTypes;
 using ApplicationManager.Domain.Users;
 using ApplicationManager.Persistence.AuthenticationServices;
 using ApplicationManager.Persistence.Identities;
 using ApplicationManager.Persistence.NotificationTypes;
 using Common.Domain.Models.DataProtection;
-using Common.Setup.Infrastructure.Hashing;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityFramework.Infrastructure.Extensions;
 using Identity = ApplicationManager.Domain.Identities.Identity;
 
 namespace ApplicationManager.Persistence
 {
-    public class ApplicationManagerDbContext : DbContext
+    public partial class ApplicationManagerDbContext : DbContext
     {
         public ApplicationManagerDbContext(DbContextOptions options) : base(options)
         {
@@ -105,12 +103,10 @@ namespace ApplicationManager.Persistence
                 .WithOne(s => s.NotificationTypeChannel)
                 .HasForeignKey<NotificationChannelTemplate>("NotificationTypeChannelId");
 
-            modelBuilder.Query<TwoFactorAuthenticationIdentityProjection>()
-                .ProtectSensitiveInformation()
-                .ToView("TwoFactorAuthenticationIdentityProjection");
-
             modelBuilder.Entity<User>()
                 .ToTable("Users");
+
+            ConfigureQueryTypes(modelBuilder);
         }
     }
 }

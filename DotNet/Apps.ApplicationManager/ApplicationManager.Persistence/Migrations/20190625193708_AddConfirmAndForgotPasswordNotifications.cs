@@ -2,26 +2,19 @@
 
 namespace ApplicationManager.Persistence.Migrations
 {
-    public partial class AddForgotPasswordAndConfirmIdentityNotifications : Migration
+    public partial class AddConfirmAndForgotPasswordNotifications : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.Sql(@"
-                DELETE FROM [apps].[NotificationChannelTemplates]
-                      WHERE [Id] = '5D0371BA-518B-4DB4-98C1-1EBD42FB3B46'
-
-                DELETE FROM [apps].[NotificationTypeChannels]
-                      WHERE [Id] = 'DFF6BCEB-36A6-4550-B150-FC8536C14E75'
-
-                DELETE FROM [apps].[NotificationTypes]
-                      WHERE [Id] = 'ED3AB96C-8F45-45E8-8880-D9F46C075BEC'
-
                 INSERT INTO [apps].[NotificationTypes]
                     ([Id]
-                    ,[Type])
+                    ,[Type]
+                    ,[Version])
                     VALUES
                     ('4BEC8097-5BF4-4C96-9A1C-20097F316CFC'
-                    ,'CONFIRM_IDENTITY')
+                    ,'CONFIRM_IDENTITY'
+                    ,0)
 
                 INSERT INTO [apps].[NotificationTypeChannels]
                     ([Id]
@@ -49,10 +42,12 @@ namespace ApplicationManager.Persistence.Migrations
 
                 INSERT INTO [apps].[NotificationTypes]
                     ([Id]
-                    ,[Type])
+                    ,[Type]
+                    ,[Version])
                     VALUES
                     ('3904F6C1-CF97-4B9B-BA0F-DFC76E5B44D2'
-                    ,'FORGOT_PASSWORD')
+                    ,'FORGOT_PASSWORD'
+                    ,0)
 
                 INSERT INTO [apps].[NotificationTypeChannels]
                     ([Id]

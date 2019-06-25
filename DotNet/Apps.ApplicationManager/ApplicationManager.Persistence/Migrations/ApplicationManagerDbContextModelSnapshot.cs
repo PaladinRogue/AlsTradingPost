@@ -33,9 +33,7 @@ namespace ApplicationManager.Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(20);
 
-                    b.Property<byte[]>("Version")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
+                    b.Property<int>("Version");
 
                     b.HasKey("Id");
 
@@ -50,9 +48,7 @@ namespace ApplicationManager.Persistence.Migrations
                     b.Property<string>("Type")
                         .IsRequired();
 
-                    b.Property<byte[]>("Version")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
+                    b.Property<int>("Version");
 
                     b.HasKey("Id");
 
@@ -89,9 +85,7 @@ namespace ApplicationManager.Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(1024);
 
-                    b.Property<byte[]>("Version")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
+                    b.Property<int>("Version");
 
                     b.HasKey("Id");
 
@@ -143,9 +137,7 @@ namespace ApplicationManager.Persistence.Migrations
 
                     b.Property<string>("Type");
 
-                    b.Property<byte[]>("Version")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
+                    b.Property<int>("Version");
 
                     b.HasKey("Id");
 
@@ -175,9 +167,7 @@ namespace ApplicationManager.Persistence.Migrations
 
                     b.Property<Guid?>("IdentityId");
 
-                    b.Property<byte[]>("Version")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
+                    b.Property<int>("Version");
 
                     b.HasKey("Id");
 
@@ -325,7 +315,7 @@ namespace ApplicationManager.Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("AuthenticationGrantTypePasswordId");
 
-                    b.OwnsOne("Common.Setup.Infrastructure.Hashing.HashSet", "PasswordHash", b1 =>
+                    b.OwnsOne("Common.Domain.Models.DataProtection.HashSet", "PasswordHash", b1 =>
                         {
                             b1.Property<Guid>("PasswordIdentityId");
 
@@ -339,7 +329,7 @@ namespace ApplicationManager.Persistence.Migrations
 
                             b1.HasOne("ApplicationManager.Domain.Identities.PasswordIdentity")
                                 .WithOne("PasswordHash")
-                                .HasForeignKey("Common.Setup.Infrastructure.Hashing.HashSet", "PasswordIdentityId")
+                                .HasForeignKey("Common.Domain.Models.DataProtection.HashSet", "PasswordIdentityId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
                 });

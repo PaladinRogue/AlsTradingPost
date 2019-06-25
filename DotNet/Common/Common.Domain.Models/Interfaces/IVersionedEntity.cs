@@ -2,6 +2,8 @@
 {
     public interface IVersionedEntity : IEntity
     {
-        byte[] Version { get; }
+        int Version { get; }
+
+        void UpdateVersion();
     }
 }

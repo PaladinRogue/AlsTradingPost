@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using Common.Domain.Models.Interfaces;
 
 namespace Common.Domain.Models
@@ -9,11 +8,16 @@ namespace Common.Domain.Models
         protected VersionedEntity()
         {
             Id = Guid.NewGuid();
+            Version = 0;
         }
 
         public Guid Id { get; protected set; }
 
-        [Timestamp]
-        public byte[] Version { get; protected set; }
+        public int Version { get; protected set; }
+
+        public void UpdateVersion()
+        {
+            Version++;
+        }
     }
 }

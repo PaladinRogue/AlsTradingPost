@@ -95,6 +95,8 @@ namespace Persistence.EntityFramework.Repositories
         {
             try
             {
+                entity.UpdateVersion();
+
                 dbSet.Add(entity);
 
                 context.SaveChanges();
@@ -113,6 +115,8 @@ namespace Persistence.EntityFramework.Repositories
         {
             try
             {
+                entity.UpdateVersion();
+
                 dbSet.Update(entity);
 
                 context.SaveChanges();
