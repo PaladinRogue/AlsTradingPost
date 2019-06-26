@@ -35,6 +35,7 @@ using Common.Domain.Persistence;
 using Common.Setup.Infrastructure.Authorisation;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
@@ -101,21 +102,22 @@ namespace ApplicationManager.Setup
 
         public static void RegisterPersistenceServices(IConfiguration configuration, IServiceCollection services)
         {
-            services.AddScoped<IGetTwoFactorAuthenticationIdentityByIdentityQuery, GetTwoFactorAuthenticationIdentityByIdentityQuery>();
-            services.AddScoped<IPasswordIdentityIdentifierIsUniqueQuery, PasswordIdentityIdentifierIsUniqueQuery>();
-            services.AddScoped<IGetIdentityByIdentifierAndPasswordQuery, GetIdentityByIdentifierAndPasswordQuery>();
-            services.AddScoped<IGetIdentityByEmailAddressQuery, GetIdentityByEmailAddressQuery>();
-            services.AddScoped<IGetIdentityByForgotPasswordTokenQuery, GetIdentityByForgotPasswordTokenQuery>();
+	        services.AddScoped<IGetTwoFactorAuthenticationIdentityByIdentityQuery, GetTwoFactorAuthenticationIdentityByIdentityQuery>();
+	        services.AddScoped<IPasswordIdentityIdentifierIsUniqueQuery, PasswordIdentityIdentifierIsUniqueQuery>();
+	        services.AddScoped<IGetIdentityByIdentifierAndPasswordQuery, GetIdentityByIdentifierAndPasswordQuery>();
+	        services.AddScoped<IGetIdentityByEmailAddressQuery, GetIdentityByEmailAddressQuery>();
+	        services.AddScoped<IGetIdentityByForgotPasswordTokenQuery, GetIdentityByForgotPasswordTokenQuery>();
 
-            services.AddScoped(typeof(ICommandRepository<>), typeof(Repository<>));
-            services.AddScoped(typeof(IQueryRepository<>), typeof(Repository<>));
+	        services.AddScoped(typeof(ICommandRepository<>), typeof(Repository<>));
+	        services.AddScoped(typeof(IQueryRepository<>), typeof(Repository<>));
 
-            services.AddEntityFrameworkSqlServer().AddOptions()
-                .AddDbContext<ApplicationManagerDbContext>(options =>
-	                options.UseLazyLoadingProxies()
-	                .UseSqlServer(configuration.GetConnectionString("Default")));
-            services.AddScoped<DbContext>(sp => sp.GetRequiredService<ApplicationManagerDbContext>());
-            services.AddScoped<ITransactionManager, EntityFrameworkTransactionManager>();
+	        services.AddEntityFrameworkSqlServer().AddOptions()
+		        .AddDbContext<ApplicationManagerDbContext>(options =>
+			        options.UseLazyLoadingProxies()
+				        .ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning))
+				        .UseSqlServer(configuration.GetConnectionString("Default")));
+	        services.AddScoped<DbContext>(sp => sp.GetRequiredService<ApplicationManagerDbContext>());
+	        services.AddScoped<ITransactionManager, EntityFrameworkTransactionManager>();
         }
 
         public static void RegisterProviders(IServiceCollection services)

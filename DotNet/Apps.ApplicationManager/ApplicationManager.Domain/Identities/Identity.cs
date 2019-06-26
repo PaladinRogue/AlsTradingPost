@@ -91,26 +91,32 @@ namespace ApplicationManager.Domain.Identities
 
         internal void ConfirmIdentity(ConfirmIdentityDdto confirmIdentityDdto)
         {
+            _authenticationIdentities.Remove(ValidateToken(new ValidateTokenDdto
+            {
+                Token = confirmIdentityDdto.Token,
+                TwoFactorAuthenticationType = TwoFactorAuthenticationType.ConfirmIdentity
+            }));
+        }
+
+        internal TwoFactorAuthenticationIdentity ValidateToken(ValidateTokenDdto validateTokenDdto)
+        {
             TwoFactorAuthenticationIdentity twoFactorAuthenticationIdentity =
                 AuthenticationIdentities.OfType<TwoFactorAuthenticationIdentity>().SingleOrDefault(t =>
-                    t.TwoFactorAuthenticationType == TwoFactorAuthenticationType.ConfirmIdentity);
+                    t.TwoFactorAuthenticationType == validateTokenDdto.TwoFactorAuthenticationType);
 
             if (twoFactorAuthenticationIdentity == null)
             {
                 throw new InvalidTwoFactorTokenDomainException();
             }
 
-            bool validToken = twoFactorAuthenticationIdentity.ValidateToken(new ValidateTokenDdto
-            {
-                Token = confirmIdentityDdto.Token
-            });
+            bool validToken = twoFactorAuthenticationIdentity.ValidateToken(validateTokenDdto);
 
             if (!validToken)
             {
                 throw new InvalidTwoFactorTokenDomainException();
             }
 
-            _authenticationIdentities.Remove(twoFactorAuthenticationIdentity);
+            return twoFactorAuthenticationIdentity;
         }
 
         internal void ForgotPassword(ForgotPasswordDdto forgotPasswordDdto)

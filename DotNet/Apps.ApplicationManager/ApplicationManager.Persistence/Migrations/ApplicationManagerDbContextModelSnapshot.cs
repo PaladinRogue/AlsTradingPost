@@ -254,6 +254,8 @@ namespace ApplicationManager.Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(1024);
 
+                    b.Property<DateTime>("TokenExpiry");
+
                     b.Property<int>("TwoFactorAuthenticationType");
 
                     b.HasDiscriminator().HasValue("TWO_FACTOR");

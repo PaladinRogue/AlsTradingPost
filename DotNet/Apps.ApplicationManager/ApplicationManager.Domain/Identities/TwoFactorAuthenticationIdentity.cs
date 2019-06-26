@@ -2,9 +2,12 @@
 using ApplicationManager.Domain.Identities.CreateTwoFactor;
 using ApplicationManager.Domain.Identities.Events;
 using ApplicationManager.Domain.Identities.ValidateToken;
+using Common.Domain.Clocks;
 using Common.Domain.DomainEvents;
 using Common.Domain.Models.DataProtection;
 using Common.Resources;
+using NodaTime;
+using NodaTime.Extensions;
 using String = Common.Resources.Extensions.String;
 
 namespace ApplicationManager.Domain.Identities
@@ -23,6 +26,7 @@ namespace ApplicationManager.Domain.Identities
             EmailAddress = createTwoFactorAuthenticationIdentityDdto.EmailAddress;
             TwoFactorAuthenticationType = createTwoFactorAuthenticationIdentityDdto.TwoFactorAuthenticationType;
             Token = String.Random(40);
+            TokenExpiry = Instant.Add(Clock.Now(),Duration.FromMinutes(20));
         }
 
         internal static TwoFactorAuthenticationIdentity Create(
@@ -37,7 +41,7 @@ namespace ApplicationManager.Domain.Identities
         }
 
         [Required]
-        [MaxLength(254)]
+        [MaxLength(FieldSizes.Extended)]
         [EmailAddress]
         [SensitiveInformation]
         public string EmailAddress { get; protected set; }
@@ -47,11 +51,14 @@ namespace ApplicationManager.Domain.Identities
         public string Token { get; set; }
 
         [Required]
+        public Instant TokenExpiry { get; set; }
+
+        [Required]
         public TwoFactorAuthenticationType TwoFactorAuthenticationType { get; protected set; }
 
         internal bool ValidateToken(ValidateTokenDdto validateTokenDdto)
         {
-            return Token == validateTokenDdto.Token;
+            return Token == validateTokenDdto.Token && TokenExpiry >= Clock.Now();
         }
     }
 }

@@ -8,6 +8,7 @@ using ApplicationManager.Persistence.Identities;
 using ApplicationManager.Persistence.NotificationTypes;
 using Common.Domain.Models.DataProtection;
 using Microsoft.EntityFrameworkCore;
+using Persistence.EntityFramework.Infrastructure.DateTimeConverters;
 using Persistence.EntityFramework.Infrastructure.Extensions;
 using Identity = ApplicationManager.Domain.Identities.Identity;
 
@@ -73,7 +74,9 @@ namespace ApplicationManager.Persistence
 
             modelBuilder.Entity<TwoFactorAuthenticationIdentity>()
                 .ProtectSensitiveInformation()
-                .HasBaseType<AuthenticationIdentity>();
+                .HasBaseType<AuthenticationIdentity>()
+                .Property(t => t.TokenExpiry)
+                .HasConversion(InstantConverter.Create());
 
             modelBuilder.Entity<RefreshTokenIdentity>()
                 .ProtectSensitiveInformation()

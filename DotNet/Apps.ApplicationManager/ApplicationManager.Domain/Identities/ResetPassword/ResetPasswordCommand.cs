@@ -1,4 +1,5 @@
-﻿using ApplicationManager.Domain.Identities.Queries;
+﻿using System.Linq;
+using ApplicationManager.Domain.Identities.Queries;
 using ApplicationManager.Domain.Identities.ValidateToken;
 using Common.Domain.Validation;
 using FluentValidation;
@@ -29,6 +30,12 @@ namespace ApplicationManager.Domain.Identities.ResetPassword
             {
                 throw new InvalidTwoFactorTokenDomainException();
             }
+
+            identity.ValidateToken(new ValidateTokenDdto
+            {
+                Token = resetPasswordCommandDdto.Token,
+                TwoFactorAuthenticationType = TwoFactorAuthenticationType.ForgotPassword
+            });
 
             identity.ResetPassword(new ResetPasswordDdto
             {

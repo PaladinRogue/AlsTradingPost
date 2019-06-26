@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using NodaTime;
 
 namespace Common.Api
 {
@@ -51,6 +52,8 @@ namespace Common.Api
             services.AddSingleton<IResourceBuilder, DefaultResourceBuilder>();
             services.AddSingleton<IPagingLinkBuilder, DefaultPagingLinkBuilder>();
             services.AddSingleton<ISortingLinkBuilder, DefaultSortingLinkBuilder>();
+
+            services.AddSingleton<IClock>(SystemClock.Instance);
 
             EventRegistration.RegisterEventHandling(services);
             MessageRegistration.RegisterRabbitMqMessaging(services);

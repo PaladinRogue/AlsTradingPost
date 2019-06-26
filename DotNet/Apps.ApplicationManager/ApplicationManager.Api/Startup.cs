@@ -3,6 +3,7 @@ using ApplicationManager.Setup;
 using AutoMapper;
 using Common.Api.Extensions;
 using Common.Api.Formats;
+using Common.Domain.Clocks;
 using Common.Domain.DomainEvents;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Domain.Models.DataProtection;
@@ -15,6 +16,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NodaTime;
 using EventRegistration = ApplicationManager.Setup.EventRegistration;
 using MessageRegistration = ApplicationManager.Setup.MessageRegistration;
 using ServiceRegistration = ApplicationManager.Setup.ServiceRegistration;
@@ -71,12 +73,14 @@ namespace ApplicationManager.Api
             IDataProtector dataProtector,
             IDomainEventDispatcher domainEventDispatcher,
             IMessageSender messageSender,
-            IDataHasher dataHasher)
+            IDataHasher dataHasher,
+            IClock clock)
         {
             DataProtection.SetDataProtector(dataProtector);
             DataProtection.SetDataHasher(dataHasher);
             DomainEvents.SetDomainEventDispatcher(domainEventDispatcher);
             Message.SetMessageSender(messageSender);
+            Clock.SetClock(clock);
 
             if (Environment.IsDevelopment())
             {
