@@ -51,7 +51,7 @@ namespace ApplicationManager.Domain.Identities
         public string Token { get; set; }
 
         [Required]
-        public Instant TokenExpiry { get; set; }
+        public Instant TokenExpiry { get; protected set; }
 
         [Required]
         public TwoFactorAuthenticationType TwoFactorAuthenticationType { get; protected set; }

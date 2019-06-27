@@ -50,7 +50,7 @@ namespace ApplicationManager.Domain.Identities
 
         [Required]
         [MaxLength(FieldSizes.Protected)]
-        public string EmailAddressHash { get; set; }
+        public string EmailAddressHash { get; protected set; }
 
         public virtual IEnumerable<AuthenticationIdentity> AuthenticationIdentities => _authenticationIdentities;
 
@@ -88,6 +88,8 @@ namespace ApplicationManager.Domain.Identities
             {
                 Password = resetPasswordDdto.Password
             });
+
+            Session.Revoked();
         }
 
         internal void ConfirmIdentity(ConfirmIdentityDdto confirmIdentityDdto)
