@@ -11,9 +11,10 @@ using ApplicationManager.Domain.Identities.ForgotPassword;
 using ApplicationManager.Domain.Identities.RegisterPassword;
 using ApplicationManager.Domain.Identities.ResetPassword;
 using ApplicationManager.Domain.Identities.ValidateToken;
+using Common.Domain.Aggregates;
+using Common.Domain.DataProtection;
+using Common.Domain.Entities;
 using Common.Domain.Models;
-using Common.Domain.Models.DataProtection;
-using Common.Domain.Models.Interfaces;
 using Common.Resources;
 
 namespace ApplicationManager.Domain.Identities

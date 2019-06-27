@@ -16,7 +16,7 @@ namespace Persistence.EntityFramework.Infrastructure.DataProtection
             return new SensitiveInformationConverter(mappingHints);
         }
 
-        private static readonly Expression<Func<string, string>> SensitiveInformationProtect = x => Common.Domain.Models.DataProtection.DataProtection.Protect(x);
-        private static readonly Expression<Func<string, string>> SensitiveInformationUnprotect = x => Common.Domain.Models.DataProtection.DataProtection.Unprotect<string>(x);
+        private static readonly Expression<Func<string, string>> SensitiveInformationProtect = x => Common.Domain.DataProtection.DataProtection.Protect(x);
+        private static readonly Expression<Func<string, string>> SensitiveInformationUnprotect = x => Common.Domain.DataProtection.DataProtection.Unprotect<string>(x);
     }
 }

@@ -3,7 +3,7 @@ using ApplicationManager.Domain;
 using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.CheckPassword;
 using ApplicationManager.Domain.Identities.Queries;
-using Common.Domain.Models.DataProtection;
+using Common.Domain.DataProtection;
 
 namespace ApplicationManager.Persistence.Identities
 {

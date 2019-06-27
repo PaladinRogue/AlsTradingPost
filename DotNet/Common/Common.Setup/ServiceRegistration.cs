@@ -3,7 +3,7 @@ using Common.Authorisation;
 using Common.Authorisation.Manager;
 using Common.Authorisation.Policies;
 using Common.Authorisation.Policies.Deny;
-using Common.Domain.Models.DataProtection;
+using Common.Domain.DataProtection;
 using Common.Resources.Encryption;
 using Common.Setup.Infrastructure.Encryption;
 using Common.Setup.Infrastructure.Hashing;

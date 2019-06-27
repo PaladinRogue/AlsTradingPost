@@ -3,7 +3,7 @@ using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities.ChangePassword;
 using ApplicationManager.Domain.Identities.CheckPassword;
 using ApplicationManager.Domain.Identities.CreatePassword;
-using Common.Domain.Models.DataProtection;
+using Common.Domain.DataProtection;
 using Common.Resources;
 
 namespace ApplicationManager.Domain.Identities

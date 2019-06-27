@@ -4,7 +4,7 @@ using Common.Messaging.Infrastructure;
 using Common.Messaging.Infrastructure.Interfaces;
 using Common.Messaging.Infrastructure.Subscribers;
 
-namespace Messaging.Broker.Messages.Interfaces
+namespace Messaging.Broker.Subscriptions
 {
     public interface IMessageBusSubscriptionsManager
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Common.Domain.Models.Interfaces;
+using Common.Domain.Aggregates;
 using Common.Domain.Pagination.Interfaces;
 using Common.Domain.Persistence;
 using Common.Domain.Sorting;

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
-using Common.Domain.Models.DataProtection;
+using Common.Domain.DataProtection;
 using Common.Domain.Persistence;
 using Common.Resources;
 using Microsoft.EntityFrameworkCore;

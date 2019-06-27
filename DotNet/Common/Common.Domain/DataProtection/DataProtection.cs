@@ -1,4 +1,4 @@
-﻿namespace Common.Domain.Models.DataProtection
+﻿namespace Common.Domain.DataProtection
 {
     public class DataProtection
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Domain.Models.Interfaces
+namespace Common.Domain.Aggregates
 {
     public interface IAggregateOwner
     {

@@ -9,7 +9,6 @@
     <PackageReference Include="NodaTime" Version="2.4.5" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common.Domain.Models\Common.Domain.Models.csproj" />
     <ProjectReference Include="..\Common.Resources\Common.Resources.csproj" />
   </ItemGroup>
 </Project>

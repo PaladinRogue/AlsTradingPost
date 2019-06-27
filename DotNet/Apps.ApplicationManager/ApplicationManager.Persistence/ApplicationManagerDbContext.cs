@@ -6,7 +6,7 @@ using ApplicationManager.Domain.Users;
 using ApplicationManager.Persistence.AuthenticationServices;
 using ApplicationManager.Persistence.Identities;
 using ApplicationManager.Persistence.NotificationTypes;
-using Common.Domain.Models.DataProtection;
+using Common.Domain.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityFramework.Infrastructure.DateTimeConverters;
 using Persistence.EntityFramework.Infrastructure.Extensions;

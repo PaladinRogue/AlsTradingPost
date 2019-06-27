@@ -1,5 +1,4 @@
-﻿using Common.Domain.Models.DataProtection;
-using Common.Resources.Encryption;
+﻿using Common.Resources.Encryption;
 using Microsoft.Extensions.Options;
 
 namespace Common.Domain.DataProtection

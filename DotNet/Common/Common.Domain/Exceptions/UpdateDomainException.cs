@@ -1,5 +1,5 @@
 ﻿using System;
-using Common.Domain.Models.Interfaces;
+using Common.Domain.Entities;
 
 namespace Common.Domain.Exceptions
 {

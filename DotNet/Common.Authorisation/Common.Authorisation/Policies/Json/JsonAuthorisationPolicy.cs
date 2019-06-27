@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using Common.Domain.Models.Interfaces;
+using Common.Domain.Aggregates;
 using Newtonsoft.Json.Linq;
 
 namespace Common.Authorisation.Policies.Json

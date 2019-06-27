@@ -4,9 +4,8 @@ using System.Linq;
 using Common.Messaging.Infrastructure;
 using Common.Messaging.Infrastructure.Interfaces;
 using Common.Messaging.Infrastructure.Subscribers;
-using Messaging.Broker.Messages.Interfaces;
 
-namespace Messaging.Broker.Messages
+namespace Messaging.Broker.Subscriptions
 {
     public class InMemoryMessageBusSubscriptionsManager: IMessageBusSubscriptionsManager
     {

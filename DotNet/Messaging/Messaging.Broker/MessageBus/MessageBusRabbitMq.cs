@@ -7,8 +7,8 @@ using Common.Messaging.Infrastructure.DeQueuers;
 using Common.Messaging.Infrastructure.Interfaces;
 using Common.Messaging.Infrastructure.Serialisers;
 using Common.Messaging.Infrastructure.Subscribers;
-using Messaging.Broker.Connection.Interfaces;
-using Messaging.Broker.Messages.Interfaces;
+using Messaging.Broker.Connection;
+using Messaging.Broker.Subscriptions;
 using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Retry;
@@ -16,7 +16,7 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Exceptions;
 
-namespace Messaging.Broker.Messages
+namespace Messaging.Broker.MessageBus
 {
     public class MessageBusRabbitMq : IMessageBus
     {

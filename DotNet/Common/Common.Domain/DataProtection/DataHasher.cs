@@ -1,5 +1,3 @@
-using Common.Domain.Models.DataProtection;
-
 namespace Common.Domain.DataProtection
 {
     public class DataHasher : IDataHasher

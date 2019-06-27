@@ -1,4 +1,4 @@
-﻿using Common.Domain.Models.Interfaces;
+﻿using Common.Domain.Aggregates;
 
 namespace Common.ApplicationServices.Services.Query
 {

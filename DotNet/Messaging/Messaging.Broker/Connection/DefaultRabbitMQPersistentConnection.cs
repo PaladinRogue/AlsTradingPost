@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Net.Sockets;
-using Messaging.Broker.Connection.Interfaces;
 using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Retry;

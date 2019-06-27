@@ -1,7 +1,6 @@
 ﻿using System;
-using Common.Domain.Models.Interfaces;
 
-namespace Common.Domain.Models
+namespace Common.Domain.Entities
 {
     public abstract class Entity : IEntity
     {

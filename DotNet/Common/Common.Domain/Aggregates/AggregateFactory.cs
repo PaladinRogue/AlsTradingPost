@@ -1,7 +1,6 @@
 ﻿using System;
-using Common.Domain.Models.Interfaces;
 
-namespace Common.Domain.Models
+namespace Common.Domain.Aggregates
 {
     public static class AggregateFactory
     {

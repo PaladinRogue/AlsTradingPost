@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Common.ApplicationServices.Exceptions;
 using Common.ApplicationServices.Transactions;
-using Common.Domain.Models.DataProtection;
+using Common.Domain.DataProtection;
 using Common.Messaging.Infrastructure.Dispatchers;
 using Common.Messaging.Infrastructure.Interfaces;
 using Common.Messaging.Infrastructure.Serialisers;

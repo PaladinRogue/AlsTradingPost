@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Common.Domain.Aggregates;
+using Common.Domain.Entities;
 using Common.Domain.Models;
-using Common.Domain.Models.Interfaces;
 
 namespace ApplicationManager.Domain.Identities
 {

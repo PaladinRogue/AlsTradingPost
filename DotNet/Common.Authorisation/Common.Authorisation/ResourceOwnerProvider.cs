@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using Common.ApplicationServices.Services.Query;
-using Common.Domain.Models.Interfaces;
+using Common.Domain.Aggregates;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Common.Authorisation

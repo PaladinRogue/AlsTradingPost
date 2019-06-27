@@ -1,4 +1,4 @@
-﻿namespace Common.Domain.Models.Interfaces
+﻿namespace Common.Domain.Entities
 {
     public interface IVersionedEntity : IEntity
     {

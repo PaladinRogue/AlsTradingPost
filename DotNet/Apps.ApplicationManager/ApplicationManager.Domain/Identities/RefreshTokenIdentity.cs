@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using ApplicationManager.Domain.AuthenticationServices;
-using Common.Domain.Models.DataProtection;
+using Common.Domain.DataProtection;
 using Common.Resources.Extensions;
 
 namespace ApplicationManager.Domain.Identities

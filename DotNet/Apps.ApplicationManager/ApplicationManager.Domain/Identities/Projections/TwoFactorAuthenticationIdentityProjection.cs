@@ -1,4 +1,4 @@
-using Common.Domain.Models.DataProtection;
+using Common.Domain.DataProtection;
 
 namespace ApplicationManager.Domain.Identities.Projections
 {

@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using Common.Domain.Models.DataProtection;
+using Common.Domain.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Common.Domain.Models.Interfaces;
+using Common.Domain.Entities;
 using Common.Domain.Pagination.Interfaces;
 using Common.Domain.Sorting;
 using Common.Resources.Sorting;

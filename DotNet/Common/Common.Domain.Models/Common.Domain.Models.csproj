@@ -5,4 +5,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Common.Resources\Common.Resources.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataProtection" />
+    <Folder Include="Interfaces" />
+  </ItemGroup>
 </Project>

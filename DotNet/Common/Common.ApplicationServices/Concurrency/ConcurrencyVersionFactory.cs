@@ -1,7 +1,7 @@
 ﻿using System;
 using Common.ApplicationServices.Exceptions;
 using Common.Domain.Concurrency.Interfaces;
-using Common.Domain.Models.Interfaces;
+using Common.Domain.Entities;
 using Newtonsoft.Json;
 
 namespace Common.ApplicationServices.Concurrency

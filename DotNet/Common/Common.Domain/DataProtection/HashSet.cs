@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Common.Domain.ValueObjects;
 
-namespace Common.Domain.Models.DataProtection
+namespace Common.Domain.DataProtection
 {
     public class HashSet : ValueObject
     {

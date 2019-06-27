@@ -1,7 +1,7 @@
 ﻿using System;
 using RabbitMQ.Client;
 
-namespace Messaging.Broker.Connection.Interfaces
+namespace Messaging.Broker.Connection
 {
     public interface IRabbitMqPersistentConnection : IDisposable
     {

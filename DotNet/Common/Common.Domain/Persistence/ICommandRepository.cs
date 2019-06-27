@@ -1,4 +1,4 @@
-﻿using Common.Domain.Models.Interfaces;
+﻿using Common.Domain.Aggregates;
 
 namespace Common.Domain.Persistence
 {
