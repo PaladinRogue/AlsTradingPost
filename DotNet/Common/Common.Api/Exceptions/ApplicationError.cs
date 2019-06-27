@@ -8,6 +8,5 @@ namespace Common.Api.Exceptions
         public HttpStatusCode HttpStatusCode { get; set; }
 
         public BusinessApplicationException Exception { get; set; }
-
     }
 }

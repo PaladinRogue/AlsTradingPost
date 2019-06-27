@@ -3,6 +3,7 @@ using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.Create;
 using ApplicationManager.Domain.Identities.ForgotPassword;
 using ApplicationManager.Domain.Identities.RegisterPassword;
+using Common.ApplicationServices;
 using Common.ApplicationServices.Exceptions;
 using Common.ApplicationServices.Transactions;
 using Common.Domain.Exceptions;
@@ -90,7 +91,7 @@ namespace ApplicationManager.ApplicationServices.Identities.CreateAdmin
 
             if (!(authenticationService is AuthenticationGrantTypePassword authenticationGrantTypePassword))
             {
-                throw new BusinessApplicationException(ExceptionType.BadRequest, "Password identities are not configured");
+                throw new BusinessApplicationException(ExceptionType.BadRequest, ErrorCodes.PasswordLoginNotConfigured, "Password identities are not configured");
             }
 
             return authenticationGrantTypePassword;

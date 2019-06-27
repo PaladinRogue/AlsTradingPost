@@ -82,11 +82,6 @@ namespace ApplicationManager.Api
             Message.SetMessageSender(messageSender);
             Clock.SetClock(clock);
 
-            if (Environment.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
             loggerFactory.AddLog4Net();
 
             MiddlewareRegistration.Register(app);

@@ -1,4 +1,5 @@
 ﻿using System.Buffers;
+using Common.Api.Exceptions;
 using Common.Api.Formats.JsonV1.Formatters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;

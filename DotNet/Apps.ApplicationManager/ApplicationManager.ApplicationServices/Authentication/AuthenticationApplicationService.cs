@@ -5,6 +5,7 @@ using ApplicationManager.ApplicationServices.Authentication.Models;
 using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.Login;
 using ApplicationManager.Domain.Users;
+using Common.ApplicationServices;
 using Common.ApplicationServices.Authentication;
 using Common.ApplicationServices.Exceptions;
 using Common.ApplicationServices.Transactions;
@@ -76,11 +77,14 @@ namespace ApplicationManager.ApplicationServices.Authentication
 
                     return await _jwtFactory.GenerateJwt<JwtAdto>(claimsIdentity, identity.Session.Id);
                 }
+                catch (InvalidLoginDomainException)
+                {
+                    throw new BusinessApplicationException(ExceptionType.BadRequest, ErrorCodes.InvalidLogin, "Your login details are incorrect");
+                }
                 catch (DomainValidationRuleException e)
                 {
                     throw new BusinessValidationRuleApplicationException(e.ValidationResult);
                 }
-
             }
         }
     }

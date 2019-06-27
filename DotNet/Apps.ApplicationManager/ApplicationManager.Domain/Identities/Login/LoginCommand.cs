@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using ApplicationManager.Domain.Identities.Queries;
-using Common.Domain.Exceptions;
 using Common.Domain.Validation;
 using FluentValidation;
 
@@ -29,14 +26,7 @@ namespace ApplicationManager.Domain.Identities.Login
 
             if (identity == null)
             {
-                throw new DomainValidationRuleException(new ValidationResult
-                {
-                    PropertyValidationErrors = new List<PropertyValidationError>
-                    {
-                        PropertyValidationErrorFactory.Create(nameof(loginCommandDdto.Identifier), loginCommandDdto.Identifier, ValidationErrorCodes.InvalidLogin),
-                        PropertyValidationErrorFactory.Create(nameof(loginCommandDdto.Password), loginCommandDdto.Password, ValidationErrorCodes.InvalidLogin)
-                    }
-                });
+                throw new InvalidLoginDomainException();
             }
 
             identity.Login();

@@ -8,7 +8,6 @@ namespace Common.Setup
     {
         public static void Register(IApplicationBuilder app)
         {
-            // app.UseMiddleware<TransactionPerRequestMiddleware>();
             app.UseMiddleware<DispatchMessagesMiddleware>();
             app.UseMiddleware<ExceptionMiddleware>();
         }

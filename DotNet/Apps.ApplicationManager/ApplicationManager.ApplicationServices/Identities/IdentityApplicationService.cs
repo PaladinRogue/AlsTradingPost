@@ -10,6 +10,7 @@ using ApplicationManager.Domain.Identities.ForgotPassword;
 using ApplicationManager.Domain.Identities.RegisterPassword;
 using ApplicationManager.Domain.Identities.ResetPassword;
 using ApplicationManager.Domain.Identities.ValidateToken;
+using Common.ApplicationServices;
 using Common.ApplicationServices.Concurrency;
 using Common.ApplicationServices.Exceptions;
 using Common.ApplicationServices.Transactions;
@@ -314,7 +315,7 @@ namespace ApplicationManager.ApplicationServices.Identities
 
             if (!(authenticationService is AuthenticationGrantTypePassword authenticationGrantTypePassword))
             {
-                throw new BusinessApplicationException(ExceptionType.BadRequest, "Password identities are not configured");
+                throw new BusinessApplicationException(ExceptionType.BadRequest, ErrorCodes.PasswordLoginNotConfigured, "Password logins are not configured");
             }
 
             return authenticationGrantTypePassword;

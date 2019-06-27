@@ -29,7 +29,7 @@ namespace Common.Setup.Infrastructure.Exceptions
                 if (context.Response.HasStarted)
                 {
                     _logger.LogWarning(
-                        "The response has already started, the http status code middleware will not be executed.");
+                        "The response has already started, the exception middleware will not be executed.");
                     throw;
                 }
 
@@ -55,9 +55,15 @@ namespace Common.Setup.Infrastructure.Exceptions
                 context.Response.StatusCode = (int)ApplicationExceptionStatusCodeMap.FromApplicationExceptionType(ExceptionType.BadRequest);
             }
             //at this point we want to catch all uncaught exceptions and return a generic response.
-            // ReSharper disable once EmptyGeneralCatchClause
             catch (Exception ex)
             {
+                if (context.Response.HasStarted)
+                {
+                    _logger.LogWarning(
+                        "The response has already started, the exception middleware will not be executed.");
+                    return;
+                }
+
                 _logger.LogCritical(ex, "Unhandled API exception");
                 context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
             }

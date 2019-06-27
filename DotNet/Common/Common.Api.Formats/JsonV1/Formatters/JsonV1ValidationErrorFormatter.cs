@@ -10,14 +10,11 @@ namespace Common.Api.Formats.JsonV1.Formatters
     {
         public FormattedError Format(ValidationResult validationResult)
         {
-            return new FormattedError
+            return FormattedError.Create(validationResult.PropertyValidationErrors.Select(e => new Error
             {
-                Errors = validationResult.PropertyValidationErrors.Select(e => new Error
-                {
-                    Code = e.PropertyName.ToCamelCase(),
-                    Meta = e.ValidationErrors.ToDictionary(ve => ve.ValidationErrorCode, ve => ve.ValidationMeta as object)
-                })
-            };
+                Code = e.PropertyName.ToCamelCase(),
+                Meta = e.ValidationErrors.ToDictionary(ve => ve.ValidationErrorCode, ve => ve.ValidationMeta as object)
+            }));
         }
     }
 }

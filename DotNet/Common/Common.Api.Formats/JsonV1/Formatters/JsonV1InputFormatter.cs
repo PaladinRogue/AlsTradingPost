@@ -2,13 +2,16 @@
 using System.Buffers;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Common.Api.Exceptions;
 using Common.Api.Formats.JsonV1.Formats;
 using Common.Api.Resources;
-using Common.Setup.Infrastructure.Exceptions;
+using Common.ApplicationServices;
+using Common.ApplicationServices.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -30,6 +33,8 @@ namespace Common.Api.Formats.JsonV1.Formatters
 
         private readonly IArrayPool<char> _charPool;
 
+        private readonly JsonSerializerSettings _jsonSerializerSettings;
+
         public JsonV1InputFormatter(ILogger logger,
             JsonSerializerSettings serializerSettings,
             ArrayPool<char> charPool,
@@ -39,6 +44,7 @@ namespace Common.Api.Formats.JsonV1.Formatters
             : base(logger, serializerSettings, charPool, objectPoolProvider, options, jsonOptions)
         {
             _options = options;
+            _jsonSerializerSettings = serializerSettings;
             _charPool = new JsonArrayPool<char>(charPool);
 
             SupportedMediaTypes.Clear();
@@ -75,25 +81,36 @@ namespace Common.Api.Formats.JsonV1.Formatters
                         ReleaseJsonSerializer(jsonSerializer);
                     }
 
-                    if (model?.Data == null && context.TreatEmptyInputAsDefaultValue)
+                    switch (model?.Data)
                     {
-                        InputFormatterResult.Success(model);
-                    }
-
-                    if (model?.Data == null)
-                    {
-                        return InputFormatterResult.NoValue();
+                        case null when context.TreatEmptyInputAsDefaultValue:
+                            return await InputFormatterResult.SuccessAsync(model);
+                        case null:
+                            return await InputFormatterResult.NoValueAsync();
                     }
 
                     string expectedType = modelType.GetCustomAttributes<ResourceTypeAttribute>().FirstOrDefault()?.Type;
 
                     if (string.IsNullOrWhiteSpace(model.Data.Type) || model.Data.Type != expectedType)
                     {
-                        //TODO proper response require here, prob in the exception middleware
-                        throw new BadRequestException($"Model type is not expected for this request");
+                        BusinessApplicationException exception = new BusinessApplicationException(ExceptionType.BadRequest, ErrorCodes.ResourceType, "The provided resource type is invalid");
+                        ApplicationError applicationError = new ApplicationError
+                        {
+                            Exception = exception,
+                            HttpStatusCode = HttpStatusCode.BadRequest
+                        };
+                        string response = JsonConvert.SerializeObject(FormattedError.Create(applicationError.FormatError()), _jsonSerializerSettings);
+
+                        context.HttpContext.Response.Clear();
+                        context.HttpContext.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+                        context.HttpContext.Response.ContentType = new MediaTypeHeaderValue("application/json").ToString();
+
+                        await context.HttpContext.Response.WriteAsync(response);
+
+                        throw exception;
                     }
 
-                    return InputFormatterResult.Success(model.Data.Attributes.ToObject(modelType));
+                    return await InputFormatterResult.SuccessAsync(model.Data.Attributes.ToObject(modelType));
                 }
             }
         }

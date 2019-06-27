@@ -19,15 +19,7 @@ namespace Common.Api.Formats.JsonV1.Formatters
 
         public FormattedError Format(IEnumerable<ApplicationError> applicationErrors)
         {
-            return new FormattedError
-            {
-                Errors = applicationErrors.Select(e => new Error
-                {
-                    Status = (int)e.HttpStatusCode,
-                    Title = Enum.GetName(typeof(HttpStatusCode), e.HttpStatusCode),
-                    Detail = e.Exception.Message
-                })
-            };
+            return FormattedError.Create(applicationErrors.Select(a => a.FormatError()));
         }
     }
 }
