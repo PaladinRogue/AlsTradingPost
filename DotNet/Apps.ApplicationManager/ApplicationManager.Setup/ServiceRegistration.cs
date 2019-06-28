@@ -16,7 +16,7 @@ using ApplicationManager.Domain.Identities.ConfirmIdentity;
 using ApplicationManager.Domain.Identities.Create;
 using ApplicationManager.Domain.Identities.CreateRefreshToken;
 using ApplicationManager.Domain.Identities.ForgotPassword;
-using ApplicationManager.Domain.Identities.Login;
+using ApplicationManager.Domain.Identities.Login.Password;
 using ApplicationManager.Domain.Identities.Logout;
 using ApplicationManager.Domain.Identities.Queries;
 using ApplicationManager.Domain.Identities.RegisterPassword;
@@ -77,7 +77,7 @@ namespace ApplicationManager.Setup
 	        services.AddScoped<IValidator<ChangeApplicationDdto>, ChangeApplicationValidator>();
 	        services.AddScoped<IValidator<CreateApplicationDdto>, CreateApplicationValidator>();
 	        services.AddScoped<IValidator<ResetPasswordCommandDdto>, ResetPasswordValidator>();
-	        services.AddScoped<IValidator<LoginCommandDdto>, LoginCommandValidator>();
+	        services.AddScoped<IValidator<PasswordLoginCommandDdto>, PasswordLoginCommandValidator>();
 	        services.AddScoped<IValidator<CheckPasswordDdto>, CheckPasswordValidator>();
 	        services.AddScoped<IValidator<ChangePasswordCommandDdto>, ChangePasswordValidator>();
 	        services.AddScoped<IValidator<RegisterPasswordCommandDdto>, RegisterPasswordValidator>();
@@ -94,7 +94,7 @@ namespace ApplicationManager.Setup
             services.AddScoped<ICreateUserCommand, CreateUserCommand>();
             services.AddScoped<ICreateUserCommand, CreateUserCommand>();
             services.AddScoped<IResetPasswordCommand, ResetPasswordCommand>();
-            services.AddScoped<ILoginCommand, LoginCommand>();
+            services.AddScoped<IPasswordLoginCommand, PasswordLoginCommand>();
             services.AddScoped<ICheckPasswordCommand, CheckPasswordCommand>();
             services.AddScoped<IChangePasswordCommand, ChangePasswordCommand>();
             services.AddScoped<IRegisterPasswordCommand, RegisterPasswordCommand>();

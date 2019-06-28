@@ -1,11 +1,11 @@
 using Common.Resources;
 using FluentValidation;
 
-namespace ApplicationManager.Domain.Identities.Login
+namespace ApplicationManager.Domain.Identities.Login.Password
 {
-    public class LoginCommandValidator : AbstractValidator<LoginCommandDdto>
+    public class PasswordLoginCommandValidator : AbstractValidator<PasswordLoginCommandDdto>
     {
-        public LoginCommandValidator()
+        public PasswordLoginCommandValidator()
         {
             RuleFor(l => l.Identifier)
                 .MaximumLength(FieldSizes.Extended)

@@ -1,6 +1,6 @@
-namespace ApplicationManager.Domain.Identities.Login
+namespace ApplicationManager.Domain.Identities.Login.Password
 {
-    public class LoginCommandDdto
+    public class PasswordLoginCommandDdto
     {
         public string Identifier { get; set; }
 

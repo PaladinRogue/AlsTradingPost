@@ -2,27 +2,27 @@ using ApplicationManager.Domain.Identities.Queries;
 using Common.Domain.Validation;
 using FluentValidation;
 
-namespace ApplicationManager.Domain.Identities.Login
+namespace ApplicationManager.Domain.Identities.Login.Password
 {
-    public class LoginCommand : ILoginCommand
+    public class PasswordLoginCommand : IPasswordLoginCommand
     {
         private readonly IGetIdentityByIdentifierAndPasswordQuery _getIdentityByIdentifierAndPasswordQuery;
 
-        private readonly IValidator<LoginCommandDdto> _validator;
+        private readonly IValidator<PasswordLoginCommandDdto> _validator;
 
-        public LoginCommand(
+        public PasswordLoginCommand(
             IGetIdentityByIdentifierAndPasswordQuery getIdentityByIdentifierAndPasswordQuery,
-            IValidator<LoginCommandDdto> validator)
+            IValidator<PasswordLoginCommandDdto> validator)
         {
             _getIdentityByIdentifierAndPasswordQuery = getIdentityByIdentifierAndPasswordQuery;
             _validator = validator;
         }
 
-        public Identity Execute(LoginCommandDdto loginCommandDdto)
+        public Identity Execute(PasswordLoginCommandDdto passwordLoginCommandDdto)
         {
-            _validator.ValidateAndThrow(loginCommandDdto);
+            _validator.ValidateAndThrow(passwordLoginCommandDdto);
 
-            Identity identity = _getIdentityByIdentifierAndPasswordQuery.Run(loginCommandDdto.Identifier, loginCommandDdto.Password);
+            Identity identity = _getIdentityByIdentifierAndPasswordQuery.Run(passwordLoginCommandDdto.Identifier, passwordLoginCommandDdto.Password);
 
             if (identity == null)
             {

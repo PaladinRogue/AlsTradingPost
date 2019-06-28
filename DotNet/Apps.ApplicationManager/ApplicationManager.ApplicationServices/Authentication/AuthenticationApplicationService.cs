@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices.Authentication.Models;
 using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.Login;
+using ApplicationManager.Domain.Identities.Login.Password;
 using ApplicationManager.Domain.Users;
 using Common.ApplicationServices;
 using Common.ApplicationServices.Authentication;
@@ -20,7 +21,7 @@ namespace ApplicationManager.ApplicationServices.Authentication
     {
         private readonly ICommandRepository<User> _userCommandRepository;
 
-        private readonly ILoginCommand _loginCommand;
+        private readonly IPasswordLoginCommand _passwordLoginCommand;
 
         private readonly IJwtFactory _jwtFactory;
 
@@ -30,13 +31,13 @@ namespace ApplicationManager.ApplicationServices.Authentication
 
         public AuthenticationApplicationService(
             ICommandRepository<User> userCommandRepository,
-            ILoginCommand loginCommand,
+            IPasswordLoginCommand passwordLoginCommand,
             IJwtFactory jwtFactory,
             ITransactionManager transactionManager,
             ICommandRepository<Identity> identityCommandRepository)
         {
             _userCommandRepository = userCommandRepository;
-            _loginCommand = loginCommand;
+            _passwordLoginCommand = passwordLoginCommand;
             _jwtFactory = jwtFactory;
             _transactionManager = transactionManager;
             _identityCommandRepository = identityCommandRepository;
@@ -48,7 +49,7 @@ namespace ApplicationManager.ApplicationServices.Authentication
             {
                 try
                 {
-                    Identity identity = _loginCommand.Execute(new LoginCommandDdto
+                    Identity identity = _passwordLoginCommand.Execute(new PasswordLoginCommandDdto
                     {
                         Identifier = passwordAdto.Identifier,
                         Password = passwordAdto.Password
