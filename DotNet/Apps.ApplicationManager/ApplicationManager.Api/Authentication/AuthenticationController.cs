@@ -28,17 +28,42 @@ namespace ApplicationManager.Api.Authentication
         [HttpGet("password/resourceTemplate", Name = RouteDictionary.AuthenticatePasswordResourceTemplate)]
         public IActionResult GetPasswordResourceTemplate()
         {
-            return Ok(_resourceBuilder.Build(new PasswordResourceTemplate()));
+            return Ok(_resourceBuilder.Build(new PasswordTemplate()));
         }
 
         [AllowAnonymous]
         [HttpPost("password", Name = RouteDictionary.AuthenticatePassword)]
-        public async Task<IActionResult> Password(PasswordResourceTemplate passwordResourceTemplate)
+        public async Task<IActionResult> Password(PasswordTemplate passwordTemplate)
         {
             JwtAdto jwt = await _authenticationApplicationService.Password(new PasswordAdto
             {
-                Identifier = passwordResourceTemplate.Identifier,
-                Password = passwordResourceTemplate.Password
+                Identifier = passwordTemplate.Identifier,
+                Password = passwordTemplate.Password
+            });
+
+            return Ok(_resourceBuilder.Build(new JwtResource
+            {
+                AuthToken = jwt.AuthToken,
+                ExpiresIn = jwt.ExpiresIn,
+                SessionId = jwt.SessionId
+            }));
+        }
+
+        [AllowAnonymous]
+        [HttpGet("password/resourceTemplate", Name = RouteDictionary.AuthenticateRefreshTokenResourceTemplate)]
+        public IActionResult GetRefreshTokenResourceTemplate()
+        {
+            return Ok(_resourceBuilder.Build(new RefreshTokenTemplate()));
+        }
+
+        [AllowAnonymous]
+        [HttpPost("refreshToken", Name = RouteDictionary.AuthenticateRefreshToken)]
+        public async Task<IActionResult> RefreshToken(RefreshTokenTemplate refreshTokenTemplate)
+        {
+            JwtAdto jwt = await _authenticationApplicationService.RefreshToken(new RefreshTokenAdto
+            {
+                SessionId = refreshTokenTemplate.SessionId,
+                Token = refreshTokenTemplate.Token
             });
 
             return Ok(_resourceBuilder.Build(new JwtResource

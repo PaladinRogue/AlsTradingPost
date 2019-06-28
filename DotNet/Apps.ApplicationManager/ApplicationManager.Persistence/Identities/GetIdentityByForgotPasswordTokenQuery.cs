@@ -1,7 +1,5 @@
 using System.Linq;
-using ApplicationManager.Domain;
 using ApplicationManager.Domain.Identities;
-using ApplicationManager.Domain.Identities.CheckPassword;
 using ApplicationManager.Domain.Identities.Queries;
 
 namespace ApplicationManager.Persistence.Identities

@@ -5,5 +5,6 @@ namespace Common.ApplicationServices
         public const string InvalidLogin = nameof(InvalidLogin);
         public const string ResourceType = nameof(ResourceType);
         public const string PasswordLoginNotConfigured = nameof(PasswordLoginNotConfigured);
+        public const string RefreshTokenLoginNotConfigured = nameof(RefreshTokenLoginNotConfigured);
     }
 }

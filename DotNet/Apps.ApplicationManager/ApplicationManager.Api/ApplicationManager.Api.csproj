@@ -27,4 +27,8 @@
     <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
     <ProjectReference Include="..\ApplicationManager.Setup\ApplicationManager.Setup.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="api.log" />
+  </ItemGroup>
 </Project>

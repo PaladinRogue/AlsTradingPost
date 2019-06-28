@@ -17,6 +17,7 @@ using ApplicationManager.Domain.Identities.Create;
 using ApplicationManager.Domain.Identities.CreateRefreshToken;
 using ApplicationManager.Domain.Identities.ForgotPassword;
 using ApplicationManager.Domain.Identities.Login.Password;
+using ApplicationManager.Domain.Identities.Login.RefreshToken;
 using ApplicationManager.Domain.Identities.Logout;
 using ApplicationManager.Domain.Identities.Queries;
 using ApplicationManager.Domain.Identities.RegisterPassword;
@@ -84,6 +85,7 @@ namespace ApplicationManager.Setup
 	        services.AddScoped<IValidator<ConfirmIdentityCommandDdto>, ConfirmIdentityValidator>();
 	        services.AddScoped<IValidator<ForgotPasswordCommandDdto>, ForgotPasswordValidator>();
 	        services.AddScoped<IValidator<CreateIdentityCommandDdto>, CreateIdentityValidator>();
+	        services.AddScoped<IValidator<RefreshTokenLoginCommandDdto>, RefreshTokenLoginCommandValidator>();
 	    }
 
         public static void RegisterDomainServices(IServiceCollection services)
@@ -102,6 +104,7 @@ namespace ApplicationManager.Setup
             services.AddScoped<IForgotPasswordCommand, ForgotPasswordCommand>();
             services.AddScoped<ICreateRefreshTokenCommand, CreateRefreshTokenCommand>();
             services.AddScoped<ILogoutCommand, LogoutCommand>();
+            services.AddScoped<IRefreshTokenLoginCommand, RefreshTokenLoginCommand>();
         }
 
         public static void RegisterPersistenceServices(IConfiguration configuration, IServiceCollection services)
@@ -111,6 +114,7 @@ namespace ApplicationManager.Setup
 	        services.AddScoped<IGetIdentityByIdentifierAndPasswordQuery, GetIdentityByIdentifierAndPasswordQuery>();
 	        services.AddScoped<IGetIdentityByEmailAddressQuery, GetIdentityByEmailAddressQuery>();
 	        services.AddScoped<IGetIdentityByForgotPasswordTokenQuery, GetIdentityByForgotPasswordTokenQuery>();
+	        services.AddScoped<IGetIdentityBySessionQuery, GetIdentityBySessionQuery>();
 
 	        services.AddScoped(typeof(ICommandRepository<>), typeof(Repository<>));
 	        services.AddScoped(typeof(IQueryRepository<>), typeof(Repository<>));

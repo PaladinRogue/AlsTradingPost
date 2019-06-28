@@ -9,7 +9,7 @@ namespace ApplicationManager.Api.Authentication
     [ResourceType(ResourceTypes.AuthenticatePassword)]
     [SelfLink(RouteDictionary.AuthenticatePasswordResourceTemplate, HttpVerb.Get)]
     [CreateLink(RouteDictionary.AuthenticatePassword)]
-    public class PasswordResourceTemplate : ITemplate
+    public class PasswordTemplate : ITemplate
     {
         [Required]
         [MaxLength(FieldSizes.Default)]

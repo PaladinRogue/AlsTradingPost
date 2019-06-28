@@ -7,5 +7,7 @@ namespace ApplicationManager.ApplicationServices.Authentication
     public interface IAuthenticationApplicationService
     {
         Task<JwtAdto> Password(PasswordAdto passwordAdto);
+
+        Task<JwtAdto> RefreshToken(RefreshTokenAdto refreshTokenAdto);
     }
 }

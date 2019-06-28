@@ -7,6 +7,7 @@ namespace ApplicationManager.Api
         public const string Password = "password";
         public const string RefreshToken = "refreshToken";
         public const string AuthenticatePassword = "authenticatePassword";
+        public const string AuthenticateRefreshToken = "authenticateRefreshToken";
         public const string ConfirmIdentity = "confirmIdentity";
     }
 }

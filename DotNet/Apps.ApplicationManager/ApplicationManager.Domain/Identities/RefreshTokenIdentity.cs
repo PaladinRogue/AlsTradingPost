@@ -51,9 +51,9 @@ namespace ApplicationManager.Domain.Identities
 
         public virtual AuthenticationGrantTypeRefreshToken AuthenticationGrantTypeRefreshToken { get; protected set; }
 
-        internal bool ValidateToken(ValidateTokenDdto validateTokenDdto)
+        internal bool ValidateToken(ValidateRefreshTokenDdto validateRefreshTokenDdto)
         {
-            return RefreshTokenHash == DataProtection.Hash(validateTokenDdto.Token, RefreshTokenHash.Salt) && TokenExpiry >= Clock.Now();
+            return RefreshTokenHash == DataProtection.Hash(validateRefreshTokenDdto.Token, RefreshTokenHash.Salt) && TokenExpiry >= Clock.Now();
         }
     }
 }
