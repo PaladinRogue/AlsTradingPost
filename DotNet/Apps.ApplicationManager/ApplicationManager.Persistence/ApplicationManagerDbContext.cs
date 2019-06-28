@@ -79,8 +79,14 @@ namespace ApplicationManager.Persistence
                 .HasConversion(InstantConverter.Create());
 
             modelBuilder.Entity<RefreshTokenIdentity>()
+                .Ignore(p => p.RefreshToken)
                 .ProtectSensitiveInformation()
-                .HasBaseType<AuthenticationIdentity>();
+                .HasBaseType<AuthenticationIdentity>()
+                .OwnsOne(typeof(HashSet), "RefreshTokenHash");
+
+            modelBuilder.Entity<RefreshTokenIdentity>()
+                .Property(t => t.TokenExpiry)
+                .HasConversion(InstantConverter.Create());
 
             modelBuilder.Entity<Identity>()
                 .HasOne(i => i.Session)

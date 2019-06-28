@@ -10,7 +10,7 @@ namespace ApplicationManager.Setup
 	    {
 	        services.AddScoped<IMessageSubscriber, RegisterApplicationMessageSubscriber>();
 	        services.AddScoped<IMessageSubscriber, SendNotificationMessageSubscriber>();
-	        services.AddScoped<IMessageSubscriber, AdminIdentityCreatedMessageSubscriber>();
+	        services.AddScoped<IMessageSubscriber, CreateAdminIdentityMessageSubscriber>();
         }
 	}
 }

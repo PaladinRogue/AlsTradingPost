@@ -1,4 +1,4 @@
-﻿namespace Common.Messaging.Infrastructure.Interfaces
+﻿namespace Common.Messaging.Infrastructure.Messages
 {
     public interface IMessage
     {

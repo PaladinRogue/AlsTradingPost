@@ -4,14 +4,16 @@ using ApplicationManager.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ApplicationManager.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationManagerDbContext))]
-    partial class ApplicationManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190627204029_AddTwoFactorAuthenticationService")]
+    partial class AddTwoFactorAuthenticationService
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -233,7 +235,9 @@ namespace ApplicationManager.Persistence.Migrations
 
                     b.Property<Guid?>("AuthenticationGrantTypeRefreshTokenId");
 
-                    b.Property<DateTime>("TokenExpiry");
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasMaxLength(1024);
 
                     b.HasIndex("AuthenticationGrantTypeRefreshTokenId");
 
@@ -252,8 +256,7 @@ namespace ApplicationManager.Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(1024);
 
-                    b.Property<DateTime>("TokenExpiry")
-                        .HasColumnName("TwoFactorAuthenticationIdentity_TokenExpiry");
+                    b.Property<DateTime>("TokenExpiry");
 
                     b.Property<int>("TwoFactorAuthenticationType");
 
@@ -340,24 +343,6 @@ namespace ApplicationManager.Persistence.Migrations
                     b.HasOne("ApplicationManager.Domain.AuthenticationServices.AuthenticationGrantTypeRefreshToken", "AuthenticationGrantTypeRefreshToken")
                         .WithMany()
                         .HasForeignKey("AuthenticationGrantTypeRefreshTokenId");
-
-                    b.OwnsOne("Common.Domain.DataProtection.HashSet", "RefreshTokenHash", b1 =>
-                        {
-                            b1.Property<Guid>("RefreshTokenIdentityId");
-
-                            b1.Property<string>("Hash");
-
-                            b1.Property<string>("Salt");
-
-                            b1.HasKey("RefreshTokenIdentityId");
-
-                            b1.ToTable("AuthenticationIdentities","apps");
-
-                            b1.HasOne("ApplicationManager.Domain.Identities.RefreshTokenIdentity")
-                                .WithOne("RefreshTokenHash")
-                                .HasForeignKey("Common.Domain.DataProtection.HashSet", "RefreshTokenIdentityId")
-                                .OnDelete(DeleteBehavior.Cascade);
-                        });
                 });
 #pragma warning restore 612, 618
         }

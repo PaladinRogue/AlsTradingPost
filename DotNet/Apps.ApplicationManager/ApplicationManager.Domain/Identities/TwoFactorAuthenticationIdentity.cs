@@ -58,7 +58,7 @@ namespace ApplicationManager.Domain.Identities
 
         internal bool ValidateToken(ValidateTokenDdto validateTokenDdto)
         {
-            return Token == validateTokenDdto.Token && TokenExpiry >= Clock.Now();
+            return TwoFactorAuthenticationType == validateTokenDdto.TwoFactorAuthenticationType && Token == validateTokenDdto.Token && TokenExpiry >= Clock.Now();
         }
     }
 }

@@ -34,7 +34,7 @@ namespace ApplicationManager.Domain.Identities
             IsRevoked = false;
         }
 
-        internal void Revoked()
+        internal void Revoke()
         {
             IsRevoked = true;
         }

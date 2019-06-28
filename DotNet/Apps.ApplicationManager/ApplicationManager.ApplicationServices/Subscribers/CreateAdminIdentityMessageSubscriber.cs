@@ -3,6 +3,7 @@ using ApplicationManager.ApplicationServices.Users.Models;
 using AutoMapper;
 using Common.ApplicationServices.Exceptions;
 using Common.Messaging.Infrastructure.Interfaces;
+using Common.Messaging.Infrastructure.MessageBus;
 using Common.Messaging.Infrastructure.Subscribers;
 using Common.Messaging.Messages;
 using Common.Setup.Settings;
@@ -11,9 +12,9 @@ using Microsoft.Extensions.Options;
 
 namespace ApplicationManager.ApplicationServices.Subscribers
 {
-    public class AdminIdentityCreatedMessageSubscriber : MessageSubscriber<AdminIdentityCreatedMessage, AdminIdentityCreatedMessageSubscriber>
+    public class CreateAdminIdentityMessageSubscriber : MessageSubscriber<CreateAdminIdentityMessage, CreateAdminIdentityMessageSubscriber>
     {
-        private readonly ILogger<AdminIdentityCreatedMessageSubscriber> _logger;
+        private readonly ILogger<CreateAdminIdentityMessageSubscriber> _logger;
 
         private readonly IMapper _mapper;
 
@@ -21,9 +22,9 @@ namespace ApplicationManager.ApplicationServices.Subscribers
 
         private readonly AppSettings _appSettings;
 
-        public AdminIdentityCreatedMessageSubscriber(
+        public CreateAdminIdentityMessageSubscriber(
             IMessageBus messageBus,
-            ILogger<AdminIdentityCreatedMessageSubscriber> logger,
+            ILogger<CreateAdminIdentityMessageSubscriber> logger,
             ICreateAdminUserApplicationKernalService createAdminUserApplicationKernalService,
             IMapper mapper, IOptions<AppSettings> appSettingsAccessor) : base(messageBus)
         {
@@ -33,13 +34,13 @@ namespace ApplicationManager.ApplicationServices.Subscribers
             _appSettings = appSettingsAccessor.Value;
         }
 
-        public override void Handle(AdminIdentityCreatedMessage message)
+        public override void Handle(CreateAdminIdentityMessage message)
         {
             try
             {
                 if (_appSettings.SystemName == message.ApplicationName)
                 {
-                    _createAdminUserApplicationKernalService.Create(_mapper.Map<AdminIdentityCreatedMessage, CreateUserAdto>(message));
+                    _createAdminUserApplicationKernalService.Create(_mapper.Map<CreateAdminIdentityMessage, CreateUserAdto>(message));
                 }
             }
             catch (BusinessApplicationException e)

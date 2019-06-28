@@ -5,6 +5,7 @@ using Common.ApplicationServices.Transactions;
 using Common.Domain.DataProtection;
 using Common.Messaging.Infrastructure.Dispatchers;
 using Common.Messaging.Infrastructure.Interfaces;
+using Common.Messaging.Infrastructure.Messages;
 using Common.Messaging.Infrastructure.Serialisers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

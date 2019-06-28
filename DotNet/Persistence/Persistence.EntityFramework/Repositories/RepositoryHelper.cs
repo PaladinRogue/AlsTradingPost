@@ -59,7 +59,7 @@ namespace Persistence.EntityFramework.Repositories
 
             try
             {
-                return results.Single(e => e.Id == id && e.Version == version.Version);
+                return results.SingleOrDefault(e => e.Id == id && e.Version == version.Version);
             }
             catch (InvalidOperationException)
             {

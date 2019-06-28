@@ -9,7 +9,7 @@ namespace ApplicationManager.Api.Identities
     [ResourceType(ResourceTypes.ConfirmIdentity)]
     [SelfLink(RouteDictionary.ConfirmIdentityResourceTemplate, HttpVerb.Get)]
     [CreateLink(RouteDictionary.ConfirmIdentity)]
-    public class ConfirmIdentityTemplate : VersionedTemplate
+    public class ConfirmIdentityTemplate : ITemplate
     {
         [Required]
         public string Token { get; set; }

@@ -14,6 +14,7 @@ using ApplicationManager.Domain.Identities.ChangePassword;
 using ApplicationManager.Domain.Identities.CheckPassword;
 using ApplicationManager.Domain.Identities.ConfirmIdentity;
 using ApplicationManager.Domain.Identities.Create;
+using ApplicationManager.Domain.Identities.CreateRefreshToken;
 using ApplicationManager.Domain.Identities.ForgotPassword;
 using ApplicationManager.Domain.Identities.Login;
 using ApplicationManager.Domain.Identities.Queries;
@@ -98,6 +99,7 @@ namespace ApplicationManager.Setup
             services.AddScoped<IRegisterPasswordCommand, RegisterPasswordCommand>();
             services.AddScoped<IConfirmIdentityCommand, ConfirmIdentityCommand>();
             services.AddScoped<IForgotPasswordCommand, ForgotPasswordCommand>();
+            services.AddScoped<ICreateRefreshTokenCommand, CreateRefreshTokenCommand>();
         }
 
         public static void RegisterPersistenceServices(IConfiguration configuration, IServiceCollection services)

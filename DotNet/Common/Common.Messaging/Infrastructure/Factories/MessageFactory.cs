@@ -1,9 +1,10 @@
 ﻿using System;
 using Common.Domain.DataProtection;
 using Common.Messaging.Infrastructure.Interfaces;
+using Common.Messaging.Infrastructure.Messages;
 using Common.Messaging.Infrastructure.Serialisers;
 
-namespace Common.Messaging.Infrastructure
+namespace Common.Messaging.Infrastructure.Factories
 {
     public class MessageFactory : IMessageFactory
     {

@@ -12,7 +12,7 @@ namespace ApplicationManager.Domain.Identities.CheckPassword
             _validator = validator;
         }
 
-        public bool Execute(PasswordIdentity passwordIdentity,CheckPasswordDdto checkPasswordDdto)
+        public bool Execute(PasswordIdentity passwordIdentity, CheckPasswordDdto checkPasswordDdto)
         {
             _validator.ValidateAndThrow(checkPasswordDdto);
 

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ApplicationManager.Api.Status
 {
-    [DefaultControllerRoute("status")]
+    [DefaultControllerRoute]
     public class StatusController : ControllerBase
     {
         private readonly IResourceBuilder _resourceBuilder;

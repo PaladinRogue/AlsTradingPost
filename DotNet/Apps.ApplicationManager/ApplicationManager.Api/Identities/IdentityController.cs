@@ -4,24 +4,30 @@ using ApplicationManager.ApplicationServices.Identities.Models;
 using Common.Api.Authentication;
 using Common.Api.Builders.Resource;
 using Common.Api.Routing;
+using Common.Setup.Infrastructure.Authorisation;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApplicationManager.Api.Identities
 {
-    [DefaultControllerRoute("identities")]
+    [DefaultControllerRoute]
     public class IdentityController : ControllerBase
     {
         private readonly IResourceBuilder _resourceBuilder;
 
         private readonly IIdentityApplicationService _identityApplicationService;
 
+        private readonly ICurrentIdentityProvider _currentIdentityProvider;
+
         public IdentityController(
             IResourceBuilder resourceBuilder,
-            IIdentityApplicationService identityApplicationService)
+            IIdentityApplicationService identityApplicationService,
+            ICurrentIdentityProvider currentIdentityProvider)
         {
             _resourceBuilder = resourceBuilder;
             _identityApplicationService = identityApplicationService;
+            _currentIdentityProvider = currentIdentityProvider;
         }
 
         [AllowAnonymous]
@@ -67,12 +73,12 @@ namespace ApplicationManager.Api.Identities
             return Accepted(_resourceBuilder.Build(new ForgotPasswordResource()));
         }
 
-        [HttpGet("{identityId}/password", Name = RouteDictionary.GetPasswordIdentity)]
-        public IActionResult GetPasswordIdentity(Guid identityId)
+        [HttpGet("password", Name = RouteDictionary.GetPasswordIdentity)]
+        public IActionResult GetPasswordIdentity()
         {
             PasswordIdentityAdto passwordIdentityAdto = _identityApplicationService.GetPasswordIdentity(new GetPasswordIdentityAdto
             {
-                IdentityId = identityId
+                IdentityId = _currentIdentityProvider.Id
             });
 
             return Ok(_resourceBuilder.Build(new PasswordIdentityResource
@@ -83,12 +89,12 @@ namespace ApplicationManager.Api.Identities
             }));
         }
 
-        [HttpGet("{identityId}/password/change/resourceTemplate", Name = RouteDictionary.ChangePasswordResourceTemplate)]
-        public IActionResult ChangePasswordResourceTemplate(Guid identityId)
+        [HttpGet("password/change/resourceTemplate", Name = RouteDictionary.ChangePasswordResourceTemplate)]
+        public IActionResult ChangePasswordResourceTemplate()
         {
             IdentityAdto identityAdto = _identityApplicationService.Get(new GetIdentityAdto
             {
-                Id = identityId
+                Id = _currentIdentityProvider.Id
             });
 
             return Ok(_resourceBuilder.Build(new ChangePasswordIdentityTemplate
@@ -97,9 +103,11 @@ namespace ApplicationManager.Api.Identities
             }));
         }
 
-        [HttpPost("{identityId}/password/change", Name = RouteDictionary.ChangePassword)]
-        public IActionResult ChangePassword(Guid identityId, ChangePasswordIdentityTemplate template)
+        [HttpPost("password/change", Name = RouteDictionary.ChangePassword)]
+        public IActionResult ChangePassword(ChangePasswordIdentityTemplate template)
         {
+            Guid identityId = _currentIdentityProvider.Id;
+
             PasswordIdentityAdto passwordIdentityAdto = _identityApplicationService.ChangePassword(new ChangePasswordAdto
             {
                 IdentityId = identityId,
@@ -117,30 +125,23 @@ namespace ApplicationManager.Api.Identities
         }
 
         [AllowRestrictedAppAccess]
-        [HttpGet("{identityId}/confirm/resourceTemplate", Name = RouteDictionary.ConfirmIdentityResourceTemplate)]
-        public IActionResult ConfirmIdentityResourceTemplate(Guid identityId, [FromQuery]string token)
+        [HttpGet("confirm/resourceTemplate", Name = RouteDictionary.ConfirmIdentityResourceTemplate)]
+        public IActionResult ConfirmIdentityResourceTemplate([FromQuery]string token)
         {
-            IdentityAdto identityAdto = _identityApplicationService.Get(new GetIdentityAdto
-            {
-                Id = identityId,
-            });
-
             return Ok(_resourceBuilder.Build(new ConfirmIdentityTemplate
             {
-                Version = identityAdto.Version,
                 Token = token
             }));
         }
 
         [AllowRestrictedAppAccess]
-        [HttpPost("{identityId}/confirm", Name = RouteDictionary.ConfirmIdentity)]
-        public IActionResult ChangePassword(Guid identityId, ConfirmIdentityTemplate template)
+        [HttpPost("confirm", Name = RouteDictionary.ConfirmIdentity)]
+        public IActionResult ConfirmIdentity(ConfirmIdentityTemplate template)
         {
             _identityApplicationService.ConfirmIdentity(new ConfirmIdentityAdto
             {
-                IdentityId = identityId,
-                Token = template.Token,
-                Version = template.Version
+                IdentityId = _currentIdentityProvider.Id,
+                Token = template.Token
             });
 
             return Accepted(_resourceBuilder.Build(new ConfirmIdentityResource()));
@@ -171,6 +172,20 @@ namespace ApplicationManager.Api.Identities
                 Identifier = passwordIdentityAdto.Identifier,
                 Password = passwordIdentityAdto.Password,
                 Version = passwordIdentityAdto.Version
+            }));
+        }
+
+        [HttpPost("refreshToken", Name = RouteDictionary.CreateRefreshToken)]
+        public IActionResult CreateRefreshToken()
+        {
+            RefreshTokenIdentityAdto refreshTokenIdentityAdto = _identityApplicationService.CreateRefreshToken(new CreateRefreshTokenAdto
+            {
+                IdentityId = _currentIdentityProvider.Id
+            });
+
+            return Ok(_resourceBuilder.Build(new RefreshTokenIdentityResource
+            {
+                Token = refreshTokenIdentityAdto.Token
             }));
         }
     }

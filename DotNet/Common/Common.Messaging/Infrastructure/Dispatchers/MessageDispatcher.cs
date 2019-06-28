@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Common.Messaging.Infrastructure.Directors;
 using Common.Messaging.Infrastructure.Interfaces;
+using Common.Messaging.Infrastructure.MessageBus;
 
 namespace Common.Messaging.Infrastructure.Dispatchers
 {

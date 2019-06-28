@@ -24,12 +24,12 @@ namespace ApplicationManager.Persistence.Identities
             Identity identity = _applicationManagerDbContext.Identities
                 .SingleOrDefault(i => i.AuthenticationIdentities.OfType<PasswordIdentity>().Any(p => p.Identifier == identifier));
 
-            if (identity == null)
+            PasswordIdentity passwordIdentity = (PasswordIdentity) identity?.AuthenticationIdentities.Single(a => a is PasswordIdentity);
+
+            if (passwordIdentity == null)
             {
                 return null;
             }
-
-            PasswordIdentity passwordIdentity = identity.AuthenticationIdentities.OfType<PasswordIdentity>().Single();
 
             return _checkPasswordCommand.Execute(passwordIdentity,
                 new CheckPasswordDdto

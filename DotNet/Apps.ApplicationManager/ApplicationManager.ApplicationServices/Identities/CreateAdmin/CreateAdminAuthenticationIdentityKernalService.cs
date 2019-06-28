@@ -74,14 +74,14 @@ namespace ApplicationManager.ApplicationServices.Identities.CreateAdmin
 
                     _commandRepository.Update(identity);
 
-                    Message.Send(AdminIdentityCreatedMessage.Create(createAdminAuthenticationIdentityAdto.ApplicationSystemName, identity.Id));
+                    Message.Send(CreateAdminIdentityMessage.Create(createAdminAuthenticationIdentityAdto.ApplicationSystemName, identity.Id));
+
+                    transaction.Commit();
                 }
                 catch (DomainValidationRuleException e)
                 {
                     throw new BusinessValidationRuleApplicationException(e.ValidationResult);
                 }
-
-                transaction.Commit();
             }
         }
 

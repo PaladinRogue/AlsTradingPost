@@ -1,7 +1,8 @@
 ﻿using System;
+using Common.Messaging.Infrastructure.Messages;
 using Common.Messaging.Infrastructure.Subscribers;
 
-namespace Common.Messaging.Infrastructure.Interfaces
+namespace Common.Messaging.Infrastructure.MessageBus
 {
     public interface IMessageBus
     {

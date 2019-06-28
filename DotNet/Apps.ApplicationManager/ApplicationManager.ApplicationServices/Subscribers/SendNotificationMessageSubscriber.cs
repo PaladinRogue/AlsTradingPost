@@ -1,5 +1,6 @@
 using ApplicationManager.ApplicationServices.Notifications.Send;
 using Common.Messaging.Infrastructure.Interfaces;
+using Common.Messaging.Infrastructure.MessageBus;
 using Common.Messaging.Infrastructure.Subscribers;
 using Common.Messaging.Messages;
 

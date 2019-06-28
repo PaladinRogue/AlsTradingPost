@@ -2,7 +2,7 @@
 
 namespace ApplicationManager.Persistence.Migrations
 {
-    public partial class AddPasswordAuthenticationServices : Migration
+    public partial class AddTwoFactorAuthenticationService : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,8 +12,8 @@ namespace ApplicationManager.Persistence.Migrations
                            ,[Type]
                            ,[Version])
                      VALUES
-                           ('D5493BEA-EED6-4021-A671-2516FEFEB23B'
-                           ,'PASSWORD'
+                           ('2ECFEC94-B7E3-4B09-96B8-3F0C08E27A4F'
+                           ,'REFRESH_TOKEN'
                            ,0)
                 GO");
         }

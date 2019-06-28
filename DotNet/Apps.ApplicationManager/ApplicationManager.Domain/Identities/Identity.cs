@@ -14,7 +14,6 @@ using ApplicationManager.Domain.Identities.ValidateToken;
 using Common.Domain.Aggregates;
 using Common.Domain.DataProtection;
 using Common.Domain.Entities;
-using Common.Domain.Models;
 using Common.Resources;
 
 namespace ApplicationManager.Domain.Identities
@@ -89,7 +88,7 @@ namespace ApplicationManager.Domain.Identities
                 Password = resetPasswordDdto.Password
             });
 
-            Session.Revoked();
+            Session?.Revoke();
         }
 
         internal void ConfirmIdentity(ConfirmIdentityDdto confirmIdentityDdto)
@@ -124,7 +123,7 @@ namespace ApplicationManager.Domain.Identities
 
         internal void ForgotPassword(ForgotPasswordDdto forgotPasswordDdto)
         {
-            PasswordIdentity passwordIdentity = AuthenticationIdentities.OfType<PasswordIdentity>().SingleOrDefault();
+            PasswordIdentity passwordIdentity = (PasswordIdentity)AuthenticationIdentities.SingleOrDefault(a => a is PasswordIdentity);
 
             if (passwordIdentity == null)
             {
@@ -147,7 +146,7 @@ namespace ApplicationManager.Domain.Identities
 
         internal void ChangePassword(ChangePasswordDdto changePasswordDdto)
         {
-            PasswordIdentity passwordIdentity = AuthenticationIdentities.OfType<PasswordIdentity>().SingleOrDefault();
+            PasswordIdentity passwordIdentity = (PasswordIdentity)AuthenticationIdentities.SingleOrDefault(a => a is PasswordIdentity);
 
             if (passwordIdentity == null)
             {
@@ -183,15 +182,17 @@ namespace ApplicationManager.Domain.Identities
             return passwordIdentity;
         }
 
-        internal RefreshTokenIdentity CreateRefreshToken(AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken)
+        internal RefreshTokenIdentity CreateRefreshToken(AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken, out string token)
         {
-            RefreshTokenIdentity refreshTokenIdentity = _authenticationIdentities.OfType<RefreshTokenIdentity>().SingleOrDefault();
+            RefreshTokenIdentity refreshTokenIdentity = (RefreshTokenIdentity)AuthenticationIdentities.SingleOrDefault(a => a is RefreshTokenIdentity);
             if (refreshTokenIdentity != null)
             {
                 _authenticationIdentities.Remove(refreshTokenIdentity);
             }
 
-            _authenticationIdentities.Add(RefreshTokenIdentity.Create(this, authenticationGrantTypeRefreshToken));
+            refreshTokenIdentity = RefreshTokenIdentity.Create(this, authenticationGrantTypeRefreshToken, out token);
+
+            _authenticationIdentities.Add(refreshTokenIdentity);
 
             return refreshTokenIdentity;
         }

@@ -4,7 +4,7 @@ namespace Common.Api.Routing
 {
     public class DefaultControllerRouteAttribute : RouteAttribute
     {
-        public DefaultControllerRouteAttribute(string controllerRoute) : base($"api/{controllerRoute}")
+        public DefaultControllerRouteAttribute(string controllerRoute = null) : base($"api/{controllerRoute ?? "[controller]"}")
         {
         }
     }

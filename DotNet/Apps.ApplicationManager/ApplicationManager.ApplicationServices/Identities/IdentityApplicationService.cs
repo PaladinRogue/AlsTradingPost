@@ -6,6 +6,7 @@ using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.ChangePassword;
 using ApplicationManager.Domain.Identities.ConfirmIdentity;
 using ApplicationManager.Domain.Identities.Create;
+using ApplicationManager.Domain.Identities.CreateRefreshToken;
 using ApplicationManager.Domain.Identities.ForgotPassword;
 using ApplicationManager.Domain.Identities.RegisterPassword;
 using ApplicationManager.Domain.Identities.ResetPassword;
@@ -41,6 +42,8 @@ namespace ApplicationManager.ApplicationServices.Identities
 
         private readonly IConfirmIdentityCommand _confirmIdentityCommand;
 
+        private readonly ICreateRefreshTokenCommand _createRefreshTokenCommand;
+
         public IdentityApplicationService(
             ITransactionManager transactionManager,
             IResetPasswordCommand resetPasswordCommand,
@@ -51,7 +54,8 @@ namespace ApplicationManager.ApplicationServices.Identities
             IRegisterPasswordCommand registerPasswordCommand,
             ICreateIdentityCommand createIdentityCommand,
             IForgotPasswordCommand forgotPasswordCommand,
-            IConfirmIdentityCommand confirmIdentityCommand)
+            IConfirmIdentityCommand confirmIdentityCommand,
+            ICreateRefreshTokenCommand createRefreshTokenCommand)
         {
             _transactionManager = transactionManager;
             _resetPasswordCommand = resetPasswordCommand;
@@ -63,6 +67,7 @@ namespace ApplicationManager.ApplicationServices.Identities
             _createIdentityCommand = createIdentityCommand;
             _forgotPasswordCommand = forgotPasswordCommand;
             _confirmIdentityCommand = confirmIdentityCommand;
+            _createRefreshTokenCommand = createRefreshTokenCommand;
         }
 
         public IdentityAdto Get(GetIdentityAdto getIdentityAdto)
@@ -182,6 +187,10 @@ namespace ApplicationManager.ApplicationServices.Identities
 
                     transaction.Commit();
                 }
+                catch (ConcurrencyDomainException)
+                {
+                    throw new BusinessApplicationException(ExceptionType.Concurrency, "No identity found to confirm identity");
+                }
                 catch (InvalidTwoFactorTokenDomainException)
                 {
                     throw new BusinessApplicationException(ExceptionType.Unauthorized, "Token invalid for identity");
@@ -300,6 +309,45 @@ namespace ApplicationManager.ApplicationServices.Identities
                         Identifier = passwordIdentity.Identifier,
                         Password = passwordIdentity.Password,
                         Version = ConcurrencyVersionFactory.CreateFromEntity(identity)
+                    };
+                }
+                catch (DomainValidationRuleException e)
+                {
+                    throw new BusinessValidationRuleApplicationException(e.ValidationResult);
+                }
+            }
+        }
+
+        public RefreshTokenIdentityAdto CreateRefreshToken(CreateRefreshTokenAdto createRefreshTokenAdto)
+        {
+            using (ITransaction transaction = _transactionManager.Create())
+            {
+                try
+                {
+                    Identity identity = _identityCommandRepository.GetById(createRefreshTokenAdto.IdentityId);
+
+                    if (identity == null)
+                    {
+                        throw new BusinessApplicationException(ExceptionType.NotFound, "Identity not found");
+                    }
+
+                    AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken =
+                        (AuthenticationGrantTypeRefreshToken) _authenticationServiceCommandRepository.GetSingle(a => a is AuthenticationGrantTypeRefreshToken);
+
+                    if (authenticationGrantTypeRefreshToken == null)
+                    {
+                        throw new BusinessApplicationException(ExceptionType.NotFound, "Refresh tokens are not configured");
+                    }
+
+                    RefreshTokenIdentityDdto refreshTokenIdentityDdto = _createRefreshTokenCommand.Execute(identity, authenticationGrantTypeRefreshToken);
+
+                    _identityCommandRepository.Update(identity);
+
+                    transaction.Commit();
+
+                    return new RefreshTokenIdentityAdto
+                    {
+                        Token = refreshTokenIdentityDdto.Token
                     };
                 }
                 catch (DomainValidationRuleException e)

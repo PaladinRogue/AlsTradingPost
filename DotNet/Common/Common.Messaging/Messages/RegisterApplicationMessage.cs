@@ -1,4 +1,4 @@
-﻿using Common.Messaging.Infrastructure.Interfaces;
+﻿using Common.Messaging.Infrastructure.Messages;
 
 namespace Common.Messaging.Messages
 {
@@ -6,9 +6,8 @@ namespace Common.Messaging.Messages
     {
         protected RegisterApplicationMessage()
         {
-            
         }
-        
+
         protected RegisterApplicationMessage(string name, string systemName, string adminEmailAddress)
         {
             Name = name;
@@ -22,7 +21,7 @@ namespace Common.Messaging.Messages
         }
 
         public string Type => nameof(RegisterApplicationMessage);
-        
+
         public string Name { get; set; }
 
         public string SystemName { get; set; }

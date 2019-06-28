@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common.Messaging.Infrastructure.Interfaces;
+using Common.Messaging.Infrastructure.Messages;
 
 namespace Common.Messaging.Messages
 {
@@ -8,9 +9,8 @@ namespace Common.Messaging.Messages
     {
         protected SendNotificationMessage()
         {
-            
         }
-        
+
         protected SendNotificationMessage(string notificationType, Guid identityId, IReadOnlyDictionary<string, string> propertyBag)
         {
             IdentityId = identityId;

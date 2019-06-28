@@ -2,6 +2,7 @@ using ApplicationManager.ApplicationServices.Applications.Register;
 using AutoMapper;
 using Common.ApplicationServices.Exceptions;
 using Common.Messaging.Infrastructure.Interfaces;
+using Common.Messaging.Infrastructure.MessageBus;
 using Common.Messaging.Infrastructure.Subscribers;
 using Common.Messaging.Messages;
 using Microsoft.Extensions.Logging;

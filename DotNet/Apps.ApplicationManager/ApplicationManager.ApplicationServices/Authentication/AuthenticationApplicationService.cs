@@ -26,16 +26,20 @@ namespace ApplicationManager.ApplicationServices.Authentication
 
         private readonly ITransactionManager _transactionManager;
 
+        private readonly ICommandRepository<Identity> _identityCommandRepository;
+
         public AuthenticationApplicationService(
             ICommandRepository<User> userCommandRepository,
             ILoginCommand loginCommand,
             IJwtFactory jwtFactory,
-            ITransactionManager transactionManager)
+            ITransactionManager transactionManager,
+            ICommandRepository<Identity> identityCommandRepository)
         {
             _userCommandRepository = userCommandRepository;
             _loginCommand = loginCommand;
             _jwtFactory = jwtFactory;
             _transactionManager = transactionManager;
+            _identityCommandRepository = identityCommandRepository;
         }
 
         public async Task<JwtAdto> Password(PasswordAdto passwordAdto)
@@ -50,32 +54,11 @@ namespace ApplicationManager.ApplicationServices.Authentication
                         Password = passwordAdto.Password
                     });
 
-                    User user = _userCommandRepository.GetSingle(u => u.Identity.Id == identity.Id);
-
-                    ClaimsBuilder claimsBuilder = ClaimsBuilder.CreateBuilder();
-
-                    if (user != null)
-                    {
-                        claimsBuilder.WithUser(user.Id);
-                    }
-
-                    claimsBuilder.WithSubject(identity.Id);
-
-                    if (identity.AuthenticationIdentities.Any(i => i is TwoFactorAuthenticationIdentity authenticationIdentity
-                                                                   && authenticationIdentity.TwoFactorAuthenticationType == TwoFactorAuthenticationType.ConfirmIdentity))
-                    {
-                        claimsBuilder.WithRole(JwtClaims.RestrictedAppAccess);
-                    }
-                    else
-                    {
-                        claimsBuilder.WithRole(JwtClaims.AppAccess);
-                    }
-
-                    ClaimsIdentity claimsIdentity = claimsBuilder.Build();
+                    _identityCommandRepository.Update(identity);
 
                     transaction.Commit();
 
-                    return await _jwtFactory.GenerateJwt<JwtAdto>(claimsIdentity, identity.Session.Id);
+                    return await _jwtFactory.GenerateJwt<JwtAdto>(CreateClaimsIdentity(identity), identity.Session.Id);
                 }
                 catch (InvalidLoginDomainException)
                 {
@@ -86,6 +69,34 @@ namespace ApplicationManager.ApplicationServices.Authentication
                     throw new BusinessValidationRuleApplicationException(e.ValidationResult);
                 }
             }
+        }
+
+        private ClaimsIdentity CreateClaimsIdentity(Identity identity)
+        {
+            User user = _userCommandRepository.GetSingle(u => u.Identity.Id == identity.Id);
+
+            ClaimsBuilder claimsBuilder = ClaimsBuilder.CreateBuilder();
+
+            if (user != null)
+            {
+                claimsBuilder.WithUser(user.Id);
+            }
+
+            claimsBuilder.WithSubject(identity.Id);
+
+            if (identity.AuthenticationIdentities.Any(i => i is TwoFactorAuthenticationIdentity authenticationIdentity
+                                                           && authenticationIdentity.TwoFactorAuthenticationType == TwoFactorAuthenticationType.ConfirmIdentity))
+            {
+                claimsBuilder.WithRole(JwtClaims.RestrictedAppAccess);
+            }
+            else
+            {
+                claimsBuilder.WithRole(JwtClaims.AppAccess);
+
+            }
+
+            ClaimsIdentity claimsIdentity = claimsBuilder.Build();
+            return claimsIdentity;
         }
     }
 }
