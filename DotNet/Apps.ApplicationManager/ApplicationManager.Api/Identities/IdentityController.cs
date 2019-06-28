@@ -188,5 +188,16 @@ namespace ApplicationManager.Api.Identities
                 Token = refreshTokenIdentityAdto.Token
             }));
         }
+
+        [HttpPost("logout", Name = RouteDictionary.Logout)]
+        public IActionResult Logout()
+        {
+            _identityApplicationService.Logout(new LogoutAdto
+            {
+                IdentityId = _currentIdentityProvider.Id
+            });
+
+            return NoContent();
+        }
     }
 }

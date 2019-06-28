@@ -196,5 +196,10 @@ namespace ApplicationManager.Domain.Identities
 
             return refreshTokenIdentity;
         }
+
+        internal void Logout()
+        {
+            Session?.Revoke();
+        }
     }
 }

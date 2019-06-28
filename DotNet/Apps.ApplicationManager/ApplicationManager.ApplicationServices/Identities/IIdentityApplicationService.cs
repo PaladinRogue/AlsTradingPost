@@ -19,5 +19,7 @@ namespace ApplicationManager.ApplicationServices.Identities
         PasswordIdentityAdto RegisterPassword(RegisterPasswordAdto registerPasswordAdto);
 
         RefreshTokenIdentityAdto CreateRefreshToken(CreateRefreshTokenAdto createRefreshTokenAdto);
+
+        void Logout(LogoutAdto logoutAdto);
     }
 }

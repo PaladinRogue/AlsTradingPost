@@ -8,6 +8,7 @@ using ApplicationManager.Domain.Identities.ConfirmIdentity;
 using ApplicationManager.Domain.Identities.Create;
 using ApplicationManager.Domain.Identities.CreateRefreshToken;
 using ApplicationManager.Domain.Identities.ForgotPassword;
+using ApplicationManager.Domain.Identities.Logout;
 using ApplicationManager.Domain.Identities.RegisterPassword;
 using ApplicationManager.Domain.Identities.ResetPassword;
 using ApplicationManager.Domain.Identities.ValidateToken;
@@ -44,6 +45,8 @@ namespace ApplicationManager.ApplicationServices.Identities
 
         private readonly ICreateRefreshTokenCommand _createRefreshTokenCommand;
 
+        private readonly ILogoutCommand _logoutCommand;
+
         public IdentityApplicationService(
             ITransactionManager transactionManager,
             IResetPasswordCommand resetPasswordCommand,
@@ -55,7 +58,8 @@ namespace ApplicationManager.ApplicationServices.Identities
             ICreateIdentityCommand createIdentityCommand,
             IForgotPasswordCommand forgotPasswordCommand,
             IConfirmIdentityCommand confirmIdentityCommand,
-            ICreateRefreshTokenCommand createRefreshTokenCommand)
+            ICreateRefreshTokenCommand createRefreshTokenCommand,
+            ILogoutCommand logoutCommand)
         {
             _transactionManager = transactionManager;
             _resetPasswordCommand = resetPasswordCommand;
@@ -68,6 +72,7 @@ namespace ApplicationManager.ApplicationServices.Identities
             _forgotPasswordCommand = forgotPasswordCommand;
             _confirmIdentityCommand = confirmIdentityCommand;
             _createRefreshTokenCommand = createRefreshTokenCommand;
+            _logoutCommand = logoutCommand;
         }
 
         public IdentityAdto Get(GetIdentityAdto getIdentityAdto)
@@ -354,6 +359,25 @@ namespace ApplicationManager.ApplicationServices.Identities
                 {
                     throw new BusinessValidationRuleApplicationException(e.ValidationResult);
                 }
+            }
+        }
+
+        public void Logout(LogoutAdto logoutAdto)
+        {
+            using (ITransaction transaction = _transactionManager.Create())
+            {
+                Identity identity = _identityCommandRepository.GetById(logoutAdto.IdentityId);
+
+                if (identity == null)
+                {
+                    throw new BusinessApplicationException(ExceptionType.NotFound, "Identity does not exist");
+                }
+
+                _logoutCommand.Execute(identity);
+
+                _identityCommandRepository.Update(identity);
+
+                transaction.Commit();
             }
         }
 
