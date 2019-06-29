@@ -1,6 +1,8 @@
-﻿using ApplicationManager.ApplicationServices.AuthenticationServices;
+﻿using System;
+using ApplicationManager.ApplicationServices.AuthenticationServices;
 using ApplicationManager.ApplicationServices.AuthenticationServices.Models;
 using ApplicationManager.Setup.Infrastructure.Authorisation;
+using AutoMapper;
 using Common.Api.Builders.Resource;
 using Common.Api.Routing;
 using Microsoft.AspNetCore.Authorization;
@@ -16,12 +18,16 @@ namespace ApplicationManager.Api.AuthenticationService
 
         private readonly IAuthenticationServiceApplicationService _authenticationServiceApplicationService;
 
+        private readonly IMapper _mapper;
+
         public AuthenticationServiceController(
             IResourceBuilder resourceBuilder,
-            IAuthenticationServiceApplicationService authenticationServiceApplicationService)
+            IAuthenticationServiceApplicationService authenticationServiceApplicationService,
+            IMapper mapper)
         {
             _resourceBuilder = resourceBuilder;
             _authenticationServiceApplicationService = authenticationServiceApplicationService;
+            _mapper = mapper;
         }
 
         [HttpGet("resourceTemplate", Name = RouteDictionary.AuthenticationServiceResourceTemplate)]
@@ -33,27 +39,23 @@ namespace ApplicationManager.Api.AuthenticationService
         [HttpPost("", Name = RouteDictionary.CreateAuthenticationService)]
         public IActionResult Post(AuthenticationServiceTemplate template)
         {
-            ClientCredentialAdto clientCredentialAdto = _authenticationServiceApplicationService.CreateClientCredential(new CreateClientCredentialAdto
-            {
-                Name = template.Name,
-                ClientId = template.ClientId,
-                ClientSecret = template.ClientSecret,
-                GrantAccessTokenUrl = template.GrantAccessTokenUrl,
-                ValidateAccessTokenUrl = template.ValidateAccessTokenUrl,
-                ClientGrantAccessTokenUrl = template.ClientGrantAccessTokenUrl
-            });
+            ClientCredentialAdto clientCredentialAdto =
+                _authenticationServiceApplicationService.CreateClientCredential(_mapper.Map<AuthenticationServiceTemplate, CreateClientCredentialAdto>(template));
 
-            return CreatedAtRoute(RouteDictionary.GetAuthenticationService, new { clientCredentialAdto.Id }, _resourceBuilder.Build(new AuthenticationServiceResource
-            {
-                Id = clientCredentialAdto.Id,
-                Name = clientCredentialAdto.Name,
-                ClientId = clientCredentialAdto.ClientId,
-                ClientSecret = clientCredentialAdto.ClientSecret,
-                GrantAccessTokenUrl = clientCredentialAdto.GrantAccessTokenUrl,
-                ValidateAccessTokenUrl = clientCredentialAdto.ValidateAccessTokenUrl,
-                ClientGrantAccessTokenUrl = clientCredentialAdto.ClientGrantAccessTokenUrl,
-                Version = clientCredentialAdto.Version
-            }));
+            return CreatedAtRoute(RouteDictionary.GetAuthenticationService, new {clientCredentialAdto.Id},
+                _resourceBuilder.Build(_mapper.Map<ClientCredentialAdto, AuthenticationServiceResource>(clientCredentialAdto)));
+        }
+
+        [HttpGet("{id}", Name = RouteDictionary.GetAuthenticationService)]
+        public IActionResult Get(Guid id)
+        {
+            ClientCredentialAdto clientCredentialAdto =
+                _authenticationServiceApplicationService.GetClientCredential(new GetClientCredentialAdto
+                {
+                    Id = id
+                });
+
+            return Ok(_resourceBuilder.Build(_mapper.Map<ClientCredentialAdto, AuthenticationServiceResource>(clientCredentialAdto)));
         }
     }
 }

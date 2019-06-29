@@ -123,9 +123,7 @@ namespace ApplicationManager.Domain.Identities
 
         internal void ForgotPassword(ForgotPasswordDdto forgotPasswordDdto)
         {
-            PasswordIdentity passwordIdentity = (PasswordIdentity)AuthenticationIdentities.SingleOrDefault(a => a is PasswordIdentity);
-
-            if (passwordIdentity == null)
+            if (!(AuthenticationIdentities.SingleOrDefault(a => a is PasswordIdentity) is PasswordIdentity))
             {
                 throw new PasswordNotSetDomainException();
             }
@@ -146,9 +144,7 @@ namespace ApplicationManager.Domain.Identities
 
         internal void ChangePassword(ChangePasswordDdto changePasswordDdto)
         {
-            PasswordIdentity passwordIdentity = (PasswordIdentity)AuthenticationIdentities.SingleOrDefault(a => a is PasswordIdentity);
-
-            if (passwordIdentity == null)
+            if (!(AuthenticationIdentities.SingleOrDefault(a => a is PasswordIdentity) is PasswordIdentity passwordIdentity))
             {
                 throw new PasswordNotSetDomainException();
             }

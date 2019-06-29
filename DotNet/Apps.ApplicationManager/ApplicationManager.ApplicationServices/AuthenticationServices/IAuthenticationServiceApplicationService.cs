@@ -5,5 +5,7 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
     public interface IAuthenticationServiceApplicationService
     {
         ClientCredentialAdto CreateClientCredential(CreateClientCredentialAdto createClientCredentialAdto);
+
+        ClientCredentialAdto GetClientCredential(GetClientCredentialAdto getClientCredentialAdto);
     }
 }

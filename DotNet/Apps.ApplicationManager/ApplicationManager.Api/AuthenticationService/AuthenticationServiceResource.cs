@@ -11,7 +11,7 @@ namespace ApplicationManager.Api.AuthenticationService
 {
     [ResourceType(ResourceTypes.AuthenticationService)]
     [SelfLink(RouteDictionary.GetAuthenticationService, HttpVerb.Get | HttpVerb.Put)]
-    public class AuthenticationServiceResource : VersionedResource
+    public class AuthenticationServiceResource : VersionedResource, IEntityResource
     {
         [Hidden]
         [ReadOnly]

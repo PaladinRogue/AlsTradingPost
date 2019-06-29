@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Content Remove="secrets.json" />
+    <Content Remove="LocalEmailInbox\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,5 +31,14 @@
 
   <ItemGroup>
     <None Remove="api.log" />
+    <None Remove="LocalEmailInbox\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="LocalEmailInbox\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="LocalEmailInbox\**" />
   </ItemGroup>
 </Project>
