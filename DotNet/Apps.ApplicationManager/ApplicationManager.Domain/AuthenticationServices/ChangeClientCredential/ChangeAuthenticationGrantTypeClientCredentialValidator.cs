@@ -1,11 +1,11 @@
 using Common.Resources;
 using FluentValidation;
 
-namespace ApplicationManager.Domain.AuthenticationServices.CreateClientCredential
+namespace ApplicationManager.Domain.AuthenticationServices.ChangeClientCredential
 {
-    public class CreateAuthenticationGrantTypeClientCredentialValidator : AbstractValidator<CreateAuthenticationGrantTypeClientCredentialDdto>
+    public class ChangeAuthenticationGrantTypeClientCredentialValidator : AbstractValidator<ChangeAuthenticationGrantTypeClientCredentialDdto>
     {
-        public CreateAuthenticationGrantTypeClientCredentialValidator()
+        public ChangeAuthenticationGrantTypeClientCredentialValidator()
         {
             RuleFor(a => a)
                 .NotNull();

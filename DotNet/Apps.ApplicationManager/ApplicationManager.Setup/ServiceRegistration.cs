@@ -11,6 +11,7 @@ using ApplicationManager.ApplicationServices.Notifications.Send;
 using ApplicationManager.ApplicationServices.Users.CreateAdmin;
 using ApplicationManager.Domain.Applications.Change;
 using ApplicationManager.Domain.Applications.Create;
+using ApplicationManager.Domain.AuthenticationServices.ChangeClientCredential;
 using ApplicationManager.Domain.AuthenticationServices.CreateClientCredential;
 using ApplicationManager.Domain.Identities.ChangePassword;
 using ApplicationManager.Domain.Identities.CheckPassword;
@@ -80,6 +81,7 @@ namespace ApplicationManager.Setup
 	    {
 		    ValidatorOptions.LanguageManager.Enabled = false;
 
+	        services.AddScoped<IValidator<CreateUserCommandDdto>, CreateUserCommandValidator>();
 	        services.AddScoped<IValidator<ChangeApplicationDdto>, ChangeApplicationValidator>();
 	        services.AddScoped<IValidator<CreateApplicationDdto>, CreateApplicationValidator>();
 	        services.AddScoped<IValidator<ResetPasswordCommandDdto>, ResetPasswordValidator>();
@@ -92,6 +94,7 @@ namespace ApplicationManager.Setup
 	        services.AddScoped<IValidator<CreateIdentityCommandDdto>, CreateIdentityValidator>();
 	        services.AddScoped<IValidator<RefreshTokenLoginCommandDdto>, RefreshTokenLoginCommandValidator>();
 	        services.AddScoped<IValidator<CreateAuthenticationGrantTypeClientCredentialDdto>, CreateAuthenticationGrantTypeClientCredentialValidator>();
+	        services.AddScoped<IValidator<ChangeAuthenticationGrantTypeClientCredentialDdto>, ChangeAuthenticationGrantTypeClientCredentialValidator>();
 	    }
 
         public static void RegisterDomainServices(IServiceCollection services)
@@ -112,6 +115,7 @@ namespace ApplicationManager.Setup
             services.AddScoped<ILogoutCommand, LogoutCommand>();
             services.AddScoped<IRefreshTokenLoginCommand, RefreshTokenLoginCommand>();
             services.AddScoped<ICreateAuthenticationGrantTypeClientCredentialCommand, CreateAuthenticationGrantTypeClientCredentialCommand>();
+            services.AddScoped<IChangeAuthenticationGrantTypeClientCredentialCommand, ChangeAuthenticationGrantTypeClientCredentialCommand>();
         }
 
         public static void RegisterPersistenceServices(IConfiguration configuration, IServiceCollection services)

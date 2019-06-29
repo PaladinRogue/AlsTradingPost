@@ -26,5 +26,6 @@
         public const string AuthenticationServiceResourceTemplate = "AuthenticationServiceResourceTemplate";
         public const string CreateAuthenticationService = "CreateAuthenticationService";
         public const string GetAuthenticationService = "GetAuthenticationService";
+        public const string ChangeAuthenticationService = "ChangeAuthenticationService";
     }
 }

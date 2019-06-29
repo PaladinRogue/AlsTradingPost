@@ -77,8 +77,6 @@ namespace ApplicationManager.ApplicationServices.Identities
 
         public IdentityAdto Get(GetIdentityAdto getIdentityAdto)
         {
-            if (getIdentityAdto == null) throw new ArgumentNullException(nameof(getIdentityAdto));
-
             using (ITransaction transaction = _transactionManager.Create())
             {
                 Identity identity = _identityQueryRepository.GetById(getIdentityAdto.Id);
@@ -100,8 +98,6 @@ namespace ApplicationManager.ApplicationServices.Identities
 
         public void ResetPassword(ResetPasswordAdto resetPasswordAdto)
         {
-            if (resetPasswordAdto == null) throw new ArgumentNullException(nameof(resetPasswordAdto));
-
             using (ITransaction transaction = _transactionManager.Create())
             {
                 try
@@ -125,9 +121,9 @@ namespace ApplicationManager.ApplicationServices.Identities
                 {
                     throw new BusinessApplicationException(ExceptionType.Unauthorized, "Two factor token is not recognized");
                 }
-                catch (ConcurrencyDomainException)
+                catch (ConcurrencyDomainException e)
                 {
-                    throw new BusinessApplicationException(ExceptionType.Concurrency, "Concurrency check failed");
+                    throw new BusinessApplicationException(ExceptionType.Concurrency, e);
                 }
                 catch (DomainValidationRuleException e)
                 {
@@ -138,8 +134,6 @@ namespace ApplicationManager.ApplicationServices.Identities
 
         public void ForgotPassword(ForgotPasswordAdto forgotPasswordAdto)
         {
-            if (forgotPasswordAdto == null) throw new ArgumentNullException(nameof(forgotPasswordAdto));
-
             using (ITransaction transaction = _transactionManager.Create())
             {
                 try
@@ -170,8 +164,6 @@ namespace ApplicationManager.ApplicationServices.Identities
 
         public void ConfirmIdentity(ConfirmIdentityAdto confirmIdentityAdto)
         {
-            if (confirmIdentityAdto == null) throw new ArgumentNullException(nameof(confirmIdentityAdto));
-
             using (ITransaction transaction = _transactionManager.Create())
             {
                 try
@@ -205,8 +197,6 @@ namespace ApplicationManager.ApplicationServices.Identities
 
         public PasswordIdentityAdto GetPasswordIdentity(GetPasswordIdentityAdto getPasswordIdentityAdto)
         {
-            if (getPasswordIdentityAdto == null) throw new ArgumentNullException(nameof(getPasswordIdentityAdto));
-
             using (ITransaction transaction = _transactionManager.Create())
             {
                 Identity identity = _identityQueryRepository.GetById(getPasswordIdentityAdto.IdentityId);
@@ -236,8 +226,6 @@ namespace ApplicationManager.ApplicationServices.Identities
 
         public PasswordIdentityAdto ChangePassword(ChangePasswordAdto changePasswordAdto)
         {
-            if (changePasswordAdto == null) throw new ArgumentNullException(nameof(changePasswordAdto));
-
             using (ITransaction transaction = _transactionManager.Create())
             {
                 try
@@ -276,13 +264,15 @@ namespace ApplicationManager.ApplicationServices.Identities
                 {
                     throw new BusinessValidationRuleApplicationException(e.ValidationResult);
                 }
+                catch (NotFoundDomainException e)
+                {
+                    throw new BusinessApplicationException(ExceptionType.NotFound, e);
+                }
             }
         }
 
         public PasswordIdentityAdto RegisterPassword(RegisterPasswordAdto registerPasswordAdto)
         {
-            if (registerPasswordAdto == null) throw new ArgumentNullException(nameof(registerPasswordAdto));
-
             using (ITransaction transaction = _transactionManager.Create())
             {
                 try

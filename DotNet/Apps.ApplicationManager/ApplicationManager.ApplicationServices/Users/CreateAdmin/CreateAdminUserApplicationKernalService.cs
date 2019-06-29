@@ -39,7 +39,7 @@ namespace ApplicationManager.ApplicationServices.Users.CreateAdmin
 
                 try
                 {
-                    User user = _createUserCommand.Execute(new CreateUserDdto
+                    User user = _createUserCommand.Execute(new CreateUserCommandDdto
                     {
                         Identity = identity
                     });

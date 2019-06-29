@@ -6,6 +6,9 @@ namespace ApplicationManager.Domain.Applications.Change
     {
         public ChangeApplicationValidator()
         {
+            RuleFor(a => a)
+                .NotNull();
+
             RuleFor(a => a.Name)
                 .NotEmpty()
                 .MaximumLength(40);

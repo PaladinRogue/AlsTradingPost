@@ -1,10 +1,21 @@
+using FluentValidation;
+
 namespace ApplicationManager.Domain.Users.Create
 {
     public class CreateUserCommand : ICreateUserCommand
     {
-        public User Execute(CreateUserDdto createUserDdto)
+        private readonly IValidator<CreateUserCommandDdto> _validator;
+
+        public CreateUserCommand(IValidator<CreateUserCommandDdto> validator)
         {
-            return User.Create(createUserDdto.Identity);
+            _validator = validator;
+        }
+
+        public User Execute(CreateUserCommandDdto createUserCommandDdto)
+        {
+            _validator.ValidateAndThrow(createUserCommandDdto);
+
+            return User.Create(createUserCommandDdto.Identity);
         }
     }
 }

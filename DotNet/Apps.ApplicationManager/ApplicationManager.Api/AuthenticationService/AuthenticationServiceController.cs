@@ -1,6 +1,7 @@
 ﻿using System;
 using ApplicationManager.ApplicationServices.AuthenticationServices;
 using ApplicationManager.ApplicationServices.AuthenticationServices.Models;
+using ApplicationManager.Domain.Identities;
 using ApplicationManager.Setup.Infrastructure.Authorisation;
 using AutoMapper;
 using Common.Api.Builders.Resource;
@@ -54,6 +55,27 @@ namespace ApplicationManager.Api.AuthenticationService
                 {
                     Id = id
                 });
+
+            return Ok(_resourceBuilder.Build(_mapper.Map<ClientCredentialAdto, AuthenticationServiceResource>(clientCredentialAdto)));
+        }
+
+        [HttpPut("{id}", Name = RouteDictionary.ChangeAuthenticationService)]
+        public IActionResult Put(Guid id, AuthenticationServiceTemplate template)
+        {
+            ChangeClientCredentialAdto changeClientCredentialAdto = new ChangeClientCredentialAdto
+            {
+                Id = id,
+                Name = template.Name,
+                ClientId = template.ClientId,
+                ClientSecret = template.ClientSecret,
+                GrantAccessTokenUrl = template.GrantAccessTokenUrl,
+                ValidateAccessTokenUrl = template.ValidateAccessTokenUrl,
+                ClientGrantAccessTokenUrl = template.ClientGrantAccessTokenUrl,
+                Version = template.Version
+            };
+
+            ClientCredentialAdto clientCredentialAdto =
+                _authenticationServiceApplicationService.ChangeClientCredential(changeClientCredentialAdto);
 
             return Ok(_resourceBuilder.Build(_mapper.Map<ClientCredentialAdto, AuthenticationServiceResource>(clientCredentialAdto)));
         }

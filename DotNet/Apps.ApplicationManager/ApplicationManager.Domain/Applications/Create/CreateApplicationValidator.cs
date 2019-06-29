@@ -6,6 +6,9 @@ namespace ApplicationManager.Domain.Applications.Create
     {
         public CreateApplicationValidator()
         {
+            RuleFor(a => a)
+                .NotNull();
+
             RuleFor(a => a.SystemName)
                 .NotEmpty()
                 .MaximumLength(20);

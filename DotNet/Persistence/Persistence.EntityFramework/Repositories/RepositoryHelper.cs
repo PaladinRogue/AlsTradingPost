@@ -50,6 +50,16 @@ namespace Persistence.EntityFramework.Repositories
             return Filter(results, predicate).Any();
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="results"></param>
+        /// <param name="id"></param>
+        /// <param name="version"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        /// <exception cref="ConcurrencyDomainException"></exception>
+        /// <exception cref="NotFoundDomainException"></exception>
         public static T GetWithConcurrencyCheck<T>(IQueryable<T> results, Guid id, IConcurrencyVersion version) where T : IVersionedEntity
         {
             if (version == null)
@@ -59,7 +69,19 @@ namespace Persistence.EntityFramework.Repositories
 
             try
             {
-                return results.SingleOrDefault(e => e.Id == id && e.Version == version.Version);
+                T versionedEntity = results.SingleOrDefault(e => e.Id == id);
+
+                if (versionedEntity == null)
+                {
+                    throw new NotFoundDomainException($"Entity of type: {nameof(T)} not found with Id: {id}");
+                }
+
+                if (versionedEntity.Version != version.Version)
+                {
+                    throw new ConcurrencyDomainException(typeof(T), id, version);
+                }
+
+                return versionedEntity;
             }
             catch (InvalidOperationException)
             {
@@ -91,6 +113,15 @@ namespace Persistence.EntityFramework.Repositories
             }
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="dbSet"></param>
+        /// <param name="context"></param>
+        /// <param name="entity"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <exception cref="ConcurrencyDomainException"></exception>
+        /// <exception cref="CreateDomainException"></exception>
         public static void Add<T>(DbSet<T> dbSet, DbContext context, T entity) where T : class, IVersionedEntity
         {
             try
@@ -111,6 +142,15 @@ namespace Persistence.EntityFramework.Repositories
             }
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="dbSet"></param>
+        /// <param name="context"></param>
+        /// <param name="entity"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <exception cref="ConcurrencyDomainException"></exception>
+        /// <exception cref="UpdateDomainException"></exception>
         public static void Update<T>(DbSet<T> dbSet, DbContext context, T entity) where T : class, IVersionedEntity
         {
             try
@@ -131,6 +171,15 @@ namespace Persistence.EntityFramework.Repositories
             }
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="dbSet"></param>
+        /// <param name="context"></param>
+        /// <param name="id"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <exception cref="ConcurrencyDomainException"></exception>
+        /// <exception cref="DeleteDomainException"></exception>
         public static void Delete<T>(DbSet<T> dbSet, DbContext context, Guid id) where T : class, IVersionedEntity
         {
             T entity = GetById(dbSet, id);

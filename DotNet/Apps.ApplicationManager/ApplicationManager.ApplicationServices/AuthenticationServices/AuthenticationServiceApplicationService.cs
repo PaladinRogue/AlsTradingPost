@@ -1,5 +1,7 @@
+using System;
 using ApplicationManager.ApplicationServices.AuthenticationServices.Models;
 using ApplicationManager.Domain.AuthenticationServices;
+using ApplicationManager.Domain.AuthenticationServices.ChangeClientCredential;
 using ApplicationManager.Domain.AuthenticationServices.CreateClientCredential;
 using AutoMapper;
 using Common.ApplicationServices.Concurrency;
@@ -20,6 +22,8 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
 
         private readonly ICreateAuthenticationGrantTypeClientCredentialCommand _createAuthenticationGrantTypeClientCredentialCommand;
 
+        private readonly IChangeAuthenticationGrantTypeClientCredentialCommand _changeAuthenticationGrantTypeClientCredentialCommand;
+
         private readonly IMapper _mapper;
 
         public AuthenticationServiceApplicationService(
@@ -27,12 +31,14 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
             IQueryRepository<AuthenticationService> queryRepository,
             ITransactionManager transactionManager,
             ICreateAuthenticationGrantTypeClientCredentialCommand createAuthenticationGrantTypeClientCredentialCommand,
-            IMapper mapper)
+            IMapper mapper,
+            IChangeAuthenticationGrantTypeClientCredentialCommand changeAuthenticationGrantTypeClientCredentialCommand)
         {
             _commandRepository = commandRepository;
             _transactionManager = transactionManager;
             _createAuthenticationGrantTypeClientCredentialCommand = createAuthenticationGrantTypeClientCredentialCommand;
             _mapper = mapper;
+            _changeAuthenticationGrantTypeClientCredentialCommand = changeAuthenticationGrantTypeClientCredentialCommand;
             _queryRepository = queryRepository;
         }
 
@@ -71,6 +77,42 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
                 transaction.Commit();
 
                 return CreateClientCredentialAdto(authenticationGrantTypeClientCredential);
+            }
+        }
+
+        public ClientCredentialAdto ChangeClientCredential(ChangeClientCredentialAdto changeClientCredentialAdto)
+        {
+            using (ITransaction transaction = _transactionManager.Create())
+            {
+                try
+                {
+                    if (!(_queryRepository.GetWithConcurrencyCheck(changeClientCredentialAdto.Id, changeClientCredentialAdto.Version) is AuthenticationGrantTypeClientCredential
+                        authenticationGrantTypeClientCredential))
+                    {
+                        throw new BusinessApplicationException(ExceptionType.NotFound, "Authentication service not found");
+                    }
+
+                    _changeAuthenticationGrantTypeClientCredentialCommand.Execute(authenticationGrantTypeClientCredential,
+                        _mapper.Map<ChangeClientCredentialAdto, ChangeAuthenticationGrantTypeClientCredentialDdto>(changeClientCredentialAdto));
+
+                    _commandRepository.Update(authenticationGrantTypeClientCredential);
+
+                    transaction.Commit();
+
+                    return CreateClientCredentialAdto(authenticationGrantTypeClientCredential);
+                }
+                catch (DomainValidationRuleException e)
+                {
+                    throw new BusinessValidationRuleApplicationException(e.ValidationResult);
+                }
+                catch (ConcurrencyDomainException e)
+                {
+                    throw new BusinessApplicationException(ExceptionType.Concurrency, e);
+                }
+                catch (NotFoundDomainException e)
+                {
+                    throw new BusinessApplicationException(ExceptionType.NotFound, e);
+                }
             }
         }
 

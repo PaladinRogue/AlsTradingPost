@@ -7,5 +7,7 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
         ClientCredentialAdto CreateClientCredential(CreateClientCredentialAdto createClientCredentialAdto);
 
         ClientCredentialAdto GetClientCredential(GetClientCredentialAdto getClientCredentialAdto);
+
+        ClientCredentialAdto ChangeClientCredential(ChangeClientCredentialAdto changeClientCredentialAdto);
     }
 }

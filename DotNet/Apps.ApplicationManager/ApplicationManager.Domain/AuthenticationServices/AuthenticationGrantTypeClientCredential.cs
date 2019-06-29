@@ -1,5 +1,5 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using ApplicationManager.Domain.AuthenticationServices.ChangeClientCredential;
 using ApplicationManager.Domain.AuthenticationServices.CreateClientCredential;
 using Common.Domain.DataProtection;
 using Common.Resources;
@@ -59,6 +59,17 @@ namespace ApplicationManager.Domain.AuthenticationServices
             CreateAuthenticationGrantTypeClientCredentialDdto createAuthenticationGrantTypeClientCredentialDdto)
         {
             return new AuthenticationGrantTypeClientCredential(createAuthenticationGrantTypeClientCredentialDdto);
+        }
+
+        internal void Change(
+            ChangeAuthenticationGrantTypeClientCredentialDdto changeAuthenticationGrantTypeClientCredentialDdto)
+        {
+            Name = changeAuthenticationGrantTypeClientCredentialDdto.Name;
+            ClientId = changeAuthenticationGrantTypeClientCredentialDdto.ClientId;
+            ClientSecret = changeAuthenticationGrantTypeClientCredentialDdto.ClientSecret;
+            ClientGrantAccessTokenUrl = changeAuthenticationGrantTypeClientCredentialDdto.ClientGrantAccessTokenUrl;
+            GrantAccessTokenUrl = changeAuthenticationGrantTypeClientCredentialDdto.GrantAccessTokenUrl;
+            ValidateAccessTokenUrl = changeAuthenticationGrantTypeClientCredentialDdto.ValidateAccessTokenUrl;
         }
     }
 }

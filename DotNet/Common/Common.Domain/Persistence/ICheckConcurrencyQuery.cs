@@ -1,5 +1,6 @@
 ﻿using System;
 using Common.Domain.Concurrency.Interfaces;
+using Common.Domain.Exceptions;
 
 namespace Common.Domain.Persistence
 {
@@ -9,6 +10,8 @@ namespace Common.Domain.Persistence
         /// <param name="id">The id of the entity to check.</param>
         /// <param name="version">The version of the entity to check.</param>
         /// <returns>The entity which exists with id and version.</returns>
+        /// <exception cref="ConcurrencyDomainException"></exception>
+        /// <exception cref="NotFoundDomainException"></exception>
         T GetWithConcurrencyCheck(Guid id, IConcurrencyVersion version);
     }
 }

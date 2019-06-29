@@ -30,5 +30,11 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
             return _securityApplicationService.Secure(() => _authenticationServiceApplicationService.GetClientCredential(getClientCredentialAdto),
                 DefaultAuthorisationContext.Create(AuthorisationResource.AuthenticationService, AuthorisationAction.Get));
         }
+
+        public ClientCredentialAdto ChangeClientCredential(ChangeClientCredentialAdto changeClientCredentialAdto)
+        {
+            return _securityApplicationService.Secure(() => _authenticationServiceApplicationService.ChangeClientCredential(changeClientCredentialAdto),
+                DefaultAuthorisationContext.Create(AuthorisationResource.AuthenticationService, AuthorisationAction.Get));
+        }
     }
 }
