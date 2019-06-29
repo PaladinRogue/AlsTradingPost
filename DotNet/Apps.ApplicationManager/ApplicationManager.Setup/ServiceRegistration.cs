@@ -24,6 +24,7 @@ using ApplicationManager.Domain.Identities.Login.RefreshToken;
 using ApplicationManager.Domain.Identities.Logout;
 using ApplicationManager.Domain.Identities.Queries;
 using ApplicationManager.Domain.Identities.RegisterPassword;
+using ApplicationManager.Domain.Identities.ResendConfirmIdentity;
 using ApplicationManager.Domain.Identities.ResetPassword;
 using ApplicationManager.Domain.Users.Create;
 using ApplicationManager.Persistence;
@@ -90,7 +91,7 @@ namespace ApplicationManager.Setup
 	        services.AddScoped<IValidator<ChangePasswordCommandDdto>, ChangePasswordValidator>();
 	        services.AddScoped<IValidator<RegisterPasswordCommandDdto>, RegisterPasswordValidator>();
 	        services.AddScoped<IValidator<ConfirmIdentityCommandDdto>, ConfirmIdentityValidator>();
-	        services.AddScoped<IValidator<ForgotPasswordCommandDdto>, ForgotPasswordValidator>();
+	        services.AddScoped<IValidator<ForgotPasswordCommandDdto>, ForgotPasswordCommandValidator>();
 	        services.AddScoped<IValidator<CreateIdentityCommandDdto>, CreateIdentityValidator>();
 	        services.AddScoped<IValidator<RefreshTokenLoginCommandDdto>, RefreshTokenLoginCommandValidator>();
 	        services.AddScoped<IValidator<CreateAuthenticationGrantTypeClientCredentialDdto>, CreateAuthenticationGrantTypeClientCredentialValidator>();
@@ -113,6 +114,7 @@ namespace ApplicationManager.Setup
             services.AddScoped<IForgotPasswordCommand, ForgotPasswordCommand>();
             services.AddScoped<ICreateRefreshTokenCommand, CreateRefreshTokenCommand>();
             services.AddScoped<ILogoutCommand, LogoutCommand>();
+            services.AddScoped<IResendConfirmIdentityCommand, ResendConfirmIdentityCommand>();
             services.AddScoped<IRefreshTokenLoginCommand, RefreshTokenLoginCommand>();
             services.AddScoped<ICreateAuthenticationGrantTypeClientCredentialCommand, CreateAuthenticationGrantTypeClientCredentialCommand>();
             services.AddScoped<IChangeAuthenticationGrantTypeClientCredentialCommand, ChangeAuthenticationGrantTypeClientCredentialCommand>();

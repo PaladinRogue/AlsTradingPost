@@ -8,6 +8,9 @@ namespace ApplicationManager.Domain.Identities.ChangePassword
     {
         public ChangePasswordValidator()
         {
+            RuleFor(c => c)
+                .NotNull();
+
             Regex passwordRegex = new Regex(RegexPatterns.Password);
 
             RuleFor(i => i.Password)

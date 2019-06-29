@@ -189,6 +189,18 @@ namespace ApplicationManager.Api.Identities
             }));
         }
 
+        [AllowRestrictedAppAccess]
+        [HttpPost("resendConfirmIdentity", Name = RouteDictionary.ResendConfirmIdentity)]
+        public IActionResult ResendConfirmIdentity()
+        {
+            _identityApplicationService.ResendConfirmIdentity(new ResendConfirmIdentityAdto
+            {
+                IdentityId = _currentIdentityProvider.Id
+            });
+
+            return Accepted(_resourceBuilder.Build(new ResendConfirmIdentityResource()));
+        }
+
         [HttpPost("logout", Name = RouteDictionary.Logout)]
         public IActionResult Logout()
         {

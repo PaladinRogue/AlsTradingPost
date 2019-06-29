@@ -8,6 +8,9 @@ namespace ApplicationManager.Domain.Identities.RegisterPassword
     {
         public RegisterPasswordValidator()
         {
+            RuleFor(r => r)
+                .NotNull();
+
             Regex passwordRegex = new Regex(RegexPatterns.Password);
 
             RuleFor(i => i.Identifier)

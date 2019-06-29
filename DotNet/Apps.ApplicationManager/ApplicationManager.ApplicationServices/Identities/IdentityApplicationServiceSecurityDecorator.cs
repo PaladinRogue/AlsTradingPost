@@ -68,6 +68,12 @@ namespace ApplicationManager.ApplicationServices.Identities
                 IdentityAuthorisationContext.Create(createRefreshTokenAdto.IdentityId, AuthorisationAction.Create));
         }
 
+        public void ResendConfirmIdentity(ResendConfirmIdentityAdto resendConfirmIdentityAdto)
+        {
+            _securityApplicationService.Secure(() => { _identityApplicationService.ResendConfirmIdentity(resendConfirmIdentityAdto); },
+                IdentityAuthorisationContext.Create(resendConfirmIdentityAdto.IdentityId, AuthorisationAction.Create));
+        }
+
         public void Logout(LogoutAdto logoutAdto)
         {
             _securityApplicationService.Secure(() => { _identityApplicationService.Logout(logoutAdto); },

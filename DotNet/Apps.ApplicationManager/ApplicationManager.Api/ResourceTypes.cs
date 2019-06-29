@@ -9,6 +9,7 @@ namespace ApplicationManager.Api
         public const string AuthenticatePassword = "authenticatePassword";
         public const string AuthenticateRefreshToken = "authenticateRefreshToken";
         public const string ConfirmIdentity = "confirmIdentity";
+        public const string ResendConfirmIdentity = "resendConfirmIdentity";
 
         public const string AuthenticationService = "authenticationService";
     }

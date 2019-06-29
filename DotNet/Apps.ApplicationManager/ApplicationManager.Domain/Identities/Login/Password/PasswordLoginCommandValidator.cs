@@ -7,6 +7,9 @@ namespace ApplicationManager.Domain.Identities.Login.Password
     {
         public PasswordLoginCommandValidator()
         {
+            RuleFor(p => p)
+                .NotNull();
+
             RuleFor(l => l.Identifier)
                 .MaximumLength(FieldSizes.Extended)
                 .NotEmpty();

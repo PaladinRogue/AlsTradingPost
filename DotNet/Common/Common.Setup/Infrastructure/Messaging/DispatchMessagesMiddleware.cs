@@ -12,6 +12,7 @@ namespace Common.Setup.Infrastructure.Messaging
         {
             HttpStatusCode.OK,
             HttpStatusCode.Created,
+            HttpStatusCode.Accepted,
             HttpStatusCode.NoContent
         };
 

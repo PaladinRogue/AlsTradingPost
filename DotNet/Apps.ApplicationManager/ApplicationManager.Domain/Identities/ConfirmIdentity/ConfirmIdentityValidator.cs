@@ -6,6 +6,9 @@ namespace ApplicationManager.Domain.Identities.ConfirmIdentity
     {
         public ConfirmIdentityValidator()
         {
+            RuleFor(c => c)
+                .NotNull();
+
             RuleFor(c => c.Token)
                 .NotEmpty();
         }

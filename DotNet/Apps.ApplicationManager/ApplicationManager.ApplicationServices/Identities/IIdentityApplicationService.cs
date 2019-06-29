@@ -20,6 +20,8 @@ namespace ApplicationManager.ApplicationServices.Identities
 
         RefreshTokenIdentityAdto CreateRefreshToken(CreateRefreshTokenAdto createRefreshTokenAdto);
 
+        void ResendConfirmIdentity(ResendConfirmIdentityAdto resendConfirmIdentityAdto);
+
         void Logout(LogoutAdto logoutAdto);
     }
 }

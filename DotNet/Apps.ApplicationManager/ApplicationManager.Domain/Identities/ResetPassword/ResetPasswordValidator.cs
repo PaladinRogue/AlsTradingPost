@@ -8,6 +8,9 @@ namespace ApplicationManager.Domain.Identities.ResetPassword
     {
         public ResetPasswordValidator()
         {
+            RuleFor(r => r)
+                .NotNull();
+
             Regex passwordRegex = new Regex(RegexPatterns.Password);
 
             RuleFor(i => i.Token)

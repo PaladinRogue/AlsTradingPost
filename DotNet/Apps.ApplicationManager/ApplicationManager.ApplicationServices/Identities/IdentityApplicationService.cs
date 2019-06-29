@@ -10,6 +10,7 @@ using ApplicationManager.Domain.Identities.CreateRefreshToken;
 using ApplicationManager.Domain.Identities.ForgotPassword;
 using ApplicationManager.Domain.Identities.Logout;
 using ApplicationManager.Domain.Identities.RegisterPassword;
+using ApplicationManager.Domain.Identities.ResendConfirmIdentity;
 using ApplicationManager.Domain.Identities.ResetPassword;
 using ApplicationManager.Domain.Identities.ValidateToken;
 using Common.ApplicationServices;
@@ -45,6 +46,8 @@ namespace ApplicationManager.ApplicationServices.Identities
 
         private readonly ICreateRefreshTokenCommand _createRefreshTokenCommand;
 
+        private readonly IResendConfirmIdentityCommand _resendConfirmIdentityCommand;
+
         private readonly ILogoutCommand _logoutCommand;
 
         public IdentityApplicationService(
@@ -59,6 +62,7 @@ namespace ApplicationManager.ApplicationServices.Identities
             IForgotPasswordCommand forgotPasswordCommand,
             IConfirmIdentityCommand confirmIdentityCommand,
             ICreateRefreshTokenCommand createRefreshTokenCommand,
+            IResendConfirmIdentityCommand resendConfirmIdentityCommand,
             ILogoutCommand logoutCommand)
         {
             _transactionManager = transactionManager;
@@ -73,6 +77,7 @@ namespace ApplicationManager.ApplicationServices.Identities
             _confirmIdentityCommand = confirmIdentityCommand;
             _createRefreshTokenCommand = createRefreshTokenCommand;
             _logoutCommand = logoutCommand;
+            _resendConfirmIdentityCommand = resendConfirmIdentityCommand;
         }
 
         public IdentityAdto Get(GetIdentityAdto getIdentityAdto)
@@ -344,6 +349,32 @@ namespace ApplicationManager.ApplicationServices.Identities
                 catch (DomainValidationRuleException e)
                 {
                     throw new BusinessValidationRuleApplicationException(e.ValidationResult);
+                }
+            }
+        }
+
+        public void ResendConfirmIdentity(ResendConfirmIdentityAdto resendConfirmIdentityAdto)
+        {
+            using (ITransaction transaction = _transactionManager.Create())
+            {
+                try
+                {
+                    Identity identity = _identityCommandRepository.GetById(resendConfirmIdentityAdto.IdentityId);
+
+                    if (identity == null)
+                    {
+                        throw new BusinessApplicationException(ExceptionType.Unauthorized, "No identity exists");
+                    }
+
+                    _resendConfirmIdentityCommand.Execute(identity);
+
+                    _identityCommandRepository.Update(identity);
+
+                    transaction.Commit();
+                }
+                catch (IdentityAlreadyConfirmedDomainException)
+                {
+                    throw new BusinessApplicationException(ExceptionType.BadRequest, ErrorCodes.IdentityAlreadyConfirmed, "Identity already confirmed");
                 }
             }
         }

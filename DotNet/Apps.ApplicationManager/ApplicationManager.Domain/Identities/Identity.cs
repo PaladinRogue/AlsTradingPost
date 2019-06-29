@@ -3,18 +3,19 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities.ChangePassword;
-using ApplicationManager.Domain.Identities.ConfirmIdentity;
 using ApplicationManager.Domain.Identities.Create;
 using ApplicationManager.Domain.Identities.CreatePassword;
 using ApplicationManager.Domain.Identities.CreateTwoFactor;
 using ApplicationManager.Domain.Identities.ForgotPassword;
 using ApplicationManager.Domain.Identities.RegisterPassword;
+using ApplicationManager.Domain.Identities.ResendConfirmIdentity;
 using ApplicationManager.Domain.Identities.ResetPassword;
 using ApplicationManager.Domain.Identities.ValidateToken;
 using Common.Domain.Aggregates;
 using Common.Domain.DataProtection;
 using Common.Domain.Entities;
 using Common.Resources;
+using ConfirmIdentityDdto = ApplicationManager.Domain.Identities.ConfirmIdentity.ConfirmIdentityDdto;
 
 namespace ApplicationManager.Domain.Identities
 {
@@ -178,9 +179,10 @@ namespace ApplicationManager.Domain.Identities
             return passwordIdentity;
         }
 
-        internal RefreshTokenIdentity CreateRefreshToken(AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken, out string token)
+        internal RefreshTokenIdentity CreateRefreshToken(AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken,
+            out string token)
         {
-            RefreshTokenIdentity refreshTokenIdentity = (RefreshTokenIdentity)AuthenticationIdentities.SingleOrDefault(a => a is RefreshTokenIdentity);
+            RefreshTokenIdentity refreshTokenIdentity = (RefreshTokenIdentity) AuthenticationIdentities.SingleOrDefault(a => a is RefreshTokenIdentity);
             if (refreshTokenIdentity != null)
             {
                 _authenticationIdentities.Remove(refreshTokenIdentity);
@@ -191,6 +193,26 @@ namespace ApplicationManager.Domain.Identities
             _authenticationIdentities.Add(refreshTokenIdentity);
 
             return refreshTokenIdentity;
+        }
+
+        internal void ResendConfirmIdentity()
+        {
+            TwoFactorAuthenticationIdentity twoFactorAuthenticationIdentity = AuthenticationIdentities.SingleOrDefault(a =>
+                    a is TwoFactorAuthenticationIdentity && (a as TwoFactorAuthenticationIdentity).TwoFactorAuthenticationType == TwoFactorAuthenticationType.ConfirmIdentity) as
+                TwoFactorAuthenticationIdentity;
+
+            if (twoFactorAuthenticationIdentity == null)
+            {
+                throw new IdentityAlreadyConfirmedDomainException();
+            }
+
+            _authenticationIdentities.Remove(twoFactorAuthenticationIdentity);
+
+            _authenticationIdentities.Add(TwoFactorAuthenticationIdentity.Create(this, new CreateTwoFactorAuthenticationIdentityDdto
+            {
+                EmailAddress = twoFactorAuthenticationIdentity.EmailAddress,
+                TwoFactorAuthenticationType = TwoFactorAuthenticationType.ConfirmIdentity
+            }));
         }
 
         internal void Logout()

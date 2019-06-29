@@ -6,6 +6,9 @@ namespace ApplicationManager.Domain.Identities.Create
     {
         public CreateIdentityValidator()
         {
+            RuleFor(c => c)
+                .NotNull();
+
             RuleFor(c => c.EmailAddress)
                 .NotEmpty()
                 .EmailAddress();

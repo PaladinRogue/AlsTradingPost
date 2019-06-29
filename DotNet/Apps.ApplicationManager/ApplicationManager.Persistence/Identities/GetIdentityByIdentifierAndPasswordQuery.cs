@@ -19,8 +19,7 @@ namespace ApplicationManager.Persistence.Identities
             _checkPasswordCommand = checkPasswordCommand;
         }
 
-        public Identity Run(string identifier,
-            string password)
+        public Identity Run(string identifier, string password)
         {
             Identity identity = _applicationManagerDbContext.Identities
                 .SingleOrDefault(i => i.AuthenticationIdentities.OfType<PasswordIdentity>().Any(p => p.Identifier == identifier));

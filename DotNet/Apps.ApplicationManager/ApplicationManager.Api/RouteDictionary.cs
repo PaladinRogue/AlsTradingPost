@@ -16,6 +16,7 @@
         public const string ConfirmIdentityResourceTemplate = "ConfirmIdentityResourceTemplate";
         public const string ConfirmIdentity = "ConfirmIdentity";
         public const string CreateRefreshToken = "CreateRefreshToken";
+        public const string ResendConfirmIdentity = "ResendConfirmIdentity";
         public const string Logout = "Logout";
 
         public const string AuthenticatePasswordResourceTemplate = "AuthenticatePasswordResourceTemplate";

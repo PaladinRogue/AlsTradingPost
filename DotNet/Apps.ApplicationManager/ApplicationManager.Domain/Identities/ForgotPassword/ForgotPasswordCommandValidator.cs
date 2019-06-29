@@ -6,6 +6,9 @@ namespace ApplicationManager.Domain.Identities.ForgotPassword
     {
         public ForgotPasswordCommandValidator()
         {
+            RuleFor(f => f)
+                .NotNull();
+
             RuleFor(f => f.EmailAddress)
                 .NotEmpty()
                 .EmailAddress();

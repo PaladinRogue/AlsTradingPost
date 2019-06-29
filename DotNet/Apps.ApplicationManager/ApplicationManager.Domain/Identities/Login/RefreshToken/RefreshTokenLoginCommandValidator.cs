@@ -7,6 +7,9 @@ namespace ApplicationManager.Domain.Identities.Login.RefreshToken
     {
         public RefreshTokenLoginCommandValidator()
         {
+            RuleFor(r => r)
+                .NotNull();
+
             RuleFor(l => l.SessionId)
                 .NotEmpty();
 

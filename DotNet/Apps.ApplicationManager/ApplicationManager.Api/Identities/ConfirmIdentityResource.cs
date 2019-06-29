@@ -5,6 +5,5 @@ namespace ApplicationManager.Api.Identities
     [ResourceType(ResourceTypes.ConfirmIdentity)]
     public class ConfirmIdentityResource : IResource
     {
-
     }
 }
