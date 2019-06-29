@@ -32,7 +32,7 @@ namespace Common.Api.Extensions
 
         public static MvcOptions UseAppAccessAuthorizeFilter(this MvcOptions options)
         {
-            options.Conventions.Add(new AuthorizeAppAccessControllerModelConvention());
+            options.Conventions.Add(new AuthoriseAppAccessControllerModelConvention());
 
             return options;
         }

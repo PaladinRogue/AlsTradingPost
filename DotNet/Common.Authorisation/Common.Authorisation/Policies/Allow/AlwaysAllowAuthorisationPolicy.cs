@@ -1,4 +1,6 @@
-﻿namespace Common.Authorisation.Policies.Allow
+﻿using Common.Authorisation.Contexts;
+
+namespace Common.Authorisation.Policies.Allow
 {
     public class AlwaysAllowAuthorisationPolicy : IAuthorisationPolicy
     {

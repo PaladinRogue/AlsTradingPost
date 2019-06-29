@@ -1,4 +1,5 @@
 ﻿using System;
+using Common.Authorisation.Contexts;
 
 namespace Common.Authorisation.Manager
 {

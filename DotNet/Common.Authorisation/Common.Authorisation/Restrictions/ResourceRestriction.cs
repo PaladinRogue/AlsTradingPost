@@ -1,4 +1,4 @@
-﻿namespace Common.Authorisation
+﻿namespace Common.Authorisation.Restrictions
 {
     public static class ResourceRestriction
     {

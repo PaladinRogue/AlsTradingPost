@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using ApplicationManager.ApplicationServices.Applications.Register;
 using ApplicationManager.ApplicationServices.Authentication;
+using ApplicationManager.ApplicationServices.AuthenticationServices;
 using ApplicationManager.ApplicationServices.Identities;
 using ApplicationManager.ApplicationServices.Identities.CreateAdmin;
 using ApplicationManager.ApplicationServices.Identities.TwoFactor;
@@ -10,6 +11,7 @@ using ApplicationManager.ApplicationServices.Notifications.Send;
 using ApplicationManager.ApplicationServices.Users.CreateAdmin;
 using ApplicationManager.Domain.Applications.Change;
 using ApplicationManager.Domain.Applications.Create;
+using ApplicationManager.Domain.AuthenticationServices.CreateClientCredential;
 using ApplicationManager.Domain.Identities.ChangePassword;
 using ApplicationManager.Domain.Identities.CheckPassword;
 using ApplicationManager.Domain.Identities.ConfirmIdentity;
@@ -34,6 +36,7 @@ using Common.ApplicationServices.Transactions;
 using Common.Authorisation;
 using Common.Authorisation.Policies;
 using Common.Authorisation.Policies.Json;
+using Common.Authorisation.Restrictions;
 using Common.Domain.Persistence;
 using Common.Setup.Infrastructure.Authorisation;
 using FluentValidation;
@@ -69,6 +72,8 @@ namespace ApplicationManager.Setup
             services.RegisterApplicationService<IIdentityApplicationService, IdentityApplicationService, IdentityApplicationServiceSecurityDecorator>();
 
             services.RegisterApplicationService<IAuthenticationApplicationService, AuthenticationApplicationService, AuthenticationApplicationServiceSecurityDecorator>();
+
+            services.RegisterApplicationService<IAuthenticationServiceApplicationService, AuthenticationServiceApplicationService, AuthenticationServiceApplicationServiceSecurityDecorator>();
         }
 
 	    public static void RegisterValidators(IServiceCollection services)
@@ -86,6 +91,7 @@ namespace ApplicationManager.Setup
 	        services.AddScoped<IValidator<ForgotPasswordCommandDdto>, ForgotPasswordValidator>();
 	        services.AddScoped<IValidator<CreateIdentityCommandDdto>, CreateIdentityValidator>();
 	        services.AddScoped<IValidator<RefreshTokenLoginCommandDdto>, RefreshTokenLoginCommandValidator>();
+	        services.AddScoped<IValidator<CreateAuthenticationGrantTypeClientCredentialDdto>, CreateAuthenticationGrantTypeClientCredentialValidator>();
 	    }
 
         public static void RegisterDomainServices(IServiceCollection services)
@@ -105,6 +111,7 @@ namespace ApplicationManager.Setup
             services.AddScoped<ICreateRefreshTokenCommand, CreateRefreshTokenCommand>();
             services.AddScoped<ILogoutCommand, LogoutCommand>();
             services.AddScoped<IRefreshTokenLoginCommand, RefreshTokenLoginCommand>();
+            services.AddScoped<ICreateAuthenticationGrantTypeClientCredentialCommand, CreateAuthenticationGrantTypeClientCredentialCommand>();
         }
 
         public static void RegisterPersistenceServices(IConfiguration configuration, IServiceCollection services)
@@ -131,14 +138,17 @@ namespace ApplicationManager.Setup
         public static void RegisterProviders(IServiceCollection services)
         {
             services.AddSingleton<IRouteProvider<bool>, DefaultRouteProvider>();
-            services.AddSingleton<ICurrentIdentityProvider, CurrentIdentityProvider>();
         }
 
         public static void RegisterAuthorisation(IServiceCollection services)
         {
+	        services.AddSingleton<ICurrentIdentityProvider, CurrentIdentityProvider>();
 	        services.AddSingleton<IAuthorisationPolicy, JsonAuthorisationPolicy>();
 	        services.AddSingleton<ISelfProvider, SelfIdentityProvider>();
+	        services.AddSingleton<IAuthorisationRestrictionProvider, AuthorisationRestrictionProvider>();
 	        services.AddSingleton<IJsonAuthorisationPolicyProvider>(s => new JsonAuthorisationPolicyProvider(JObject.Parse(File.ReadAllText("authorisationPolicy.json"))));
+
+	        services.AddScoped<IAuthorisationRestriction, UserAuthorisationRestriction>();
         }
 
         public static void RegisterNotifications(IServiceCollection services)

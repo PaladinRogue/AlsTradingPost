@@ -14,5 +14,16 @@
     "get": {
       "restriction":  "self"
     }
+  },
+  "authenticationService": {
+    "create": {
+      "restriction": "user"
+    },
+    "update": {
+      "restriction": "user"
+    },
+    "get": {
+      "restriction":  "user"
+    }
   }
 }

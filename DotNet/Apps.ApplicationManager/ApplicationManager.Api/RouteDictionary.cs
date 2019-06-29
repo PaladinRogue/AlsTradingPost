@@ -22,5 +22,9 @@
         public const string AuthenticatePassword = "AuthenticatePassword";
         public const string AuthenticateRefreshTokenResourceTemplate = "AuthenticateRefreshTokenResourceTemplate";
         public const string AuthenticateRefreshToken = "AuthenticateRefreshToken";
+
+        public const string AuthenticationServiceResourceTemplate = "AuthenticationServiceResourceTemplate";
+        public const string CreateAuthenticationService = "CreateAuthenticationService";
+        public const string GetAuthenticationService = "GetAuthenticationService";
     }
 }

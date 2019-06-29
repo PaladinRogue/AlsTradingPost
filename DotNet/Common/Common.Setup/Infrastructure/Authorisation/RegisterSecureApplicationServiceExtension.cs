@@ -1,5 +1,6 @@
 using System;
 using Common.Authorisation;
+using Common.Authorisation.ApplicationServices;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Common.Setup.Infrastructure.Authorisation

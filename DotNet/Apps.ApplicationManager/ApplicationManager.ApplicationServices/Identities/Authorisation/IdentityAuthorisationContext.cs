@@ -1,6 +1,7 @@
 using System;
 using ApplicationManager.Domain.Identities;
 using Common.Authorisation;
+using Common.Authorisation.Contexts;
 
 namespace ApplicationManager.ApplicationServices.Identities.Authorisation
 {

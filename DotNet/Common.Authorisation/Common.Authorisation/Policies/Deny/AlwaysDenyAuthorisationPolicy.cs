@@ -1,4 +1,6 @@
-﻿namespace Common.Authorisation.Policies.Deny
+﻿using Common.Authorisation.Contexts;
+
+namespace Common.Authorisation.Policies.Deny
 {
     public class AlwaysDenyAuthorisationPolicy : IAuthorisationPolicy
     {

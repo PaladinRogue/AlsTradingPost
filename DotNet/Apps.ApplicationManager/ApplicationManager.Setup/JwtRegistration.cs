@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ApplicationManager.ApplicationServices.Claims;
 using ApplicationManager.Setup.Infrastructure.Authorisation;
 using Common.ApplicationServices.Authentication;
 using Common.Setup.Settings;
@@ -12,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using CommonJwtClaimIdentifiers = Common.ApplicationServices.Claims.Constants.JwtClaimIdentifiers;
 using CommonJwtClaims = Common.Api.Authentication.Constants.JwtClaims;
+using CommonPolicies = Common.Api.Authorisation.Policies;
 
 namespace ApplicationManager.Setup
 {
@@ -71,9 +71,9 @@ namespace ApplicationManager.Setup
 
 		    services.AddAuthorization(options =>
 		    {
-		        options.AddPolicy(CommonJwtClaims.AppAccess, policy => policy.RequireClaim(CommonJwtClaimIdentifiers.Rol, CommonJwtClaims.AppAccess));
-		        options.AddPolicy(CommonJwtClaims.RestrictedAppAccess, policy => policy.RequireClaim(CommonJwtClaimIdentifiers.Rol, CommonJwtClaims.RestrictedAppAccess));
-		        options.AddPolicy(JwtClaims.IsUser, policy => policy.Requirements.Add(new IsUserRequirement()));
+		        options.AddPolicy(CommonPolicies.AppAccess, policy => policy.RequireClaim(CommonJwtClaimIdentifiers.Rol, CommonJwtClaims.AppAccess));
+		        options.AddPolicy(CommonPolicies.RestrictedAppAccess, policy => policy.RequireClaim(CommonJwtClaimIdentifiers.Rol, CommonJwtClaims.RestrictedAppAccess));
+		        options.AddPolicy(Policies.User, policy => policy.Requirements.Add(new UserRequirement()));
 		    });
 
             services.AddSingleton<IAuthorizationHandler, IsUserAuthorizationHandler>();

@@ -2,6 +2,6 @@
 {
     public static class JwtClaims
     {
-        public static readonly string IsUser = "IsUser";
+        public const string User = "User";
     }
 }

@@ -1,7 +1,8 @@
 ﻿using System;
 using Common.ApplicationServices.Exceptions;
+using Common.Authorisation.Contexts;
 
-namespace Common.Authorisation
+namespace Common.Authorisation.ApplicationServices
 {
     public interface ISecurityApplicationService
     {

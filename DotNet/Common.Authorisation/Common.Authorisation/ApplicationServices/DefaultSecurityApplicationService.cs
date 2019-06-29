@@ -1,8 +1,9 @@
 ﻿using System;
 using Common.ApplicationServices.Exceptions;
+using Common.Authorisation.Contexts;
 using Common.Authorisation.Manager;
 
-namespace Common.Authorisation
+namespace Common.Authorisation.ApplicationServices
 {
     public class DefaultSecurityApplicationService : ISecurityApplicationService
     {

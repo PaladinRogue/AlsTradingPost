@@ -1,8 +1,10 @@
 ﻿using Common.ApplicationServices.Services.Query;
 using Common.Authorisation;
+using Common.Authorisation.ApplicationServices;
 using Common.Authorisation.Manager;
 using Common.Authorisation.Policies;
 using Common.Authorisation.Policies.Deny;
+using Common.Authorisation.Restrictions;
 using Common.Domain.DataProtection;
 using Common.Resources.Encryption;
 using Common.Setup.Infrastructure.Encryption;
@@ -35,6 +37,7 @@ namespace Common.Setup
 
         public static void RegisterAuthorisation(IServiceCollection services)
         {
+            services.AddSingleton<IAuthorisationRestrictionProvider, AuthorisationRestrictionProvider>();
             services.AddSingleton<IAuthorisationPolicy, AlwaysDenyAuthorisationPolicy>();
         }
     }

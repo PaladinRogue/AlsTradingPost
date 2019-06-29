@@ -176,11 +176,11 @@ namespace ApplicationManager.ApplicationServices.Identities
             {
                 try
                 {
-                    Identity identity = _identityCommandRepository.GetWithConcurrencyCheck(confirmIdentityAdto.IdentityId, confirmIdentityAdto.Version);
+                    Identity identity = _identityCommandRepository.GetById(confirmIdentityAdto.IdentityId);
 
                     if (identity == null)
                     {
-                        throw new BusinessApplicationException(ExceptionType.Concurrency, "No identity found to confirm identity");
+                        throw new BusinessApplicationException(ExceptionType.NotFound, "No identity found to confirm identity");
                     }
 
                     _confirmIdentityCommand.Execute(identity, new ConfirmIdentityCommandDdto
@@ -191,10 +191,6 @@ namespace ApplicationManager.ApplicationServices.Identities
                     _identityCommandRepository.Update(identity);
 
                     transaction.Commit();
-                }
-                catch (ConcurrencyDomainException)
-                {
-                    throw new BusinessApplicationException(ExceptionType.Concurrency, "No identity found to confirm identity");
                 }
                 catch (InvalidTwoFactorTokenDomainException)
                 {

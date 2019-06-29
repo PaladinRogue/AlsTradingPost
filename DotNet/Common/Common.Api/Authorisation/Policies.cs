@@ -1,4 +1,6 @@
-﻿namespace Common.Api.Authentication.Constants
+﻿using Common.Api.Authentication.Constants;
+
+namespace Common.Api.Authorisation
 {
     public class Policies
     {
