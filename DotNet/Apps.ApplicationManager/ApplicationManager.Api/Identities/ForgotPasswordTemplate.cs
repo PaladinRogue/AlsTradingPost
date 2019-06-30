@@ -1,6 +1,8 @@
 using Common.Api.Links;
+using Common.Api.PropertyTypes;
 using Common.Api.Resources;
 using Common.Api.Validation.Attributes;
+using Common.Resources;
 using Common.Setup.Infrastructure.Constants;
 
 namespace ApplicationManager.Api.Identities
@@ -11,6 +13,8 @@ namespace ApplicationManager.Api.Identities
     public class ForgotPasswordTemplate : ITemplate
     {
         [Required]
+        [EmailAddress]
+        [MaxLength(FieldSizes.Extended)]
         public string EmailAddress { get; set; }
     }
 }

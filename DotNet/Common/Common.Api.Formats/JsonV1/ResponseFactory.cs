@@ -98,7 +98,7 @@ namespace Common.Api.Formats.JsonV1
         {
             DictionaryBuilder<string, object> propertyMetaBuilder = DictionaryBuilder<string, object>.Create();
 
-            propertyMetaBuilder.Add(MetaType.Type, FieldTypeMapper.GetFieldType(property.Type));
+            propertyMetaBuilder.Add(MetaType.Type, property.FieldType ?? FieldTypeMapper.GetFieldType(property.Type));
 
             if (property.Constraints != null)
             {

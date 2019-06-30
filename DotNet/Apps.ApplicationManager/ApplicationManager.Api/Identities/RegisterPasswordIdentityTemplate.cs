@@ -1,5 +1,6 @@
 using Common.Api.Concurrency;
 using Common.Api.Links;
+using Common.Api.PropertyTypes;
 using Common.Api.Resources;
 using Common.Api.Validation.Attributes;
 using Common.Resources;
@@ -13,7 +14,7 @@ namespace ApplicationManager.Api.Identities
     public class RegisterPasswordIdentityTemplate : ITemplate
     {
         [Required]
-        //TODO Email address attribute
+        [EmailAddress]
         [MaxLength(FieldSizes.Extended)]
         public string EmailAddress { get; set; }
 
@@ -23,10 +24,12 @@ namespace ApplicationManager.Api.Identities
 
         [Required]
         [Length(6, FieldSizes.Default)]
+        [Password]
         public string Password { get; set; }
 
         [Required]
         [Length(6, FieldSizes.Default)]
+        [Password]
         public string ConfirmPassword { get; set; }
     }
 }

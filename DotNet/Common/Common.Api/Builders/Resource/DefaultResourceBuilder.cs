@@ -6,6 +6,7 @@ using Common.Api.Concurrency.Interfaces;
 using Common.Api.Links;
 using Common.Api.Meta;
 using Common.Api.Pagination.Interfaces;
+using Common.Api.PropertyTypes;
 using Common.Api.Resources;
 using Common.Api.Validation.Attributes;
 using Common.Domain.Concurrency.Interfaces;
@@ -34,6 +35,7 @@ namespace Common.Api.Builders.Resource
                 Properties = properties.Where(p => !p.GetCustomAttributes<IgnoreAttribute>().Any()).Select(p => new Property
                 {
                     Type = p.PropertyType,
+                    FieldType = GetFieldType(p),
                     Name = p.Name,
                     Value = p.GetValue(resource),
                     Constraints = new Constraints
@@ -52,6 +54,21 @@ namespace Common.Api.Builders.Resource
                 Links = _linkBuilder.BuildLinks(resource),
                 Version = resource is IVersioned<IConcurrencyVersion> versionedResource ? versionedResource.Version : null
             };
+        }
+
+        private static string GetFieldType(MemberInfo propertyInfo)
+        {
+            if (propertyInfo.GetCustomAttribute<EmailAddressAttribute>() != null)
+            {
+                return FieldType.Email;
+            }
+
+            if (propertyInfo.GetCustomAttribute<PasswordAttribute>() != null)
+            {
+                return FieldType.Password;
+            }
+
+            return null;
         }
 
         public BuiltCollectionResource Build<T>(ICollectionResource<T> collectionResource, ITemplate template) where T: IResource

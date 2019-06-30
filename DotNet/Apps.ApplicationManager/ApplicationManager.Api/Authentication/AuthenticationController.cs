@@ -50,7 +50,7 @@ namespace ApplicationManager.Api.Authentication
         }
 
         [AllowAnonymous]
-        [HttpGet("password/resourceTemplate", Name = RouteDictionary.AuthenticateRefreshTokenResourceTemplate)]
+        [HttpGet("refreshToken/resourceTemplate", Name = RouteDictionary.AuthenticateRefreshTokenResourceTemplate)]
         public IActionResult GetRefreshTokenResourceTemplate()
         {
             return Ok(_resourceBuilder.Build(new RefreshTokenTemplate()));

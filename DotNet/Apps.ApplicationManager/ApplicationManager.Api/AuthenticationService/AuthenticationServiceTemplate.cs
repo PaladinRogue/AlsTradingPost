@@ -1,5 +1,6 @@
 using Common.Api.Concurrency;
 using Common.Api.Links;
+using Common.Api.PropertyTypes;
 using Common.Api.Resources;
 using Common.Api.Validation.Attributes;
 using Common.Resources;
@@ -18,12 +19,12 @@ namespace ApplicationManager.Api.AuthenticationService
 
         [Required]
         [MaxLength(FieldSizes.Default)]
-        //TODO Password attribute
+        [Password]
         public string ClientId { get; set; }
 
         [Required]
         [MaxLength(FieldSizes.Extended)]
-        //TODO Password attribute
+        [Password]
         public string ClientSecret { get; set; }
 
         [Required]

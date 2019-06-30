@@ -1,4 +1,5 @@
 using Common.Api.Links;
+using Common.Api.PropertyTypes;
 using Common.Api.Resources;
 using Common.Api.Validation.Attributes;
 using Common.Resources;
@@ -17,6 +18,7 @@ namespace ApplicationManager.Api.Authentication
 
         [Required]
         [MaxLength(FieldSizes.Default)]
+        [Password]
         public string Password { get; set; }
     }
 }

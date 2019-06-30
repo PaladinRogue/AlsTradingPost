@@ -8,6 +8,8 @@ namespace Common.Api.Builders.Resource
 
         public object Value { get; set; }
 
+        public string FieldType { get; set; }
+
         public Type Type { get; set; }
 
         public Constraints Constraints { get; set; }

@@ -1,6 +1,7 @@
 using System;
 using Common.Api.Concurrency;
 using Common.Api.Links;
+using Common.Api.PropertyTypes;
 using Common.Api.Resources;
 using Common.Setup.Infrastructure.Constants;
 
@@ -16,6 +17,7 @@ namespace ApplicationManager.Api.Identities
 
         public string Identifier { get; set; }
 
+        [Password]
         public string Password { get; set; }
     }
 }
