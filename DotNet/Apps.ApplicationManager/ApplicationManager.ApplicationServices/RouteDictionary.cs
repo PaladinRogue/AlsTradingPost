@@ -1,4 +1,4 @@
-﻿namespace ApplicationManager.Api
+﻿namespace ApplicationManager.ApplicationServices
 {
     public static class RouteDictionary
     {
@@ -23,7 +23,9 @@
         public const string AuthenticatePassword = "AuthenticatePassword";
         public const string AuthenticateRefreshTokenResourceTemplate = "AuthenticateRefreshTokenResourceTemplate";
         public const string AuthenticateRefreshToken = "AuthenticateRefreshToken";
+        public const string AuthenticateClientCredential = "AuthenticateClientCredential";
 
+        public const string GetAuthenticationServices = "GetAuthenticationServices";
         public const string AuthenticationServiceResourceTemplate = "AuthenticationServiceResourceTemplate";
         public const string CreateAuthenticationService = "CreateAuthenticationService";
         public const string GetAuthenticationService = "GetAuthenticationService";

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ApplicationManager.ApplicationServices.AuthenticationServices.Models;
 using Common.Authorisation;
 using Common.Authorisation.ApplicationServices;
@@ -17,6 +18,12 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
         {
             _securityApplicationService = securityApplicationService;
             _authenticationServiceApplicationService = authenticationServiceApplicationService;
+        }
+
+        public IEnumerable<AuthenticationServiceAdto> GetAuthenticationServices()
+        {
+            return _securityApplicationService.Secure(() => _authenticationServiceApplicationService.GetAuthenticationServices(),
+                DefaultAuthorisationContext.Create(AuthorisationResource.AuthenticationService, AuthorisationAction.Search));
         }
 
         public ClientCredentialAdto CreateClientCredential(CreateClientCredentialAdto createClientCredentialAdto)

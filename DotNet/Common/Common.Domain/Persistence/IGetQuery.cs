@@ -12,7 +12,7 @@ namespace Common.Domain.Persistence
         /// <param name="sort">The ordering to be applied.</param>
         /// <param name="predicate">The predicate of the entities to return.</param>
         /// <returns>Returns an enumerable entities of type <typeparamref name="T"/></returns>
-        IQueryable<T> Get(IList<SortBy> sort,
+        IQueryable<T> Get(IList<SortBy> sort = null,
             Expression<Func<T, bool>> predicate = null);
     }
 }

@@ -144,6 +144,7 @@ namespace ApplicationManager.Setup
         public static void RegisterProviders(IServiceCollection services)
         {
             services.AddSingleton<IRouteProvider<bool>, DefaultRouteProvider>();
+            services.AddSingleton<IAbsoluteRouteProvider, DefaultAbsoluteRouteProvider>();
         }
 
         public static void RegisterAuthorisation(IServiceCollection services)

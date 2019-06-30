@@ -1,9 +1,11 @@
-using System;
+using System.Collections.Generic;
+using System.Linq;
 using ApplicationManager.ApplicationServices.AuthenticationServices.Models;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.AuthenticationServices.ChangeClientCredential;
 using ApplicationManager.Domain.AuthenticationServices.CreateClientCredential;
 using AutoMapper;
+using Common.Api.Routing;
 using Common.ApplicationServices.Concurrency;
 using Common.ApplicationServices.Exceptions;
 using Common.ApplicationServices.Transactions;
@@ -26,20 +28,58 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
 
         private readonly IMapper _mapper;
 
+        private readonly IAbsoluteRouteProvider _absoluteRouteProvider;
+
         public AuthenticationServiceApplicationService(
             ICommandRepository<AuthenticationService> commandRepository,
             IQueryRepository<AuthenticationService> queryRepository,
             ITransactionManager transactionManager,
             ICreateAuthenticationGrantTypeClientCredentialCommand createAuthenticationGrantTypeClientCredentialCommand,
+            IChangeAuthenticationGrantTypeClientCredentialCommand changeAuthenticationGrantTypeClientCredentialCommand,
             IMapper mapper,
-            IChangeAuthenticationGrantTypeClientCredentialCommand changeAuthenticationGrantTypeClientCredentialCommand)
+            IAbsoluteRouteProvider absoluteRouteProvider)
         {
             _commandRepository = commandRepository;
             _transactionManager = transactionManager;
             _createAuthenticationGrantTypeClientCredentialCommand = createAuthenticationGrantTypeClientCredentialCommand;
             _mapper = mapper;
             _changeAuthenticationGrantTypeClientCredentialCommand = changeAuthenticationGrantTypeClientCredentialCommand;
+            _absoluteRouteProvider = absoluteRouteProvider;
             _queryRepository = queryRepository;
+        }
+
+        public IEnumerable<AuthenticationServiceAdto> GetAuthenticationServices()
+        {
+            using (ITransaction transaction = _transactionManager.Create())
+            {
+                IQueryable<AuthenticationService> authenticationServices = _queryRepository.Get();
+
+                IList<AuthenticationServiceAdto> authenticationServiceAdtos = new List<AuthenticationServiceAdto>();
+
+                foreach (AuthenticationService authenticationService in authenticationServices)
+                {
+                    switch (authenticationService)
+                    {
+                        case AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential:
+                            authenticationServiceAdtos.Add(new AuthenticationServiceAdto
+                            {
+                                Type = authenticationGrantTypeClientCredential.Name,
+                                AccessUrl = BuildAccessUrl(authenticationGrantTypeClientCredential)
+                            });
+                            break;
+                        case AuthenticationGrantTypePassword authenticationGrantTypePassword:
+                            authenticationServiceAdtos.Add(new AuthenticationServiceAdto
+                            {
+                                Type = "Password"
+                            });
+                            break;
+                    }
+                }
+
+                transaction.Commit();
+
+                return authenticationServiceAdtos;
+            }
         }
 
         public ClientCredentialAdto CreateClientCredential(CreateClientCredentialAdto createClientCredentialAdto)
@@ -114,6 +154,17 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
                     throw new BusinessApplicationException(ExceptionType.NotFound, e);
                 }
             }
+        }
+
+        private string BuildAccessUrl(AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential)
+        {
+            string redirect = _absoluteRouteProvider.GetRouteTemplate(RouteDictionary.AuthenticateClientCredential, new {});
+
+            return string.Format(
+                authenticationGrantTypeClientCredential.ClientGrantAccessTokenUrl,
+                authenticationGrantTypeClientCredential.ClientId,
+                redirect,
+                authenticationGrantTypeClientCredential.Id);
         }
 
         private static ClientCredentialAdto CreateClientCredentialAdto(AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential)

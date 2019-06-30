@@ -75,6 +75,7 @@ namespace Common.Api.Builders.Resource
         {
             BuiltCollectionResource builtCollectionResource = new BuiltCollectionResource
             {
+                TotalResults = collectionResource.Results.Count,
                 BuiltResources = collectionResource.Results.Select(Build),
                 Links = _linkBuilder.BuildLinks(collectionResource, template)
             };

@@ -24,6 +24,9 @@
     },
     "get": {
       "restriction":  "user"
+    },
+    "search": {
+      "restriction":  "everyone"
     }
   }
 }

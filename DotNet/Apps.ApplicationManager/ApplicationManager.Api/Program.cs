@@ -1,8 +1,10 @@
-﻿using Common.Api.ApplicationRegistration;
+﻿using System.IO;
+using Common.Api.ApplicationRegistration;
 using Common.Setup.Infrastructure.Messaging;
 using Common.Setup.Infrastructure.Persistence;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace ApplicationManager.Api
 {
@@ -18,8 +20,16 @@ namespace ApplicationManager.Api
                 .Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        {
+            IConfigurationBuilder builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("hostsettings.json", false)
+                .AddEnvironmentVariables();
+
+            return WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>()
+                .UseConfiguration(builder.Build());
+        }
     }
 }

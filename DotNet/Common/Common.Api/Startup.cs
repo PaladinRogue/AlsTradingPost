@@ -25,6 +25,7 @@ namespace Common.Api
                 .SetBasePath(environment.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile("secrets.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("hostsettings.json", optional: false, reloadOnChange: true)
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
@@ -46,6 +47,7 @@ namespace Common.Api
 
             services.Configure<ProxySettings>(Configuration.GetSection(nameof(ProxySettings)));
             services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
+            services.Configure<HostSettings>(Configuration);
             services.Configure<MessagingBusSettings>(Configuration.GetSection(nameof(MessagingBusSettings)));
 
             services.AddSingleton<ILinkBuilder, DefaultLinkBuilder>();

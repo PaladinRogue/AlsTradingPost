@@ -1,4 +1,6 @@
+using System;
 using System.Threading.Tasks;
+using ApplicationManager.ApplicationServices;
 using ApplicationManager.ApplicationServices.Authentication;
 using ApplicationManager.ApplicationServices.Authentication.Models;
 using Common.Api.Builders.Resource;
@@ -72,6 +74,13 @@ namespace ApplicationManager.Api.Authentication
                 ExpiresIn = jwt.ExpiresIn,
                 SessionId = jwt.SessionId
             }));
+        }
+
+        [AllowAnonymous]
+        [HttpGet("clientCredential", Name = RouteDictionary.AuthenticateClientCredential)]
+        public IActionResult ClientCredential(string code, Guid state)
+        {
+            return Ok();
         }
     }
 }

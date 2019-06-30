@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using ApplicationManager.ApplicationServices;
 using ApplicationManager.ApplicationServices.AuthenticationServices;
 using ApplicationManager.ApplicationServices.AuthenticationServices.Models;
-using ApplicationManager.Domain.Identities;
 using ApplicationManager.Setup.Infrastructure.Authorisation;
 using AutoMapper;
 using Common.Api.Builders.Resource;
@@ -11,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ApplicationManager.Api.AuthenticationService
 {
-    [DefaultControllerRoute]
+    [DefaultControllerRoute("authenticationServices")]
     [Authorize(Policies.User)]
     public class AuthenticationServiceController : ControllerBase
     {
@@ -29,6 +31,22 @@ namespace ApplicationManager.Api.AuthenticationService
             _resourceBuilder = resourceBuilder;
             _authenticationServiceApplicationService = authenticationServiceApplicationService;
             _mapper = mapper;
+        }
+
+        [AllowAnonymous]
+        [HttpGet("", Name = RouteDictionary.GetAuthenticationServices)]
+        public IActionResult Get()
+        {
+            IEnumerable<AuthenticationServiceAdto> authenticationServiceAdtos = _authenticationServiceApplicationService.GetAuthenticationServices();
+
+            return Ok(_resourceBuilder.Build(new AuthenticationServicesResource
+            {
+                Results = authenticationServiceAdtos.Select(a => new AuthenticationServiceSummaryResource
+                {
+                    Type = a.Type,
+                    AccessUrl = a.AccessUrl
+                }).ToList()
+            }, new AuthenticationServiceSummaryResource()));
         }
 
         [HttpGet("resourceTemplate", Name = RouteDictionary.AuthenticationServiceResourceTemplate)]
