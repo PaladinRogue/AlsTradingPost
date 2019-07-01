@@ -15,7 +15,7 @@ using Common.ApplicationServices.Transactions;
 using Common.Domain.Exceptions;
 using Common.Domain.Persistence;
 using ClaimsBuilder = ApplicationManager.ApplicationServices.Claims.ClaimsBuilder;
-using JwtClaims = Common.Api.Authentication.Constants.JwtClaims;
+using JwtClaims = Common.ApplicationServices.Authentication.Constants.JwtClaims;
 
 namespace ApplicationManager.ApplicationServices.Authentication
 {

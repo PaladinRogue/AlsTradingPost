@@ -1,5 +1,4 @@
 ﻿using System;
-using ApplicationManager.ApplicationServices;
 using ApplicationManager.ApplicationServices.Identities;
 using ApplicationManager.ApplicationServices.Identities.Models;
 using Common.Api.Authentication;

@@ -2,11 +2,10 @@ using ApplicationManager.ApplicationServices.Users.CreateAdmin;
 using ApplicationManager.ApplicationServices.Users.Models;
 using AutoMapper;
 using Common.ApplicationServices.Exceptions;
-using Common.Messaging.Infrastructure.Interfaces;
 using Common.Messaging.Infrastructure.MessageBus;
 using Common.Messaging.Infrastructure.Subscribers;
 using Common.Messaging.Messages;
-using Common.Setup.Settings;
+using Common.Resources.Settings;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 

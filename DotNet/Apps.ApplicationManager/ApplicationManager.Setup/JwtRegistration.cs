@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using ApplicationManager.Setup.Infrastructure.Authorisation;
 using Common.ApplicationServices.Authentication;
-using Common.Setup.Settings;
+using Common.Resources.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using CommonJwtClaimIdentifiers = Common.ApplicationServices.Claims.Constants.JwtClaimIdentifiers;
-using CommonJwtClaims = Common.Api.Authentication.Constants.JwtClaims;
+using CommonJwtClaims = Common.ApplicationServices.Authentication.Constants.JwtClaims;
 using CommonPolicies = Common.Api.Authorisation.Policies;
 
 namespace ApplicationManager.Setup

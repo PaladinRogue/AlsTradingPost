@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Common.Api.Builders.Dictionary;
 using Common.Api.Builders.Resource;
 using Common.Api.Formats.JsonV1.Formats;
 using Common.Api.Headers;
 using Common.Api.Links;
 using Common.Api.Resources;
+using Common.Resources.Builders.Dictionaries;
 using Common.Resources.Extensions;
 using Microsoft.AspNetCore.Http;
 using Link = Common.Api.Formats.JsonV1.Formats.Link;

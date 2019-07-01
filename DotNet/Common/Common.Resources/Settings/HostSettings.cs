@@ -1,4 +1,4 @@
-namespace Common.Setup.Settings
+namespace Common.Resources.Settings
 {
     public class HostSettings
     {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ApplicationManager.ApplicationServices;
 using ApplicationManager.ApplicationServices.AuthenticationServices;
 using ApplicationManager.ApplicationServices.AuthenticationServices.Models;
 using ApplicationManager.Setup.Infrastructure.Authorisation;

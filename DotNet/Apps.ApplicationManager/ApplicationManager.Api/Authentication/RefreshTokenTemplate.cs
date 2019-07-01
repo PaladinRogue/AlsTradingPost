@@ -1,5 +1,4 @@
 using System;
-using ApplicationManager.ApplicationServices;
 using Common.Api.Links;
 using Common.Api.Resources;
 using Common.Api.Validation.Attributes;

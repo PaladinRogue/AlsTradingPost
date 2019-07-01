@@ -5,12 +5,13 @@ using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.AuthenticationServices.ChangeClientCredential;
 using ApplicationManager.Domain.AuthenticationServices.CreateClientCredential;
 using AutoMapper;
-using Common.Api.Routing;
 using Common.ApplicationServices.Concurrency;
 using Common.ApplicationServices.Exceptions;
 using Common.ApplicationServices.Transactions;
 using Common.Domain.Exceptions;
 using Common.Domain.Persistence;
+using Common.Resources.Builders.Dictionaries;
+using Common.Resources.Extensions;
 
 namespace ApplicationManager.ApplicationServices.AuthenticationServices
 {
@@ -28,23 +29,19 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
 
         private readonly IMapper _mapper;
 
-        private readonly IAbsoluteRouteProvider _absoluteRouteProvider;
-
         public AuthenticationServiceApplicationService(
             ICommandRepository<AuthenticationService> commandRepository,
             IQueryRepository<AuthenticationService> queryRepository,
             ITransactionManager transactionManager,
             ICreateAuthenticationGrantTypeClientCredentialCommand createAuthenticationGrantTypeClientCredentialCommand,
             IChangeAuthenticationGrantTypeClientCredentialCommand changeAuthenticationGrantTypeClientCredentialCommand,
-            IMapper mapper,
-            IAbsoluteRouteProvider absoluteRouteProvider)
+            IMapper mapper)
         {
             _commandRepository = commandRepository;
             _transactionManager = transactionManager;
             _createAuthenticationGrantTypeClientCredentialCommand = createAuthenticationGrantTypeClientCredentialCommand;
             _mapper = mapper;
             _changeAuthenticationGrantTypeClientCredentialCommand = changeAuthenticationGrantTypeClientCredentialCommand;
-            _absoluteRouteProvider = absoluteRouteProvider;
             _queryRepository = queryRepository;
         }
 
@@ -64,7 +61,7 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
                             authenticationServiceAdtos.Add(new AuthenticationServiceAdto
                             {
                                 Type = authenticationGrantTypeClientCredential.Name,
-                                AccessUrl = BuildAccessUrl(authenticationGrantTypeClientCredential)
+                                AccessUrl = BuildClientAccessUrl(authenticationGrantTypeClientCredential)
                             });
                             break;
                         case AuthenticationGrantTypePassword authenticationGrantTypePassword:
@@ -156,15 +153,13 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
             }
         }
 
-        private string BuildAccessUrl(AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential)
+        private string BuildClientAccessUrl(AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential)
         {
-            string redirect = _absoluteRouteProvider.GetRouteTemplate(RouteDictionary.AuthenticateClientCredential, new {});
-
-            return string.Format(
-                authenticationGrantTypeClientCredential.ClientGrantAccessTokenUrl,
-                authenticationGrantTypeClientCredential.ClientId,
-                redirect,
-                authenticationGrantTypeClientCredential.Id);
+            return authenticationGrantTypeClientCredential.ClientGrantAccessTokenUrl.Format(
+                DictionaryBuilder<string, object>.Create()
+                    .Add("clientId", authenticationGrantTypeClientCredential.ClientId)
+                    .Add("state", authenticationGrantTypeClientCredential.Id)
+                    .Build());
         }
 
         private static ClientCredentialAdto CreateClientCredentialAdto(AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential)

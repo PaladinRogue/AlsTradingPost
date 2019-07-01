@@ -3,7 +3,7 @@ using Common.Api.Settings;
 using Common.Messaging.Infrastructure.Dispatchers;
 using Common.Messaging.Infrastructure.Senders;
 using Common.Messaging.Messages;
-using Common.Setup.Settings;
+using Common.Resources.Settings;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;

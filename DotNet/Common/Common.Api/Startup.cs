@@ -2,8 +2,8 @@
 using Common.Api.Links;
 using Common.Api.Routing;
 using Common.Api.Settings;
+using Common.Resources.Settings;
 using Common.Setup;
-using Common.Setup.Settings;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;

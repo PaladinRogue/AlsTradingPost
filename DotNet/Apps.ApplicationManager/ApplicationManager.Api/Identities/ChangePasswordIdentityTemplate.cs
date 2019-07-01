@@ -1,4 +1,3 @@
-using ApplicationManager.ApplicationServices;
 using Common.Api.Concurrency;
 using Common.Api.Links;
 using Common.Api.PropertyTypes;

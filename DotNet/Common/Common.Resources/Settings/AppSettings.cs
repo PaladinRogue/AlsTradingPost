@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Common.Setup.Settings
+namespace Common.Resources.Settings
 {
     public class AppSettings
     {

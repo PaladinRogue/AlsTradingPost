@@ -1,4 +1,4 @@
-﻿namespace Common.Api.Builders
+﻿namespace Common.Resources.Builders
 {
     public interface IBuilder<out T>
     {

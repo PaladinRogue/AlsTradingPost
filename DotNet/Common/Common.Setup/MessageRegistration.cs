@@ -9,7 +9,7 @@ using Common.Messaging.Infrastructure.MessageBus;
 using Common.Messaging.Infrastructure.Senders;
 using Common.Messaging.Infrastructure.Serialisers;
 using Common.Messaging.Infrastructure.Subscribers;
-using Common.Setup.Settings;
+using Common.Resources.Settings;
 using Messaging.Broker.Connection;
 using Messaging.Broker.MessageBus;
 using Messaging.Broker.Subscriptions;

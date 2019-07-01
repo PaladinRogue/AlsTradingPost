@@ -1,4 +1,4 @@
-﻿namespace ApplicationManager.ApplicationServices
+﻿namespace ApplicationManager.Api
 {
     public static class RouteDictionary
     {

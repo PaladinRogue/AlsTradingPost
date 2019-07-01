@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Common.Api.Builders.Dictionary
+namespace Common.Resources.Builders.Dictionaries
 {
     public class DictionaryBuilder<TKey, TValue> : IDictionaryBuilder<TKey, TValue>
     {
@@ -23,14 +23,14 @@ namespace Common.Api.Builders.Dictionary
 
             return this;
         }
-            
+
         public IDictionary<TKey, TValue> Build()
         {
             if (!_dictionary.Keys.Any())
             {
                 return null;
             }
-            
+
             return _dictionary;
         }
     }

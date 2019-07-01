@@ -1,4 +1,4 @@
-﻿namespace Common.Api.Settings
+﻿namespace Common.Resources.Settings
 {
     public class SystemAdminIdentitySettings
     {

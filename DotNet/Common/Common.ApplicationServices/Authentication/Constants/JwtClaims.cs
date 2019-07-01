@@ -1,4 +1,4 @@
-﻿namespace Common.Api.Authentication.Constants
+﻿namespace Common.ApplicationServices.Authentication.Constants
 {
     public static class JwtClaims
     {

@@ -1,5 +1,4 @@
-﻿using ApplicationManager.ApplicationServices;
-using Common.Api.Builders.Resource;
+﻿using Common.Api.Builders.Resource;
 using Common.Api.Routing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
