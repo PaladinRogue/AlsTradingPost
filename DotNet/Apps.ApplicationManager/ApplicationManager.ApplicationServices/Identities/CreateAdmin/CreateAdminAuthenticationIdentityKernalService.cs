@@ -50,10 +50,7 @@ namespace ApplicationManager.ApplicationServices.Identities.CreateAdmin
             {
                 try
                 {
-                    Identity identity = _createIdentityCommand.Execute(new CreateIdentityCommandDdto
-                    {
-                        EmailAddress = createAdminAuthenticationIdentityAdto.EmailAddress
-                    });
+                    Identity identity = _createIdentityCommand.Execute();
 
                     string tempPassword = $"{String.RandomChar(20)}{String.RandomNumeric(3)}{String.RandomSpecial(3)}";
 

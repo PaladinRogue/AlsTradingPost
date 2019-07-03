@@ -10,8 +10,11 @@ namespace ApplicationManager.Domain.Identities
 {
     public class PasswordIdentity : AuthenticationIdentity
     {
-        private const byte MaskLength = 8;
-        private readonly string _passwordMask = new string('*', MaskLength);
+        private const byte EmailMaskLength = 20;
+        private readonly string _emailMask = new string('*', EmailMaskLength);
+
+        private const byte PasswordMaskLength = 8;
+        private readonly string _passwordMask = new string('*', PasswordMaskLength);
 
         protected PasswordIdentity()
         {
@@ -26,6 +29,7 @@ namespace ApplicationManager.Domain.Identities
             AuthenticationGrantTypePassword = authenticationGrantTypePassword;
             Identifier = createPasswordIdentityDdto.Identifier;
             Password = createPasswordIdentityDdto.Password;
+            EmailAddress = createPasswordIdentityDdto.EmailAddress;
         }
 
         internal static PasswordIdentity Create(
@@ -36,8 +40,18 @@ namespace ApplicationManager.Domain.Identities
             return new PasswordIdentity(identity, authenticationGrantTypePassword, createPasswordIdentityDdto);
         }
 
-        [MaxLength(FieldSizes.Extended)]
+        public string EmailAddress
+        {
+            get => _emailMask;
+            protected set => EmailAddressHash = DataProtection.Hash(value, StaticSalts.EmailAddress).Hash;
+        }
+
         [Required]
+        [MaxLength(FieldSizes.Protected)]
+        public string EmailAddressHash { get; protected set; }
+
+        [Required]
+        [MaxLength(FieldSizes.Extended)]
         public string Identifier { get; protected set; }
 
         public string Password

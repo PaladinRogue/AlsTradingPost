@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using ApplicationManager.ApplicationServices.Identities.Models;
 using ApplicationManager.Domain.AuthenticationServices;
@@ -282,10 +281,7 @@ namespace ApplicationManager.ApplicationServices.Identities
             {
                 try
                 {
-                    Identity identity = _createIdentityCommand.Execute(new CreateIdentityCommandDdto
-                    {
-                        EmailAddress = registerPasswordAdto.EmailAddress
-                    });
+                    Identity identity = _createIdentityCommand.Execute();
 
                     PasswordIdentity passwordIdentity = _registerPasswordCommand.Execute(identity, GetAuthenticationGrantTypePassword(), new RegisterPasswordCommandDdto
                     {

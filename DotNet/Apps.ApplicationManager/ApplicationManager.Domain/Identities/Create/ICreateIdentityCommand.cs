@@ -2,6 +2,6 @@
 {
     public interface ICreateIdentityCommand
     {
-        Identity Execute(CreateIdentityCommandDdto createIdentityCommandDdto);
+        Identity Execute();
     }
 }

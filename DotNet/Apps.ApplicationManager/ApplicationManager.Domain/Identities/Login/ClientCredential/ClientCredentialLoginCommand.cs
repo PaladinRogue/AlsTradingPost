@@ -1,5 +1,4 @@
 using ApplicationManager.Domain.AuthenticationServices;
-using ApplicationManager.Domain.Identities.Create;
 using ApplicationManager.Domain.Identities.Queries;
 using ApplicationManager.Domain.Identities.RegisterClientCredential;
 using Common.Domain.Validation;
@@ -30,10 +29,7 @@ namespace ApplicationManager.Domain.Identities.Login.ClientCredential
 
             if (identity == null)
             {
-                identity = Identity.Create(new CreateIdentityDdto
-                {
-                    EmailAddress = string.Empty
-                });
+                identity = Identity.Create();
 
                 identity.RegisterClientCredential(authenticationGrantTypeClientCredential, new RegisterClientCredentialDdto
                 {

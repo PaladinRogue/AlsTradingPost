@@ -5,5 +5,7 @@ namespace ApplicationManager.Domain.Identities.CreatePassword
         public string Identifier { get; set; }
 
         public string Password { get; set; }
+
+        public string EmailAddress { get; set; }
     }
 }

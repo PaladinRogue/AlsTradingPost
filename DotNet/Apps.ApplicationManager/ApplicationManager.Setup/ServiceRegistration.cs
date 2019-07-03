@@ -97,7 +97,6 @@ namespace ApplicationManager.Setup
 	        services.AddScoped<IValidator<RegisterPasswordCommandDdto>, RegisterPasswordValidator>();
 	        services.AddScoped<IValidator<ConfirmIdentityCommandDdto>, ConfirmIdentityValidator>();
 	        services.AddScoped<IValidator<ForgotPasswordCommandDdto>, ForgotPasswordCommandValidator>();
-	        services.AddScoped<IValidator<CreateIdentityCommandDdto>, CreateIdentityValidator>();
 	        services.AddScoped<IValidator<RefreshTokenLoginCommandDdto>, RefreshTokenLoginCommandValidator>();
 	        services.AddScoped<IValidator<ClientCredentialLoginCommandDdto>, ClientCredentialLoginCommandValidator>();
 	        services.AddScoped<IValidator<CreateAuthenticationGrantTypeClientCredentialDdto>, CreateAuthenticationGrantTypeClientCredentialValidator>();
@@ -136,6 +135,7 @@ namespace ApplicationManager.Setup
 	        services.AddScoped<IGetIdentityByForgotPasswordTokenQuery, GetIdentityByForgotPasswordTokenQuery>();
 	        services.AddScoped<IGetIdentityBySessionQuery, GetIdentityBySessionQuery>();
 	        services.AddScoped<IGetIdentityByClientCredentialIdentifierQuery, GetIdentityByClientCredentialIdentifierQuery>();
+	        services.AddScoped<IPasswordIdentityEmailIsUniqueQuery, PasswordIdentityEmailIsUniqueQuery>();
 
 	        services.AddScoped(typeof(ICommandRepository<>), typeof(Repository<>));
 	        services.AddScoped(typeof(IQueryRepository<>), typeof(Repository<>));

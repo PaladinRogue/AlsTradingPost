@@ -16,14 +16,14 @@ namespace ApplicationManager.Persistence.Identities
             _applicationManagerDbContext = applicationManagerDbContext;
         }
 
-        public Identity Run(AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential, string identifier)
+        public Identity Run(AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential,
+            string identifier)
         {
             return _applicationManagerDbContext.Identities
                 .SingleOrDefault(i =>
-                    i.AuthenticationIdentities.Any(a =>
-                        a is ClientCredentialIdentity
-                        && (a as ClientCredentialIdentity).IdentifierHash == DataProtection.Hash(identifier, StaticSalts.Identifier).Hash
-                        && (a as ClientCredentialIdentity).AuthenticationGrantTypeClientCredential == authenticationGrantTypeClientCredential));
+                    i.AuthenticationIdentities.OfType<ClientCredentialIdentity>().Any(a =>
+                        a.IdentifierHash == DataProtection.Hash(identifier, StaticSalts.Identifier).Hash
+                        && a.AuthenticationGrantTypeClientCredential == authenticationGrantTypeClientCredential));
         }
     }
 }

@@ -69,6 +69,7 @@ namespace ApplicationManager.Persistence
 
             modelBuilder.Entity<PasswordIdentity>()
                 .Ignore(p => p.Password)
+                .Ignore(i => i.EmailAddress)
                 .HasBaseType<AuthenticationIdentity>()
                 .ProtectSensitiveInformation()
                 .OwnsOne(typeof(HashSet), "PasswordHash");
@@ -99,9 +100,6 @@ namespace ApplicationManager.Persistence
                 .WithOne(s => s.Identity)
                 .HasForeignKey<Session>("IdentityId");
 
-            modelBuilder.Entity<Identity>()
-                .Ignore(i => i.EmailAddress);
-
             modelBuilder.Entity<NotificationTypeChannel>()
                 .ToTable("NotificationTypeChannels");
 
@@ -120,8 +118,6 @@ namespace ApplicationManager.Persistence
 
             modelBuilder.Entity<User>()
                 .ToTable("Users");
-
-            ConfigureQueryTypes(modelBuilder);
         }
     }
 }
