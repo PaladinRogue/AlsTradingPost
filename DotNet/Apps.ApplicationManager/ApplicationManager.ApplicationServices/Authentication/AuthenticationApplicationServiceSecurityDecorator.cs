@@ -32,5 +32,11 @@ namespace ApplicationManager.ApplicationServices.Authentication
             return _securityApplicationService.Secure(() => _authenticationApplicationService.RefreshToken(refreshTokenAdto),
                 DefaultAuthorisationContext.Create(AuthorisationResource.Authenticate, AuthorisationAction.Create));
         }
+
+        public Task<JwtAdto> ClientCredential(ClientCredentialAdto clientCredentialAdto)
+        {
+            return _securityApplicationService.Secure(() => _authenticationApplicationService.ClientCredential(clientCredentialAdto),
+                DefaultAuthorisationContext.Create(AuthorisationResource.Authenticate, AuthorisationAction.Create));
+        }
     }
 }

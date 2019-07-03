@@ -65,6 +65,7 @@ namespace ApplicationManager.Persistence
                 .HasValue<PasswordIdentity>(AuthenticationIdentityTypes.Password)
                 .HasValue<TwoFactorAuthenticationIdentity>(AuthenticationIdentityTypes.TwoFactor)
                 .HasValue<RefreshTokenIdentity>(AuthenticationIdentityTypes.RefreshToken);
+//                .HasValue<ClientCredentialIdentity>(AuthenticationIdentityTypes.ClientCredential);
 
             modelBuilder.Entity<PasswordIdentity>()
                 .Ignore(p => p.Password)
@@ -87,6 +88,11 @@ namespace ApplicationManager.Persistence
             modelBuilder.Entity<RefreshTokenIdentity>()
                 .Property(t => t.TokenExpiry)
                 .HasConversion(InstantConverter.Create());
+
+//            modelBuilder.Entity<ClientCredentialIdentity>()
+//                .Ignore(i => i.Identifier)
+//                .ProtectSensitiveInformation()
+//                .HasBaseType<AuthenticationIdentity>();
 
             modelBuilder.Entity<Identity>()
                 .HasOne(i => i.Session)

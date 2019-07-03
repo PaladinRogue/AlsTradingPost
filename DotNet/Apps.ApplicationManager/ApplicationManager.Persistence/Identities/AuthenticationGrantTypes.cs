@@ -7,5 +7,7 @@
         public const string TwoFactor = "TWO_FACTOR";
 
         public const string RefreshToken = "REFRESH_TOKEN";
+
+        public const string ClientCredential = "CLIENT_CREDENTIAL";
     }
 }

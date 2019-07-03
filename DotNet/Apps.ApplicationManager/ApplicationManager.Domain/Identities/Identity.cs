@@ -4,9 +4,11 @@ using System.Linq;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities.ChangePassword;
 using ApplicationManager.Domain.Identities.Create;
+using ApplicationManager.Domain.Identities.CreateClientCredential;
 using ApplicationManager.Domain.Identities.CreatePassword;
 using ApplicationManager.Domain.Identities.CreateTwoFactor;
 using ApplicationManager.Domain.Identities.ForgotPassword;
+using ApplicationManager.Domain.Identities.RegisterClientCredential;
 using ApplicationManager.Domain.Identities.RegisterPassword;
 using ApplicationManager.Domain.Identities.ResendConfirmIdentity;
 using ApplicationManager.Domain.Identities.ResetPassword;
@@ -42,6 +44,7 @@ namespace ApplicationManager.Domain.Identities
 
         public virtual Session Session { get; protected set; }
 
+        // TODO only need an email address for Password identity
         public string EmailAddress
         {
             get => _emailMask;
@@ -56,18 +59,14 @@ namespace ApplicationManager.Domain.Identities
 
         internal void ResetPassword(ResetPasswordDdto resetPasswordDdto)
         {
-            PasswordIdentity passwordIdentity = AuthenticationIdentities.OfType<PasswordIdentity>().SingleOrDefault();
-
-            if (passwordIdentity == null)
+            if (!(AuthenticationIdentities.SingleOrDefault(a => a is PasswordIdentity) is PasswordIdentity passwordIdentity))
             {
                 throw new PasswordNotSetDomainException();
             }
 
-            TwoFactorAuthenticationIdentity twoFactorAuthenticationIdentity =
-                AuthenticationIdentities.OfType<TwoFactorAuthenticationIdentity>().SingleOrDefault(t =>
-                    t.TwoFactorAuthenticationType == TwoFactorAuthenticationType.ForgotPassword);
-
-            if (twoFactorAuthenticationIdentity == null)
+            if (!(AuthenticationIdentities.SingleOrDefault(t => t is TwoFactorAuthenticationIdentity
+                && (t as TwoFactorAuthenticationIdentity).TwoFactorAuthenticationType == TwoFactorAuthenticationType.ForgotPassword)
+                is TwoFactorAuthenticationIdentity twoFactorAuthenticationIdentity))
             {
                 throw new InvalidTwoFactorTokenDomainException();
             }
@@ -103,11 +102,9 @@ namespace ApplicationManager.Domain.Identities
 
         internal TwoFactorAuthenticationIdentity ValidateToken(ValidateTokenDdto validateTokenDdto)
         {
-            TwoFactorAuthenticationIdentity twoFactorAuthenticationIdentity =
-                AuthenticationIdentities.OfType<TwoFactorAuthenticationIdentity>().SingleOrDefault(t =>
-                    t.TwoFactorAuthenticationType == validateTokenDdto.TwoFactorAuthenticationType);
-
-            if (twoFactorAuthenticationIdentity == null)
+            if (!(AuthenticationIdentities.SingleOrDefault(t => t is TwoFactorAuthenticationIdentity
+                && (t as TwoFactorAuthenticationIdentity).TwoFactorAuthenticationType == validateTokenDdto.TwoFactorAuthenticationType)
+                is TwoFactorAuthenticationIdentity twoFactorAuthenticationIdentity))
             {
                 throw new InvalidTwoFactorTokenDomainException();
             }
@@ -127,6 +124,13 @@ namespace ApplicationManager.Domain.Identities
             if (!(AuthenticationIdentities.SingleOrDefault(a => a is PasswordIdentity) is PasswordIdentity))
             {
                 throw new PasswordNotSetDomainException();
+            }
+
+            if (AuthenticationIdentities.SingleOrDefault(t => t is TwoFactorAuthenticationIdentity
+                && (t as TwoFactorAuthenticationIdentity).TwoFactorAuthenticationType == TwoFactorAuthenticationType.ForgotPassword)
+                is TwoFactorAuthenticationIdentity twoFactorAuthenticationIdentity)
+            {
+                _authenticationIdentities.Remove(twoFactorAuthenticationIdentity);
             }
 
             _authenticationIdentities.Add(TwoFactorAuthenticationIdentity.Create(this, new CreateTwoFactorAuthenticationIdentityDdto
@@ -157,7 +161,7 @@ namespace ApplicationManager.Domain.Identities
             AuthenticationGrantTypePassword authenticationGrantTypePassword,
             RegisterPasswordDdto registerPasswordDdto)
         {
-            if (AuthenticationIdentities.Any(i => i is PasswordIdentity))
+            if (_authenticationIdentities.Any(i => i is PasswordIdentity))
             {
                 throw new PasswordIdentityExistsDomainException();
             }
@@ -179,11 +183,30 @@ namespace ApplicationManager.Domain.Identities
             return passwordIdentity;
         }
 
+        internal ClientCredentialIdentity RegisterClientCredential(
+            AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential,
+            RegisterClientCredentialDdto registerClientCredentialDdto)
+        {
+            if (_authenticationIdentities.Any(i => i is ClientCredentialIdentity &&
+                                                  (i as ClientCredentialIdentity).AuthenticationGrantTypeClientCredential == authenticationGrantTypeClientCredential))
+            {
+                throw new ClientCredentialIdentityExistsDomainException();
+            }
+
+            ClientCredentialIdentity clientCredentialIdentity = ClientCredentialIdentity.Create(this, authenticationGrantTypeClientCredential, new CreateClientCredentialIdentityDdto
+            {
+                Identifier = registerClientCredentialDdto.Identifier
+            });
+
+            _authenticationIdentities.Add(clientCredentialIdentity);
+
+            return clientCredentialIdentity;
+        }
+
         internal RefreshTokenIdentity CreateRefreshToken(AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken,
             out string token)
         {
-            RefreshTokenIdentity refreshTokenIdentity = (RefreshTokenIdentity) AuthenticationIdentities.SingleOrDefault(a => a is RefreshTokenIdentity);
-            if (refreshTokenIdentity != null)
+            if (AuthenticationIdentities.SingleOrDefault(a => a is RefreshTokenIdentity) is RefreshTokenIdentity refreshTokenIdentity)
             {
                 _authenticationIdentities.Remove(refreshTokenIdentity);
             }
@@ -197,11 +220,10 @@ namespace ApplicationManager.Domain.Identities
 
         internal void ResendConfirmIdentity()
         {
-            TwoFactorAuthenticationIdentity twoFactorAuthenticationIdentity = AuthenticationIdentities.SingleOrDefault(a =>
-                    a is TwoFactorAuthenticationIdentity && (a as TwoFactorAuthenticationIdentity).TwoFactorAuthenticationType == TwoFactorAuthenticationType.ConfirmIdentity) as
-                TwoFactorAuthenticationIdentity;
-
-            if (twoFactorAuthenticationIdentity == null)
+            if (!(AuthenticationIdentities.SingleOrDefault(a =>
+                a is TwoFactorAuthenticationIdentity
+                && (a as TwoFactorAuthenticationIdentity).TwoFactorAuthenticationType == TwoFactorAuthenticationType.ConfirmIdentity)
+                is TwoFactorAuthenticationIdentity twoFactorAuthenticationIdentity))
             {
                 throw new IdentityAlreadyConfirmedDomainException();
             }

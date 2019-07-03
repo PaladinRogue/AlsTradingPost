@@ -7,7 +7,7 @@ using Common.Setup.Infrastructure.Constants;
 
 namespace ApplicationManager.Api.Identities
 {
-    [ResourceType(ResourceTypes.Password)]
+    [ResourceType(ResourceTypes.ForgotPassword)]
     [SelfLink(RouteDictionary.ForgotPasswordResourceTemplate, HttpVerb.Get)]
     [CreateLink(RouteDictionary.ForgotPassword)]
     public class ForgotPasswordTemplate : ITemplate

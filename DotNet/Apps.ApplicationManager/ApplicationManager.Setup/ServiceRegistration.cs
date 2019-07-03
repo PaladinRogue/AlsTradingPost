@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using ApplicationManager.ApplicationServices.Applications.Register;
 using ApplicationManager.ApplicationServices.Authentication;
+using ApplicationManager.ApplicationServices.Authentication.ClientCredential;
 using ApplicationManager.ApplicationServices.AuthenticationServices;
 using ApplicationManager.ApplicationServices.Identities;
 using ApplicationManager.ApplicationServices.Identities.CreateAdmin;
@@ -19,6 +20,7 @@ using ApplicationManager.Domain.Identities.ConfirmIdentity;
 using ApplicationManager.Domain.Identities.Create;
 using ApplicationManager.Domain.Identities.CreateRefreshToken;
 using ApplicationManager.Domain.Identities.ForgotPassword;
+using ApplicationManager.Domain.Identities.Login.ClientCredential;
 using ApplicationManager.Domain.Identities.Login.Password;
 using ApplicationManager.Domain.Identities.Login.RefreshToken;
 using ApplicationManager.Domain.Identities.Logout;
@@ -29,6 +31,7 @@ using ApplicationManager.Domain.Identities.ResetPassword;
 using ApplicationManager.Domain.Users.Create;
 using ApplicationManager.Persistence;
 using ApplicationManager.Persistence.Identities;
+using ApplicationManager.Setup.Infrastructure.Authentication.ClientCredential;
 using ApplicationManager.Setup.Infrastructure.Authorisation;
 using Common.Api.HttpClient;
 using Common.Api.HttpClient.Interfaces;
@@ -76,6 +79,8 @@ namespace ApplicationManager.Setup
             services.RegisterApplicationService<IAuthenticationApplicationService, AuthenticationApplicationService, AuthenticationApplicationServiceSecurityDecorator>();
 
             services.RegisterApplicationService<IAuthenticationServiceApplicationService, AuthenticationServiceApplicationService, AuthenticationServiceApplicationServiceSecurityDecorator>();
+
+            services.AddScoped<IClientCredentialAuthenticationValidator, ClientCredentialAuthenticationValidator>();
         }
 
 	    public static void RegisterValidators(IServiceCollection services)
@@ -94,6 +99,7 @@ namespace ApplicationManager.Setup
 	        services.AddScoped<IValidator<ForgotPasswordCommandDdto>, ForgotPasswordCommandValidator>();
 	        services.AddScoped<IValidator<CreateIdentityCommandDdto>, CreateIdentityValidator>();
 	        services.AddScoped<IValidator<RefreshTokenLoginCommandDdto>, RefreshTokenLoginCommandValidator>();
+	        services.AddScoped<IValidator<ClientCredentialLoginCommandDdto>, ClientCredentialLoginCommandValidator>();
 	        services.AddScoped<IValidator<CreateAuthenticationGrantTypeClientCredentialDdto>, CreateAuthenticationGrantTypeClientCredentialValidator>();
 	        services.AddScoped<IValidator<ChangeAuthenticationGrantTypeClientCredentialDdto>, ChangeAuthenticationGrantTypeClientCredentialValidator>();
 	    }
@@ -116,6 +122,7 @@ namespace ApplicationManager.Setup
             services.AddScoped<ILogoutCommand, LogoutCommand>();
             services.AddScoped<IResendConfirmIdentityCommand, ResendConfirmIdentityCommand>();
             services.AddScoped<IRefreshTokenLoginCommand, RefreshTokenLoginCommand>();
+            services.AddScoped<IClientCredentialLoginCommand, ClientCredentialLoginCommand>();
             services.AddScoped<ICreateAuthenticationGrantTypeClientCredentialCommand, CreateAuthenticationGrantTypeClientCredentialCommand>();
             services.AddScoped<IChangeAuthenticationGrantTypeClientCredentialCommand, ChangeAuthenticationGrantTypeClientCredentialCommand>();
         }
@@ -128,6 +135,7 @@ namespace ApplicationManager.Setup
 	        services.AddScoped<IGetIdentityByEmailAddressQuery, GetIdentityByEmailAddressQuery>();
 	        services.AddScoped<IGetIdentityByForgotPasswordTokenQuery, GetIdentityByForgotPasswordTokenQuery>();
 	        services.AddScoped<IGetIdentityBySessionQuery, GetIdentityBySessionQuery>();
+	        services.AddScoped<IGetIdentityByClientCredentialIdentifierQuery, GetIdentityByClientCredentialIdentifierQuery>();
 
 	        services.AddScoped(typeof(ICommandRepository<>), typeof(Repository<>));
 	        services.AddScoped(typeof(IQueryRepository<>), typeof(Repository<>));

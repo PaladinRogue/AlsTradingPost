@@ -23,6 +23,7 @@
         public const string AuthenticatePassword = "AuthenticatePassword";
         public const string AuthenticateRefreshTokenResourceTemplate = "AuthenticateRefreshTokenResourceTemplate";
         public const string AuthenticateRefreshToken = "AuthenticateRefreshToken";
+        public const string AuthenticateClientCredentialResourceTemplate = "AuthenticateClientCredentialResourceTemplate";
         public const string AuthenticateClientCredential = "AuthenticateClientCredential";
 
         public const string GetAuthenticationServices = "GetAuthenticationServices";

@@ -6,7 +6,6 @@ using Common.Api.Builders.Resource;
 using Common.Api.Routing;
 using Common.Setup.Infrastructure.Authorisation;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApplicationManager.Api.Identities

@@ -1,4 +1,3 @@
-using Common.Api.Concurrency;
 using Common.Api.Links;
 using Common.Api.PropertyTypes;
 using Common.Api.Resources;
@@ -11,7 +10,7 @@ namespace ApplicationManager.Api.AuthenticationService
     [ResourceType(ResourceTypes.AuthenticationService)]
     [SelfLink(RouteDictionary.AuthenticationServiceResourceTemplate, HttpVerb.Get)]
     [CreateLink(RouteDictionary.CreateAuthenticationService)]
-    public class AuthenticationServiceTemplate : VersionedTemplate
+    public class AuthenticationServiceTemplate : ITemplate
     {
         [Required]
         [MaxLength(FieldSizes.Default)]

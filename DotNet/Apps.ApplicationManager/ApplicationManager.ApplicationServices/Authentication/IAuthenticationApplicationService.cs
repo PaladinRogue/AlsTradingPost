@@ -9,5 +9,7 @@ namespace ApplicationManager.ApplicationServices.Authentication
         Task<JwtAdto> Password(PasswordAdto passwordAdto);
 
         Task<JwtAdto> RefreshToken(RefreshTokenAdto refreshTokenAdto);
+
+        Task<JwtAdto> ClientCredential(ClientCredentialAdto clientCredentialAdto);
     }
 }

@@ -77,18 +77,18 @@ namespace ApplicationManager.Api.AuthenticationService
         }
 
         [HttpPut("{id}", Name = RouteDictionary.ChangeAuthenticationService)]
-        public IActionResult Put(Guid id, AuthenticationServiceTemplate template)
+        public IActionResult Put(Guid id, AuthenticationServiceResource resource)
         {
             ChangeClientCredentialAdto changeClientCredentialAdto = new ChangeClientCredentialAdto
             {
                 Id = id,
-                Name = template.Name,
-                ClientId = template.ClientId,
-                ClientSecret = template.ClientSecret,
-                GrantAccessTokenUrl = template.GrantAccessTokenUrl,
-                ValidateAccessTokenUrl = template.ValidateAccessTokenUrl,
-                ClientGrantAccessTokenUrl = template.ClientGrantAccessTokenUrl,
-                Version = template.Version
+                Name = resource.Name,
+                ClientId = resource.ClientId,
+                ClientSecret = resource.ClientSecret,
+                GrantAccessTokenUrl = resource.GrantAccessTokenUrl,
+                ValidateAccessTokenUrl = resource.ValidateAccessTokenUrl,
+                ClientGrantAccessTokenUrl = resource.ClientGrantAccessTokenUrl,
+                Version = resource.Version
             };
 
             ClientCredentialAdto clientCredentialAdto =
