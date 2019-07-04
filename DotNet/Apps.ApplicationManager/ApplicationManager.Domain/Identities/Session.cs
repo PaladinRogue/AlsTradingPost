@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ApplicationManager.Domain.AuthenticationServices;
 using Common.Domain.Aggregates;
 using Common.Domain.Entities;
 using Common.Domain.Models;
@@ -24,10 +25,19 @@ namespace ApplicationManager.Domain.Identities
 
         public bool IsRevoked { get; protected set; }
 
+        public virtual RefreshToken RefreshToken { get; protected set; }
+
         [Required]
         public virtual Identity Identity { get; protected set; }
 
         public IAggregateRoot AggregateRoot => Identity;
+
+        internal RefreshToken CreateRefreshToken(AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken, out string token)
+        {
+            RefreshToken = RefreshToken.Create(this, authenticationGrantTypeRefreshToken, out token);
+
+            return RefreshToken;
+        }
 
         internal void Reinstate()
         {
@@ -36,6 +46,7 @@ namespace ApplicationManager.Domain.Identities
 
         internal void Revoke()
         {
+            RefreshToken = null;
             IsRevoked = true;
         }
     }

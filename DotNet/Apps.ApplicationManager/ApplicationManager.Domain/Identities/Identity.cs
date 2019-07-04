@@ -177,19 +177,10 @@ namespace ApplicationManager.Domain.Identities
             return clientCredentialIdentity;
         }
 
-        internal RefreshTokenIdentity CreateRefreshToken(AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken,
+        internal RefreshToken CreateRefreshToken(AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken,
             out string token)
         {
-            if (AuthenticationIdentities.OfType<RefreshTokenIdentity>().SingleOrDefault() is RefreshTokenIdentity refreshTokenIdentity)
-            {
-                _authenticationIdentities.Remove(refreshTokenIdentity);
-            }
-
-            refreshTokenIdentity = RefreshTokenIdentity.Create(this, authenticationGrantTypeRefreshToken, out token);
-
-            _authenticationIdentities.Add(refreshTokenIdentity);
-
-            return refreshTokenIdentity;
+            return Session.CreateRefreshToken(authenticationGrantTypeRefreshToken, out token);
         }
 
         internal void ResendConfirmIdentity()

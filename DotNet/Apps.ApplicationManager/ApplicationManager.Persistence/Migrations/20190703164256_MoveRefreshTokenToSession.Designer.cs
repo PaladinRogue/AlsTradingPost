@@ -4,14 +4,16 @@ using ApplicationManager.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ApplicationManager.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationManagerDbContext))]
-    partial class ApplicationManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190703164256_MoveRefreshTokenToSession")]
+    partial class MoveRefreshTokenToSession
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,6 +88,27 @@ namespace ApplicationManager.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Identities");
+                });
+
+            modelBuilder.Entity("ApplicationManager.Domain.Identities.RefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid?>("AuthenticationGrantTypeRefreshTokenId");
+
+                    b.Property<Guid>("SessionId");
+
+                    b.Property<DateTime>("TokenExpiry");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthenticationGrantTypeRefreshTokenId");
+
+                    b.HasIndex("SessionId")
+                        .IsUnique();
+
+                    b.ToTable("RefreshTokens");
                 });
 
             modelBuilder.Entity("ApplicationManager.Domain.Identities.Session", b =>
@@ -276,58 +299,46 @@ namespace ApplicationManager.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("ApplicationManager.Domain.Identities.RefreshToken", b =>
+                {
+                    b.HasOne("ApplicationManager.Domain.AuthenticationServices.AuthenticationGrantTypeRefreshToken", "AuthenticationGrantTypeRefreshToken")
+                        .WithMany()
+                        .HasForeignKey("AuthenticationGrantTypeRefreshTokenId");
+
+                    b.HasOne("ApplicationManager.Domain.Identities.Session", "Session")
+                        .WithOne("RefreshToken")
+                        .HasForeignKey("ApplicationManager.Domain.Identities.RefreshToken", "SessionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.OwnsOne("Common.Domain.DataProtection.HashSet", "TokenHash", b1 =>
+                        {
+                            b1.Property<Guid>("RefreshTokenId");
+
+                            b1.Property<string>("Hash")
+                                .IsRequired()
+                                .HasMaxLength(1024);
+
+                            b1.Property<string>("Salt")
+                                .IsRequired()
+                                .HasMaxLength(255);
+
+                            b1.HasKey("RefreshTokenId");
+
+                            b1.ToTable("RefreshTokens","apps");
+
+                            b1.HasOne("ApplicationManager.Domain.Identities.RefreshToken")
+                                .WithOne("TokenHash")
+                                .HasForeignKey("Common.Domain.DataProtection.HashSet", "RefreshTokenId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
+                });
+
             modelBuilder.Entity("ApplicationManager.Domain.Identities.Session", b =>
                 {
                     b.HasOne("ApplicationManager.Domain.Identities.Identity", "Identity")
                         .WithOne("Session")
                         .HasForeignKey("ApplicationManager.Domain.Identities.Session", "IdentityId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.OwnsOne("ApplicationManager.Domain.Identities.RefreshToken", "RefreshToken", b1 =>
-                        {
-                            b1.Property<Guid>("SessionId");
-
-                            b1.Property<Guid?>("AuthenticationGrantTypeRefreshTokenId");
-
-                            b1.Property<DateTime>("TokenExpiry");
-
-                            b1.HasKey("SessionId");
-
-                            b1.HasIndex("AuthenticationGrantTypeRefreshTokenId");
-
-                            b1.ToTable("RefreshTokens","apps");
-
-                            b1.HasOne("ApplicationManager.Domain.AuthenticationServices.AuthenticationGrantTypeRefreshToken", "AuthenticationGrantTypeRefreshToken")
-                                .WithMany()
-                                .HasForeignKey("AuthenticationGrantTypeRefreshTokenId");
-
-                            b1.HasOne("ApplicationManager.Domain.Identities.Session", "Session")
-                                .WithOne("RefreshToken")
-                                .HasForeignKey("ApplicationManager.Domain.Identities.RefreshToken", "SessionId")
-                                .OnDelete(DeleteBehavior.Cascade);
-
-                            b1.OwnsOne("Common.Domain.DataProtection.HashSet", "TokenHash", b2 =>
-                                {
-                                    b2.Property<Guid>("RefreshTokenSessionId");
-
-                                    b2.Property<string>("Hash")
-                                        .IsRequired()
-                                        .HasMaxLength(1024);
-
-                                    b2.Property<string>("Salt")
-                                        .IsRequired()
-                                        .HasMaxLength(255);
-
-                                    b2.HasKey("RefreshTokenSessionId");
-
-                                    b2.ToTable("RefreshTokens","apps");
-
-                                    b2.HasOne("ApplicationManager.Domain.Identities.RefreshToken")
-                                        .WithOne("TokenHash")
-                                        .HasForeignKey("Common.Domain.DataProtection.HashSet", "RefreshTokenSessionId")
-                                        .OnDelete(DeleteBehavior.Cascade);
-                                });
-                        });
                 });
 
             modelBuilder.Entity("ApplicationManager.Domain.NotificationTypes.NotificationChannelTemplate", b =>

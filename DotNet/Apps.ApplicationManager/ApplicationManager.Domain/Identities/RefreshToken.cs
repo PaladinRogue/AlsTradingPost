@@ -1,59 +1,66 @@
 using System.ComponentModel.DataAnnotations;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities.ValidateToken;
+using Common.Domain.Aggregates;
 using Common.Domain.Clocks;
 using Common.Domain.DataProtection;
+using Common.Domain.Entities;
 using Common.Resources.Extensions;
 using NodaTime;
 
 namespace ApplicationManager.Domain.Identities
 {
-    public class RefreshTokenIdentity : AuthenticationIdentity
+    public class RefreshToken : IAggregateMember
     {
         private const byte MaskLength = 20;
-        private readonly string _refreshTokenMask = new string('*', MaskLength);
+        private readonly string _tokenMask = new string('*', MaskLength);
 
-        protected RefreshTokenIdentity()
+        protected RefreshToken()
         {
         }
 
-        private RefreshTokenIdentity(
-            Identity identity,
+        private RefreshToken(
+            Session session,
             AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken,
             out string token)
         {
             token = String.Random(100);
-            Identity = identity;
+            Session = session;
             AuthenticationGrantTypeRefreshToken = authenticationGrantTypeRefreshToken;
-            RefreshToken = token;
+            Token = token;
             TokenExpiry = Instant.Add(Clock.Now(),Duration.FromDays(2));
         }
 
-        internal static RefreshTokenIdentity Create(
-            Identity identity,
+        internal static RefreshToken Create(
+            Session session,
             AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken,
             out string token)
         {
-            return new RefreshTokenIdentity(identity, authenticationGrantTypeRefreshToken, out token);
+            return new RefreshToken(session, authenticationGrantTypeRefreshToken, out token);
         }
 
-        public string RefreshToken
+        public string Token
         {
-            get => _refreshTokenMask;
-            protected set => RefreshTokenHash = DataProtection.Hash(value);
+            get => _tokenMask;
+            protected set => TokenHash = DataProtection.Hash(value);
         }
 
         [Required]
-        protected virtual HashSet RefreshTokenHash { get; set; }
+        protected virtual HashSet TokenHash { get; set; }
 
         [Required]
         public Instant TokenExpiry { get; protected set; }
+
+        [Required]
+        public virtual Session Session { get; protected set; }
+
+        public IAggregateRoot AggregateRoot => Session.Identity;
 
         public virtual AuthenticationGrantTypeRefreshToken AuthenticationGrantTypeRefreshToken { get; protected set; }
 
         internal bool ValidateToken(ValidateRefreshTokenDdto validateRefreshTokenDdto)
         {
-            return RefreshTokenHash == DataProtection.Hash(validateRefreshTokenDdto.Token, RefreshTokenHash.Salt) && TokenExpiry >= Clock.Now();
+            return TokenHash == DataProtection.Hash(validateRefreshTokenDdto.Token, TokenHash.Salt) && TokenExpiry >= Clock.Now();
         }
     }
 }

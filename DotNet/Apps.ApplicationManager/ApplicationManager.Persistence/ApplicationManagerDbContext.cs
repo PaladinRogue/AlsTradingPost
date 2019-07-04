@@ -40,7 +40,18 @@ namespace ApplicationManager.Persistence
                 .ToTable("AuthenticationIdentities");
 
             modelBuilder.Entity<Session>()
-                .ToTable("Sessions");
+                .ToTable("Sessions")
+                .OwnsOne(i => i.RefreshToken);
+
+            modelBuilder.Entity<RefreshToken>()
+                .ToTable("RefreshTokens")
+                .Ignore(p => p.Token)
+                .ProtectSensitiveInformation()
+                .OwnsOne(typeof(HashSet), "TokenHash");
+
+            modelBuilder.Entity<RefreshToken>()
+                .Property(t => t.TokenExpiry)
+                .HasConversion(InstantConverter.Create());
 
             modelBuilder.Entity<AuthenticationService>()
                 .HasDiscriminator<string>("Type")
@@ -63,8 +74,7 @@ namespace ApplicationManager.Persistence
             modelBuilder.Entity<AuthenticationIdentity>()
                 .HasDiscriminator<string>("Type")
                 .HasValue<PasswordIdentity>(AuthenticationIdentityTypes.Password)
-                .HasValue<TwoFactorAuthenticationIdentity>(AuthenticationIdentityTypes.TwoFactor)
-                .HasValue<RefreshTokenIdentity>(AuthenticationIdentityTypes.RefreshToken);
+                .HasValue<TwoFactorAuthenticationIdentity>(AuthenticationIdentityTypes.TwoFactor);
 //                .HasValue<ClientCredentialIdentity>(AuthenticationIdentityTypes.ClientCredential);
 
             modelBuilder.Entity<PasswordIdentity>()
@@ -77,16 +87,6 @@ namespace ApplicationManager.Persistence
             modelBuilder.Entity<TwoFactorAuthenticationIdentity>()
                 .ProtectSensitiveInformation()
                 .HasBaseType<AuthenticationIdentity>()
-                .Property(t => t.TokenExpiry)
-                .HasConversion(InstantConverter.Create());
-
-            modelBuilder.Entity<RefreshTokenIdentity>()
-                .Ignore(p => p.RefreshToken)
-                .ProtectSensitiveInformation()
-                .HasBaseType<AuthenticationIdentity>()
-                .OwnsOne(typeof(HashSet), "RefreshTokenHash");
-
-            modelBuilder.Entity<RefreshTokenIdentity>()
                 .Property(t => t.TokenExpiry)
                 .HasConversion(InstantConverter.Create());
 

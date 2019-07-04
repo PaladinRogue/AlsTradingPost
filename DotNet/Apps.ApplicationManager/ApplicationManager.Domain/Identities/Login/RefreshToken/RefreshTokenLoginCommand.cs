@@ -1,4 +1,3 @@
-using System.Linq;
 using ApplicationManager.Domain.Identities.Queries;
 using ApplicationManager.Domain.Identities.ValidateToken;
 using Common.Domain.Validation;
@@ -31,14 +30,14 @@ namespace ApplicationManager.Domain.Identities.Login.RefreshToken
                 throw new InvalidLoginDomainException();
             }
 
-            RefreshTokenIdentity refreshTokenIdentity = (RefreshTokenIdentity) identity.AuthenticationIdentities.SingleOrDefault(a => a is RefreshTokenIdentity);
+            Identities.RefreshToken refreshToken = identity.Session.RefreshToken;
 
-            if (refreshTokenIdentity == null)
+            if (refreshToken == null)
             {
                 throw new InvalidLoginDomainException();
             }
 
-            bool validaToken = refreshTokenIdentity.ValidateToken(new ValidateRefreshTokenDdto
+            bool validaToken = refreshToken.ValidateToken(new ValidateRefreshTokenDdto
             {
                 Token = refreshTokenLoginCommandDdto.RefreshToken
             });
