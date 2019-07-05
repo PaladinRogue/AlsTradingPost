@@ -123,7 +123,7 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
             {
                 try
                 {
-                    if (!(_queryRepository.GetWithConcurrencyCheck(changeClientCredentialAdto.Id, changeClientCredentialAdto.Version) is AuthenticationGrantTypeClientCredential
+                    if (!(_commandRepository.GetWithConcurrencyCheck(changeClientCredentialAdto.Id, changeClientCredentialAdto.Version) is AuthenticationGrantTypeClientCredential
                         authenticationGrantTypeClientCredential))
                     {
                         throw new BusinessApplicationException(ExceptionType.NotFound, "Authentication service not found");

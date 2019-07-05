@@ -10,10 +10,13 @@ using ApplicationManager.ApplicationServices.Notifications.Audiences;
 using ApplicationManager.ApplicationServices.Notifications.Emails;
 using ApplicationManager.ApplicationServices.Notifications.Send;
 using ApplicationManager.ApplicationServices.Users.CreateAdmin;
+using ApplicationManager.Domain.Applications;
 using ApplicationManager.Domain.Applications.Change;
 using ApplicationManager.Domain.Applications.Create;
+using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.AuthenticationServices.ChangeClientCredential;
 using ApplicationManager.Domain.AuthenticationServices.CreateClientCredential;
+using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.ChangePassword;
 using ApplicationManager.Domain.Identities.CheckPassword;
 using ApplicationManager.Domain.Identities.ConfirmIdentity;
@@ -28,6 +31,8 @@ using ApplicationManager.Domain.Identities.Queries;
 using ApplicationManager.Domain.Identities.RegisterPassword;
 using ApplicationManager.Domain.Identities.ResendConfirmIdentity;
 using ApplicationManager.Domain.Identities.ResetPassword;
+using ApplicationManager.Domain.NotificationTypes;
+using ApplicationManager.Domain.Users;
 using ApplicationManager.Domain.Users.Create;
 using ApplicationManager.Persistence;
 using ApplicationManager.Persistence.Identities;
@@ -137,8 +142,16 @@ namespace ApplicationManager.Setup
 	        services.AddScoped<IGetIdentityByClientCredentialIdentifierQuery, GetIdentityByClientCredentialIdentifierQuery>();
 	        services.AddScoped<IPasswordIdentityEmailIsUniqueQuery, PasswordIdentityEmailIsUniqueQuery>();
 
-	        services.AddScoped(typeof(ICommandRepository<>), typeof(Repository<>));
-	        services.AddScoped(typeof(IQueryRepository<>), typeof(Repository<>));
+	        services.AddScoped<ICommandRepository<Application>, CommandRepository<Application>>();
+	        services.AddScoped<ICommandRepository<AuthenticationService>, CommandRepository<AuthenticationService>>();
+	        services.AddScoped<ICommandRepository<Identity>, IdentityCommandRepository>();
+	        services.AddScoped<ICommandRepository<User>, CommandRepository<User>>();
+
+	        services.AddScoped<IQueryRepository<Application>, QueryRepository<Application>>();
+	        services.AddScoped<IQueryRepository<AuthenticationService>, QueryRepository<AuthenticationService>>();
+	        services.AddScoped<IQueryRepository<Identity>, QueryRepository<Identity>>();
+	        services.AddScoped<IQueryRepository<NotificationType>, QueryRepository<NotificationType>>();
+	        services.AddScoped<IQueryRepository<User>, QueryRepository<User>>();
 
 	        services.AddEntityFrameworkSqlServer().AddOptions()
 		        .AddDbContext<ApplicationManagerDbContext>(options =>
