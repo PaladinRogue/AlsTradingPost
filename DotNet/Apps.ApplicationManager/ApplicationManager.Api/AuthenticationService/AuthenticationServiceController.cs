@@ -39,7 +39,7 @@ namespace ApplicationManager.Api.AuthenticationService
         {
             IEnumerable<AuthenticationServiceAdto> authenticationServiceAdtos = await _authenticationServiceApplicationService.GetAuthenticationServicesAsync();
 
-            return Ok(_resourceBuilder.Build(new AuthenticationServicesResource
+            return Ok(_resourceBuilder.BuildCollection(new AuthenticationServicesResource
             {
                 Results = authenticationServiceAdtos.Select<AuthenticationServiceAdto, AuthenticationServiceSummaryResource>(a =>
                 {
@@ -61,7 +61,7 @@ namespace ApplicationManager.Api.AuthenticationService
                             throw new ArgumentOutOfRangeException(a.GetType().Name);
                     }
                 }).ToList()
-            }, new AuthenticationServiceSummaryResource()));
+            }));
         }
 
         [HttpGet("resourceTemplate", Name = RouteDictionary.AuthenticationServiceResourceTemplate)]

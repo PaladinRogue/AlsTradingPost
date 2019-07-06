@@ -1,4 +1,3 @@
-using System;
 using Common.Api.Resources;
 
 namespace ApplicationManager.Api.AuthenticationService

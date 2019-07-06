@@ -44,7 +44,7 @@ namespace Common.Api.Routing
                 return null;
             }
 
-            Dictionary<string,string> routeDataDictionary = typeof(TRouteData).GetProperties()
+            Dictionary<string,string> routeDataDictionary = routeData.GetType().GetProperties()
                 .Where(p => p.GetValue(routeData) != null)
                 .ToDictionary(
                     p => p.Name.ToCamelCase(),

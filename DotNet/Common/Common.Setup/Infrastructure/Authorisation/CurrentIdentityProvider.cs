@@ -18,6 +18,8 @@ namespace Common.Setup.Infrastructure.Authorisation
             _jwtIssuerOptions = jwtIssuerOptionsAccessor.Value;
         }
 
+        public bool IsAuthenticated => _httpContextAccessor.IsAuthenticated();
+
         public Guid Id
         {
             get

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ApplicationManager.ApplicationServices.AuthenticationServices.Authorisation;
 using ApplicationManager.ApplicationServices.AuthenticationServices.Models;
 using Common.Authorisation;
 using Common.Authorisation.ApplicationServices;
@@ -42,7 +43,7 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
         public Task<ClientCredentialAdto> ChangeClientCredentialAsync(ChangeClientCredentialAdto changeClientCredentialAdto)
         {
             return _securityApplicationService.SecureAsync(() => _authenticationServiceApplicationService.ChangeClientCredentialAsync(changeClientCredentialAdto),
-                DefaultAuthorisationContext.Create(AuthorisationResource.AuthenticationService, AuthorisationAction.Get));
+                GetAuthenticationServiceAuthorisationContext.Create(changeClientCredentialAdto.Id));
         }
     }
 }

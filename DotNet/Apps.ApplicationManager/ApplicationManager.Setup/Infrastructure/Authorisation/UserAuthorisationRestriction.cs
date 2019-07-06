@@ -26,9 +26,14 @@ namespace ApplicationManager.Setup.Infrastructure.Authorisation
 
         public async Task<IRestrictionResult> CheckRestrictionAsync(IAuthorisationContext authorisationContext)
         {
-            User user = await _userQueryRepository.GetSingleAsync(u => u.Identity.Id == _currentIdentityProvider.Id);
+            if (_currentIdentityProvider.IsAuthenticated)
+            {
+                User user = await _userQueryRepository.GetSingleAsync(u => u.Identity.Id == _currentIdentityProvider.Id);
 
-            return user == null ? RestrictionResult.Fail : RestrictionResult.Succeed;
+                return user == null ? RestrictionResult.Fail : RestrictionResult.Succeed;
+            }
+
+            return RestrictionResult.Fail;
         }
     }
 }

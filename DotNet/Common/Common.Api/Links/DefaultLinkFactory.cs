@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Common.Api.Pagination.Interfaces;
 using Common.Api.Resources;
 using Common.Api.Routing;
 using Common.Api.Sorting;
+using Common.Authorisation.Contexts;
+using Common.Authorisation.Policies;
 using Common.Setup.Infrastructure.Constants;
 
 namespace Common.Api.Links
@@ -11,17 +14,20 @@ namespace Common.Api.Links
     public class DefaultLinkFactory : ILinkFactory
     {
         private readonly IRouteProvider<bool> _routeProvider;
+        private readonly IAuthorisationPolicy _authorisationPolicy;
         private readonly IPagingLinkBuilder _pagingLinkBuilder;
         private readonly ISortingLinkBuilder _sortingLinkBuilder;
 
         public DefaultLinkFactory(
             IRouteProvider<bool> routeProvider,
             IPagingLinkBuilder pagingLinkBuilder,
-            ISortingLinkBuilder sortingLinkBuilder)
+            ISortingLinkBuilder sortingLinkBuilder,
+            IAuthorisationPolicy authorisationPolicy)
         {
             _routeProvider = routeProvider;
             _pagingLinkBuilder = pagingLinkBuilder;
             _sortingLinkBuilder = sortingLinkBuilder;
+            _authorisationPolicy = authorisationPolicy;
         }
 
         public ILink Create<TResource, TTemplate>(
@@ -32,8 +38,35 @@ namespace Common.Api.Links
             TTemplate template,
             string basePath = null)
         {
-            HttpVerb allowVerbs = verbAuthorisationContextTypePairs.Select(a => a.HttpVerb)
+            HttpVerb allowVerbs = verbAuthorisationContextTypePairs
+                .Where(linkAttribute =>
+                {
+                    if (linkAttribute.AuthorisationContextType == null)
+                    {
+                        return true;
+                    }
+
+                    IAuthorisationContext authorisationContext;
+                    if (typeof(IEntityResource).IsAssignableFrom(typeof(TResource)))
+                    {
+                        Guid resourceId = ((IEntityResource) resource).Id;
+                        authorisationContext = (IAuthorisationContext) Activator.CreateInstance(linkAttribute.AuthorisationContextType, resourceId);
+                    }
+                    else if (typeof(IEntityResource).IsAssignableFrom(typeof(TTemplate)))
+                    {
+                        Guid resourceId = ((IEntityResource) template).Id;
+                        authorisationContext = (IAuthorisationContext) Activator.CreateInstance(linkAttribute.AuthorisationContextType, resourceId);
+                    }
+                    else
+                    {
+                        authorisationContext = (IAuthorisationContext) Activator.CreateInstance(linkAttribute.AuthorisationContextType);
+                    }
+
+                    return _authorisationPolicy.HasAccessAsync(authorisationContext).Result;
+                })
+                .Select(a => a.HttpVerb)
                 .Aggregate<HttpVerb, HttpVerb>(0, (current, f) => current | f);
+
             string uri = string.IsNullOrWhiteSpace(routeName) ? string.Empty : _routeProvider.GetRouteTemplate(routeName, true, resource);
 
             switch (resource)

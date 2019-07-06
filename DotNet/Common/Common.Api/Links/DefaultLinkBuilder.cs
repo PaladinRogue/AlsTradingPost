@@ -5,6 +5,7 @@ using System.Reflection;
 using Common.Api.Pagination;
 using Common.Api.Pagination.Interfaces;
 using Common.Api.Resources;
+using Common.Setup.Infrastructure.Constants;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Common.Api.Links
@@ -58,6 +59,7 @@ namespace Common.Api.Links
                         template,
                         basePath);
                 })
+                .Where(link => link.AllowVerbs != HttpVerb.None)
                 .ToList();
 
             ILink selfLink = links.FirstOrDefault(l => l.Name == LinkType.Self);
