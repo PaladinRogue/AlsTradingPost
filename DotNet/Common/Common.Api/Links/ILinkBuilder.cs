@@ -6,6 +6,6 @@ namespace Common.Api.Links
     {
         Links BuildLinks<TResource>(TResource resource) where TResource : IResource;
 
-        Links BuildLinks<TResource, TTemplate>(TResource resource, TTemplate template) where TResource : IResource where TTemplate : ITemplate;
+        Links BuildLinks<TResource, TTemplate>(TResource resource, TTemplate template) where TResource : IResource where TTemplate : IResource;
     }
 }

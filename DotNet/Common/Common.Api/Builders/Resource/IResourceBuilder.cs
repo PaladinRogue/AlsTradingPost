@@ -7,7 +7,7 @@ namespace Common.Api.Builders.Resource
     {
         BuiltResource Build<TResource>(TResource resource) where TResource: IResource;
 
-        BuiltCollectionResource Build<T>(ICollectionResource<T> collectionResource, ITemplate template) where T : IResource;
+        BuiltCollectionResource Build<T>(ICollectionResource<T> collectionResource, IResource resource) where T : IResource;
 
         BuiltCollectionResource Build<T>(IPagedCollectionResource<T> collectionResource, IPaginationTemplate paginationTemplate) where T : IResource;
     }

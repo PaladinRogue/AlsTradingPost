@@ -30,7 +30,7 @@ namespace Common.Api.Links
             return BuildLinks<TResource, ITemplate>(resource, null);
         }
 
-        public Links BuildLinks<TResource, TTemplate>(TResource resource, TTemplate template) where TResource : IResource where TTemplate : ITemplate
+        public Links BuildLinks<TResource, TTemplate>(TResource resource, TTemplate template) where TResource : IResource where TTemplate : IResource
         {
             IList<ILink> links = resource.GetType().GetCustomAttributes<LinkAttribute>()
                 .GroupBy(linkAttribute => new

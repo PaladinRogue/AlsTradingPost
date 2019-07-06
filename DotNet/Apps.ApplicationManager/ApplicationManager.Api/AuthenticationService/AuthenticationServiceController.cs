@@ -41,10 +41,25 @@ namespace ApplicationManager.Api.AuthenticationService
 
             return Ok(_resourceBuilder.Build(new AuthenticationServicesResource
             {
-                Results = authenticationServiceAdtos.Select(a => new AuthenticationServiceSummaryResource
+                Results = authenticationServiceAdtos.Select<AuthenticationServiceAdto, AuthenticationServiceSummaryResource>(a =>
                 {
-                    Type = a.Type,
-                    AccessUrl = a.AccessUrl
+                    switch (a)
+                    {
+                        case PasswordAuthenticationServiceAdto passwordAuthenticationServiceAdto:
+                            return new PasswordAuthenticationServiceSummaryResource
+                            {
+                                Type = passwordAuthenticationServiceAdto.Type
+                            };
+                        case ClientCredentialAuthenticationServiceAdto clientCredentialAuthenticationServiceAdto:
+                            return new ClientCredentialAuthenticationServiceSummaryResource
+                            {
+                                Id = clientCredentialAuthenticationServiceAdto.Id,
+                                Type = clientCredentialAuthenticationServiceAdto.Type,
+                                AccessUrl = clientCredentialAuthenticationServiceAdto.AccessUrl
+                            };
+                        default:
+                            throw new ArgumentOutOfRangeException(a.GetType().Name);
+                    }
                 }).ToList()
             }, new AuthenticationServiceSummaryResource()));
         }
@@ -78,7 +93,8 @@ namespace ApplicationManager.Api.AuthenticationService
         }
 
         [HttpPut("{id}", Name = RouteDictionary.ChangeAuthenticationService)]
-        public async Task<IActionResult> Put(Guid id, AuthenticationServiceResource resource)
+        public async Task<IActionResult> Put(Guid id,
+            AuthenticationServiceResource resource)
         {
             ChangeClientCredentialAdto changeClientCredentialAdto = new ChangeClientCredentialAdto
             {

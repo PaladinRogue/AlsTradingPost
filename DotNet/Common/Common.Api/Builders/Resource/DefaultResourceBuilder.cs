@@ -56,7 +56,7 @@ namespace Common.Api.Builders.Resource
             };
         }
 
-        private static string GetFieldType(MemberInfo propertyInfo)
+        private static string GetFieldType(PropertyInfo propertyInfo)
         {
             if (propertyInfo.GetCustomAttribute<EmailAddressAttribute>() != null)
             {
@@ -71,13 +71,13 @@ namespace Common.Api.Builders.Resource
             return null;
         }
 
-        public BuiltCollectionResource Build<T>(ICollectionResource<T> collectionResource, ITemplate template) where T: IResource
+        public BuiltCollectionResource Build<T>(ICollectionResource<T> collectionResource, IResource resource) where T: IResource
         {
             BuiltCollectionResource builtCollectionResource = new BuiltCollectionResource
             {
                 TotalResults = collectionResource.Results.Count,
                 BuiltResources = collectionResource.Results.Select(Build),
-                Links = _linkBuilder.BuildLinks(collectionResource, template)
+                Links = _linkBuilder.BuildLinks(collectionResource, resource)
             };
 
             return builtCollectionResource;

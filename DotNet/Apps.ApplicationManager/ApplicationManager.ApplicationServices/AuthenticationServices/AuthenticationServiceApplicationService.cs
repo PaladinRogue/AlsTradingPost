@@ -59,15 +59,16 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
                     switch (authenticationService)
                     {
                         case AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential:
-                            authenticationServiceAdtos.Add(new AuthenticationServiceAdto
+                            authenticationServiceAdtos.Add(new ClientCredentialAuthenticationServiceAdto
                             {
+                                Id = authenticationGrantTypeClientCredential.Id,
                                 Type = authenticationGrantTypeClientCredential.Name,
                                 AccessUrl = BuildClientAccessUrl(authenticationGrantTypeClientCredential)
                             });
                             break;
                         // ReSharper disable once UnusedVariable - Because of switch case parameter is mandatory
                         case AuthenticationGrantTypePassword authenticationGrantTypePassword:
-                            authenticationServiceAdtos.Add(new AuthenticationServiceAdto
+                            authenticationServiceAdtos.Add(new PasswordAuthenticationServiceAdto
                             {
                                 Type = "Password"
                             });
