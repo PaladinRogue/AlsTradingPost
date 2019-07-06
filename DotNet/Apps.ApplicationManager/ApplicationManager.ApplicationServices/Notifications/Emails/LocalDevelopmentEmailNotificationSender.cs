@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
 namespace ApplicationManager.ApplicationServices.Notifications.Emails
@@ -18,7 +19,7 @@ namespace ApplicationManager.ApplicationServices.Notifications.Emails
             Directory.CreateDirectory(_devInboxPath);
         }
 
-        public void Send(SendEmailNotificationAdto sendEmailNotificationAdto)
+        public async Task SendAsync(SendEmailNotificationAdto sendEmailNotificationAdto)
         {
             try
             {
@@ -33,7 +34,7 @@ namespace ApplicationManager.ApplicationServices.Notifications.Emails
                     {
                         smtpClient.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
                         smtpClient.PickupDirectoryLocation = _devInboxPath;
-                        smtpClient.Send(message);
+                        await smtpClient.SendMailAsync(message);
                     }
                 }
             }

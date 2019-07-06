@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Common.Domain.Validation;
 using FluentValidation;
 
@@ -12,7 +13,8 @@ namespace ApplicationManager.Domain.Identities.ChangePassword
             _validator = validator;
         }
 
-        public void Execute(Identity identity, ChangePasswordCommandDdto changePasswordCommandDdto)
+        public Task ExecuteAsync(Identity identity,
+            ChangePasswordCommandDdto changePasswordCommandDdto)
         {
             _validator.ValidateAndThrow(changePasswordCommandDdto);
 
@@ -20,6 +22,8 @@ namespace ApplicationManager.Domain.Identities.ChangePassword
             {
                 Password = changePasswordCommandDdto.Password
             });
+
+            return Task.CompletedTask;
         }
     }
 }

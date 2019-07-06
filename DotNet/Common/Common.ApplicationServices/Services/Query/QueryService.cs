@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Common.Domain.Aggregates;
+using Common.Domain.Models;
 using Common.Domain.Pagination.Interfaces;
 using Common.Domain.Persistence;
 using Common.Domain.Sorting;
@@ -19,8 +21,8 @@ namespace Common.ApplicationServices.Services.Query
             _queryRepository = queryRepository;
         }
 
-        public IEnumerable<T> GetPage(IPaginationDdto paginationDdto,
-            out int totalResults,
+        public Task<IPagedResult<T>> GetPageAsync(
+            IPaginationDdto paginationDdto,
             IList<SortBy> sort,
             Expression<Func<T, bool>> predicate = null)
         {
@@ -36,16 +38,17 @@ namespace Common.ApplicationServices.Services.Query
                 }
             }
 
-            return _queryRepository.GetPage(
+            return _queryRepository.GetPageAsync(
                 paginationDdto.PageSize,
                 paginationDdto.PageOffset,
-                out totalResults,
                 sort,
                 predicate
             );
         }
 
-        public IEnumerable<T> Get(IList<SortBy> sort, Expression<Func<T, bool>> predicate = null)
+        public Task<IQueryable<T>> GetAsync(
+            IList<SortBy> sort,
+            Expression<Func<T, bool>> predicate = null)
         {
             if (sort != null)
             {
@@ -59,7 +62,7 @@ namespace Common.ApplicationServices.Services.Query
                 }
             }
 
-            return _queryRepository.Get(
+            return _queryRepository.GetAsync(
                 sort,
                 predicate
             );

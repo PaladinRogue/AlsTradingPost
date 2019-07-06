@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using ApplicationManager.Domain.Identities.Queries;
 using Common.Domain.Validation;
 using FluentValidation;
@@ -18,11 +19,11 @@ namespace ApplicationManager.Domain.Identities.Login.Password
             _validator = validator;
         }
 
-        public Identity Execute(PasswordLoginCommandDdto passwordLoginCommandDdto)
+        public async Task<Identity> ExecuteAsync(PasswordLoginCommandDdto passwordLoginCommandDdto)
         {
             _validator.ValidateAndThrow(passwordLoginCommandDdto);
 
-            Identity identity = _getIdentityByIdentifierAndPasswordQuery.Run(passwordLoginCommandDdto.Identifier, passwordLoginCommandDdto.Password);
+            Identity identity = await _getIdentityByIdentifierAndPasswordQuery.RunAsync(passwordLoginCommandDdto.Identifier, passwordLoginCommandDdto.Password);
 
             if (identity == null)
             {

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using ApplicationManager.Domain.Identities.Queries;
 using ApplicationManager.Domain.Identities.ValidateToken;
 using Common.Domain.Validation;
@@ -19,11 +20,11 @@ namespace ApplicationManager.Domain.Identities.Login.RefreshToken
             _getIdentityBySessionQuery = getIdentityBySessionQuery;
         }
 
-        public Identity Execute(RefreshTokenLoginCommandDdto refreshTokenLoginCommandDdto)
+        public async Task<Identity> ExecuteAsync(RefreshTokenLoginCommandDdto refreshTokenLoginCommandDdto)
         {
             _validator.ValidateAndThrow(refreshTokenLoginCommandDdto);
 
-            Identity identity = _getIdentityBySessionQuery.Run(refreshTokenLoginCommandDdto.SessionId);
+            Identity identity = await _getIdentityBySessionQuery.RunAsync(refreshTokenLoginCommandDdto.SessionId);
 
             if (identity == null || identity.Session.IsRevoked)
             {

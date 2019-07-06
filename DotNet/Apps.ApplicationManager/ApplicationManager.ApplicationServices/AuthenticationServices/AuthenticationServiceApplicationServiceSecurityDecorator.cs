@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices.AuthenticationServices.Models;
 using Common.Authorisation;
 using Common.Authorisation.ApplicationServices;
@@ -20,27 +21,27 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
             _authenticationServiceApplicationService = authenticationServiceApplicationService;
         }
 
-        public IEnumerable<AuthenticationServiceAdto> GetAuthenticationServices()
+        public Task<IEnumerable<AuthenticationServiceAdto>> GetAuthenticationServicesAsync()
         {
-            return _securityApplicationService.Secure(() => _authenticationServiceApplicationService.GetAuthenticationServices(),
+            return _securityApplicationService.SecureAsync(() => _authenticationServiceApplicationService.GetAuthenticationServicesAsync(),
                 DefaultAuthorisationContext.Create(AuthorisationResource.AuthenticationService, AuthorisationAction.Search));
         }
 
-        public ClientCredentialAdto CreateClientCredential(CreateClientCredentialAdto createClientCredentialAdto)
+        public Task<ClientCredentialAdto> CreateClientCredential(CreateClientCredentialAdto createClientCredentialAdto)
         {
-            return _securityApplicationService.Secure(() => _authenticationServiceApplicationService.CreateClientCredential(createClientCredentialAdto),
+            return _securityApplicationService.SecureAsync(() => _authenticationServiceApplicationService.CreateClientCredential(createClientCredentialAdto),
                 DefaultAuthorisationContext.Create(AuthorisationResource.AuthenticationService, AuthorisationAction.Create));
         }
 
-        public ClientCredentialAdto GetClientCredential(GetClientCredentialAdto getClientCredentialAdto)
+        public Task<ClientCredentialAdto> GetClientCredentialAsync(GetClientCredentialAdto getClientCredentialAdto)
         {
-            return _securityApplicationService.Secure(() => _authenticationServiceApplicationService.GetClientCredential(getClientCredentialAdto),
+            return _securityApplicationService.SecureAsync(() => _authenticationServiceApplicationService.GetClientCredentialAsync(getClientCredentialAdto),
                 DefaultAuthorisationContext.Create(AuthorisationResource.AuthenticationService, AuthorisationAction.Get));
         }
 
-        public ClientCredentialAdto ChangeClientCredential(ChangeClientCredentialAdto changeClientCredentialAdto)
+        public Task<ClientCredentialAdto> ChangeClientCredentialAsync(ChangeClientCredentialAdto changeClientCredentialAdto)
         {
-            return _securityApplicationService.Secure(() => _authenticationServiceApplicationService.ChangeClientCredential(changeClientCredentialAdto),
+            return _securityApplicationService.SecureAsync(() => _authenticationServiceApplicationService.ChangeClientCredentialAsync(changeClientCredentialAdto),
                 DefaultAuthorisationContext.Create(AuthorisationResource.AuthenticationService, AuthorisationAction.Get));
         }
     }

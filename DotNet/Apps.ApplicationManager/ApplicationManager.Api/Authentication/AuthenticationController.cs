@@ -35,7 +35,7 @@ namespace ApplicationManager.Api.Authentication
         [HttpPost("password", Name = RouteDictionary.AuthenticatePassword)]
         public async Task<IActionResult> Password(PasswordTemplate passwordTemplate)
         {
-            JwtAdto jwt = await _authenticationApplicationService.Password(new PasswordAdto
+            JwtAdto jwt = await _authenticationApplicationService.PasswordAsync(new PasswordAdto
             {
                 Identifier = passwordTemplate.Identifier,
                 Password = passwordTemplate.Password
@@ -60,7 +60,7 @@ namespace ApplicationManager.Api.Authentication
         [HttpPost("refreshToken", Name = RouteDictionary.AuthenticateRefreshToken)]
         public async Task<IActionResult> RefreshToken(RefreshTokenTemplate refreshTokenTemplate)
         {
-            JwtAdto jwt = await _authenticationApplicationService.RefreshToken(new RefreshTokenAdto
+            JwtAdto jwt = await _authenticationApplicationService.RefreshTokenAsync(new RefreshTokenAdto
             {
                 SessionId = refreshTokenTemplate.SessionId,
                 Token = refreshTokenTemplate.Token
@@ -85,7 +85,7 @@ namespace ApplicationManager.Api.Authentication
         [HttpPost("clientCredential", Name = RouteDictionary.AuthenticateClientCredential)]
         public async Task<IActionResult> ClientCredential(ClientCredentialTemplate template)
         {
-            JwtAdto jwt = await _authenticationApplicationService.ClientCredential(new ClientCredentialAdto
+            JwtAdto jwt = await _authenticationApplicationService.ClientCredentialAsync(new ClientCredentialAdto
             {
                 Token = template.Token,
                 State = template.State,

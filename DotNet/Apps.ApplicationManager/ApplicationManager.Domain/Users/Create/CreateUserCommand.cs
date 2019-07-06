@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using FluentValidation;
 
 namespace ApplicationManager.Domain.Users.Create
@@ -11,11 +12,11 @@ namespace ApplicationManager.Domain.Users.Create
             _validator = validator;
         }
 
-        public User Execute(CreateUserCommandDdto createUserCommandDdto)
+        public Task<User> ExecuteAsync(CreateUserCommandDdto createUserCommandDdto)
         {
             _validator.ValidateAndThrow(createUserCommandDdto);
 
-            return User.Create(createUserCommandDdto.Identity);
+            return Task.FromResult(User.Create(createUserCommandDdto.Identity));
         }
     }
 }

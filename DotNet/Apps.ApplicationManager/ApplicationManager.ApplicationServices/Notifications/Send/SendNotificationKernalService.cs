@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices.Notifications.Audiences;
 using ApplicationManager.ApplicationServices.Notifications.Emails;
 using ApplicationManager.Domain.NotificationTypes;
@@ -17,13 +18,13 @@ namespace ApplicationManager.ApplicationServices.Notifications.Send
         private readonly IQueryRepository<NotificationType> _queryRepository;
 
         private readonly IChannelAudienceResolverProvider _channelAudienceResolverProvider;
-        
+
         private readonly ITransactionManager _transactionManager;
-        
+
         private readonly IEmailNotificationSender _emailNotificationSender;
-        
+
         private readonly IEmailBuilder _emailBuilder;
-        
+
         public SendNotificationKernalService(
             ILogger<SendNotificationKernalService> logger,
             IQueryRepository<NotificationType> queryRepository,
@@ -40,15 +41,15 @@ namespace ApplicationManager.ApplicationServices.Notifications.Send
             _emailBuilder = emailBuilder;
         }
 
-        public void Send(SendNotificationAdto sendNotificationAdto)
+        public async Task SendAsync(SendNotificationAdto sendNotificationAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
                 try
                 {
-                    NotificationType notificationType =
-                        _queryRepository.GetSingle(n => n.Type == sendNotificationAdto.NotificationType);
-                    
+                    NotificationType notificationType = await
+                        _queryRepository.GetSingleAsync(n => n.Type == sendNotificationAdto.NotificationType);
+
                     if (notificationType != null)
                     {
                         foreach (NotificationTypeChannel notificationTypeChannel in notificationType
@@ -58,8 +59,7 @@ namespace ApplicationManager.ApplicationServices.Notifications.Send
                                 _channelAudienceResolverProvider.GetByType(notificationTypeChannel.ChannelType,
                                     sendNotificationAdto.NotificationType);
 
-                            IEnumerable<string> emailAddresses =
-                                channelAudienceResolver.GetAudience(sendNotificationAdto.IdentityId);
+                            IEnumerable<string> emailAddresses = await channelAudienceResolver.GetAudienceAsync(sendNotificationAdto.IdentityId);
 
                             switch (notificationTypeChannel.ChannelType)
                             {
@@ -80,7 +80,7 @@ namespace ApplicationManager.ApplicationServices.Notifications.Send
 
                                         try
                                         {
-                                            _emailNotificationSender.Send(new SendEmailNotificationAdto
+                                            await _emailNotificationSender.SendAsync(new SendEmailNotificationAdto
                                             {
                                                 From = "noreply@paladin-rogue.com",
                                                 Recipients = new List<string> {emailAddress},
@@ -100,7 +100,7 @@ namespace ApplicationManager.ApplicationServices.Notifications.Send
                             }
                         }
                     }
-                    
+
                     transaction.Commit();
                 }
                 catch (BusinessApplicationException e)

@@ -1,7 +1,9 @@
-﻿namespace ApplicationManager.Domain.Identities.ResetPassword
+﻿using System.Threading.Tasks;
+
+namespace ApplicationManager.Domain.Identities.ResetPassword
 {
     public interface IResetPasswordCommand
     {
-        Identity Execute(ResetPasswordCommandDdto resetPasswordCommandDdto);
+        Task<Identity> ExecuteAsync(ResetPasswordCommandDdto resetPasswordCommandDdto);
     }
 }

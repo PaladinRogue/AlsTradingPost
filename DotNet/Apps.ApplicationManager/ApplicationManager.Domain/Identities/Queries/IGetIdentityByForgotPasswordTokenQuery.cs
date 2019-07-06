@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
+
 namespace ApplicationManager.Domain.Identities.Queries
 {
     public interface IGetIdentityByForgotPasswordTokenQuery
     {
-        Identity Run(string token);
+        Task<Identity> RunAsync(string token);
     }
 }

@@ -6,10 +6,10 @@ namespace ApplicationManager.ApplicationServices.Authentication
 {
     public interface IAuthenticationApplicationService
     {
-        Task<JwtAdto> Password(PasswordAdto passwordAdto);
+        Task<JwtAdto> PasswordAsync(PasswordAdto passwordAdto);
 
-        Task<JwtAdto> RefreshToken(RefreshTokenAdto refreshTokenAdto);
+        Task<JwtAdto> RefreshTokenAsync(RefreshTokenAdto refreshTokenAdto);
 
-        Task<JwtAdto> ClientCredential(ClientCredentialAdto clientCredentialAdto);
+        Task<JwtAdto> ClientCredentialAsync(ClientCredentialAdto clientCredentialAdto);
     }
 }

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices;
 using ApplicationManager.Domain.Users;
 using Common.Authorisation.Contexts;
@@ -23,9 +24,9 @@ namespace ApplicationManager.Setup.Infrastructure.Authorisation
 
         public string Restriction => AuthorisationRestriction.User;
 
-        public IRestrictionResult CheckRestriction(IAuthorisationContext authorisationContext)
+        public async Task<IRestrictionResult> CheckRestrictionAsync(IAuthorisationContext authorisationContext)
         {
-            User user = _userQueryRepository.GetSingle(u => u.Identity.Id == _currentIdentityProvider.Id);
+            User user = await _userQueryRepository.GetSingleAsync(u => u.Identity.Id == _currentIdentityProvider.Id);
 
             return user == null ? RestrictionResult.Fail : RestrictionResult.Succeed;
         }

@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Common.Domain.Aggregates;
 
 namespace Common.Authorisation
 {
     public interface IResourceOwnerProvider
     {
-        IAggregateOwner GetOwner(Type resourceType, Guid resourceId);
+        Type Type { get; }
+
+        Task<IAggregateOwner> GetOwnerAsync(Guid resourceId);
     }
 }

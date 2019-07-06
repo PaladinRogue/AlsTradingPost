@@ -1,7 +1,7 @@
+using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices.Applications.Register;
 using AutoMapper;
 using Common.ApplicationServices.Exceptions;
-using Common.Messaging.Infrastructure.Interfaces;
 using Common.Messaging.Infrastructure.MessageBus;
 using Common.Messaging.Infrastructure.Subscribers;
 using Common.Messaging.Messages;
@@ -28,11 +28,11 @@ namespace ApplicationManager.ApplicationServices.Subscribers
             _mapper = mapper;
         }
 
-        public override void Handle(RegisterApplicationMessage message)
+        public override async Task HandleAsync(RegisterApplicationMessage message)
         {
             try
             {
-                _registerApplicationKernalService.Register(_mapper.Map<RegisterApplicationMessage, RegisterApplicationAdto>(message));
+                await _registerApplicationKernalService.RegisterAsync(_mapper.Map<RegisterApplicationMessage, RegisterApplicationAdto>(message));
             }
             catch (BusinessApplicationException e)
             {

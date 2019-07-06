@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Common.Domain.Validation;
 using FluentValidation;
 
@@ -12,11 +13,12 @@ namespace ApplicationManager.Domain.Identities.CheckPassword
             _validator = validator;
         }
 
-        public bool Execute(PasswordIdentity passwordIdentity, CheckPasswordDdto checkPasswordDdto)
+        public Task<bool> ExecuteAsync(PasswordIdentity passwordIdentity,
+            CheckPasswordDdto checkPasswordDdto)
         {
             _validator.ValidateAndThrow(checkPasswordDdto);
 
-            return passwordIdentity.CheckPassword(checkPasswordDdto);
+            return Task.FromResult(passwordIdentity.CheckPassword(checkPasswordDdto));
         }
     }
 }

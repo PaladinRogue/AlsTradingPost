@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
+
 namespace ApplicationManager.ApplicationServices.Notifications.Emails
 {
     public interface IEmailNotificationSender
     {
-        void Send(SendEmailNotificationAdto sendEmailNotificationAdto);
+        Task SendAsync(SendEmailNotificationAdto sendEmailNotificationAdto);
     }
 }

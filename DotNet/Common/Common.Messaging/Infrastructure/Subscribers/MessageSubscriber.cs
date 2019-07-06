@@ -1,4 +1,4 @@
-﻿using Common.Messaging.Infrastructure.Interfaces;
+﻿using System.Threading.Tasks;
 using Common.Messaging.Infrastructure.MessageBus;
 using Common.Messaging.Infrastructure.Messages;
 
@@ -15,11 +15,11 @@ namespace Common.Messaging.Infrastructure.Subscribers
             _messageBus = messageBus;
         }
 
-        public abstract void Handle(T message);
+        public abstract Task HandleAsync(T message);
 
         public void Subscribe()
         {
-            _messageBus.Subscribe<T, TSubscriber>(Handle);
+            _messageBus.Subscribe<T, TSubscriber>(HandleAsync);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices.Identities;
 using ApplicationManager.ApplicationServices.Identities.Models;
 using Common.Api.Authentication;
@@ -41,9 +42,9 @@ namespace ApplicationManager.Api.Identities
 
         [AllowAnonymous]
         [HttpPost("password/reset", Name = RouteDictionary.ResetPassword)]
-        public IActionResult Post(ResetPasswordTemplate template)
+        public async Task<IActionResult> Post(ResetPasswordTemplate template)
         {
-            _identityApplicationService.ResetPassword(new ResetPasswordAdto
+            await _identityApplicationService.ResetPasswordAsync(new ResetPasswordAdto
             {
                 Password = template.Password,
                 ConfirmPassword = template.ConfirmPassword,
@@ -62,9 +63,9 @@ namespace ApplicationManager.Api.Identities
 
         [AllowAnonymous]
         [HttpPost("password/forgot", Name = RouteDictionary.ForgotPassword)]
-        public IActionResult Post(ForgotPasswordTemplate template)
+        public async Task<IActionResult> Post(ForgotPasswordTemplate template)
         {
-            _identityApplicationService.ForgotPassword(new ForgotPasswordAdto
+            await _identityApplicationService.ForgotPasswordAsync(new ForgotPasswordAdto
             {
                 EmailAddress = template.EmailAddress
             });
@@ -73,9 +74,9 @@ namespace ApplicationManager.Api.Identities
         }
 
         [HttpGet("password", Name = RouteDictionary.GetPasswordIdentity)]
-        public IActionResult GetPasswordIdentity()
+        public async Task<IActionResult> GetPasswordIdentity()
         {
-            PasswordIdentityAdto passwordIdentityAdto = _identityApplicationService.GetPasswordIdentity(new GetPasswordIdentityAdto
+            PasswordIdentityAdto passwordIdentityAdto = await _identityApplicationService.GetPasswordIdentityAsync(new GetPasswordIdentityAdto
             {
                 IdentityId = _currentIdentityProvider.Id
             });
@@ -89,9 +90,9 @@ namespace ApplicationManager.Api.Identities
         }
 
         [HttpGet("password/change/resourceTemplate", Name = RouteDictionary.ChangePasswordResourceTemplate)]
-        public IActionResult ChangePasswordResourceTemplate()
+        public async Task<IActionResult> ChangePasswordResourceTemplate()
         {
-            IdentityAdto identityAdto = _identityApplicationService.Get(new GetIdentityAdto
+            IdentityAdto identityAdto = await _identityApplicationService.GetAsync(new GetIdentityAdto
             {
                 Id = _currentIdentityProvider.Id
             });
@@ -103,11 +104,11 @@ namespace ApplicationManager.Api.Identities
         }
 
         [HttpPost("password/change", Name = RouteDictionary.ChangePassword)]
-        public IActionResult ChangePassword(ChangePasswordIdentityTemplate template)
+        public async Task<IActionResult> ChangePassword(ChangePasswordIdentityTemplate template)
         {
             Guid identityId = _currentIdentityProvider.Id;
 
-            PasswordIdentityAdto passwordIdentityAdto = _identityApplicationService.ChangePassword(new ChangePasswordAdto
+            PasswordIdentityAdto passwordIdentityAdto = await _identityApplicationService.ChangePasswordAsync(new ChangePasswordAdto
             {
                 IdentityId = identityId,
                 Password = template.Password,
@@ -135,9 +136,9 @@ namespace ApplicationManager.Api.Identities
 
         [AllowRestrictedAppAccess]
         [HttpPost("confirm", Name = RouteDictionary.ConfirmIdentity)]
-        public IActionResult ConfirmIdentity(ConfirmIdentityTemplate template)
+        public async Task<IActionResult> ConfirmIdentity(ConfirmIdentityTemplate template)
         {
-            _identityApplicationService.ConfirmIdentity(new ConfirmIdentityAdto
+            await _identityApplicationService.ConfirmIdentityAsync(new ConfirmIdentityAdto
             {
                 IdentityId = _currentIdentityProvider.Id,
                 Token = template.Token
@@ -155,9 +156,9 @@ namespace ApplicationManager.Api.Identities
 
         [AllowAnonymous]
         [HttpPost("password", Name = RouteDictionary.RegisterPassword)]
-        public IActionResult RegisterPassword(RegisterPasswordIdentityTemplate template)
+        public async Task<IActionResult> RegisterPassword(RegisterPasswordIdentityTemplate template)
         {
-            PasswordIdentityAdto passwordIdentityAdto = _identityApplicationService.RegisterPassword(new RegisterPasswordAdto
+            PasswordIdentityAdto passwordIdentityAdto = await _identityApplicationService.RegisterPasswordAsync(new RegisterPasswordAdto
             {
                 Identifier = template.Identifier,
                 Password = template.Password,
@@ -175,9 +176,9 @@ namespace ApplicationManager.Api.Identities
         }
 
         [HttpPost("refreshToken", Name = RouteDictionary.CreateRefreshToken)]
-        public IActionResult CreateRefreshToken()
+        public async Task<IActionResult> CreateRefreshToken()
         {
-            RefreshTokenIdentityAdto refreshTokenIdentityAdto = _identityApplicationService.CreateRefreshToken(new CreateRefreshTokenAdto
+            RefreshTokenIdentityAdto refreshTokenIdentityAdto = await _identityApplicationService.CreateRefreshTokenAsync(new CreateRefreshTokenAdto
             {
                 IdentityId = _currentIdentityProvider.Id
             });
@@ -190,9 +191,9 @@ namespace ApplicationManager.Api.Identities
 
         [AllowRestrictedAppAccess]
         [HttpPost("resendConfirmIdentity", Name = RouteDictionary.ResendConfirmIdentity)]
-        public IActionResult ResendConfirmIdentity()
+        public async Task<IActionResult> ResendConfirmIdentity()
         {
-            _identityApplicationService.ResendConfirmIdentity(new ResendConfirmIdentityAdto
+            await _identityApplicationService.ResendConfirmIdentityAsync(new ResendConfirmIdentityAdto
             {
                 IdentityId = _currentIdentityProvider.Id
             });
@@ -201,9 +202,9 @@ namespace ApplicationManager.Api.Identities
         }
 
         [HttpPost("logout", Name = RouteDictionary.Logout)]
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            _identityApplicationService.Logout(new LogoutAdto
+            await _identityApplicationService.LogoutAsync(new LogoutAdto
             {
                 IdentityId = _currentIdentityProvider.Id
             });

@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
+
 namespace ApplicationManager.Domain.Identities.Login.Password
 {
     public interface IPasswordLoginCommand
     {
-        Identity Execute(PasswordLoginCommandDdto passwordLoginCommandDdto);
+        Task<Identity> ExecuteAsync(PasswordLoginCommandDdto passwordLoginCommandDdto);
     }
 }

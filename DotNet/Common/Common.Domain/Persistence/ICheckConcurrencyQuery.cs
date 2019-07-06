@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Exceptions;
 
@@ -12,6 +13,6 @@ namespace Common.Domain.Persistence
         /// <returns>The entity which exists with id and version.</returns>
         /// <exception cref="ConcurrencyDomainException"></exception>
         /// <exception cref="NotFoundDomainException"></exception>
-        T GetWithConcurrencyCheck(Guid id, IConcurrencyVersion version);
+        Task<T> GetWithConcurrencyCheckAsync(Guid id, IConcurrencyVersion version);
     }
 }

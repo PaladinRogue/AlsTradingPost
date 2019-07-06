@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Common.Authorisation.Contexts;
 using Common.Authorisation.Restrictions;
 using Common.Domain.Aggregates;
@@ -13,23 +14,23 @@ namespace Common.Authorisation.Policies.Json
 
         private readonly ISelfProvider _selfProvider;
 
-        private readonly IResourceOwnerProvider _resourceOwnerProvider;
+        private readonly IResourceOwnerProviderCollection _resourceOwnerProviderCollection;
 
         private readonly IAuthorisationRestrictionProvider _authorisationRestrictionProvider;
 
         public JsonAuthorisationPolicy(
             IJsonAuthorisationPolicyProvider jsonAuthorisationPolicyProvider,
             ISelfProvider selfProvider,
-            IResourceOwnerProvider resourceOwnerProvider,
+            IResourceOwnerProviderCollection resourceOwnerProviderCollection,
             IAuthorisationRestrictionProvider authorisationRestrictionProvider)
         {
             _jsonAuthorisationPolicyProvider = jsonAuthorisationPolicyProvider;
             _selfProvider = selfProvider;
-            _resourceOwnerProvider = resourceOwnerProvider;
+            _resourceOwnerProviderCollection = resourceOwnerProviderCollection;
             _authorisationRestrictionProvider = authorisationRestrictionProvider;
         }
 
-        public bool HasAccess(IAuthorisationContext authorisationContext)
+        public Task<bool> HasAccessAsync(IAuthorisationContext authorisationContext)
         {
             JToken policy = _jsonAuthorisationPolicyProvider.AuthorisationPolicy[authorisationContext.Resource][authorisationContext.Action];
 
@@ -40,13 +41,13 @@ namespace Common.Authorisation.Policies.Json
             switch (restrictionValue)
             {
                 case ResourceRestriction.Everyone:
-                    return true;
+                    return Task.FromResult(true);
                 case ResourceRestriction.Self:
-                    return CheckSelf(authorisationContext);
+                    return Task.FromResult(CheckSelf(authorisationContext));
                 case ResourceRestriction.Owner:
-                    return CheckOwner(authorisationContext);
+                    return CheckOwnerAsync(authorisationContext);
                 default:
-                    return CheckPolicy(restrictionValue, authorisationContext);
+                    return CheckPolicyAsync(restrictionValue, authorisationContext);
             }
         }
 
@@ -68,20 +69,22 @@ namespace Common.Authorisation.Policies.Json
             }
         }
 
-        private bool CheckPolicy(string restrictionValue, IAuthorisationContext authorisationContext)
+        private async Task<bool> CheckPolicyAsync(string restrictionValue, IAuthorisationContext authorisationContext)
         {
             IAuthorisationRestriction authorisationRestriction = _authorisationRestrictionProvider.GetByRestriction(restrictionValue);
 
-            IRestrictionResult restrictionResult = authorisationRestriction.CheckRestriction(authorisationContext);
+            IRestrictionResult restrictionResult = await authorisationRestriction.CheckRestrictionAsync(authorisationContext);
 
             return restrictionResult.Succeeded;
         }
 
-        private bool CheckOwner(IAuthorisationContext authorisationContext)
+        private async Task<bool> CheckOwnerAsync(IAuthorisationContext authorisationContext)
         {
             ValidateAuthorisationContext(authorisationContext);
 
-            IAggregateOwner aggregateOwner = _resourceOwnerProvider.GetOwner(authorisationContext.ResourceType, authorisationContext.ResourceId.Value);
+            IResourceOwnerProvider resourceOwnerProvider = _resourceOwnerProviderCollection.Get(authorisationContext.ResourceType);
+
+            IAggregateOwner aggregateOwner = await resourceOwnerProvider.GetOwnerAsync(authorisationContext.ResourceId.Value);
 
             return  _selfProvider.WhoAmI.Any(i => i.Key == aggregateOwner.AggregateType && i.Value == aggregateOwner.Id);
         }

@@ -1,5 +1,5 @@
+using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices.Notifications.Send;
-using Common.Messaging.Infrastructure.Interfaces;
 using Common.Messaging.Infrastructure.MessageBus;
 using Common.Messaging.Infrastructure.Subscribers;
 using Common.Messaging.Messages;
@@ -17,9 +17,9 @@ namespace ApplicationManager.ApplicationServices.Subscribers
             _sendNotificationKernalService = sendNotificationKernalService;
         }
 
-        public override void Handle(SendNotificationMessage message)
+        public override Task HandleAsync(SendNotificationMessage message)
         {
-            _sendNotificationKernalService.Send(new SendNotificationAdto
+            return _sendNotificationKernalService.SendAsync(new SendNotificationAdto
             {
                 IdentityId = message.IdentityId,
                 NotificationType = message.NotificationType,

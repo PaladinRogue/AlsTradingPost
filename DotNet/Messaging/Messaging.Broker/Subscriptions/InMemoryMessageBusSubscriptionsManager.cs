@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Common.Messaging.Infrastructure;
-using Common.Messaging.Infrastructure.Interfaces;
 using Common.Messaging.Infrastructure.Messages;
 using Common.Messaging.Infrastructure.Subscribers;
 
@@ -25,12 +25,12 @@ namespace Messaging.Broker.Subscriptions
 
         public void Clear() => _handlers.Clear();
 
-        public void AddSubscription<T, TH>(Action<T> handler)
+        public void AddSubscription<T, TH>(Func<T, Task> asyncHandler)
             where T : IMessage
             where TH : IMessageSubscriber<T>
         {
             string messageKey = GetMessageKey<T>();
-            _doAddSubscription(typeof(TH), handler, messageKey);
+            _doAddSubscription(typeof(TH), asyncHandler, messageKey);
             _messageTypes.Add(typeof(T));
         }
 
@@ -66,7 +66,7 @@ namespace Messaging.Broker.Subscriptions
             return typeof(T).Name;
         }
 
-        private void _doAddSubscription(Type handlerType, Delegate handler, string messageName)
+        private void _doAddSubscription<T>(Type handlerType, Func<T, Task> asyncHandler, string messageName)
         {
             if (!HasSubscriptionsForMessage(messageName))
             {
@@ -79,9 +79,9 @@ namespace Messaging.Broker.Subscriptions
                     $"Handler Type {handlerType.Name} already registered for '{messageName}'", nameof(handlerType));
             }
 
-            _handlers[messageName].Add(MessageSubscription.Create(handlerType, handler));
+            _handlers[messageName].Add(MessageSubscription.Create(handlerType, asyncHandler));
         }
-        
+
         private void _doRemoveSubscription(string messageName, MessageSubscription messageSubscriptionToRemove)
         {
             if (messageSubscriptionToRemove == null) return;

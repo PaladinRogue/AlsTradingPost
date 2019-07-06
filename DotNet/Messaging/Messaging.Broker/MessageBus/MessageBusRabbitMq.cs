@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
 using Common.Messaging.Infrastructure;
 using Common.Messaging.Infrastructure.DeQueuers;
 using Common.Messaging.Infrastructure.MessageBus;
@@ -104,11 +105,11 @@ namespace Messaging.Broker.MessageBus
             }
         }
 
-        public void Subscribe<T, TH>(Action<T> handler) where T : IMessage where TH : IMessageSubscriber<T>
+        public void Subscribe<T, TH>(Func<T, Task> asyncHandler) where T : IMessage where TH : IMessageSubscriber<T>
         {
             string messageName = _messageBusSubscriptionsManager.GetMessageKey<T>();
             DoInternalSubscription(messageName);
-            _messageBusSubscriptionsManager.AddSubscription<T, TH>(handler);
+            _messageBusSubscriptionsManager.AddSubscription<T, TH>(asyncHandler);
         }
 
         private void DoInternalSubscription(string messageName)
@@ -172,15 +173,23 @@ namespace Messaging.Broker.MessageBus
             return channel;
         }
 
-        private void ProcessMessage(string messageName, string serialisedMessage)
+        private void ProcessMessage(string messageName,
+            string serialisedMessage)
         {
             if (!_messageBusSubscriptionsManager.HasSubscriptionsForMessage(messageName))
             {
                 return;
             }
 
-            IEnumerable<MessageSubscription> subscriptions = _messageBusSubscriptionsManager.GetSubscribersForMessage(messageName);
-            _messageDeQueuer.DeQueue(_messageSerialiser.Deserialise(serialisedMessage), subscriptions);
+            try
+            {
+                IEnumerable<MessageSubscription> subscriptions = _messageBusSubscriptionsManager.GetSubscribersForMessage(messageName);
+                _messageDeQueuer.DeQueueAsync(_messageSerialiser.Deserialise(serialisedMessage), subscriptions);
+            }
+            catch (Exception e)
+            {
+                _logger.LogCritical(e.Message);
+            }
         }
 
         private bool CanConnect()

@@ -1,27 +1,28 @@
+using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices.Identities.Models;
 
 namespace ApplicationManager.ApplicationServices.Identities
 {
     public interface IIdentityApplicationService
     {
-        IdentityAdto Get(GetIdentityAdto getIdentityAdto);
+        Task<IdentityAdto> GetAsync(GetIdentityAdto getIdentityAdto);
 
-        void ResetPassword(ResetPasswordAdto resetPasswordAdto);
+        Task ResetPasswordAsync(ResetPasswordAdto resetPasswordAdto);
 
-        void ForgotPassword(ForgotPasswordAdto forgotPasswordAdto);
+        Task ForgotPasswordAsync(ForgotPasswordAdto forgotPasswordAdto);
 
-        void ConfirmIdentity(ConfirmIdentityAdto confirmIdentityAdto);
+        Task ConfirmIdentityAsync(ConfirmIdentityAdto confirmIdentityAdto);
 
-        PasswordIdentityAdto GetPasswordIdentity(GetPasswordIdentityAdto getPasswordIdentityAdto);
+        Task<PasswordIdentityAdto> GetPasswordIdentityAsync(GetPasswordIdentityAdto getPasswordIdentityAdto);
 
-        PasswordIdentityAdto ChangePassword(ChangePasswordAdto changePasswordAdto);
+        Task<PasswordIdentityAdto> ChangePasswordAsync(ChangePasswordAdto changePasswordAdto);
 
-        PasswordIdentityAdto RegisterPassword(RegisterPasswordAdto registerPasswordAdto);
+        Task<PasswordIdentityAdto> RegisterPasswordAsync(RegisterPasswordAdto registerPasswordAdto);
 
-        RefreshTokenIdentityAdto CreateRefreshToken(CreateRefreshTokenAdto createRefreshTokenAdto);
+        Task<RefreshTokenIdentityAdto> CreateRefreshTokenAsync(CreateRefreshTokenAdto createRefreshTokenAdto);
 
-        void ResendConfirmIdentity(ResendConfirmIdentityAdto resendConfirmIdentityAdto);
+        Task ResendConfirmIdentityAsync(ResendConfirmIdentityAdto resendConfirmIdentityAdto);
 
-        void Logout(LogoutAdto logoutAdto);
+        Task LogoutAsync(LogoutAdto logoutAdto);
     }
 }

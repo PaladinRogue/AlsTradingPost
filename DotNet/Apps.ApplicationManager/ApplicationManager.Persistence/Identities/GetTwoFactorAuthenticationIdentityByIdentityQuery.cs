@@ -1,6 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using ApplicationManager.Domain.Identities;
+using System.Threading.Tasks;
 using ApplicationManager.Domain.Identities.Projections;
 using ApplicationManager.Domain.Identities.Queries;
 using Microsoft.EntityFrameworkCore;
@@ -16,17 +17,14 @@ namespace ApplicationManager.Persistence.Identities
             _applicationManagerDbContext = applicationManagerDbContext;
         }
 
-        public TwoFactorAuthenticationIdentityProjection Run(Guid identityId)
+        public async Task<TwoFactorAuthenticationIdentityProjection> RunAsync(Guid identityId)
         {
-            return _applicationManagerDbContext.Identities
-                .FirstOrDefault(i => i.Id == identityId)?
-                .AuthenticationIdentities
-                .OfType<TwoFactorAuthenticationIdentity>()
-                .Select(a => new TwoFactorAuthenticationIdentityProjection
-                {
-                    EmailAddress = a.EmailAddress
-                })
-                .FirstOrDefault();
+            List<TwoFactorAuthenticationIdentityProjection> twoFactorAuthenticationIdentityProjections = await _applicationManagerDbContext.Query<TwoFactorAuthenticationIdentityProjection>()
+                .FromSql($"SELECT * FROM [apps].[AuthenticationIdentities] WHERE [TYPE] = {AuthenticationIdentityTypes.TwoFactor} AND [IdentityId] = {identityId}")
+                .AsNoTracking()
+                .ToListAsync();
+
+            return twoFactorAuthenticationIdentityProjections.FirstOrDefault();
         }
     }
 }

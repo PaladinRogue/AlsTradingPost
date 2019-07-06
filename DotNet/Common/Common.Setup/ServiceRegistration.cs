@@ -30,7 +30,7 @@ namespace Common.Setup
 
         public static void RegisterProviders(IServiceCollection services)
         {
-	        services.AddSingleton<IResourceOwnerProvider, ResourceOwnerProvider>();
+	        services.AddSingleton<IResourceOwnerProviderCollection, ResourceOwnerProviderCollection>();
 	        services.AddSingleton<IApiDescriptionGroupCollectionProvider, ApiDescriptionGroupCollectionProvider>();
 	        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }

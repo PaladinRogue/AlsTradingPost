@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
+
 namespace ApplicationManager.Domain.Identities.ResendConfirmIdentity
 {
     public interface IResendConfirmIdentityCommand
     {
-        void Execute(Identity identity);
+        Task ExecuteAsync(Identity identity);
     }
 }

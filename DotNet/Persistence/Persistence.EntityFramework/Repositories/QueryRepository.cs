@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Common.Domain.Aggregates;
+using Common.Domain.Models;
 using Common.Domain.Persistence;
 using Common.Resources.Sorting;
 using Microsoft.EntityFrameworkCore;
@@ -18,29 +20,29 @@ namespace Persistence.EntityFramework.Repositories
             Context = context;
         }
 
-        public virtual T GetById(Guid id)
+        public virtual Task<T> GetByIdAsync(Guid id)
         {
-            return RepositoryHelper.GetById(Context.Set<T>().AsNoTracking(), id);
+            return RepositoryHelper.GetByIdAsync(Context.Set<T>(), id);
         }
 
-        public virtual IQueryable<T> Get(IList<SortBy> sort, Expression<Func<T, bool>> predicate = null)
+        public virtual Task<IQueryable<T>> GetAsync(IList<SortBy> sort, Expression<Func<T, bool>> predicate = null)
         {
-            return RepositoryHelper.Get(Context.Set<T>().AsNoTracking(), sort, predicate);
+            return RepositoryHelper.GetAsync(Context.Set<T>(), sort, predicate);
         }
 
-        public virtual IQueryable<T> GetPage(int pageSize, int pageOffset, out int totalResults, IList<SortBy> sort, Expression<Func<T, bool>> predicate = null)
+        public virtual Task<IPagedResult<T>> GetPageAsync(int pageSize, int pageOffset, IList<SortBy> sort, Expression<Func<T, bool>> predicate = null)
         {
-            return RepositoryHelper.GetPage(Context.Set<T>().AsNoTracking(), pageSize, pageOffset, out totalResults, sort, predicate);
+            return RepositoryHelper.GetPage(Context.Set<T>(), pageSize, pageOffset, sort, predicate);
         }
 
-        public virtual T GetSingle(Expression<Func<T, bool>> predicate)
+        public virtual Task<T> GetSingleAsync(Expression<Func<T, bool>> predicate)
         {
-            return RepositoryHelper.GetSingle(Context.Set<T>().AsNoTracking(), predicate);
+            return RepositoryHelper.GetSingleAsync(Context.Set<T>(), predicate);
         }
 
-        public virtual bool AreAny(Expression<Func<T, bool>> predicate)
+        public virtual Task<bool> AreAnyAsync(Expression<Func<T, bool>> predicate)
         {
-            return RepositoryHelper.CheckExists(Context.Set<T>().AsNoTracking(), predicate);
+            return RepositoryHelper.CheckExistsAsync(Context.Set<T>(), predicate);
         }
     }
 }

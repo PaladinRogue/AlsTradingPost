@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System.Threading.Tasks;
 using ApplicationManager.Domain.Identities.Queries;
 using ApplicationManager.Domain.Identities.ValidateToken;
 using Common.Domain.Validation;
@@ -20,11 +20,11 @@ namespace ApplicationManager.Domain.Identities.ResetPassword
             _getIdentityByForgotPasswordTokenQuery = getIdentityByForgotPasswordTokenQuery;
         }
 
-        public Identity Execute(ResetPasswordCommandDdto resetPasswordCommandDdto)
+        public async Task<Identity> ExecuteAsync(ResetPasswordCommandDdto resetPasswordCommandDdto)
         {
             _validator.ValidateAndThrow(resetPasswordCommandDdto);
 
-            Identity identity = _getIdentityByForgotPasswordTokenQuery.Run(resetPasswordCommandDdto.Token);
+            Identity identity = await _getIdentityByForgotPasswordTokenQuery.RunAsync(resetPasswordCommandDdto.Token);
 
             if (identity == null)
             {

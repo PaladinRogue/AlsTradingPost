@@ -1,8 +1,10 @@
 using System.Linq;
+using System.Threading.Tasks;
 using ApplicationManager.Domain;
 using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.Queries;
 using Common.Domain.DataProtection;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationManager.Persistence.Identities
 {
@@ -15,10 +17,12 @@ namespace ApplicationManager.Persistence.Identities
             _applicationManagerDbContext = applicationManagerDbContext;
         }
 
-        public Identity Run(string emailAddress)
+        public Task<Identity> RunAsync(string emailAddress)
         {
             return _applicationManagerDbContext.Identities
-                .SingleOrDefault(i => i.AuthenticationIdentities.OfType<PasswordIdentity>().Any(a => a.EmailAddressHash == DataProtection.Hash(emailAddress, StaticSalts.EmailAddress).Hash));
+                .SingleOrDefaultAsync(i => i.AuthenticationIdentities.OfType<PasswordIdentity>().Any(
+                    a => a.EmailAddressHash == DataProtection.Hash(emailAddress, StaticSalts.EmailAddress).Hash
+                ));
         }
     }
 }

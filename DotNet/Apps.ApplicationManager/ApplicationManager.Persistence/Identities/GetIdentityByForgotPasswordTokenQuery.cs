@@ -1,6 +1,8 @@
 using System.Linq;
+using System.Threading.Tasks;
 using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.Queries;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationManager.Persistence.Identities
 {
@@ -13,10 +15,10 @@ namespace ApplicationManager.Persistence.Identities
             _applicationManagerDbContext = applicationManagerDbContext;
         }
 
-        public Identity Run(string token)
+        public Task<Identity> RunAsync(string token)
         {
             return _applicationManagerDbContext.Identities
-                .SingleOrDefault(i => i.AuthenticationIdentities
+                .SingleOrDefaultAsync(i => i.AuthenticationIdentities
                     .OfType<TwoFactorAuthenticationIdentity>().Any(p =>
                         p.TwoFactorAuthenticationType == TwoFactorAuthenticationType.ForgotPassword
                         && p.Token == token));

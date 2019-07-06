@@ -1,24 +1,26 @@
 using System.Linq;
+using System.Threading.Tasks;
 using ApplicationManager.Domain;
 using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.Queries;
 using Common.Domain.DataProtection;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationManager.Persistence.Identities
 {
-    public class PasswordIdentityEmailIsUniqueQuery : IPasswordIdentityEmailIsUniqueQuery
+    public class PasswordIdentityEmailExistsQuery : IPasswordIdentityEmailExistsQuery
     {
         private readonly ApplicationManagerDbContext _applicationManagerDbContext;
 
-        public PasswordIdentityEmailIsUniqueQuery(ApplicationManagerDbContext applicationManagerDbContext)
+        public PasswordIdentityEmailExistsQuery(ApplicationManagerDbContext applicationManagerDbContext)
         {
             _applicationManagerDbContext = applicationManagerDbContext;
         }
 
-        public bool Run(string emailAddress)
+        public Task<bool> RunAsync(string emailAddress)
         {
             return _applicationManagerDbContext.Identities
-                .Any(i => i.AuthenticationIdentities.OfType<PasswordIdentity>().Any(a => a.EmailAddressHash == DataProtection.Hash(emailAddress, StaticSalts.EmailAddress).Hash));
+                .AnyAsync(i => i.AuthenticationIdentities.OfType<PasswordIdentity>().Any(a => a.EmailAddressHash == DataProtection.Hash(emailAddress, StaticSalts.EmailAddress).Hash));
         }
     }
 }

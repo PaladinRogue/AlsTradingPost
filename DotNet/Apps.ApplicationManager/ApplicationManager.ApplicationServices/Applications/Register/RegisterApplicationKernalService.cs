@@ -1,4 +1,5 @@
-﻿using ApplicationManager.ApplicationServices.Identities.CreateAdmin;
+﻿using System.Threading.Tasks;
+using ApplicationManager.ApplicationServices.Identities.CreateAdmin;
 using ApplicationManager.Domain.Applications;
 using ApplicationManager.Domain.Applications.Change;
 using ApplicationManager.Domain.Applications.Create;
@@ -13,8 +14,6 @@ namespace ApplicationManager.ApplicationServices.Applications.Register
     {
         private readonly ITransactionManager _transactionManager;
 
-        private readonly IQueryRepository<Application> _queryRepository;
-
         private readonly ICreateAdminAuthenticationIdentityKernalService _createAdminAuthenticationIdentityKernalService;
 
         private readonly ICommandRepository<Application> _commandRepository;
@@ -25,41 +24,38 @@ namespace ApplicationManager.ApplicationServices.Applications.Register
 
         public RegisterApplicationKernalService(
             ITransactionManager transactionManager,
-            IQueryRepository<Application> queryRepository,
             ICommandRepository<Application> commandRepository,
             ICreateAdminAuthenticationIdentityKernalService createAdminAuthenticationIdentityKernalService,
             IChangeApplicationCommand changeApplicationCommand,
             ICreateApplicationCommand createApplicationCommand)
         {
             _transactionManager = transactionManager;
-            _queryRepository = queryRepository;
             _commandRepository = commandRepository;
             _createAdminAuthenticationIdentityKernalService = createAdminAuthenticationIdentityKernalService;
             _changeApplicationCommand = changeApplicationCommand;
             _createApplicationCommand = createApplicationCommand;
         }
 
-        public void Register(RegisterApplicationAdto registerApplicationAdto)
+        public async Task RegisterAsync(RegisterApplicationAdto registerApplicationAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
-                Application application = _queryRepository.GetSingle(a => a.SystemName == registerApplicationAdto.SystemName);
-
-                if (application == null)
+                try
                 {
-                    try
+                    Application application = await _commandRepository.GetSingleAsync(a => a.SystemName == registerApplicationAdto.SystemName);
+                    if (application == null)
                     {
-                        application = _createApplicationCommand.Execute(new CreateApplicationDdto
+                        application = await _createApplicationCommand.ExecuteAsync(new CreateApplicationDdto
                         {
                             Name = registerApplicationAdto.Name,
                             SystemName = registerApplicationAdto.SystemName
                         });
 
-                        _commandRepository.Add(application);
+                        await _commandRepository.AddAsync(application);
 
                         if (!string.IsNullOrWhiteSpace(registerApplicationAdto.AdminEmailAddress))
                         {
-                            _createAdminAuthenticationIdentityKernalService.Create(
+                            await _createAdminAuthenticationIdentityKernalService.CreateAsync(
                                 new CreateAdminAuthenticationIdentityAdto
                                 {
                                     EmailAddress = registerApplicationAdto.AdminEmailAddress,
@@ -67,26 +63,26 @@ namespace ApplicationManager.ApplicationServices.Applications.Register
                                 });
                         }
                     }
-                    catch (CreateDomainException e)
+                    else
                     {
-                        throw new BusinessApplicationException(ExceptionType.Unknown, e);
-                    }
-                    catch (ConcurrencyDomainException e)
-                    {
-                        throw new BusinessApplicationException(ExceptionType.Unknown, e);
-                    }
-                }
-                else
-                {
-                    _changeApplicationCommand.Execute(application, new ChangeApplicationDdto
-                    {
-                        Name = registerApplicationAdto.Name
-                    });
-                }
 
-                transaction.Commit();
+                        await _changeApplicationCommand.ExecuteAsync(application, new ChangeApplicationDdto
+                        {
+                            Name = registerApplicationAdto.Name
+                        });
+                    }
+
+                    transaction.Commit();
+                }
+                catch (CreateDomainException e)
+                {
+                    throw new BusinessApplicationException(ExceptionType.Unknown, e);
+                }
+                catch (ConcurrencyDomainException e)
+                {
+                    throw new BusinessApplicationException(ExceptionType.Unknown, e);
+                }
             }
         }
     }
 }
-

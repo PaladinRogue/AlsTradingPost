@@ -1,4 +1,4 @@
-using System;
+using System.Threading.Tasks;
 using ApplicationManager.Domain.Identities.Queries;
 using Common.Domain.Validation;
 using FluentValidation;
@@ -19,11 +19,11 @@ namespace ApplicationManager.Domain.Identities.ForgotPassword
             _validator = validator;
         }
 
-        public Identity Execute(ForgotPasswordCommandDdto forgotPasswordCommandDdto)
+        public async Task<Identity> ExecuteAsync(ForgotPasswordCommandDdto forgotPasswordCommandDdto)
         {
             _validator.ValidateAndThrow(forgotPasswordCommandDdto);
 
-            Identity identity = _getIdentityByEmailAddressQuery.Run(forgotPasswordCommandDdto.EmailAddress);
+            Identity identity = await _getIdentityByEmailAddressQuery.RunAsync(forgotPasswordCommandDdto.EmailAddress);
 
             identity?.ForgotPassword(new ForgotPasswordDdto
             {

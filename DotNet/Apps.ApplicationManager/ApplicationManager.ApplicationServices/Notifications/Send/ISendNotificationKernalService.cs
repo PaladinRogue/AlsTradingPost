@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
+
 namespace ApplicationManager.ApplicationServices.Notifications.Send
 {
     public interface ISendNotificationKernalService
     {
-        void Send(SendNotificationAdto sendNotificationAdto);
+        Task SendAsync(SendNotificationAdto sendNotificationAdto);
     }
 }

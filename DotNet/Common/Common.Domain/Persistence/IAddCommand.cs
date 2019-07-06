@@ -1,4 +1,5 @@
-﻿using Common.Domain.Exceptions;
+﻿using System.Threading.Tasks;
+using Common.Domain.Exceptions;
 
 namespace Common.Domain.Persistence
 {
@@ -8,6 +9,6 @@ namespace Common.Domain.Persistence
         /// <param name="entity">The entity to add.</param>
         /// <exception cref="CreateDomainException">Failed to add <paramref name="entity">entity</paramref>.</exception>
         /// <exception cref="ConcurrencyDomainException">Concurrency check has failed for given <typeparamref name="T">entity</typeparamref>.</exception>
-        void Add(T entity);
+        Task AddAsync(T entity);
     }
 }

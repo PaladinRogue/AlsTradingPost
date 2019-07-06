@@ -1,4 +1,5 @@
-﻿using Common.Domain.Validation;
+﻿using System.Threading.Tasks;
+using Common.Domain.Validation;
 using FluentValidation;
 
 namespace ApplicationManager.Domain.Applications.Create
@@ -12,11 +13,11 @@ namespace ApplicationManager.Domain.Applications.Create
             _validator = validator;
         }
 
-        public Application Execute(CreateApplicationDdto createApplicationDdto)
+        public Task<Application> ExecuteAsync(CreateApplicationDdto createApplicationDdto)
         {
             _validator.ValidateAndThrow(createApplicationDdto);
 
-            return Application.Create(createApplicationDdto);
+            return Task.FromResult(Application.Create(createApplicationDdto));
         }
     }
 }

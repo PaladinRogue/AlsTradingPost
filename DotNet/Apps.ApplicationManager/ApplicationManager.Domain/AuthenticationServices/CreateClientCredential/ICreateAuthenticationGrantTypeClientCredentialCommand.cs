@@ -1,8 +1,9 @@
+using System.Threading.Tasks;
+
 namespace ApplicationManager.Domain.AuthenticationServices.CreateClientCredential
 {
     public interface ICreateAuthenticationGrantTypeClientCredentialCommand
     {
-        AuthenticationGrantTypeClientCredential Execute(
-            CreateAuthenticationGrantTypeClientCredentialDdto createAuthenticationGrantTypeClientCredentialDdto);
+        Task<AuthenticationGrantTypeClientCredential> ExecuteAsync(CreateAuthenticationGrantTypeClientCredentialDdto createAuthenticationGrantTypeClientCredentialDdto);
     }
 }

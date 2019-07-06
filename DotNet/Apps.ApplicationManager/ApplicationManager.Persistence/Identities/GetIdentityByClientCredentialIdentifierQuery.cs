@@ -1,9 +1,11 @@
 using System.Linq;
+using System.Threading.Tasks;
 using ApplicationManager.Domain;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.Queries;
 using Common.Domain.DataProtection;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationManager.Persistence.Identities
 {
@@ -16,11 +18,11 @@ namespace ApplicationManager.Persistence.Identities
             _applicationManagerDbContext = applicationManagerDbContext;
         }
 
-        public Identity Run(AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential,
+        public Task<Identity> RunAsync(AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential,
             string identifier)
         {
             return _applicationManagerDbContext.Identities
-                .SingleOrDefault(i =>
+                .SingleOrDefaultAsync(i =>
                     i.AuthenticationIdentities.OfType<ClientCredentialIdentity>().Any(a =>
                         a.IdentifierHash == DataProtection.Hash(identifier, StaticSalts.Identifier).Hash
                         && a.AuthenticationGrantTypeClientCredential == authenticationGrantTypeClientCredential));

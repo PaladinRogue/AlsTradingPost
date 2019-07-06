@@ -1,7 +1,10 @@
+using System.Threading.Tasks;
+
 namespace ApplicationManager.Domain.Identities.ChangePassword
 {
     public interface IChangePasswordCommand
     {
-        void Execute(Identity identity, ChangePasswordCommandDdto changePasswordCommandDdto);
+        Task ExecuteAsync(Identity identity,
+            ChangePasswordCommandDdto changePasswordCommandDdto);
     }
 }

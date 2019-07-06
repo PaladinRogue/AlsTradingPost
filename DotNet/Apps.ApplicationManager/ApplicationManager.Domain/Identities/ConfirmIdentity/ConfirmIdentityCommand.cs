@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Common.Domain.Validation;
 using FluentValidation;
 
@@ -12,7 +13,8 @@ namespace ApplicationManager.Domain.Identities.ConfirmIdentity
             _validator = validator;
         }
 
-        public void Execute(Identity identity, ConfirmIdentityCommandDdto confirmIdentityCommandDdto)
+        public Task ExecuteAsync(Identity identity,
+            ConfirmIdentityCommandDdto confirmIdentityCommandDdto)
         {
             _validator.ValidateAndThrow(confirmIdentityCommandDdto);
 
@@ -20,6 +22,8 @@ namespace ApplicationManager.Domain.Identities.ConfirmIdentity
             {
                 Token = confirmIdentityCommandDdto.Token
             });
+
+            return Task.CompletedTask;
         }
     }
 }

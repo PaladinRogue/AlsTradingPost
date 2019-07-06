@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities.Queries;
 using Common.Domain.Exceptions;
@@ -11,25 +12,27 @@ namespace ApplicationManager.Domain.Identities.RegisterPassword
     {
         private readonly IValidator<RegisterPasswordCommandDdto> _validator;
 
-        private readonly IPasswordIdentityIdentifierIsUniqueQuery _passwordIdentityIdentifierIsUniqueQuery;
+        private readonly IPasswordIdentityIdentifierExistsQuery _passwordIdentityIdentifierExistsQuery;
 
-        private readonly IPasswordIdentityEmailIsUniqueQuery _passwordIdentityEmailIsUniqueQuery;
+        private readonly IPasswordIdentityEmailExistsQuery _passwordIdentityEmailExistsQuery;
 
         public RegisterPasswordCommand(
             IValidator<RegisterPasswordCommandDdto> validator,
-            IPasswordIdentityIdentifierIsUniqueQuery passwordIdentityIdentifierIsUniqueQuery,
-            IPasswordIdentityEmailIsUniqueQuery passwordIdentityEmailIsUniqueQuery)
+            IPasswordIdentityIdentifierExistsQuery passwordIdentityIdentifierExistsQuery,
+            IPasswordIdentityEmailExistsQuery passwordIdentityEmailExistsQuery)
         {
             _validator = validator;
-            _passwordIdentityIdentifierIsUniqueQuery = passwordIdentityIdentifierIsUniqueQuery;
-            _passwordIdentityEmailIsUniqueQuery = passwordIdentityEmailIsUniqueQuery;
+            _passwordIdentityIdentifierExistsQuery = passwordIdentityIdentifierExistsQuery;
+            _passwordIdentityEmailExistsQuery = passwordIdentityEmailExistsQuery;
         }
 
-        public PasswordIdentity Execute(Identity identity, AuthenticationGrantTypePassword authenticationGrantTypePassword, RegisterPasswordCommandDdto registerPasswordCommandDdto)
+        public async Task<PasswordIdentity> ExecuteAsync(Identity identity,
+            AuthenticationGrantTypePassword authenticationGrantTypePassword,
+            RegisterPasswordCommandDdto registerPasswordCommandDdto)
         {
             _validator.ValidateAndThrow(registerPasswordCommandDdto);
 
-            if (!_passwordIdentityIdentifierIsUniqueQuery.Run(registerPasswordCommandDdto.Identifier))
+            if (await _passwordIdentityIdentifierExistsQuery.RunAsync(registerPasswordCommandDdto.Identifier))
             {
                 throw new DomainValidationRuleException(new ValidationResult
                 {
@@ -40,7 +43,7 @@ namespace ApplicationManager.Domain.Identities.RegisterPassword
                 });
             }
 
-            if (_passwordIdentityEmailIsUniqueQuery.Run(registerPasswordCommandDdto.EmailAddress))
+            if (await _passwordIdentityEmailExistsQuery.RunAsync(registerPasswordCommandDdto.EmailAddress))
             {
                 throw new DomainValidationRuleException(new ValidationResult
                 {

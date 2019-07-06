@@ -6,6 +6,6 @@ namespace Common.ApplicationServices.Authentication
 {
     public interface IJwtFactory
     {
-        Task<T> GenerateJwt<T>(ClaimsIdentity identity, Guid sessionId) where T : IJwtAdto;
+        Task<T> GenerateJwtAsync<T>(ClaimsIdentity identity, Guid sessionId) where T : IJwtAdto;
     }
 }

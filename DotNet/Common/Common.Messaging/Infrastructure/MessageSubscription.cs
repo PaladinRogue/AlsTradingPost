@@ -1,22 +1,23 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Common.Messaging.Infrastructure
 {
     public class MessageSubscription
     {
-        private MessageSubscription(Type handlerType, Delegate handler)
+        private MessageSubscription(Type handlerType, Delegate asyncHandler)
         {
             HandlerType = handlerType;
-            Handler = handler;
+            AsyncHandler = asyncHandler;
         }
 
-        public Type HandlerType { get; set; }
+        public Type HandlerType { get; }
 
-        public Delegate Handler { get; set; }
+        public Delegate AsyncHandler { get; }
 
-        public static MessageSubscription Create(Type handlerType, Delegate handler)
+        public static MessageSubscription Create<T>(Type handlerType, Func<T, Task> asyncHandler)
         {
-            return new MessageSubscription(handlerType, handler);
+            return new MessageSubscription(handlerType, asyncHandler);
         }
     }
 }

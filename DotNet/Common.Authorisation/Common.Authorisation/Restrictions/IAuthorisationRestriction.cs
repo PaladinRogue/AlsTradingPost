@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Common.Authorisation.Contexts;
 
 namespace Common.Authorisation.Restrictions
@@ -6,6 +7,6 @@ namespace Common.Authorisation.Restrictions
     {
         string Restriction { get; }
 
-        IRestrictionResult CheckRestriction(IAuthorisationContext authorisationContext);
+        Task<IRestrictionResult> CheckRestrictionAsync(IAuthorisationContext authorisationContext);
     }
 }

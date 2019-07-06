@@ -21,21 +21,21 @@ namespace ApplicationManager.ApplicationServices.Authentication
             _authenticationApplicationService = authenticationApplicationService;
         }
 
-        public Task<JwtAdto> Password(PasswordAdto passwordAdto)
+        public Task<JwtAdto> PasswordAsync(PasswordAdto passwordAdto)
         {
-            return _securityApplicationService.Secure(() => _authenticationApplicationService.Password(passwordAdto),
+            return _securityApplicationService.SecureAsync(() => _authenticationApplicationService.PasswordAsync(passwordAdto),
                 DefaultAuthorisationContext.Create(AuthorisationResource.Authenticate, AuthorisationAction.Create));
         }
 
-        public Task<JwtAdto> RefreshToken(RefreshTokenAdto refreshTokenAdto)
+        public Task<JwtAdto> RefreshTokenAsync(RefreshTokenAdto refreshTokenAdto)
         {
-            return _securityApplicationService.Secure(() => _authenticationApplicationService.RefreshToken(refreshTokenAdto),
+            return _securityApplicationService.SecureAsync(() => _authenticationApplicationService.RefreshTokenAsync(refreshTokenAdto),
                 DefaultAuthorisationContext.Create(AuthorisationResource.Authenticate, AuthorisationAction.Create));
         }
 
-        public Task<JwtAdto> ClientCredential(ClientCredentialAdto clientCredentialAdto)
+        public Task<JwtAdto> ClientCredentialAsync(ClientCredentialAdto clientCredentialAdto)
         {
-            return _securityApplicationService.Secure(() => _authenticationApplicationService.ClientCredential(clientCredentialAdto),
+            return _securityApplicationService.SecureAsync(() => _authenticationApplicationService.ClientCredentialAsync(clientCredentialAdto),
                 DefaultAuthorisationContext.Create(AuthorisationResource.Authenticate, AuthorisationAction.Create));
         }
     }

@@ -19,7 +19,7 @@ namespace Common.ApplicationServices.Authentication
 			ThrowIfInvalidOptions(_jwtIssuerOptions);
 	    }
 
-	    public async Task<T> GenerateJwt<T>(ClaimsIdentity identity, Guid sessionId) where T : IJwtAdto
+	    public async Task<T> GenerateJwtAsync<T>(ClaimsIdentity identity, Guid sessionId) where T : IJwtAdto
 	    {
 	        T jwt = Activator.CreateInstance<T>();
 

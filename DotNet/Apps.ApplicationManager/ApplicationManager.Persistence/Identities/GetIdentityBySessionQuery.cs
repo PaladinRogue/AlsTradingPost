@@ -1,7 +1,8 @@
 using System;
-using System.Linq;
+using System.Threading.Tasks;
 using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.Queries;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationManager.Persistence.Identities
 {
@@ -14,9 +15,9 @@ namespace ApplicationManager.Persistence.Identities
             _applicationManagerDbContext = applicationManagerDbContext;
         }
 
-        public Identity Run(Guid sessionId)
+        public Task<Identity> RunAsync(Guid sessionId)
         {
-            return _applicationManagerDbContext.Identities.SingleOrDefault(i => i.Session.Id == sessionId);
+            return _applicationManagerDbContext.Identities.SingleOrDefaultAsync(i => i.Session.Id == sessionId);
         }
     }
 }

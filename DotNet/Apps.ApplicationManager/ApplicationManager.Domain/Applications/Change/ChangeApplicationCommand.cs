@@ -1,4 +1,5 @@
-﻿using Common.Domain.Validation;
+﻿using System.Threading.Tasks;
+using Common.Domain.Validation;
 using FluentValidation;
 
 namespace ApplicationManager.Domain.Applications.Change
@@ -12,11 +13,14 @@ namespace ApplicationManager.Domain.Applications.Change
             _validator = validator;
         }
 
-        public void Execute(Application application, ChangeApplicationDdto changeApplicationDdto)
+        public Task ExecuteAsync(Application application,
+            ChangeApplicationDdto changeApplicationDdto)
         {
             _validator.ValidateAndThrow(changeApplicationDdto);
 
             application.Change(changeApplicationDdto);
+
+            return Task.CompletedTask;
         }
     }
 }

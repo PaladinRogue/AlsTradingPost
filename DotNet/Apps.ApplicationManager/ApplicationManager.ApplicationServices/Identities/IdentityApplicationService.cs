@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices.Identities.Models;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities;
@@ -79,11 +80,11 @@ namespace ApplicationManager.ApplicationServices.Identities
             _resendConfirmIdentityCommand = resendConfirmIdentityCommand;
         }
 
-        public IdentityAdto Get(GetIdentityAdto getIdentityAdto)
+        public async Task<IdentityAdto> GetAsync(GetIdentityAdto getIdentityAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
-                Identity identity = _identityQueryRepository.GetById(getIdentityAdto.Id);
+                Identity identity = await _identityQueryRepository.GetByIdAsync(getIdentityAdto.Id);
 
                 if (identity == null)
                 {
@@ -100,20 +101,20 @@ namespace ApplicationManager.ApplicationServices.Identities
             }
         }
 
-        public void ResetPassword(ResetPasswordAdto resetPasswordAdto)
+        public async Task ResetPasswordAsync(ResetPasswordAdto resetPasswordAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
                 try
                 {
-                    Identity identity = _resetPasswordCommand.Execute(new ResetPasswordCommandDdto
+                    Identity identity = await _resetPasswordCommand.ExecuteAsync(new ResetPasswordCommandDdto
                     {
                         Token = resetPasswordAdto.Token,
                         Password = resetPasswordAdto.Password,
                         ConfirmPassword = resetPasswordAdto.ConfirmPassword
                     });
 
-                    _identityCommandRepository.Update(identity);
+                   await _identityCommandRepository.UpdateAsync(identity);
 
                     transaction.Commit();
                 }
@@ -136,13 +137,13 @@ namespace ApplicationManager.ApplicationServices.Identities
             }
         }
 
-        public void ForgotPassword(ForgotPasswordAdto forgotPasswordAdto)
+        public async Task ForgotPasswordAsync(ForgotPasswordAdto forgotPasswordAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
                 try
                 {
-                    Identity identity = _forgotPasswordCommand.Execute(new ForgotPasswordCommandDdto
+                    Identity identity = await _forgotPasswordCommand.ExecuteAsync(new ForgotPasswordCommandDdto
                     {
                         EmailAddress = forgotPasswordAdto.EmailAddress
                     });
@@ -152,7 +153,7 @@ namespace ApplicationManager.ApplicationServices.Identities
                         return;
                     }
 
-                    _identityCommandRepository.Update(identity);
+                    await _identityCommandRepository.UpdateAsync(identity);
 
                     transaction.Commit();
                 }
@@ -166,25 +167,25 @@ namespace ApplicationManager.ApplicationServices.Identities
             }
         }
 
-        public void ConfirmIdentity(ConfirmIdentityAdto confirmIdentityAdto)
+        public async Task ConfirmIdentityAsync(ConfirmIdentityAdto confirmIdentityAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
                 try
                 {
-                    Identity identity = _identityCommandRepository.GetById(confirmIdentityAdto.IdentityId);
+                    Identity identity = await _identityCommandRepository.GetByIdAsync(confirmIdentityAdto.IdentityId);
 
                     if (identity == null)
                     {
                         throw new BusinessApplicationException(ExceptionType.NotFound, "No identity found to confirm identity");
                     }
 
-                    _confirmIdentityCommand.Execute(identity, new ConfirmIdentityCommandDdto
+                    await _confirmIdentityCommand.ExecuteAsync(identity, new ConfirmIdentityCommandDdto
                     {
                         Token = confirmIdentityAdto.Token
                     });
 
-                    _identityCommandRepository.Update(identity);
+                    await _identityCommandRepository.UpdateAsync(identity);
 
                     transaction.Commit();
                 }
@@ -199,11 +200,11 @@ namespace ApplicationManager.ApplicationServices.Identities
             }
         }
 
-        public PasswordIdentityAdto GetPasswordIdentity(GetPasswordIdentityAdto getPasswordIdentityAdto)
+        public async Task<PasswordIdentityAdto> GetPasswordIdentityAsync(GetPasswordIdentityAdto getPasswordIdentityAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
-                Identity identity = _identityQueryRepository.GetById(getPasswordIdentityAdto.IdentityId);
+                Identity identity = await _identityQueryRepository.GetByIdAsync(getPasswordIdentityAdto.IdentityId);
 
                 if (identity == null)
                 {
@@ -228,30 +229,30 @@ namespace ApplicationManager.ApplicationServices.Identities
             }
         }
 
-        public PasswordIdentityAdto ChangePassword(ChangePasswordAdto changePasswordAdto)
+        public async Task<PasswordIdentityAdto> ChangePasswordAsync(ChangePasswordAdto changePasswordAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
                 try
                 {
-                    Identity identity = _identityCommandRepository.GetWithConcurrencyCheck(changePasswordAdto.IdentityId, changePasswordAdto.Version);
+                    Identity identity = await _identityCommandRepository.GetWithConcurrencyCheckAsync(changePasswordAdto.IdentityId, changePasswordAdto.Version);
 
                     if (identity == null)
                     {
                         throw new BusinessApplicationException(ExceptionType.NotFound, "Identity does not exist");
                     }
 
-                    _changePasswordCommand.Execute(identity, new ChangePasswordCommandDdto
+                    await _changePasswordCommand.ExecuteAsync(identity, new ChangePasswordCommandDdto
                     {
                         Password = changePasswordAdto.Password,
                         ConfirmPassword = changePasswordAdto.ConfirmPassword
                     });
 
-                    _identityCommandRepository.Update(identity);
+                    await _identityCommandRepository.UpdateAsync(identity);
 
                     transaction.Commit();
 
-                    return GetPasswordIdentity(new GetPasswordIdentityAdto
+                    return await GetPasswordIdentityAsync(new GetPasswordIdentityAdto
                     {
                         IdentityId = identity.Id
                     });
@@ -275,15 +276,15 @@ namespace ApplicationManager.ApplicationServices.Identities
             }
         }
 
-        public PasswordIdentityAdto RegisterPassword(RegisterPasswordAdto registerPasswordAdto)
+        public async Task<PasswordIdentityAdto> RegisterPasswordAsync(RegisterPasswordAdto registerPasswordAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
                 try
                 {
-                    Identity identity = _createIdentityCommand.Execute();
+                    Identity identity = await _createIdentityCommand.ExecuteAsync();
 
-                    PasswordIdentity passwordIdentity = _registerPasswordCommand.Execute(identity, GetAuthenticationGrantTypePassword(), new RegisterPasswordCommandDdto
+                    PasswordIdentity passwordIdentity = await _registerPasswordCommand.ExecuteAsync(identity, await GetAuthenticationGrantTypePasswordAsync(), new RegisterPasswordCommandDdto
                     {
                         Identifier = registerPasswordAdto.Identifier,
                         Password = registerPasswordAdto.Password,
@@ -291,7 +292,7 @@ namespace ApplicationManager.ApplicationServices.Identities
                         EmailAddress = registerPasswordAdto.EmailAddress
                     });
 
-                    _identityCommandRepository.Add(identity);
+                    await _identityCommandRepository.AddAsync(identity);
 
                     transaction.Commit();
 
@@ -310,30 +311,30 @@ namespace ApplicationManager.ApplicationServices.Identities
             }
         }
 
-        public RefreshTokenIdentityAdto CreateRefreshToken(CreateRefreshTokenAdto createRefreshTokenAdto)
+        public async Task<RefreshTokenIdentityAdto> CreateRefreshTokenAsync(CreateRefreshTokenAdto createRefreshTokenAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
                 try
                 {
-                    Identity identity = _identityCommandRepository.GetById(createRefreshTokenAdto.IdentityId);
+                    Identity identity = await _identityCommandRepository.GetByIdAsync(createRefreshTokenAdto.IdentityId);
 
                     if (identity == null)
                     {
                         throw new BusinessApplicationException(ExceptionType.NotFound, "Identity not found");
                     }
 
-                    AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken =
-                        (AuthenticationGrantTypeRefreshToken) _authenticationServiceCommandRepository.GetSingle(a => a is AuthenticationGrantTypeRefreshToken);
+                    AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken = (AuthenticationGrantTypeRefreshToken) await
+                         _authenticationServiceCommandRepository.GetSingleAsync(a => a is AuthenticationGrantTypeRefreshToken);
 
                     if (authenticationGrantTypeRefreshToken == null)
                     {
                         throw new BusinessApplicationException(ExceptionType.NotFound, "Refresh tokens are not configured");
                     }
 
-                    RefreshTokenIdentityDdto refreshTokenIdentityDdto = _createRefreshTokenCommand.Execute(identity, authenticationGrantTypeRefreshToken);
+                    RefreshTokenIdentityDdto refreshTokenIdentityDdto = await _createRefreshTokenCommand.ExecuteAsync(identity, authenticationGrantTypeRefreshToken);
 
-                    _identityCommandRepository.Update(identity);
+                    await _identityCommandRepository.UpdateAsync(identity);
 
                     transaction.Commit();
 
@@ -349,22 +350,22 @@ namespace ApplicationManager.ApplicationServices.Identities
             }
         }
 
-        public void ResendConfirmIdentity(ResendConfirmIdentityAdto resendConfirmIdentityAdto)
+        public async Task ResendConfirmIdentityAsync(ResendConfirmIdentityAdto resendConfirmIdentityAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
                 try
                 {
-                    Identity identity = _identityCommandRepository.GetById(resendConfirmIdentityAdto.IdentityId);
+                    Identity identity = await _identityCommandRepository.GetByIdAsync(resendConfirmIdentityAdto.IdentityId);
 
                     if (identity == null)
                     {
                         throw new BusinessApplicationException(ExceptionType.Unauthorized, "No identity exists");
                     }
 
-                    _resendConfirmIdentityCommand.Execute(identity);
+                    await _resendConfirmIdentityCommand.ExecuteAsync(identity);
 
-                    _identityCommandRepository.Update(identity);
+                    await _identityCommandRepository.UpdateAsync(identity);
 
                     transaction.Commit();
                 }
@@ -375,28 +376,28 @@ namespace ApplicationManager.ApplicationServices.Identities
             }
         }
 
-        public void Logout(LogoutAdto logoutAdto)
+        public async Task LogoutAsync(LogoutAdto logoutAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
-                Identity identity = _identityCommandRepository.GetById(logoutAdto.IdentityId);
+                Identity identity = await _identityCommandRepository.GetByIdAsync(logoutAdto.IdentityId);
 
                 if (identity == null)
                 {
                     throw new BusinessApplicationException(ExceptionType.NotFound, "Identity does not exist");
                 }
 
-                _logoutCommand.Execute(identity);
+                await _logoutCommand.ExecuteAsync(identity);
 
-                _identityCommandRepository.Update(identity);
+                await _identityCommandRepository.UpdateAsync(identity);
 
                 transaction.Commit();
             }
         }
 
-        private AuthenticationGrantTypePassword GetAuthenticationGrantTypePassword()
+        private async Task<AuthenticationGrantTypePassword> GetAuthenticationGrantTypePasswordAsync()
         {
-            AuthenticationService authenticationService = _authenticationServiceCommandRepository.GetSingle(s => s is AuthenticationGrantTypePassword);
+            AuthenticationService authenticationService = await _authenticationServiceCommandRepository.GetSingleAsync(s => s is AuthenticationGrantTypePassword);
 
             if (!(authenticationService is AuthenticationGrantTypePassword authenticationGrantTypePassword))
             {

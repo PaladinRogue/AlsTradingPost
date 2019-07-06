@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Common.Domain.Exceptions;
 
 namespace Common.Domain.Persistence
@@ -10,6 +11,6 @@ namespace Common.Domain.Persistence
         /// <param name="predicate">A predicate to test an entity for against.</param>
         /// <returns>The single entity <typeparamref name="T"/>, or null if no such entity is found.</returns>
         /// <exception cref="DomainException">More than one entity is found which matches the given <paramref name="predicate">predicate</paramref>.</exception>
-        T GetSingle(Expression<Func<T, bool>> predicate);
+        Task<T> GetSingleAsync(Expression<Func<T, bool>> predicate);
     }
 }

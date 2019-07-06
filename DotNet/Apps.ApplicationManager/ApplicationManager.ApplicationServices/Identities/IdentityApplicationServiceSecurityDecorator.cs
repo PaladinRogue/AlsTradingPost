@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices.Identities.Authorisation;
 using ApplicationManager.ApplicationServices.Identities.Models;
 using Common.Authorisation;
@@ -20,63 +21,63 @@ namespace ApplicationManager.ApplicationServices.Identities
             _identityApplicationService = identityApplicationService;
         }
 
-        public IdentityAdto Get(GetIdentityAdto getIdentityAdto)
+        public Task<IdentityAdto> GetAsync(GetIdentityAdto getIdentityAdto)
         {
-            return _securityApplicationService.Secure(() => _identityApplicationService.Get(getIdentityAdto),
+            return _securityApplicationService.SecureAsync(() => _identityApplicationService.GetAsync(getIdentityAdto),
                 IdentityAuthorisationContext.Create(getIdentityAdto.Id, AuthorisationAction.Get));
         }
 
-        public void ResetPassword(ResetPasswordAdto resetPasswordAdto)
+        public Task ResetPasswordAsync(ResetPasswordAdto resetPasswordAdto)
         {
-            _securityApplicationService.Secure(() => { _identityApplicationService.ResetPassword(resetPasswordAdto); },
+            return _securityApplicationService.SecureAsync(() => _identityApplicationService.ResetPasswordAsync(resetPasswordAdto),
                 DefaultAuthorisationContext.Create(AuthorisationResource.Identity, AuthorisationAction.Create));
         }
 
-        public void ForgotPassword(ForgotPasswordAdto forgotPasswordAdto)
+        public Task ForgotPasswordAsync(ForgotPasswordAdto forgotPasswordAdto)
         {
-            _securityApplicationService.Secure(() => { _identityApplicationService.ForgotPassword(forgotPasswordAdto); },
+            return _securityApplicationService.SecureAsync(() => _identityApplicationService.ForgotPasswordAsync(forgotPasswordAdto),
                 DefaultAuthorisationContext.Create(AuthorisationResource.Identity, AuthorisationAction.Create));
         }
 
-        public void ConfirmIdentity(ConfirmIdentityAdto confirmIdentityAdto)
+        public Task ConfirmIdentityAsync(ConfirmIdentityAdto confirmIdentityAdto)
         {
-            _securityApplicationService.Secure(() => { _identityApplicationService.ConfirmIdentity(confirmIdentityAdto); },
+            return _securityApplicationService.SecureAsync(() => _identityApplicationService.ConfirmIdentityAsync(confirmIdentityAdto),
                 IdentityAuthorisationContext.Create(confirmIdentityAdto.IdentityId, AuthorisationAction.Update));
         }
 
-        public PasswordIdentityAdto GetPasswordIdentity(GetPasswordIdentityAdto getPasswordIdentityAdto)
+        public Task<PasswordIdentityAdto> GetPasswordIdentityAsync(GetPasswordIdentityAdto getPasswordIdentityAdto)
         {
-            return _securityApplicationService.Secure(() => _identityApplicationService.GetPasswordIdentity(getPasswordIdentityAdto),
+            return _securityApplicationService.SecureAsync(() => _identityApplicationService.GetPasswordIdentityAsync(getPasswordIdentityAdto),
                 IdentityAuthorisationContext.Create(getPasswordIdentityAdto.IdentityId, AuthorisationAction.Get));
         }
 
-        public PasswordIdentityAdto ChangePassword(ChangePasswordAdto changePasswordAdto)
+        public Task<PasswordIdentityAdto> ChangePasswordAsync(ChangePasswordAdto changePasswordAdto)
         {
-            return _securityApplicationService.Secure(() => _identityApplicationService.ChangePassword(changePasswordAdto),
+            return _securityApplicationService.SecureAsync(() => _identityApplicationService.ChangePasswordAsync(changePasswordAdto),
                 IdentityAuthorisationContext.Create(changePasswordAdto.IdentityId, AuthorisationAction.Update));
         }
 
-        public PasswordIdentityAdto RegisterPassword(RegisterPasswordAdto registerPasswordAdto)
+        public Task<PasswordIdentityAdto> RegisterPasswordAsync(RegisterPasswordAdto registerPasswordAdto)
         {
-            return _securityApplicationService.Secure(() => _identityApplicationService.RegisterPassword(registerPasswordAdto),
+            return _securityApplicationService.SecureAsync(() => _identityApplicationService.RegisterPasswordAsync(registerPasswordAdto),
                 DefaultAuthorisationContext.Create(AuthorisationResource.Identity, AuthorisationAction.Create));
         }
 
-        public RefreshTokenIdentityAdto CreateRefreshToken(CreateRefreshTokenAdto createRefreshTokenAdto)
+        public Task<RefreshTokenIdentityAdto> CreateRefreshTokenAsync(CreateRefreshTokenAdto createRefreshTokenAdto)
         {
-            return _securityApplicationService.Secure(() => _identityApplicationService.CreateRefreshToken(createRefreshTokenAdto),
-                IdentityAuthorisationContext.Create(createRefreshTokenAdto.IdentityId, AuthorisationAction.Create));
+            return _securityApplicationService.SecureAsync(() => _identityApplicationService.CreateRefreshTokenAsync(createRefreshTokenAdto),
+                IdentityAuthorisationContext.Create(createRefreshTokenAdto.IdentityId, AuthorisationAction.Update));
         }
 
-        public void ResendConfirmIdentity(ResendConfirmIdentityAdto resendConfirmIdentityAdto)
+        public Task ResendConfirmIdentityAsync(ResendConfirmIdentityAdto resendConfirmIdentityAdto)
         {
-            _securityApplicationService.Secure(() => { _identityApplicationService.ResendConfirmIdentity(resendConfirmIdentityAdto); },
-                IdentityAuthorisationContext.Create(resendConfirmIdentityAdto.IdentityId, AuthorisationAction.Create));
+            return _securityApplicationService.SecureAsync(() => _identityApplicationService.ResendConfirmIdentityAsync(resendConfirmIdentityAdto),
+                IdentityAuthorisationContext.Create(resendConfirmIdentityAdto.IdentityId, AuthorisationAction.Update));
         }
 
-        public void Logout(LogoutAdto logoutAdto)
+        public Task LogoutAsync(LogoutAdto logoutAdto)
         {
-            _securityApplicationService.Secure(() => { _identityApplicationService.Logout(logoutAdto); },
+            return _securityApplicationService.SecureAsync(() => _identityApplicationService.LogoutAsync(logoutAdto),
                 IdentityAuthorisationContext.Create(logoutAdto.IdentityId, AuthorisationAction.Update));
         }
     }

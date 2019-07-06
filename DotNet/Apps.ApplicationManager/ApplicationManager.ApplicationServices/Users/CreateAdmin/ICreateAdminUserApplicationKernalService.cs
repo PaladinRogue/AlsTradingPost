@@ -1,9 +1,10 @@
+using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices.Users.Models;
 
 namespace ApplicationManager.ApplicationServices.Users.CreateAdmin
 {
     public interface ICreateAdminUserApplicationKernalService
     {
-        void Create(CreateUserAdto createUserAdto);
+        Task CreateAsync(CreateUserAdto createUserAdto);
     }
 }

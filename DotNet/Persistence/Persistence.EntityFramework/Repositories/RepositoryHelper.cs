@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Entities;
 using Common.Domain.Exceptions;
+using Common.Domain.Models;
 using Common.Resources.Extensions;
 using Common.Resources.Sorting;
 using Microsoft.EntityFrameworkCore;
@@ -13,41 +15,40 @@ namespace Persistence.EntityFramework.Repositories
 {
     public static class RepositoryHelper
     {
-        public static IQueryable<T> Get<T>(
+        public static Task<IQueryable<T>> GetAsync<T>(
             IQueryable<T> results,
             IList<SortBy> sort,
             Expression<Func<T, bool>> predicate = null) where T : IEntity
         {
             IQueryable<T> filteredResults = Filter(results, predicate);
-            if (sort == null || !sort.Any()) return filteredResults;
+            if (sort == null || !sort.Any()) return Task.FromResult(filteredResults);
 
             SortBy firstSort = sort.First();
             IOrderedQueryable<T> orderedResults = OrderBy(filteredResults, firstSort.PropertyName.CreatePropertyAccessor<T, object>(), firstSort.IsAscending);
             orderedResults = sort.Skip(1).Aggregate(orderedResults, (current, sortBy) => ThenBy(current, sortBy.PropertyName.CreatePropertyAccessor<T, object>(), sortBy.IsAscending));
 
-            return orderedResults;
+            return Task.FromResult((IQueryable<T>) orderedResults);
         }
 
-        public static IQueryable<T> GetPage<T>(
+        public static Task<IPagedResult<T>> GetPage<T>(
             IQueryable<T> results,
-            int pageSize, int pageOffset, out int totalResults,
+            int pageSize, int pageOffset,
             IList<SortBy> sort,
             Expression<Func<T, bool>> predicate = null) where T : IEntity
         {
             IQueryable<T> filteredResults = Filter(results, predicate);
-            if (sort == null || !sort.Any()) return GetPage(filteredResults, pageSize, pageOffset, out totalResults);
+            if (sort == null || !sort.Any()) return GetPageAsync(filteredResults, pageSize, pageOffset);
 
             SortBy firstSort = sort.First();
             IOrderedQueryable<T> orderedResults = OrderBy(filteredResults, firstSort.PropertyName.CreatePropertyAccessor<T, object>(), firstSort.IsAscending);
             orderedResults = sort.Skip(1).Aggregate(orderedResults, (current, sortBy) => ThenBy(current, sortBy.PropertyName.CreatePropertyAccessor<T, object>(), sortBy.IsAscending));
 
-            return GetPage(orderedResults ?? filteredResults, pageSize, pageOffset, out totalResults);
+            return GetPageAsync(orderedResults ?? filteredResults, pageSize, pageOffset);
         }
 
-
-        public static bool CheckExists<T>(IQueryable<T> results, Expression<Func<T, bool>> predicate) where T : IEntity
+        public static Task<bool> CheckExistsAsync<T>(IQueryable<T> results, Expression<Func<T, bool>> predicate) where T : IEntity
         {
-            return Filter(results, predicate).Any();
+            return Filter(results, predicate).AnyAsync();
         }
 
         /// <summary>
@@ -60,7 +61,7 @@ namespace Persistence.EntityFramework.Repositories
         /// <returns></returns>
         /// <exception cref="ConcurrencyDomainException"></exception>
         /// <exception cref="NotFoundDomainException"></exception>
-        public static T GetWithConcurrencyCheck<T>(IQueryable<T> results, Guid id, IConcurrencyVersion version) where T : IVersionedEntity
+        public static async Task<T> GetWithConcurrencyCheckAsync<T>(IQueryable<T> results, Guid id, IConcurrencyVersion version) where T : IVersionedEntity
         {
             if (version == null)
             {
@@ -69,7 +70,7 @@ namespace Persistence.EntityFramework.Repositories
 
             try
             {
-                T versionedEntity = results.SingleOrDefault(e => e.Id == id);
+                T versionedEntity = await results.SingleOrDefaultAsync(e => e.Id == id);
 
                 if (versionedEntity == null)
                 {
@@ -89,11 +90,11 @@ namespace Persistence.EntityFramework.Repositories
             }
         }
 
-        public static T GetById<T>(IQueryable<T> results, Guid id) where T : IEntity
+        public static async Task<T> GetByIdAsync<T>(IQueryable<T> results, Guid id) where T : IEntity
         {
             try
             {
-                return Filter(results, e => e.Id == id).SingleOrDefault();
+                return await Filter(results, e => e.Id == id).SingleOrDefaultAsync();
             }
             catch (InvalidOperationException ex)
             {
@@ -101,11 +102,11 @@ namespace Persistence.EntityFramework.Repositories
             }
         }
 
-        public static T GetSingle<T>(IQueryable<T> results, Expression<Func<T, bool>> predicate)
+        public static async Task<T> GetSingleAsync<T>(IQueryable<T> results, Expression<Func<T, bool>> predicate)
         {
             try
             {
-                return Filter(results, predicate).SingleOrDefault();
+                return await Filter(results, predicate).SingleOrDefaultAsync();
             }
             catch (InvalidOperationException ex)
             {
@@ -122,15 +123,15 @@ namespace Persistence.EntityFramework.Repositories
         /// <typeparam name="T"></typeparam>
         /// <exception cref="ConcurrencyDomainException"></exception>
         /// <exception cref="CreateDomainException"></exception>
-        public static void Add<T>(DbSet<T> dbSet, DbContext context, T entity) where T : class, IVersionedEntity
+        public static async Task AddAsync<T>(DbSet<T> dbSet, DbContext context, T entity) where T : class, IVersionedEntity
         {
             try
             {
                 entity.UpdateVersion();
 
-                dbSet.Add(entity);
+                await dbSet.AddAsync(entity);
 
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException e)
             {
@@ -151,7 +152,7 @@ namespace Persistence.EntityFramework.Repositories
         /// <typeparam name="T"></typeparam>
         /// <exception cref="ConcurrencyDomainException"></exception>
         /// <exception cref="UpdateDomainException"></exception>
-        public static void Update<T>(DbSet<T> dbSet, DbContext context, T entity) where T : class, IVersionedEntity
+        public static async Task UpdateAsync<T>(DbSet<T> dbSet, DbContext context, T entity) where T : class, IVersionedEntity
         {
             try
             {
@@ -159,7 +160,7 @@ namespace Persistence.EntityFramework.Repositories
 
                 dbSet.Update(entity);
 
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException e)
             {
@@ -180,15 +181,15 @@ namespace Persistence.EntityFramework.Repositories
         /// <typeparam name="T"></typeparam>
         /// <exception cref="ConcurrencyDomainException"></exception>
         /// <exception cref="DeleteDomainException"></exception>
-        public static void Delete<T>(DbSet<T> dbSet, DbContext context, Guid id) where T : class, IVersionedEntity
+        public static async Task DeleteAsync<T>(DbSet<T> dbSet, DbContext context, Guid id) where T : class, IVersionedEntity
         {
-            T entity = GetById(dbSet, id);
+            T entity = await GetByIdAsync(dbSet, id);
 
             try
             {
                 dbSet.Remove(entity);
 
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException e)
             {
@@ -227,11 +228,9 @@ namespace Persistence.EntityFramework.Repositories
             return results;
         }
 
-        private static IQueryable<T> GetPage<T>(IQueryable<T> results, int pageSize, int pageOffset, out int totalResults) where T : IEntity
+        private static async Task<IPagedResult<T>> GetPageAsync<T>(IQueryable<T> results, int pageSize, int pageOffset) where T : IEntity
         {
-            totalResults = results.Count();
-
-            return results.Skip(pageOffset).Take(pageSize);
+            return PagedResult<T>.Create(results.Skip(pageOffset).Take(pageSize), await results.CountAsync());
         }
     }
 }

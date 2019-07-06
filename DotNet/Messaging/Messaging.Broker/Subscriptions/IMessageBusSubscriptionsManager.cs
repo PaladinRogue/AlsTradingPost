@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Common.Messaging.Infrastructure;
-using Common.Messaging.Infrastructure.Interfaces;
 using Common.Messaging.Infrastructure.Messages;
 using Common.Messaging.Infrastructure.Subscribers;
 
@@ -13,7 +13,7 @@ namespace Messaging.Broker.Subscriptions
 
         event EventHandler<string> OnMessageRemoved;
 
-        void AddSubscription<T, TH>(Action<T> handler)
+        void AddSubscription<T, TH>(Func<T, Task> asyncHandler)
             where T : IMessage
             where TH : IMessageSubscriber<T>;
 

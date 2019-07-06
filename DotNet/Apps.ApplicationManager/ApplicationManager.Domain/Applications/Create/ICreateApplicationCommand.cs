@@ -1,7 +1,9 @@
-﻿namespace ApplicationManager.Domain.Applications.Create
+﻿using System.Threading.Tasks;
+
+namespace ApplicationManager.Domain.Applications.Create
 {
     public interface ICreateApplicationCommand
     {
-        Application Execute(CreateApplicationDdto createApplicationDdto);
+        Task<Application> ExecuteAsync(CreateApplicationDdto createApplicationDdto);
     }
 }

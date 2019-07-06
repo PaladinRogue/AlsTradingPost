@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ApplicationManager.Domain.NotificationTypes;
 
 namespace ApplicationManager.ApplicationServices.Notifications.Audiences
@@ -10,6 +11,6 @@ namespace ApplicationManager.ApplicationServices.Notifications.Audiences
 
         IEnumerable<string> NotificationTypes { get; }
 
-        IEnumerable<string> GetAudience(Guid identifier);
+        Task<IEnumerable<string>> GetAudienceAsync(Guid identifier);
     }
 }

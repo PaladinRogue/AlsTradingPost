@@ -1,7 +1,9 @@
 using System.Linq;
+using System.Threading.Tasks;
 using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.CheckPassword;
 using ApplicationManager.Domain.Identities.Queries;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationManager.Persistence.Identities
 {
@@ -19,17 +21,17 @@ namespace ApplicationManager.Persistence.Identities
             _checkPasswordCommand = checkPasswordCommand;
         }
 
-        public Identity Run(string identifier, string password)
+        public async Task<Identity> RunAsync(string identifier, string password)
         {
-            Identity identity = _applicationManagerDbContext.Identities
-                .SingleOrDefault(i => i.AuthenticationIdentities.OfType<PasswordIdentity>().Any(p => p.Identifier == identifier));
+            Identity identity = await _applicationManagerDbContext.Identities
+                .SingleOrDefaultAsync(i => i.AuthenticationIdentities.OfType<PasswordIdentity>().Any(p => p.Identifier == identifier));
 
-            if (!(identity?.AuthenticationIdentities.Single(a => a is PasswordIdentity) is PasswordIdentity passwordIdentity))
+            if (!(identity?.AuthenticationIdentities.SingleOrDefault(a => a is PasswordIdentity) is PasswordIdentity passwordIdentity))
             {
                 return null;
             }
 
-            return _checkPasswordCommand.Execute(passwordIdentity,
+            return await _checkPasswordCommand.ExecuteAsync(passwordIdentity,
                 new CheckPasswordDdto
                 {
                     Password = password

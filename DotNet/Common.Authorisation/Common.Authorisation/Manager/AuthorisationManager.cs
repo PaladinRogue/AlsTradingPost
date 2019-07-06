@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Common.Authorisation.Contexts;
 using Common.Authorisation.Policies;
 
@@ -13,14 +14,14 @@ namespace Common.Authorisation.Manager
             _authorisationPolicy = authorisationPolicy;
         }
 
-        public bool HasAccess(IAuthorisationContext authorisationContext)
+        public Task<bool> HasAccessAsync(IAuthorisationContext authorisationContext)
         {
-            return _authorisationPolicy.HasAccess(authorisationContext);
+            return _authorisationPolicy.HasAccessAsync(authorisationContext);
         }
 
-        public void DemandAccess(IAuthorisationContext authorisationContext)
+        public async Task DemandAccessAsync(IAuthorisationContext authorisationContext)
         {
-            if (!HasAccess(authorisationContext))
+            if (!await HasAccessAsync(authorisationContext))
             {
                 throw new UnauthorizedAccessException();
             }

@@ -1,10 +1,11 @@
 using System;
+using System.Threading.Tasks;
 using ApplicationManager.Domain.Identities.Projections;
 
 namespace ApplicationManager.Domain.Identities.Queries
 {
     public interface IGetTwoFactorAuthenticationIdentityByIdentityQuery
     {
-        TwoFactorAuthenticationIdentityProjection Run(Guid identityId);
+        Task<TwoFactorAuthenticationIdentityProjection> RunAsync(Guid identityId);
     }
 }

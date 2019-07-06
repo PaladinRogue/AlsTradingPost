@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
+
 namespace ApplicationManager.Domain.Identities.Login.RefreshToken
 {
     public interface IRefreshTokenLoginCommand
     {
-        Identity Execute(RefreshTokenLoginCommandDdto refreshTokenLoginCommandDdto);
+        Task<Identity> ExecuteAsync(RefreshTokenLoginCommandDdto refreshTokenLoginCommandDdto);
     }
 }

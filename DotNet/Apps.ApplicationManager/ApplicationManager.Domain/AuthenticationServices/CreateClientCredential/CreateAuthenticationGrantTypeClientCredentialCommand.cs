@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Common.Domain.Validation;
 using FluentValidation;
 
@@ -12,12 +13,11 @@ namespace ApplicationManager.Domain.AuthenticationServices.CreateClientCredentia
             _validator = validator;
         }
 
-        public AuthenticationGrantTypeClientCredential Execute(
-            CreateAuthenticationGrantTypeClientCredentialDdto createAuthenticationGrantTypeClientCredentialDdto)
+        public Task<AuthenticationGrantTypeClientCredential> ExecuteAsync(CreateAuthenticationGrantTypeClientCredentialDdto createAuthenticationGrantTypeClientCredentialDdto)
         {
             _validator.ValidateAndThrow(createAuthenticationGrantTypeClientCredentialDdto);
 
-            return AuthenticationGrantTypeClientCredential.Create(createAuthenticationGrantTypeClientCredentialDdto);
+            return Task.FromResult(AuthenticationGrantTypeClientCredential.Create(createAuthenticationGrantTypeClientCredentialDdto));
         }
     }
 }

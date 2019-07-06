@@ -1,8 +1,10 @@
-﻿namespace ApplicationManager.ApplicationServices.Applications.Register
+﻿using System.Threading.Tasks;
+
+namespace ApplicationManager.ApplicationServices.Applications.Register
 {
     public interface IRegisterApplicationKernalService
     {
-        void Register(RegisterApplicationAdto registerApplicationAdto);
+        Task RegisterAsync(RegisterApplicationAdto registerApplicationAdto);
     }
 }
 

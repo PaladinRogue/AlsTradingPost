@@ -1,16 +1,17 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices.AuthenticationServices.Models;
 
 namespace ApplicationManager.ApplicationServices.AuthenticationServices
 {
     public interface IAuthenticationServiceApplicationService
     {
-        IEnumerable<AuthenticationServiceAdto> GetAuthenticationServices();
+        Task<IEnumerable<AuthenticationServiceAdto>> GetAuthenticationServicesAsync();
 
-        ClientCredentialAdto CreateClientCredential(CreateClientCredentialAdto createClientCredentialAdto);
+        Task<ClientCredentialAdto> CreateClientCredential(CreateClientCredentialAdto createClientCredentialAdto);
 
-        ClientCredentialAdto GetClientCredential(GetClientCredentialAdto getClientCredentialAdto);
+        Task<ClientCredentialAdto> GetClientCredentialAsync(GetClientCredentialAdto getClientCredentialAdto);
 
-        ClientCredentialAdto ChangeClientCredential(ChangeClientCredentialAdto changeClientCredentialAdto);
+        Task<ClientCredentialAdto> ChangeClientCredentialAsync(ChangeClientCredentialAdto changeClientCredentialAdto);
     }
 }

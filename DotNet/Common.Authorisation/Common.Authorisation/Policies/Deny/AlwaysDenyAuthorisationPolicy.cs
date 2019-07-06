@@ -1,12 +1,13 @@
-﻿using Common.Authorisation.Contexts;
+﻿using System.Threading.Tasks;
+using Common.Authorisation.Contexts;
 
 namespace Common.Authorisation.Policies.Deny
 {
     public class AlwaysDenyAuthorisationPolicy : IAuthorisationPolicy
     {
-        public bool HasAccess(IAuthorisationContext authorisationContext)
+        public Task<bool> HasAccessAsync(IAuthorisationContext authorisationContext)
         {
-            return false;
+            return Task.FromResult(false);
         }
     }
 }

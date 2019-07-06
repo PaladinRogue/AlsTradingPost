@@ -134,13 +134,13 @@ namespace ApplicationManager.Setup
         public static void RegisterPersistenceServices(IConfiguration configuration, IServiceCollection services)
         {
 	        services.AddScoped<IGetTwoFactorAuthenticationIdentityByIdentityQuery, GetTwoFactorAuthenticationIdentityByIdentityQuery>();
-	        services.AddScoped<IPasswordIdentityIdentifierIsUniqueQuery, PasswordIdentityIdentifierIsUniqueQuery>();
+	        services.AddScoped<IPasswordIdentityIdentifierExistsQuery, PasswordIdentityIdentifierExistsQuery>();
 	        services.AddScoped<IGetIdentityByIdentifierAndPasswordQuery, GetIdentityByIdentifierAndPasswordQuery>();
 	        services.AddScoped<IGetIdentityByEmailAddressQuery, GetIdentityByEmailAddressQuery>();
 	        services.AddScoped<IGetIdentityByForgotPasswordTokenQuery, GetIdentityByForgotPasswordTokenQuery>();
 	        services.AddScoped<IGetIdentityBySessionQuery, GetIdentityBySessionQuery>();
 	        services.AddScoped<IGetIdentityByClientCredentialIdentifierQuery, GetIdentityByClientCredentialIdentifierQuery>();
-	        services.AddScoped<IPasswordIdentityEmailIsUniqueQuery, PasswordIdentityEmailIsUniqueQuery>();
+	        services.AddScoped<IPasswordIdentityEmailExistsQuery, PasswordIdentityEmailExistsQuery>();
 
 	        services.AddScoped<ICommandRepository<Application>, CommandRepository<Application>>();
 	        services.AddScoped<ICommandRepository<AuthenticationService>, CommandRepository<AuthenticationService>>();

@@ -1,4 +1,5 @@
-﻿using ApplicationManager.Domain.AuthenticationServices;
+﻿using System.Threading.Tasks;
+using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.Create;
 using ApplicationManager.Domain.Identities.ForgotPassword;
@@ -44,17 +45,17 @@ namespace ApplicationManager.ApplicationServices.Identities.CreateAdmin
             _forgotPasswordCommand = forgotPasswordCommand;
         }
 
-        public void Create(CreateAdminAuthenticationIdentityAdto createAdminAuthenticationIdentityAdto)
+        public async Task CreateAsync(CreateAdminAuthenticationIdentityAdto createAdminAuthenticationIdentityAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
                 try
                 {
-                    Identity identity = _createIdentityCommand.Execute();
+                    Identity identity = await _createIdentityCommand.ExecuteAsync();
 
                     string tempPassword = $"{String.RandomChar(20)}{String.RandomNumeric(3)}{String.RandomSpecial(3)}";
 
-                    _registerPasswordCommand.Execute(identity, GetAuthenticationGrantTypePassword(), new RegisterPasswordCommandDdto
+                    await _registerPasswordCommand.ExecuteAsync(identity, await GetAuthenticationGrantTypePassword(), new RegisterPasswordCommandDdto
                     {
                         Identifier = createAdminAuthenticationIdentityAdto.EmailAddress,
                         EmailAddress = createAdminAuthenticationIdentityAdto.EmailAddress,
@@ -62,14 +63,14 @@ namespace ApplicationManager.ApplicationServices.Identities.CreateAdmin
                         ConfirmPassword = tempPassword
                     });
 
-                    _commandRepository.Add(identity);
+                    await _commandRepository.AddAsync(identity);
 
-                    _forgotPasswordCommand.Execute(new ForgotPasswordCommandDdto
+                    await _forgotPasswordCommand.ExecuteAsync(new ForgotPasswordCommandDdto
                     {
                         EmailAddress = createAdminAuthenticationIdentityAdto.EmailAddress
                     });
 
-                    _commandRepository.Update(identity);
+                    await _commandRepository.UpdateAsync(identity);
 
                     Message.Send(CreateAdminIdentityMessage.Create(createAdminAuthenticationIdentityAdto.ApplicationSystemName, identity.Id));
 
@@ -82,9 +83,9 @@ namespace ApplicationManager.ApplicationServices.Identities.CreateAdmin
             }
         }
 
-        private AuthenticationGrantTypePassword GetAuthenticationGrantTypePassword()
+        private async Task<AuthenticationGrantTypePassword> GetAuthenticationGrantTypePassword()
         {
-            AuthenticationService authenticationService = _authenticationServiceCommandRepository.GetSingle(s => s is AuthenticationGrantTypePassword);
+            AuthenticationService authenticationService = await _authenticationServiceCommandRepository.GetSingleAsync(s => s is AuthenticationGrantTypePassword);
 
             if (!(authenticationService is AuthenticationGrantTypePassword authenticationGrantTypePassword))
             {

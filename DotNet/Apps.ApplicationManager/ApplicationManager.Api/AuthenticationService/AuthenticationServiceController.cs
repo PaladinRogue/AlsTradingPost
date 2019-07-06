@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices.AuthenticationServices;
 using ApplicationManager.ApplicationServices.AuthenticationServices.Models;
 using ApplicationManager.Setup.Infrastructure.Authorisation;
@@ -34,9 +35,9 @@ namespace ApplicationManager.Api.AuthenticationService
 
         [AllowAnonymous]
         [HttpGet("", Name = RouteDictionary.GetAuthenticationServices)]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            IEnumerable<AuthenticationServiceAdto> authenticationServiceAdtos = _authenticationServiceApplicationService.GetAuthenticationServices();
+            IEnumerable<AuthenticationServiceAdto> authenticationServiceAdtos = await _authenticationServiceApplicationService.GetAuthenticationServicesAsync();
 
             return Ok(_resourceBuilder.Build(new AuthenticationServicesResource
             {
@@ -55,9 +56,9 @@ namespace ApplicationManager.Api.AuthenticationService
         }
 
         [HttpPost("", Name = RouteDictionary.CreateAuthenticationService)]
-        public IActionResult Post(AuthenticationServiceTemplate template)
+        public async Task<IActionResult> Post(AuthenticationServiceTemplate template)
         {
-            ClientCredentialAdto clientCredentialAdto =
+            ClientCredentialAdto clientCredentialAdto = await
                 _authenticationServiceApplicationService.CreateClientCredential(_mapper.Map<AuthenticationServiceTemplate, CreateClientCredentialAdto>(template));
 
             return CreatedAtRoute(RouteDictionary.GetAuthenticationService, new {clientCredentialAdto.Id},
@@ -65,10 +66,10 @@ namespace ApplicationManager.Api.AuthenticationService
         }
 
         [HttpGet("{id}", Name = RouteDictionary.GetAuthenticationService)]
-        public IActionResult Get(Guid id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            ClientCredentialAdto clientCredentialAdto =
-                _authenticationServiceApplicationService.GetClientCredential(new GetClientCredentialAdto
+            ClientCredentialAdto clientCredentialAdto = await
+                _authenticationServiceApplicationService.GetClientCredentialAsync(new GetClientCredentialAdto
                 {
                     Id = id
                 });
@@ -77,7 +78,7 @@ namespace ApplicationManager.Api.AuthenticationService
         }
 
         [HttpPut("{id}", Name = RouteDictionary.ChangeAuthenticationService)]
-        public IActionResult Put(Guid id, AuthenticationServiceResource resource)
+        public async Task<IActionResult> Put(Guid id, AuthenticationServiceResource resource)
         {
             ChangeClientCredentialAdto changeClientCredentialAdto = new ChangeClientCredentialAdto
             {
@@ -91,8 +92,8 @@ namespace ApplicationManager.Api.AuthenticationService
                 Version = resource.Version
             };
 
-            ClientCredentialAdto clientCredentialAdto =
-                _authenticationServiceApplicationService.ChangeClientCredential(changeClientCredentialAdto);
+            ClientCredentialAdto clientCredentialAdto = await
+                _authenticationServiceApplicationService.ChangeClientCredentialAsync(changeClientCredentialAdto);
 
             return Ok(_resourceBuilder.Build(_mapper.Map<ClientCredentialAdto, AuthenticationServiceResource>(clientCredentialAdto)));
         }

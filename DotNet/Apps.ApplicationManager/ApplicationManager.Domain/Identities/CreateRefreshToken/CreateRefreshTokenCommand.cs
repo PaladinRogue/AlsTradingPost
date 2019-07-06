@@ -1,22 +1,19 @@
+using System.Threading.Tasks;
 using ApplicationManager.Domain.AuthenticationServices;
 
 namespace ApplicationManager.Domain.Identities.CreateRefreshToken
 {
     public class CreateRefreshTokenCommand : ICreateRefreshTokenCommand
     {
-        public RefreshTokenIdentityDdto Execute(Identity identity, AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken)
+        public Task<RefreshTokenIdentityDdto> ExecuteAsync(Identity identity,
+            AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken)
         {
             identity.CreateRefreshToken(authenticationGrantTypeRefreshToken, out string token);
 
-            return new RefreshTokenIdentityDdto
+            return Task.FromResult(new RefreshTokenIdentityDdto
             {
                 Token = token
-            };
+            });
         }
-    }
-
-    public class RefreshTokenIdentityDdto
-    {
-        public string Token { get; set; }
     }
 }

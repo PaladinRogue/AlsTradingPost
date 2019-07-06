@@ -64,28 +64,30 @@ namespace ApplicationManager.ApplicationServices.Authentication
             _clientCredentialLoginCommand = clientCredentialLoginCommand;
         }
 
-        public async Task<JwtAdto> Password(PasswordAdto passwordAdto)
+        public async Task<JwtAdto> PasswordAsync(PasswordAdto passwordAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
                 try
                 {
-                    if (!(_authenticationServiceCommandRepository.GetSingle(s => s is AuthenticationGrantTypePassword) is AuthenticationGrantTypePassword))
+                    if (!(await _authenticationServiceCommandRepository.GetSingleAsync(s => s is AuthenticationGrantTypePassword) is AuthenticationGrantTypePassword))
                     {
                         throw new BusinessApplicationException(ExceptionType.BadRequest, ErrorCodes.PasswordLoginNotConfigured, "Password logins are not configured");
                     }
 
-                    Identity identity = _passwordLoginCommand.Execute(new PasswordLoginCommandDdto
+                    Identity identity = await _passwordLoginCommand.ExecuteAsync(new PasswordLoginCommandDdto
                     {
                         Identifier = passwordAdto.Identifier,
                         Password = passwordAdto.Password
                     });
 
-                    _identityCommandRepository.Update(identity);
+                    await _identityCommandRepository.UpdateAsync(identity);
+
+                    JwtAdto jwtAdto = await _jwtFactory.GenerateJwtAsync<JwtAdto>(await GetClaimsIdentityAsync(identity), identity.Session.Id);
 
                     transaction.Commit();
 
-                    return await _jwtFactory.GenerateJwt<JwtAdto>(CreateClaimsIdentity(identity), identity.Session.Id);
+                    return jwtAdto;
                 }
                 catch (InvalidLoginDomainException)
                 {
@@ -98,28 +100,30 @@ namespace ApplicationManager.ApplicationServices.Authentication
             }
         }
 
-        public async Task<JwtAdto> RefreshToken(RefreshTokenAdto refreshTokenAdto)
+        public async Task<JwtAdto> RefreshTokenAsync(RefreshTokenAdto refreshTokenAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
                 try
                 {
-                    if (!(_authenticationServiceCommandRepository.GetSingle(s => s is AuthenticationGrantTypeRefreshToken) is AuthenticationGrantTypeRefreshToken))
+                    if (!(await _authenticationServiceCommandRepository.GetSingleAsync(s => s is AuthenticationGrantTypeRefreshToken) is AuthenticationGrantTypeRefreshToken))
                     {
                         throw new BusinessApplicationException(ExceptionType.BadRequest, ErrorCodes.RefreshTokenLoginNotConfigured, "Refresh token logins are not configured");
                     }
 
-                    Identity identity = _refreshTokenLoginCommand.Execute(new RefreshTokenLoginCommandDdto
+                    Identity identity = await _refreshTokenLoginCommand.ExecuteAsync(new RefreshTokenLoginCommandDdto
                     {
                         SessionId = refreshTokenAdto.SessionId,
                         RefreshToken = refreshTokenAdto.Token
                     });
 
-                    _identityCommandRepository.Update(identity);
+                    await _identityCommandRepository.UpdateAsync(identity);
+
+                    JwtAdto jwtAdto = await _jwtFactory.GenerateJwtAsync<JwtAdto>(await GetClaimsIdentityAsync(identity), identity.Session.Id);
 
                     transaction.Commit();
 
-                    return await _jwtFactory.GenerateJwt<JwtAdto>(CreateClaimsIdentity(identity), identity.Session.Id);
+                    return jwtAdto;
                 }
                 catch (InvalidLoginDomainException)
                 {
@@ -132,7 +136,7 @@ namespace ApplicationManager.ApplicationServices.Authentication
             }
         }
 
-        public async Task<JwtAdto> ClientCredential(ClientCredentialAdto clientCredentialAdto)
+        public async Task<JwtAdto> ClientCredentialAsync(ClientCredentialAdto clientCredentialAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
@@ -141,7 +145,7 @@ namespace ApplicationManager.ApplicationServices.Authentication
                     Guid.TryParse(clientCredentialAdto.State, out Guid authenticationServiceId);
 
                     AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential =
-                        (AuthenticationGrantTypeClientCredential) _authenticationServiceCommandRepository.GetSingle(
+                        (AuthenticationGrantTypeClientCredential) await _authenticationServiceCommandRepository.GetSingleAsync(
                             s => s is AuthenticationGrantTypeClientCredential && s.Id == authenticationServiceId);
 
                     if (authenticationGrantTypeClientCredential == null)
@@ -160,16 +164,18 @@ namespace ApplicationManager.ApplicationServices.Authentication
                         throw new BusinessApplicationException(ExceptionType.Unauthorized, "Could not validate access token");
                     }
 
-                    Identity identity = _clientCredentialLoginCommand.Execute(authenticationGrantTypeClientCredential, new ClientCredentialLoginCommandDdto
+                    Identity identity = await _clientCredentialLoginCommand.ExecuteAsync(authenticationGrantTypeClientCredential, new ClientCredentialLoginCommandDdto
                     {
                         Identifier = clientCredentialAuthenticationResult.Identifier
                     });
 
-                    _identityCommandRepository.Add(identity);
+                    await _identityCommandRepository.AddAsync(identity);
+
+                    JwtAdto jwtAdto = await _jwtFactory.GenerateJwtAsync<JwtAdto>(await GetClaimsIdentityAsync(identity), identity.Session.Id);
 
                     transaction.Commit();
 
-                    return await _jwtFactory.GenerateJwt<JwtAdto>(CreateClaimsIdentity(identity), identity.Session.Id);
+                    return jwtAdto;
                 }
                 catch (InvalidLoginDomainException)
                 {
@@ -182,9 +188,9 @@ namespace ApplicationManager.ApplicationServices.Authentication
             }
         }
 
-        private ClaimsIdentity CreateClaimsIdentity(Identity identity)
+        private async Task<ClaimsIdentity> GetClaimsIdentityAsync(Identity identity)
         {
-            User user = _userCommandRepository.GetSingle(u => u.Identity.Id == identity.Id);
+            User user = await _userCommandRepository.GetSingleAsync(u => u.Identity.Id == identity.Id);
 
             ClaimsBuilder claimsBuilder = ClaimsBuilder.CreateBuilder();
 

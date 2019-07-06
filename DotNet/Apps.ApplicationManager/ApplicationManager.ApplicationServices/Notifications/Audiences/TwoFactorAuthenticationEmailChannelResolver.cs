@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ApplicationManager.Domain.Identities.Projections;
 using ApplicationManager.Domain.Identities.Queries;
 using ApplicationManager.Domain.NotificationTypes;
@@ -25,9 +26,9 @@ namespace ApplicationManager.ApplicationServices.Notifications.Audiences
             NotificationNames.ForgotPassword
         };
 
-        public IEnumerable<string> GetAudience(Guid identifier)
+        public async Task<IEnumerable<string>> GetAudienceAsync(Guid identifier)
         {
-            TwoFactorAuthenticationIdentityProjection twoFactorAuthenticationIdentityProjection = _getTwoFactorAuthenticationIdentityByIdentityQuery.Run(identifier);
+            TwoFactorAuthenticationIdentityProjection twoFactorAuthenticationIdentityProjection = await _getTwoFactorAuthenticationIdentityByIdentityQuery.RunAsync(identifier);
 
             return new List<string>
             {

@@ -1,7 +1,10 @@
+using System.Threading.Tasks;
+
 namespace ApplicationManager.Domain.Identities.CheckPassword
 {
     public interface ICheckPasswordCommand
     {
-        bool Execute(PasswordIdentity passwordIdentity, CheckPasswordDdto checkPasswordDdto);
+        Task<bool> ExecuteAsync(PasswordIdentity passwordIdentity,
+            CheckPasswordDdto checkPasswordDdto);
     }
 }

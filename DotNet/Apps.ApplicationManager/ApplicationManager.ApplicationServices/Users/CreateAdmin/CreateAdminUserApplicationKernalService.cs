@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices.Users.Models;
 using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Users;
@@ -31,20 +32,20 @@ namespace ApplicationManager.ApplicationServices.Users.CreateAdmin
             _createUserCommand = createUserCommand;
         }
 
-        public void Create(CreateUserAdto createUserAdto)
+        public async Task CreateAsync(CreateUserAdto createUserAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
-                Identity identity = _queryRepository.GetById(createUserAdto.IdentityId);
+                Identity identity = await _queryRepository.GetByIdAsync(createUserAdto.IdentityId);
 
                 try
                 {
-                    User user = _createUserCommand.Execute(new CreateUserCommandDdto
+                    User user = await _createUserCommand.ExecuteAsync(new CreateUserCommandDdto
                     {
                         Identity = identity
                     });
 
-                    _commandRepository.Add(user);
+                    await _commandRepository.AddAsync(user);
                 }
                 catch (CreateDomainException e)
                 {

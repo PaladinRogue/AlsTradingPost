@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities.Queries;
 using ApplicationManager.Domain.Identities.RegisterClientCredential;
@@ -20,12 +21,12 @@ namespace ApplicationManager.Domain.Identities.Login.ClientCredential
             _validator = validator;
         }
 
-        public Identity Execute(AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential,
+        public async Task<Identity> ExecuteAsync(AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential,
             ClientCredentialLoginCommandDdto clientCredentialLoginCommandDdto)
         {
             _validator.ValidateAndThrow(clientCredentialLoginCommandDdto);
 
-            Identity identity = _getIdentityByClientCredentialIdentifierQuery.Run(authenticationGrantTypeClientCredential, clientCredentialLoginCommandDdto.Identifier);
+            Identity identity = await _getIdentityByClientCredentialIdentifierQuery.RunAsync(authenticationGrantTypeClientCredential, clientCredentialLoginCommandDdto.Identifier);
 
             if (identity == null)
             {

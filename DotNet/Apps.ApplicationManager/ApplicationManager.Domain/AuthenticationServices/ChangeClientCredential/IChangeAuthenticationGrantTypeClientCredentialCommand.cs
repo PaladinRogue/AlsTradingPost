@@ -1,9 +1,10 @@
+using System.Threading.Tasks;
+
 namespace ApplicationManager.Domain.AuthenticationServices.ChangeClientCredential
 {
     public interface IChangeAuthenticationGrantTypeClientCredentialCommand
     {
-        void Execute(
-            AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential,
+        Task ExecuteAsync(AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential,
             ChangeAuthenticationGrantTypeClientCredentialDdto changeAuthenticationGrantTypeClientCredentialDdto);
     }
 }

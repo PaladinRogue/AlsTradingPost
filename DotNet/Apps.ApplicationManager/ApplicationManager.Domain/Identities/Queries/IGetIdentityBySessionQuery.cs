@@ -1,9 +1,10 @@
 using System;
+using System.Threading.Tasks;
 
 namespace ApplicationManager.Domain.Identities.Queries
 {
     public interface IGetIdentityBySessionQuery
     {
-        Identity Run(Guid sessionId);
+        Task<Identity> RunAsync(Guid sessionId);
     }
 }

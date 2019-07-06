@@ -1,12 +1,13 @@
-﻿using Common.Authorisation.Contexts;
+﻿using System.Threading.Tasks;
+using Common.Authorisation.Contexts;
 
 namespace Common.Authorisation.Policies.Allow
 {
     public class AlwaysAllowAuthorisationPolicy : IAuthorisationPolicy
     {
-        public bool HasAccess(IAuthorisationContext authorisationContext)
+        public Task<bool> HasAccessAsync(IAuthorisationContext authorisationContext)
         {
-            return true;
+            return Task.FromResult(true);
         }
     }
 }

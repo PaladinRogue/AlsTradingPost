@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Common.ApplicationServices.Exceptions;
 using Common.Authorisation.Contexts;
 using Common.Authorisation.Manager;
@@ -14,13 +15,14 @@ namespace Common.Authorisation.ApplicationServices
             _authorisationManager = authorisationManager;
         }
 
-        public TOut Secure<TOut>(Func<TOut> function, IAuthorisationContext authorisationContext)
+        public async Task<TOut> SecureAsync<TOut>(Func<Task<TOut>> function,
+            IAuthorisationContext authorisationContext)
         {
             try
             {
-                _authorisationManager.DemandAccess(authorisationContext);
+                await _authorisationManager.DemandAccessAsync(authorisationContext);
 
-                return function();
+                return await function();
             }
             catch (UnauthorizedAccessException e)
             {
@@ -28,13 +30,14 @@ namespace Common.Authorisation.ApplicationServices
             }
         }
 
-        public void Secure(Action action, IAuthorisationContext authorisationContext)
+        public async Task SecureAsync(Func<Task> function,
+            IAuthorisationContext authorisationContext)
         {
             try
             {
-                _authorisationManager.DemandAccess(authorisationContext);
+                await _authorisationManager.DemandAccessAsync(authorisationContext);
 
-                action();
+                await function();
             }
             catch (UnauthorizedAccessException e)
             {

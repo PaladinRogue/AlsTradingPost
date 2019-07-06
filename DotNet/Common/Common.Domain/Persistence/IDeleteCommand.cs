@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Common.Domain.Exceptions;
 
 namespace Common.Domain.Persistence
@@ -9,6 +10,6 @@ namespace Common.Domain.Persistence
         /// <param name="id">The id of the entity to delete.</param>
         /// <exception cref="DeleteDomainException">Failed to delete <paramref name="id">entity</paramref>.</exception>
         /// <exception cref="ConcurrencyDomainException">Concurrency check has failed for given <paramref name="id"/>entity.</exception>
-        void Delete(Guid id);
+        Task DeleteAsync(Guid id);
     }
 }

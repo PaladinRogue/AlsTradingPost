@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
+
 namespace ApplicationManager.Domain.Users.Create
 {
     public interface ICreateUserCommand
     {
-        User Execute(CreateUserCommandDdto createUserCommandDdto);
+        Task<User> ExecuteAsync(CreateUserCommandDdto createUserCommandDdto);
     }
 }

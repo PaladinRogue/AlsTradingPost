@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Common.Domain.Validation;
 using FluentValidation;
 
@@ -12,13 +13,14 @@ namespace ApplicationManager.Domain.AuthenticationServices.ChangeClientCredentia
             _validator = validator;
         }
 
-        public void Execute(
-            AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential,
+        public Task ExecuteAsync(AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential,
             ChangeAuthenticationGrantTypeClientCredentialDdto changeAuthenticationGrantTypeClientCredentialDdto)
         {
             _validator.ValidateAndThrow(changeAuthenticationGrantTypeClientCredentialDdto);
 
             authenticationGrantTypeClientCredential.Change(changeAuthenticationGrantTypeClientCredentialDdto);
+
+            return Task.CompletedTask;
         }
     }
 }

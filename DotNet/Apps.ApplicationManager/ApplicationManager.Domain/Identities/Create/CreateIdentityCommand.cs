@@ -1,16 +1,12 @@
-using System.Collections.Generic;
-using ApplicationManager.Domain.Identities.Queries;
-using Common.Domain.Exceptions;
-using Common.Domain.Validation;
-using FluentValidation;
+using System.Threading.Tasks;
 
 namespace ApplicationManager.Domain.Identities.Create
 {
     public class CreateIdentityCommand : ICreateIdentityCommand
     {
-        public Identity Execute()
+        public Task<Identity> ExecuteAsync()
         {
-            return Identity.Create();
+            return Task.FromResult(Identity.Create());
         }
     }
 }

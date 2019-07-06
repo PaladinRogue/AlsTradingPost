@@ -1,7 +1,9 @@
-﻿namespace ApplicationManager.ApplicationServices.Identities.CreateAdmin
+﻿using System.Threading.Tasks;
+
+namespace ApplicationManager.ApplicationServices.Identities.CreateAdmin
 {
     public interface ICreateAdminAuthenticationIdentityKernalService
     {
-        void Create(CreateAdminAuthenticationIdentityAdto createAdminAuthenticationIdentityAdto);
+        Task CreateAsync(CreateAdminAuthenticationIdentityAdto createAdminAuthenticationIdentityAdto);
     }
 }

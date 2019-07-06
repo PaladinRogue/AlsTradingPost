@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Common.Domain.Aggregates;
 using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Exceptions;
@@ -19,40 +20,40 @@ namespace Persistence.EntityFramework.Repositories
 
         /// <exception cref="ConcurrencyDomainException"></exception>
         /// <exception cref="NotFoundDomainException"></exception>
-        public virtual T GetWithConcurrencyCheck(Guid id, IConcurrencyVersion version)
+        public virtual Task<T> GetWithConcurrencyCheckAsync(Guid id, IConcurrencyVersion version)
         {
-            return RepositoryHelper.GetWithConcurrencyCheck(Context.Set<T>(), id, version);
+            return RepositoryHelper.GetWithConcurrencyCheckAsync(Context.Set<T>(), id, version);
         }
 
-        public T GetById(Guid id)
+        public virtual Task<T> GetByIdAsync(Guid id)
         {
-            return RepositoryHelper.GetById(Context.Set<T>(), id);
+            return RepositoryHelper.GetByIdAsync(Context.Set<T>(), id);
         }
 
-        public virtual T GetSingle(Expression<Func<T, bool>> predicate)
+        public virtual Task<T> GetSingleAsync(Expression<Func<T, bool>> predicate)
         {
-            return RepositoryHelper.GetSingle(Context.Set<T>(), predicate);
+            return RepositoryHelper.GetSingleAsync(Context.Set<T>(), predicate);
         }
 
         /// <exception cref="ConcurrencyDomainException"></exception>
         /// <exception cref="UpdateDomainException"></exception>
-        public virtual void Update(T entity)
+        public virtual Task UpdateAsync(T entity)
         {
-            RepositoryHelper.Update(Context.Set<T>(), Context, entity);
+           return RepositoryHelper.UpdateAsync(Context.Set<T>(), Context, entity);
         }
 
         /// <exception cref="ConcurrencyDomainException"></exception>
         /// <exception cref="CreateDomainException"></exception>
-        public virtual void Add(T entity)
+        public virtual Task AddAsync(T entity)
         {
-            RepositoryHelper.Add(Context.Set<T>(), Context, entity);
+            return RepositoryHelper.AddAsync(Context.Set<T>(), Context, entity);
         }
 
         /// <exception cref="ConcurrencyDomainException"></exception>
         /// <exception cref="DeleteDomainException"></exception>
-        public virtual void Delete(Guid id)
+        public virtual Task DeleteAsync(Guid id)
         {
-            RepositoryHelper.Delete(Context.Set<T>(), Context, id);
+           return RepositoryHelper.DeleteAsync(Context.Set<T>(), Context, id);
         }
     }
 }

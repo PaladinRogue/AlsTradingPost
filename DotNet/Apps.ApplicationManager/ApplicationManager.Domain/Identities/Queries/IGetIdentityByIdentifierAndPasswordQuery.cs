@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
+
 namespace ApplicationManager.Domain.Identities.Queries
 {
     public interface IGetIdentityByIdentifierAndPasswordQuery
     {
-        Identity Run(string identifier, string password);
+        Task<Identity> RunAsync(string identifier, string password);
     }
 }

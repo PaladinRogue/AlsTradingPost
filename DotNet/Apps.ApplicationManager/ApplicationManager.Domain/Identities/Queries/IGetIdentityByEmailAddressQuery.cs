@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
+
 namespace ApplicationManager.Domain.Identities.Queries
 {
     public interface IGetIdentityByEmailAddressQuery
     {
-        Identity Run(string emailAddress);
+        Task<Identity> RunAsync(string emailAddress);
     }
 }

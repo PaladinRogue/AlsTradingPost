@@ -1,9 +1,10 @@
-﻿using Common.Authorisation.Contexts;
+﻿using System.Threading.Tasks;
+using Common.Authorisation.Contexts;
 
 namespace Common.Authorisation.Policies
 {
     public interface IAuthorisationPolicy
     {
-        bool HasAccess(IAuthorisationContext authorisationContext);
+        Task<bool> HasAccessAsync(IAuthorisationContext authorisationContext);
     }
 }

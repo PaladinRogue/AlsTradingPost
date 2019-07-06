@@ -118,6 +118,8 @@ namespace ApplicationManager.Persistence
 
             modelBuilder.Entity<User>()
                 .ToTable("Users");
+
+            ConfigureQueryTypes(modelBuilder);
         }
     }
 }

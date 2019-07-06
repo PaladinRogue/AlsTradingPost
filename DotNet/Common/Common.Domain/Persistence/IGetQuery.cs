@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Common.Resources.Sorting;
 
 namespace Common.Domain.Persistence
@@ -12,7 +13,7 @@ namespace Common.Domain.Persistence
         /// <param name="sort">The ordering to be applied.</param>
         /// <param name="predicate">The predicate of the entities to return.</param>
         /// <returns>Returns an enumerable entities of type <typeparamref name="T"/></returns>
-        IQueryable<T> Get(IList<SortBy> sort = null,
+        Task<IQueryable<T>> GetAsync(IList<SortBy> sort = null,
             Expression<Func<T, bool>> predicate = null);
     }
 }

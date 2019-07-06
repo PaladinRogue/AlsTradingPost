@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices.Users.CreateAdmin;
 using ApplicationManager.ApplicationServices.Users.Models;
 using AutoMapper;
@@ -33,13 +34,13 @@ namespace ApplicationManager.ApplicationServices.Subscribers
             _appSettings = appSettingsAccessor.Value;
         }
 
-        public override void Handle(CreateAdminIdentityMessage message)
+        public override async Task HandleAsync(CreateAdminIdentityMessage message)
         {
             try
             {
                 if (_appSettings.SystemName == message.ApplicationName)
                 {
-                    _createAdminUserApplicationKernalService.Create(_mapper.Map<CreateAdminIdentityMessage, CreateUserAdto>(message));
+                   await _createAdminUserApplicationKernalService.CreateAsync(_mapper.Map<CreateAdminIdentityMessage, CreateUserAdto>(message));
                 }
             }
             catch (BusinessApplicationException e)

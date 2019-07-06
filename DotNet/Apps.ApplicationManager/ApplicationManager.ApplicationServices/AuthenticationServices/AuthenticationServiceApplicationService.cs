@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices.AuthenticationServices.Models;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.AuthenticationServices.ChangeClientCredential;
@@ -45,11 +46,11 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
             _queryRepository = queryRepository;
         }
 
-        public IEnumerable<AuthenticationServiceAdto> GetAuthenticationServices()
+        public async Task<IEnumerable<AuthenticationServiceAdto>> GetAuthenticationServicesAsync()
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
-                IQueryable<AuthenticationService> authenticationServices = _queryRepository.Get();
+                IQueryable<AuthenticationService> authenticationServices = await _queryRepository.GetAsync();
 
                 IList<AuthenticationServiceAdto> authenticationServiceAdtos = new List<AuthenticationServiceAdto>();
 
@@ -64,6 +65,7 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
                                 AccessUrl = BuildClientAccessUrl(authenticationGrantTypeClientCredential)
                             });
                             break;
+                        // ReSharper disable once UnusedVariable - Because of switch case parameter is mandatory
                         case AuthenticationGrantTypePassword authenticationGrantTypePassword:
                             authenticationServiceAdtos.Add(new AuthenticationServiceAdto
                             {
@@ -79,17 +81,17 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
             }
         }
 
-        public ClientCredentialAdto CreateClientCredential(CreateClientCredentialAdto createClientCredentialAdto)
+        public async Task<ClientCredentialAdto> CreateClientCredential(CreateClientCredentialAdto createClientCredentialAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
                 try
                 {
                     AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential =
-                        _createAuthenticationGrantTypeClientCredentialCommand.Execute(
+                        await _createAuthenticationGrantTypeClientCredentialCommand.ExecuteAsync(
                             _mapper.Map<CreateClientCredentialAdto, CreateAuthenticationGrantTypeClientCredentialDdto>(createClientCredentialAdto));
 
-                    _commandRepository.Add(authenticationGrantTypeClientCredential);
+                    await _commandRepository.AddAsync(authenticationGrantTypeClientCredential);
 
                     transaction.Commit();
 
@@ -102,11 +104,11 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
             }
         }
 
-        public ClientCredentialAdto GetClientCredential(GetClientCredentialAdto getClientCredentialAdto)
+        public async Task<ClientCredentialAdto> GetClientCredentialAsync(GetClientCredentialAdto getClientCredentialAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
-                if (!(_queryRepository.GetById(getClientCredentialAdto.Id) is AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential))
+                if (!(await _queryRepository.GetByIdAsync(getClientCredentialAdto.Id) is AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential))
                 {
                     throw new BusinessApplicationException(ExceptionType.NotFound, "Authentication service not found");
                 }
@@ -117,22 +119,22 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
             }
         }
 
-        public ClientCredentialAdto ChangeClientCredential(ChangeClientCredentialAdto changeClientCredentialAdto)
+        public async Task<ClientCredentialAdto> ChangeClientCredentialAsync(ChangeClientCredentialAdto changeClientCredentialAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
                 try
                 {
-                    if (!(_commandRepository.GetWithConcurrencyCheck(changeClientCredentialAdto.Id, changeClientCredentialAdto.Version) is AuthenticationGrantTypeClientCredential
+                    if (!(await _commandRepository.GetWithConcurrencyCheckAsync(changeClientCredentialAdto.Id, changeClientCredentialAdto.Version) is AuthenticationGrantTypeClientCredential
                         authenticationGrantTypeClientCredential))
                     {
                         throw new BusinessApplicationException(ExceptionType.NotFound, "Authentication service not found");
                     }
 
-                    _changeAuthenticationGrantTypeClientCredentialCommand.Execute(authenticationGrantTypeClientCredential,
+                    await _changeAuthenticationGrantTypeClientCredentialCommand.ExecuteAsync(authenticationGrantTypeClientCredential,
                         _mapper.Map<ChangeClientCredentialAdto, ChangeAuthenticationGrantTypeClientCredentialDdto>(changeClientCredentialAdto));
 
-                    _commandRepository.Update(authenticationGrantTypeClientCredential);
+                    await _commandRepository.UpdateAsync(authenticationGrantTypeClientCredential);
 
                     transaction.Commit();
 

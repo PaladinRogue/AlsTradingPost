@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Common.ApplicationServices.Exceptions;
 using Common.Authorisation.Contexts;
 
@@ -9,11 +10,13 @@ namespace Common.Authorisation.ApplicationServices
         /// <param name="function">The method to execute</param>
         /// <param name="authorisationContext">The authorisation context</param>
         /// <exception cref="BusinessApplicationException"></exception>
-        TOut Secure<TOut>(Func<TOut> function, IAuthorisationContext authorisationContext);
+        Task<TOut> SecureAsync<TOut>(Func<Task<TOut>> function,
+            IAuthorisationContext authorisationContext);
 
         /// <param name="action">The method to execute</param>
         /// <param name="authorisationContext">The authorisation context</param>
         /// <exception cref="BusinessApplicationException"></exception>
-        void Secure(Action action, IAuthorisationContext authorisationContext);
+        Task SecureAsync(Func<Task> action,
+            IAuthorisationContext authorisationContext);
     }
 }
