@@ -43,5 +43,9 @@ namespace ApplicationManager.Api.AuthenticationService
         [Required]
         [MaxLength(FieldSizes.Extended)]
         public string ValidateAccessTokenUrl { get; set; }
+
+        [Required]
+        [MaxLength(FieldSizes.Extended)]
+        public string AppAccessToken { get; set; }
     }
 }

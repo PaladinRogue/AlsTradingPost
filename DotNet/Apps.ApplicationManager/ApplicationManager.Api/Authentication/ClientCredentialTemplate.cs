@@ -1,3 +1,4 @@
+using System;
 using Common.Api.Links;
 using Common.Api.Resources;
 using Common.Api.Validation.Attributes;
@@ -10,13 +11,13 @@ namespace ApplicationManager.Api.Authentication
     [CreateLink(RouteDictionary.AuthenticateClientCredential)]
     public class ClientCredentialTemplate : ITemplate
     {
+        [Ignore]
+        public Guid Id { get; set; }
+
         [Required]
         public string RedirectUri { get; set; }
 
         [Required]
         public string Token { get; set; }
-
-        [Required]
-        public string State { get; set; }
     }
 }

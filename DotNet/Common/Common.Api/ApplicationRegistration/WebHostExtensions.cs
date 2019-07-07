@@ -1,5 +1,4 @@
 ﻿using System;
-using Common.Api.Settings;
 using Common.Messaging.Infrastructure.Dispatchers;
 using Common.Messaging.Infrastructure.Senders;
 using Common.Messaging.Messages;

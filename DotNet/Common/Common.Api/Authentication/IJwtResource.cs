@@ -1,7 +1,7 @@
 ﻿using System;
 using Common.Api.Resources;
 
-namespace Common.Api.Authentication.Interfaces
+namespace Common.Api.Authentication
 {
     public interface IJwtResource : IResource
     {

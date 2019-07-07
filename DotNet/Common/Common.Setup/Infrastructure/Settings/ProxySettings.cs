@@ -1,4 +1,4 @@
-﻿namespace Common.Api.Settings
+﻿namespace Common.Setup.Infrastructure.Settings
 {
     public class ProxySettings
     {

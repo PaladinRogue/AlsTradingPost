@@ -1,4 +1,5 @@
 ﻿using Common.Api.Authentication;
+using Common.Api.Authorisation;
 using Common.Api.Concurrency;
 using Common.Api.Exceptions;
 using Common.Api.Validation;

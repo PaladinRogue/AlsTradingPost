@@ -161,7 +161,6 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
             return authenticationGrantTypeClientCredential.ClientGrantAccessTokenUrl.Format(
                 DictionaryBuilder<string, object>.Create()
                     .Add("clientId", authenticationGrantTypeClientCredential.ClientId)
-                    .Add("state", authenticationGrantTypeClientCredential.Id)
                     .Build());
         }
 
@@ -176,6 +175,7 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
                 ClientGrantAccessTokenUrl = authenticationGrantTypeClientCredential.ClientGrantAccessTokenUrl,
                 GrantAccessTokenUrl = authenticationGrantTypeClientCredential.GrantAccessTokenUrl,
                 ValidateAccessTokenUrl = authenticationGrantTypeClientCredential.ValidateAccessTokenUrl,
+                AppAccessToken = authenticationGrantTypeClientCredential.MaskedAppAccessToken,
                 Version = ConcurrencyVersionFactory.CreateFromEntity(authenticationGrantTypeClientCredential)
             };
         }

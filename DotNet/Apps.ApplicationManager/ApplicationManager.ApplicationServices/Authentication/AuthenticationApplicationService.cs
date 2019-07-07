@@ -6,10 +6,13 @@ using ApplicationManager.ApplicationServices.Authentication.ClientCredential;
 using ApplicationManager.ApplicationServices.Authentication.Models;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities;
+using ApplicationManager.Domain.Identities.Create;
 using ApplicationManager.Domain.Identities.Login;
 using ApplicationManager.Domain.Identities.Login.ClientCredential;
 using ApplicationManager.Domain.Identities.Login.Password;
 using ApplicationManager.Domain.Identities.Login.RefreshToken;
+using ApplicationManager.Domain.Identities.Queries;
+using ApplicationManager.Domain.Identities.RegisterClientCredential;
 using ApplicationManager.Domain.Users;
 using Common.ApplicationServices;
 using Common.ApplicationServices.Authentication;
@@ -40,7 +43,13 @@ namespace ApplicationManager.ApplicationServices.Authentication
 
         private readonly IClientCredentialAuthenticationValidator _clientCredentialAuthenticationValidator;
 
+        private readonly IGetIdentityByClientCredentialIdentifierQuery _getIdentityByClientCredentialIdentifierQuery;
+
+        private readonly ICreateIdentityCommand _createIdentityCommand;
+
         private readonly IClientCredentialLoginCommand _clientCredentialLoginCommand;
+
+        private readonly IRegisterClientCredentialCommand _registerClientCredentialCommand;
 
         public AuthenticationApplicationService(
             ICommandRepository<User> userCommandRepository,
@@ -51,7 +60,10 @@ namespace ApplicationManager.ApplicationServices.Authentication
             IRefreshTokenLoginCommand refreshTokenLoginCommand,
             IQueryRepository<AuthenticationService> authenticationServiceCommandRepository,
             IClientCredentialAuthenticationValidator clientCredentialAuthenticationValidator,
-            IClientCredentialLoginCommand clientCredentialLoginCommand)
+            IClientCredentialLoginCommand clientCredentialLoginCommand,
+            ICreateIdentityCommand createIdentityCommand,
+            IGetIdentityByClientCredentialIdentifierQuery getIdentityByClientCredentialIdentifierQuery,
+            IRegisterClientCredentialCommand registerClientCredentialCommand)
         {
             _userCommandRepository = userCommandRepository;
             _passwordLoginCommand = passwordLoginCommand;
@@ -62,6 +74,9 @@ namespace ApplicationManager.ApplicationServices.Authentication
             _authenticationServiceCommandRepository = authenticationServiceCommandRepository;
             _clientCredentialAuthenticationValidator = clientCredentialAuthenticationValidator;
             _clientCredentialLoginCommand = clientCredentialLoginCommand;
+            _createIdentityCommand = createIdentityCommand;
+            _getIdentityByClientCredentialIdentifierQuery = getIdentityByClientCredentialIdentifierQuery;
+            _registerClientCredentialCommand = registerClientCredentialCommand;
         }
 
         public async Task<JwtAdto> PasswordAsync(PasswordAdto passwordAdto)
@@ -142,11 +157,9 @@ namespace ApplicationManager.ApplicationServices.Authentication
             {
                 try
                 {
-                    Guid.TryParse(clientCredentialAdto.State, out Guid authenticationServiceId);
-
                     AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential =
                         (AuthenticationGrantTypeClientCredential) await _authenticationServiceCommandRepository.GetSingleAsync(
-                            s => s is AuthenticationGrantTypeClientCredential && s.Id == authenticationServiceId);
+                            s => s is AuthenticationGrantTypeClientCredential && s.Id == clientCredentialAdto.Id);
 
                     if (authenticationGrantTypeClientCredential == null)
                     {
@@ -164,12 +177,23 @@ namespace ApplicationManager.ApplicationServices.Authentication
                         throw new BusinessApplicationException(ExceptionType.Unauthorized, "Could not validate access token");
                     }
 
-                    Identity identity = await _clientCredentialLoginCommand.ExecuteAsync(authenticationGrantTypeClientCredential, new ClientCredentialLoginCommandDdto
-                    {
-                        Identifier = clientCredentialAuthenticationResult.Identifier
-                    });
+                    Identity identity = await _getIdentityByClientCredentialIdentifierQuery.RunAsync(authenticationGrantTypeClientCredential, clientCredentialAuthenticationResult.Identifier);
 
-                    await _identityCommandRepository.AddAsync(identity);
+                    if (identity == null)
+                    {
+                        identity = await _createIdentityCommand.ExecuteAsync();
+
+                        await _registerClientCredentialCommand.ExecuteAsync(identity, authenticationGrantTypeClientCredential, new RegisterClientCredentialCommandDdto
+                        {
+                            Identifier = clientCredentialAuthenticationResult.Identifier
+                        });
+
+                        await _identityCommandRepository.AddAsync(identity);
+                    }
+
+                    await _clientCredentialLoginCommand.ExecuteAsync(identity);
+
+                    await _identityCommandRepository.UpdateAsync(identity);
 
                     JwtAdto jwtAdto = await _jwtFactory.GenerateJwtAsync<JwtAdto>(await GetClaimsIdentityAsync(identity), identity.Session.Id);
 

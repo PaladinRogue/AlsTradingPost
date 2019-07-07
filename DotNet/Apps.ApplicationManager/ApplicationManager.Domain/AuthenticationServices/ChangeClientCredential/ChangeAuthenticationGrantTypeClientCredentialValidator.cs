@@ -33,6 +33,10 @@ namespace ApplicationManager.Domain.AuthenticationServices.ChangeClientCredentia
             RuleFor(a => a.ValidateAccessTokenUrl)
                 .NotEmpty()
                 .MaximumLength(FieldSizes.Extended);
+
+            RuleFor(a => a.AppAccessToken)
+                .NotEmpty()
+                .MaximumLength(FieldSizes.Extended);
         }
     }
 }

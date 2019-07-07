@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices.Authentication;
 using ApplicationManager.ApplicationServices.Authentication.Models;
@@ -75,20 +76,23 @@ namespace ApplicationManager.Api.Authentication
         }
 
         [AllowAnonymous]
-        [HttpGet("clientCredential/resourceTemplate", Name = RouteDictionary.AuthenticateClientCredentialResourceTemplate)]
-        public IActionResult GetClientCredentialResourceTemplate()
+        [HttpGet("clientCredential/{id}/resourceTemplate", Name = RouteDictionary.AuthenticateClientCredentialResourceTemplate)]
+        public IActionResult GetClientCredentialResourceTemplate(Guid id)
         {
-            return Ok(_resourceBuilder.Build(new ClientCredentialTemplate()));
+            return Ok(_resourceBuilder.Build(new ClientCredentialTemplate
+            {
+                Id = id
+            }));
         }
 
         [AllowAnonymous]
-        [HttpPost("clientCredential", Name = RouteDictionary.AuthenticateClientCredential)]
-        public async Task<IActionResult> ClientCredential(ClientCredentialTemplate template)
+        [HttpPost("clientCredential/{id}", Name = RouteDictionary.AuthenticateClientCredential)]
+        public async Task<IActionResult> ClientCredential(Guid id, ClientCredentialTemplate template)
         {
             JwtAdto jwt = await _authenticationApplicationService.ClientCredentialAsync(new ClientCredentialAdto
             {
+                Id = id,
                 Token = template.Token,
-                State = template.State,
                 RedirectUri = template.RedirectUri
             });
 

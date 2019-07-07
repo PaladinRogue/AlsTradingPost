@@ -1,5 +1,4 @@
-﻿using Common.Api.Settings;
-using Common.Resources.Settings;
+﻿using Common.Resources.Settings;
 using Microsoft.Extensions.Options;
 
 namespace Common.Api.Links

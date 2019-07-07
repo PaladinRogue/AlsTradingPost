@@ -2,10 +2,12 @@ using System;
 using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices.Authentication.ClientCredential;
 using ApplicationManager.Domain.AuthenticationServices;
-using Common.Api.HttpClient.Interfaces;
+using Common.ApplicationServices.HttpClient;
 using Common.Resources.Builders.Dictionaries;
 using Common.Resources.Extensions;
+using Common.Setup.Infrastructure.Exceptions;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace ApplicationManager.Setup.Infrastructure.Authentication.ClientCredential
 {
@@ -13,41 +15,53 @@ namespace ApplicationManager.Setup.Infrastructure.Authentication.ClientCredentia
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
+        private readonly JsonSerializerSettings _jsonSerializerSettings;
+
         public ClientCredentialAuthenticationValidator(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
+            DefaultContractResolver contractResolver = new DefaultContractResolver
+            {
+                NamingStrategy = new SnakeCaseNamingStrategy()
+            };
+
+            _jsonSerializerSettings = new JsonSerializerSettings
+            {
+                ContractResolver = contractResolver
+            };
         }
 
-        public async Task<IClientCredentialAuthenticationResult> Validate(AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential,
+        public async Task<IClientCredentialAuthenticationResult> Validate(
+            AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential,
             ValidateClientCredentialAdto validateClientCredentialAdto)
         {
+            try
+            {
+                ClientCredentialAccessTokenResponse appAccessTokenResponse = await _httpClientFactory.GetJsonAsync<ClientCredentialAccessTokenResponse>(
+                    new Uri(authenticationGrantTypeClientCredential.GrantAccessTokenUrl.Format(
+                        DictionaryBuilder<string, object>.Create()
+                            .Add("clientId", authenticationGrantTypeClientCredential.ClientId)
+                            .Add("clientSecret", authenticationGrantTypeClientCredential.ClientSecret)
+                            .Add("redirectUri", validateClientCredentialAdto.RedirectUri)
+                            .Add("code", validateClientCredentialAdto.Token)
+                            .Build()
+                    )), _jsonSerializerSettings
+                );
 
-            string appAccessTokenResponse = await _httpClientFactory.GetStringAsync(new Uri(authenticationGrantTypeClientCredential.GrantAccessTokenUrl.Format(
-                DictionaryBuilder<string, object>.Create()
-                    .Add("clientId", authenticationGrantTypeClientCredential.ClientId)
-                    .Add("clientSecret", authenticationGrantTypeClientCredential.ClientSecret)
-                    .Add("redirectUri", validateClientCredentialAdto.RedirectUri)
-                    .Add("code", validateClientCredentialAdto.Token)
-                    .Build()
-                ))
+                ValidateAccessTokenResponse validateAccessTokenResponse = await _httpClientFactory.GetJsonAsync<ValidateAccessTokenResponse>(new Uri(authenticationGrantTypeClientCredential.ValidateAccessTokenUrl.Format(
+                    DictionaryBuilder<string, object>.Create()
+                        .Add("inputToken", appAccessTokenResponse.AccessToken)
+                        .Add("accessToken", authenticationGrantTypeClientCredential.AppAccessToken)
+                        .Build()
+                )), _jsonSerializerSettings);
 
-            );
-
-            throw new NotImplementedException();
-
-//            FacebookAppAccessToken appAccessToken =
-//                JsonConvert.DeserializeObject<FacebookAppAccessToken>(appAccessTokenResponse);
-//
-//            string userAccessTokenValidationResponse = await _httpClientFactory.GetStringAsync(new Uri(string.Format(
-//                    _fbAuthSettings.AccessTokenValidationEndpoint,
-//                    template.AccessToken,
-//                    appAccessToken.AccessToken
-//                ))
-//            );
-//
-//            FacebookUserAccessTokenValidation userAccessTokenValidation =
-//                JsonConvert.DeserializeObject<FacebookUserAccessTokenValidation>(userAccessTokenValidationResponse);
-
+                return validateAccessTokenResponse.Data.IsValid ?
+                    ClientCredentialAuthenticationResult.Succeed(validateAccessTokenResponse.Data.UserId) : ClientCredentialAuthenticationResult.Fail;
+            }
+            catch (BadRequestException)
+            {
+                return ClientCredentialAuthenticationResult.Fail;
+            }
         }
     }
 }

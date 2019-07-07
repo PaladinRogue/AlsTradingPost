@@ -1,4 +1,4 @@
-namespace ApplicationManager.ApplicationServices.Identities
+namespace ApplicationManager.ApplicationServices.Identities.Models
 {
     public class RefreshTokenIdentityAdto
     {

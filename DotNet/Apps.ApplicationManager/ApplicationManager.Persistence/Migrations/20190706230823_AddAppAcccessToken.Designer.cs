@@ -4,14 +4,16 @@ using ApplicationManager.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ApplicationManager.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationManagerDbContext))]
-    partial class ApplicationManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190706230823_AddAppAcccessToken")]
+    partial class AddAppAcccessToken
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -221,21 +223,6 @@ namespace ApplicationManager.Persistence.Migrations
                     b.HasDiscriminator().HasValue("REFRESH_TOKEN");
                 });
 
-            modelBuilder.Entity("ApplicationManager.Domain.Identities.ClientCredentialIdentity", b =>
-                {
-                    b.HasBaseType("ApplicationManager.Domain.Identities.AuthenticationIdentity");
-
-                    b.Property<Guid>("AuthenticationGrantTypeClientCredentialId");
-
-                    b.Property<string>("IdentifierHash")
-                        .IsRequired()
-                        .HasMaxLength(1024);
-
-                    b.HasIndex("AuthenticationGrantTypeClientCredentialId");
-
-                    b.HasDiscriminator().HasValue("CLIENT_CREDENTIAL");
-                });
-
             modelBuilder.Entity("ApplicationManager.Domain.Identities.PasswordIdentity", b =>
                 {
                     b.HasBaseType("ApplicationManager.Domain.Identities.AuthenticationIdentity");
@@ -368,14 +355,6 @@ namespace ApplicationManager.Persistence.Migrations
                     b.HasOne("ApplicationManager.Domain.Identities.Identity", "Identity")
                         .WithMany()
                         .HasForeignKey("IdentityId");
-                });
-
-            modelBuilder.Entity("ApplicationManager.Domain.Identities.ClientCredentialIdentity", b =>
-                {
-                    b.HasOne("ApplicationManager.Domain.AuthenticationServices.AuthenticationGrantTypeClientCredential", "AuthenticationGrantTypeClientCredential")
-                        .WithMany()
-                        .HasForeignKey("AuthenticationGrantTypeClientCredentialId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ApplicationManager.Domain.Identities.PasswordIdentity", b =>

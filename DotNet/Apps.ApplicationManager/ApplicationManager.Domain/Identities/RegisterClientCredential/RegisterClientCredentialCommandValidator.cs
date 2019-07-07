@@ -1,11 +1,11 @@
 using Common.Resources;
 using FluentValidation;
 
-namespace ApplicationManager.Domain.Identities.Login.ClientCredential
+namespace ApplicationManager.Domain.Identities.RegisterClientCredential
 {
-    public class ClientCredentialLoginCommandValidator : AbstractValidator<ClientCredentialLoginCommandDdto>
+    public class RegisterClientCredentialCommandValidator : AbstractValidator<RegisterClientCredentialCommandDdto>
     {
-        public ClientCredentialLoginCommandValidator()
+        public RegisterClientCredentialCommandValidator()
         {
             RuleFor(p => p)
                 .NotNull();

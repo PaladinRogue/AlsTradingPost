@@ -13,5 +13,7 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices.Models
         public string GrantAccessTokenUrl { get; set; }
 
         public string ValidateAccessTokenUrl { get; set; }
+
+        public string AppAccessToken { get; set; }
     }
 }

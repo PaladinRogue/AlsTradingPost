@@ -105,6 +105,7 @@ namespace ApplicationManager.Api.AuthenticationService
                 GrantAccessTokenUrl = resource.GrantAccessTokenUrl,
                 ValidateAccessTokenUrl = resource.ValidateAccessTokenUrl,
                 ClientGrantAccessTokenUrl = resource.ClientGrantAccessTokenUrl,
+                AppAccessToken = resource.AppAccessToken,
                 Version = resource.Version
             };
 

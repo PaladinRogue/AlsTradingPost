@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using Common.Api.Authorisation;
+using Common.Api.Authentication;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Authorization;
 
-namespace Common.Api.Authentication
+namespace Common.Api.Authorisation
 {
     public class AuthoriseAppAccessControllerModelConvention : IControllerModelConvention
     {

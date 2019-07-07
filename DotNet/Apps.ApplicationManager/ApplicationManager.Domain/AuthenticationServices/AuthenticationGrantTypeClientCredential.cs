@@ -23,10 +23,11 @@ namespace ApplicationManager.Domain.AuthenticationServices
             ClientGrantAccessTokenUrl = createAuthenticationGrantTypeClientCredentialDdto.ClientGrantAccessTokenUrl;
             GrantAccessTokenUrl = createAuthenticationGrantTypeClientCredentialDdto.GrantAccessTokenUrl;
             ValidateAccessTokenUrl = createAuthenticationGrantTypeClientCredentialDdto.ValidateAccessTokenUrl;
+            AppAccessToken = createAuthenticationGrantTypeClientCredentialDdto.AppAccessToken;
         }
 
-        [MaxLength(FieldSizes.Default)]
         [Required]
+        [MaxLength(FieldSizes.Default)]
         public string Name { get; protected set; }
 
         [SensitiveInformation]
@@ -34,26 +35,33 @@ namespace ApplicationManager.Domain.AuthenticationServices
         [Required]
         public string ClientId { get; protected set; }
 
+        [Required]
         [SensitiveInformation]
         [MaxLength(FieldSizes.Default)]
-        [Required]
         public string ClientSecret { get; protected set; }
 
-        [MaxLength(FieldSizes.Extended)]
         [Required]
+        [SensitiveInformation]
+        [MaxLength(FieldSizes.Default)]
+        public string AppAccessToken { get; protected set; }
+
+        [Required]
+        [MaxLength(FieldSizes.Extended)]
         public string ClientGrantAccessTokenUrl { get; protected set; }
 
-        [MaxLength(FieldSizes.Extended)]
         [Required]
+        [MaxLength(FieldSizes.Extended)]
         public string GrantAccessTokenUrl { get; protected set; }
 
-        [MaxLength(FieldSizes.Extended)]
         [Required]
+        [MaxLength(FieldSizes.Extended)]
         public string ValidateAccessTokenUrl { get; protected set; }
 
         public string MaskedClientId => _clientMask;
 
         public string MaskedClientSecret => _clientMask;
+
+        public string MaskedAppAccessToken => _clientMask;
 
         internal static AuthenticationGrantTypeClientCredential Create(
             CreateAuthenticationGrantTypeClientCredentialDdto createAuthenticationGrantTypeClientCredentialDdto)
@@ -70,6 +78,7 @@ namespace ApplicationManager.Domain.AuthenticationServices
             ClientGrantAccessTokenUrl = changeAuthenticationGrantTypeClientCredentialDdto.ClientGrantAccessTokenUrl;
             GrantAccessTokenUrl = changeAuthenticationGrantTypeClientCredentialDdto.GrantAccessTokenUrl;
             ValidateAccessTokenUrl = changeAuthenticationGrantTypeClientCredentialDdto.ValidateAccessTokenUrl;
+            AppAccessToken = changeAuthenticationGrantTypeClientCredentialDdto.AppAccessToken;
         }
     }
 }

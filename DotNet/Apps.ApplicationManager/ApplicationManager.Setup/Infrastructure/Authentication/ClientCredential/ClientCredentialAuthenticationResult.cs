@@ -4,6 +4,10 @@ namespace ApplicationManager.Setup.Infrastructure.Authentication.ClientCredentia
 {
     public class ClientCredentialAuthenticationResult : IClientCredentialAuthenticationResult
     {
+        protected ClientCredentialAuthenticationResult()
+        {
+        }
+
         public bool Success { get; set; }
 
         public string Identifier { get; set; }
@@ -17,12 +21,10 @@ namespace ApplicationManager.Setup.Infrastructure.Authentication.ClientCredentia
             };
         }
 
-        public static IClientCredentialAuthenticationResult Fail()
-        {
-            return new ClientCredentialAuthenticationResult
+        public static IClientCredentialAuthenticationResult Fail =>
+            new ClientCredentialAuthenticationResult
             {
                 Success = false
             };
-        }
     }
 }

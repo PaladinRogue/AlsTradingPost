@@ -74,8 +74,8 @@ namespace ApplicationManager.Persistence
             modelBuilder.Entity<AuthenticationIdentity>()
                 .HasDiscriminator<string>("Type")
                 .HasValue<PasswordIdentity>(AuthenticationIdentityTypes.Password)
-                .HasValue<TwoFactorAuthenticationIdentity>(AuthenticationIdentityTypes.TwoFactor);
-//                .HasValue<ClientCredentialIdentity>(AuthenticationIdentityTypes.ClientCredential);
+                .HasValue<TwoFactorAuthenticationIdentity>(AuthenticationIdentityTypes.TwoFactor)
+                .HasValue<ClientCredentialIdentity>(AuthenticationIdentityTypes.ClientCredential);
 
             modelBuilder.Entity<PasswordIdentity>()
                 .Ignore(p => p.Password)
@@ -90,10 +90,10 @@ namespace ApplicationManager.Persistence
                 .Property(t => t.TokenExpiry)
                 .HasConversion(InstantConverter.Create());
 
-//            modelBuilder.Entity<ClientCredentialIdentity>()
-//                .Ignore(i => i.Identifier)
-//                .ProtectSensitiveInformation()
-//                .HasBaseType<AuthenticationIdentity>();
+            modelBuilder.Entity<ClientCredentialIdentity>()
+                .Ignore(i => i.Identifier)
+                .ProtectSensitiveInformation()
+                .HasBaseType<AuthenticationIdentity>();
 
             modelBuilder.Entity<Identity>()
                 .HasOne(i => i.Session)

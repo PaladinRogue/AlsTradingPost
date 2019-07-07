@@ -1,8 +1,10 @@
+using System;
+
 namespace ApplicationManager.ApplicationServices.Authentication.Models
 {
     public class ClientCredentialAdto
     {
-        public string State { get; set; }
+        public Guid Id { get; set; }
 
         public string RedirectUri { get; set; }
 

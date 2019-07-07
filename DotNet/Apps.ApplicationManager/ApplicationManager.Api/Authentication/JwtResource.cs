@@ -1,5 +1,5 @@
 using System;
-using Common.Api.Authentication.Interfaces;
+using Common.Api.Authentication;
 
 namespace ApplicationManager.Api.Authentication
 {
