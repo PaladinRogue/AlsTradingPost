@@ -156,7 +156,7 @@ namespace ApplicationManager.ApplicationServices.AuthenticationServices
             }
         }
 
-        private string BuildClientAccessUrl(AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential)
+        private static string BuildClientAccessUrl(AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential)
         {
             return authenticationGrantTypeClientCredential.ClientGrantAccessTokenUrl.Format(
                 DictionaryBuilder<string, object>.Create()
