@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices.Authentication.ClientCredential;
 using ApplicationManager.Domain.AuthenticationServices;
-using Common.ApplicationServices.HttpClient;
+using Common.ApplicationServices.WebRequests;
 using Common.Resources.Builders.Dictionaries;
 using Common.Resources.Extensions;
 using Common.Setup.Infrastructure.Exceptions;

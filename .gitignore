@@ -297,7 +297,5 @@ __pycache__/
 
 *.gitconfig
 *.1
-/DotNet/Apps.AlsTradingPost/AlsTradingPost.Api/secrets.json
-/DotNet/Apps.Authentication/Authentication.Api/secrets.json
 /Web/PaladinRogue/dist
-/DotNet/Apps.ApplicationManager/ApplicationManager.Api/secrets.json
+**/secrets.json

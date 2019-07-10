@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <ApplicationIcon />
+        <OutputType>WinExe</OutputType>
+        <StartupObject />
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\Common\Common.Api\Common.Api.csproj" />
+        <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
+        <ProjectReference Include="..\ReverseProxy.Setup\ReverseProxy.Setup.csproj" />
+    </ItemGroup>
+</Project>

@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
+using Common.ApplicationServices.WebRequests;
 using Common.Setup.Infrastructure.Exceptions;
 using Common.Setup.Infrastructure.Settings;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-namespace Common.Setup.Infrastructure.HttpClient
+namespace Common.Setup.Infrastructure.WebRequests
 {
-    public class HttpClientFactory : ApplicationServices.HttpClient.IHttpClientFactory
+    public class HttpClientFactory : IHttpClientFactory
     {
-	    private readonly System.Net.Http.HttpClient _client;
+	    private readonly HttpClient _client;
 
 		public HttpClientFactory(IOptions<ProxySettings> proxySettingsAccessor)
 		{
@@ -19,7 +21,7 @@ namespace Common.Setup.Infrastructure.HttpClient
 
 			if (proxySettings.UseProxy)
 			{
-				_client = new System.Net.Http.HttpClient(new HttpClientHandler
+				_client = new HttpClient(new HttpClientHandler
 				{
 					Proxy = new WebProxy(proxySettings.ProxyServer, false)
 					{
@@ -31,7 +33,7 @@ namespace Common.Setup.Infrastructure.HttpClient
 			}
 			else
 			{
-				_client = new System.Net.Http.HttpClient();
+				_client = new HttpClient();
 			}
 		}
 
@@ -60,6 +62,21 @@ namespace Common.Setup.Infrastructure.HttpClient
             catch (HttpRequestException e)
             {
 			    throw new BadRequestException($"Failed to get a successful response from {requestUri}", e);
+		    }
+	    }
+
+		public async Task<HttpResponseMessage> SendAsync(
+			HttpRequestMessage httpRequestMessage,
+			HttpCompletionOption completionOption,
+			CancellationToken cancellationToken)
+	    {
+		    try
+		    {
+			    return await _client.SendAsync(httpRequestMessage, completionOption, cancellationToken);
+		    }
+            catch (HttpRequestException e)
+            {
+			    throw new BadRequestException($"Failed to get a successful response from {httpRequestMessage.RequestUri}", e);
 		    }
 	    }
     }
