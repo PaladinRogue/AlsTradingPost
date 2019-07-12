@@ -1,11 +1,11 @@
 ﻿using System;
+using Common.Api.Extensions;
 using Common.Messaging.Infrastructure.Dispatchers;
 using Common.Messaging.Infrastructure.Senders;
 using Common.Messaging.Messages;
 using Common.Resources.Settings;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 namespace Common.Api.ApplicationRegistration
 {
@@ -19,18 +19,14 @@ namespace Common.Api.ApplicationRegistration
 
             IMessageDispatcher messageDispatcher = serviceProvider.GetRequiredService<IMessageDispatcher>();
 
-            IOptions<SystemAdminIdentitySettings> systemAdminIdentitySettingsAccessor =
-                serviceProvider.GetRequiredService<IOptions<SystemAdminIdentitySettings>>();
+            SystemAdminIdentitySettings systemAdminIdentitySettings = serviceProvider.GetRequiredOptions<SystemAdminIdentitySettings>();
 
-            SystemAdminIdentitySettings systemAdminIdentitySettings = systemAdminIdentitySettingsAccessor.Value;
+            AppSettings appSettings = serviceProvider.GetRequiredOptions<AppSettings>();
 
-            IOptions<AppSettings> appSettingsAccessor =
-                serviceProvider.GetRequiredService<IOptions<AppSettings>>();
-
-            AppSettings appSettings = appSettingsAccessor.Value;
+            HostSettings hostSettings = serviceProvider.GetRequiredOptions<HostSettings>();
 
             messageSender.Send(
-                    RegisterApplicationMessage.Create(appSettings.Name, appSettings.SystemName, systemAdminIdentitySettings.Email)
+                    RegisterApplicationMessage.Create(appSettings.Name, appSettings.SystemName, hostSettings.Urls, systemAdminIdentitySettings.Email)
                 );
 
             messageDispatcher.DispatchMessagesAsync();

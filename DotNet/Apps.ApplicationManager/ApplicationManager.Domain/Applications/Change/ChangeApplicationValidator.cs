@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Common.Resources;
+using FluentValidation;
 
 namespace ApplicationManager.Domain.Applications.Change
 {
@@ -12,6 +13,11 @@ namespace ApplicationManager.Domain.Applications.Change
             RuleFor(a => a.Name)
                 .NotEmpty()
                 .MaximumLength(40);
+
+            RuleFor(a => a.HostUri)
+                .NotEmpty()
+                .MaximumLength(FieldSizes.Extended)
+                .Matches(RegexPatterns.HttpsUri);
         }
     }
 }

@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices.AuthenticationServices;
 using ApplicationManager.ApplicationServices.AuthenticationServices.Models;
 using ApplicationManager.Setup.Infrastructure.Authorisation;
+using ApplicationManager.Setup.Infrastructure.Routing;
 using AutoMapper;
 using Common.Api.Builders.Resource;
-using Common.Api.Routing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApplicationManager.Api.AuthenticationService
 {
-    [DefaultControllerRoute("authenticationServices")]
+    [ApplicationManagerControllerRoute("authenticationServices")]
     [Authorize(Policies.User)]
     public class AuthenticationServiceController : ControllerBase
     {

@@ -2,16 +2,16 @@
 using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices.Identities;
 using ApplicationManager.ApplicationServices.Identities.Models;
+using ApplicationManager.Setup.Infrastructure.Routing;
 using Common.Api.Authentication;
 using Common.Api.Builders.Resource;
-using Common.Api.Routing;
 using Common.Setup.Infrastructure.Authorisation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApplicationManager.Api.Identities
 {
-    [DefaultControllerRoute]
+    [ApplicationManagerControllerRoute]
     public class IdentityController : ControllerBase
     {
         private readonly IResourceBuilder _resourceBuilder;

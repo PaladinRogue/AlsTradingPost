@@ -48,7 +48,8 @@ namespace ApplicationManager.ApplicationServices.Applications.Register
                         application = await _createApplicationCommand.ExecuteAsync(new CreateApplicationDdto
                         {
                             Name = registerApplicationAdto.Name,
-                            SystemName = registerApplicationAdto.SystemName
+                            SystemName = registerApplicationAdto.SystemName,
+                            HostUri = registerApplicationAdto.HostUri
                         });
 
                         await _commandRepository.AddAsync(application);
@@ -68,7 +69,8 @@ namespace ApplicationManager.ApplicationServices.Applications.Register
 
                         await _changeApplicationCommand.ExecuteAsync(application, new ChangeApplicationDdto
                         {
-                            Name = registerApplicationAdto.Name
+                            Name = registerApplicationAdto.Name,
+                            HostUri = registerApplicationAdto.HostUri
                         });
                     }
 

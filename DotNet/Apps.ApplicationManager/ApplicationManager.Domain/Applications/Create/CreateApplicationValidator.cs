@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Common.Resources;
+using FluentValidation;
 
 namespace ApplicationManager.Domain.Applications.Create
 {
@@ -11,11 +12,16 @@ namespace ApplicationManager.Domain.Applications.Create
 
             RuleFor(a => a.SystemName)
                 .NotEmpty()
-                .MaximumLength(20);
+                .MaximumLength(FieldSizes.Short);
 
             RuleFor(a => a.Name)
                 .NotEmpty()
-                .MaximumLength(40);
+                .MaximumLength(FieldSizes.Default);
+
+            RuleFor(a => a.HostUri)
+                .NotEmpty()
+                .MaximumLength(FieldSizes.Extended)
+                .Matches(RegexPatterns.HttpsUri);
         }
     }
 }

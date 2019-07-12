@@ -2,15 +2,15 @@ using System;
 using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices.Authentication;
 using ApplicationManager.ApplicationServices.Authentication.Models;
+using ApplicationManager.Setup.Infrastructure.Routing;
 using Common.Api.Builders.Resource;
-using Common.Api.Routing;
 using Common.ApplicationServices.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApplicationManager.Api.Authentication
 {
-    [DefaultControllerRoute("authenticate")]
+    [ApplicationManagerControllerRoute("authenticate")]
     public class AuthenticationController : ControllerBase
     {
         private readonly IResourceBuilder _resourceBuilder;

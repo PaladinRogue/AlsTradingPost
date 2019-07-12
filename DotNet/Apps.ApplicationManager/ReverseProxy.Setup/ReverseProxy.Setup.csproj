@@ -8,5 +8,6 @@
         <ProjectReference Include="..\..\Common\Common.ApplicationServices\Common.ApplicationServices.csproj" />
         <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
         <ProjectReference Include="..\ApplicationManager.Persistence\ApplicationManager.Persistence.csproj" />
+        <ProjectReference Include="..\ReverseProxy.ApplicationServices\ReverseProxy.ApplicationServices.csproj" />
     </ItemGroup>
 </Project>

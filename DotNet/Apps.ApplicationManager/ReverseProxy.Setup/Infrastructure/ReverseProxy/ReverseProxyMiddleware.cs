@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 using Common.ApplicationServices.WebRequests;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
+using ReverseProxy.ApplicationServices.Applications;
 
 namespace ReverseProxy.Setup.Infrastructure.ReverseProxy
 {
     public class ReverseProxyMiddleware
     {
         private readonly RequestDelegate _nextMiddleware;
+
+        private IApplicationKernalService _applicationKernalService;
 
         public ReverseProxyMiddleware(RequestDelegate nextMiddleware)
         {
@@ -20,9 +23,12 @@ namespace ReverseProxy.Setup.Infrastructure.ReverseProxy
 
         public async Task Invoke(
             HttpContext context,
-            IHttpClientFactory httpClientFactory)
+            IHttpClientFactory httpClientFactory,
+            IApplicationKernalService applicationKernalService)
         {
-            Uri targetUri = BuildTargetUri(context.Request);
+            _applicationKernalService = applicationKernalService;
+
+            Uri targetUri = await BuildTargetUriAsync(context.Request);
 
             if (targetUri != null)
             {
@@ -108,13 +114,23 @@ namespace ReverseProxy.Setup.Infrastructure.ReverseProxy
             return new HttpMethod(method);
         }
 
-        private static Uri BuildTargetUri(HttpRequest request)
+        private async Task<Uri> BuildTargetUriAsync(HttpRequest request)
         {
             Uri targetUri = null;
 
-            if (request.Path.StartsWithSegments("/api/apps", out PathString remainingPath))
+            if (request.Path.StartsWithSegments("/api", out PathString remainingPath))
             {
-                targetUri = new Uri("https://localhost:5002/api" + remainingPath);
+                IEnumerable<string> remainingPathParts = remainingPath.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+
+                string applicationSystemName = remainingPathParts.First();
+
+                ApplicationAdto applicationAdto = await _applicationKernalService.GetByNameAsync(applicationSystemName);
+                if (applicationAdto == null)
+                {
+                    return null;
+                }
+
+                targetUri = new Uri(applicationAdto.HostUri, $"/api{remainingPath}");
             }
 
             return targetUri;

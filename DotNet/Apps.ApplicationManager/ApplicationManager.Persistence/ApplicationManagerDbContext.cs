@@ -10,6 +10,7 @@ using Common.Domain.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityFramework.Infrastructure.DateTimeConverters;
 using Persistence.EntityFramework.Infrastructure.Extensions;
+using Persistence.EntityFramework.Infrastructure.Uris;
 using Identity = ApplicationManager.Domain.Identities.Identity;
 
 namespace ApplicationManager.Persistence
@@ -35,6 +36,10 @@ namespace ApplicationManager.Persistence
             modelBuilder.HasDefaultSchema("apps");
 
             modelBuilder.ProtectSensitiveInformation();
+
+            modelBuilder.Entity<Application>()
+                .Property(a => a.HostUri)
+                .HasConversion(UriConverter.Create());
 
             modelBuilder.Entity<AuthenticationIdentity>()
                 .ToTable("AuthenticationIdentities");

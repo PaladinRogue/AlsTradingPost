@@ -6,6 +6,8 @@
 
         public string SystemName { get; set; }
 
+        public string HostUri { get; set; }
+
         public string AdminEmailAddress { get; set; }
     }
 }
