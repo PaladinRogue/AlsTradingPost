@@ -1,10 +1,10 @@
-﻿using Common.Messaging.Infrastructure.Interfaces;
+﻿using System.Threading.Tasks;
 using Common.Messaging.Infrastructure.Messages;
 
 namespace Common.Messaging.Infrastructure.Senders
 {
     public interface IMessageSender
     {
-        void Send(IMessage message);
+        Task SendAsync(IMessage message);
     }
 }

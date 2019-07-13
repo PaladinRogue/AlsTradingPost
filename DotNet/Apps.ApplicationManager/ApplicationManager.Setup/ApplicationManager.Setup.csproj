@@ -17,5 +17,6 @@
     <ProjectReference Include="..\..\Persistence\Persistence.EntityFramework\Persistence.EntityFramework.csproj" />
     <ProjectReference Include="..\ApplicationManager.ApplicationServices\ApplicationManager.ApplicationServices.csproj" />
     <ProjectReference Include="..\ApplicationManager.Persistence\ApplicationManager.Persistence.csproj" />
+    <ProjectReference Include="..\ReverseProxy.ApplicationServices\ReverseProxy.ApplicationServices.csproj" />
   </ItemGroup>
 </Project>

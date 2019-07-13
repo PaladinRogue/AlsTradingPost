@@ -1,6 +1,5 @@
 ﻿using Common.ApplicationServices.Transactions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Persistence.EntityFramework.Infrastructure.Transactions
 {

@@ -2,21 +2,17 @@ using NodaTime;
 
 namespace Common.Domain.Clocks
 {
-    public class Clock
+    public static class Clock
     {
         private static volatile IClock _clock;
 
-        protected Clock()
-        {
-        }
-
-        protected static IClock ClockInstance
+        private static IClock ClockInstance
         {
             get => _clock;
             set => _clock = value;
         }
 
-        public static void SetClock(IClock clock)
+        public static void SetClock(this IClock clock)
         {
             if (ClockInstance == null)
             {

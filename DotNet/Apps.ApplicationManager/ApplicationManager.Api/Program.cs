@@ -24,7 +24,7 @@ namespace ApplicationManager.Api
         {
             IConfigurationBuilder builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("hostsettings.json", false)
+                .AddJsonFile("hostSettings.json", false)
                 .AddEnvironmentVariables();
 
             return WebHost.CreateDefaultBuilder(args)

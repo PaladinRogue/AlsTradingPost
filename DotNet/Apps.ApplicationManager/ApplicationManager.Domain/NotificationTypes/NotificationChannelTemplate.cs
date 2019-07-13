@@ -1,9 +1,5 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 using Common.Domain.Aggregates;
 using Common.Domain.Entities;
-using Common.Domain.Models;
 
 namespace ApplicationManager.Domain.NotificationTypes
 {

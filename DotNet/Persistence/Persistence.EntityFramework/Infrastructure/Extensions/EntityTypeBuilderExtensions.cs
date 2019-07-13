@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using Common.Domain.DataProtection;
-using Common.Domain.Persistence;
 using Common.Resources;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;

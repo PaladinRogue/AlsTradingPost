@@ -37,8 +37,6 @@ namespace Common.Setup.Infrastructure.Exceptions
 
                 _logger.LogInformation(ex, "Re-written app exception");
                 context.Response.StatusCode = (int)ApplicationExceptionStatusCodeMap.FromApplicationExceptionType(ex.Type);
-
-                await context.Response.WriteAsync(ex.Message);
             }
             catch (PreConditionFailedException ex)
             {

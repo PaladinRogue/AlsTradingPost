@@ -72,7 +72,7 @@ namespace ApplicationManager.ApplicationServices.Identities.CreateAdmin
 
                     await _commandRepository.UpdateAsync(identity);
 
-                    Message.Send(CreateAdminIdentityMessage.Create(createAdminAuthenticationIdentityAdto.ApplicationSystemName, identity.Id));
+                    await Message.SendAsync(CreateAdminIdentityMessage.Create(createAdminAuthenticationIdentityAdto.ApplicationSystemName, identity.Id));
 
                     transaction.Commit();
                 }

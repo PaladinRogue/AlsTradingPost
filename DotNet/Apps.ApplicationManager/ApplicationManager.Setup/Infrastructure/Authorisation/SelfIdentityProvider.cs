@@ -1,10 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Common.Authorisation;
-using Microsoft.AspNetCore.Http;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using ApplicationManager.Domain.Identities;
 using Common.Setup.Infrastructure.Authorisation;
 

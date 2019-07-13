@@ -27,6 +27,7 @@
     <ProjectReference Include="..\..\Common\Common.Api\Common.Api.csproj" />
     <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
     <ProjectReference Include="..\ApplicationManager.Setup\ApplicationManager.Setup.csproj" />
+    <ProjectReference Include="..\ReverseProxy.Setup\ReverseProxy.Setup.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using ApplicationManager.Domain.Identities.CreateTwoFactor;
 using ApplicationManager.Domain.Identities.Events;
 using ApplicationManager.Domain.Identities.ValidateToken;
@@ -7,7 +8,6 @@ using Common.Domain.DataProtection;
 using Common.Domain.DomainEvents;
 using Common.Resources;
 using NodaTime;
-using NodaTime.Extensions;
 using String = Common.Resources.Extensions.String;
 
 namespace ApplicationManager.Domain.Identities
@@ -29,13 +29,13 @@ namespace ApplicationManager.Domain.Identities
             TokenExpiry = Instant.Add(Clock.Now(),Duration.FromMinutes(20));
         }
 
-        internal static TwoFactorAuthenticationIdentity Create(
+        internal static async Task<TwoFactorAuthenticationIdentity> Create(
             Identity identity,
             CreateTwoFactorAuthenticationIdentityDdto createTwoFactorAuthenticationIdentityDdto)
         {
             TwoFactorAuthenticationIdentity twoFactorAuthenticationIdentity = new TwoFactorAuthenticationIdentity(identity, createTwoFactorAuthenticationIdentityDdto);
 
-            DomainEvents.Raise(TwoFactorAuthenticationIdentityCreatedDomainEvent.Create(twoFactorAuthenticationIdentity));
+            await DomainEvents.RaiseAsync(TwoFactorAuthenticationIdentityCreatedDomainEvent.Create(twoFactorAuthenticationIdentity));
 
             return twoFactorAuthenticationIdentity;
         }

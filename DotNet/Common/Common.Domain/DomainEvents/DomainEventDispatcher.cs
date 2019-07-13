@@ -1,4 +1,5 @@
-﻿using Common.Domain.DomainEvents.Interfaces;
+﻿using System.Threading.Tasks;
+using Common.Domain.DomainEvents.Interfaces;
 
 namespace Common.Domain.DomainEvents
 {
@@ -11,9 +12,9 @@ namespace Common.Domain.DomainEvents
             _domainEventBus = domainEventBus;
         }
 
-        public void DispatchEvent<T>(T domainEvent) where T : IDomainEvent
+        public Task DispatchEventAsync<T>(T domainEvent) where T : IDomainEvent
         {
-            _domainEventBus.Publish(domainEvent);
+            return _domainEventBus.PublishAsync(domainEvent);
         }
     }
 }

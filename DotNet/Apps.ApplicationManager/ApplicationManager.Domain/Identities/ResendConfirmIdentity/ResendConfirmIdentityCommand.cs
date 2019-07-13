@@ -6,9 +6,7 @@ namespace ApplicationManager.Domain.Identities.ResendConfirmIdentity
     {
         public Task ExecuteAsync(Identity identity)
         {
-            identity.ResendConfirmIdentity();
-
-            return Task.CompletedTask;
+            return identity.ResendConfirmIdentity();
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Common.Api.ApplicationRegistration
 
             HostSettings hostSettings = serviceProvider.GetRequiredOptions<HostSettings>();
 
-            messageSender.Send(
+            messageSender.SendAsync(
                     RegisterApplicationMessage.Create(appSettings.Name, appSettings.SystemName, hostSettings.Urls, systemAdminIdentitySettings.Email)
                 );
 

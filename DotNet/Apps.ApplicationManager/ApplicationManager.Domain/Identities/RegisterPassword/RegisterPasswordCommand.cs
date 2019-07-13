@@ -54,7 +54,7 @@ namespace ApplicationManager.Domain.Identities.RegisterPassword
                 });
             }
 
-            return identity.RegisterPassword(authenticationGrantTypePassword, new RegisterPasswordDdto
+            return await identity.RegisterPassword(authenticationGrantTypePassword, new RegisterPasswordDdto
             {
                 Identifier = registerPasswordCommandDdto.Identifier,
                 Password = registerPasswordCommandDdto.Password,

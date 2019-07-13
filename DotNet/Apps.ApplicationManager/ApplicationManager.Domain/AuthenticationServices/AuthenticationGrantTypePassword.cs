@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ApplicationManager.Domain.AuthenticationServices
+﻿namespace ApplicationManager.Domain.AuthenticationServices
 {
     public class AuthenticationGrantTypePassword : AuthenticationService
     {

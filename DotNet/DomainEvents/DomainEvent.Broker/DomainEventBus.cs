@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Common.Domain.DomainEvents.Interfaces;
 
 namespace DomainEvent.Broker
@@ -12,18 +13,17 @@ namespace DomainEvent.Broker
             _domainEventHandlerResolver = domainEventHandlerResolver;
         }
 
-        public void Publish<T>(T domainEvent) where T : IDomainEvent
+        public Task PublishAsync<T>(T domainEvent) where T : IDomainEvent
         {
-            ProcessDomainEvent(domainEvent);
+            return ProcessDomainEventAsync(domainEvent);
         }
 
-        private void ProcessDomainEvent<T>(T domainEvent) where T : IDomainEvent
+        private async Task ProcessDomainEventAsync<T>(T domainEvent) where T : IDomainEvent
         {
             IEnumerable<IDomainEventHandler<T>> domainEventHandlers = _domainEventHandlerResolver.ResolveAll<T>();
             foreach (IDomainEventHandler<T> domainEventHandler in domainEventHandlers)
             {
-                //TODO Make async?
-                domainEventHandler.Handle(domainEvent);
+                await domainEventHandler.HandleAsync(domainEvent);
             }
         }
     }

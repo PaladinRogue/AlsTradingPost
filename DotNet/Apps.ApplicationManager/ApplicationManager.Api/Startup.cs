@@ -1,6 +1,10 @@
 ﻿using System;
 using ApplicationManager.Setup;
+using ApplicationManager.Setup.Infrastructure.Authorisation;
+using ApplicationManager.Setup.Infrastructure.DomainEvents;
+using ApplicationManager.Setup.Infrastructure.Messaging;
 using AutoMapper;
+using Common.Api.Builders;
 using Common.Api.Extensions;
 using Common.Api.Formats;
 using Common.Domain.Clocks;
@@ -10,16 +14,20 @@ using Common.Domain.DomainEvents.Interfaces;
 using Common.Messaging.Infrastructure;
 using Common.Messaging.Infrastructure.Senders;
 using Common.Setup;
+using Common.Setup.Infrastructure.DomainEvents;
 using Common.Setup.Infrastructure.Logging;
+using Common.Setup.Infrastructure.Messaging;
+using Common.Setup.Infrastructure.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NodaTime;
-using EventRegistration = ApplicationManager.Setup.EventRegistration;
-using MessageRegistration = ApplicationManager.Setup.MessageRegistration;
-using ServiceRegistration = ApplicationManager.Setup.ServiceRegistration;
+using ReverseProxy.Setup;
+using ReverseProxy.Setup.Infrastructure.ReverseProxy;
+using Common.Setup.Infrastructure.DataProtection;
+using Common.Setup.Infrastructure.Exceptions;
 
 [assembly: ApiController]
 
@@ -33,7 +41,18 @@ namespace ApplicationManager.Api
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            CommonConfigureServices(services);
+            services.AddDefaultMvcOptions()
+                .LoadAppSettings(Configuration)
+                .LoadHostSettings(Configuration)
+                .LoadSystemAdminIdentitySettings(Configuration)
+                .UseDefaultResourceBuilders()
+                .UseSystemClock()
+                .UseDomainEvents()
+                .UseRabbitMqMessaging(Configuration)
+                .RegisterCommonProviders()
+                .RegisterCommonServices()
+                .RegisterAuthorisationServices()
+                .UseDataProtection(Configuration);
 
             services.Configure<MvcOptions>(options =>
             {
@@ -45,26 +64,20 @@ namespace ApplicationManager.Api
                     .RequireHttps();
             });
 
-            SettingRegistration.RegisterSystemAdminIdentitySettings(Configuration, services);
+            services.UseJsonV1Format()
+                .UseJsonPolicyAuthorisation(Configuration)
+                .UseEmailNotifications()
+                .RegisterMessageSubscribers()
+                .RegisterDomainEventHandlers()
+                .RegisterBuilders()
+                .RegisterValidators()
+                .RegisterApplicationServices()
+                .RegisterDomainServices()
+                .RegisterPersistenceServices(Configuration)
+                .RegisterProviders()
+                .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            FormatRegistration.ConfigureJsonV1Format(services);
-
-            JwtRegistration.RegisterOptions(Configuration, services);
-
-            MessageRegistration.RegisterSubscribers(services);
-
-            EventRegistration.RegisterHandlers(services);
-
-            ServiceRegistration.RegisterBuilders(services);
-            ServiceRegistration.RegisterValidators(services);
-            ServiceRegistration.RegisterApplicationServices(services);
-            ServiceRegistration.RegisterDomainServices(services);
-            ServiceRegistration.RegisterPersistenceServices(Configuration, services);
-            ServiceRegistration.RegisterProviders(services);
-            ServiceRegistration.RegisterAuthorisation(services);
-            ServiceRegistration.RegisterNotifications(services);
-
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.RegisterReverseProxyServices();
 
             return services.BuildServiceProvider();
         }
@@ -77,20 +90,35 @@ namespace ApplicationManager.Api
             IDataHasher dataHasher,
             IClock clock)
         {
-            DataProtection.SetDataProtector(dataProtector);
-            DataProtection.SetDataHasher(dataHasher);
-            DomainEvents.SetDomainEventDispatcher(domainEventDispatcher);
-            Message.SetMessageSender(messageSender);
-            Clock.SetClock(clock);
+            dataProtector.SetDataProtector();
+            dataHasher.SetDataHasher();
+            domainEventDispatcher.SetDomainEventDispatcher();
+            messageSender.SetMessageSender();
+            clock.SetClock();
 
             loggerFactory.AddLog4Net();
 
-            MiddlewareRegistration.Register(app);
+            app.Map("/api", proxy =>
+            {
+                proxy
+                    .UseExceptionMiddleware()
+                    .UseReverseProxyMiddleware()
+                    .UseHttpsRedirection()
+                    .UseHsts()
+                    .UseMvc();
+            });
 
-            app.UseAuthentication();
-            app.UseHttpsRedirection();
-            app.UseHsts();
-            app.UseMvc();
+            app.Map("/v1", jsonVersion =>
+            {
+                jsonVersion
+                    .UseDispatchMessagesMiddleware()
+                    .UseExceptionMiddleware()
+                    .UseJsonV1Middleware()
+                    .UseAuthentication()
+                    .UseHttpsRedirection()
+                    .UseHsts()
+                    .UseMvc();
+            });
         }
     }
 }

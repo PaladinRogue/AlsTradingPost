@@ -3,13 +3,13 @@ using ApplicationManager.Domain.Identities.Events;
 using Common.Domain.DomainEvents.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ApplicationManager.Setup
+namespace ApplicationManager.Setup.Infrastructure.DomainEvents
 {
-    public static class EventRegistration
+    public static class ServiceCollectionExtensions
     {
-        public static void RegisterHandlers(IServiceCollection services)
+        public static IServiceCollection RegisterDomainEventHandlers(this IServiceCollection services)
         {
-            services
+            return services
                 .AddScoped<IDomainEventHandler<TwoFactorAuthenticationIdentityCreatedDomainEvent>,
                     SendNotificationWhenTwoFactorAuthenticationIdentityCreatedDomainEventHandler>();
         }

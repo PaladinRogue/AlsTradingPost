@@ -116,24 +116,13 @@ namespace ReverseProxy.Setup.Infrastructure.ReverseProxy
 
         private async Task<Uri> BuildTargetUriAsync(HttpRequest request)
         {
-            Uri targetUri = null;
+            IList<string> remainingPathParts = request.Path.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
 
-            if (request.Path.StartsWithSegments("/api", out PathString remainingPath))
-            {
-                IEnumerable<string> remainingPathParts = remainingPath.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+            string applicationSystemName = remainingPathParts[1];
 
-                string applicationSystemName = remainingPathParts.First();
+            ApplicationAdto applicationAdto = await _applicationKernalService.GetByNameAsync(applicationSystemName);
 
-                ApplicationAdto applicationAdto = await _applicationKernalService.GetByNameAsync(applicationSystemName);
-                if (applicationAdto == null)
-                {
-                    return null;
-                }
-
-                targetUri = new Uri(applicationAdto.HostUri, $"/api{remainingPath}");
-            }
-
-            return targetUri;
+            return applicationAdto == null ? null : new Uri(applicationAdto.HostUri, request.Path);
         }
     }
 }

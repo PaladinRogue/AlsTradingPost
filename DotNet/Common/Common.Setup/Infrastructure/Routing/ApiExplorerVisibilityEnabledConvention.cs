@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
-namespace Common.Api.Routing
+namespace Common.Setup.Infrastructure.Routing
 {
     public class ApiExplorerVisibilityEnabledConvention : IApplicationModelConvention
     {
@@ -9,7 +9,7 @@ namespace Common.Api.Routing
             foreach (ControllerModel applicationController in application.Controllers)
             {
                 if (applicationController.ApiExplorer.IsVisible != null) continue;
-                
+
                 applicationController.ApiExplorer.IsVisible = true;
                 applicationController.ApiExplorer.GroupName = applicationController.ControllerName;
             }

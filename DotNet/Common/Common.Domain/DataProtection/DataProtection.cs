@@ -1,28 +1,24 @@
 ﻿namespace Common.Domain.DataProtection
 {
-    public class DataProtection
+    public static class DataProtection
     {
         private static volatile IDataProtector _dataProtector;
 
         private static volatile IDataHasher _dataHasher;
 
-        protected DataProtection()
-        {
-        }
-
-        protected static IDataProtector DataProtector
+        private static IDataProtector DataProtector
         {
             get => _dataProtector;
             set => _dataProtector = value;
         }
 
-        protected static IDataHasher DataHasher
+        private static IDataHasher DataHasher
         {
             get => _dataHasher;
             set => _dataHasher = value;
         }
 
-        public static void SetDataHasher(IDataHasher dataHasher)
+        public static void SetDataHasher(this IDataHasher dataHasher)
         {
             if (DataHasher == null)
             {
@@ -30,7 +26,7 @@
             }
         }
 
-        public static void SetDataProtector(IDataProtector dataProtector)
+        public static void SetDataProtector(this IDataProtector dataProtector)
         {
             if (DataProtector == null)
             {

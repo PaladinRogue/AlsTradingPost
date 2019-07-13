@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ApplicationManager.Domain.Applications.Create
+﻿namespace ApplicationManager.Domain.Applications.Create
 {
     public class CreateApplicationDdto
     {

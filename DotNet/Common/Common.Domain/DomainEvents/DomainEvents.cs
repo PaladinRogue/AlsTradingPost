@@ -1,22 +1,19 @@
-﻿using Common.Domain.DomainEvents.Interfaces;
+﻿using System.Threading.Tasks;
+using Common.Domain.DomainEvents.Interfaces;
 
 namespace Common.Domain.DomainEvents
 {
-    public class DomainEvents
+    public static class DomainEvents
     {
         private static volatile IDomainEventDispatcher _domainEventDispatcher;
 
-        protected DomainEvents()
-        {
-        }
-
-        protected static IDomainEventDispatcher DomainEventDispatcher
+        private static IDomainEventDispatcher DomainEventDispatcher
         {
             get => _domainEventDispatcher;
             set => _domainEventDispatcher = value;
         }
 
-        public static void SetDomainEventDispatcher(IDomainEventDispatcher domainEventDispatcher)
+        public static void SetDomainEventDispatcher(this IDomainEventDispatcher domainEventDispatcher)
         {
             if (DomainEventDispatcher == null)
             {
@@ -24,14 +21,14 @@ namespace Common.Domain.DomainEvents
             }
         }
 
-        public static void Raise<T>(T domainEvent) where T : IDomainEvent
+        public static Task RaiseAsync<T>(T domainEvent) where T : IDomainEvent
         {
             if (DomainEventDispatcher == null)
             {
                 throw new DomainEventDispatcherNotSetException();
             }
 
-            DomainEventDispatcher.DispatchEvent(domainEvent);
+            return DomainEventDispatcher.DispatchEventAsync(domainEvent);
         }
     }
 }

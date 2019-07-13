@@ -26,9 +26,6 @@ namespace Common.Api.Formats.JsonV1.Formatters
 {
     public class JsonV1InputFormatter : JsonInputFormatter
     {
-        private const string JsonV1MediaType = "application/vnd.api+json";
-        private const string ProblemMediaType = "application/problem+json";
-
         private readonly MvcOptions _options;
 
         private readonly IArrayPool<char> _charPool;
@@ -48,8 +45,8 @@ namespace Common.Api.Formats.JsonV1.Formatters
             _charPool = new JsonArrayPool<char>(charPool);
 
             SupportedMediaTypes.Clear();
-            SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse(JsonV1MediaType));
-            SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse(ProblemMediaType));
+            SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse(MediaTypes.JsonV1));
+            SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse(MediaTypes.Problem));
         }
 
         public override async Task<InputFormatterResult> ReadRequestBodyAsync(InputFormatterContext context, Encoding encoding)

@@ -1,25 +1,21 @@
-﻿using Common.Messaging.Infrastructure.Dispatchers;
-using Common.Messaging.Infrastructure.Interfaces;
+﻿using System.Threading.Tasks;
+using Common.Messaging.Infrastructure.Dispatchers;
 using Common.Messaging.Infrastructure.Messages;
 using Common.Messaging.Infrastructure.Senders;
 
 namespace Common.Messaging.Infrastructure
 {
-    public class Message
+    public static class Message
     {
         private static volatile IMessageSender _messageSender;
 
-        protected Message()
-        {
-        }
-
-        protected static IMessageSender MessageSender
+        private static IMessageSender MessageSender
         {
             get => _messageSender;
             set => _messageSender = value;
         }
 
-        public static void SetMessageSender(IMessageSender messageSender)
+        public static void SetMessageSender(this IMessageSender messageSender)
         {
             if (MessageSender == null)
             {
@@ -27,14 +23,14 @@ namespace Common.Messaging.Infrastructure
             }
         }
 
-        public static void Send<T>(T message) where T : IMessage
+        public static Task SendAsync<T>(T message) where T : IMessage
         {
             if (MessageSender == null)
             {
                 throw new MessageSenderNotSetException();
             }
 
-            MessageSender.Send(message);
+            return MessageSender.SendAsync(message);
         }
     }
 }

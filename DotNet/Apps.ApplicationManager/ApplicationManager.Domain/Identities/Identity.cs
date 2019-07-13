@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities.ChangePassword;
 using ApplicationManager.Domain.Identities.CreateClientCredential;
@@ -94,7 +95,7 @@ namespace ApplicationManager.Domain.Identities
             return twoFactorAuthenticationIdentity;
         }
 
-        internal void ForgotPassword(ForgotPasswordDdto forgotPasswordDdto)
+        internal async Task ForgotPassword(ForgotPasswordDdto forgotPasswordDdto)
         {
             if (AuthenticationIdentities.OfType<PasswordIdentity>().SingleOrDefault() == null)
             {
@@ -107,7 +108,7 @@ namespace ApplicationManager.Domain.Identities
                 _authenticationIdentities.Remove(twoFactorAuthenticationIdentity);
             }
 
-            _authenticationIdentities.Add(TwoFactorAuthenticationIdentity.Create(this, new CreateTwoFactorAuthenticationIdentityDdto
+            _authenticationIdentities.Add(await TwoFactorAuthenticationIdentity.Create(this, new CreateTwoFactorAuthenticationIdentityDdto
             {
                 EmailAddress = forgotPasswordDdto.EmailAddress,
                 TwoFactorAuthenticationType = TwoFactorAuthenticationType.ForgotPassword
@@ -131,7 +132,7 @@ namespace ApplicationManager.Domain.Identities
             passwordIdentity.ChangePassword(changePasswordDdto);
         }
 
-        internal PasswordIdentity RegisterPassword(
+        internal async Task<PasswordIdentity> RegisterPassword(
             AuthenticationGrantTypePassword authenticationGrantTypePassword,
             RegisterPasswordDdto registerPasswordDdto)
         {
@@ -149,7 +150,7 @@ namespace ApplicationManager.Domain.Identities
 
             _authenticationIdentities.Add(passwordIdentity);
 
-            _authenticationIdentities.Add(TwoFactorAuthenticationIdentity.Create(this, new CreateTwoFactorAuthenticationIdentityDdto
+            _authenticationIdentities.Add(await TwoFactorAuthenticationIdentity.Create(this, new CreateTwoFactorAuthenticationIdentityDdto
             {
                 EmailAddress = registerPasswordDdto.EmailAddress,
                 TwoFactorAuthenticationType = TwoFactorAuthenticationType.ConfirmIdentity
@@ -183,7 +184,7 @@ namespace ApplicationManager.Domain.Identities
             return Session.CreateRefreshToken(authenticationGrantTypeRefreshToken, out token);
         }
 
-        internal void ResendConfirmIdentity()
+        internal async Task ResendConfirmIdentity()
         {
             if (!(AuthenticationIdentities.OfType<TwoFactorAuthenticationIdentity>().SingleOrDefault(a =>
                     a.TwoFactorAuthenticationType == TwoFactorAuthenticationType.ConfirmIdentity)
@@ -194,7 +195,7 @@ namespace ApplicationManager.Domain.Identities
 
             _authenticationIdentities.Remove(twoFactorAuthenticationIdentity);
 
-            _authenticationIdentities.Add(TwoFactorAuthenticationIdentity.Create(this, new CreateTwoFactorAuthenticationIdentityDdto
+            _authenticationIdentities.Add( await TwoFactorAuthenticationIdentity.Create(this, new CreateTwoFactorAuthenticationIdentityDdto
             {
                 EmailAddress = twoFactorAuthenticationIdentity.EmailAddress,
                 TwoFactorAuthenticationType = TwoFactorAuthenticationType.ConfirmIdentity

@@ -1,7 +1,9 @@
-﻿namespace Common.Domain.DomainEvents.Interfaces
+﻿using System.Threading.Tasks;
+
+namespace Common.Domain.DomainEvents.Interfaces
 {
 	public interface IDomainEventHandler<in T> where T : IDomainEvent
 	{
-		void Handle(T domainEvent);
+		Task HandleAsync(T domainEvent);
 	}
 }

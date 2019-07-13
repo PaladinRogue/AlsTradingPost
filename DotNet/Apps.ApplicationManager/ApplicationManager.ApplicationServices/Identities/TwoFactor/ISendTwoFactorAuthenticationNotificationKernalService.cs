@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
+
 namespace ApplicationManager.ApplicationServices.Identities.TwoFactor
 {
     public interface ISendTwoFactorAuthenticationNotificationKernalService
     {
-        void Send(SendTwoFactorAuthenticationNotificationAdto sendTwoFactorAuthenticationNotificationAdto);
+        Task SendAsync(SendTwoFactorAuthenticationNotificationAdto sendTwoFactorAuthenticationNotificationAdto);
     }
 }

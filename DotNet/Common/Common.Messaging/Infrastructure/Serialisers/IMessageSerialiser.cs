@@ -1,5 +1,4 @@
-﻿using Common.Messaging.Infrastructure.Interfaces;
-using Common.Messaging.Infrastructure.Messages;
+﻿using Common.Messaging.Infrastructure.Messages;
 
 namespace Common.Messaging.Infrastructure.Serialisers
 {

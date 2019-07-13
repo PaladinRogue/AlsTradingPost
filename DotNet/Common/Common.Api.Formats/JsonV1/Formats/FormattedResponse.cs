@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Common.Api.Builders;
 using Newtonsoft.Json;
 
 namespace Common.Api.Formats.JsonV1.Formats

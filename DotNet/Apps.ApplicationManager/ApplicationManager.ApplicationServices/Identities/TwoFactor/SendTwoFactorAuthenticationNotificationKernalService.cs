@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Common.ApplicationServices.Transactions;
 using Common.Messaging.Infrastructure;
 using Common.Messaging.Messages;
@@ -15,11 +16,11 @@ namespace ApplicationManager.ApplicationServices.Identities.TwoFactor
             _transactionManager = transactionManager;
         }
 
-        public void Send(SendTwoFactorAuthenticationNotificationAdto sendTwoFactorAuthenticationNotificationAdto)
+        public async Task SendAsync(SendTwoFactorAuthenticationNotificationAdto sendTwoFactorAuthenticationNotificationAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
-                Message.Send(SendNotificationMessage.Create(
+                await Message.SendAsync(SendNotificationMessage.Create(
                     TwoFactorAuthenticationNotificationMap.ForType(sendTwoFactorAuthenticationNotificationAdto.TwoFactorAuthenticationType),
                     sendTwoFactorAuthenticationNotificationAdto.IdentityId,
                     new Dictionary<string, string>

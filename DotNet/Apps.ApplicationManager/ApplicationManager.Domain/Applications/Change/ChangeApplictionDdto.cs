@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ApplicationManager.Domain.Applications.Change
+﻿namespace ApplicationManager.Domain.Applications.Change
 {
     public class ChangeApplicationDdto
     {

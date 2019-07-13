@@ -1,4 +1,5 @@
-﻿using Common.Messaging.Infrastructure.Directors;
+﻿using System.Threading.Tasks;
+using Common.Messaging.Infrastructure.Directors;
 using Common.Messaging.Infrastructure.Factories;
 using Common.Messaging.Infrastructure.Interfaces;
 using Common.Messaging.Infrastructure.Messages;
@@ -19,11 +20,13 @@ namespace Common.Messaging.Infrastructure.Senders
             _pendingMessageContainer = pendingMessageContainer;
         }
 
-        public void Send(IMessage message)
+        public Task SendAsync(IMessage message)
         {
             IPreparedMessage preparedMessage = _messageFactory.Create(message);
 
             _pendingMessageContainer.Add(preparedMessage);
+
+            return Task.CompletedTask;
         }
     }
 }

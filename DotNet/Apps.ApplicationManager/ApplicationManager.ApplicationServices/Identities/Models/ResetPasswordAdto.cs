@@ -1,4 +1,3 @@
-using System;
 using Common.ApplicationServices.Concurrency;
 using Common.Domain.Concurrency.Interfaces;
 
