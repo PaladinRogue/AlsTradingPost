@@ -12,22 +12,20 @@ using ApplicationManager.Domain.Identities.Login.Password;
 using ApplicationManager.Domain.Identities.Login.RefreshToken;
 using ApplicationManager.Domain.Identities.Queries;
 using ApplicationManager.Domain.Identities.RegisterClientCredential;
-using ApplicationManager.Domain.Users;
 using Common.ApplicationServices;
 using Common.ApplicationServices.Authentication;
+using Common.ApplicationServices.Claims;
 using Common.ApplicationServices.Exceptions;
 using Common.ApplicationServices.Transactions;
 using Common.Domain.Exceptions;
 using Common.Domain.Persistence;
-using ClaimsBuilder = ApplicationManager.ApplicationServices.Claims.ClaimsBuilder;
+using Claim = ApplicationManager.Domain.Identities.Claim;
 using JwtClaims = Common.ApplicationServices.Authentication.Constants.JwtClaims;
 
 namespace ApplicationManager.ApplicationServices.Authentication
 {
     public class AuthenticationApplicationService : IAuthenticationApplicationService
     {
-        private readonly ICommandRepository<User> _userCommandRepository;
-
         private readonly IPasswordLoginCommand _passwordLoginCommand;
 
         private readonly IRefreshTokenLoginCommand _refreshTokenLoginCommand;
@@ -51,7 +49,6 @@ namespace ApplicationManager.ApplicationServices.Authentication
         private readonly IRegisterClientCredentialCommand _registerClientCredentialCommand;
 
         public AuthenticationApplicationService(
-            ICommandRepository<User> userCommandRepository,
             IPasswordLoginCommand passwordLoginCommand,
             IJwtFactory jwtFactory,
             ITransactionManager transactionManager,
@@ -64,7 +61,6 @@ namespace ApplicationManager.ApplicationServices.Authentication
             IGetIdentityByClientCredentialIdentifierQuery getIdentityByClientCredentialIdentifierQuery,
             IRegisterClientCredentialCommand registerClientCredentialCommand)
         {
-            _userCommandRepository = userCommandRepository;
             _passwordLoginCommand = passwordLoginCommand;
             _jwtFactory = jwtFactory;
             _transactionManager = transactionManager;
@@ -97,7 +93,7 @@ namespace ApplicationManager.ApplicationServices.Authentication
 
                     await _identityCommandRepository.UpdateAsync(identity);
 
-                    JwtAdto jwtAdto = await _jwtFactory.GenerateJwtAsync<JwtAdto>(await GetClaimsIdentityAsync(identity), identity.Session.Id);
+                    JwtAdto jwtAdto = await _jwtFactory.GenerateJwtAsync<JwtAdto>(GetClaimsIdentity(identity), identity.Session.Id);
 
                     transaction.Commit();
 
@@ -133,7 +129,7 @@ namespace ApplicationManager.ApplicationServices.Authentication
 
                     await _identityCommandRepository.UpdateAsync(identity);
 
-                    JwtAdto jwtAdto = await _jwtFactory.GenerateJwtAsync<JwtAdto>(await GetClaimsIdentityAsync(identity), identity.Session.Id);
+                    JwtAdto jwtAdto = await _jwtFactory.GenerateJwtAsync<JwtAdto>(GetClaimsIdentity(identity), identity.Session.Id);
 
                     transaction.Commit();
 
@@ -194,7 +190,7 @@ namespace ApplicationManager.ApplicationServices.Authentication
 
                     await _identityCommandRepository.UpdateAsync(identity);
 
-                    JwtAdto jwtAdto = await _jwtFactory.GenerateJwtAsync<JwtAdto>(await GetClaimsIdentityAsync(identity), identity.Session.Id);
+                    JwtAdto jwtAdto = await _jwtFactory.GenerateJwtAsync<JwtAdto>(GetClaimsIdentity(identity), identity.Session.Id);
 
                     transaction.Commit();
 
@@ -211,15 +207,13 @@ namespace ApplicationManager.ApplicationServices.Authentication
             }
         }
 
-        private async Task<ClaimsIdentity> GetClaimsIdentityAsync(Identity identity)
+        private ClaimsIdentity GetClaimsIdentity(Identity identity)
         {
-            User user = await _userCommandRepository.GetSingleAsync(u => u.Identity.Id == identity.Id);
-
             ClaimsBuilder claimsBuilder = ClaimsBuilder.CreateBuilder();
 
-            if (user != null)
+            foreach (Claim identityClaim in identity.Claims)
             {
-                claimsBuilder.WithUser(user.Id);
+                claimsBuilder.AddClaim(identityClaim.Type, identityClaim.Value);
             }
 
             claimsBuilder.WithSubject(identity.Id);
@@ -235,6 +229,7 @@ namespace ApplicationManager.ApplicationServices.Authentication
             }
 
             ClaimsIdentity claimsIdentity = claimsBuilder.Build();
+
             return claimsIdentity;
         }
     }

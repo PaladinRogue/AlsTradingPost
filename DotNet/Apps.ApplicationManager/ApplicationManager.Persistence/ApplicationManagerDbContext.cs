@@ -40,6 +40,9 @@ namespace ApplicationManager.Persistence
                 .ToTable("Sessions")
                 .OwnsOne(i => i.RefreshToken);
 
+            modelBuilder.Entity<Claim>()
+                .ToTable("Claims");
+
             modelBuilder.Entity<RefreshToken>()
                 .ToTable("RefreshTokens")
                 .Ignore(p => p.Token)

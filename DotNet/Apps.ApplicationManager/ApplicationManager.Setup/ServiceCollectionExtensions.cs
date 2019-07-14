@@ -2,6 +2,7 @@ using ApplicationManager.ApplicationServices.Authentication;
 using ApplicationManager.ApplicationServices.Authentication.ClientCredential;
 using ApplicationManager.ApplicationServices.AuthenticationServices;
 using ApplicationManager.ApplicationServices.Identities;
+using ApplicationManager.ApplicationServices.Identities.Claims;
 using ApplicationManager.ApplicationServices.Identities.CreateAdmin;
 using ApplicationManager.ApplicationServices.Identities.TwoFactor;
 using ApplicationManager.ApplicationServices.Notifications.Audiences;
@@ -12,6 +13,8 @@ using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.AuthenticationServices.ChangeClientCredential;
 using ApplicationManager.Domain.AuthenticationServices.CreateClientCredential;
 using ApplicationManager.Domain.Identities;
+using ApplicationManager.Domain.Identities.AddClaim;
+using ApplicationManager.Domain.Identities.ChangeClaim;
 using ApplicationManager.Domain.Identities.ChangePassword;
 using ApplicationManager.Domain.Identities.CheckPassword;
 using ApplicationManager.Domain.Identities.ConfirmIdentity;
@@ -35,10 +38,8 @@ using ApplicationManager.Persistence.Identities;
 using ApplicationManager.Setup.Infrastructure.Authentication.ClientCredential;
 using Common.Api.Routing;
 using Common.ApplicationServices.Transactions;
-using Common.ApplicationServices.WebRequests;
 using Common.Domain.Persistence;
 using Common.Setup.Infrastructure.Authorisation;
-using Common.Setup.Infrastructure.WebRequests;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -58,6 +59,7 @@ namespace ApplicationManager.Setup
                 .AddScoped<ISendNotificationKernalService, SendNotificationKernalService>()
                 .AddScoped<ISendTwoFactorAuthenticationNotificationKernalService, SendTwoFactorAuthenticationNotificationKernalService>()
                 .AddScoped<ICreateAdminUserApplicationKernalService, CreateAdminUserApplicationKernalService>()
+                .AddScoped<IIdentityClaimsApplicationKernalService, IdentityClaimsApplicationKernalService>()
                 .RegisterApplicationService<IIdentityApplicationService, IdentityApplicationService, IdentityApplicationServiceSecurityDecorator>()
                 .RegisterApplicationService<IAuthenticationApplicationService, AuthenticationApplicationService, AuthenticationApplicationServiceSecurityDecorator>()
                 .RegisterApplicationService<IAuthenticationServiceApplicationService, AuthenticationServiceApplicationService, AuthenticationServiceApplicationServiceSecurityDecorator>()
@@ -80,7 +82,9 @@ namespace ApplicationManager.Setup
                 .AddScoped<IValidator<RefreshTokenLoginCommandDdto>, RefreshTokenLoginCommandValidator>()
                 .AddScoped<IValidator<RegisterClientCredentialCommandDdto>, RegisterClientCredentialCommandValidator>()
                 .AddScoped<IValidator<CreateAuthenticationGrantTypeClientCredentialDdto>, CreateAuthenticationGrantTypeClientCredentialValidator>()
-                .AddScoped<IValidator<ChangeAuthenticationGrantTypeClientCredentialDdto>, ChangeAuthenticationGrantTypeClientCredentialValidator>();
+                .AddScoped<IValidator<ChangeAuthenticationGrantTypeClientCredentialDdto>, ChangeAuthenticationGrantTypeClientCredentialValidator>()
+                .AddScoped<IValidator<AddIdentityClaimCommandDdto>, AddIdentityClaimValidator>()
+                .AddScoped<IValidator<ChangeIdentityClaimCommandDdto>, ChangeIdentityClaimValidator>();
         }
 
         public static IServiceCollection RegisterDomainServices(this IServiceCollection services)
@@ -103,7 +107,9 @@ namespace ApplicationManager.Setup
                 .AddScoped<IRegisterClientCredentialCommand, RegisterClientCredentialCommand>()
                 .AddScoped<IClientCredentialLoginCommand, ClientCredentialLoginCommand>()
                 .AddScoped<ICreateAuthenticationGrantTypeClientCredentialCommand, CreateAuthenticationGrantTypeClientCredentialCommand>()
-                .AddScoped<IChangeAuthenticationGrantTypeClientCredentialCommand, ChangeAuthenticationGrantTypeClientCredentialCommand>();
+                .AddScoped<IChangeAuthenticationGrantTypeClientCredentialCommand, ChangeAuthenticationGrantTypeClientCredentialCommand>()
+                .AddScoped<IAddIdentityClaimCommand, AddIdentityClaimCommand>()
+                .AddScoped<IChangeIdentityClaimCommand, ChangeIdentityClaimCommand>();
         }
 
         public static IServiceCollection RegisterPersistenceServices(

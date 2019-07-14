@@ -2,7 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using ApplicationManager.Domain.AuthenticationServices;
+using ApplicationManager.Domain.Identities.AddClaim;
+using ApplicationManager.Domain.Identities.ChangeClaim;
 using ApplicationManager.Domain.Identities.ChangePassword;
+using ApplicationManager.Domain.Identities.CreateClaim;
 using ApplicationManager.Domain.Identities.CreateClientCredential;
 using ApplicationManager.Domain.Identities.CreatePassword;
 using ApplicationManager.Domain.Identities.CreateTwoFactor;
@@ -25,6 +28,7 @@ namespace ApplicationManager.Domain.Identities
         }
 
         private readonly ISet<AuthenticationIdentity> _authenticationIdentities = new HashSet<AuthenticationIdentity>();
+        private readonly ISet<Claim> _claims = new HashSet<Claim>();
 
         internal static Identity Create()
         {
@@ -34,6 +38,8 @@ namespace ApplicationManager.Domain.Identities
         public virtual Session Session { get; protected set; }
 
         public virtual IEnumerable<AuthenticationIdentity> AuthenticationIdentities => _authenticationIdentities;
+
+        public virtual IEnumerable<Claim> Claims => _claims;
 
         internal void ResetPassword(ResetPasswordDdto resetPasswordDdto)
         {
@@ -200,6 +206,35 @@ namespace ApplicationManager.Domain.Identities
                 EmailAddress = twoFactorAuthenticationIdentity.EmailAddress,
                 TwoFactorAuthenticationType = TwoFactorAuthenticationType.ConfirmIdentity
             }));
+        }
+
+        internal void AddClaim(AddIdentityClaimDdto addIdentityClaimDdto)
+        {
+            if (Claims.Any(c => c.Type == addIdentityClaimDdto.Type))
+            {
+                throw new IdentityClaimExistsDomainException();
+            }
+
+            _claims.Add(Claim.Create(this, new CreateClaimDdto
+            {
+                Type = addIdentityClaimDdto.Type,
+                Value = addIdentityClaimDdto.Value
+            }));
+        }
+
+        internal void ChangeClaim(ChangeIdentityClaimDdto changeIdentityClaimDdto)
+        {
+            Claim claim = Claims.SingleOrDefault(c => c.Type == changeIdentityClaimDdto.Type);
+
+            if (claim == null)
+            {
+                throw new IdentityClaimDoesNotExistDomainException();
+            }
+
+            claim.Change(new ChangeClaimDdto
+            {
+                Value = changeIdentityClaimDdto.Value
+            });
         }
 
         internal void Logout()

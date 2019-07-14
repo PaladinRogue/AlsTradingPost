@@ -16,7 +16,7 @@ namespace ApplicationManager.Domain.Users.Create
         {
             _validator.ValidateAndThrow(createUserCommandDdto);
 
-            return Task.FromResult(User.Create(createUserCommandDdto.Identity));
+            return User.Create(createUserCommandDdto.Identity);
         }
     }
 }

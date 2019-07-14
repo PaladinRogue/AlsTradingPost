@@ -33,6 +33,15 @@ namespace Common.ApplicationServices.Claims
             return this;
         }
 
+        public ClaimsBuilder AddClaim(
+            string type,
+            string value)
+        {
+            Claims.AddClaim(new Claim(type, value));
+
+            return this;
+        }
+
         public ClaimsIdentity Build()
         {
             return Claims;

@@ -5,10 +5,6 @@ using Common.Authorisation.Manager;
 using Common.Authorisation.Policies;
 using Common.Authorisation.Policies.Deny;
 using Common.Authorisation.Restrictions;
-using Common.Domain.DataProtection;
-using Common.Resources.Encryption;
-using Common.Setup.Infrastructure.Encryption;
-using Common.Setup.Infrastructure.Hashing;
 using Common.Setup.Infrastructure.Routing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -57,8 +53,9 @@ namespace Common.Setup
             return services
                 .AddSingleton<IAuthorisationRestrictionProvider, AuthorisationRestrictionProvider>()
                 .AddSingleton<IAuthorisationPolicy, AlwaysDenyAuthorisationPolicy>()
+                .AddSingleton<IAuthorisationManager, AuthorisationManager>()
                 .AddScoped<ISecurityApplicationService, DefaultSecurityApplicationService>()
-                .AddSingleton<IAuthorisationManager, AuthorisationManager>();
+                .AddScoped<IClaimsApplicationKernalService, ClaimsApplicationKernalService>();
         }
 
         public static IServiceCollection UseSystemClock(this IServiceCollection services)

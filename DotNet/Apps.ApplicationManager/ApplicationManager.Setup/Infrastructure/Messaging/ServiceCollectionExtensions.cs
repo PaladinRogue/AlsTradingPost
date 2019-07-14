@@ -11,7 +11,8 @@ namespace ApplicationManager.Setup.Infrastructure.Messaging
             return services
                 .AddScoped<IMessageSubscriber, SendNotificationMessageSubscriber>()
                 .AddScoped<IMessageSubscriber, CreateAdminIdentityMessageSubscriber>()
-                .AddScoped<IMessageSubscriber, AdminIdentityCreatedMessageSubscriber>();
+                .AddScoped<IMessageSubscriber, AdminIdentityCreatedMessageSubscriber>()
+                .AddScoped<IMessageSubscriber, AddAuthorisationClaimMessageSubscriber>();
         }
     }
 }
