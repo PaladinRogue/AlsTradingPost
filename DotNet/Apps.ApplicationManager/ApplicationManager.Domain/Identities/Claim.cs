@@ -2,12 +2,11 @@ using System.ComponentModel.DataAnnotations;
 using ApplicationManager.Domain.Identities.ChangeClaim;
 using ApplicationManager.Domain.Identities.CreateClaim;
 using Common.Domain.Aggregates;
-using Common.Domain.Entities;
 using Common.Resources;
 
 namespace ApplicationManager.Domain.Identities
 {
-    public class Claim : Entity, IAggregateMember
+    public class Claim : IAggregateMember
     {
         protected Claim()
         {

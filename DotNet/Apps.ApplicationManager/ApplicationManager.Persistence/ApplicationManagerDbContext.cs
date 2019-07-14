@@ -41,7 +41,10 @@ namespace ApplicationManager.Persistence
                 .OwnsOne(i => i.RefreshToken);
 
             modelBuilder.Entity<Claim>()
-                .ToTable("Claims");
+                .ToTable("Claims")
+                // Can't set composite key on navigation property through fluent api so have done so
+                // by changing the migration manually
+                .HasKey(c => new { c.Type, c.Value/*, c.Identity.Id*/ });
 
             modelBuilder.Entity<RefreshToken>()
                 .ToTable("RefreshTokens")
