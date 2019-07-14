@@ -21,4 +21,8 @@
       <ProjectReference Include="..\ReverseProxy.Setup\ReverseProxy.Setup.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Remove="secrets.json" />
+    </ItemGroup>
+
 </Project>
