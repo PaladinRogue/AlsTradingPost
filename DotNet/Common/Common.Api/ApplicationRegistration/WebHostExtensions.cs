@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Common.Api.Extensions;
 using Common.Messaging.Infrastructure.Dispatchers;
 using Common.Messaging.Infrastructure.Senders;
@@ -11,7 +12,7 @@ namespace Common.Api.ApplicationRegistration
 {
     public static class WebHostExtensions
     {
-        public static IWebHost RegisterApplication(this IWebHost webHost)
+        public static async Task RegisterApplicationAsync(this IWebHost webHost)
         {
             IServiceProvider serviceProvider = webHost.Services;
 
@@ -19,19 +20,15 @@ namespace Common.Api.ApplicationRegistration
 
             IMessageDispatcher messageDispatcher = serviceProvider.GetRequiredService<IMessageDispatcher>();
 
-            SystemAdminIdentitySettings systemAdminIdentitySettings = serviceProvider.GetRequiredOptions<SystemAdminIdentitySettings>();
-
             AppSettings appSettings = serviceProvider.GetRequiredOptions<AppSettings>();
 
             HostSettings hostSettings = serviceProvider.GetRequiredOptions<HostSettings>();
 
-            messageSender.SendAsync(
-                    RegisterApplicationMessage.Create(appSettings.Name, appSettings.SystemName, hostSettings.Urls, systemAdminIdentitySettings.Email)
-                );
+            await messageSender.SendAsync(
+                RegisterApplicationMessage.Create(appSettings.Name, appSettings.SystemName, hostSettings.Urls)
+            );
 
-            messageDispatcher.DispatchMessagesAsync();
-
-            return webHost;
+           await messageDispatcher.DispatchMessagesAsync();
         }
     }
 }

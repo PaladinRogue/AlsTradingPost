@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
-using ApplicationManager.Domain.Applications.Events;
 using Common.Domain.DomainEvents.Interfaces;
+using ReverseProxy.Domain.Applications.Events;
 
 namespace ReverseProxy.ApplicationServices.Applications
 {

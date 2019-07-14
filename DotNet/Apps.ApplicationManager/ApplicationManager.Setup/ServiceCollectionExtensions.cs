@@ -1,4 +1,3 @@
-using ApplicationManager.ApplicationServices.Applications.Register;
 using ApplicationManager.ApplicationServices.Authentication;
 using ApplicationManager.ApplicationServices.Authentication.ClientCredential;
 using ApplicationManager.ApplicationServices.AuthenticationServices;
@@ -9,9 +8,6 @@ using ApplicationManager.ApplicationServices.Notifications.Audiences;
 using ApplicationManager.ApplicationServices.Notifications.Emails;
 using ApplicationManager.ApplicationServices.Notifications.Send;
 using ApplicationManager.ApplicationServices.Users.CreateAdmin;
-using ApplicationManager.Domain.Applications;
-using ApplicationManager.Domain.Applications.Change;
-using ApplicationManager.Domain.Applications.Create;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.AuthenticationServices.ChangeClientCredential;
 using ApplicationManager.Domain.AuthenticationServices.CreateClientCredential;
@@ -37,7 +33,6 @@ using ApplicationManager.Domain.Users.Create;
 using ApplicationManager.Persistence;
 using ApplicationManager.Persistence.Identities;
 using ApplicationManager.Setup.Infrastructure.Authentication.ClientCredential;
-using Common.Api.Links;
 using Common.Api.Routing;
 using Common.ApplicationServices.Transactions;
 using Common.ApplicationServices.WebRequests;
@@ -56,18 +51,9 @@ namespace ApplicationManager.Setup
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection RegisterBuilders(this IServiceCollection services)
-        {
-            services.AddSingleton<ILinkFactory, DefaultLinkFactory>();
-
-            return services;
-        }
-
         public static IServiceCollection RegisterApplicationServices(this IServiceCollection services)
         {
             return services
-                .AddSingleton<IHttpClientFactory, HttpClientFactory>()
-                .AddScoped<IRegisterApplicationKernalService, RegisterApplicationKernalService>()
                 .AddScoped<ICreateAdminAuthenticationIdentityKernalService, CreateAdminAuthenticationIdentityKernalService>()
                 .AddScoped<ISendNotificationKernalService, SendNotificationKernalService>()
                 .AddScoped<ISendTwoFactorAuthenticationNotificationKernalService, SendTwoFactorAuthenticationNotificationKernalService>()
@@ -84,8 +70,6 @@ namespace ApplicationManager.Setup
 
             return services
                 .AddScoped<IValidator<CreateUserCommandDdto>, CreateUserCommandValidator>()
-                .AddScoped<IValidator<ChangeApplicationDdto>, ChangeApplicationValidator>()
-                .AddScoped<IValidator<CreateApplicationDdto>, CreateApplicationValidator>()
                 .AddScoped<IValidator<ResetPasswordCommandDdto>, ResetPasswordValidator>()
                 .AddScoped<IValidator<PasswordLoginCommandDdto>, PasswordLoginCommandValidator>()
                 .AddScoped<IValidator<CheckPasswordDdto>, CheckPasswordValidator>()
@@ -103,8 +87,6 @@ namespace ApplicationManager.Setup
         {
             return services
                 .AddScoped<ICreateIdentityCommand, CreateIdentityCommand>()
-                .AddScoped<IChangeApplicationCommand, ChangeApplicationCommand>()
-                .AddScoped<ICreateApplicationCommand, CreateApplicationCommand>()
                 .AddScoped<ICreateUserCommand, CreateUserCommand>()
                 .AddScoped<ICreateUserCommand, CreateUserCommand>()
                 .AddScoped<IResetPasswordCommand, ResetPasswordCommand>()
@@ -137,12 +119,10 @@ namespace ApplicationManager.Setup
             services.AddScoped<IGetIdentityByClientCredentialIdentifierQuery, GetIdentityByClientCredentialIdentifierQuery>();
             services.AddScoped<IPasswordIdentityEmailExistsQuery, PasswordIdentityEmailExistsQuery>();
 
-            services.AddScoped<ICommandRepository<Application>, CommandRepository<Application>>();
             services.AddScoped<ICommandRepository<AuthenticationService>, CommandRepository<AuthenticationService>>();
             services.AddScoped<ICommandRepository<Identity>, IdentityCommandRepository>();
             services.AddScoped<ICommandRepository<User>, CommandRepository<User>>();
 
-            services.AddScoped<IQueryRepository<Application>, QueryRepository<Application>>();
             services.AddScoped<IQueryRepository<AuthenticationService>, QueryRepository<AuthenticationService>>();
             services.AddScoped<IQueryRepository<Identity>, QueryRepository<Identity>>();
             services.AddScoped<IQueryRepository<NotificationType>, QueryRepository<NotificationType>>();

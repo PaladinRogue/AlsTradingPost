@@ -42,16 +42,16 @@ namespace Common.Messaging.Infrastructure.DeQueuers
         {
             if (message is IPreparedMessage preparedMessage)
             {
+                if (_dataProtector.Unprotect<Guid>(preparedMessage.SecurityToken) != preparedMessage.Id)
+                {
+                    throw new BusinessApplicationException(ExceptionType.Unknown, "Unable to verify sender of message");
+                }
+
+                string unprotectedMessage = _dataProtector.Unprotect<string>(preparedMessage.Payload);
+                IMessage deserialisedMessage = _messageSerialiser.Deserialise(unprotectedMessage);
+
                 using (_serviceProvider.CreateScope())
                 {
-                    if (_dataProtector.Unprotect<Guid>(preparedMessage.SecurityToken) != preparedMessage.Id)
-                    {
-                        throw new BusinessApplicationException(ExceptionType.Unknown, "Unable to verify sender of message");
-                    }
-
-                    string unprotectedMessage = _dataProtector.Unprotect<string>(preparedMessage.Payload);
-                    IMessage deserialisedMessage = _messageSerialiser.Deserialise(unprotectedMessage);
-
                     using (ITransaction transaction = _transactionManager.Create())
                     {
                         try

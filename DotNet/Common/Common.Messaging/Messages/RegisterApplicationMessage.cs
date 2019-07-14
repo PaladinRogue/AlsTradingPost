@@ -8,17 +8,16 @@ namespace Common.Messaging.Messages
         {
         }
 
-        protected RegisterApplicationMessage(string name, string systemName, string hostUri, string adminEmailAddress)
+        protected RegisterApplicationMessage(string name, string systemName, string hostUri)
         {
             Name = name;
             SystemName = systemName;
             HostUri = hostUri;
-            AdminEmailAddress = adminEmailAddress;
         }
 
-        public static RegisterApplicationMessage Create(string name, string systemName, string hostUri, string adminEmailAddress)
+        public static RegisterApplicationMessage Create(string name, string systemName, string hostUri)
         {
-            return new RegisterApplicationMessage(name, systemName, hostUri, adminEmailAddress);
+            return new RegisterApplicationMessage(name, systemName, hostUri);
         }
 
         public string Type => nameof(RegisterApplicationMessage);
@@ -28,7 +27,5 @@ namespace Common.Messaging.Messages
         public string SystemName { get; set; }
 
         public string HostUri { get; set; }
-
-        public string AdminEmailAddress { get; set; }
     }
 }

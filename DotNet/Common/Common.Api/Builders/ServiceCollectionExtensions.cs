@@ -11,7 +11,8 @@ namespace Common.Api.Builders
             return services.AddSingleton<ILinkBuilder, DefaultLinkBuilder>()
                 .AddSingleton<IResourceBuilder, DefaultResourceBuilder>()
                 .AddSingleton<IPagingLinkBuilder, DefaultPagingLinkBuilder>()
-                .AddSingleton<ISortingLinkBuilder, DefaultSortingLinkBuilder>();
+                .AddSingleton<ISortingLinkBuilder, DefaultSortingLinkBuilder>()
+                .AddSingleton<ILinkFactory, DefaultLinkFactory>();
         }
     }
 }

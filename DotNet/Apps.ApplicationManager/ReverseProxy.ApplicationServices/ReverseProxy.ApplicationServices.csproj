@@ -6,6 +6,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ApplicationManager.Persistence\ApplicationManager.Persistence.csproj" />
+      <ProjectReference Include="..\ReverseProxy.Domain\ReverseProxy.Domain.csproj" />
     </ItemGroup>
 
 </Project>

@@ -150,14 +150,8 @@ namespace Messaging.Broker.MessageBus
 
             _queueName = channel.QueueDeclare().QueueName;
 
-            EventingBasicConsumer consumer = new EventingBasicConsumer(channel);
-            consumer.Received += (model, ea) =>
-            {
-                string messageKey = ea.RoutingKey;
-                string message = Encoding.UTF8.GetString(ea.Body);
-
-                ProcessMessage(messageKey, message);
-            };
+            AsyncEventingBasicConsumer consumer = new AsyncEventingBasicConsumer(channel);;
+            consumer.Received += ConsumerRecieved;
 
             channel.BasicConsume(
                 queue: _queueName,
@@ -173,7 +167,15 @@ namespace Messaging.Broker.MessageBus
             return channel;
         }
 
-        private void ProcessMessage(string messageName,
+        private async Task ConsumerRecieved(object sender, BasicDeliverEventArgs @event)
+        {
+            string messageKey = @event.RoutingKey;
+            string message = Encoding.UTF8.GetString(@event.Body);
+
+            await ProcessMessageAsync(messageKey, message);
+        }
+
+        private async Task ProcessMessageAsync(string messageName,
             string serialisedMessage)
         {
             if (!_messageBusSubscriptionsManager.HasSubscriptionsForMessage(messageName))
@@ -184,7 +186,7 @@ namespace Messaging.Broker.MessageBus
             try
             {
                 IEnumerable<MessageSubscription> subscriptions = _messageBusSubscriptionsManager.GetSubscribersForMessage(messageName);
-                _messageDeQueuer.DeQueueAsync(_messageSerialiser.Deserialise(serialisedMessage), subscriptions);
+                await _messageDeQueuer.DeQueueAsync(_messageSerialiser.Deserialise(serialisedMessage), subscriptions);
             }
             catch (Exception e)
             {

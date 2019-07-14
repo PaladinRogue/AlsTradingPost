@@ -24,10 +24,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NodaTime;
-using ReverseProxy.Setup;
-using ReverseProxy.Setup.Infrastructure.ReverseProxy;
 using Common.Setup.Infrastructure.DataProtection;
 using Common.Setup.Infrastructure.Exceptions;
+using Common.Setup.Infrastructure.WebRequests;
 
 [assembly: ApiController]
 
@@ -41,7 +40,8 @@ namespace ApplicationManager.Api
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddDefaultMvcOptions()
+            services
+                .AddDefaultMvcOptions()
                 .LoadAppSettings(Configuration)
                 .LoadHostSettings(Configuration)
                 .LoadSystemAdminIdentitySettings(Configuration)
@@ -50,9 +50,10 @@ namespace ApplicationManager.Api
                 .UseDomainEvents()
                 .UseRabbitMqMessaging(Configuration)
                 .RegisterCommonProviders()
-                .RegisterCommonServices()
+                .RegisterCommonApplicationServices()
                 .RegisterAuthorisationServices()
-                .UseDataProtection(Configuration);
+                .UseDataProtection(Configuration)
+                .UseWebRequests();
 
             services.Configure<MvcOptions>(options =>
             {
@@ -64,12 +65,12 @@ namespace ApplicationManager.Api
                     .RequireHttps();
             });
 
-            services.UseJsonV1Format()
+            services
+                .UseJsonV1Format()
                 .UseJsonPolicyAuthorisation(Configuration)
                 .UseEmailNotifications()
                 .RegisterMessageSubscribers()
                 .RegisterDomainEventHandlers()
-                .RegisterBuilders()
                 .RegisterValidators()
                 .RegisterApplicationServices()
                 .RegisterDomainServices()
@@ -77,12 +78,11 @@ namespace ApplicationManager.Api
                 .RegisterProviders()
                 .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.RegisterReverseProxyServices();
-
             return services.BuildServiceProvider();
         }
 
-        public void Configure(IApplicationBuilder app,
+        public void Configure(
+            IApplicationBuilder app,
             ILoggerFactory loggerFactory,
             IDataProtector dataProtector,
             IDomainEventDispatcher domainEventDispatcher,
@@ -97,16 +97,6 @@ namespace ApplicationManager.Api
             clock.SetClock();
 
             loggerFactory.AddLog4Net();
-
-            app.Map("/api", proxy =>
-            {
-                proxy
-                    .UseExceptionMiddleware()
-                    .UseReverseProxyMiddleware()
-                    .UseHttpsRedirection()
-                    .UseHsts()
-                    .UseMvc();
-            });
 
             app.Map("/v1", jsonVersion =>
             {

@@ -5,16 +5,15 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.6" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
       <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\ReverseProxy.ApplicationServices\ReverseProxy.ApplicationServices.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Infrastructure" />
+      <ProjectReference Include="..\ReverseProxy.Domain\ReverseProxy.Domain.csproj" />
+      <ProjectReference Include="..\ReverseProxy.Persistence\ReverseProxy.Persistence.csproj" />
     </ItemGroup>
 
 </Project>

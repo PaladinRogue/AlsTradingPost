@@ -11,6 +11,7 @@ using Common.Domain.Exceptions;
 using Common.Domain.Persistence;
 using Common.Messaging.Infrastructure;
 using Common.Messaging.Messages;
+using Microsoft.Extensions.Logging;
 using String = Common.Resources.Extensions.String;
 
 namespace ApplicationManager.ApplicationServices.Identities.CreateAdmin
@@ -29,13 +30,16 @@ namespace ApplicationManager.ApplicationServices.Identities.CreateAdmin
 
         private readonly ICommandRepository<AuthenticationService> _authenticationServiceCommandRepository;
 
+        private readonly ILogger<CreateAdminAuthenticationIdentityKernalService> _logger;
+
         public CreateAdminAuthenticationIdentityKernalService(
             ITransactionManager transactionManager,
             ICreateIdentityCommand createIdentityCommand,
             ICommandRepository<Identity> commandRepository,
             IRegisterPasswordCommand registerPasswordCommand,
             ICommandRepository<AuthenticationService> authenticationServiceCommandRepository,
-            IForgotPasswordCommand forgotPasswordCommand)
+            IForgotPasswordCommand forgotPasswordCommand,
+            ILogger<CreateAdminAuthenticationIdentityKernalService> logger)
         {
             _transactionManager = transactionManager;
             _createIdentityCommand = createIdentityCommand;
@@ -43,6 +47,7 @@ namespace ApplicationManager.ApplicationServices.Identities.CreateAdmin
             _registerPasswordCommand = registerPasswordCommand;
             _authenticationServiceCommandRepository = authenticationServiceCommandRepository;
             _forgotPasswordCommand = forgotPasswordCommand;
+            _logger = logger;
         }
 
         public async Task CreateAsync(CreateAdminAuthenticationIdentityAdto createAdminAuthenticationIdentityAdto)
@@ -72,13 +77,13 @@ namespace ApplicationManager.ApplicationServices.Identities.CreateAdmin
 
                     await _commandRepository.UpdateAsync(identity);
 
-                    await Message.SendAsync(CreateAdminIdentityMessage.Create(createAdminAuthenticationIdentityAdto.ApplicationSystemName, identity.Id));
+                    await Message.SendAsync(AdminIdentityCreatedMessage.Create(createAdminAuthenticationIdentityAdto.ApplicationName, identity.Id));
 
                     transaction.Commit();
                 }
                 catch (DomainValidationRuleException e)
                 {
-                    throw new BusinessValidationRuleApplicationException(e.ValidationResult);
+                    _logger.LogInformation("Could not create admin identity", e);
                 }
             }
         }

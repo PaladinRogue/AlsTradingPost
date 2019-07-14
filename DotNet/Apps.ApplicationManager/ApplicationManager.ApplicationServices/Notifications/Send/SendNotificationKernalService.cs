@@ -52,8 +52,9 @@ namespace ApplicationManager.ApplicationServices.Notifications.Send
 
                     if (notificationType != null)
                     {
-                        foreach (NotificationTypeChannel notificationTypeChannel in notificationType
-                            .NotificationTypeChannels)
+                        IEnumerable<NotificationTypeChannel> notificationTypeNotificationTypeChannels = notificationType.NotificationTypeChannels;
+
+                        foreach (NotificationTypeChannel notificationTypeChannel in notificationTypeNotificationTypeChannels)
                         {
                             IChannelAudienceResolver channelAudienceResolver =
                                 _channelAudienceResolverProvider.GetByType(notificationTypeChannel.ChannelType,

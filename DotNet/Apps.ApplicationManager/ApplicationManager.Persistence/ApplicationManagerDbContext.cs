@@ -1,5 +1,4 @@
-﻿using ApplicationManager.Domain.Applications;
-using ApplicationManager.Domain.AuthenticationServices;
+﻿using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.NotificationTypes;
 using ApplicationManager.Domain.Users;
@@ -10,7 +9,6 @@ using Common.Domain.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityFramework.Infrastructure.DateTimeConverters;
 using Persistence.EntityFramework.Infrastructure.Extensions;
-using Persistence.EntityFramework.Infrastructure.Uris;
 using Identity = ApplicationManager.Domain.Identities.Identity;
 
 namespace ApplicationManager.Persistence
@@ -20,8 +18,6 @@ namespace ApplicationManager.Persistence
         public ApplicationManagerDbContext(DbContextOptions options) : base(options)
         {
         }
-
-        public DbSet<Application> Applications { get; set; }
 
         public DbSet<AuthenticationService> AuthenticationServices { get; set; }
 
@@ -36,10 +32,6 @@ namespace ApplicationManager.Persistence
             modelBuilder.HasDefaultSchema("apps");
 
             modelBuilder.ProtectSensitiveInformation();
-
-            modelBuilder.Entity<Application>()
-                .Property(a => a.HostUri)
-                .HasConversion(UriConverter.Create());
 
             modelBuilder.Entity<AuthenticationIdentity>()
                 .ToTable("AuthenticationIdentities");

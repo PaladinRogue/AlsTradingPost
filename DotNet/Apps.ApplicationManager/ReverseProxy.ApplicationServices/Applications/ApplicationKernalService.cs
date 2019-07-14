@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using ApplicationManager.Domain.Applications;
 using Common.ApplicationServices.Exceptions;
 using Common.ApplicationServices.Transactions;
 using Common.Domain.Persistence;
+using ReverseProxy.Domain.Applications;
 
 namespace ReverseProxy.ApplicationServices.Applications
 {

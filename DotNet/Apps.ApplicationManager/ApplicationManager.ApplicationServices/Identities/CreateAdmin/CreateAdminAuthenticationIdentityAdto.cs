@@ -4,6 +4,6 @@
     {
         public string EmailAddress { get; set; }
 
-        public string ApplicationSystemName { get; set; }
+        public string ApplicationName { get; set; }
     }
 }

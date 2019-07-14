@@ -1,5 +1,4 @@
-﻿using System;
-using Common.Messaging.Infrastructure.Messages;
+﻿using Common.Messaging.Infrastructure.Messages;
 
 namespace Common.Messaging.Messages
 {
@@ -9,21 +8,21 @@ namespace Common.Messaging.Messages
         {
         }
 
-        protected CreateAdminIdentityMessage(string applicationName, Guid identityId)
+        protected CreateAdminIdentityMessage(string applicationName, string emailAddress)
         {
-            IdentityId = identityId;
             ApplicationName = applicationName;
+            EmailAddress = emailAddress;
         }
 
-        public static CreateAdminIdentityMessage Create(string applicationName, Guid identityId)
+        public static CreateAdminIdentityMessage Create(string applicationName, string emailAddress)
         {
-            return new CreateAdminIdentityMessage(applicationName, identityId);
+            return new CreateAdminIdentityMessage(applicationName, emailAddress);
         }
 
         public string Type => nameof(CreateAdminIdentityMessage);
 
         public string ApplicationName { get; set; }
 
-        public Guid IdentityId { get; set; }
+        public string EmailAddress { get; set; }
     }
 }

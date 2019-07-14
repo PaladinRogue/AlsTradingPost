@@ -1,8 +1,10 @@
+using System;
 using System.Threading.Tasks;
 using ApplicationManager.ApplicationServices.Notifications.Send;
 using Common.Messaging.Infrastructure.MessageBus;
 using Common.Messaging.Infrastructure.Subscribers;
 using Common.Messaging.Messages;
+using Microsoft.Extensions.Logging;
 
 namespace ApplicationManager.ApplicationServices.Subscribers
 {
@@ -10,21 +12,32 @@ namespace ApplicationManager.ApplicationServices.Subscribers
     {
         private readonly ISendNotificationKernalService _sendNotificationKernalService;
 
+        private readonly ILogger<SendNotificationMessageSubscriber> _logger;
+
         public SendNotificationMessageSubscriber(
             IMessageBus messageBus,
-            ISendNotificationKernalService sendNotificationKernalService) : base(messageBus)
+            ISendNotificationKernalService sendNotificationKernalService,
+            ILogger<SendNotificationMessageSubscriber> logger) : base(messageBus)
         {
+            _logger = logger;
             _sendNotificationKernalService = sendNotificationKernalService;
         }
 
-        public override Task HandleAsync(SendNotificationMessage message)
+        public override async Task HandleAsync(SendNotificationMessage message)
         {
-            return _sendNotificationKernalService.SendAsync(new SendNotificationAdto
+            try
             {
-                IdentityId = message.IdentityId,
-                NotificationType = message.NotificationType,
-                PropertyBag = message.PropertyBag
-            });
+                await _sendNotificationKernalService.SendAsync(new SendNotificationAdto
+                {
+                    IdentityId = message.IdentityId,
+                    NotificationType = message.NotificationType,
+                    PropertyBag = message.PropertyBag
+                });
+            }
+            catch (Exception e)
+            {
+                _logger.LogCritical(e, "Unable to create admin user");
+            }
         }
     }
 }

@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using ApplicationManager.Domain.Applications;
+using ReverseProxy.Domain.Applications;
 
 namespace ReverseProxy.ApplicationServices.Applications
 {

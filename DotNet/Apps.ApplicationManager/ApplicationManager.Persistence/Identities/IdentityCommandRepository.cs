@@ -17,7 +17,7 @@ namespace ApplicationManager.Persistence.Identities
         [Obsolete("Only needed as EF Core 2.2 does not track nested owned entities properly")]
         public override Task UpdateAsync(Identity entity)
         {
-            if (entity.Session.RefreshToken != null)
+            if (entity.Session?.RefreshToken != null)
             {
                 PropertyInfo tokenHashPropertyInfo = typeof(RefreshToken).GetProperty("TokenHash", BindingFlags.NonPublic | BindingFlags.Instance);
                 HashSet refreshTokenTokenHash = tokenHashPropertyInfo.GetValue(entity.Session.RefreshToken) as HashSet;

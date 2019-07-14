@@ -38,23 +38,24 @@ namespace Common.Setup
             return services;
         }
 
-        public static IServiceCollection RegisterCommonServices(this IServiceCollection services)
+        public static IServiceCollection RegisterCommonApplicationServices(this IServiceCollection services)
         {
-            return services.AddSingleton<IEncryptionFactory, AesEncryptionFactory>()
-                .AddSingleton<IHashFactory, Sha256HashFactory>()
+            return services
                 .AddScoped(typeof(IQueryService<>), typeof(QueryService<>));
         }
 
         public static IServiceCollection RegisterCommonProviders(this IServiceCollection services)
         {
-            return services.AddSingleton<IResourceOwnerProviderCollection, ResourceOwnerProviderCollection>()
+            return services
+                .AddSingleton<IResourceOwnerProviderCollection, ResourceOwnerProviderCollection>()
                 .AddSingleton<IApiDescriptionGroupCollectionProvider, ApiDescriptionGroupCollectionProvider>()
                 .AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         public static IServiceCollection RegisterAuthorisationServices(this IServiceCollection services)
         {
-            return services.AddSingleton<IAuthorisationRestrictionProvider, AuthorisationRestrictionProvider>()
+            return services
+                .AddSingleton<IAuthorisationRestrictionProvider, AuthorisationRestrictionProvider>()
                 .AddSingleton<IAuthorisationPolicy, AlwaysDenyAuthorisationPolicy>()
                 .AddScoped<ISecurityApplicationService, DefaultSecurityApplicationService>()
                 .AddSingleton<IAuthorisationManager, AuthorisationManager>();
@@ -62,7 +63,8 @@ namespace Common.Setup
 
         public static IServiceCollection UseSystemClock(this IServiceCollection services)
         {
-            return services.AddSingleton<IClock>(SystemClock.Instance);
+            return services
+                .AddSingleton<IClock>(SystemClock.Instance);
         }
     }
 }

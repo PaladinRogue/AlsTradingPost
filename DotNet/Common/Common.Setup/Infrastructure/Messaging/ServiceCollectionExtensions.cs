@@ -35,6 +35,7 @@ namespace Common.Setup.Infrastructure.Messaging
 
                 ConnectionFactory factory = new ConnectionFactory
                 {
+                    DispatchConsumersAsync = true,
                     HostName = string.IsNullOrEmpty(messageBusSettings.Connection) ? throw new ArgumentException(nameof(messageBusSettings.Connection)) : messageBusSettings.Connection
                 };
 

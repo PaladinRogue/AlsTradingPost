@@ -299,3 +299,5 @@ __pycache__/
 *.1
 /Web/PaladinRogue/dist
 **/secrets.json
+*.log
+*.eml

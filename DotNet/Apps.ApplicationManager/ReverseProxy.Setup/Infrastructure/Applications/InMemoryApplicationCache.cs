@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ApplicationManager.Domain.Applications;
 using ReverseProxy.ApplicationServices.Applications;
+using ReverseProxy.Domain.Applications;
 
 namespace ReverseProxy.Setup.Infrastructure.Applications
 {
