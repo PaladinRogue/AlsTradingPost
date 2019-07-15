@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Common.Authorisation.Contexts;
@@ -43,7 +44,7 @@ namespace Common.Authorisation.Policies.Json
                 case ResourceRestriction.Everyone:
                     return Task.FromResult(true);
                 case ResourceRestriction.Self:
-                    return Task.FromResult(CheckSelf(authorisationContext));
+                    return CheckSelfAsync(authorisationContext);
                 case ResourceRestriction.Owner:
                     return CheckOwnerAsync(authorisationContext);
                 default:
@@ -69,11 +70,13 @@ namespace Common.Authorisation.Policies.Json
             }
         }
 
-        private bool CheckSelf(IAuthorisationContext authorisationContext)
+        private async Task<bool> CheckSelfAsync(IAuthorisationContext authorisationContext)
         {
             ValidateAuthorisationContext(authorisationContext);
 
-            _selfProvider.WhoAmI.TryGetValue(authorisationContext.ResourceType, out Guid entityId);
+            IDictionary<Type,Guid> whoAmI = await _selfProvider.WhoAmIAsync();
+
+            whoAmI.TryGetValue(authorisationContext.ResourceType, out Guid entityId);
 
             return entityId == authorisationContext.ResourceId;
         }
@@ -86,7 +89,9 @@ namespace Common.Authorisation.Policies.Json
 
             IAggregateOwner aggregateOwner = await resourceOwnerProvider.GetOwnerAsync(authorisationContext.ResourceId.Value);
 
-            return  _selfProvider.WhoAmI.Any(i => i.Key == aggregateOwner.AggregateType && i.Value == aggregateOwner.Id);
+            IDictionary<Type,Guid> whoAmI = await _selfProvider.WhoAmIAsync();
+
+            return whoAmI.Any(i => i.Key == aggregateOwner.AggregateType && i.Value == aggregateOwner.Id);
         }
 
         private async Task<bool> CheckPolicyAsync(string restrictionValue, IAuthorisationContext authorisationContext)

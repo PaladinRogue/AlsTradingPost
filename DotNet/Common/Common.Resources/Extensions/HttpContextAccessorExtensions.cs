@@ -26,6 +26,13 @@ namespace Common.Resources.Extensions
             return subjectId == Guid.Empty ? null : (Guid?)subjectId;
         }
 
+        public static Guid? GetClaim(this IHttpContextAccessor httpContextAccessor, string claimType)
+        {
+            Guid.TryParse(httpContextAccessor?.HttpContext?.User?.FindFirst(claimType)?.Value, out Guid subjectId);
+
+            return subjectId == Guid.Empty ? null : (Guid?)subjectId;
+        }
+
         public static bool HasRequestHeader(this IHttpContextAccessor httpContextAccessor, string headerKey)
         {
             bool? containsKey = httpContextAccessor?.HttpContext?.Request?.Headers?.ContainsKey(headerKey);

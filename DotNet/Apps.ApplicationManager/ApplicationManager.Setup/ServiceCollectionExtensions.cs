@@ -36,6 +36,7 @@ using ApplicationManager.Domain.Users.Create;
 using ApplicationManager.Persistence;
 using ApplicationManager.Persistence.Identities;
 using ApplicationManager.Setup.Infrastructure.Authentication.ClientCredential;
+using ApplicationManager.Setup.Infrastructure.Authorisation;
 using Common.Api.Routing;
 using Common.ApplicationServices.Transactions;
 using Common.Domain.Persistence;
@@ -148,6 +149,7 @@ namespace ApplicationManager.Setup
         public static IServiceCollection RegisterProviders(this IServiceCollection services)
         {
             return services
+                .AddSingleton<ICurrentUserProvider, CurrentUserProvider>()
                 .AddSingleton<IRouteProvider<bool>, DefaultRouteProvider>()
                 .AddSingleton<IAbsoluteRouteProvider, DefaultAbsoluteRouteProvider>();
         }

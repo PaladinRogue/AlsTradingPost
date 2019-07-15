@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Common.Authorisation
 {
     public interface ISelfProvider
     {
-        IReadOnlyDictionary<Type, Guid> WhoAmI { get; }
+        Task<IDictionary<Type, Guid>> WhoAmIAsync();
     }
 }

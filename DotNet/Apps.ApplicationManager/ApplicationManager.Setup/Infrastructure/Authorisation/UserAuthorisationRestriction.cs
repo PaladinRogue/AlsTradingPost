@@ -10,15 +10,15 @@ namespace ApplicationManager.Setup.Infrastructure.Authorisation
 {
     public class UserAuthorisationRestriction : IAuthorisationRestriction
     {
-        private readonly ICurrentIdentityProvider _currentIdentityProvider;
+        private readonly ICurrentUserProvider _currentUserProvider;
 
         private readonly IQueryRepository<User> _userQueryRepository;
 
         public UserAuthorisationRestriction(
-            ICurrentIdentityProvider currentIdentityProvider,
+            ICurrentUserProvider currentUserProvider,
             IQueryRepository<User> userQueryRepository)
         {
-            _currentIdentityProvider = currentIdentityProvider;
+            _currentUserProvider = currentUserProvider;
             _userQueryRepository = userQueryRepository;
         }
 
@@ -26,9 +26,9 @@ namespace ApplicationManager.Setup.Infrastructure.Authorisation
 
         public async Task<IRestrictionResult> CheckRestrictionAsync(IAuthorisationContext authorisationContext)
         {
-            if (_currentIdentityProvider.IsAuthenticated)
+            if (_currentUserProvider.IsAuthenticated && _currentUserProvider.Id.HasValue)
             {
-                User user = await _userQueryRepository.GetSingleAsync(u => u.Identity.Id == _currentIdentityProvider.Id);
+                User user = await _userQueryRepository.GetByIdAsync(_currentUserProvider.Id.Value);
 
                 return user == null ? RestrictionResult.Fail : RestrictionResult.Succeed;
             }
