@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using ApplicationManager.Domain.AuthenticationServices;
-using ApplicationManager.Domain.Identities.AddClaim;
+using ApplicationManager.Domain.Identities.AddOrChangeClaim;
 using ApplicationManager.Domain.Identities.ChangeClaim;
 using ApplicationManager.Domain.Identities.ChangePassword;
 using ApplicationManager.Domain.Identities.CreateClaim;
@@ -208,33 +208,25 @@ namespace ApplicationManager.Domain.Identities
             }));
         }
 
-        internal void AddClaim(AddIdentityClaimDdto addIdentityClaimDdto)
+        internal void AddOrChangeClaim(AddOrChangeIdentityClaimDdto addOrChangeIdentityClaimDdto)
         {
-            if (Claims.Any(c => c.Type == addIdentityClaimDdto.Type))
-            {
-                throw new IdentityClaimExistsDomainException();
-            }
-
-            _claims.Add(Claim.Create(this, new CreateClaimDdto
-            {
-                Type = addIdentityClaimDdto.Type,
-                Value = addIdentityClaimDdto.Value
-            }));
-        }
-
-        internal void ChangeClaim(ChangeIdentityClaimDdto changeIdentityClaimDdto)
-        {
-            Claim claim = Claims.SingleOrDefault(c => c.Type == changeIdentityClaimDdto.Type);
+            Claim claim = Claims.SingleOrDefault(c => c.Type == addOrChangeIdentityClaimDdto.Type);
 
             if (claim == null)
             {
-                throw new IdentityClaimDoesNotExistDomainException();
+                _claims.Add(Claim.Create(this, new CreateClaimDdto
+                {
+                    Type = addOrChangeIdentityClaimDdto.Type,
+                    Value = addOrChangeIdentityClaimDdto.Value
+                }));
             }
-
-            claim.Change(new ChangeClaimDdto
+            else
             {
-                Value = changeIdentityClaimDdto.Value
-            });
+                claim.Change(new ChangeClaimDdto
+                {
+                    Value = addOrChangeIdentityClaimDdto.Value
+                });
+            }
         }
 
         internal void Logout()

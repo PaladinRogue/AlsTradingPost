@@ -13,8 +13,7 @@ using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.AuthenticationServices.ChangeClientCredential;
 using ApplicationManager.Domain.AuthenticationServices.CreateClientCredential;
 using ApplicationManager.Domain.Identities;
-using ApplicationManager.Domain.Identities.AddClaim;
-using ApplicationManager.Domain.Identities.ChangeClaim;
+using ApplicationManager.Domain.Identities.AddOrChangeClaim;
 using ApplicationManager.Domain.Identities.ChangePassword;
 using ApplicationManager.Domain.Identities.CheckPassword;
 using ApplicationManager.Domain.Identities.ConfirmIdentity;
@@ -84,8 +83,7 @@ namespace ApplicationManager.Setup
                 .AddScoped<IValidator<RegisterClientCredentialCommandDdto>, RegisterClientCredentialCommandValidator>()
                 .AddScoped<IValidator<CreateAuthenticationGrantTypeClientCredentialDdto>, CreateAuthenticationGrantTypeClientCredentialValidator>()
                 .AddScoped<IValidator<ChangeAuthenticationGrantTypeClientCredentialDdto>, ChangeAuthenticationGrantTypeClientCredentialValidator>()
-                .AddScoped<IValidator<AddIdentityClaimCommandDdto>, AddIdentityClaimValidator>()
-                .AddScoped<IValidator<ChangeIdentityClaimCommandDdto>, ChangeIdentityClaimValidator>();
+                .AddScoped<IValidator<AddOrChangeIdentityClaimCommandDdto>, AddOrChangeIdentityClaimValidator>();
         }
 
         public static IServiceCollection RegisterDomainServices(this IServiceCollection services)
@@ -109,8 +107,7 @@ namespace ApplicationManager.Setup
                 .AddScoped<IClientCredentialLoginCommand, ClientCredentialLoginCommand>()
                 .AddScoped<ICreateAuthenticationGrantTypeClientCredentialCommand, CreateAuthenticationGrantTypeClientCredentialCommand>()
                 .AddScoped<IChangeAuthenticationGrantTypeClientCredentialCommand, ChangeAuthenticationGrantTypeClientCredentialCommand>()
-                .AddScoped<IAddIdentityClaimCommand, AddIdentityClaimCommand>()
-                .AddScoped<IChangeIdentityClaimCommand, ChangeIdentityClaimCommand>();
+                .AddScoped<IAddOrChangeIdentityClaimCommand, AddOrChangeIdentityClaimCommand>();
         }
 
         public static IServiceCollection RegisterPersistenceServices(

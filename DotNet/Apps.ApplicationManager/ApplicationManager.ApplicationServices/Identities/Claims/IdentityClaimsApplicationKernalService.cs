@@ -1,8 +1,6 @@
-using System.Linq;
 using System.Threading.Tasks;
 using ApplicationManager.Domain.Identities;
-using ApplicationManager.Domain.Identities.AddClaim;
-using ApplicationManager.Domain.Identities.ChangeClaim;
+using ApplicationManager.Domain.Identities.AddOrChangeClaim;
 using Common.ApplicationServices.Exceptions;
 using Common.ApplicationServices.Transactions;
 using Common.Domain.Exceptions;
@@ -19,22 +17,18 @@ namespace ApplicationManager.ApplicationServices.Identities.Claims
 
         private readonly ILogger<IdentityClaimsApplicationKernalService> _logger;
 
-        private readonly IAddIdentityClaimCommand _addIdentityClaimCommand;
-
-        private readonly IChangeIdentityClaimCommand _changeIdentityClaimCommand;
+        private readonly IAddOrChangeIdentityClaimCommand _addOrChangeIdentityClaimCommand;
 
         public IdentityClaimsApplicationKernalService(
             ICommandRepository<Identity> commandRepository,
             ITransactionManager transactionManager,
             ILogger<IdentityClaimsApplicationKernalService> logger,
-            IAddIdentityClaimCommand addIdentityClaimCommand,
-            IChangeIdentityClaimCommand changeIdentityClaimCommand)
+            IAddOrChangeIdentityClaimCommand addOrChangeIdentityClaimCommand)
         {
             _commandRepository = commandRepository;
             _transactionManager = transactionManager;
             _logger = logger;
-            _addIdentityClaimCommand = addIdentityClaimCommand;
-            _changeIdentityClaimCommand = changeIdentityClaimCommand;
+            _addOrChangeIdentityClaimCommand = addOrChangeIdentityClaimCommand;
         }
 
         public async Task UpdateAsync(UpdateIdentityClaimAdto updateIdentityClaimAdto)
@@ -50,25 +44,11 @@ namespace ApplicationManager.ApplicationServices.Identities.Claims
                         throw new BusinessApplicationException(ExceptionType.NotFound, $"Identity with id: {updateIdentityClaimAdto.IdentityId} does not exist");
                     }
 
-                    Claim claim = identity.Claims.FirstOrDefault(c => c.Type == updateIdentityClaimAdto.Type);
-
-                    if (claim == null)
+                    await _addOrChangeIdentityClaimCommand.ExecuteAsync(identity, new AddOrChangeIdentityClaimCommandDdto
                     {
-                        await _addIdentityClaimCommand.ExecuteAsync(identity, new AddIdentityClaimCommandDdto
-                        {
-                            Type = updateIdentityClaimAdto.Type,
-                            Value = updateIdentityClaimAdto.Value
-                        });
-                    }
-                    else
-                    {
-                        //TODO Ask about this, should we pass the claim in directly or do the change through the identity
-                        await _changeIdentityClaimCommand.ExecuteAsync(identity, new ChangeIdentityClaimCommandDdto
-                        {
-                            Type = updateIdentityClaimAdto.Type,
-                            Value = updateIdentityClaimAdto.Value
-                        });
-                    }
+                        Type = updateIdentityClaimAdto.Type,
+                        Value = updateIdentityClaimAdto.Value
+                    });
 
                     await _commandRepository.UpdateAsync(identity);
 

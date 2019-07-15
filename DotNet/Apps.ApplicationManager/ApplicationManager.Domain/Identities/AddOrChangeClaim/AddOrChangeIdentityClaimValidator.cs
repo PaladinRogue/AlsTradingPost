@@ -1,11 +1,11 @@
 using Common.Resources;
 using FluentValidation;
 
-namespace ApplicationManager.Domain.Identities.ChangeClaim
+namespace ApplicationManager.Domain.Identities.AddOrChangeClaim
 {
-    public class ChangeIdentityClaimValidator : AbstractValidator<ChangeIdentityClaimCommandDdto>
+    public class AddOrChangeIdentityClaimValidator : AbstractValidator<AddOrChangeIdentityClaimCommandDdto>
     {
-        public ChangeIdentityClaimValidator()
+        public AddOrChangeIdentityClaimValidator()
         {
             RuleFor(c => c)
                 .NotNull();
