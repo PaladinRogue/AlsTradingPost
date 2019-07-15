@@ -20,7 +20,7 @@ namespace Common.Authorisation.Restrictions
 
             if (authorisationRestriction == null)
             {
-                throw new Exception($"Authorisation restriction not defined for restriction: { restriction }");
+                throw new AuthorisationRestrictionNotFoundException($"Authorisation restriction not defined for restriction: { restriction }");
             }
 
             return authorisationRestriction;

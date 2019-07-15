@@ -15,6 +15,7 @@ namespace ApplicationManager.Setup.Infrastructure.Authorisation
             _currentIdentityProvider = currentIdentityProvider;
         }
 
+        //TODO Should this validate against the DB or rely on the auth token?
         public IReadOnlyDictionary<Type, Guid> WhoAmI =>
             new Dictionary<Type, Guid>
             {

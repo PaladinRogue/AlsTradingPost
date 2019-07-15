@@ -69,13 +69,13 @@ namespace Common.Authorisation.Policies.Json
             }
         }
 
-        private async Task<bool> CheckPolicyAsync(string restrictionValue, IAuthorisationContext authorisationContext)
+        private bool CheckSelf(IAuthorisationContext authorisationContext)
         {
-            IAuthorisationRestriction authorisationRestriction = _authorisationRestrictionProvider.GetByRestriction(restrictionValue);
+            ValidateAuthorisationContext(authorisationContext);
 
-            IRestrictionResult restrictionResult = await authorisationRestriction.CheckRestrictionAsync(authorisationContext);
+            _selfProvider.WhoAmI.TryGetValue(authorisationContext.ResourceType, out Guid entityId);
 
-            return restrictionResult.Succeeded;
+            return entityId == authorisationContext.ResourceId;
         }
 
         private async Task<bool> CheckOwnerAsync(IAuthorisationContext authorisationContext)
@@ -89,13 +89,13 @@ namespace Common.Authorisation.Policies.Json
             return  _selfProvider.WhoAmI.Any(i => i.Key == aggregateOwner.AggregateType && i.Value == aggregateOwner.Id);
         }
 
-        private bool CheckSelf(IAuthorisationContext authorisationContext)
+        private async Task<bool> CheckPolicyAsync(string restrictionValue, IAuthorisationContext authorisationContext)
         {
-            ValidateAuthorisationContext(authorisationContext);
+            IAuthorisationRestriction authorisationRestriction = _authorisationRestrictionProvider.GetByRestriction(restrictionValue);
 
-            _selfProvider.WhoAmI.TryGetValue(authorisationContext.ResourceType, out Guid entityId);
+            IRestrictionResult restrictionResult = await authorisationRestriction.CheckRestrictionAsync(authorisationContext);
 
-            return entityId == authorisationContext.ResourceId;
+            return restrictionResult.Succeeded;
         }
     }
 }
