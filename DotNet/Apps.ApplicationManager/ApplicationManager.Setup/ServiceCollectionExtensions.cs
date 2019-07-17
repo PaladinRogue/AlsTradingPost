@@ -60,9 +60,9 @@ namespace ApplicationManager.Setup
                 .AddScoped<ISendTwoFactorAuthenticationNotificationKernalService, SendTwoFactorAuthenticationNotificationKernalService>()
                 .AddScoped<ICreateAdminUserApplicationKernalService, CreateAdminUserApplicationKernalService>()
                 .AddScoped<IIdentityClaimsApplicationKernalService, IdentityClaimsApplicationKernalService>()
-                .RegisterApplicationService<IIdentityApplicationService, IdentityApplicationService, IdentityApplicationServiceSecurityDecorator>()
-                .RegisterApplicationService<IAuthenticationApplicationService, AuthenticationApplicationService, AuthenticationApplicationServiceSecurityDecorator>()
-                .RegisterApplicationService<IAuthenticationServiceApplicationService, AuthenticationServiceApplicationService, AuthenticationServiceApplicationServiceSecurityDecorator>()
+                .AddSecureApplicationService<IIdentityApplicationService, IdentityApplicationService, IdentityApplicationServiceSecurityDecorator>()
+                .AddSecureApplicationService<IAuthenticationApplicationService, AuthenticationApplicationService, AuthenticationApplicationServiceSecurityDecorator>()
+                .AddSecureApplicationService<IAuthenticationServiceApplicationService, AuthenticationServiceApplicationService, AuthenticationServiceApplicationServiceSecurityDecorator>()
                 .AddScoped<IClientCredentialAuthenticationValidator, ClientCredentialAuthenticationValidator>();
         }
 

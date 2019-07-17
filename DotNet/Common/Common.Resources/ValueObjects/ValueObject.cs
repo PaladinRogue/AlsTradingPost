@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Common.Domain.ValueObjects
+namespace Common.Resources.ValueObjects
 {
-    public abstract class ValueObject
+    public abstract class ValueObject<T>
     {
         protected abstract IEnumerable<object> GetEqualityComponents();
 
@@ -15,7 +15,7 @@ namespace Common.Domain.ValueObjects
             if (GetType().BaseType != obj.GetType())
                 return false;
 
-            ValueObject valueObject = (ValueObject)obj;
+            ValueObject<T> valueObject = (ValueObject<T>)obj;
 
             return GetEqualityComponents().SequenceEqual(valueObject.GetEqualityComponents());
         }
@@ -32,7 +32,7 @@ namespace Common.Domain.ValueObjects
                 });
         }
 
-        public static bool operator ==(ValueObject a, ValueObject b)
+        public static bool operator ==(ValueObject<T> a, ValueObject<T> b)
         {
             if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
                 return true;
@@ -43,7 +43,7 @@ namespace Common.Domain.ValueObjects
             return a.Equals(b);
         }
 
-        public static bool operator !=(ValueObject a, ValueObject b)
+        public static bool operator !=(ValueObject<T> a, ValueObject<T> b)
         {
             return !(a == b);
         }

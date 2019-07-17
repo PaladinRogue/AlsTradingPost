@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Common.Domain.ValueObjects;
 using Common.Resources;
+using Common.Resources.ValueObjects;
 
 namespace Common.Domain.DataProtection
 {
-    public class HashSet : ValueObject
+    public class HashSet : ValueObject<HashSet>
     {
         [Required]
         [MaxLength(FieldSizes.Extended)]

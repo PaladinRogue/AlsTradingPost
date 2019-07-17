@@ -11,6 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
       <ProjectReference Include="..\ReverseProxy.ApplicationServices\ReverseProxy.ApplicationServices.csproj" />
       <ProjectReference Include="..\ReverseProxy.Domain\ReverseProxy.Domain.csproj" />
       <ProjectReference Include="..\ReverseProxy.Persistence\ReverseProxy.Persistence.csproj" />

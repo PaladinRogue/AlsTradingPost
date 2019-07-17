@@ -1,5 +1,7 @@
-﻿using Common.ApplicationServices.Transactions;
+﻿using Common.ApplicationServices.Caching;
+using Common.ApplicationServices.Transactions;
 using Common.Domain.Persistence;
+using Common.Setup.Infrastructure.Caching;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -8,12 +10,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Persistence.EntityFramework.Infrastructure.Transactions;
 using Persistence.EntityFramework.Repositories;
 using ReverseProxy.ApplicationServices.Applications;
+using ReverseProxy.ApplicationServices.Applications.Caching;
 using ReverseProxy.ApplicationServices.Applications.Register;
 using ReverseProxy.Domain.Applications;
 using ReverseProxy.Domain.Applications.Change;
 using ReverseProxy.Domain.Applications.Create;
+using ReverseProxy.Domain.Applications.Persistence;
 using ReverseProxy.Persistence;
-using ReverseProxy.Setup.Infrastructure.Applications;
+using ReverseProxy.Persistence.Applications;
+using ReverseProxy.Setup.Infrastructure.Caching;
 
 namespace ReverseProxy.Setup
 {
@@ -23,8 +28,7 @@ namespace ReverseProxy.Setup
         {
             return services
                 .AddScoped<IRegisterApplicationKernalService, RegisterApplicationKernalService>()
-                .AddScoped<IApplicationKernalService, ApplicationKernalService>()
-                .AddSingleton<IApplicationCache, InMemoryApplicationCache>();
+                .AddScoped<IApplicationKernalService, ApplicationKernalService>();
         }
 
         public static IServiceCollection RegisterValidators(this IServiceCollection services)
@@ -49,7 +53,7 @@ namespace ReverseProxy.Setup
         {
             services.AddScoped<ICommandRepository<Application>, CommandRepository<Application>>();
 
-            services.AddScoped<IQueryRepository<Application>, QueryRepository<Application>>();
+            services.AddSingletonCache<IApplicationQueryRepository, ApplicationQueryRepository, ICacheDecorator<string, Application>, ApplicationQueryRepositoryCacheDecorator, GatewayCacheService>();
 
             services.AddEntityFrameworkSqlServer().AddOptions()
                 .AddDbContext<ReverseProxyDbContext>(options =>

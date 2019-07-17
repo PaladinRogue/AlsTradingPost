@@ -12,6 +12,9 @@
         <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection">
           <Version>6.1.1</Version>
         </PackageReference>
+        <PackageReference Include="LazyCache.AspNetCore">
+          <Version>2.0.1</Version>
+        </PackageReference>
         <PackageReference Include="Microsoft.AspNetCore.App" />
     </ItemGroup>
 

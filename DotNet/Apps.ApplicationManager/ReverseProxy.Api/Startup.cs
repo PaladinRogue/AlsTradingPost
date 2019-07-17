@@ -36,7 +36,9 @@ namespace ReversProxy.Api
                 .UseDomainEvents()
                 .UseRabbitMqMessaging(Configuration)
                 .UseDataProtection(Configuration)
-                .UseWebRequests();
+                .UseWebRequests()
+                .UseSystemClock()
+                .AddLazyCache();
 
             services.Configure<MvcOptions>(options =>
             {

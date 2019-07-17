@@ -4,7 +4,7 @@ using Common.Domain.Exceptions;
 
 namespace Common.Domain.Persistence
 {
-    public interface IDelete
+    public interface IDeleteCommand
     {
         /// <summary>Deletes an entity of type <typeparamref name="T"/>.</summary>
         /// <param name="id">The id of the entity to delete.</param>
