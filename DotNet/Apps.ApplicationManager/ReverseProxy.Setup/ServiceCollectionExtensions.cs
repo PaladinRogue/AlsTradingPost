@@ -53,7 +53,7 @@ namespace ReverseProxy.Setup
         {
             services.AddScoped<ICommandRepository<Application>, CommandRepository<Application>>();
 
-            services.AddSingletonCache<IApplicationQueryRepository, ApplicationQueryRepository, ICacheDecorator<string, Application>, ApplicationQueryRepositoryCacheDecorator, GatewayCacheService>();
+            services.AddSingletonCache<IApplicationQueryRepository, ApplicationQueryRepository, ICacheDecorator<string, Application>, ApplicationQueryRepositoryCacheDecorator, GatewayCacheService>(ServiceLifetime.Scoped);
 
             services.AddEntityFrameworkSqlServer().AddOptions()
                 .AddDbContext<ReverseProxyDbContext>(options =>

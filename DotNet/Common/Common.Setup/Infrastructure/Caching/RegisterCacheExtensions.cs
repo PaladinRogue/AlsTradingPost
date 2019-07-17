@@ -17,17 +17,21 @@ namespace Common.Setup.Infrastructure.Caching
             services.AddSingleton<TCacheService>();
 
             services.AddScoped<IQueryRepository<T>>(sp =>
-                Activator.CreateInstance(typeof(QueryRepositoryCacheDecorator<T>), sp.GetRequiredService<QueryRepository<T>>(), sp.GetRequiredService<TCacheService>()) as QueryRepositoryCacheDecorator<T>
+                Activator.CreateInstance(typeof(QueryRepositoryCacheDecorator<T>), sp.GetRequiredService<QueryRepository<T>>(), sp.GetRequiredService<TCacheService>()) as
+                    QueryRepositoryCacheDecorator<T>
             );
 
             services.AddScoped<ICacheDecorator<Guid, T>>(sp =>
-                Activator.CreateInstance(typeof(QueryRepositoryCacheDecorator<T>), sp.GetRequiredService<QueryRepository<T>>(), sp.GetRequiredService<TCacheService>()) as QueryRepositoryCacheDecorator<T>
+                Activator.CreateInstance(typeof(QueryRepositoryCacheDecorator<T>), sp.GetRequiredService<QueryRepository<T>>(), sp.GetRequiredService<TCacheService>()) as
+                    QueryRepositoryCacheDecorator<T>
             );
 
             return services;
         }
 
-        public static IServiceCollection AddSingletonCache<TIService, TService, TICacheDecorator, TServiceCacheDecorator, TCacheService>(this IServiceCollection services)
+        public static IServiceCollection AddSingletonCache<TIService, TService, TICacheDecorator, TServiceCacheDecorator, TCacheService>(
+            this IServiceCollection services,
+            ServiceLifetime serviceLifetime)
             where TIService : class
             where TService : class, TIService
             where TICacheDecorator : class
@@ -40,10 +44,10 @@ namespace Common.Setup.Infrastructure.Caching
                 Activator.CreateInstance(typeof(TServiceCacheDecorator), sp.GetRequiredService<TService>(), sp.GetRequiredService<TCacheService>()) as TServiceCacheDecorator
             );
 
-            return AddServiceCache<TIService, TService, TServiceCacheDecorator, TCacheService>(services);
+            return AddServiceCache<TIService, TService, TServiceCacheDecorator, TCacheService>(services, serviceLifetime);
         }
 
-        public static IServiceCollection AddScopedCache<TIService, TService, TServiceCacheDecorator, TCacheService>(this IServiceCollection services)
+        public static IServiceCollection AddScopedCache<TIService, TService, TServiceCacheDecorator, TCacheService>(this IServiceCollection services, ServiceLifetime serviceLifetime)
             where TIService : class
             where TService : class, TIService
             where TServiceCacheDecorator : class, TIService
@@ -51,18 +55,23 @@ namespace Common.Setup.Infrastructure.Caching
         {
             services.AddScoped<TCacheService>();
 
-            return AddServiceCache<TIService, TService, TServiceCacheDecorator, TCacheService>(services);
+            return AddServiceCache<TIService, TService, TServiceCacheDecorator, TCacheService>(services, serviceLifetime);
         }
 
-        private static IServiceCollection AddServiceCache<TIService, TService, TServiceCacheDecorator, TCacheService>(IServiceCollection services) where TIService : class
+        private static IServiceCollection AddServiceCache<TIService, TService, TServiceCacheDecorator, TCacheService>(IServiceCollection services, ServiceLifetime serviceLifetime)
+            where TIService : class
             where TService : class, TIService
             where TServiceCacheDecorator : class, TIService
             where TCacheService : class, ICacheService
         {
-            services.AddScoped<TService>();
+            services.Add(new ServiceDescriptor(typeof(TService), typeof(TService), serviceLifetime));
 
-            services.AddScoped<TIService>(sp =>
-                Activator.CreateInstance(typeof(TServiceCacheDecorator), sp.GetRequiredService<TService>(), sp.GetRequiredService<TCacheService>()) as TServiceCacheDecorator
+            services.Add(
+                new ServiceDescriptor(
+                    typeof(TIService),
+                    sp =>
+                        Activator.CreateInstance(typeof(TServiceCacheDecorator), sp.GetRequiredService<TService>(), sp.GetRequiredService<TCacheService>()) as TServiceCacheDecorator
+                    , serviceLifetime)
             );
 
             return services;

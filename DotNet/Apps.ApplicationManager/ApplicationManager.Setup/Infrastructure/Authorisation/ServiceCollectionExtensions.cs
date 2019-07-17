@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using ApplicationManager.Setup.Infrastructure.Caching;
 using Common.ApplicationServices.Authentication;
 using Common.Authorisation;
 using Common.Authorisation.Policies;
@@ -9,6 +10,7 @@ using Common.Authorisation.Policies.Json;
 using Common.Authorisation.Restrictions;
 using Common.Resources.Settings;
 using Common.Setup.Infrastructure.Authorisation;
+using Common.Setup.Infrastructure.Caching;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
@@ -89,7 +91,7 @@ namespace ApplicationManager.Setup.Infrastructure.Authorisation
             services.AddScoped<IJwtFactory, JwtFactory>();
 
             services.AddSingleton<ICurrentIdentityProvider, CurrentIdentityProvider>();
-            services.AddSingleton<IAuthorisationPolicy, JsonAuthorisationPolicy>();
+            services.AddScopedCache<IAuthorisationPolicy, JsonAuthorisationPolicy, AuthorisationPolicyCacheDecorator, IdentityCacheService>(ServiceLifetime.Singleton);
             services.AddSingleton<ISelfProvider, SelfIdentityProvider>();
             services.AddSingleton<IAuthorisationRestrictionProvider, AuthorisationRestrictionProvider>();
             services.AddSingleton<IJsonAuthorisationPolicyProvider>(s => new JsonAuthorisationPolicyProvider(

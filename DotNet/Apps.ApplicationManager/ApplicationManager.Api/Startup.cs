@@ -53,7 +53,8 @@ namespace ApplicationManager.Api
                 .RegisterCommonApplicationServices()
                 .RegisterAuthorisationServices()
                 .UseDataProtection(Configuration)
-                .UseWebRequests();
+                .UseWebRequests()
+                .AddLazyCache();
 
             services.Configure<MvcOptions>(options =>
             {

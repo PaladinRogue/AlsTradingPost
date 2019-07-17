@@ -50,7 +50,7 @@ namespace ApplicationManager.Setup.Infrastructure.Caching
 
         private IdentityCacheKey<TKey, TValue> CreateKey<TKey, TValue>(TKey key) where TKey : CacheKey<TValue>
         {
-            return new IdentityCacheKey<TKey, TValue>(key, _currentIdentityProvider.Id);
+            return new IdentityCacheKey<TKey, TValue>(key, _currentIdentityProvider.IsAuthenticated ? _currentIdentityProvider.Id : Guid.Empty);
         }
     }
 }
