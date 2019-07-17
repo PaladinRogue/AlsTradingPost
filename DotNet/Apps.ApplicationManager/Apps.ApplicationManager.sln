@@ -55,6 +55,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReverseProxy.Domain", "Reve
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReverseProxy.Api", "ReverseProxy.Api\ReverseProxy.Api.csproj", "{AADA2EBC-D0AE-413B-8B22-B2EF16ED35AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault.Persistence", "KeyVault.Persistence\KeyVault.Persistence.csproj", "{BC2738E8-5A0C-491E-BB87-FB78B7E0A0F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault.Domain", "KeyVault.Domain\KeyVault.Domain.csproj", "{6058897F-4642-4DB4-9B95-77563FCEE551}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -149,6 +153,14 @@ Global
 		{AADA2EBC-D0AE-413B-8B22-B2EF16ED35AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AADA2EBC-D0AE-413B-8B22-B2EF16ED35AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AADA2EBC-D0AE-413B-8B22-B2EF16ED35AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC2738E8-5A0C-491E-BB87-FB78B7E0A0F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC2738E8-5A0C-491E-BB87-FB78B7E0A0F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC2738E8-5A0C-491E-BB87-FB78B7E0A0F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC2738E8-5A0C-491E-BB87-FB78B7E0A0F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6058897F-4642-4DB4-9B95-77563FCEE551}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6058897F-4642-4DB4-9B95-77563FCEE551}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6058897F-4642-4DB4-9B95-77563FCEE551}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6058897F-4642-4DB4-9B95-77563FCEE551}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

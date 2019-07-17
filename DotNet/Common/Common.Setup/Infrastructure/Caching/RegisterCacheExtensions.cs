@@ -31,7 +31,7 @@ namespace Common.Setup.Infrastructure.Caching
 
         public static IServiceCollection AddSingletonCache<TIService, TService, TICacheDecorator, TServiceCacheDecorator, TCacheService>(
             this IServiceCollection services,
-            ServiceLifetime serviceLifetime)
+            ServiceLifetime serviceLifetime = ServiceLifetime.Scoped)
             where TIService : class
             where TService : class, TIService
             where TICacheDecorator : class
@@ -47,7 +47,7 @@ namespace Common.Setup.Infrastructure.Caching
             return AddServiceCache<TIService, TService, TServiceCacheDecorator, TCacheService>(services, serviceLifetime);
         }
 
-        public static IServiceCollection AddScopedCache<TIService, TService, TServiceCacheDecorator, TCacheService>(this IServiceCollection services, ServiceLifetime serviceLifetime)
+        public static IServiceCollection AddScopedCache<TIService, TService, TServiceCacheDecorator, TCacheService>(this IServiceCollection services)
             where TIService : class
             where TService : class, TIService
             where TServiceCacheDecorator : class, TIService
@@ -55,7 +55,7 @@ namespace Common.Setup.Infrastructure.Caching
         {
             services.AddScoped<TCacheService>();
 
-            return AddServiceCache<TIService, TService, TServiceCacheDecorator, TCacheService>(services, serviceLifetime);
+            return AddServiceCache<TIService, TService, TServiceCacheDecorator, TCacheService>(services, ServiceLifetime.Scoped);
         }
 
         private static IServiceCollection AddServiceCache<TIService, TService, TServiceCacheDecorator, TCacheService>(IServiceCollection services, ServiceLifetime serviceLifetime)

@@ -91,7 +91,7 @@ namespace ApplicationManager.Setup.Infrastructure.Authorisation
             services.AddScoped<IJwtFactory, JwtFactory>();
 
             services.AddSingleton<ICurrentIdentityProvider, CurrentIdentityProvider>();
-            services.AddScopedCache<IAuthorisationPolicy, JsonAuthorisationPolicy, AuthorisationPolicyCacheDecorator, IdentityCacheService>(ServiceLifetime.Singleton);
+            services.AddScopedCache<IAuthorisationPolicy, JsonAuthorisationPolicy, AuthorisationPolicyCacheDecorator, IdentityCacheService>();
             services.AddSingleton<ISelfProvider, SelfIdentityProvider>();
             services.AddSingleton<IAuthorisationRestrictionProvider, AuthorisationRestrictionProvider>();
             services.AddSingleton<IJsonAuthorisationPolicyProvider>(s => new JsonAuthorisationPolicyProvider(
