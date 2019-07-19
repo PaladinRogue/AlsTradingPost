@@ -1,3 +1,4 @@
+using Common.Api.Routing;
 using Common.ApplicationServices.Transactions;
 using Common.Domain.Persistence;
 using FluentValidation;
@@ -45,6 +46,12 @@ namespace KeyVault.Setup
                 .AddScoped<IAddApplicationDataKeyCommand, AddApplicationDataKeyCommand>()
                 .AddScoped<ICreateSharedDataKeyCommand, CreateSharedDataKeyCommand>()
                 .AddScoped<IChangeSharedDataKeyCommand, ChangeSharedDataKeyCommand>();
+        }
+
+        public static IServiceCollection RegisterProviders(this IServiceCollection services)
+        {
+            return services
+                .AddSingleton<IRouteProvider<bool>, DefaultRouteProvider>();
         }
 
         public static IServiceCollection RegisterPersistenceServices(

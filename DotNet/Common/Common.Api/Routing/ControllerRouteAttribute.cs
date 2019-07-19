@@ -4,7 +4,7 @@ namespace Common.Api.Routing
 {
     public abstract class ControllerRouteAttribute : RouteAttribute
     {
-        public ControllerRouteAttribute(string applicationPrefix, string controllerName = null) : base($"{applicationPrefix}/{controllerName ?? "[controller]"}")
+        protected ControllerRouteAttribute(string applicationPrefix, string controllerName = null) : base($"{applicationPrefix}/{controllerName ?? "[controller]"}")
         {
         }
     }

@@ -3,6 +3,7 @@ using AutoMapper;
 using Common.Api.Builders;
 using Common.Api.Extensions;
 using Common.Api.Formats;
+using Common.Authorisation.Policies;
 using Common.Domain.Clocks;
 using Common.Domain.DataProtectors;
 using Common.Domain.DomainEvents;
@@ -48,6 +49,7 @@ namespace KeyVault.Api
                 .UseDomainEvents()
                 .UseRabbitMqMessaging(Configuration)
                 .UseDataProtection(Configuration)
+                .RegisterCommonProviders()
                 .UseWebRequests()
                 .AddLazyCache();
 
@@ -57,17 +59,18 @@ namespace KeyVault.Api
                     .UseConcurrencyFilter()
                     .UseBusinessExceptionFilter()
                     .UseValidationExceptionFilter()
-                    .UseAppAccessAuthorizeFilter()
                     .RequireHttps();
             });
 
             services
                 .UseJsonV1Format()
+                .UseAlwaysDenyAuthorisation()
                 .RegisterMessageSubscribers()
                 .RegisterDomainEventHandlers()
                 .RegisterValidators()
                 .RegisterApplicationServices()
                 .RegisterDomainCommands()
+                .RegisterProviders()
                 .RegisterPersistenceServices(Configuration)
                 .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

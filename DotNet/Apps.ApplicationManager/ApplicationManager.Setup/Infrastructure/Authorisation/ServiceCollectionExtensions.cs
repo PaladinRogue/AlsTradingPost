@@ -25,7 +25,8 @@ namespace ApplicationManager.Setup.Infrastructure.Authorisation
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection UseJsonPolicyAuthorisation(this IServiceCollection services,
+        public static IServiceCollection UseJsonPolicyAuthorisation(
+            this IServiceCollection services,
             IConfiguration configuration)
         {
             AppSettings appSettings = new AppSettings();
@@ -96,7 +97,8 @@ namespace ApplicationManager.Setup.Infrastructure.Authorisation
             services.AddSingleton<IAuthorisationRestrictionProvider, AuthorisationRestrictionProvider>();
             services.AddSingleton<IJsonAuthorisationPolicyProvider>(s => new JsonAuthorisationPolicyProvider(
                 JObject.Parse(File.ReadAllText("authorisationPolicy.json")
-                )));
+                )
+            ));
 
             services.AddScoped<IAuthorisationRestriction, UserAuthorisationRestriction>();
 
