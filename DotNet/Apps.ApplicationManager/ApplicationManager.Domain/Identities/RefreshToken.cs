@@ -3,7 +3,7 @@ using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities.ValidateToken;
 using Common.Domain.Aggregates;
 using Common.Domain.Clocks;
-using Common.Domain.DataProtection;
+using Common.Domain.DataProtectors;
 using Common.Resources.Extensions;
 using NodaTime;
 

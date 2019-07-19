@@ -1,5 +1,5 @@
 ﻿using System;
-using Common.Domain.DataProtection;
+using Common.Domain.DataProtectors;
 using Common.Messaging.Infrastructure.Interfaces;
 using Common.Messaging.Infrastructure.Messages;
 using Common.Messaging.Infrastructure.Serialisers;

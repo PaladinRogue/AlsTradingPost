@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Common.ApplicationServices.Exceptions;
 using Common.ApplicationServices.Transactions;
-using Common.Domain.DataProtection;
+using Common.Domain.DataProtectors;
 using Common.Messaging.Infrastructure.Dispatchers;
 using Common.Messaging.Infrastructure.Interfaces;
 using Common.Messaging.Infrastructure.Messages;

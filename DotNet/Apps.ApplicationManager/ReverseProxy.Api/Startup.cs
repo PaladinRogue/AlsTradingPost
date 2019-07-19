@@ -51,9 +51,8 @@ namespace ReversProxy.Api
                 .RegisterDomainEventHandlers()
                 .RegisterValidators()
                 .RegisterApplicationServices()
-                .RegisterDomainServices()
+                .RegisterDomainCommands()
                 .RegisterPersistenceServices(Configuration)
-                .RegisterProviders()
                 .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             return services.BuildServiceProvider();

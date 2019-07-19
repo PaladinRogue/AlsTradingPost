@@ -15,7 +15,7 @@ namespace ReverseProxy.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("apps");
+            modelBuilder.HasDefaultSchema("proxy");
 
             modelBuilder.ProtectSensitiveInformation();
 

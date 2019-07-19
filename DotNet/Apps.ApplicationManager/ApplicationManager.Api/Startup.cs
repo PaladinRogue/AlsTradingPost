@@ -8,7 +8,7 @@ using Common.Api.Builders;
 using Common.Api.Extensions;
 using Common.Api.Formats;
 using Common.Domain.Clocks;
-using Common.Domain.DataProtection;
+using Common.Domain.DataProtectors;
 using Common.Domain.DomainEvents;
 using Common.Domain.DomainEvents.Interfaces;
 using Common.Messaging.Infrastructure;
@@ -74,7 +74,7 @@ namespace ApplicationManager.Api
                 .RegisterDomainEventHandlers()
                 .RegisterValidators()
                 .RegisterApplicationServices()
-                .RegisterDomainServices()
+                .RegisterDomainCommands()
                 .RegisterPersistenceServices(Configuration)
                 .RegisterProviders()
                 .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

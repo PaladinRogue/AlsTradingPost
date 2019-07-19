@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Text;
-using Common.Domain.DataProtection;
+using Common.Domain.DataProtectors;
 
 namespace Common.Setup.Infrastructure.Hashing
 {

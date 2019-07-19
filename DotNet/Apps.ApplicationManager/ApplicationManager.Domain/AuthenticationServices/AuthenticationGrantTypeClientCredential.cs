@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using ApplicationManager.Domain.AuthenticationServices.ChangeClientCredential;
 using ApplicationManager.Domain.AuthenticationServices.CreateClientCredential;
-using Common.Domain.DataProtection;
+using Common.Domain.DataProtectors;
 using Common.Resources;
 
 namespace ApplicationManager.Domain.AuthenticationServices

@@ -9,11 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="secrets.json" />
-    <Content Remove="LocalEmailInbox\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.1.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.1.0" />
     <PackageReference Include="LazyCache.AspNetCore" Version="2.0.1" />
@@ -25,18 +20,5 @@
     <ProjectReference Include="..\..\Common\Common.Api\Common.Api.csproj" />
     <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
     <ProjectReference Include="..\ApplicationManager.Setup\ApplicationManager.Setup.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="api.log" />
-    <None Remove="LocalEmailInbox\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="LocalEmailInbox\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Remove="LocalEmailInbox\**" />
   </ItemGroup>
 </Project>

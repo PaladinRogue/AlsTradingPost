@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
-using Common.Domain.DataProtection;
+using Common.Domain.DataProtectors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Persistence.EntityFramework.Infrastructure.DataProtection;
+using Persistence.EntityFramework.Infrastructure.DataProtectors;
 
 namespace Persistence.EntityFramework.Infrastructure.Extensions
 {

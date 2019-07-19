@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using ApplicationManager.Domain.Identities;
-using Common.Domain.DataProtection;
+using Common.Domain.DataProtectors;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityFramework.Repositories;
 

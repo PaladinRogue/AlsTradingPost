@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Common.Domain.Aggregates;
 using Common.Domain.Concurrency.Interfaces;
 using Common.Domain.Exceptions;
 using Common.Domain.Persistence;
+using Common.Resources.Sorting;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.EntityFramework.Repositories
@@ -33,6 +36,12 @@ namespace Persistence.EntityFramework.Repositories
         public virtual Task<T> GetSingleAsync(Expression<Func<T, bool>> predicate)
         {
             return RepositoryHelper.GetSingleAsync(Context.Set<T>(), predicate);
+        }
+
+        /// <exception cref="NotImplementedException"></exception>
+        public Task<IQueryable<T>> GetAsync(IList<SortBy> sort = null, Expression<Func<T, bool>> predicate = null)
+        {
+            return RepositoryHelper.GetAsync(Context.Set<T>(), sort, predicate);
         }
 
         /// <exception cref="ConcurrencyDomainException"></exception>

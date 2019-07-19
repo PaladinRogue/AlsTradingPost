@@ -40,7 +40,7 @@ namespace ReverseProxy.Setup
                 .AddScoped<IValidator<CreateApplicationDdto>, CreateApplicationValidator>();
         }
 
-        public static IServiceCollection RegisterDomainServices(this IServiceCollection services)
+        public static IServiceCollection RegisterDomainCommands(this IServiceCollection services)
         {
             return services
                 .AddScoped<IChangeApplicationCommand, ChangeApplicationCommand>()
@@ -63,11 +63,6 @@ namespace ReverseProxy.Setup
             services.AddScoped<DbContext>(sp => sp.GetRequiredService<ReverseProxyDbContext>());
             services.AddScoped<ITransactionManager, EntityFrameworkTransactionManager>();
 
-            return services;
-        }
-
-        public static IServiceCollection RegisterProviders(this IServiceCollection services)
-        {
             return services;
         }
     }

@@ -4,7 +4,7 @@ using ApplicationManager.Domain.Identities.CreateTwoFactor;
 using ApplicationManager.Domain.Identities.Events;
 using ApplicationManager.Domain.Identities.ValidateToken;
 using Common.Domain.Clocks;
-using Common.Domain.DataProtection;
+using Common.Domain.DataProtectors;
 using Common.Domain.DomainEvents;
 using Common.Resources;
 using NodaTime;

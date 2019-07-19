@@ -9,83 +9,100 @@ namespace Common.Setup.Infrastructure.Encryption
 {
     public class AesEncryptionFactory : IEncryptionFactory
     {
-	    public string Enrypt<T>(T data, SymmetricSecurityKey securityKey)
-	    {
-		    string textToEncode = JsonConvert.SerializeObject(data);
-		    byte[] encrypted;
+        private const int KeySize = 256;
 
-		    byte[] keyBytes = securityKey.Key;
+        private const int BlockSize = 128;
 
-		    using (Aes aesAlg = Aes.Create())
-		    {
-			    if (aesAlg == null)
-			    {
-				    throw new NullReferenceException(nameof(aesAlg));
-			    }
+        public string Encrypt<T>(T data, SymmetricSecurityKey securityKey)
+        {
+            string textToEncode = JsonConvert.SerializeObject(data);
+            byte[] encrypted;
 
-			    aesAlg.Key = keyBytes;
-			    byte[] iv = aesAlg.IV;
+            byte[] keyBytes = securityKey.Key;
 
-			    ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+            using (Aes aesAlg = Aes.Create())
+            {
+                if (aesAlg == null)
+                {
+                    throw new NullReferenceException(nameof(aesAlg));
+                }
 
-			    using (MemoryStream msEncrypt = new MemoryStream())
-			    {
-				    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
-				    {
-					    using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
-					    {
-						    // write iv
-						    msEncrypt.Write(iv, 0, iv.Length);
-						    //Write all data to the stream.
-						    swEncrypt.Write(textToEncode);
-					    }
+                aesAlg.Key = keyBytes;
+                byte[] iv = aesAlg.IV;
 
-					    encrypted = msEncrypt.ToArray();
-				    }
-			    }
-		    }
+                ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
 
-		    return Convert.ToBase64String(encrypted);
-		}
+                using (MemoryStream msEncrypt = new MemoryStream())
+                {
+                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                    {
+                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                        {
+                            // write iv
+                            msEncrypt.Write(iv, 0, iv.Length);
+                            //Write all data to the stream.
+                            swEncrypt.Write(textToEncode);
+                        }
 
-	    public T Decrypt<T>(string cipherText, SymmetricSecurityKey securityKey)
-	    {
-		    byte[] fullCipher = Convert.FromBase64String(cipherText);
+                        encrypted = msEncrypt.ToArray();
+                    }
+                }
+            }
 
-		    if (fullCipher == null || fullCipher.Length <= 0)
-			    throw new ArgumentNullException(nameof(cipherText));
+            return Convert.ToBase64String(encrypted);
+        }
+
+        public T Decrypt<T>(string cipherText, SymmetricSecurityKey securityKey)
+        {
+            byte[] fullCipher = Convert.FromBase64String(cipherText);
+
+            if (fullCipher == null || fullCipher.Length <= 0)
+                throw new ArgumentNullException(nameof(cipherText));
 
             string plaintext;
-		    byte[] keyBytes = securityKey.Key;
+            byte[] keyBytes = securityKey.Key;
 
-		    using (Aes aesAlg = Aes.Create())
-			{
-				if (aesAlg == null)
-				{
-					throw new NullReferenceException(nameof(aesAlg));
-				}
+            using (Aes aesAlg = Aes.Create())
+            {
+                if (aesAlg == null)
+                {
+                    throw new NullReferenceException(nameof(aesAlg));
+                }
 
-				aesAlg.Key = keyBytes;
+                aesAlg.Key = keyBytes;
 
                 using (MemoryStream msDecrypt = new MemoryStream(fullCipher))
-			    {
-				    byte[] iv = new byte[16];
-				    msDecrypt.Read(iv, 0, 16);
-				    aesAlg.IV = iv;
+                {
+                    byte[] iv = new byte[16];
+                    msDecrypt.Read(iv, 0, 16);
+                    aesAlg.IV = iv;
 
-				    ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+                    ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
 
-				    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
-				    {
-					    using (StreamReader srDecrypt = new StreamReader(csDecrypt))
-					    {
-						    plaintext = srDecrypt.ReadToEnd();
-					    }
-				    }
-			    }
-		    }
+                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                    {
+                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                        {
+                            plaintext = srDecrypt.ReadToEnd();
+                        }
+                    }
+                }
+            }
 
-		    return JsonConvert.DeserializeObject<T>(plaintext);
-		}
+            return JsonConvert.DeserializeObject<T>(plaintext);
+        }
+
+        public SymmetricSecurityKey CreateKey()
+        {
+            AesCryptoServiceProvider crypto = new AesCryptoServiceProvider
+            {
+                KeySize = KeySize,
+                BlockSize = BlockSize
+            };
+
+            crypto.GenerateKey();
+
+            return new SymmetricSecurityKey(crypto.Key);
+        }
     }
 }

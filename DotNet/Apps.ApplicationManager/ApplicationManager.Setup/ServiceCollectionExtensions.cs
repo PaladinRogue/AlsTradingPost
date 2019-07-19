@@ -86,7 +86,7 @@ namespace ApplicationManager.Setup
                 .AddScoped<IValidator<AddOrChangeIdentityClaimCommandDdto>, AddOrChangeIdentityClaimValidator>();
         }
 
-        public static IServiceCollection RegisterDomainServices(this IServiceCollection services)
+        public static IServiceCollection RegisterDomainCommands(this IServiceCollection services)
         {
             return services
                 .AddScoped<ICreateIdentityCommand, CreateIdentityCommand>()

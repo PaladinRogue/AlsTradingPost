@@ -4,7 +4,7 @@ using ApplicationManager.Domain;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities;
 using ApplicationManager.Domain.Identities.Queries;
-using Common.Domain.DataProtection;
+using Common.Domain.DataProtectors;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationManager.Persistence.Identities
