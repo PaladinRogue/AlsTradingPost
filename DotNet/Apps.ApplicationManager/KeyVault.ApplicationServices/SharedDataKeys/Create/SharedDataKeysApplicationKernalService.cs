@@ -6,6 +6,7 @@ using Common.ApplicationServices.Transactions;
 using Common.Domain.Persistence;
 using Common.Resources.Encryption;
 using KeyVault.Domain.SharedDataKeys;
+using KeyVault.Domain.SharedDataKeys.Change;
 using KeyVault.Domain.SharedDataKeys.Create;
 using Microsoft.Extensions.Logging;
 
@@ -21,6 +22,8 @@ namespace KeyVault.ApplicationServices.SharedDataKeys.Create
 
         private readonly ICreateSharedDataKeyCommand _createSharedDataKeyCommand;
 
+        private readonly IChangeSharedDataKeyCommand _changeSharedDataKeyCommand;
+
         private readonly IEncryptionFactory _encryptionFactory;
 
         public SharedDataKeysApplicationKernalService(
@@ -28,16 +31,18 @@ namespace KeyVault.ApplicationServices.SharedDataKeys.Create
             ILogger<SharedDataKeysApplicationKernalService> logger,
             ICommandRepository<SharedDataKey> commandRepository,
             ICreateSharedDataKeyCommand createSharedDataKeyCommand,
+            IChangeSharedDataKeyCommand changeSharedDataKeyCommand,
             IEncryptionFactory encryptionFactory)
         {
             _transactionManager = transactionManager;
             _logger = logger;
             _commandRepository = commandRepository;
             _createSharedDataKeyCommand = createSharedDataKeyCommand;
+            _changeSharedDataKeyCommand = changeSharedDataKeyCommand;
             _encryptionFactory = encryptionFactory;
         }
 
-        public async Task Initialise()
+        public async Task Create()
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
@@ -47,25 +52,34 @@ namespace KeyVault.ApplicationServices.SharedDataKeys.Create
 
                     foreach (SharedDatKeyType sharedDataKeyType in Enum.GetValues(typeof(SharedDatKeyType)))
                     {
-                        if (existingKeys.Any(k => k.Type == sharedDataKeyType))
+                        SharedDataKey key = existingKeys.SingleOrDefault(k => k.Type == sharedDataKeyType);
+                        if (key == null)
                         {
-                            continue;
+                            SharedDataKey sharedDataKey = await _createSharedDataKeyCommand.ExecuteAsync(new CreateSharedDataKeyCommandDdto
+                            {
+                                Type = sharedDataKeyType,
+                                Value = _encryptionFactory.CreateKey()
+                            });
+
+                            await _commandRepository.AddAsync(sharedDataKey);
                         }
-
-                        SharedDataKey sharedDataKey = await _createSharedDataKeyCommand.ExecuteAsync(new CreateSharedDataKeyCommandDdto
+                        else
                         {
-                            Type = sharedDataKeyType,
-                            Value = _encryptionFactory.CreateKey()
-                        });
+                            await _changeSharedDataKeyCommand.ExecuteAsync(key, new ChangeSharedDataKeyCommandDdto
+                            {
+                                Value = _encryptionFactory.CreateKey()
+                            });
 
-                        await _commandRepository.AddAsync(sharedDataKey);
-
-                        transaction.Commit();
+                            await _commandRepository.UpdateAsync(key);
+                        }
                     }
+
+                    transaction.Commit();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     _logger.LogCritical("Unable to initialise shared data keys");
+                    throw;
                 }
             }
         }

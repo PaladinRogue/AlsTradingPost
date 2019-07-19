@@ -4,14 +4,16 @@ using KeyVault.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KeyVault.Persistence.Migrations
 {
     [DbContext(typeof(KeyVaultDbContext))]
-    partial class KeyVaultDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190719120839_FixPluralisationOfTableNames")]
+    partial class FixPluralisationOfTableNames
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

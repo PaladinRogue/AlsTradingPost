@@ -6,6 +6,7 @@ using KeyVault.Domain.Applications;
 using KeyVault.Domain.Applications.AddDataKey;
 using KeyVault.Domain.Applications.Create;
 using KeyVault.Domain.SharedDataKeys;
+using KeyVault.Domain.SharedDataKeys.Change;
 using KeyVault.Domain.SharedDataKeys.Create;
 using KeyVault.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,8 @@ namespace KeyVault.Setup
             return services
                 .AddScoped<IValidator<CreateApplicationCommandDdto>, CreateApplicationValidator>()
                 .AddScoped<IValidator<AddApplicationDataKeyCommandDdto>, AddApplicationDataKeyValidator>()
-                .AddScoped<IValidator<CreateSharedDataKeyCommandDdto>, CreateSharedDataKeyValidator>();
+                .AddScoped<IValidator<CreateSharedDataKeyCommandDdto>, CreateSharedDataKeyValidator>()
+                .AddScoped<IValidator<ChangeSharedDataKeyCommandDdto>, ChangeSharedDataKeyValidator>();
         }
 
         public static IServiceCollection RegisterDomainCommands(this IServiceCollection services)
@@ -41,7 +43,8 @@ namespace KeyVault.Setup
             return services
                 .AddScoped<ICreateApplicationCommand, CreateApplicationCommand>()
                 .AddScoped<IAddApplicationDataKeyCommand, AddApplicationDataKeyCommand>()
-                .AddScoped<ICreateSharedDataKeyCommand, CreateSharedDataKeyCommand>();
+                .AddScoped<ICreateSharedDataKeyCommand, CreateSharedDataKeyCommand>()
+                .AddScoped<IChangeSharedDataKeyCommand, ChangeSharedDataKeyCommand>();
         }
 
         public static IServiceCollection RegisterPersistenceServices(

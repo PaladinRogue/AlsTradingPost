@@ -28,6 +28,7 @@ namespace KeyVault.Persistence
                 .HasConversion(SymmetricSecurityKeyConverter.Create());
 
             modelBuilder.Entity<ApplicationDataKey>()
+                .ToTable("ApplicationDataKeys")
                 .ProtectSensitiveInformation()
                 .Property(a => a.Value)
                 .HasConversion(SymmetricSecurityKeyConverter.Create());

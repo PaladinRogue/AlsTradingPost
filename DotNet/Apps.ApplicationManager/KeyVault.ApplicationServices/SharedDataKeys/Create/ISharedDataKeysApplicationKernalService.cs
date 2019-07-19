@@ -4,6 +4,6 @@ namespace KeyVault.ApplicationServices.SharedDataKeys.Create
 {
     public interface ISharedDataKeysApplicationKernalService
     {
-        Task Initialise();
+        Task Create();
     }
 }

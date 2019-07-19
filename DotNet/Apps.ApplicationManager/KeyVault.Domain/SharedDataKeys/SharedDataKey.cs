@@ -1,4 +1,5 @@
 using Common.Domain.Aggregates;
+using KeyVault.Domain.SharedDataKeys.Change;
 using KeyVault.Domain.SharedDataKeys.Create;
 
 namespace KeyVault.Domain.SharedDataKeys
@@ -18,6 +19,11 @@ namespace KeyVault.Domain.SharedDataKeys
         internal static SharedDataKey Create(CreateSharedDataKeyDdto createSharedDataKeyDdto)
         {
             return new SharedDataKey(createSharedDataKeyDdto);
+        }
+
+        internal void Change(ChangeSharedDataKeyDdto changeSharedDataKeyDdto)
+        {
+            Value = changeSharedDataKeyDdto.Value;
         }
     }
 }

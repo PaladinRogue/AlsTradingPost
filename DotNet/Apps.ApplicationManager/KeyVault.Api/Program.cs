@@ -1,6 +1,8 @@
 ﻿using System.IO;
+using System.Threading.Tasks;
 using Common.Setup.Infrastructure.Messaging;
 using Common.Setup.Infrastructure.Persistence;
+using KeyVault.Setup.Infrastructure.DataKeys;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -9,12 +11,15 @@ namespace KeyVault.Api
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            CreateWebHostBuilder(args)
+            IWebHost builder = CreateWebHostBuilder(args)
                 .Build()
-                .ApplyMigrations()
-                .InitialiseMessaging().Run();
+                .ApplyMigrations();
+
+            await builder.CreateSharedDataKeysAsync();
+
+            builder.Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)

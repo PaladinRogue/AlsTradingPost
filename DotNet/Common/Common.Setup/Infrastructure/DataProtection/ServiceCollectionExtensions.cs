@@ -16,7 +16,8 @@ namespace Common.Setup.Infrastructure.DataProtection
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddSingleton<IEncryptionFactory, AesEncryptionFactory>()
+            services
+                .AddSingleton<IEncryptionFactory, AesEncryptionFactory>()
                 .AddSingleton<IHashFactory, Sha256HashFactory>()
                 .AddSingleton<IDataProtector, DataProtector>()
                 .AddSingleton<IDataHasher, DataHasher>();
