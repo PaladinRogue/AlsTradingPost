@@ -5,6 +5,6 @@ namespace KeyVault.Broker.ApplicationServices
 {
     public interface ICacheDataKeyApplicationKernalService
     {
-        Task CreateAndCacheAllAsync<T>() where T : Enum;
+        Task CreateAndCacheAllAsync<T>() where T : struct, Enum;
     }
 }

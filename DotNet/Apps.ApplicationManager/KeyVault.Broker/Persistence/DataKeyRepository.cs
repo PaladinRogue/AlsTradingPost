@@ -70,7 +70,7 @@ namespace KeyVault.Broker.Persistence
             return null;
         }
 
-        public async Task<IEnumerable<DataKey<T>>> GetAllAsync<T>() where T : Enum
+        public async Task<IEnumerable<DataKey<T>>> GetAllAsync<T>() where T : struct, Enum
         {
             Application application = await _applicationQueryRepository.GetSingleAsync(a => a.SystemName == _appSettings.SystemName);
 
@@ -81,11 +81,11 @@ namespace KeyVault.Broker.Persistence
             }) ?? Enumerable.Empty<DataKey<T>>();
         }
 
-        public async Task<DataKey<T>> GetAsync<T>(T type) where T : Enum
+        public async Task<DataKey<T>> GetAsync<T>(T type) where T : struct, Enum
         {
             Application application = await _applicationQueryRepository.GetSingleAsync(a => a.SystemName == _appSettings.SystemName);
 
-            ApplicationDataKey applicationDataKey = application?.ApplicationDataKeys.SingleOrDefault(a => a.Type == type.ToInt());
+            ApplicationDataKey applicationDataKey = application?.ApplicationDataKeys.SingleOrDefault(a => a.Type == type.ToString());
             if (applicationDataKey != null)
             {
                 return new DataKey<T>
@@ -98,9 +98,9 @@ namespace KeyVault.Broker.Persistence
             return null;
         }
 
-        public async Task CreateKeyAsync<T>(DataKey<T> dataKey) where T : Enum
+        public async Task CreateKeyAsync<T>(DataKey<T> dataKey) where T : struct, Enum
         {
-            Application application = await _applicationQueryRepository.GetSingleAsync(a => a.SystemName == _appSettings.SystemName);
+            Application application = await _applicationCommandRepository.GetSingleAsync(a => a.SystemName == _appSettings.SystemName);
 
             if (application == null)
             {
@@ -109,13 +109,19 @@ namespace KeyVault.Broker.Persistence
                     SystemName = _appSettings.SystemName
                 });
 
+                await _addApplicationDataKeyCommand.ExecuteAsync(application, new AddApplicationDataKeyCommandDdto
+                {
+                    Type = dataKey.Type.ToString(),
+                    Value = dataKey.Value
+                });
+
                 await _applicationCommandRepository.AddAsync(application);
             }
             else
             {
                 await _addApplicationDataKeyCommand.ExecuteAsync(application, new AddApplicationDataKeyCommandDdto
                 {
-                    Type = dataKey.Type.ToInt(),
+                    Type = dataKey.Type.ToString(),
                     Value = dataKey.Value
                 });
 

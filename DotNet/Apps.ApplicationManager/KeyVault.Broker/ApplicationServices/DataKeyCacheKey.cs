@@ -5,7 +5,7 @@ using KeyVault.Broker.Domain;
 
 namespace KeyVault.Broker.ApplicationServices
 {
-    public class DataKeyCacheKey<T> : CacheKey<DataKey<T>> where T : Enum
+    public class DataKeyCacheKey<T> : CacheKey<DataKey<T>> where T : struct, Enum
     {
         private const string DataKey = nameof(DataKey<T>);
 

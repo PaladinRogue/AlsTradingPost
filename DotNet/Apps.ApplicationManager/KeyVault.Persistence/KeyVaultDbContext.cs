@@ -1,6 +1,7 @@
 using KeyVault.Domain.Applications;
 using KeyVault.Domain.SharedDataKeys;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.EntityFramework.Infrastructure.Extensions;
 using Persistence.EntityFramework.Infrastructure.SecurityKeys;
 
@@ -26,6 +27,10 @@ namespace KeyVault.Persistence
                 .ToTable("SharedDataKeys")
                 .Property(a => a.Value)
                 .HasConversion(SymmetricSecurityKeyConverter.Create());
+
+            modelBuilder.Entity<SharedDataKey>()
+                .Property(a => a.Type)
+                .HasConversion<string>();
 
             modelBuilder.Entity<ApplicationDataKey>()
                 .ToTable("ApplicationDataKeys")

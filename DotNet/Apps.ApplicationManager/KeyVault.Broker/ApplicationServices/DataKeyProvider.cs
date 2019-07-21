@@ -20,7 +20,7 @@ namespace KeyVault.Broker.ApplicationServices
             _transactionManager = transactionManager;
         }
 
-        public async Task<DataKey<T>> GetAsync<T>(T type) where T : Enum
+        public async Task<DataKey<T>> GetAsync<T>(T type) where T : struct, Enum
         {
             using (ITransaction transaction = _transactionManager.Create())
             {

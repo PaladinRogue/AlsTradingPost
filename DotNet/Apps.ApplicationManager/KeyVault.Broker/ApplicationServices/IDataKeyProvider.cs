@@ -6,6 +6,6 @@ namespace KeyVault.Broker.ApplicationServices
 {
     public interface IDataKeyProvider
     {
-        Task<DataKey<T>> GetAsync<T>(T type) where T : Enum;
+        Task<DataKey<T>> GetAsync<T>(T type) where T : struct, Enum;
     }
 }

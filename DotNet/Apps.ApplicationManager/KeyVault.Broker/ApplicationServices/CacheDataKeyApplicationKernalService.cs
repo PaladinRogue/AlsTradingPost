@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Common.ApplicationServices.Exceptions;
 using Common.ApplicationServices.Transactions;
 using Common.Resources.Encryption;
 using KeyVault.Broker.Caching;
@@ -33,11 +34,16 @@ namespace KeyVault.Broker.ApplicationServices
             _encryptionFactory = encryptionFactory;
         }
 
-        public async Task CreateAndCacheAllAsync<T>() where T : Enum
+        public async Task CreateAndCacheAllAsync<T>() where T : struct, Enum
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
                 IList<DataKey<T>> dataKeys = (await _dataKeyRepository.GetAllAsync<T>()).ToList();
+
+                if (dataKeys.GroupBy(k => k.Type).Any(g => g.Count() > 1))
+                {
+                    throw new BusinessApplicationException(ExceptionType.Unknown, "Duplicate data key detected");
+                }
 
                 foreach (T type in Enum.GetValues(typeof(T)))
                 {

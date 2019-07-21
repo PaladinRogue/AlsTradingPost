@@ -18,6 +18,7 @@ namespace KeyVault.Domain
         }
 
         [Required]
+        [MaxLength(FieldSizes.Default)]
         public T Type { get; set; }
 
         [Required]

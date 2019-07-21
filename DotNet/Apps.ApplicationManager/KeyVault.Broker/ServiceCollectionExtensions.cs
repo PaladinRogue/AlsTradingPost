@@ -23,7 +23,7 @@ namespace KeyVault.Broker
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection UseKeyVault<T>(this IServiceCollection services, IConfiguration configuration) where T : Enum
+        public static IServiceCollection UseKeyVault<T>(this IServiceCollection services, IConfiguration configuration) where T : struct, Enum
         {
             services
                 .AddEntityFrameworkSqlServer().AddOptions()
@@ -33,7 +33,7 @@ namespace KeyVault.Broker
                         .ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning))
                         .UseSqlServer(configuration.GetConnectionString("Vault"), providerOptions =>
                             providerOptions
-                                .EnableRetryOnFailure()
+                                .EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null)
                             )
                 );
 

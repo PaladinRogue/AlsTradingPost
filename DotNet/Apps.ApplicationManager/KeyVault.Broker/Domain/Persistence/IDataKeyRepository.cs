@@ -11,10 +11,10 @@ namespace KeyVault.Broker.Domain.Persistence
 
         Task<DataKey<SharedDataKeyType>> GetSharedAsync(SharedDataKeyType type);
 
-        Task<IEnumerable<DataKey<T>>> GetAllAsync<T>()  where T : Enum;
+        Task<IEnumerable<DataKey<T>>> GetAllAsync<T>() where T : struct, Enum;
 
-        Task<DataKey<T>> GetAsync<T>(T type)  where T : Enum;
+        Task<DataKey<T>> GetAsync<T>(T type) where T : struct, Enum;
 
-        Task CreateKeyAsync<T>(DataKey<T> dataKey)  where T : Enum;
+        Task CreateKeyAsync<T>(DataKey<T> dataKey)  where T : struct, Enum;
     }
 }

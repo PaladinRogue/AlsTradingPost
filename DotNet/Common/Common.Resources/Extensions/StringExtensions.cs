@@ -67,5 +67,12 @@ namespace Common.Resources.Extensions
             return parameters
                 .Aggregate(str, (current, kv) => current.Replace($"{{{kv.Key}}}", kv.Value?.ToString() ?? "", StringComparison.OrdinalIgnoreCase));
         }
+
+        public static TEnum ToEnum<TEnum>(this string value) where TEnum : struct, Enum
+        {
+            Enum.TryParse(value, true, out TEnum @enum);
+
+            return @enum;
+        }
     }
 }

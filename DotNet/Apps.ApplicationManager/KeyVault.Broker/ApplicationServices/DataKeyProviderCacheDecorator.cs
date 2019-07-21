@@ -5,7 +5,7 @@ using KeyVault.Broker.Domain;
 
 namespace KeyVault.Broker.ApplicationServices
 {
-    public class DataKeyProviderCacheDecorator<T> : CacheDecorator<T, DataKeyCacheKey<T>, DataKey<T>>, IDataKeyProvider where T : Enum
+    public class DataKeyProviderCacheDecorator<T> : CacheDecorator<T, DataKeyCacheKey<T>, DataKey<T>>, IDataKeyProvider where T : struct, Enum
     {
         private readonly IDataKeyProvider _dataKeyProvider;
 
@@ -19,7 +19,7 @@ namespace KeyVault.Broker.ApplicationServices
             _cacheService = cacheService;
         }
 
-        public Task<DataKey<TType>> GetAsync<TType>(TType type) where TType : Enum
+        public Task<DataKey<TType>> GetAsync<TType>(TType type) where TType : struct, Enum
         {
             return _cacheService.GetOrAddAsync(new DataKeyCacheKey<TType>(type), () => _dataKeyProvider.GetAsync(type));
         }
