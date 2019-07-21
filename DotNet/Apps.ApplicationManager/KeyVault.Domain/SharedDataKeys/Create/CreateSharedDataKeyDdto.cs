@@ -4,7 +4,7 @@ namespace KeyVault.Domain.SharedDataKeys.Create
 {
     internal class CreateSharedDataKeyDdto
     {
-        public SharedDatKeyType Type { get; set; }
+        public SharedDataKeyType Type { get; set; }
 
         public SymmetricSecurityKey Value { get; set; }
     }

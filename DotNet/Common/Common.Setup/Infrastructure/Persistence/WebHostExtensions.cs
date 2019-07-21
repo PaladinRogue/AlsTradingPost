@@ -15,9 +15,9 @@ namespace Common.Setup.Infrastructure.Persistence
                 DbContext context = serviceProvider.GetService<DbContext>();
 
                 context.Database.Migrate();
-            }
 
-            return host;
+                return host;
+            }
         }
     }
 }

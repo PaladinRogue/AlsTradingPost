@@ -1,6 +1,6 @@
 namespace KeyVault.Domain.SharedDataKeys
 {
-    public enum SharedDatKeyType
+    public enum SharedDataKeyType
     {
         Queue = 1,
         Authentication

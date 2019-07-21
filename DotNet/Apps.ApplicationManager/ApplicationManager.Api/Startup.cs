@@ -1,4 +1,5 @@
 ﻿using System;
+using ApplicationManager.Domain;
 using ApplicationManager.Setup;
 using ApplicationManager.Setup.Infrastructure.Authorisation;
 using ApplicationManager.Setup.Infrastructure.DomainEvents;
@@ -27,6 +28,7 @@ using NodaTime;
 using Common.Setup.Infrastructure.DataProtection;
 using Common.Setup.Infrastructure.Exceptions;
 using Common.Setup.Infrastructure.WebRequests;
+using KeyVault.Broker;
 
 [assembly: ApiController]
 
@@ -53,6 +55,7 @@ namespace ApplicationManager.Api
                 .RegisterCommonApplicationServices()
                 .RegisterAuthorisationServices()
                 .UseDataProtection(Configuration)
+                .UseKeyVault<DataKeyType>(Configuration)
                 .UseWebRequests()
                 .AddLazyCache();
 

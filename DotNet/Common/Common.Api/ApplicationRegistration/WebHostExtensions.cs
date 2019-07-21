@@ -14,21 +14,24 @@ namespace Common.Api.ApplicationRegistration
     {
         public static async Task RegisterApplicationAsync(this IWebHost webHost)
         {
-            IServiceProvider serviceProvider = webHost.Services;
+            using (IServiceScope scope = webHost.Services.CreateScope())
+            {
+                IServiceProvider serviceProvider = scope.ServiceProvider;
 
-            IMessageSender messageSender = serviceProvider.GetRequiredService<IMessageSender>();
+                IMessageSender messageSender = serviceProvider.GetRequiredService<IMessageSender>();
 
-            IMessageDispatcher messageDispatcher = serviceProvider.GetRequiredService<IMessageDispatcher>();
+                IMessageDispatcher messageDispatcher = serviceProvider.GetRequiredService<IMessageDispatcher>();
 
-            AppSettings appSettings = serviceProvider.GetRequiredOptions<AppSettings>();
+                AppSettings appSettings = serviceProvider.GetRequiredOptions<AppSettings>();
 
-            HostSettings hostSettings = serviceProvider.GetRequiredOptions<HostSettings>();
+                HostSettings hostSettings = serviceProvider.GetRequiredOptions<HostSettings>();
 
-            await messageSender.SendAsync(
-                RegisterApplicationMessage.Create(appSettings.Name, appSettings.SystemName, hostSettings.Urls)
-            );
+                await messageSender.SendAsync(
+                    RegisterApplicationMessage.Create(appSettings.Name, appSettings.SystemName, hostSettings.Urls)
+                );
 
-           await messageDispatcher.DispatchMessagesAsync();
+                await messageDispatcher.DispatchMessagesAsync();
+            }
         }
     }
 }

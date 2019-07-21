@@ -8,7 +8,7 @@ namespace KeyVault.Persistence
 {
     public class KeyVaultDbContext : DbContext
     {
-        public KeyVaultDbContext(DbContextOptions options) : base(options)
+        public KeyVaultDbContext(DbContextOptions<KeyVaultDbContext> options) : base(options)
         {
         }
 

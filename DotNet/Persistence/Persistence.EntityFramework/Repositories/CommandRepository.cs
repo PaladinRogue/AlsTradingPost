@@ -12,11 +12,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.EntityFramework.Repositories
 {
-    public class CommandRepository<T> : ICommandRepository<T> where T : class, IAggregateRoot
+    public class CommandRepository<T> : CommandRepository<T, DbContext> where T : class, IAggregateRoot
     {
-        protected readonly DbContext Context;
+        public CommandRepository(DbContext context) : base(context)
+        {
+        }
+    }
 
-        public CommandRepository(DbContext context)
+    public class CommandRepository<T, TDbContext> : ICommandRepository<T>
+        where T : class, IAggregateRoot
+        where TDbContext : DbContext
+    {
+        protected readonly TDbContext Context;
+
+        public CommandRepository(TDbContext context)
         {
             Context = context;
         }

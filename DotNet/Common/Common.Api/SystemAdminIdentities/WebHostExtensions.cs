@@ -14,21 +14,24 @@ namespace Common.Api.SystemAdminIdentities
     {
         public static async Task RegisterSystemAdminAsync(this IWebHost webHost)
         {
-            IServiceProvider serviceProvider = webHost.Services;
+            using (IServiceScope scope = webHost.Services.CreateScope())
+            {
+                IServiceProvider serviceProvider = scope.ServiceProvider;
 
-            IMessageSender messageSender = serviceProvider.GetRequiredService<IMessageSender>();
+                IMessageSender messageSender = serviceProvider.GetRequiredService<IMessageSender>();
 
-            IMessageDispatcher messageDispatcher = serviceProvider.GetRequiredService<IMessageDispatcher>();
+                IMessageDispatcher messageDispatcher = serviceProvider.GetRequiredService<IMessageDispatcher>();
 
-            SystemAdminIdentitySettings systemAdminIdentitySettings = serviceProvider.GetRequiredOptions<SystemAdminIdentitySettings>();
+                SystemAdminIdentitySettings systemAdminIdentitySettings = serviceProvider.GetRequiredOptions<SystemAdminIdentitySettings>();
 
-            AppSettings appSettings = serviceProvider.GetRequiredOptions<AppSettings>();
+                AppSettings appSettings = serviceProvider.GetRequiredOptions<AppSettings>();
 
-            await messageSender.SendAsync(
-                CreateAdminIdentityMessage.Create(appSettings.SystemName, systemAdminIdentitySettings.Email)
-            );
+                await messageSender.SendAsync(
+                    CreateAdminIdentityMessage.Create(appSettings.SystemName, systemAdminIdentitySettings.Email)
+                );
 
-            await messageDispatcher.DispatchMessagesAsync();
+                await messageDispatcher.DispatchMessagesAsync();
+            }
         }
     }
 }

@@ -20,5 +20,6 @@
     <ProjectReference Include="..\..\Common\Common.Api\Common.Api.csproj" />
     <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
     <ProjectReference Include="..\ApplicationManager.Setup\ApplicationManager.Setup.csproj" />
+    <ProjectReference Include="..\KeyVault.Broker\KeyVault.Broker.csproj" />
   </ItemGroup>
 </Project>

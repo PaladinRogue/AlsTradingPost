@@ -1,9 +1,11 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
+using ApplicationManager.Domain;
 using Common.Api.ApplicationRegistration;
 using Common.Api.SystemAdminIdentities;
 using Common.Setup.Infrastructure.Messaging;
 using Common.Setup.Infrastructure.Persistence;
+using KeyVault.Broker;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +22,7 @@ namespace ApplicationManager.Api
                     .ApplyMigrations()
                     .InitialiseMessaging();
 
+            await builder.CreateDataKeysAsync<DataKeyType>();
             await builder.RegisterApplicationAsync();
             await builder.RegisterSystemAdminAsync();
 

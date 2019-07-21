@@ -11,11 +11,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.EntityFramework.Repositories
 {
-    public class QueryRepository<T> : IQueryRepository<T> where T : class, IAggregateRoot
+    public class QueryRepository<T> : QueryRepository<T, DbContext> where T : class, IAggregateRoot
     {
-        protected readonly DbContext Context;
+        public QueryRepository(DbContext context) : base(context)
+        {
+        }
+    }
 
-        public QueryRepository(DbContext context)
+    public class QueryRepository<T, TDbContext> : IQueryRepository<T>
+        where T : class, IAggregateRoot
+        where TDbContext : DbContext
+    {
+        protected readonly TDbContext Context;
+
+        public QueryRepository(TDbContext context)
         {
             Context = context;
         }

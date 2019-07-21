@@ -9,13 +9,15 @@ namespace Common.Setup.Infrastructure.Messaging
     {
         public static IWebHost InitialiseMessaging(this IWebHost webHost)
         {
-            IServiceProvider serviceProvider = webHost.Services;
+            using (IServiceScope scope = webHost.Services.CreateScope())
+            {
+                IServiceProvider serviceProvider = scope.ServiceProvider;
+                IMessageSubscriberFactory messageSubscriberFactory = serviceProvider.GetRequiredService<IMessageSubscriberFactory>();
 
-            IMessageSubscriberFactory messageSubscriberFactory = serviceProvider.GetRequiredService<IMessageSubscriberFactory>();
+                messageSubscriberFactory.Initialise();
 
-            messageSubscriberFactory.Initialise();
-
-            return webHost;
+                return webHost;
+            }
         }
     }
 }

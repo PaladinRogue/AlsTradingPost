@@ -4,7 +4,7 @@ using KeyVault.Domain.SharedDataKeys.Create;
 
 namespace KeyVault.Domain.SharedDataKeys
 {
-    public class SharedDataKey : DataKey<SharedDatKeyType>, IAggregateRoot
+    public class SharedDataKey : DataKey<SharedDataKeyType>, IAggregateRoot
     {
         protected SharedDataKey()
         {

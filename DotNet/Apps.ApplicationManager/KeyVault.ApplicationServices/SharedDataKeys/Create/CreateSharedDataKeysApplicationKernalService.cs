@@ -12,11 +12,11 @@ using Microsoft.Extensions.Logging;
 
 namespace KeyVault.ApplicationServices.SharedDataKeys.Create
 {
-    public class SharedDataKeysApplicationKernalService : ISharedDataKeysApplicationKernalService
+    public class CreateSharedDataKeysApplicationKernalService : ICreateSharedDataKeysApplicationKernalService
     {
         private readonly ITransactionManager _transactionManager;
 
-        private readonly ILogger<SharedDataKeysApplicationKernalService> _logger;
+        private readonly ILogger<CreateSharedDataKeysApplicationKernalService> _logger;
 
         private readonly ICommandRepository<SharedDataKey> _commandRepository;
 
@@ -26,9 +26,9 @@ namespace KeyVault.ApplicationServices.SharedDataKeys.Create
 
         private readonly IEncryptionFactory _encryptionFactory;
 
-        public SharedDataKeysApplicationKernalService(
+        public CreateSharedDataKeysApplicationKernalService(
             ITransactionManager transactionManager,
-            ILogger<SharedDataKeysApplicationKernalService> logger,
+            ILogger<CreateSharedDataKeysApplicationKernalService> logger,
             ICommandRepository<SharedDataKey> commandRepository,
             ICreateSharedDataKeyCommand createSharedDataKeyCommand,
             IChangeSharedDataKeyCommand changeSharedDataKeyCommand,
@@ -42,7 +42,7 @@ namespace KeyVault.ApplicationServices.SharedDataKeys.Create
             _encryptionFactory = encryptionFactory;
         }
 
-        public async Task Create()
+        public async Task ExecuteAsync()
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
@@ -50,7 +50,7 @@ namespace KeyVault.ApplicationServices.SharedDataKeys.Create
                 {
                     IList<SharedDataKey> existingKeys = (await _commandRepository.GetAsync()).ToList();
 
-                    foreach (SharedDatKeyType sharedDataKeyType in Enum.GetValues(typeof(SharedDatKeyType)))
+                    foreach (SharedDataKeyType sharedDataKeyType in Enum.GetValues(typeof(SharedDataKeyType)))
                     {
                         SharedDataKey key = existingKeys.SingleOrDefault(k => k.Type == sharedDataKeyType);
                         if (key == null)

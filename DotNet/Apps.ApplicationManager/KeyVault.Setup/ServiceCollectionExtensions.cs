@@ -25,7 +25,7 @@ namespace KeyVault.Setup
         public static IServiceCollection RegisterApplicationServices(this IServiceCollection services)
         {
             return services
-                .AddScoped<ISharedDataKeysApplicationKernalService, SharedDataKeysApplicationKernalService>();
+                .AddScoped<ICreateSharedDataKeysApplicationKernalService, CreateSharedDataKeysApplicationKernalService>();
         }
 
         public static IServiceCollection RegisterValidators(this IServiceCollection services)
