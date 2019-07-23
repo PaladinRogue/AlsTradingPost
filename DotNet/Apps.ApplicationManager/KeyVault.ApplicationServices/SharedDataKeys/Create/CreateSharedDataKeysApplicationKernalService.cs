@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Common.ApplicationServices.Transactions;
 using Common.Domain.Persistence;
@@ -50,14 +51,16 @@ namespace KeyVault.ApplicationServices.SharedDataKeys.Create
                 {
                     IList<SharedDataKey> existingKeys = (await _commandRepository.GetAsync()).ToList();
 
-                    foreach (SharedDataKeyType sharedDataKeyType in Enum.GetValues(typeof(SharedDataKeyType)))
+                    foreach (FieldInfo fieldInfo in typeof(Common.Domain.DataProtectors.SharedDataKeys).GetFields())
                     {
-                        SharedDataKey key = existingKeys.SingleOrDefault(k => k.Type == sharedDataKeyType);
+                        string keyName = fieldInfo.GetRawConstantValue().ToString();
+
+                        SharedDataKey key = existingKeys.SingleOrDefault(k => k.Name == keyName);
                         if (key == null)
                         {
                             SharedDataKey sharedDataKey = await _createSharedDataKeyCommand.ExecuteAsync(new CreateSharedDataKeyCommandDdto
                             {
-                                Type = sharedDataKeyType,
+                                Name = keyName,
                                 Value = _encryptionFactory.CreateKey()
                             });
 

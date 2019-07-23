@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
-using Common.Setup.Infrastructure.Messaging;
 using Common.Setup.Infrastructure.Persistence;
 using KeyVault.Setup.Infrastructure.DataKeys;
 using Microsoft.AspNetCore;

@@ -1,4 +1,6 @@
-﻿namespace Common.Domain.DataProtectors
+﻿using System.Threading.Tasks;
+
+namespace Common.Domain.DataProtectors
 {
     public static class DataProtection
     {
@@ -34,24 +36,24 @@
             }
         }
 
-        public static string Protect<T>(T data)
+        public static Task<string> ProtectAsync<T>(T data, string keyName)
         {
             if (DataProtector == null)
             {
                 throw new DataProtectorNotSetException();
             }
 
-            return DataProtector.Protect(data);
+            return DataProtector.ProtectAsync(data, keyName);
         }
 
-        public static T Unprotect<T>(string data)
+        public static Task<T> Unprotect<T>(string data, string keyName)
         {
             if (DataProtector == null)
             {
                 throw new DataProtectorNotSetException();
             }
 
-            return DataProtector.Unprotect<T>(data);
+            return DataProtector.UnprotectAsync<T>(data, keyName);
         }
 
         public static HashSet Hash(string data, string salt = null)

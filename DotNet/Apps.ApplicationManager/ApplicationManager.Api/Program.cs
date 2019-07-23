@@ -22,7 +22,7 @@ namespace ApplicationManager.Api
                     .ApplyMigrations()
                     .InitialiseMessaging();
 
-            await builder.CreateDataKeysAsync<DataKeyType>();
+            await builder.CreateDataKeysAsync<DataKeys>();
             await builder.RegisterApplicationAsync();
             await builder.RegisterSystemAdminAsync();
 

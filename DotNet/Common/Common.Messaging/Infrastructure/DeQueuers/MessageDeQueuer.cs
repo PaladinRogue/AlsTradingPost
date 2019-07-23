@@ -42,12 +42,12 @@ namespace Common.Messaging.Infrastructure.DeQueuers
         {
             if (message is IPreparedMessage preparedMessage)
             {
-                if (_dataProtector.Unprotect<Guid>(preparedMessage.SecurityToken) != preparedMessage.Id)
+                if (await _dataProtector.UnprotectAsync<Guid>(preparedMessage.SecurityToken, SharedDataKeys.Queue) != preparedMessage.Id)
                 {
                     throw new BusinessApplicationException(ExceptionType.Unknown, "Unable to verify sender of message");
                 }
 
-                string unprotectedMessage = _dataProtector.Unprotect<string>(preparedMessage.Payload);
+                string unprotectedMessage = await _dataProtector.UnprotectAsync<string>(preparedMessage.Payload, SharedDataKeys.Queue);
                 IMessage deserialisedMessage = _messageSerialiser.Deserialise(unprotectedMessage);
 
                 using (_serviceProvider.CreateScope())

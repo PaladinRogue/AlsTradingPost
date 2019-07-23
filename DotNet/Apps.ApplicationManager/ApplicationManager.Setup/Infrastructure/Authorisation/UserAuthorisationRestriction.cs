@@ -4,7 +4,6 @@ using ApplicationManager.Domain.Users;
 using Common.Authorisation.Contexts;
 using Common.Authorisation.Restrictions;
 using Common.Domain.Persistence;
-using Common.Setup.Infrastructure.Authorisation;
 
 namespace ApplicationManager.Setup.Infrastructure.Authorisation
 {

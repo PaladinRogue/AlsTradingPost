@@ -9,7 +9,7 @@ namespace KeyVault.Broker
 {
     public static class WebHostExtensions
     {
-        public static async Task<IWebHost> CreateDataKeysAsync<T>(this IWebHost webHost) where T : struct, Enum
+        public static async Task<IWebHost> CreateDataKeysAsync<T>(this IWebHost webHost)
         {
             using (IServiceScope scope = webHost.Services.CreateScope())
             {

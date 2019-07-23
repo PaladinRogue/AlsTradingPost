@@ -4,7 +4,7 @@ using KeyVault.Domain.Applications.CreateDataKey;
 
 namespace KeyVault.Domain.Applications
 {
-    public class ApplicationDataKey : DataKey<string>, IAggregateMember
+    public class ApplicationDataKey : DataKey, IAggregateMember
     {
         protected ApplicationDataKey()
         {

@@ -1,8 +1,8 @@
-﻿using System.Reflection;
+﻿using System.Linq;
+using System.Reflection;
 using Common.Domain.DataProtectors;
 using Common.Resources;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Persistence.EntityFramework.Infrastructure.DataProtectors;
@@ -15,12 +15,14 @@ namespace Persistence.EntityFramework.Infrastructure.Extensions
         {
             foreach (PropertyInfo propertyInfo in typeof(T).GetProperties())
             {
-                if (propertyInfo.DeclaringType == typeof(T) && propertyInfo.GetCustomAttributes<SensitiveInformationAttribute>().Any())
+                SensitiveInformationAttribute sensitiveInformationAttribute = propertyInfo.GetCustomAttributes<SensitiveInformationAttribute>().SingleOrDefault();
+
+                if (propertyInfo.DeclaringType == typeof(T) && sensitiveInformationAttribute != null)
                 {
                     IMutableProperty mutableProperty = entityTypeBuilder.Property(propertyInfo.Name).Metadata;
 
                     mutableProperty.SetMaxLength(FieldSizes.Protected);
-                    mutableProperty.SetValueConverter(SensitiveInformationConverter.Create());
+                    mutableProperty.SetValueConverter(SensitiveInformationConverter.Create(sensitiveInformationAttribute.KeyName));
                 }
             }
 

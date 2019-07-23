@@ -18,7 +18,7 @@ namespace KeyVault.Domain.SharedDataKeys.Create
 
             SharedDataKey sharedDataKey = SharedDataKey.Create(new CreateSharedDataKeyDdto
             {
-                Type = createSharedDataKeyCommandDdto.Type,
+                Name = createSharedDataKeyCommandDdto.Name,
                 Value = createSharedDataKeyCommandDdto.Value
             });
 

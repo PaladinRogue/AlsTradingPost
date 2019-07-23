@@ -1,3 +1,4 @@
+using Common.Resources;
 using FluentValidation;
 
 namespace KeyVault.Domain.SharedDataKeys.Create
@@ -6,7 +7,8 @@ namespace KeyVault.Domain.SharedDataKeys.Create
     {
         public CreateSharedDataKeyValidator()
         {
-            RuleFor(c => c.Type)
+            RuleFor(c => c.Name)
+                .MaximumLength(FieldSizes.Default)
                 .NotEmpty();
 
             RuleFor(c => c.Value)

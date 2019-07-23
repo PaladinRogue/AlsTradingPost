@@ -8,6 +8,8 @@ using Common.Setup.Infrastructure.Exceptions;
 using Common.Setup.Infrastructure.Messaging;
 using Common.Setup.Infrastructure.Settings;
 using Common.Setup.Infrastructure.WebRequests;
+using KeyVault.Broker;
+using KeyVault.Broker.Setup.DataKeys;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +23,7 @@ using ReverseProxy.Setup.Infrastructure.ReverseProxy;
 
 namespace ReversProxy.Api
 {
-    public class Startup : Common.Api.Startup
+    public class Startup : VaultApiStartup
     {
         public Startup(IHostingEnvironment environment) : base(environment)
         {
@@ -33,9 +35,11 @@ namespace ReversProxy.Api
                 .AddDefaultMvcOptions()
                 .LoadAppSettings(Configuration)
                 .LoadHostSettings(Configuration)
+                .LoadMasterKey(Configuration)
                 .UseDomainEvents()
                 .UseRabbitMqMessaging(Configuration)
-                .UseDataProtection(Configuration)
+                .UseDataProtection()
+                .UseKeyVault(Configuration)
                 .UseWebRequests()
                 .UseSystemClock()
                 .AddLazyCache();

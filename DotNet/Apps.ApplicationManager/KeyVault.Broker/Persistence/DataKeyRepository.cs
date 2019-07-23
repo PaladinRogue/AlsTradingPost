@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Common.Domain.Persistence;
-using Common.Resources.Extensions;
+using Common.Domain.DataProtectors;
 using Common.Resources.Settings;
-using KeyVault.Broker.Domain;
 using KeyVault.Broker.Domain.Persistence;
 using KeyVault.Domain.Applications;
 using KeyVault.Domain.Applications.AddDataKey;
@@ -45,24 +43,24 @@ namespace KeyVault.Broker.Persistence
             _appSettings = appSettingsAccessor.Value;
         }
 
-        public async Task<IEnumerable<DataKey<SharedDataKeyType>>> GetAllSharedAsync()
+        public async Task<IEnumerable<DataKey>> GetAllSharedAsync()
         {
-            return (await _sharedDataKeyQueryRepository.GetAsync()).Select(s => new DataKey<SharedDataKeyType>
+            return (await _sharedDataKeyQueryRepository.GetAsync()).Select(s => new DataKey
             {
-                Type = s.Type,
+                Name = s.Name,
                 Value = s.Value
             });
         }
 
-        public async Task<DataKey<SharedDataKeyType>> GetSharedAsync(SharedDataKeyType type)
+        public async Task<DataKey> GetSharedAsync(string name)
         {
-            SharedDataKey sharedDataKey = await _sharedDataKeyQueryRepository.GetSingleAsync(s => s.Type == type);
+            SharedDataKey sharedDataKey = await _sharedDataKeyQueryRepository.GetSingleAsync(s => s.Name == name);
 
             if (sharedDataKey != null)
             {
-                return new DataKey<SharedDataKeyType>
+                return new DataKey
                 {
-                    Type = sharedDataKey.Type,
+                    Name = sharedDataKey.Name,
                     Value = sharedDataKey.Value
                 };
             }
@@ -70,27 +68,27 @@ namespace KeyVault.Broker.Persistence
             return null;
         }
 
-        public async Task<IEnumerable<DataKey<T>>> GetAllAsync<T>() where T : struct, Enum
+        public async Task<IEnumerable<DataKey>> GetAllAsync()
         {
             Application application = await _applicationQueryRepository.GetSingleAsync(a => a.SystemName == _appSettings.SystemName);
 
-            return application?.ApplicationDataKeys.Select(a => new DataKey<T>
+            return application?.ApplicationDataKeys.Select(a => new DataKey
             {
-                Type = a.Type.ToEnum<T>(),
+                Name = a.Name,
                 Value = a.Value
-            }) ?? Enumerable.Empty<DataKey<T>>();
+            }) ?? Enumerable.Empty<DataKey>();
         }
 
-        public async Task<DataKey<T>> GetAsync<T>(T type) where T : struct, Enum
+        public async Task<DataKey> GetAsync(string name)
         {
             Application application = await _applicationQueryRepository.GetSingleAsync(a => a.SystemName == _appSettings.SystemName);
 
-            ApplicationDataKey applicationDataKey = application?.ApplicationDataKeys.SingleOrDefault(a => a.Type == type.ToString());
+            ApplicationDataKey applicationDataKey = application?.ApplicationDataKeys.SingleOrDefault(a => a.Name == name);
             if (applicationDataKey != null)
             {
-                return new DataKey<T>
+                return new DataKey
                 {
-                    Type = applicationDataKey.Type.ToEnum<T>(),
+                    Name = applicationDataKey.Name,
                     Value = applicationDataKey.Value
                 };
             }
@@ -98,7 +96,7 @@ namespace KeyVault.Broker.Persistence
             return null;
         }
 
-        public async Task CreateKeyAsync<T>(DataKey<T> dataKey) where T : struct, Enum
+        public async Task CreateKeyAsync(DataKey dataKey)
         {
             Application application = await _applicationCommandRepository.GetSingleAsync(a => a.SystemName == _appSettings.SystemName);
 
@@ -111,7 +109,7 @@ namespace KeyVault.Broker.Persistence
 
                 await _addApplicationDataKeyCommand.ExecuteAsync(application, new AddApplicationDataKeyCommandDdto
                 {
-                    Type = dataKey.Type.ToString(),
+                    Type = dataKey.Name,
                     Value = dataKey.Value
                 });
 
@@ -121,7 +119,7 @@ namespace KeyVault.Broker.Persistence
             {
                 await _addApplicationDataKeyCommand.ExecuteAsync(application, new AddApplicationDataKeyCommandDdto
                 {
-                    Type = dataKey.Type.ToString(),
+                    Type = dataKey.Name,
                     Value = dataKey.Value
                 });
 

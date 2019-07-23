@@ -1,6 +1,9 @@
 using Common.Api.Routing;
+using Common.ApplicationServices.Caching;
 using Common.ApplicationServices.Transactions;
+using Common.Domain.DataProtectors;
 using Common.Domain.Persistence;
+using Common.Setup.Infrastructure.Caching;
 using FluentValidation;
 using KeyVault.ApplicationServices.SharedDataKeys.Create;
 using KeyVault.Domain.Applications;
@@ -10,6 +13,8 @@ using KeyVault.Domain.SharedDataKeys;
 using KeyVault.Domain.SharedDataKeys.Change;
 using KeyVault.Domain.SharedDataKeys.Create;
 using KeyVault.Persistence;
+using KeyVault.Setup.Infrastructure.Caching;
+using KeyVault.Setup.Infrastructure.DataKeys;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
@@ -51,6 +56,8 @@ namespace KeyVault.Setup
         public static IServiceCollection RegisterProviders(this IServiceCollection services)
         {
             return services
+                .AddSingleton<IMasterKeyProvider, MasterKeyProvider>()
+                .AddSingletonCache<IDataKeyProvider, DataKeyProvider, ICacheDecorator<string, DataKey>, DataKeyProviderCacheDecorator, KeyVaultCacheService>()
                 .AddSingleton<IRouteProvider<bool>, DefaultRouteProvider>();
         }
 

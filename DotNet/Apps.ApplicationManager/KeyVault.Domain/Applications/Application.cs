@@ -36,7 +36,7 @@ namespace KeyVault.Domain.Applications
 
         internal ApplicationDataKey AddDataKey(AddApplicationDataKeyDdto addApplicationDataKeyDdto)
         {
-            if (ApplicationDataKeys.SingleOrDefault(a => a.Type == addApplicationDataKeyDdto.Type) != null)
+            if (ApplicationDataKeys.SingleOrDefault(a => a.Name == addApplicationDataKeyDdto.Type) != null)
             {
                 throw new ApplicationDataKeyAlreadyExistsDomainException();
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Common.Domain.DataProtectors;
 using Common.Messaging.Infrastructure.Interfaces;
 using Common.Messaging.Infrastructure.Messages;
@@ -20,11 +21,14 @@ namespace Common.Messaging.Infrastructure.Factories
             _messageSerialiser = messageSerialiser;
         }
 
-        public IPreparedMessage Create(IMessage message)
+        public async Task<IPreparedMessage> CreateAsync(IMessage message)
         {
             Guid id = Guid.NewGuid();
 
-            return PreparedMessage.Create(id, message.Type, _dataProtector.Protect(id), _dataProtector.Protect(_messageSerialiser.Serialise(message)));
+            return PreparedMessage.Create(id, message.Type,
+                await _dataProtector.ProtectAsync(id, SharedDataKeys.Queue),
+                await _dataProtector.ProtectAsync(_messageSerialiser.Serialise(message), SharedDataKeys.Queue)
+            );
         }
     }
 }

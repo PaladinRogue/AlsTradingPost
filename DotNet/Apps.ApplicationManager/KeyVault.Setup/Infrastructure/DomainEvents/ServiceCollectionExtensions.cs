@@ -1,5 +1,4 @@
-﻿using Common.Domain.DomainEvents.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace KeyVault.Setup.Infrastructure.DomainEvents
 {

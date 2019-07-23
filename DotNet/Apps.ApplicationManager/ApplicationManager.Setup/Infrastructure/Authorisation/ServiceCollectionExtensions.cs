@@ -38,7 +38,7 @@ namespace ApplicationManager.Setup.Infrastructure.Authorisation
 
             jwtIssuerOptionsSection.Bind(jwtIssuerOptions);
 
-            SymmetricSecurityKey signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(appSettings.Secret));
+            SymmetricSecurityKey signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(appSettings.AuthenticationSecret));
 
             services.Configure<JwtIssuerOptions>(options =>
             {

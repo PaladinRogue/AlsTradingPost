@@ -1,20 +1,19 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using KeyVault.Domain.SharedDataKeys;
+using Common.Domain.DataProtectors;
 
 namespace KeyVault.Broker.Domain.Persistence
 {
     public interface IDataKeyRepository
     {
-        Task<IEnumerable<DataKey<SharedDataKeyType>>> GetAllSharedAsync();
+        Task<IEnumerable<DataKey>> GetAllSharedAsync();
 
-        Task<DataKey<SharedDataKeyType>> GetSharedAsync(SharedDataKeyType type);
+        Task<DataKey> GetSharedAsync(string name);
 
-        Task<IEnumerable<DataKey<T>>> GetAllAsync<T>() where T : struct, Enum;
+        Task<IEnumerable<DataKey>> GetAllAsync();
 
-        Task<DataKey<T>> GetAsync<T>(T type) where T : struct, Enum;
+        Task<DataKey> GetAsync(string name);
 
-        Task CreateKeyAsync<T>(DataKey<T> dataKey)  where T : struct, Enum;
+        Task CreateKeyAsync(DataKey dataKey);
     }
 }

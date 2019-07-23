@@ -4,16 +4,16 @@ using KeyVault.Domain.SharedDataKeys.Create;
 
 namespace KeyVault.Domain.SharedDataKeys
 {
-    public class SharedDataKey : DataKey<SharedDataKeyType>, IAggregateRoot
+    public class SharedDataKey : DataKey, IAggregateRoot
     {
         protected SharedDataKey()
         {
         }
 
         private SharedDataKey(CreateSharedDataKeyDdto createSharedDataKeyDdto)
-            : base(createSharedDataKeyDdto.Type, createSharedDataKeyDdto.Value)
+            : base(createSharedDataKeyDdto.Name, createSharedDataKeyDdto.Value)
         {
-            Type = createSharedDataKeyDdto.Type;
+            Name = createSharedDataKeyDdto.Name;
         }
 
         internal static SharedDataKey Create(CreateSharedDataKeyDdto createSharedDataKeyDdto)

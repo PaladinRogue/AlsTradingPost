@@ -1,29 +1,34 @@
-﻿using Common.Resources.Encryption;
-using Microsoft.Extensions.Options;
+﻿using System.Threading.Tasks;
+using Common.Resources.Encryption;
 
 namespace Common.Domain.DataProtectors
 {
     public class DataProtector : IDataProtector
     {
         private readonly IEncryptionFactory _encryptionFactory;
-        private readonly DataProtectionSettings _dataProtectionSettings;
+
+        private readonly IDataKeyProvider _dataKeyProvider;
 
         public DataProtector(
             IEncryptionFactory encryptionFactory,
-            IOptions<DataProtectionSettings> dataProtectionSettingsAccessor)
+            IDataKeyProvider dataKeyProvider)
         {
             _encryptionFactory = encryptionFactory;
-            _dataProtectionSettings = dataProtectionSettingsAccessor.Value;
+            _dataKeyProvider = dataKeyProvider;
         }
 
-        public string Protect<T>(T data)
+        public async Task<string> ProtectAsync<T>(T data, string keyName)
         {
-            return _encryptionFactory.Encrypt(data, _dataProtectionSettings.SigningKey);
+            DataKey dataKey = await _dataKeyProvider.GetAsync(keyName);
+
+            return _encryptionFactory.Encrypt(data, dataKey.Value);
         }
 
-        public T Unprotect<T>(string data)
+        public async Task<T> UnprotectAsync<T>(string data, string keyName)
         {
-            return _encryptionFactory.Decrypt<T>(data, _dataProtectionSettings.SigningKey);
+            DataKey dataKey = await _dataKeyProvider.GetAsync(keyName);
+
+            return _encryptionFactory.Decrypt<T>(data, dataKey.Value);
         }
     }
 }

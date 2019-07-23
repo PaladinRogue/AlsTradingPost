@@ -43,7 +43,7 @@ namespace ApplicationManager.Domain.Identities
         [Required]
         [MaxLength(FieldSizes.Extended)]
         [EmailAddress]
-        [SensitiveInformation]
+        [SensitiveInformation(DataKeys.EmailAddress)]
         public string EmailAddress { get; protected set; }
 
         [Required]

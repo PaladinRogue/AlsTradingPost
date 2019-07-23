@@ -20,13 +20,11 @@ namespace Common.Messaging.Infrastructure.Senders
             _pendingMessageContainer = pendingMessageContainer;
         }
 
-        public Task SendAsync(IMessage message)
+        public async Task SendAsync(IMessage message)
         {
-            IPreparedMessage preparedMessage = _messageFactory.Create(message);
+            IPreparedMessage preparedMessage = await _messageFactory.CreateAsync(message);
 
             _pendingMessageContainer.Add(preparedMessage);
-
-            return Task.CompletedTask;
         }
     }
 }

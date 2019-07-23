@@ -4,7 +4,7 @@ namespace ApplicationManager.Domain.Identities.Projections
 {
     public class TwoFactorAuthenticationIdentityProjection
     {
-        [SensitiveInformation]
+        [SensitiveInformation(DataKeys.EmailAddress)]
         public string EmailAddress { get; set; }
     }
 }

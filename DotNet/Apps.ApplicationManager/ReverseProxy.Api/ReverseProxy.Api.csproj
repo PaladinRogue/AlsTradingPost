@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
         <RootNamespace>ReversProxy.Api</RootNamespace>
+        <LangVersion>7.1</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
@@ -21,6 +22,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\Common\Common.Api\Common.Api.csproj" />
       <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
+      <ProjectReference Include="..\KeyVault.Broker\KeyVault.Broker.csproj" />
       <ProjectReference Include="..\ReverseProxy.Setup\ReverseProxy.Setup.csproj" />
     </ItemGroup>
 </Project>

@@ -286,7 +286,6 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
-/src/Atlas.Payroll.Api/Properties/PublishProfiles
 
 # NuGet Package Reference Switcher Tool
 # https://github.com/KwalityKoder/NuGetReferenceSwitcher
@@ -296,8 +295,7 @@ __pycache__/
 *.pubxml
 
 *.gitconfig
-*.1
-/Web/PaladinRogue/dist
+**/vaultSecrets.json
 **/secrets.json
-*.log
+*.log.*
 *.eml

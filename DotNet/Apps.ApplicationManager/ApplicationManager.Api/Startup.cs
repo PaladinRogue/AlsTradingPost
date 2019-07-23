@@ -1,5 +1,4 @@
 ﻿using System;
-using ApplicationManager.Domain;
 using ApplicationManager.Setup;
 using ApplicationManager.Setup.Infrastructure.Authorisation;
 using ApplicationManager.Setup.Infrastructure.DomainEvents;
@@ -29,12 +28,13 @@ using Common.Setup.Infrastructure.DataProtection;
 using Common.Setup.Infrastructure.Exceptions;
 using Common.Setup.Infrastructure.WebRequests;
 using KeyVault.Broker;
+using KeyVault.Broker.Setup.DataKeys;
 
 [assembly: ApiController]
 
 namespace ApplicationManager.Api
 {
-    public class Startup : Common.Api.Startup
+    public class Startup : VaultApiStartup
     {
         public Startup(IHostingEnvironment environment) : base(environment)
         {
@@ -46,6 +46,7 @@ namespace ApplicationManager.Api
                 .AddDefaultMvcOptions()
                 .LoadAppSettings(Configuration)
                 .LoadHostSettings(Configuration)
+                .LoadMasterKey(Configuration)
                 .LoadSystemAdminIdentitySettings(Configuration)
                 .UseDefaultResourceBuilders()
                 .UseSystemClock()
@@ -54,8 +55,8 @@ namespace ApplicationManager.Api
                 .RegisterCommonProviders()
                 .RegisterCommonApplicationServices()
                 .RegisterAuthorisationServices()
-                .UseDataProtection(Configuration)
-                .UseKeyVault<DataKeyType>(Configuration)
+                .UseDataProtection()
+                .UseKeyVault(Configuration)
                 .UseWebRequests()
                 .AddLazyCache();
 

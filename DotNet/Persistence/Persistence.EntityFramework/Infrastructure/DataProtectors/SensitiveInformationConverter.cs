@@ -7,17 +7,20 @@ namespace Persistence.EntityFramework.Infrastructure.DataProtectors
 {
     public class SensitiveInformationConverter : ValueConverter<string, string>
     {
-        protected SensitiveInformationConverter(ConverterMappingHints mappingHints = null)
+        private SensitiveInformationConverter(string keyName, ConverterMappingHints mappingHints = null)
             : base(SensitiveInformationProtect, SensitiveInformationUnprotect, mappingHints)
         {
+            KeyName = keyName;
         }
 
-        public static SensitiveInformationConverter Create(ConverterMappingHints mappingHints = null)
+        private static string KeyName { get; set; }
+
+        public static SensitiveInformationConverter Create(string keyName, ConverterMappingHints mappingHints = null)
         {
-            return new SensitiveInformationConverter(mappingHints);
+            return new SensitiveInformationConverter(keyName, mappingHints);
         }
 
-        private static readonly Expression<Func<string, string>> SensitiveInformationProtect = x => DataProtection.Protect(x);
-        private static readonly Expression<Func<string, string>> SensitiveInformationUnprotect = x => DataProtection.Unprotect<string>(x);
+        private static readonly Expression<Func<string, string>> SensitiveInformationProtect = x => DataProtection.ProtectAsync(x, KeyName).Result;
+        private static readonly Expression<Func<string, string>> SensitiveInformationUnprotect = x => DataProtection.Unprotect<string>(x, KeyName).Result;
     }
 }

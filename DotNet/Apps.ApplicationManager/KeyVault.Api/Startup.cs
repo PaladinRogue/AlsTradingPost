@@ -1,5 +1,6 @@
 ﻿using System;
 using AutoMapper;
+using Common.Api;
 using Common.Api.Builders;
 using Common.Api.Extensions;
 using Common.Api.Formats;
@@ -18,12 +19,14 @@ using Common.Setup.Infrastructure.Logging;
 using Common.Setup.Infrastructure.Messaging;
 using Common.Setup.Infrastructure.Settings;
 using Common.Setup.Infrastructure.WebRequests;
+using KeyVault.Broker.Setup.DataKeys;
 using KeyVault.Setup;
 using KeyVault.Setup.Infrastructure.DomainEvents;
 using KeyVault.Setup.Infrastructure.Messaging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NodaTime;
@@ -32,10 +35,19 @@ using NodaTime;
 
 namespace KeyVault.Api
 {
-    public class Startup : Common.Api.Startup
+    public class Startup : ApiStartup
     {
         public Startup(IHostingEnvironment environment) : base(environment)
         {
+            IConfigurationRoot configurationRoot = new ConfigurationBuilder()
+                .SetBasePath(environment.ContentRootPath)
+                .AddJsonFile("vaultSecrets.json", false, true)
+                .Build();
+
+            Configuration = new ConfigurationBuilder()
+                .AddConfiguration(Configuration)
+                .AddConfiguration(configurationRoot)
+                .Build();
         }
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
@@ -48,7 +60,7 @@ namespace KeyVault.Api
                 .UseSystemClock()
                 .UseDomainEvents()
                 .UseRabbitMqMessaging(Configuration)
-                .UseDataProtection(Configuration)
+                .UseDataProtection()
                 .RegisterCommonProviders()
                 .UseWebRequests()
                 .AddLazyCache();
@@ -72,6 +84,7 @@ namespace KeyVault.Api
                 .RegisterDomainCommands()
                 .RegisterProviders()
                 .RegisterPersistenceServices(Configuration)
+                .LoadMasterKey(Configuration)
                 .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             return services.BuildServiceProvider();

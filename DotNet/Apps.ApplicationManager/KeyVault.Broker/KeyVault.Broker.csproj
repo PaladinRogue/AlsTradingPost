@@ -10,6 +10,7 @@
       <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
       <ProjectReference Include="..\KeyVault.Domain\KeyVault.Domain.csproj" />
       <ProjectReference Include="..\KeyVault.Persistence\KeyVault.Persistence.csproj" />
+      <ProjectReference Include="..\KeyVault.Setup\KeyVault.Setup.csproj" />
     </ItemGroup>
 
     <ItemGroup>

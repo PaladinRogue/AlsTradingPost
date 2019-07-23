@@ -3,13 +3,13 @@ using Microsoft.Extensions.Configuration;
 
 namespace Common.Api
 {
-    public abstract class Startup
+    public abstract class ApiStartup
     {
-        public IHostingEnvironment Environment { get; }
+        protected IHostingEnvironment Environment { get; }
 
-        public IConfiguration Configuration { get; }
+        protected IConfiguration Configuration { get; set; }
 
-        public Startup(IHostingEnvironment environment)
+        protected ApiStartup(IHostingEnvironment environment)
         {
             IConfigurationBuilder builder = new ConfigurationBuilder()
                 .SetBasePath(environment.ContentRootPath)

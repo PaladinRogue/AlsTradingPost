@@ -1,9 +1,11 @@
-﻿namespace Common.Domain.DataProtectors
+﻿using System.Threading.Tasks;
+
+namespace Common.Domain.DataProtectors
 {
     public interface IDataProtector
     {
-        string Protect<T>(T data);
+        Task<string> ProtectAsync<T>(T data, string keyName);
 
-        T Unprotect<T>(string data);
+        Task<T> UnprotectAsync<T>(string data, string keyName);
     }
 }

@@ -5,21 +5,21 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace KeyVault.Domain
 {
-    public abstract class DataKey<T> : VersionedEntity
+    public abstract class DataKey : VersionedEntity
     {
         protected DataKey()
         {
         }
 
-        protected DataKey(T type, SymmetricSecurityKey value)
+        protected DataKey(string name, SymmetricSecurityKey value)
         {
-            Type = type;
+            Name = name;
             Value = value;
         }
 
         [Required]
         [MaxLength(FieldSizes.Default)]
-        public T Type { get; set; }
+        public string Name { get; set; }
 
         [Required]
         [MaxLength(FieldSizes.Protected)]

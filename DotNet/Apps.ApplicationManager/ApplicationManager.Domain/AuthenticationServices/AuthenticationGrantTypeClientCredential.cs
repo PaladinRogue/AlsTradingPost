@@ -30,18 +30,18 @@ namespace ApplicationManager.Domain.AuthenticationServices
         [MaxLength(FieldSizes.Default)]
         public string Name { get; protected set; }
 
-        [SensitiveInformation]
+        [SensitiveInformation(DataKeys.ClientId)]
         [MaxLength(FieldSizes.Default)]
         [Required]
         public string ClientId { get; protected set; }
 
         [Required]
-        [SensitiveInformation]
+        [SensitiveInformation(DataKeys.ClientSecret)]
         [MaxLength(FieldSizes.Default)]
         public string ClientSecret { get; protected set; }
 
         [Required]
-        [SensitiveInformation]
+        [SensitiveInformation(DataKeys.AppAccessToken)]
         [MaxLength(FieldSizes.Default)]
         public string AppAccessToken { get; protected set; }
 
