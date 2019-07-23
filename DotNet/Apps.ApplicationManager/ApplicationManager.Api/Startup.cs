@@ -72,7 +72,6 @@ namespace ApplicationManager.Api
 
             services
                 .UseJsonV1Format()
-                .UseJsonPolicyAuthorisation(Configuration)
                 .UseEmailNotifications()
                 .RegisterMessageSubscribers()
                 .RegisterDomainEventHandlers()
@@ -81,6 +80,7 @@ namespace ApplicationManager.Api
                 .RegisterDomainCommands()
                 .RegisterPersistenceServices(Configuration)
                 .RegisterProviders()
+                .UseJsonPolicyAuthorisation(Configuration)
                 .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             return services.BuildServiceProvider();

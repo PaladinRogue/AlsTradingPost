@@ -26,7 +26,7 @@ namespace ApplicationManager.Api
             await builder.RegisterApplicationAsync();
             await builder.RegisterSystemAdminAsync();
 
-            builder.Run();
+            await builder.RunAsync();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
