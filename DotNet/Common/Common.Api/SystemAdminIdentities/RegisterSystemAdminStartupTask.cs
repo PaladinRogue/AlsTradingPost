@@ -1,20 +1,28 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Common.Api.Extensions;
 using Common.Messaging.Infrastructure.Dispatchers;
 using Common.Messaging.Infrastructure.Senders;
 using Common.Messaging.Messages;
 using Common.Resources.Settings;
-using Microsoft.AspNetCore.Hosting;
+using Common.Setup.Infrastructure.Startup;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Common.Api.SystemAdminIdentities
 {
-    public static class WebHostExtensions
+    public class RegisterSystemAdminStartupTask : IStartupTask
     {
-        public static async Task RegisterSystemAdminAsync(this IWebHost webHost)
+        private readonly IServiceProvider _serviceProvider;
+
+        public RegisterSystemAdminStartupTask(IServiceProvider serviceProvider)
         {
-            using (IServiceScope scope = webHost.Services.CreateScope())
+            _serviceProvider = serviceProvider;
+        }
+
+        public async Task ExecuteAsync(CancellationToken cancellationToken = default)
+        {
+            using (IServiceScope scope = _serviceProvider.CreateScope())
             {
                 IServiceProvider serviceProvider = scope.ServiceProvider;
 

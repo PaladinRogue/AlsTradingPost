@@ -3,11 +3,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.EntityFramework.Infrastructure.Transactions
 {
-    public class EntityFrameworkTransactionManager : ITransactionManager
+    public class EntityFrameworkTransactionManager : EntityFrameworkTransactionManager<DbContext>
     {
-        private readonly DbContext _dbContext;
+        public EntityFrameworkTransactionManager(DbContext dbContext) : base(dbContext)
+        {
+        }
+    }
 
-        public EntityFrameworkTransactionManager(DbContext dbContext)
+    public class EntityFrameworkTransactionManager<TDbContext> : ITransactionManager where TDbContext : DbContext
+    {
+        private readonly TDbContext _dbContext;
+
+        public EntityFrameworkTransactionManager(TDbContext dbContext)
         {
             _dbContext = dbContext;
         }

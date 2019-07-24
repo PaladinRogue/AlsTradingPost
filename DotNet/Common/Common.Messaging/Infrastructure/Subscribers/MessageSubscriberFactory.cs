@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Common.Messaging.Infrastructure.Subscribers
 {
@@ -11,11 +12,11 @@ namespace Common.Messaging.Infrastructure.Subscribers
 			_subscribers = subscribers;
 		}
 
-		public void Initialise()
+		public async Task InitialiseAsync()
 		{
 			foreach (IMessageSubscriber messageSubscriber in _subscribers)
 			{
-				messageSubscriber.Subscribe();
+				await messageSubscriber.SubscribeAsync();
 			}
 		}
 	}

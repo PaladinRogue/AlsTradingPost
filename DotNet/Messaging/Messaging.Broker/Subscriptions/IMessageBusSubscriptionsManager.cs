@@ -13,11 +13,11 @@ namespace Messaging.Broker.Subscriptions
 
         event EventHandler<string> OnMessageRemoved;
 
-        void AddSubscription<T, TH>(Func<T, Task> asyncHandler)
+        Task AddSubscriptionAsync<T, TH>(Func<T, Task> asyncHandler)
             where T : IMessage
             where TH : IMessageSubscriber<T>;
 
-        void RemoveSubscription<T, TH>()
+        Task RemoveSubscriptionAsync<T, TH>()
             where T : IMessage
             where TH : IMessageSubscriber<T>;
 

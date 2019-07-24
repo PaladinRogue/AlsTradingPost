@@ -1,7 +1,9 @@
-﻿namespace Common.Messaging.Infrastructure.Subscribers
+﻿using System.Threading.Tasks;
+
+namespace Common.Messaging.Infrastructure.Subscribers
 {
 	public interface IMessageSubscriber
 	{
-		void Subscribe();
+		Task SubscribeAsync();
 	}
 }

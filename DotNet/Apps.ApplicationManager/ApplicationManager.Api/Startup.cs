@@ -1,18 +1,19 @@
 ﻿using System;
+using ApplicationManager.Domain;
 using ApplicationManager.Setup;
 using ApplicationManager.Setup.Infrastructure.Authorisation;
 using ApplicationManager.Setup.Infrastructure.DomainEvents;
 using ApplicationManager.Setup.Infrastructure.Messaging;
 using AutoMapper;
+using Common.Api.ApplicationRegistration;
 using Common.Api.Builders;
+using Common.Api.Clocks;
+using Common.Api.DataProtection;
+using Common.Api.DomainEvents;
 using Common.Api.Extensions;
 using Common.Api.Formats;
-using Common.Domain.Clocks;
-using Common.Domain.DataProtectors;
-using Common.Domain.DomainEvents;
-using Common.Domain.DomainEvents.Interfaces;
-using Common.Messaging.Infrastructure;
-using Common.Messaging.Infrastructure.Senders;
+using Common.Api.Messages;
+using Common.Api.SystemAdminIdentities;
 using Common.Setup;
 using Common.Setup.Infrastructure.DomainEvents;
 using Common.Setup.Infrastructure.Logging;
@@ -23,9 +24,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using NodaTime;
 using Common.Setup.Infrastructure.DataProtection;
 using Common.Setup.Infrastructure.Exceptions;
+using Common.Setup.Infrastructure.Persistence;
+using Common.Setup.Infrastructure.Startup;
 using Common.Setup.Infrastructure.WebRequests;
 using KeyVault.Broker;
 using KeyVault.Broker.Setup.DataKeys;
@@ -81,6 +83,16 @@ namespace ApplicationManager.Api
                 .RegisterPersistenceServices(Configuration)
                 .RegisterProviders()
                 .UseJsonPolicyAuthorisation(Configuration)
+                .AddStartupTask<SetDataProtectorStartupTask>()
+                .AddStartupTask<SetDataHasherStartupTask>()
+                .AddStartupTask<SetDomainEventDispatcherStartupTask>()
+                .AddStartupTask<SetMessageSenderStartupTask>()
+                .AddStartupTask<SetClockStartupTask>()
+                .AddStartupTask<ApplyMigrationsStartupTask>()
+                .AddStartupTask<InitialiseMessagingStartupTask>()
+                .AddStartupTask<CreateDataKeysStartupTask<DataKeys>>()
+                .AddStartupTask<RegisterApplicationStartupTask>()
+                .AddStartupTask<RegisterSystemAdminStartupTask>()
                 .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             return services.BuildServiceProvider();
@@ -88,19 +100,8 @@ namespace ApplicationManager.Api
 
         public void Configure(
             IApplicationBuilder app,
-            ILoggerFactory loggerFactory,
-            IDataProtector dataProtector,
-            IDomainEventDispatcher domainEventDispatcher,
-            IMessageSender messageSender,
-            IDataHasher dataHasher,
-            IClock clock)
+            ILoggerFactory loggerFactory)
         {
-            dataProtector.SetDataProtector();
-            dataHasher.SetDataHasher();
-            domainEventDispatcher.SetDomainEventDispatcher();
-            messageSender.SetMessageSender();
-            clock.SetClock();
-
             loggerFactory.AddLog4Net();
 
             app.Map("/v1", jsonVersion =>

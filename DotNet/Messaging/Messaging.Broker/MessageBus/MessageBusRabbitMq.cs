@@ -105,11 +105,11 @@ namespace Messaging.Broker.MessageBus
             }
         }
 
-        public void Subscribe<T, TH>(Func<T, Task> asyncHandler) where T : IMessage where TH : IMessageSubscriber<T>
+        public Task SubscribeAsync<T, TH>(Func<T, Task> asyncHandler) where T : IMessage where TH : IMessageSubscriber<T>
         {
             string messageName = _messageBusSubscriptionsManager.GetMessageKey<T>();
             DoInternalSubscription(messageName);
-            _messageBusSubscriptionsManager.AddSubscription<T, TH>(asyncHandler);
+            return _messageBusSubscriptionsManager.AddSubscriptionAsync<T, TH>(asyncHandler);
         }
 
         private void DoInternalSubscription(string messageName)
@@ -130,9 +130,9 @@ namespace Messaging.Broker.MessageBus
             }
         }
 
-        public void Unsubscribe<T, TH>() where T : IMessage where TH : IMessageSubscriber<T>
+        public Task UnsubscribeAsync<T, TH>() where T : IMessage where TH : IMessageSubscriber<T>
         {
-            _messageBusSubscriptionsManager.RemoveSubscription<T, TH>();
+            return _messageBusSubscriptionsManager.RemoveSubscriptionAsync<T, TH>();
         }
 
         private IModel CreateConsumerChannel()

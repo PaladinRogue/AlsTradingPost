@@ -28,7 +28,8 @@ namespace KeyVault.Broker
         public static IServiceCollection UseKeyVault(this IServiceCollection services, IConfiguration configuration)
         {
             services
-                .AddEntityFrameworkSqlServer().AddOptions()
+                .AddEntityFrameworkSqlServer()
+                .AddOptions()
                 .AddDbContext<KeyVaultDbContext>(options =>
                     options
                         .UseLazyLoadingProxies()
@@ -40,10 +41,14 @@ namespace KeyVault.Broker
                 .AddScoped<IMasterKeyProvider, MasterKeyProvider>()
                 .AddScoped<ICacheDataKeyApplicationKernalService, CacheDataKeyApplicationKernalService>()
                 .AddSingletonCache<IDataKeyProvider, DataKeyProvider, ICacheDecorator<string, DataKey>, DataKeyProviderCacheDecorator, ApplicationCacheService>()
+
                 .AddScoped<ICreateApplicationCommand, CreateApplicationCommand>()
                 .AddScoped<IValidator<CreateApplicationCommandDdto>, CreateApplicationValidator>()
+
                 .AddScoped<IAddApplicationDataKeyCommand, AddApplicationDataKeyCommand>()
                 .AddScoped<IValidator<AddApplicationDataKeyCommandDdto>, AddApplicationDataKeyValidator>()
+
+                .AddScoped<IKeyVaultTransactionManager, KeyVaultTransactionManager>()
                 .AddScoped<IDataKeyRepository, DataKeyRepository>()
                 .AddScoped<ICommandRepository<Application>, CommandRepository<Application, KeyVaultDbContext>>()
                 .AddScoped<IQueryRepository<Application>, QueryRepository<Application, KeyVaultDbContext>>()

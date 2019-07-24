@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Common.ApplicationServices.Transactions;
 using Common.Domain.DataProtectors;
 using KeyVault.Broker.Domain.Persistence;
+using KeyVault.Broker.Persistence;
 using KeyVault.Domain;
 using DataKey = Common.Domain.DataProtectors.DataKey;
 
@@ -12,13 +13,13 @@ namespace KeyVault.Broker.Setup.DataKeys
     {
         private readonly IDataKeyRepository _dataKeyRepository;
 
-        private readonly ITransactionManager _transactionManager;
+        private readonly IKeyVaultTransactionManager _transactionManager;
 
         private readonly IMasterKeyProvider _masterKeyProvider;
 
         public DataKeyProvider(
             IDataKeyRepository dataKeyRepository,
-            ITransactionManager transactionManager,
+            IKeyVaultTransactionManager transactionManager,
             IMasterKeyProvider masterKeyProvider)
         {
             _dataKeyRepository = dataKeyRepository;

@@ -25,22 +25,26 @@ namespace Messaging.Broker.Subscriptions
 
         public void Clear() => _handlers.Clear();
 
-        public void AddSubscription<T, TH>(Func<T, Task> asyncHandler)
+        public Task AddSubscriptionAsync<T, TH>(Func<T, Task> asyncHandler)
             where T : IMessage
             where TH : IMessageSubscriber<T>
         {
             string messageKey = GetMessageKey<T>();
             _doAddSubscription(typeof(TH), asyncHandler, messageKey);
             _messageTypes.Add(typeof(T));
+
+            return Task.CompletedTask;
         }
 
-        public void RemoveSubscription<T, TH>()
+        public Task RemoveSubscriptionAsync<T, TH>()
             where T : IMessage
             where TH : IMessageSubscriber<T>
         {
             MessageSubscription messageSubscriptionToRemove = _findSubscriptionToRemove<T, TH>();
             string messageKey = GetMessageKey<T>();
             _doRemoveSubscription(messageKey, messageSubscriptionToRemove);
+
+            return Task.CompletedTask;
         }
 
         public IEnumerable<MessageSubscription> GetSubscribersForMessage<T>() where T : IMessage
@@ -58,8 +62,6 @@ namespace Messaging.Broker.Subscriptions
         }
 
         public bool HasSubscriptionsForMessage(string messageName) => _handlers.ContainsKey(messageName);
-
-        public Type GetMessageTypeByName(string messageName) => _messageTypes.SingleOrDefault(t => t.Name == messageName);
 
         public string GetMessageKey<T>()
         {

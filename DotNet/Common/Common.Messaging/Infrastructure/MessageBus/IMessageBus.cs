@@ -9,11 +9,11 @@ namespace Common.Messaging.Infrastructure.MessageBus
     {
         void Publish(IMessage message);
 
-        void Subscribe<T, TH>(Func<T, Task> asyncHandler)
+        Task SubscribeAsync<T, TH>(Func<T, Task> asyncHandler)
             where T : IMessage
             where TH : IMessageSubscriber<T>;
 
-        void Unsubscribe<T, TH>()
+        Task UnsubscribeAsync<T, TH>()
             where T : IMessage
             where TH : IMessageSubscriber<T>;
     }

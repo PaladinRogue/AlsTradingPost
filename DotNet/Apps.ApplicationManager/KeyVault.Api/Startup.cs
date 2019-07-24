@@ -2,25 +2,26 @@
 using AutoMapper;
 using Common.Api;
 using Common.Api.Builders;
+using Common.Api.Clocks;
+using Common.Api.DataProtection;
+using Common.Api.DomainEvents;
 using Common.Api.Extensions;
 using Common.Api.Formats;
+using Common.Api.Messages;
 using Common.Authorisation.Policies;
-using Common.Domain.Clocks;
-using Common.Domain.DataProtectors;
-using Common.Domain.DomainEvents;
-using Common.Domain.DomainEvents.Interfaces;
-using Common.Messaging.Infrastructure;
-using Common.Messaging.Infrastructure.Senders;
 using Common.Setup;
 using Common.Setup.Infrastructure.DataProtection;
 using Common.Setup.Infrastructure.DomainEvents;
 using Common.Setup.Infrastructure.Exceptions;
 using Common.Setup.Infrastructure.Logging;
 using Common.Setup.Infrastructure.Messaging;
+using Common.Setup.Infrastructure.Persistence;
 using Common.Setup.Infrastructure.Settings;
+using Common.Setup.Infrastructure.Startup;
 using Common.Setup.Infrastructure.WebRequests;
 using KeyVault.Broker.Setup.DataKeys;
 using KeyVault.Setup;
+using KeyVault.Setup.Infrastructure.DataKeys;
 using KeyVault.Setup.Infrastructure.DomainEvents;
 using KeyVault.Setup.Infrastructure.Messaging;
 using Microsoft.AspNetCore.Builder;
@@ -29,7 +30,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using NodaTime;
 
 [assembly: ApiController]
 
@@ -85,6 +85,13 @@ namespace KeyVault.Api
                 .RegisterProviders()
                 .RegisterPersistenceServices(Configuration)
                 .LoadMasterKey(Configuration)
+                .AddStartupTask<SetDataProtectorStartupTask>()
+                .AddStartupTask<SetDomainEventDispatcherStartupTask>()
+                .AddStartupTask<SetMessageSenderStartupTask>()
+                .AddStartupTask<SetClockStartupTask>()
+                .AddStartupTask<ApplyMigrationsStartupTask>()
+                .AddStartupTask<InitialiseMessagingStartupTask>()
+                .AddStartupTask<CreateSharedDataKeysStartupTask>()
                 .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             return services.BuildServiceProvider();
@@ -92,16 +99,8 @@ namespace KeyVault.Api
 
         public void Configure(
             IApplicationBuilder app,
-            ILoggerFactory loggerFactory,
-            IDataProtector dataProtector,
-            IDomainEventDispatcher domainEventDispatcher,
-            IMessageSender messageSender,
-            IClock clock)
+            ILoggerFactory loggerFactory)
         {
-            dataProtector.SetDataProtector();
-            domainEventDispatcher.SetDomainEventDispatcher();
-            messageSender.SetMessageSender();
-            clock.SetClock();
 
             loggerFactory.AddLog4Net();
 

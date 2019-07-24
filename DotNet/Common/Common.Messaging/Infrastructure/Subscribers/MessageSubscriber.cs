@@ -17,9 +17,9 @@ namespace Common.Messaging.Infrastructure.Subscribers
 
         public abstract Task HandleAsync(T message);
 
-        public void Subscribe()
+        public Task SubscribeAsync()
         {
-            _messageBus.Subscribe<T, TSubscriber>(HandleAsync);
+            return _messageBus.SubscribeAsync<T, TSubscriber>(HandleAsync);
         }
     }
 }
