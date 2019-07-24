@@ -36,7 +36,7 @@ namespace ApplicationManager.Domain.Identities
         public string Identifier
         {
             get => _emailMask;
-            protected set => IdentifierHash = DataProtection.Hash(value, StaticSalts.Identifier).Hash;
+            protected set => IdentifierHash = DataProtection.StaticHashAsync(value, DataKeys.IdentifierSalt).Result.Hash;
         }
 
         [Required]

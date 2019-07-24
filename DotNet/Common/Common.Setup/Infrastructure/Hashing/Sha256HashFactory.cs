@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using Common.Domain.DataProtectors;
 
 namespace Common.Setup.Infrastructure.Hashing
 {
     public class Sha256HashFactory : IHashFactory
     {
-        public HashSet GenerateHash<T>(T data, string salt = null)
+        public Task<HashSet> GenerateHashAsync<T>(T data, string salt = null)
         {
             salt = salt ?? GetSalt();
-            return new HashSet
+            return Task.FromResult(new HashSet
             {
                 Salt = salt,
                 Hash = GetHash(data + salt)
-            };
+            });
         }
 
         private static string GetSalt() {

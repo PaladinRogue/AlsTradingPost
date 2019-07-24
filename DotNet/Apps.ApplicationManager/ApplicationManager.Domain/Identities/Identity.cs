@@ -41,7 +41,7 @@ namespace ApplicationManager.Domain.Identities
 
         public virtual IEnumerable<Claim> Claims => _claims;
 
-        internal void ResetPassword(ResetPasswordDdto resetPasswordDdto)
+        internal async Task ResetPassword(ResetPasswordDdto resetPasswordDdto)
         {
             if (!(AuthenticationIdentities.OfType<PasswordIdentity>().SingleOrDefault() is PasswordIdentity passwordIdentity))
             {
@@ -66,7 +66,7 @@ namespace ApplicationManager.Domain.Identities
 
             _authenticationIdentities.Remove(twoFactorAuthenticationIdentity);
 
-            passwordIdentity.ChangePassword(new ChangePasswordDdto
+            await passwordIdentity.ChangePassword(new ChangePasswordDdto
             {
                 Password = resetPasswordDdto.Password
             });
@@ -128,14 +128,14 @@ namespace ApplicationManager.Domain.Identities
             Session.Reinstate();
         }
 
-        internal void ChangePassword(ChangePasswordDdto changePasswordDdto)
+        internal async Task ChangePassword(ChangePasswordDdto changePasswordDdto)
         {
             if (!(AuthenticationIdentities.OfType<PasswordIdentity>().SingleOrDefault() is PasswordIdentity passwordIdentity))
             {
                 throw new PasswordNotSetDomainException();
             }
 
-            passwordIdentity.ChangePassword(changePasswordDdto);
+            await passwordIdentity.ChangePassword(changePasswordDdto);
         }
 
         internal async Task<PasswordIdentity> RegisterPassword(

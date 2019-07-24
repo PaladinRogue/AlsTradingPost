@@ -18,12 +18,10 @@ namespace ApplicationManager.Domain.Identities.ChangePassword
         {
             _validator.ValidateAndThrow(changePasswordCommandDdto);
 
-            identity.ChangePassword(new ChangePasswordDdto
+            return identity.ChangePassword(new ChangePasswordDdto
             {
                 Password = changePasswordCommandDdto.Password
             });
-
-            return Task.CompletedTask;
         }
     }
 }

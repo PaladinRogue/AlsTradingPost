@@ -22,6 +22,6 @@ namespace Persistence.EntityFramework.Infrastructure.SecurityKeys
         }
 
         private static readonly Expression<Func<SymmetricSecurityKey, string>> ConvertTo = x => DataProtection.ProtectAsync(Convert.ToBase64String(x.Key), KeyName).Result;
-        private static readonly Expression<Func<string, SymmetricSecurityKey>> ConvertFrom = x => new SymmetricSecurityKey(Convert.FromBase64String(DataProtection.Unprotect<string>(x, KeyName).Result));
+        private static readonly Expression<Func<string, SymmetricSecurityKey>> ConvertFrom = x => new SymmetricSecurityKey(Convert.FromBase64String(DataProtection.UnprotectAsync<string>(x, KeyName).Result));
     }
 }

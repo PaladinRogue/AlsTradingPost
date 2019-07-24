@@ -38,7 +38,7 @@ namespace ApplicationManager.Domain.Identities.Login.RefreshToken
                 throw new InvalidLoginDomainException();
             }
 
-            bool validaToken = refreshToken.ValidateToken(new ValidateRefreshTokenDdto
+            bool validaToken = await refreshToken.ValidateToken(new ValidateRefreshTokenDdto
             {
                 Token = refreshTokenLoginCommandDdto.RefreshToken
             });

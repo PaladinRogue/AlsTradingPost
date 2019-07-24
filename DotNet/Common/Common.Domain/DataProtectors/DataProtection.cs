@@ -46,7 +46,7 @@ namespace Common.Domain.DataProtectors
             return DataProtector.ProtectAsync(data, keyName);
         }
 
-        public static Task<T> Unprotect<T>(string data, string keyName)
+        public static Task<T> UnprotectAsync<T>(string data, string keyName)
         {
             if (DataProtector == null)
             {
@@ -56,14 +56,24 @@ namespace Common.Domain.DataProtectors
             return DataProtector.UnprotectAsync<T>(data, keyName);
         }
 
-        public static HashSet Hash(string data, string salt = null)
+        public static Task<HashSet> StaticHashAsync(string data, string saltName)
         {
             if (DataHasher == null)
             {
                 throw new DataHasherNotSetException();
             }
 
-            return DataHasher.Hash(data, salt);
+            return DataHasher.StaticHashAsync(data, saltName);
+        }
+
+        public static Task<HashSet> HashAsync(string data, string salt = null)
+        {
+            if (DataHasher == null)
+            {
+                throw new DataHasherNotSetException();
+            }
+
+            return DataHasher.HashAsync(data, salt);
         }
     }
 }

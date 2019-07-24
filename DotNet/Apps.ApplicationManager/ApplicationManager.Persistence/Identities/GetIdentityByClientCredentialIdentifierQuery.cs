@@ -18,13 +18,16 @@ namespace ApplicationManager.Persistence.Identities
             _applicationManagerDbContext = applicationManagerDbContext;
         }
 
-        public Task<Identity> RunAsync(AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential,
+        public async Task<Identity> RunAsync(
+            AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential,
             string identifier)
         {
-            return _applicationManagerDbContext.Identities
+            HashSet identifierHash = await DataProtection.StaticHashAsync(identifier, DataKeys.IdentifierSalt);
+
+            return await _applicationManagerDbContext.Identities
                 .SingleOrDefaultAsync(i =>
                     i.AuthenticationIdentities.OfType<ClientCredentialIdentity>().Any(a =>
-                        a.IdentifierHash == DataProtection.Hash(identifier, StaticSalts.Identifier).Hash
+                        a.IdentifierHash == identifierHash.Hash
                         && a.AuthenticationGrantTypeClientCredential == authenticationGrantTypeClientCredential));
         }
     }

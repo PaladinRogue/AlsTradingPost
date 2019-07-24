@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities.ChangePassword;
 using ApplicationManager.Domain.Identities.CheckPassword;
@@ -43,7 +44,7 @@ namespace ApplicationManager.Domain.Identities
         public string EmailAddress
         {
             get => _emailMask;
-            protected set => EmailAddressHash = DataProtection.Hash(value, StaticSalts.EmailAddress).Hash;
+            protected set => EmailAddressHash = DataProtection.StaticHashAsync(value, DataKeys.EmailAddressSalt).Result.Hash;
         }
 
         [Required]
@@ -57,7 +58,7 @@ namespace ApplicationManager.Domain.Identities
         public string Password
         {
             get => _passwordMask;
-            protected set => PasswordHash = DataProtection.Hash(value);
+            protected set => PasswordHash = DataProtection.HashAsync(value).Result;
         }
 
         [Required]
@@ -65,14 +66,14 @@ namespace ApplicationManager.Domain.Identities
 
         public virtual AuthenticationGrantTypePassword AuthenticationGrantTypePassword { get; protected set; }
 
-        internal bool CheckPassword(CheckPasswordDdto checkPasswordDdto)
+        internal async Task<bool> CheckPassword(CheckPasswordDdto checkPasswordDdto)
         {
-            return PasswordHash == DataProtection.Hash(checkPasswordDdto.Password, PasswordHash.Salt);
+            return PasswordHash == await DataProtection.HashAsync(checkPasswordDdto.Password, PasswordHash.Salt);
         }
 
-        internal void ChangePassword(ChangePasswordDdto changePasswordDdto)
+        internal async Task ChangePassword(ChangePasswordDdto changePasswordDdto)
         {
-            PasswordHash = DataProtection.Hash(changePasswordDdto.Password);
+            PasswordHash = await DataProtection.HashAsync(changePasswordDdto.Password);
         }
     }
 }

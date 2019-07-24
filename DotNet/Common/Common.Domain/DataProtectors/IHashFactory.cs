@@ -1,7 +1,9 @@
-﻿namespace Common.Domain.DataProtectors
+﻿using System.Threading.Tasks;
+
+namespace Common.Domain.DataProtectors
 {
     public interface IHashFactory
     {
-        HashSet GenerateHash<T>(T data, string salt = null);
+        Task<HashSet> GenerateHashAsync<T>(T data, string salt = null);
     }
 }

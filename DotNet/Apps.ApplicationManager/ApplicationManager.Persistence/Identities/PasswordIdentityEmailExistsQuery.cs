@@ -17,10 +17,14 @@ namespace ApplicationManager.Persistence.Identities
             _applicationManagerDbContext = applicationManagerDbContext;
         }
 
-        public Task<bool> RunAsync(string emailAddress)
+        public async Task<bool> RunAsync(string emailAddress)
         {
-            return _applicationManagerDbContext.Identities
-                .AnyAsync(i => i.AuthenticationIdentities.OfType<PasswordIdentity>().Any(a => a.EmailAddressHash == DataProtection.Hash(emailAddress, StaticSalts.EmailAddress).Hash));
+            HashSet emailAddressHash = await DataProtection.StaticHashAsync(emailAddress, DataKeys.EmailAddressSalt);
+
+            return await _applicationManagerDbContext.Identities
+                .AnyAsync(i => i.AuthenticationIdentities.OfType<PasswordIdentity>()
+                    .Any(a => a.EmailAddressHash == emailAddressHash.Hash)
+                );
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using ApplicationManager.Domain.AuthenticationServices;
 using ApplicationManager.Domain.Identities.ValidateToken;
 using Common.Domain.Aggregates;
@@ -41,7 +42,7 @@ namespace ApplicationManager.Domain.Identities
         public string Token
         {
             get => _tokenMask;
-            protected set => TokenHash = DataProtection.Hash(value);
+            protected set => TokenHash = DataProtection.HashAsync(value).Result;
         }
 
         [Required]
@@ -57,9 +58,9 @@ namespace ApplicationManager.Domain.Identities
 
         public virtual AuthenticationGrantTypeRefreshToken AuthenticationGrantTypeRefreshToken { get; protected set; }
 
-        internal bool ValidateToken(ValidateRefreshTokenDdto validateRefreshTokenDdto)
+        internal async Task<bool> ValidateToken(ValidateRefreshTokenDdto validateRefreshTokenDdto)
         {
-            return TokenHash == DataProtection.Hash(validateRefreshTokenDdto.Token, TokenHash.Salt) && TokenExpiry >= Clock.Now();
+            return TokenHash == await DataProtection.HashAsync(validateRefreshTokenDdto.Token, TokenHash.Salt) && TokenExpiry >= Clock.Now();
         }
     }
 }

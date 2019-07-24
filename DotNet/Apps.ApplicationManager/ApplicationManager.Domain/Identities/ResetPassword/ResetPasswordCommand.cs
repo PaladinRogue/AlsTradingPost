@@ -37,7 +37,7 @@ namespace ApplicationManager.Domain.Identities.ResetPassword
                 TwoFactorAuthenticationType = TwoFactorAuthenticationType.ForgotPassword
             });
 
-            identity.ResetPassword(new ResetPasswordDdto
+            await identity.ResetPassword(new ResetPasswordDdto
             {
                 Password = resetPasswordCommandDdto.Password,
                 Token = resetPasswordCommandDdto.Token

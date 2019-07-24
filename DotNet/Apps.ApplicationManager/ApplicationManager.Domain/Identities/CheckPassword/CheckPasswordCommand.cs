@@ -18,7 +18,7 @@ namespace ApplicationManager.Domain.Identities.CheckPassword
         {
             _validator.ValidateAndThrow(checkPasswordDdto);
 
-            return Task.FromResult(passwordIdentity.CheckPassword(checkPasswordDdto));
+            return passwordIdentity.CheckPassword(checkPasswordDdto);
         }
     }
 }

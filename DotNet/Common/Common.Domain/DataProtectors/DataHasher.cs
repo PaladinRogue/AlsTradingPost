@@ -1,17 +1,29 @@
+using System.Text;
+using System.Threading.Tasks;
+
 namespace Common.Domain.DataProtectors
 {
     public class DataHasher : IDataHasher
     {
         private readonly IHashFactory _hashFactory;
 
-        public DataHasher(IHashFactory hashFactory)
+        private readonly IDataKeyProvider _dataKeyProvider;
+
+        public DataHasher(IHashFactory hashFactory, IDataKeyProvider dataKeyProvider)
         {
             _hashFactory = hashFactory;
+            _dataKeyProvider = dataKeyProvider;
         }
 
-        public HashSet Hash(string data, string salt = null)
+        public async Task<HashSet> StaticHashAsync(string data, string saltName)
         {
-            return _hashFactory.GenerateHash(data, salt);
+            DataKey dataKey = await _dataKeyProvider.GetAsync(saltName);
+            return await _hashFactory.GenerateHashAsync(data, Encoding.UTF8.GetString(dataKey.Value.Key));
+        }
+
+        public Task<HashSet> HashAsync(string data, string salt = null)
+        {
+            return _hashFactory.GenerateHashAsync(data, salt);
         }
     }
 }

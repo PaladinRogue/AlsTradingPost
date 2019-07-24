@@ -21,6 +21,6 @@ namespace Persistence.EntityFramework.Infrastructure.DataProtectors
         }
 
         private static readonly Expression<Func<string, string>> SensitiveInformationProtect = x => DataProtection.ProtectAsync(x, KeyName).Result;
-        private static readonly Expression<Func<string, string>> SensitiveInformationUnprotect = x => DataProtection.Unprotect<string>(x, KeyName).Result;
+        private static readonly Expression<Func<string, string>> SensitiveInformationUnprotect = x => DataProtection.UnprotectAsync<string>(x, KeyName).Result;
     }
 }
