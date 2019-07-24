@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20181022094804_InitialSetup.cs" />
+    <Compile Remove="Migrations\20181022103214_InitialSetup.cs" />
+    <Compile Remove="Migrations\20181022112524_InitialSetup.cs" />
+    <Compile Remove="Migrations\20181022112736_InitialSetup.cs" />
+    <Compile Remove="Migrations\20181022113959_InitialSetup.cs" />
+    <Compile Remove="Migrations\20181022115042_InitialSetup.cs" />
+    <Compile Remove="Migrations\20181022115625_InitialSetup.cs" />
+    <Compile Remove="Migrations\20181022115720_InitialSetup.cs" />
+    <Compile Remove="Migrations\20181022122024_InitialSetup.cs" />
+    <Compile Remove="Migrations\20181022122256_InitialSetup.cs" />
+    <Compile Remove="Migrations\20181030102808_RemoveApplicationAuthServiceLinkAddPasswordIdentities.cs" />
+    <Compile Remove="Migrations\20181030103152_RemoveApplicationAuthServiceLinkAddPasswordIdentities.cs" />
+    <Compile Remove="Migrations\20181030103834_RemoveApplicationAuthServiceLinkAddPasswordIdentities.cs" />
+    <Compile Remove="Migrations\20181105152108_InitialCreate.cs" />
+    <Compile Remove="Migrations\20181105152234_InitialCreate.cs" />
+    <Compile Remove="Migrations\20181105152501_InitialCreate.cs" />
+    <Compile Remove="Migrations\20181105153325_InitialCreate.cs" />
+    <Compile Remove="Migrations\20181107183241_InitialCreate.cs" />
+    <Compile Remove="Migrations\20181107183422_InitialCreate.cs" />
+    <Compile Remove="Migrations\20181107184932_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190527203849_test.cs" />
+    <Compile Remove="Migrations\20190528080611_UpdateMaxLengths.cs" />
+    <Compile Remove="Migrations\20190528083308_UpdateFieldLengthConstraintsForEncryptedData.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.Persistence\Common.Persistence.csproj" />
+    <ProjectReference Include="..\..\Persistence\Persistence.EntityFramework\Persistence.EntityFramework.csproj" />
+    <ProjectReference Include="..\Authentication.ApplicationServices\Authentication.ApplicationServices.csproj" />
+    <ProjectReference Include="..\Authentication.Domain\Authentication.Domain.csproj" />
+  </ItemGroup>
+</Project>

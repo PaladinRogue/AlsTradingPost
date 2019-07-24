@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Common\Common.ApplicationServices\Common.ApplicationServices.csproj" />
+      <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
+      <ProjectReference Include="..\Vault.Domain\Vault.Domain.csproj" />
+      <ProjectReference Include="..\Vault.Persistence\Vault.Persistence.csproj" />
+      <ProjectReference Include="..\Vault.Setup\Vault.Setup.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="LazyCache" Version="2.0.1" />
+      <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.4" />
+    </ItemGroup>
+</Project>

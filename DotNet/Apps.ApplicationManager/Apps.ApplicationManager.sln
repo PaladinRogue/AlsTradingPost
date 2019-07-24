@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationManager.Domain", "ApplicationManager.Domain\ApplicationManager.Domain.csproj", "{2B42E962-CEA7-4758-AC07-5BB6405F6953}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.Domain", "Authentication.Domain\Authentication.Domain.csproj", "{2B42E962-CEA7-4758-AC07-5BB6405F6953}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationManager.Persistence", "ApplicationManager.Persistence\ApplicationManager.Persistence.csproj", "{7504B7B2-11F7-4A9F-A4A1-28699187E3C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authtentication.Persistence", "Authtentication.Persistence\Authtentication.Persistence.csproj", "{7504B7B2-11F7-4A9F-A4A1-28699187E3C7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{79DBFCBE-67CD-487F-B2F7-F1A88C048919}"
 EndProject
@@ -35,39 +35,39 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Messaging", "..\Comm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Api.Formats", "..\Common\Common.Api.Formats\Common.Api.Formats.csproj", "{9A303724-1BA0-4E99-8EF0-330CDE7F02D6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationManager.ApplicationServices", "ApplicationManager.ApplicationServices\ApplicationManager.ApplicationServices.csproj", "{BEE1801D-B717-4CDE-8019-673F31CA819F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.ApplicationServices", "Authentication.ApplicationServices\Authentication.ApplicationServices.csproj", "{BEE1801D-B717-4CDE-8019-673F31CA819F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationManager.Setup", "ApplicationManager.Setup\ApplicationManager.Setup.csproj", "{B9A8D7E9-56AD-4875-9FD2-6DFA73213710}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.Setup", "Authentication.Setup\Authentication.Setup.csproj", "{B9A8D7E9-56AD-4875-9FD2-6DFA73213710}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationManager.Api", "ApplicationManager.Api\ApplicationManager.Api.csproj", "{ADAA7F45-ED8E-40C3-9E51-5826C0C727F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.Api", "Authentication.Api\Authentication.Api.csproj", "{ADAA7F45-ED8E-40C3-9E51-5826C0C727F2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.ApplicationServices", "..\Common\Common.ApplicationServices\Common.ApplicationServices.csproj", "{4D1F7BED-D763-46CE-8F21-47FC4285C75D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Authorisation", "..\Common.Authorisation\Common.Authorisation\Common.Authorisation.csproj", "{D8D5DAC6-4A8F-4AEC-8C9D-8EF2EBF6FF5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReverseProxy.ApplicationServices", "ReverseProxy.ApplicationServices\ReverseProxy.ApplicationServices.csproj", "{93E9E08B-C081-45C9-8139-C0742B360581}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway.ApplicationServices", "Gateway.ApplicationServices\Gateway.ApplicationServices.csproj", "{93E9E08B-C081-45C9-8139-C0742B360581}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReverseProxy.Setup", "ReverseProxy.Setup\ReverseProxy.Setup.csproj", "{1F52F051-D9E5-42D3-9DFE-B5E64362D042}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway.Setup", "Gateway.Setup\Gateway.Setup.csproj", "{1F52F051-D9E5-42D3-9DFE-B5E64362D042}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReverseProxy.Persistence", "ReverseProxy.Persistence\ReverseProxy.Persistence.csproj", "{60474FBB-4C6E-4379-B89E-A53E9CC74342}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway.Persistence", "Gateway.Persistence\Gateway.Persistence.csproj", "{60474FBB-4C6E-4379-B89E-A53E9CC74342}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReverseProxy.Domain", "ReverseProxy.Domain\ReverseProxy.Domain.csproj", "{2C941C08-2452-4927-A45D-AC547003576D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway.Domain", "Gateway.Domain\Gateway.Domain.csproj", "{2C941C08-2452-4927-A45D-AC547003576D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReverseProxy.Api", "ReverseProxy.Api\ReverseProxy.Api.csproj", "{AADA2EBC-D0AE-413B-8B22-B2EF16ED35AD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway.Api", "Gateway.Api\Gateway.Api.csproj", "{AADA2EBC-D0AE-413B-8B22-B2EF16ED35AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault.Persistence", "KeyVault.Persistence\KeyVault.Persistence.csproj", "{BC2738E8-5A0C-491E-BB87-FB78B7E0A0F3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vault.Persistence", "Vault.Persistence\Vault.Persistence.csproj", "{BC2738E8-5A0C-491E-BB87-FB78B7E0A0F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault.Domain", "KeyVault.Domain\KeyVault.Domain.csproj", "{6058897F-4642-4DB4-9B95-77563FCEE551}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vault.Domain", "Vault.Domain\Vault.Domain.csproj", "{6058897F-4642-4DB4-9B95-77563FCEE551}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault.Setup", "KeyVault.Setup\KeyVault.Setup.csproj", "{99474705-286D-41F5-9D9F-81D1B65AE168}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vault.Setup", "Vault.Setup\Vault.Setup.csproj", "{99474705-286D-41F5-9D9F-81D1B65AE168}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault.ApplicationServices", "KeyVault.ApplicationServices\KeyVault.ApplicationServices.csproj", "{F1B2CE41-E083-4843-B69F-2D9DEEAC9E35}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vault.ApplicationServices", "Vault.ApplicationServices\Vault.ApplicationServices.csproj", "{F1B2CE41-E083-4843-B69F-2D9DEEAC9E35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault.Api", "KeyVault.Api\KeyVault.Api.csproj", "{A58D46F0-95FD-426C-9F6B-58F87DFCFA4E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vault.Api", "Vault.Api\Vault.Api.csproj", "{A58D46F0-95FD-426C-9F6B-58F87DFCFA4E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KeyVault", "KeyVault", "{B923A1AC-3BB6-4510-A108-4CE5562B275D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vault", "Vault", "{B923A1AC-3BB6-4510-A108-4CE5562B275D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault.Broker", "KeyVault.Broker\KeyVault.Broker.csproj", "{F67F7F43-AFBC-47BC-96DA-309E5A7F3204}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vault.Broker", "Vault.Broker\Vault.Broker.csproj", "{F67F7F43-AFBC-47BC-96DA-309E5A7F3204}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

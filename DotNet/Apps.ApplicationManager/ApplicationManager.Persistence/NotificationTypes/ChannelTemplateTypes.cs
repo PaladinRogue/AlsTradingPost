@@ -1,7 +1,0 @@
-namespace ApplicationManager.Persistence.NotificationTypes
-{
-    public static class ChannelTemplateTypes
-    {
-        public const string Email = "EMAIL";
-    }
-}
