@@ -190,7 +190,7 @@ namespace Authentication.Api.Identities
         }
 
         [AllowRestrictedAppAccess]
-        [HttpPost("resendConfirmIdentity", Name = RouteDictionary.ResendConfirmIdentity)]
+        [HttpPost("resendConfirm", Name = RouteDictionary.ResendConfirmIdentity)]
         public async Task<IActionResult> ResendConfirmIdentity()
         {
             await _identityApplicationService.ResendConfirmIdentityAsync(new ResendConfirmIdentityAdto
