@@ -19,6 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Common\Common.Api.Formats\Common.Api.Formats.csproj" />
       <ProjectReference Include="..\..\Common\Common.Api\Common.Api.csproj" />
       <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
       <ProjectReference Include="..\Gateway.Setup\Gateway.Setup.csproj" />

@@ -1,7 +1,10 @@
 ﻿using System;
 using AutoMapper;
+using Common.Api.Builders;
 using Common.Api.DataProtection;
 using Common.Api.Extensions;
+using Common.Api.Formats;
+using Common.Authorisation.Policies;
 using Common.Setup;
 using Common.Setup.Infrastructure.DataProtection;
 using Common.Setup.Infrastructure.DomainEvents;
@@ -44,6 +47,10 @@ namespace Gateway.Api
                 .UseRabbitMqMessaging(Configuration)
                 .UseDataProtection()
                 .UseVault(Configuration)
+                .UseDefaultResourceBuilders()
+                .RegisterAuthorisationServices()
+                .UseAlwaysAllowAuthorisation()
+                .RegisterCommonProviders()
                 .UseWebRequests()
                 .UseSystemClock()
                 .AddLazyCache();
@@ -55,12 +62,14 @@ namespace Gateway.Api
             });
 
             services
+                .UseJsonV1Format()
                 .RegisterMessageSubscribers()
                 .RegisterDomainEventHandlers()
                 .RegisterValidators()
                 .RegisterApplicationServices()
                 .RegisterDomainCommands()
                 .RegisterPersistenceServices(Configuration)
+                .RegisterProviders()
                 .AddStartupTask<SetDataProtectorStartupTask>()
                 .AddStartupTask<ApplyMigrationsStartupTask>()
                 .AddStartupTask<InitialiseMessagingStartupTask>()
@@ -77,9 +86,14 @@ namespace Gateway.Api
                 proxy
                     .UseExceptionMiddleware()
                     .UseReverseProxyMiddleware()
-                    .UseHttpsRedirection()
-                    .UseHsts()
-                    .UseMvc();
+                    .Map("/v1", jsonVersion =>
+                    {
+                        jsonVersion
+                            .UseJsonV1Middleware()
+                            .UseHttpsRedirection()
+                            .UseHsts()
+                            .UseMvc();
+                    });
             });
         }
     }

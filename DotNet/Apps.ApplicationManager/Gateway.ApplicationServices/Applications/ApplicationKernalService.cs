@@ -40,7 +40,8 @@ namespace Gateway.ApplicationServices.Applications
 
                 return new ApplicationAdto
                 {
-                    ApplicationName = application.SystemName,
+                    Name = application.Name,
+                    SystemName = application.SystemName,
                     HostUri = application.HostUri
                 };
             }

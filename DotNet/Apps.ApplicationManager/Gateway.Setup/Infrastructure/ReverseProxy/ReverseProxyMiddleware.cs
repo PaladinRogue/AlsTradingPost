@@ -61,7 +61,8 @@ namespace Gateway.Setup.Infrastructure.ReverseProxy
             return requestMessage;
         }
 
-        private static void CopyFromOriginalRequestContentAndHeaders(HttpContext context,
+        private static void CopyFromOriginalRequestContentAndHeaders(
+            HttpContext context,
             HttpRequestMessage requestMessage)
         {
             string requestMethod = context.Request.Method;
@@ -88,7 +89,8 @@ namespace Gateway.Setup.Infrastructure.ReverseProxy
             return HttpMethods.IsPut(requestMethod) || HttpMethods.IsPost(requestMethod);
         }
 
-        private static void CopyFromTargetResponseHeaders(HttpContext context,
+        private static void CopyFromTargetResponseHeaders(
+            HttpContext context,
             HttpResponseMessage responseMessage)
         {
             foreach ((string key, IEnumerable<string> value) in responseMessage.Headers)
@@ -117,6 +119,8 @@ namespace Gateway.Setup.Infrastructure.ReverseProxy
         private async Task<Uri> BuildTargetUriAsync(HttpRequest request)
         {
             IList<string> remainingPathParts = request.Path.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+
+            if (remainingPathParts.Count <= 1) return null;
 
             string applicationSystemName = remainingPathParts[1];
 

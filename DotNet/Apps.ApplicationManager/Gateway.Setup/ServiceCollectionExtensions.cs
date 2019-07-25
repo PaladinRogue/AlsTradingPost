@@ -1,6 +1,8 @@
-﻿using Common.ApplicationServices.Caching;
+﻿using Common.Api.Routing;
+using Common.ApplicationServices.Caching;
 using Common.ApplicationServices.Transactions;
 using Common.Domain.Persistence;
+using Common.Setup.Infrastructure.Authorisation;
 using Common.Setup.Infrastructure.Caching;
 using FluentValidation;
 using Gateway.ApplicationServices.Applications;
@@ -13,6 +15,7 @@ using Gateway.Domain.Applications.Persistence;
 using Gateway.Persistence;
 using Gateway.Persistence.Applications;
 using Gateway.Setup.Infrastructure.Caching;
+using Gateway.Setup.Infrastructure.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +30,7 @@ namespace Gateway.Setup
         public static IServiceCollection RegisterApplicationServices(this IServiceCollection services)
         {
             return services
+                .AddSecureApplicationService<IApplicationApplicationService, ApplicationApplicationService, ApplicationApplicationServiceSecurityDecorator>()
                 .AddScoped<IRegisterApplicationKernalService, RegisterApplicationKernalService>()
                 .AddScoped<IApplicationKernalService, ApplicationKernalService>();
         }
@@ -51,6 +55,7 @@ namespace Gateway.Setup
             this IServiceCollection services,
             IConfiguration configuration)
         {
+            services.AddScoped<IQueryRepository<Application>, QueryRepository<Application>>();
             services.AddScoped<ICommandRepository<Application>, CommandRepository<Application>>();
 
             services.AddSingletonCache<IApplicationQueryRepository, ApplicationQueryRepository, ICacheDecorator<string, Application>, ApplicationQueryRepositoryCacheDecorator, GatewayCacheService>();
@@ -64,6 +69,12 @@ namespace Gateway.Setup
             services.AddScoped<ITransactionManager, EntityFrameworkTransactionManager>();
 
             return services;
+        }
+
+        public static IServiceCollection RegisterProviders(this IServiceCollection services)
+        {
+            return services
+                .AddSingleton<IRouteProvider<bool>, GatewayRouteProvider>();
         }
     }
 }
