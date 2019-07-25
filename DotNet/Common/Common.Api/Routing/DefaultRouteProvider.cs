@@ -9,7 +9,7 @@ namespace Common.Api.Routing
 {
     public class DefaultRouteProvider : IRouteProvider<bool>
     {
-        private readonly IDictionary<string, Route<bool>> _routes;
+        protected readonly IDictionary<string, Route<bool>> Routes;
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -18,7 +18,7 @@ namespace Common.Api.Routing
             IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
-            _routes = new Dictionary<string, Route<bool>>();
+            Routes = new Dictionary<string, Route<bool>>();
 
             foreach (ApiDescriptionGroup apiDescriptionGroup in apiDescriptionGroupCollectionProvider.ApiDescriptionGroups.Items)
             {
@@ -27,7 +27,7 @@ namespace Common.Api.Routing
                     string routeName = apiDescription.ActionDescriptor.AttributeRouteInfo.Name;
                     if (string.IsNullOrEmpty(routeName)) continue;
 
-                    _routes.Add(
+                    Routes.Add(
                         routeName,
                         Route<bool>.Create(apiDescription.RelativePath, true)
                     );
@@ -58,7 +58,7 @@ namespace Common.Api.Routing
 
         public bool HasAccessToRoute(string routeName, bool routeRestriction)
         {
-            return _routes.ContainsKey(routeName);
+            return Routes.ContainsKey(routeName);
         }
 
         private static string FormatRoute(string route)
@@ -77,7 +77,7 @@ namespace Common.Api.Routing
 
         private string GetRouteTemplate(string routeName)
         {
-            return HasAccessToRoute(routeName, true) ?  _routes[routeName].Template : null;
+            return HasAccessToRoute(routeName, true) ?  Routes[routeName].Template : null;
         }
     }
 }

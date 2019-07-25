@@ -2,7 +2,7 @@
 
 namespace Common.Api.Pagination.Interfaces
 {
-    public interface IPagedCollectionResource<T>: ICollectionResource<T>, IPagedResource
+    public interface IPagedCollectionResource<T>: ICollectionResource<T>, IPagedResource where T : IResource
     {
     }
 }
