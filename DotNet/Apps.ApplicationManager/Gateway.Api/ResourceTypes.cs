@@ -2,6 +2,6 @@ namespace Gateway.Api
 {
     public static class ResourceTypes
     {
-        public const string Application = "application";
+        public const string Application = nameof(Application);
     }
 }

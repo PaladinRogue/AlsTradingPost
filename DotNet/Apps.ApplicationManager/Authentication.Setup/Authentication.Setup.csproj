@@ -16,6 +16,6 @@
     <ProjectReference Include="..\..\Common\Common.Api\Common.Api.csproj" />
     <ProjectReference Include="..\..\Persistence\Persistence.EntityFramework\Persistence.EntityFramework.csproj" />
     <ProjectReference Include="..\Authentication.ApplicationServices\Authentication.ApplicationServices.csproj" />
-    <ProjectReference Include="..\Authtentication.Persistence\Authtentication.Persistence.csproj" />
+    <ProjectReference Include="..\Authentication.Persistence\Authentication.Persistence.csproj" />
   </ItemGroup>
 </Project>

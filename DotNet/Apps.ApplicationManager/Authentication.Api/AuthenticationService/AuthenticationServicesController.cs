@@ -41,16 +41,15 @@ namespace Authentication.Api.AuthenticationService
                     switch (a)
                     {
                         case PasswordAuthenticationServiceAdto passwordAuthenticationServiceAdto:
-                            return new PasswordAuthenticationServiceSummaryResource
-                            {
-                                Type = passwordAuthenticationServiceAdto.Type
-                            };
+                            return new PasswordAuthenticationServiceSummaryResource();
+                        case RefreshTokenAuthenticationServiceAdto refreshTokenAuthenticationServiceAdto:
+                            return new RefreshTokenAuthenticationServiceSummaryResource();
                         case ClientCredentialAuthenticationServiceAdto clientCredentialAuthenticationServiceAdto:
                             return new ClientCredentialAuthenticationServiceSummaryResource
                             {
                                 Id = clientCredentialAuthenticationServiceAdto.Id,
-                                Type = clientCredentialAuthenticationServiceAdto.Type,
-                                AccessUrl = clientCredentialAuthenticationServiceAdto.AccessUrl
+                                AccessUrl = clientCredentialAuthenticationServiceAdto.AccessUrl,
+                                Name = clientCredentialAuthenticationServiceAdto.Name
                             };
                         default:
                             throw new ArgumentOutOfRangeException(a.GetType().Name);

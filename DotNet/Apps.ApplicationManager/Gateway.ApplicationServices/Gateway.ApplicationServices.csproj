@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Authtentication.Persistence\Authtentication.Persistence.csproj" />
+      <ProjectReference Include="..\Authentication.Persistence\Authentication.Persistence.csproj" />
       <ProjectReference Include="..\Gateway.Domain\Gateway.Domain.csproj" />
     </ItemGroup>
 

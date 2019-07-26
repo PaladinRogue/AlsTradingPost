@@ -2,16 +2,19 @@ namespace Authentication.Api
 {
     public static class ResourceTypes
     {
-        public const string ForgotPassword = "forgotPassword";
-        public const string ResetPassword = "resetPassword";
-        public const string Password = "password";
-        public const string RefreshToken = "refreshToken";
-        public const string AuthenticatePassword = "authenticatePassword";
-        public const string AuthenticateRefreshToken = "authenticateRefreshToken";
-        public const string AuthenticateClientCredential = "authenticateClientCredential";
-        public const string ConfirmIdentity = "confirmIdentity";
-        public const string ResendConfirmIdentity = "resendConfirmIdentity";
+        public const string ForgotPassword = nameof(ForgotPassword);
+        public const string ResetPassword = nameof(ResetPassword);
+        public const string Password = nameof(Password);
+        public const string RefreshToken = nameof(RefreshToken);
+        public const string AuthenticatePassword = nameof(AuthenticatePassword);
+        public const string AuthenticateRefreshToken = nameof(AuthenticateRefreshToken);
+        public const string AuthenticateClientCredential = nameof(AuthenticateClientCredential);
+        public const string ConfirmIdentity = nameof(ConfirmIdentity);
+        public const string ResendConfirmIdentity = nameof(ResendConfirmIdentity);
 
-        public const string AuthenticationService = "authenticationService";
+        public const string AuthenticationService = nameof(AuthenticationService);
+        public const string AuthenticationServicePassword = nameof(AuthenticationServicePassword);
+        public const string AuthenticationServiceClientCredential = nameof(AuthenticationServiceClientCredential);
+        public const string AuthenticationServiceRefreshToken = nameof(AuthenticationServiceRefreshToken);
     }
 }

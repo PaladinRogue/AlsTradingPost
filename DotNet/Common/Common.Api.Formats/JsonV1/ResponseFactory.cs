@@ -179,7 +179,7 @@ namespace Common.Api.Formats.JsonV1
 
         private static string GetResourceTypeName(MemberInfo argType)
         {
-            return argType.GetCustomAttributes<ResourceTypeAttribute>().FirstOrDefault()?.Type ?? argType.Name.ToCamelCase();
+            return argType.GetCustomAttributes<ResourceTypeAttribute>().FirstOrDefault()?.Type.ToCamelCase() ?? argType.Name.ToCamelCase();
         }
     }
 }

@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.Domain", "Authentication.Domain\Authentication.Domain.csproj", "{2B42E962-CEA7-4758-AC07-5BB6405F6953}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authtentication.Persistence", "Authtentication.Persistence\Authtentication.Persistence.csproj", "{7504B7B2-11F7-4A9F-A4A1-28699187E3C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.Persistence", "Authentication.Persistence\Authentication.Persistence.csproj", "{7504B7B2-11F7-4A9F-A4A1-28699187E3C7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{79DBFCBE-67CD-487F-B2F7-F1A88C048919}"
 EndProject

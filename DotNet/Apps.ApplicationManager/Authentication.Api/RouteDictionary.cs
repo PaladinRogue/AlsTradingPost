@@ -2,34 +2,34 @@
 {
     public static class RouteDictionary
     {
-        public const string Status = "Status";
+        public const string Status = nameof(Status);
 
-        public const string ForgotPasswordResourceTemplate = "ForgotPasswordResourceTemplate";
-        public const string ForgotPassword = "ForgotPassword";
-        public const string ResetPasswordResourceTemplate = "ResetPasswordResourceTemplate";
-        public const string ResetPassword = "ResetPassword";
-        public const string GetPasswordIdentity = "GetPasswordIdentity";
-        public const string ChangePasswordResourceTemplate = "ChangePasswordResourceTemplate";
-        public const string ChangePassword = "ChangePassword";
-        public const string RegisterPasswordResourceTemplate = "RegisterPasswordResourceTemplate";
-        public const string RegisterPassword = "RegisterPassword";
-        public const string ConfirmIdentityResourceTemplate = "ConfirmIdentityResourceTemplate";
-        public const string ConfirmIdentity = "ConfirmIdentity";
-        public const string CreateRefreshToken = "CreateRefreshToken";
-        public const string ResendConfirmIdentity = "ResendConfirmIdentity";
-        public const string Logout = "Logout";
+        public const string ForgotPasswordResourceTemplate = nameof(ForgotPasswordResourceTemplate);
+        public const string ForgotPassword = nameof(ForgotPassword);
+        public const string ResetPasswordResourceTemplate = nameof(ResetPasswordResourceTemplate);
+        public const string ResetPassword = nameof(ResetPassword);
+        public const string GetPasswordIdentity = nameof(GetPasswordIdentity);
+        public const string ChangePasswordResourceTemplate = nameof(ChangePasswordResourceTemplate);
+        public const string ChangePassword = nameof(ChangePassword);
+        public const string RegisterPasswordResourceTemplate = nameof(RegisterPasswordResourceTemplate);
+        public const string RegisterPassword = nameof(RegisterPassword);
+        public const string ConfirmIdentityResourceTemplate = nameof(ConfirmIdentityResourceTemplate);
+        public const string ConfirmIdentity = nameof(ConfirmIdentity);
+        public const string CreateRefreshToken = nameof(CreateRefreshToken);
+        public const string ResendConfirmIdentity = nameof(ResendConfirmIdentity);
+        public const string Logout = nameof(Logout);
 
-        public const string AuthenticatePasswordResourceTemplate = "AuthenticatePasswordResourceTemplate";
-        public const string AuthenticatePassword = "AuthenticatePassword";
-        public const string AuthenticateRefreshTokenResourceTemplate = "AuthenticateRefreshTokenResourceTemplate";
-        public const string AuthenticateRefreshToken = "AuthenticateRefreshToken";
-        public const string AuthenticateClientCredentialResourceTemplate = "AuthenticateClientCredentialResourceTemplate";
-        public const string AuthenticateClientCredential = "AuthenticateClientCredential";
+        public const string AuthenticatePasswordResourceTemplate = nameof(AuthenticatePasswordResourceTemplate);
+        public const string AuthenticatePassword = nameof(AuthenticatePassword);
+        public const string AuthenticateRefreshTokenResourceTemplate = nameof(AuthenticateRefreshTokenResourceTemplate);
+        public const string AuthenticateRefreshToken = nameof(AuthenticateRefreshToken);
+        public const string AuthenticateClientCredentialResourceTemplate = nameof(AuthenticateClientCredentialResourceTemplate);
+        public const string AuthenticateClientCredential = nameof(AuthenticateClientCredential);
 
-        public const string GetAuthenticationServices = "GetAuthenticationServices";
-        public const string AuthenticationServiceResourceTemplate = "AuthenticationServiceResourceTemplate";
-        public const string CreateAuthenticationService = "CreateAuthenticationService";
-        public const string GetAuthenticationService = "GetAuthenticationService";
-        public const string ChangeAuthenticationService = "ChangeAuthenticationService";
+        public const string GetAuthenticationServices = nameof(GetAuthenticationServices);
+        public const string AuthenticationServiceResourceTemplate = nameof(AuthenticationServiceResourceTemplate);
+        public const string CreateAuthenticationService = nameof(CreateAuthenticationService);
+        public const string GetAuthenticationService = nameof(GetAuthenticationService);
+        public const string ChangeAuthenticationService = nameof(ChangeAuthenticationService);
     }
 }

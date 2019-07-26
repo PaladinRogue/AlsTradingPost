@@ -62,16 +62,15 @@ namespace Authentication.ApplicationServices.AuthenticationServices
                             authenticationServiceAdtos.Add(new ClientCredentialAuthenticationServiceAdto
                             {
                                 Id = authenticationGrantTypeClientCredential.Id,
-                                Type = authenticationGrantTypeClientCredential.Name,
-                                AccessUrl = BuildClientAccessUrl(authenticationGrantTypeClientCredential)
+                                AccessUrl = BuildClientAccessUrl(authenticationGrantTypeClientCredential),
+                                Name = authenticationGrantTypeClientCredential.Name
                             });
                             break;
-                        // ReSharper disable once UnusedVariable - Because of switch case parameter is mandatory
                         case AuthenticationGrantTypePassword authenticationGrantTypePassword:
-                            authenticationServiceAdtos.Add(new PasswordAuthenticationServiceAdto
-                            {
-                                Type = "Password"
-                            });
+                            authenticationServiceAdtos.Add(new PasswordAuthenticationServiceAdto());
+                            break;
+                        case AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken:
+                            authenticationServiceAdtos.Add(new RefreshTokenAuthenticationServiceAdto());
                             break;
                     }
                 }
