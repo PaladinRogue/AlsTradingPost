@@ -17,7 +17,6 @@ using Authentication.Domain.Identities.ResetPassword;
 using Authentication.Domain.Identities.ValidateToken;
 using Common.Domain.Aggregates;
 using Common.Domain.Entities;
-using ConfirmIdentityDdto = Authentication.Domain.Identities.ConfirmIdentity.ConfirmIdentityDdto;
 
 namespace Authentication.Domain.Identities
 {
@@ -40,6 +39,9 @@ namespace Authentication.Domain.Identities
         public virtual IEnumerable<AuthenticationIdentity> AuthenticationIdentities => _authenticationIdentities;
 
         public virtual IEnumerable<Claim> Claims => _claims;
+
+        public bool IsConfirmed => !AuthenticationIdentities.Any(i => i is TwoFactorAuthenticationIdentity authenticationIdentity
+                                                                     && authenticationIdentity.TwoFactorAuthenticationType == TwoFactorAuthenticationType.ConfirmIdentity);
 
         internal async Task ResetPassword(ResetPasswordDdto resetPasswordDdto)
         {
@@ -184,7 +186,8 @@ namespace Authentication.Domain.Identities
             return clientCredentialIdentity;
         }
 
-        internal RefreshToken CreateRefreshToken(AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken,
+        internal RefreshToken CreateRefreshToken(
+            AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken,
             out string token)
         {
             return Session.CreateRefreshToken(authenticationGrantTypeRefreshToken, out token);
@@ -201,7 +204,7 @@ namespace Authentication.Domain.Identities
 
             _authenticationIdentities.Remove(twoFactorAuthenticationIdentity);
 
-            _authenticationIdentities.Add( await TwoFactorAuthenticationIdentity.Create(this, new CreateTwoFactorAuthenticationIdentityDdto
+            _authenticationIdentities.Add(await TwoFactorAuthenticationIdentity.Create(this, new CreateTwoFactorAuthenticationIdentityDdto
             {
                 EmailAddress = twoFactorAuthenticationIdentity.EmailAddress,
                 TwoFactorAuthenticationType = TwoFactorAuthenticationType.ConfirmIdentity

@@ -8,6 +8,7 @@ namespace Authentication.Api.Identities
     [ResourceType(ResourceTypes.ConfirmIdentity)]
     [SelfLink(RouteDictionary.ConfirmIdentityResourceTemplate, HttpVerb.Get)]
     [CreateLink(RouteDictionary.ConfirmIdentity)]
+    [Link(LinkDictionary.ResendConfirmIdentity, RouteDictionary.ResendConfirmIdentity, HttpVerb.Post)]
     public class ConfirmIdentityTemplate : ITemplate
     {
         [Required]

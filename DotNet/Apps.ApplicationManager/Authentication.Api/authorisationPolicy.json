@@ -1,32 +1,35 @@
 {
-  "authenticate": {
-    "create": {
-      "restriction": "everyone"
+  "Authenticate": {
+    "Create": {
+      "Restriction": "Everyone"
     }
   },
-  "identity": {
-    "create": {
-      "restriction": "everyone"
+  "Identity": {
+    "Confirm": {
+      "Restriction": "RestrictedAppAccess"
     },
-    "update": {
-      "restriction": "self"
+    "Create": {
+      "Restriction": "Everyone"
     },
-    "get": {
-      "restriction":  "self"
+    "Update": {
+      "Restriction": "Self"
+    },
+    "Get": {
+      "Restriction":  "Self"
     }
   },
-  "authenticationService": {
-    "create": {
-      "restriction": "user"
+  "AuthenticationService": {
+    "Create": {
+      "Restriction": "User"
     },
-    "update": {
-      "restriction": "user"
+    "Update": {
+      "Restriction": "User"
     },
-    "get": {
-      "restriction":  "user"
+    "Get": {
+      "Restriction": "User"
     },
-    "search": {
-      "restriction":  "everyone"
+    "Search": {
+      "Restriction": "Everyone"
     }
   }
 }

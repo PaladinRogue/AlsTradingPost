@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Common.ApplicationServices.WebRequests;
 using Gateway.ApplicationServices.Applications;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.Primitives;
 
 namespace Gateway.Setup.Infrastructure.ReverseProxy
@@ -126,7 +127,7 @@ namespace Gateway.Setup.Infrastructure.ReverseProxy
 
             ApplicationAdto applicationAdto = await _applicationKernalService.GetByNameAsync(applicationSystemName);
 
-            return applicationAdto == null ? null : new Uri(applicationAdto.HostUri, request.Path);
+            return applicationAdto == null ? null : new Uri(applicationAdto.HostUri, UriHelper.BuildRelative(null, request.Path, request.QueryString));
         }
     }
 }

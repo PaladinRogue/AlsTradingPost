@@ -35,6 +35,11 @@ namespace Authentication.Setup.Infrastructure.Authorisation
 
         public async Task<IDictionary<Type, Guid>> WhoAmIAsync()
         {
+            if (!_currentIdentityProvider.IsAuthenticated)
+            {
+                return new Dictionary<Type, Guid>();
+            }
+
             Identity identity = await _identityQueryRepository.GetByIdAsync(_currentIdentityProvider.Id);
 
             if (identity == null)

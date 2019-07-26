@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Authentication.ApplicationServices.AuthenticationServices.Authorisation;
 using Common.Api.Links;
 using Common.Api.Resources;
 using Common.Setup.Infrastructure.Constants;
@@ -6,6 +7,8 @@ using Common.Setup.Infrastructure.Constants;
 namespace Authentication.Api.AuthenticationService
 {
     [SelfLink(RouteDictionary.GetAuthenticationServices, HttpVerb.Get)]
+    [CreateLink(RouteDictionary.CreateAuthenticationService, HttpVerb.Post, typeof(CreateAuthenticationServiceAuthorisationContext))]
+    [Link(LinkDictionary.ForgotPassword, RouteDictionary.ForgotPasswordResourceTemplate, HttpVerb.Get)]
     public class AuthenticationServicesResource : ICollectionResource<AuthenticationServiceSummaryResource>
     {
         public IList<AuthenticationServiceSummaryResource> Results { get; set; }

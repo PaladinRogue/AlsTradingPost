@@ -5,13 +5,12 @@ using System.Threading.Tasks;
 using Common.Authorisation.Contexts;
 using Common.Authorisation.Restrictions;
 using Common.Domain.Aggregates;
-using Newtonsoft.Json.Linq;
 
-namespace Common.Authorisation.Policies.Json
+namespace Common.Authorisation.Policies
 {
-    public class JsonAuthorisationPolicy : IAuthorisationPolicy
+    public class AuthorisationPolicy : IAuthorisationPolicy
     {
-        private readonly IJsonAuthorisationPolicyProvider _jsonAuthorisationPolicyProvider;
+        private readonly IAuthorisationPolicyProvider _authorisationPolicyProvider;
 
         private readonly ISelfProvider _selfProvider;
 
@@ -19,13 +18,13 @@ namespace Common.Authorisation.Policies.Json
 
         private readonly IAuthorisationRestrictionProvider _authorisationRestrictionProvider;
 
-        public JsonAuthorisationPolicy(
-            IJsonAuthorisationPolicyProvider jsonAuthorisationPolicyProvider,
+        public AuthorisationPolicy(
+            IAuthorisationPolicyProvider authorisationPolicyProvider,
             ISelfProvider selfProvider,
             IResourceOwnerProviderCollection resourceOwnerProviderCollection,
             IAuthorisationRestrictionProvider authorisationRestrictionProvider)
         {
-            _jsonAuthorisationPolicyProvider = jsonAuthorisationPolicyProvider;
+            _authorisationPolicyProvider = authorisationPolicyProvider;
             _selfProvider = selfProvider;
             _resourceOwnerProviderCollection = resourceOwnerProviderCollection;
             _authorisationRestrictionProvider = authorisationRestrictionProvider;
@@ -33,11 +32,9 @@ namespace Common.Authorisation.Policies.Json
 
         public Task<bool> HasAccessAsync(IAuthorisationContext authorisationContext)
         {
-            JToken policy = _jsonAuthorisationPolicyProvider.AuthorisationPolicy[authorisationContext.Resource][authorisationContext.Action];
+            ActionPolicy policy = _authorisationPolicyProvider.ResourcePolicies[authorisationContext.Resource][authorisationContext.Action];
 
-            JToken restriction = policy[JTokenTypes.Restriction];
-
-            string restrictionValue = restriction.Value<string>();
+            string restrictionValue = policy.Restriction;
 
             switch (restrictionValue)
             {
@@ -59,11 +56,6 @@ namespace Common.Authorisation.Policies.Json
                 throw new ArgumentNullException(nameof(authorisationContext));
             }
 
-            if (authorisationContext.ResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(authorisationContext.ResourceId));
-            }
-
             if (authorisationContext.ResourceType == null)
             {
                 throw new ArgumentNullException(nameof(authorisationContext.ResourceType));
@@ -78,7 +70,7 @@ namespace Common.Authorisation.Policies.Json
 
             whoAmI.TryGetValue(authorisationContext.ResourceType, out Guid entityId);
 
-            return entityId == authorisationContext.ResourceId;
+            return entityId != Guid.Empty && entityId == authorisationContext.ResourceId;
         }
 
         private async Task<bool> CheckOwnerAsync(IAuthorisationContext authorisationContext)
@@ -86,6 +78,8 @@ namespace Common.Authorisation.Policies.Json
             ValidateAuthorisationContext(authorisationContext);
 
             IResourceOwnerProvider resourceOwnerProvider = _resourceOwnerProviderCollection.Get(authorisationContext.ResourceType);
+
+            if (!authorisationContext.ResourceId.HasValue) return false;
 
             IAggregateOwner aggregateOwner = await resourceOwnerProvider.GetOwnerAsync(authorisationContext.ResourceId.Value);
 

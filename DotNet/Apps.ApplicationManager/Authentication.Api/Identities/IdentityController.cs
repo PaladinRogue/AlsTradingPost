@@ -89,6 +89,7 @@ namespace Authentication.Api.Identities
             }));
         }
 
+        [AllowRestrictedAppAccess]
         [HttpGet("password/change/resourceTemplate", Name = RouteDictionary.ChangePasswordResourceTemplate)]
         public async Task<IActionResult> ChangePasswordResourceTemplate()
         {
@@ -103,6 +104,7 @@ namespace Authentication.Api.Identities
             }));
         }
 
+        [AllowRestrictedAppAccess]
         [HttpPost("password/change", Name = RouteDictionary.ChangePassword)]
         public async Task<IActionResult> ChangePassword(ChangePasswordIdentityTemplate template)
         {
@@ -183,7 +185,7 @@ namespace Authentication.Api.Identities
                 IdentityId = _currentIdentityProvider.Id
             });
 
-            return Ok(_resourceBuilder.Build(new RefreshTokenIdentityResource
+            return Ok(_resourceBuilder.Build(new RefreshTokenResource
             {
                 Token = refreshTokenIdentityAdto.Token
             }));

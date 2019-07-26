@@ -52,6 +52,13 @@ namespace Common.Setup.Infrastructure.Exceptions
                 _logger.LogInformation(ex, "Re-written bad request exception");
                 context.Response.StatusCode = (int)ApplicationExceptionStatusCodeMap.FromApplicationExceptionType(ExceptionType.BadRequest);
             }
+            catch (ServiceUnavailableExcpetion ex)
+            {
+                context.Response.Clear();
+
+                _logger.LogInformation(ex, "Re-written service unavailable exception");
+                context.Response.StatusCode = (int)ApplicationExceptionStatusCodeMap.FromApplicationExceptionType(ExceptionType.ServiceUnavailable);
+            }
             //at this point we want to catch all uncaught exceptions and return a generic response.
             catch (Exception ex)
             {

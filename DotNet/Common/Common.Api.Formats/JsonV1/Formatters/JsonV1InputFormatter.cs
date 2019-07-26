@@ -88,26 +88,26 @@ namespace Common.Api.Formats.JsonV1.Formatters
 
                     string expectedType = modelType.GetCustomAttributes<ResourceTypeAttribute>().FirstOrDefault()?.Type;
 
-                    if (string.IsNullOrWhiteSpace(model.Data.Type) || model.Data.Type != expectedType)
+                    if (!string.IsNullOrWhiteSpace(model.Data.Type) && model.Data.Type.Equals(expectedType, StringComparison.OrdinalIgnoreCase))
                     {
-                        BusinessApplicationException exception = new BusinessApplicationException(ExceptionType.BadRequest, ErrorCodes.ResourceType, "The provided resource type is invalid");
-                        ApplicationError applicationError = new ApplicationError
-                        {
-                            Exception = exception,
-                            HttpStatusCode = HttpStatusCode.BadRequest
-                        };
-                        string response = JsonConvert.SerializeObject(FormattedError.Create(applicationError.FormatError()), _jsonSerializerSettings);
-
-                        context.HttpContext.Response.Clear();
-                        context.HttpContext.Response.StatusCode = (int) HttpStatusCode.BadRequest;
-                        context.HttpContext.Response.ContentType = new MediaTypeHeaderValue("application/json").ToString();
-
-                        await context.HttpContext.Response.WriteAsync(response);
-
-                        throw exception;
+                        return await InputFormatterResult.SuccessAsync(model.Data.Attributes.ToObject(modelType));
                     }
 
-                    return await InputFormatterResult.SuccessAsync(model.Data.Attributes.ToObject(modelType));
+                    BusinessApplicationException exception = new BusinessApplicationException(ExceptionType.BadRequest, ErrorCodes.ResourceType, "The provided resource type is invalid");
+                    ApplicationError applicationError = new ApplicationError
+                    {
+                        Exception = exception,
+                        HttpStatusCode = HttpStatusCode.BadRequest
+                    };
+                    string response = JsonConvert.SerializeObject(FormattedError.Create(applicationError.FormatError()), _jsonSerializerSettings);
+
+                    context.HttpContext.Response.Clear();
+                    context.HttpContext.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+                    context.HttpContext.Response.ContentType = new MediaTypeHeaderValue("application/json").ToString();
+
+                    await context.HttpContext.Response.WriteAsync(response);
+
+                    throw exception;
                 }
             }
         }

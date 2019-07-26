@@ -42,7 +42,7 @@ namespace Authentication.ApplicationServices.Identities
         public Task ConfirmIdentityAsync(ConfirmIdentityAdto confirmIdentityAdto)
         {
             return _securityApplicationService.SecureAsync(() => _identityApplicationService.ConfirmIdentityAsync(confirmIdentityAdto),
-                IdentityAuthorisationContext.Create(confirmIdentityAdto.IdentityId, AuthorisationAction.Update));
+                IdentityAuthorisationContext.Create(confirmIdentityAdto.IdentityId, IdentityAuthorisationAction.Confirm));
         }
 
         public Task<PasswordIdentityAdto> GetPasswordIdentityAsync(GetPasswordIdentityAdto getPasswordIdentityAdto)

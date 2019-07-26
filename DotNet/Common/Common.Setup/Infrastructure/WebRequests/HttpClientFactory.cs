@@ -25,7 +25,7 @@ namespace Common.Setup.Infrastructure.WebRequests
             }
             catch (HttpRequestException e)
             {
-                throw new BadRequestException($"Failed to get a successful response from {requestUri}", e);
+                throw new ServiceUnavailableExcpetion($"Failed to get a successful response from {requestUri}", e);
             }
         }
 
@@ -42,7 +42,7 @@ namespace Common.Setup.Infrastructure.WebRequests
             }
             catch (HttpRequestException e)
             {
-                throw new BadRequestException($"Failed to get a successful response from {requestUri}", e);
+                throw new ServiceUnavailableExcpetion($"Failed to get a successful response from {requestUri}", e);
             }
         }
 
@@ -57,7 +57,7 @@ namespace Common.Setup.Infrastructure.WebRequests
             }
             catch (HttpRequestException e)
             {
-                throw new BadRequestException($"Failed to get a successful response from {httpRequestMessage.RequestUri}", e);
+                throw new ServiceUnavailableExcpetion($"Failed to get a successful response from {httpRequestMessage.RequestUri}", e);
             }
         }
     }

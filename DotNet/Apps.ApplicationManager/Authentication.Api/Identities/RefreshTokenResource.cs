@@ -6,7 +6,8 @@ namespace Authentication.Api.Identities
 {
     [ResourceType(ResourceTypes.RefreshToken)]
     [SelfLink(RouteDictionary.CreateRefreshToken, HttpVerb.Post)]
-    public class RefreshTokenIdentityResource : IResource
+    [Link(LinkDictionary.Authenticate, RouteDictionary.AuthenticateRefreshTokenResourceTemplate, HttpVerb.Get)]
+    public class RefreshTokenResource : IResource
     {
         public string Token { get; set; }
     }

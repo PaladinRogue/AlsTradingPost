@@ -48,17 +48,21 @@ namespace Authentication.Setup.Infrastructure.Authentication.ClientCredential
                     )), _jsonSerializerSettings
                 );
 
-                ValidateAccessTokenResponse validateAccessTokenResponse = await _httpClientFactory.GetJsonAsync<ValidateAccessTokenResponse>(new Uri(authenticationGrantTypeClientCredential.ValidateAccessTokenUrl.Format(
-                    DictionaryBuilder<string, object>.Create()
-                        .Add("inputToken", appAccessTokenResponse.AccessToken)
-                        .Add("accessToken", authenticationGrantTypeClientCredential.AppAccessToken)
-                        .Build()
-                )), _jsonSerializerSettings);
+                ValidateAccessTokenResponse validateAccessTokenResponse = await _httpClientFactory.GetJsonAsync<ValidateAccessTokenResponse>(new Uri(
+                    authenticationGrantTypeClientCredential.ValidateAccessTokenUrl.Format(
+                        DictionaryBuilder<string, object>.Create()
+                            .Add("inputToken", appAccessTokenResponse.AccessToken)
+                            .Add("accessToken", authenticationGrantTypeClientCredential.AppAccessToken)
+                            .Build()
+                    )), _jsonSerializerSettings);
 
-                return validateAccessTokenResponse.Data.IsValid ?
-                    ClientCredentialAuthenticationResult.Succeed(validateAccessTokenResponse.Data.UserId) : ClientCredentialAuthenticationResult.Fail;
+                return validateAccessTokenResponse.Data.IsValid ? ClientCredentialAuthenticationResult.Succeed(validateAccessTokenResponse.Data.UserId) : ClientCredentialAuthenticationResult.Fail;
             }
             catch (BadRequestException)
+            {
+                return ClientCredentialAuthenticationResult.Fail;
+            }
+            catch (ServiceUnavailableExcpetion)
             {
                 return ClientCredentialAuthenticationResult.Fail;
             }

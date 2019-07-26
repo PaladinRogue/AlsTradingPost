@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Authentication.Domain.Identities.Queries;
 using Authentication.Domain.Identities.ValidateToken;
@@ -24,7 +25,9 @@ namespace Authentication.Domain.Identities.Login.RefreshToken
         {
             _validator.ValidateAndThrow(refreshTokenLoginCommandDdto);
 
-            Identity identity = await _getIdentityBySessionQuery.RunAsync(refreshTokenLoginCommandDdto.SessionId);
+            if (!refreshTokenLoginCommandDdto.SessionId.HasValue) throw new ArgumentNullException(nameof(refreshTokenLoginCommandDdto.SessionId));
+
+            Identity identity = await _getIdentityBySessionQuery.RunAsync(refreshTokenLoginCommandDdto.SessionId.Value);
 
             if (identity == null || identity.Session.IsRevoked)
             {

@@ -2,10 +2,10 @@
 {
     public static class AuthorisationAction
     {
-        public const string Create = "create";
-        public const string Get = "get";
-        public const string Search = "search";
-        public const string Update = "update";
-        public const string Delete = "delete";
+        public const string Create = nameof(Create);
+        public const string Get = nameof(Get);
+        public const string Search = nameof(Search);
+        public const string Update = nameof(Update);
+        public const string Delete = nameof(Delete);
     }
 }

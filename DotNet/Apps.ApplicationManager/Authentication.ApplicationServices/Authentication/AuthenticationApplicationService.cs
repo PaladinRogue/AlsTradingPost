@@ -218,15 +218,7 @@ namespace Authentication.ApplicationServices.Authentication
 
             claimsBuilder.WithSubject(identity.Id);
 
-            if (identity.AuthenticationIdentities.Any(i => i is TwoFactorAuthenticationIdentity authenticationIdentity
-                                                           && authenticationIdentity.TwoFactorAuthenticationType == TwoFactorAuthenticationType.ConfirmIdentity))
-            {
-                claimsBuilder.WithRole(JwtClaims.RestrictedAppAccess);
-            }
-            else
-            {
-                claimsBuilder.WithRole(JwtClaims.AppAccess);
-            }
+            claimsBuilder.WithRole(identity.IsConfirmed ? JwtClaims.AppAccess : JwtClaims.RestrictedAppAccess);
 
             ClaimsIdentity claimsIdentity = claimsBuilder.Build();
 

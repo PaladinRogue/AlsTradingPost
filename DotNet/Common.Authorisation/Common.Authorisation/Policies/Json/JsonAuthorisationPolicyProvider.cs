@@ -2,13 +2,13 @@
 
 namespace Common.Authorisation.Policies.Json
 {
-    public class JsonAuthorisationPolicyProvider : IJsonAuthorisationPolicyProvider
+    public class JsonAuthorisationPolicyProvider : IAuthorisationPolicyProvider
     {
-        public JsonAuthorisationPolicyProvider(JObject authorisationPolicy)
+        public JsonAuthorisationPolicyProvider(JToken authorisationPolicy)
         {
-            AuthorisationPolicy = authorisationPolicy;
+            ResourcePolicies = authorisationPolicy.ToObject<ResourcePolicies>();
         }
 
-        public JObject AuthorisationPolicy { get; }
+        public ResourcePolicies ResourcePolicies { get; }
     }
 }

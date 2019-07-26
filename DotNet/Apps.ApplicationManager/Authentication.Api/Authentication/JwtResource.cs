@@ -1,8 +1,14 @@
 using System;
 using Common.Api.Authentication;
+using Common.Api.Links;
+using Common.Api.Resources;
+using Common.Setup.Infrastructure.Constants;
 
 namespace Authentication.Api.Authentication
 {
+    [ResourceType(ResourceTypes.Jwt)]
+    [Link(LinkDictionary.Profile, RouteDictionary.Profile, HttpVerb.Get)]
+    [Link(LinkDictionary.Logout, RouteDictionary.Logout, HttpVerb.Post)]
     public class JwtResource : IJwtResource
     {
         public string AuthToken { get; set; }

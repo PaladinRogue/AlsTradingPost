@@ -45,7 +45,7 @@ namespace Common.Api.Builders.Resource
 
             return new BuiltResource
             {
-                Id = resource is IEntityResource entityResource ? entityResource.Id : (Guid?)null,
+                Id = resource is IEntityResource entityResource ? entityResource.Id != Guid.Empty ? entityResource.Id : (Guid?)null : null,
                 Type = resourceType,
                 Properties = properties.Where(p => !p.GetCustomAttributes<IgnoreAttribute>().Any()).Select(p => new Property
                 {

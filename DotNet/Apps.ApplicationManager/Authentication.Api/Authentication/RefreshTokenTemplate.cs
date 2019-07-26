@@ -13,7 +13,7 @@ namespace Authentication.Api.Authentication
     public class RefreshTokenTemplate : ITemplate
     {
         [Required]
-        public Guid SessionId { get; set; }
+        public Guid? SessionId { get; set; }
 
         [Required]
         [MaxLength(FieldSizes.Extended)]

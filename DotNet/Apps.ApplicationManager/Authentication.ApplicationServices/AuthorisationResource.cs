@@ -2,9 +2,9 @@
 {
     public static class AuthorisationResource
     {
-        public const string Authenticate = "authenticate";
+        public const string Authenticate = nameof(Authenticate);
 
-        public const string AuthenticationService = "authenticationService";
-        public const string Identity = "identity";
+        public const string AuthenticationService = nameof(AuthenticationService);
+        public const string Identity = nameof(Identity);
     }
 }

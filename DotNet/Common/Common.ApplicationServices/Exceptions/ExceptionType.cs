@@ -3,6 +3,7 @@
     public enum ExceptionType
     {
         Unknown,
+        ServiceUnavailable,
         BadRequest,
         Concurrency,
         Unauthorized,

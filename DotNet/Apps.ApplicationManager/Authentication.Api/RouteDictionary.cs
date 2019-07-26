@@ -3,6 +3,8 @@
     public static class RouteDictionary
     {
         public const string Status = nameof(Status);
+        
+        public const string Profile = nameof(Profile);
 
         public const string ForgotPasswordResourceTemplate = nameof(ForgotPasswordResourceTemplate);
         public const string ForgotPassword = nameof(ForgotPassword);
