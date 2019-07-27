@@ -29,7 +29,7 @@ namespace Authentication.Setup.Infrastructure.Authorisation
             {
                 User user = await _userQueryRepository.GetByIdAsync(_currentUserProvider.Id.Value);
 
-                return user == null ? RestrictionResult.Fail : RestrictionResult.Succeed;
+                return user == null || user.Identity.Session.IsRevoked ? RestrictionResult.Fail : RestrictionResult.Succeed;
             }
 
             return RestrictionResult.Fail;

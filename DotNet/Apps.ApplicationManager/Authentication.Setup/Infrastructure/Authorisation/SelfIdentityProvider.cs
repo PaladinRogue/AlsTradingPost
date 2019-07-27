@@ -49,7 +49,7 @@ namespace Authentication.Setup.Infrastructure.Authorisation
 
                 Identity identity = await _identityQueryRepository.GetByIdAsync(_currentIdentityProvider.Id);
 
-                if (identity == null)
+                if (identity == null || identity.Session.IsRevoked)
                 {
                     throw new BusinessApplicationException(ExceptionType.Unauthorized, "Current identity token is not valid");
                 }

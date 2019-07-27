@@ -39,7 +39,7 @@ namespace Authentication.Setup.Infrastructure.Authorisation
 
                     transaction.Commit();
 
-                    return identity != null && identity.IsConfirmed ? RestrictionResult.Fail : RestrictionResult.Succeed;
+                    return identity == null || identity.IsConfirmed || identity.Session.IsRevoked ? RestrictionResult.Fail : RestrictionResult.Succeed;
                 }
 
                 return RestrictionResult.Fail;

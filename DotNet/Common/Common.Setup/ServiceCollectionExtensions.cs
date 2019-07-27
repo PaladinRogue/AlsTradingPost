@@ -53,7 +53,7 @@ namespace Common.Setup
             return services
                 .AddSingleton<IAuthorisationRestrictionProvider, AuthorisationRestrictionProvider>()
                 .AddSingleton<IAuthorisationPolicy, AlwaysDenyAuthorisationPolicy>()
-                .AddSingleton<IAuthorisationManager, AuthorisationManager>()
+                .AddScoped<IAuthorisationManager, AuthorisationManager>()
                 .AddScoped<ISecurityApplicationService, DefaultSecurityApplicationService>()
                 .AddScoped<IClaimsApplicationKernalService, ClaimsApplicationKernalService>();
         }
