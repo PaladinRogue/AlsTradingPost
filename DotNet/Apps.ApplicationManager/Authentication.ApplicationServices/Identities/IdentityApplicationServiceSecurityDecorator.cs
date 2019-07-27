@@ -45,19 +45,13 @@ namespace Authentication.ApplicationServices.Identities
                 IdentityAuthorisationContext.Create(confirmIdentityAdto.IdentityId, IdentityAuthorisationAction.Confirm));
         }
 
-        public Task<PasswordIdentityAdto> GetPasswordIdentityAsync(GetPasswordIdentityAdto getPasswordIdentityAdto)
-        {
-            return _securityApplicationService.SecureAsync(() => _identityApplicationService.GetPasswordIdentityAsync(getPasswordIdentityAdto),
-                IdentityAuthorisationContext.Create(getPasswordIdentityAdto.IdentityId, AuthorisationAction.Get));
-        }
-
-        public Task<PasswordIdentityAdto> ChangePasswordAsync(ChangePasswordAdto changePasswordAdto)
+        public Task<PasswordAdto> ChangePasswordAsync(ChangePasswordAdto changePasswordAdto)
         {
             return _securityApplicationService.SecureAsync(() => _identityApplicationService.ChangePasswordAsync(changePasswordAdto),
                 IdentityAuthorisationContext.Create(changePasswordAdto.IdentityId, AuthorisationAction.Update));
         }
 
-        public Task<PasswordIdentityAdto> RegisterPasswordAsync(RegisterPasswordAdto registerPasswordAdto)
+        public Task<PasswordAdto> RegisterPasswordAsync(RegisterPasswordAdto registerPasswordAdto)
         {
             return _securityApplicationService.SecureAsync(() => _identityApplicationService.RegisterPasswordAsync(registerPasswordAdto),
                 DefaultAuthorisationContext.Create(AuthorisationResource.Identity, AuthorisationAction.Create));

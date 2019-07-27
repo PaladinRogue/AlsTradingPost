@@ -4,11 +4,10 @@ using Common.Api.Links;
 using Common.Api.Resources;
 using Common.Setup.Infrastructure.Constants;
 
-namespace Authentication.Api.Profile
+namespace Authentication.Api.Identities
 {
-    [ResourceType(ResourceTypes.Profile)]
-    [SelfLink(RouteDictionary.Profile, HttpVerb.Get)]
-    [Link(LinkDictionary.ChangePassword, RouteDictionary.ChangePasswordResourceTemplate, HttpVerb.Get, typeof(ChangePasswordAuthorisationContext))]
+    [ResourceType(ResourceTypes.Identity)]
+    [SelfLink(RouteDictionary.GetIdentity, HttpVerb.Get)]
     [Link(LinkDictionary.ConfirmIdentity, RouteDictionary.ConfirmIdentityResourceTemplate, HttpVerb.Get, typeof(ConfirmIdentityAuthorisationContext))]
     [Link(LinkDictionary.RefreshToken, RouteDictionary.CreateRefreshToken, HttpVerb.Post, typeof(CreateRefreshTokenAuthorisationContext))]
     public class IdentityResource : IEntityResource

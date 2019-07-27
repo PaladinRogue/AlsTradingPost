@@ -1,23 +1,13 @@
-using System;
-using Common.Api.Concurrency;
+using Authentication.ApplicationServices.Identities.Authorisation;
 using Common.Api.Links;
-using Common.Api.PropertyTypes;
 using Common.Api.Resources;
 using Common.Setup.Infrastructure.Constants;
 
 namespace Authentication.Api.Identities
 {
-    [ResourceType(ResourceTypes.Password)]
-    [SelfLink(RouteDictionary.GetPasswordIdentity, HttpVerb.Get)]
-    [Link(LinkDictionary.ChangePassword, RouteDictionary.ChangePasswordResourceTemplate, HttpVerb.Get)]
-    public class PasswordIdentityResource : VersionedResource
+    [ResourceType(ResourceTypes.Identity)]
+    [Link(LinkDictionary.ChangePassword, RouteDictionary.ChangePasswordResourceTemplate, HttpVerb.Get, typeof(ChangePasswordAuthorisationContext))]
+    public class PasswordIdentityResource : IdentityResource
     {
-        [Ignore]
-        public Guid IdentityId { get; set; }
-
-        public string Identifier { get; set; }
-
-        [Password]
-        public string Password { get; set; }
     }
 }

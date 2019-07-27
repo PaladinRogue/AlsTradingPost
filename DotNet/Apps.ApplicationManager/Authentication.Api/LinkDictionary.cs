@@ -2,8 +2,8 @@ namespace Authentication.Api
 {
     public static class LinkDictionary
     {
-        public const string Profile = nameof(Profile);
-
+        public const string Identity = nameof(Identity);
+        public const string Register = nameof(Register);
         public const string ResendConfirmIdentity = nameof(ResendConfirmIdentity);
         public const string ConfirmIdentity = nameof(ConfirmIdentity);
         public const string ChangePassword = nameof(ChangePassword);

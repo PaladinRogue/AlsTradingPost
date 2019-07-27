@@ -3,14 +3,12 @@
     public static class RouteDictionary
     {
         public const string Status = nameof(Status);
-        
-        public const string Profile = nameof(Profile);
 
+        public const string GetIdentity = nameof(GetIdentity);
         public const string ForgotPasswordResourceTemplate = nameof(ForgotPasswordResourceTemplate);
         public const string ForgotPassword = nameof(ForgotPassword);
         public const string ResetPasswordResourceTemplate = nameof(ResetPasswordResourceTemplate);
         public const string ResetPassword = nameof(ResetPassword);
-        public const string GetPasswordIdentity = nameof(GetPasswordIdentity);
         public const string ChangePasswordResourceTemplate = nameof(ChangePasswordResourceTemplate);
         public const string ChangePassword = nameof(ChangePassword);
         public const string RegisterPasswordResourceTemplate = nameof(RegisterPasswordResourceTemplate);

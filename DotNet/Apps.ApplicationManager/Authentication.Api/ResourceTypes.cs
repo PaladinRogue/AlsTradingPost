@@ -4,8 +4,7 @@ namespace Authentication.Api
     {
         public const string Jwt = nameof(Jwt);
 
-        public const string Profile = nameof(Profile);
-
+        public const string Identity = nameof(Identity);
         public const string ForgotPassword = nameof(ForgotPassword);
         public const string ResetPassword = nameof(ResetPassword);
         public const string Password = nameof(Password);

@@ -43,6 +43,8 @@ namespace Authentication.Domain.Identities
         public bool IsConfirmed => !AuthenticationIdentities.Any(i => i is TwoFactorAuthenticationIdentity authenticationIdentity
                                                                      && authenticationIdentity.TwoFactorAuthenticationType == TwoFactorAuthenticationType.ConfirmIdentity);
 
+        public bool HasPassword => AuthenticationIdentities.Any(i => i is PasswordIdentity);
+
         internal async Task ResetPassword(ResetPasswordDdto resetPasswordDdto)
         {
             if (!(AuthenticationIdentities.OfType<PasswordIdentity>().SingleOrDefault() is PasswordIdentity passwordIdentity))

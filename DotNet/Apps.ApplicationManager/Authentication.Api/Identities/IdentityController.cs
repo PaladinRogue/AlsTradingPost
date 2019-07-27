@@ -30,6 +30,33 @@ namespace Authentication.Api.Identities
             _currentIdentityProvider = currentIdentityProvider;
         }
 
+
+        [AllowAnonymous]
+        [HttpGet("", Name = RouteDictionary.GetIdentity)]
+        public async Task<IActionResult> Get()
+        {
+            IdentityAdto identityAdto = await _identityApplicationService.GetAsync(new GetIdentityAdto
+            {
+                Id = _currentIdentityProvider.Id
+            });
+
+            switch (identityAdto)
+            {
+                case PasswordIdentityAdto passwordIdentityAdto:
+                    return Ok(_resourceBuilder.Build(new PasswordIdentityResource
+                    {
+                        Id = passwordIdentityAdto.Id
+                    }));
+                case IdentityAdto defaultIdentityAdto:
+                    return Ok(_resourceBuilder.Build(new IdentityResource
+                    {
+                        Id = defaultIdentityAdto.Id
+                    }));
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(identityAdto));
+            }
+        }
+
         [AllowAnonymous]
         [HttpGet("password/reset/resourceTemplate", Name = RouteDictionary.ResetPasswordResourceTemplate)]
         public IActionResult GetResetPasswordResourceTemplate([FromQuery]string token)
@@ -73,22 +100,6 @@ namespace Authentication.Api.Identities
             return Accepted(_resourceBuilder.Build(new ForgotPasswordResource()));
         }
 
-        [HttpGet("password", Name = RouteDictionary.GetPasswordIdentity)]
-        public async Task<IActionResult> GetPasswordIdentity()
-        {
-            PasswordIdentityAdto passwordIdentityAdto = await _identityApplicationService.GetPasswordIdentityAsync(new GetPasswordIdentityAdto
-            {
-                IdentityId = _currentIdentityProvider.Id
-            });
-
-            return Ok(_resourceBuilder.Build(new PasswordIdentityResource
-            {
-                Identifier = passwordIdentityAdto.Identifier,
-                Password = passwordIdentityAdto.Password,
-                Version = passwordIdentityAdto.Version
-            }));
-        }
-
         [AllowRestrictedAppAccess]
         [HttpGet("password/change/resourceTemplate", Name = RouteDictionary.ChangePasswordResourceTemplate)]
         public async Task<IActionResult> ChangePasswordResourceTemplate()
@@ -110,7 +121,7 @@ namespace Authentication.Api.Identities
         {
             Guid identityId = _currentIdentityProvider.Id;
 
-            PasswordIdentityAdto passwordIdentityAdto = await _identityApplicationService.ChangePasswordAsync(new ChangePasswordAdto
+            PasswordAdto passwordAdto = await _identityApplicationService.ChangePasswordAsync(new ChangePasswordAdto
             {
                 IdentityId = identityId,
                 Password = template.Password,
@@ -118,11 +129,9 @@ namespace Authentication.Api.Identities
                 Version = template.Version
             });
 
-            return CreatedAtRoute(RouteDictionary.GetPasswordIdentity, new { identityId }, _resourceBuilder.Build(new PasswordIdentityResource
+            return Accepted(_resourceBuilder.Build(new PasswordResource
             {
-                Identifier = passwordIdentityAdto.Identifier,
-                Password = passwordIdentityAdto.Password,
-                Version = passwordIdentityAdto.Version
+                Id = passwordAdto.IdentityId
             }));
         }
 
@@ -160,7 +169,7 @@ namespace Authentication.Api.Identities
         [HttpPost("password", Name = RouteDictionary.RegisterPassword)]
         public async Task<IActionResult> RegisterPassword(RegisterPasswordIdentityTemplate template)
         {
-            PasswordIdentityAdto passwordIdentityAdto = await _identityApplicationService.RegisterPasswordAsync(new RegisterPasswordAdto
+            PasswordAdto passwordAdto = await _identityApplicationService.RegisterPasswordAsync(new RegisterPasswordAdto
             {
                 Identifier = template.Identifier,
                 Password = template.Password,
@@ -168,12 +177,9 @@ namespace Authentication.Api.Identities
                 EmailAddress = template.EmailAddress
             });
 
-            return CreatedAtRoute(RouteDictionary.GetPasswordIdentity, new { passwordIdentityAdto.IdentityId }, _resourceBuilder.Build(new PasswordIdentityResource
+            return Accepted(_resourceBuilder.Build(new PasswordResource
             {
-                IdentityId = passwordIdentityAdto.IdentityId,
-                Identifier = passwordIdentityAdto.Identifier,
-                Password = passwordIdentityAdto.Password,
-                Version = passwordIdentityAdto.Version
+                Id = passwordAdto.IdentityId
             }));
         }
 

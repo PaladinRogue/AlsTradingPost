@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Threading.Tasks;
 using Authentication.ApplicationServices.Identities.Models;
 using Authentication.Domain.AuthenticationServices;
@@ -93,6 +92,15 @@ namespace Authentication.ApplicationServices.Identities
 
                 transaction.Commit();
 
+                if (identity.HasPassword)
+                {
+                    return new PasswordIdentityAdto
+                    {
+                        Id = identity.Id,
+                        Version = ConcurrencyVersionFactory.CreateFromEntity(identity)
+                    };
+                }
+
                 return new IdentityAdto
                 {
                     Id = identity.Id,
@@ -114,7 +122,7 @@ namespace Authentication.ApplicationServices.Identities
                         ConfirmPassword = resetPasswordAdto.ConfirmPassword
                     });
 
-                   await _identityCommandRepository.UpdateAsync(identity);
+                    await _identityCommandRepository.UpdateAsync(identity);
 
                     transaction.Commit();
                 }
@@ -200,36 +208,7 @@ namespace Authentication.ApplicationServices.Identities
             }
         }
 
-        public async Task<PasswordIdentityAdto> GetPasswordIdentityAsync(GetPasswordIdentityAdto getPasswordIdentityAdto)
-        {
-            using (ITransaction transaction = _transactionManager.Create())
-            {
-                Identity identity = await _identityQueryRepository.GetByIdAsync(getPasswordIdentityAdto.IdentityId);
-
-                if (identity == null)
-                {
-                    throw new BusinessApplicationException(ExceptionType.NotFound, "Identity does not exist");
-                }
-
-                PasswordIdentity passwordIdentity = identity.AuthenticationIdentities.OfType<PasswordIdentity>().SingleOrDefault();
-
-                if (passwordIdentity == null)
-                {
-                    throw new BusinessApplicationException(ExceptionType.NotFound, "Password not set for identity");
-                }
-
-                transaction.Commit();
-
-                return new PasswordIdentityAdto
-                {
-                    Identifier = passwordIdentity.Identifier,
-                    Password = passwordIdentity.Password,
-                    Version = ConcurrencyVersionFactory.CreateFromEntity(identity)
-                };
-            }
-        }
-
-        public async Task<PasswordIdentityAdto> ChangePasswordAsync(ChangePasswordAdto changePasswordAdto)
+        public async Task<PasswordAdto> ChangePasswordAsync(ChangePasswordAdto changePasswordAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
@@ -252,10 +231,10 @@ namespace Authentication.ApplicationServices.Identities
 
                     transaction.Commit();
 
-                    return await GetPasswordIdentityAsync(new GetPasswordIdentityAdto
+                    return new PasswordAdto
                     {
                         IdentityId = identity.Id
-                    });
+                    };
                 }
                 catch (PasswordNotSetDomainException e)
                 {
@@ -276,7 +255,7 @@ namespace Authentication.ApplicationServices.Identities
             }
         }
 
-        public async Task<PasswordIdentityAdto> RegisterPasswordAsync(RegisterPasswordAdto registerPasswordAdto)
+        public async Task<PasswordAdto> RegisterPasswordAsync(RegisterPasswordAdto registerPasswordAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
@@ -284,7 +263,7 @@ namespace Authentication.ApplicationServices.Identities
                 {
                     Identity identity = await _createIdentityCommand.ExecuteAsync();
 
-                    PasswordIdentity passwordIdentity = await _registerPasswordCommand.ExecuteAsync(identity, await GetAuthenticationGrantTypePasswordAsync(), new RegisterPasswordCommandDdto
+                    await _registerPasswordCommand.ExecuteAsync(identity, await GetAuthenticationGrantTypePasswordAsync(), new RegisterPasswordCommandDdto
                     {
                         Identifier = registerPasswordAdto.Identifier,
                         Password = registerPasswordAdto.Password,
@@ -296,12 +275,9 @@ namespace Authentication.ApplicationServices.Identities
 
                     transaction.Commit();
 
-                    return new PasswordIdentityAdto
+                    return new PasswordAdto
                     {
-                        IdentityId = identity.Id,
-                        Identifier = passwordIdentity.Identifier,
-                        Password = passwordIdentity.Password,
-                        Version = ConcurrencyVersionFactory.CreateFromEntity(identity)
+                        IdentityId = identity.Id
                     };
                 }
                 catch (DomainValidationRuleException e)
@@ -325,7 +301,7 @@ namespace Authentication.ApplicationServices.Identities
                     }
 
                     AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken = (AuthenticationGrantTypeRefreshToken) await
-                         _authenticationServiceCommandRepository.GetSingleAsync(a => a is AuthenticationGrantTypeRefreshToken);
+                        _authenticationServiceCommandRepository.GetSingleAsync(a => a is AuthenticationGrantTypeRefreshToken);
 
                     if (authenticationGrantTypeRefreshToken == null)
                     {

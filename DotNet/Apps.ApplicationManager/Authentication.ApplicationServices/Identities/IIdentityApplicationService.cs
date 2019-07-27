@@ -13,11 +13,9 @@ namespace Authentication.ApplicationServices.Identities
 
         Task ConfirmIdentityAsync(ConfirmIdentityAdto confirmIdentityAdto);
 
-        Task<PasswordIdentityAdto> GetPasswordIdentityAsync(GetPasswordIdentityAdto getPasswordIdentityAdto);
+        Task<PasswordAdto> ChangePasswordAsync(ChangePasswordAdto changePasswordAdto);
 
-        Task<PasswordIdentityAdto> ChangePasswordAsync(ChangePasswordAdto changePasswordAdto);
-
-        Task<PasswordIdentityAdto> RegisterPasswordAsync(RegisterPasswordAdto registerPasswordAdto);
+        Task<PasswordAdto> RegisterPasswordAsync(RegisterPasswordAdto registerPasswordAdto);
 
         Task<RefreshTokenIdentityAdto> CreateRefreshTokenAsync(CreateRefreshTokenAdto createRefreshTokenAdto);
 
