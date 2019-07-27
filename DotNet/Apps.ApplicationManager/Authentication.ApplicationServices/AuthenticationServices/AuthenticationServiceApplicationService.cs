@@ -155,6 +155,33 @@ namespace Authentication.ApplicationServices.AuthenticationServices
             }
         }
 
+        public async Task DeleteClientCredentialAsync(DeleteClientCredentialAdto deleteClientCredentialAdto)
+        {
+            using (ITransaction transaction = _transactionManager.Create())
+            {
+                try
+                {
+                    if (!(await _commandRepository.GetWithConcurrencyCheckAsync(deleteClientCredentialAdto.Id, deleteClientCredentialAdto.Version) is AuthenticationGrantTypeClientCredential
+                        authenticationGrantTypeClientCredential))
+                    {
+                        throw new BusinessApplicationException(ExceptionType.NotFound, "Authentication service not found");
+                    }
+
+                    await _commandRepository.DeleteAsync(authenticationGrantTypeClientCredential.Id);
+
+                    transaction.Commit();
+                }
+                catch (ConcurrencyDomainException e)
+                {
+                    throw new BusinessApplicationException(ExceptionType.Concurrency, e);
+                }
+                catch (NotFoundDomainException e)
+                {
+                    throw new BusinessApplicationException(ExceptionType.NotFound, e);
+                }
+            }
+        }
+
         private static string BuildClientAccessUrl(AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential)
         {
             return authenticationGrantTypeClientCredential.ClientGrantAccessTokenUrl.Format(

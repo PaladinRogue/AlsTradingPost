@@ -5,6 +5,7 @@ using Common.Authorisation.Manager;
 using Common.Authorisation.Policies;
 using Common.Authorisation.Policies.Deny;
 using Common.Authorisation.Restrictions;
+using Common.Setup.Infrastructure.Concurrency;
 using Common.Setup.Infrastructure.Routing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -43,6 +44,7 @@ namespace Common.Setup
         public static IServiceCollection RegisterCommonProviders(this IServiceCollection services)
         {
             return services
+                .AddSingleton<IConcurrencyVersionProvider, ConcurrencyVersionProvider>()
                 .AddSingleton<IResourceOwnerProviderCollection, ResourceOwnerProviderCollection>()
                 .AddSingleton<IApiDescriptionGroupCollectionProvider, ApiDescriptionGroupCollectionProvider>()
                 .AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

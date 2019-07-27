@@ -7,7 +7,7 @@ using Common.Setup.Infrastructure.Constants;
 namespace Authentication.Api.AuthenticationService
 {
     [SelfLink(RouteDictionary.GetAuthenticationServices, HttpVerb.Get)]
-    [CreateLink(RouteDictionary.CreateAuthenticationService, HttpVerb.Post, typeof(CreateAuthenticationServiceAuthorisationContext))]
+    [CreateLink(RouteDictionary.AuthenticationServiceResourceTemplate, HttpVerb.Get, typeof(CreateAuthenticationServiceAuthorisationContext))]
     public class AuthenticationServicesResource : ICollectionResource<AuthenticationServiceSummaryResource>
     {
         public IList<AuthenticationServiceSummaryResource> Results { get; set; }

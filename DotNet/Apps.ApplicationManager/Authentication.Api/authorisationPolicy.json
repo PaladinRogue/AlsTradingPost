@@ -19,17 +19,20 @@
     }
   },
   "AuthenticationService": {
+    "Search": {
+      "Restriction": "Everyone"
+    },
+    "Get": {
+      "Restriction": "User"
+    },
     "Create": {
       "Restriction": "User"
     },
     "Update": {
       "Restriction": "User"
     },
-    "Get": {
+    "Delete": {
       "Restriction": "User"
-    },
-    "Search": {
-      "Restriction": "Everyone"
     }
   }
 }

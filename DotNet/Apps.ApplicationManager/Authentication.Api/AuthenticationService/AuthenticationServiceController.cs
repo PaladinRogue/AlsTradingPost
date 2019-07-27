@@ -6,6 +6,7 @@ using Authentication.Setup.Infrastructure.Authorisation;
 using Authentication.Setup.Infrastructure.Routing;
 using AutoMapper;
 using Common.Api.Builders.Resource;
+using Common.Setup.Infrastructure.Concurrency;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,14 +22,18 @@ namespace Authentication.Api.AuthenticationService
 
         private readonly IMapper _mapper;
 
+        private readonly IConcurrencyVersionProvider _concurrencyVersionProvider;
+
         public AuthenticationServiceController(
             IResourceBuilder resourceBuilder,
             IAuthenticationServiceApplicationService authenticationServiceApplicationService,
-            IMapper mapper)
+            IMapper mapper,
+            IConcurrencyVersionProvider concurrencyVersionProvider)
         {
             _resourceBuilder = resourceBuilder;
             _authenticationServiceApplicationService = authenticationServiceApplicationService;
             _mapper = mapper;
+            _concurrencyVersionProvider = concurrencyVersionProvider;
         }
 
         [HttpGet("resourceTemplate", Name = RouteDictionary.AuthenticationServiceResourceTemplate)]
@@ -60,7 +65,8 @@ namespace Authentication.Api.AuthenticationService
         }
 
         [HttpPut("{id}", Name = RouteDictionary.ChangeAuthenticationService)]
-        public async Task<IActionResult> Put(Guid id,
+        public async Task<IActionResult> Put(
+            Guid id,
             AuthenticationServiceResource resource)
         {
             ChangeClientCredentialAdto changeClientCredentialAdto = new ChangeClientCredentialAdto
@@ -80,6 +86,21 @@ namespace Authentication.Api.AuthenticationService
                 _authenticationServiceApplicationService.ChangeClientCredentialAsync(changeClientCredentialAdto);
 
             return Ok(_resourceBuilder.Build(_mapper.Map<ClientCredentialAdto, AuthenticationServiceResource>(clientCredentialAdto)));
+        }
+
+        [HttpDelete("{id}", Name = RouteDictionary.DeleteAuthenticationService)]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            DeleteClientCredentialAdto deleteClientCredentialAdto = new DeleteClientCredentialAdto
+            {
+                Id = id,
+                Version = _concurrencyVersionProvider.Get()
+            };
+
+            await
+                _authenticationServiceApplicationService.DeleteClientCredentialAsync(deleteClientCredentialAdto);
+
+            return NoContent();
         }
     }
 }

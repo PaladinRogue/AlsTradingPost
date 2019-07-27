@@ -31,5 +31,6 @@
         public const string CreateAuthenticationService = nameof(CreateAuthenticationService);
         public const string GetAuthenticationService = nameof(GetAuthenticationService);
         public const string ChangeAuthenticationService = nameof(ChangeAuthenticationService);
+        public const string DeleteAuthenticationService = nameof(DeleteAuthenticationService);
     }
 }

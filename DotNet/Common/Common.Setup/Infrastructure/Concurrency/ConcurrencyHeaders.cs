@@ -1,4 +1,4 @@
-﻿namespace Common.Api.Concurrency
+﻿namespace Common.Setup.Infrastructure.Concurrency
 {
     public class ConcurrencyHeaders
     {

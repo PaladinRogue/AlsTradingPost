@@ -13,5 +13,7 @@ namespace Authentication.ApplicationServices.AuthenticationServices
         Task<ClientCredentialAdto> GetClientCredentialAsync(GetClientCredentialAdto getClientCredentialAdto);
 
         Task<ClientCredentialAdto> ChangeClientCredentialAsync(ChangeClientCredentialAdto changeClientCredentialAdto);
+
+        Task DeleteClientCredentialAsync(DeleteClientCredentialAdto deleteClientCredentialAdto);
     }
 }

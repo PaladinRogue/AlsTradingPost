@@ -11,7 +11,7 @@ using Common.Setup.Infrastructure.Constants;
 namespace Authentication.Api.AuthenticationService
 {
     [ResourceType(ResourceTypes.AuthenticationService)]
-    [SelfLink(RouteDictionary.GetAuthenticationService, HttpVerb.Get | HttpVerb.Put)]
+    [SelfLink(RouteDictionary.GetAuthenticationService, HttpVerb.Get | HttpVerb.Put | HttpVerb.Delete)]
     public class AuthenticationServiceResource : VersionedResource, IEntityResource
     {
         [Hidden]

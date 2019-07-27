@@ -9,7 +9,6 @@ namespace Authentication.Api.Identities
     [Link(LinkDictionary.Authenticate, RouteDictionary.AuthenticatePasswordResourceTemplate, HttpVerb.Get)]
     public class RegisterPasswordResource : IEntityResource
     {
-        [Ignore]
         public Guid Id { get; set; }
     }
 }

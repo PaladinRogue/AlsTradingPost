@@ -2,10 +2,9 @@
 using System.Linq;
 using Common.Api.Builders.Resource;
 using Common.Api.Concurrency.Interfaces;
-using Common.ApplicationServices.Concurrency;
 using Common.Domain.Concurrency.Interfaces;
+using Common.Setup.Infrastructure.Concurrency;
 using Common.Setup.Infrastructure.Constants;
-using Common.Setup.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
@@ -18,19 +17,22 @@ namespace Common.Api.Concurrency
 
         private const HttpVerb OnActionExecutedVerbs = HttpVerb.Get | HttpVerb.Put | HttpVerb.Post;
 
+        private readonly IConcurrencyVersionProvider _concurrencyVersionProvider;
+
+        public ConcurrencyActionFilter(IConcurrencyVersionProvider concurrencyVersionProvider)
+        {
+            _concurrencyVersionProvider = concurrencyVersionProvider;
+        }
+
         public void OnActionExecuting(ActionExecutingContext context)
         {
             if (OnActionExecutingVerbs.HasFlag(HttpVerbMapper.GetVerb(context.HttpContext.Request.Method)))
             {
                 IVersioned<IConcurrencyVersion> resource = context.ActionArguments.Values.OfType<IVersioned<IConcurrencyVersion>>().SingleOrDefault();
 
-                string concurrencyValue = context.HttpContext.Request.Headers[ConcurrencyHeaders.IfMatch];
-
-                if (concurrencyValue == null && resource != null) throw new PreConditionFailedException();
-
                 if (resource != null)
                 {
-                    resource.Version = ConcurrencyVersionFactory.CreateFromBase64String(concurrencyValue);
+                    resource.Version = _concurrencyVersionProvider.Get();
                 }
             }
         }

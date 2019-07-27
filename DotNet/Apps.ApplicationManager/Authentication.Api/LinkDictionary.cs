@@ -13,5 +13,7 @@ namespace Authentication.Api
 
         public const string Authenticate = nameof(Authenticate);
         public const string Logout = nameof(Logout);
+
+        public const string AuthenticationServices = nameof(AuthenticationServices);
     }
 }

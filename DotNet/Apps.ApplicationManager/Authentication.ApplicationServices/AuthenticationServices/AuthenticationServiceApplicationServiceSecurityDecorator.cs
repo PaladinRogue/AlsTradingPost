@@ -45,5 +45,11 @@ namespace Authentication.ApplicationServices.AuthenticationServices
             return _securityApplicationService.SecureAsync(() => _authenticationServiceApplicationService.ChangeClientCredentialAsync(changeClientCredentialAdto),
                 GetAuthenticationServiceAuthorisationContext.Create(changeClientCredentialAdto.Id));
         }
+
+        public Task DeleteClientCredentialAsync(DeleteClientCredentialAdto deleteClientCredentialAdto)
+        {
+            return _securityApplicationService.SecureAsync(() => _authenticationServiceApplicationService.DeleteClientCredentialAsync(deleteClientCredentialAdto),
+                DefaultAuthorisationContext.Create(AuthorisationResource.AuthenticationService, AuthorisationAction.Delete));
+        }
     }
 }
