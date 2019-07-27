@@ -74,7 +74,7 @@ namespace Gateway.Setup
         public static IServiceCollection RegisterProviders(this IServiceCollection services)
         {
             return services
-                .AddSingleton<IRouteProvider<bool>, GatewayRouteProvider>();
+                .AddScoped<IRouteProvider<bool>, GatewayRouteProvider>();
         }
     }
 }

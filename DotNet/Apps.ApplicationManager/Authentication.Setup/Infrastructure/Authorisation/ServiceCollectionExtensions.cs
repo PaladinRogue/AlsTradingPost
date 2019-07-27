@@ -43,8 +43,8 @@ namespace Authentication.Setup.Infrastructure.Authorisation
 
             services.AddSingleton<ICurrentIdentityProvider, CurrentIdentityProvider>();
             services.AddScopedCache<IAuthorisationPolicy, AuthorisationPolicy, AuthorisationPolicyCacheDecorator, IdentityCacheService>();
-            services.AddSingleton<ISelfProvider, SelfIdentityProvider>();
-            services.AddSingleton<IAuthorisationRestrictionProvider, AuthorisationRestrictionProvider>();
+            services.AddScoped<ISelfProvider, SelfIdentityProvider>();
+            services.AddScoped<IAuthorisationRestrictionProvider, AuthorisationRestrictionProvider>();
             services.AddSingleton<IAuthorisationPolicyProvider>(s => new JsonAuthorisationPolicyProvider(
                 JObject.Parse(File.ReadAllText("authorisationPolicy.json"))
             ));

@@ -5,9 +5,9 @@ using Common.Setup.Infrastructure.Constants;
 
 namespace Authentication.Api.Identities
 {
-    [ResourceType(ResourceTypes.Password)]
-    [Link(LinkDictionary.ChangePassword, RouteDictionary.ChangePasswordResourceTemplate, HttpVerb.Get)]
-    public class PasswordResource : IEntityResource
+    [ResourceType(ResourceTypes.RegisterPassword)]
+    [Link(LinkDictionary.Authenticate, RouteDictionary.AuthenticatePasswordResourceTemplate, HttpVerb.Get)]
+    public class RegisterPasswordResource : IEntityResource
     {
         [Ignore]
         public Guid Id { get; set; }

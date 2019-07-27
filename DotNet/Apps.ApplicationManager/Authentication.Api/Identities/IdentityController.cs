@@ -129,7 +129,7 @@ namespace Authentication.Api.Identities
                 Version = template.Version
             });
 
-            return Accepted(_resourceBuilder.Build(new PasswordResource
+            return Accepted(_resourceBuilder.Build(new ChangePasswordResource
             {
                 Id = passwordAdto.IdentityId
             }));
@@ -177,7 +177,7 @@ namespace Authentication.Api.Identities
                 EmailAddress = template.EmailAddress
             });
 
-            return Accepted(_resourceBuilder.Build(new PasswordResource
+            return Accepted(_resourceBuilder.Build(new RegisterPasswordResource
             {
                 Id = passwordAdto.IdentityId
             }));

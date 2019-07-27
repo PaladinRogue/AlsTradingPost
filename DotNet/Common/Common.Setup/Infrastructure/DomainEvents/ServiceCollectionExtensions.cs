@@ -9,7 +9,8 @@ namespace Common.Setup.Infrastructure.DomainEvents
     {
         public static IServiceCollection UseDomainEvents(this IServiceCollection services)
         {
-            return services.AddSingleton<IDomainEventBus, DomainEventBus>()
+            return services
+                .AddSingleton<IDomainEventBus, DomainEventBus>()
                 .AddSingleton<IDomainEventHandlerResolver, DomainEventHandlerResolver>()
                 .AddSingleton<IDomainEventDispatcher, DomainEventDispatcher>();
         }

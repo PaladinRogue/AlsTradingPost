@@ -14,8 +14,11 @@ namespace Common.Api.Links
     public class DefaultLinkFactory : ILinkFactory
     {
         private readonly IRouteProvider<bool> _routeProvider;
+
         private readonly IAuthorisationPolicy _authorisationPolicy;
+
         private readonly IPagingLinkBuilder _pagingLinkBuilder;
+
         private readonly ISortingLinkBuilder _sortingLinkBuilder;
 
         public DefaultLinkFactory(

@@ -8,11 +8,12 @@ namespace Common.Api.Builders
     {
         public static IServiceCollection UseDefaultResourceBuilders(this IServiceCollection services)
         {
-            return services.AddSingleton<ILinkBuilder, DefaultLinkBuilder>()
-                .AddSingleton<IResourceBuilder, DefaultResourceBuilder>()
-                .AddSingleton<IPagingLinkBuilder, DefaultPagingLinkBuilder>()
-                .AddSingleton<ISortingLinkBuilder, DefaultSortingLinkBuilder>()
-                .AddSingleton<ILinkFactory, DefaultLinkFactory>();
+            return services
+                .AddScoped<ILinkBuilder, DefaultLinkBuilder>()
+                .AddScoped<IResourceBuilder, DefaultResourceBuilder>()
+                .AddScoped<IPagingLinkBuilder, DefaultPagingLinkBuilder>()
+                .AddScoped<ISortingLinkBuilder, DefaultSortingLinkBuilder>()
+                .AddScoped<ILinkFactory, DefaultLinkFactory>();
         }
     }
 }

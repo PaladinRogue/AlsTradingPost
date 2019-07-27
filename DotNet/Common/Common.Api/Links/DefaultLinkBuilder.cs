@@ -13,7 +13,9 @@ namespace Common.Api.Links
     public class DefaultLinkBuilder : ILinkBuilder
     {
         private readonly ILinkFactory _linkFactory;
+
         private readonly IPagingLinkBuilder _pagingLinkBuilder;
+
         private readonly IServiceProvider _services;
 
         public DefaultLinkBuilder(

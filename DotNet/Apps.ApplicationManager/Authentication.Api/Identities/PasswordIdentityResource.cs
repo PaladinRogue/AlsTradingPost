@@ -6,6 +6,7 @@ using Common.Setup.Infrastructure.Constants;
 namespace Authentication.Api.Identities
 {
     [ResourceType(ResourceTypes.Identity)]
+    [Link(LinkDictionary.ConfirmIdentity, RouteDictionary.ConfirmIdentityResourceTemplate, HttpVerb.Get, typeof(ConfirmIdentityAuthorisationContext))]
     [Link(LinkDictionary.ChangePassword, RouteDictionary.ChangePasswordResourceTemplate, HttpVerb.Get, typeof(ChangePasswordAuthorisationContext))]
     public class PasswordIdentityResource : IdentityResource
     {

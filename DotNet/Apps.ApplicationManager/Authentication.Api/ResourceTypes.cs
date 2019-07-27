@@ -8,6 +8,7 @@ namespace Authentication.Api
         public const string ForgotPassword = nameof(ForgotPassword);
         public const string ResetPassword = nameof(ResetPassword);
         public const string Password = nameof(Password);
+        public const string RegisterPassword = nameof(RegisterPassword);
         public const string RefreshToken = nameof(RefreshToken);
         public const string AuthenticatePassword = nameof(AuthenticatePassword);
         public const string AuthenticateRefreshToken = nameof(AuthenticateRefreshToken);

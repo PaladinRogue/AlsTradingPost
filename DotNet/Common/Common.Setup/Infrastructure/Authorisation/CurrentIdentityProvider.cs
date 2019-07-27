@@ -10,6 +10,7 @@ namespace Common.Setup.Infrastructure.Authorisation
     public class CurrentIdentityProvider : ICurrentIdentityProvider
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
+
         private readonly JwtIssuerOptions _jwtIssuerOptions;
 
         public CurrentIdentityProvider(IHttpContextAccessor httpContextAccessor, IOptions<JwtIssuerOptions> jwtIssuerOptionsAccessor)

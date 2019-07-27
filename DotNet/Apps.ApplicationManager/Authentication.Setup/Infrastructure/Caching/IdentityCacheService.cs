@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Common.ApplicationServices.Caching;
 using Common.Setup.Infrastructure.Authorisation;
 using LazyCache;
+using Microsoft.Extensions.Caching.Memory;
+using NodaTime;
 
 namespace Authentication.Setup.Infrastructure.Caching
 {
@@ -12,19 +14,27 @@ namespace Authentication.Setup.Infrastructure.Caching
 
         private readonly ICurrentIdentityProvider _currentIdentityProvider;
 
+        private readonly MemoryCacheEntryOptions _memoryCacheEntryOptions;
+
         public IdentityCacheService(
             IAppCache appCache,
-            ICurrentIdentityProvider currentIdentityProvider)
+            ICurrentIdentityProvider currentIdentityProvider,
+            IClock clock)
         {
             _appCache = appCache;
             _currentIdentityProvider = currentIdentityProvider;
+
+            _memoryCacheEntryOptions = new MemoryCacheEntryOptions
+            {
+                AbsoluteExpiration = clock.GetCurrentInstant().Plus(Duration.FromSeconds(10)).ToDateTimeOffset()
+            };
         }
 
         public Task AddAsync<TKey, TValue>(
             TKey cacheKey,
             TValue item) where TKey : CacheKey<TValue>
         {
-            _appCache.Add(CreateKey<TKey, TValue>(cacheKey), item);
+            _appCache.Add(CreateKey<TKey, TValue>(cacheKey), item, _memoryCacheEntryOptions);
 
             return Task.CompletedTask;
         }
@@ -38,7 +48,7 @@ namespace Authentication.Setup.Infrastructure.Caching
             TKey cacheKey,
             Func<Task<TValue>> addItemFactory) where TKey : CacheKey<TValue>
         {
-            return _appCache.GetOrAddAsync(CreateKey<TKey, TValue>(cacheKey), addItemFactory);
+            return _appCache.GetOrAddAsync(CreateKey<TKey, TValue>(cacheKey), addItemFactory, _memoryCacheEntryOptions);
         }
 
         public Task RemoveAsync<TKey, TValue>(TKey cacheKey) where TKey : CacheKey<TValue>

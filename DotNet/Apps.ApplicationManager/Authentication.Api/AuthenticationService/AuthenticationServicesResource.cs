@@ -8,7 +8,6 @@ namespace Authentication.Api.AuthenticationService
 {
     [SelfLink(RouteDictionary.GetAuthenticationServices, HttpVerb.Get)]
     [CreateLink(RouteDictionary.CreateAuthenticationService, HttpVerb.Post, typeof(CreateAuthenticationServiceAuthorisationContext))]
-    [Link(LinkDictionary.ForgotPassword, RouteDictionary.ForgotPasswordResourceTemplate, HttpVerb.Get)]
     public class AuthenticationServicesResource : ICollectionResource<AuthenticationServiceSummaryResource>
     {
         public IList<AuthenticationServiceSummaryResource> Results { get; set; }
