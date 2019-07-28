@@ -30,9 +30,14 @@ namespace Authentication.Api.AuthenticationService
 
         [AllowAnonymous]
         [HttpGet("", Name = RouteDictionary.GetAuthenticationServices)]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery]string redirectUri,
+            [FromQuery]string state)
         {
-            IEnumerable<AuthenticationServiceAdto> authenticationServiceAdtos = await _authenticationServiceApplicationService.GetAuthenticationServicesAsync();
+            IEnumerable<AuthenticationServiceAdto> authenticationServiceAdtos = await _authenticationServiceApplicationService.GetAuthenticationServicesAsync(new GetAuthenticationServicesAdto
+            {
+                RedirectUri = redirectUri,
+                State = state
+            });
 
             return Ok(_resourceBuilder.BuildCollection(new AuthenticationServicesResource
             {

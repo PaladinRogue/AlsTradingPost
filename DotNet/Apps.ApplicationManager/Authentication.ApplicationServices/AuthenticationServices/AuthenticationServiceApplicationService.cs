@@ -46,7 +46,7 @@ namespace Authentication.ApplicationServices.AuthenticationServices
             _queryRepository = queryRepository;
         }
 
-        public async Task<IEnumerable<AuthenticationServiceAdto>> GetAuthenticationServicesAsync()
+        public async Task<IEnumerable<AuthenticationServiceAdto>> GetAuthenticationServicesAsync(GetAuthenticationServicesAdto getAuthenticationServicesAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
@@ -62,7 +62,7 @@ namespace Authentication.ApplicationServices.AuthenticationServices
                             authenticationServiceAdtos.Add(new ClientCredentialAuthenticationServiceAdto
                             {
                                 Id = authenticationGrantTypeClientCredential.Id,
-                                AccessUrl = BuildClientAccessUrl(authenticationGrantTypeClientCredential),
+                                AccessUrl = BuildClientAccessUrl(authenticationGrantTypeClientCredential, getAuthenticationServicesAdto),
                                 Name = authenticationGrantTypeClientCredential.Name
                             });
                             break;
@@ -182,12 +182,24 @@ namespace Authentication.ApplicationServices.AuthenticationServices
             }
         }
 
-        private static string BuildClientAccessUrl(AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential)
+        private static string BuildClientAccessUrl(
+            AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential,
+            GetAuthenticationServicesAdto getAuthenticationServicesAdto)
         {
-            return authenticationGrantTypeClientCredential.ClientGrantAccessTokenUrl.Format(
-                DictionaryBuilder<string, object>.Create()
-                    .Add("clientId", authenticationGrantTypeClientCredential.ClientId)
-                    .Build());
+            IDictionaryBuilder<string, object> builder = DictionaryBuilder<string, object>.Create()
+                .Add("clientId", authenticationGrantTypeClientCredential.ClientId);
+
+            if (!string.IsNullOrWhiteSpace(getAuthenticationServicesAdto.State))
+            {
+                builder.Add("state", getAuthenticationServicesAdto.State);
+            }
+
+            if (!string.IsNullOrWhiteSpace(getAuthenticationServicesAdto.RedirectUri))
+            {
+                builder.Add("redirectUri", getAuthenticationServicesAdto.RedirectUri);
+            }
+
+            return authenticationGrantTypeClientCredential.ClientGrantAccessTokenUrl.Format(builder.Build());
         }
 
         private static ClientCredentialAdto CreateClientCredentialAdto(AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential)

@@ -22,9 +22,9 @@ namespace Authentication.ApplicationServices.AuthenticationServices
             _authenticationServiceApplicationService = authenticationServiceApplicationService;
         }
 
-        public Task<IEnumerable<AuthenticationServiceAdto>> GetAuthenticationServicesAsync()
+        public Task<IEnumerable<AuthenticationServiceAdto>> GetAuthenticationServicesAsync(GetAuthenticationServicesAdto getAuthenticationServicesAdto)
         {
-            return _securityApplicationService.SecureAsync(() => _authenticationServiceApplicationService.GetAuthenticationServicesAsync(),
+            return _securityApplicationService.SecureAsync(() => _authenticationServiceApplicationService.GetAuthenticationServicesAsync(getAuthenticationServicesAdto),
                 DefaultAuthorisationContext.Create(AuthorisationResource.AuthenticationService, AuthorisationAction.Search));
         }
 

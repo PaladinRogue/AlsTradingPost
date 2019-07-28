@@ -6,7 +6,7 @@ namespace Authentication.ApplicationServices.AuthenticationServices
 {
     public interface IAuthenticationServiceApplicationService
     {
-        Task<IEnumerable<AuthenticationServiceAdto>> GetAuthenticationServicesAsync();
+        Task<IEnumerable<AuthenticationServiceAdto>> GetAuthenticationServicesAsync(GetAuthenticationServicesAdto getAuthenticationServicesAdto);
 
         Task<ClientCredentialAdto> CreateClientCredential(CreateClientCredentialAdto createClientCredentialAdto);
 
