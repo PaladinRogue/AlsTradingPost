@@ -4,18 +4,20 @@ using Authentication.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Authentication.Persistence.Migrations
 {
     [DbContext(typeof(AuthenticationDbContext))]
-    partial class AuthenticationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190729120021_AddReferenceData")]
+    partial class AddReferenceData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("authentication")
+                .HasDefaultSchema("apps")
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -358,7 +360,7 @@ namespace Authentication.Persistence.Migrations
 
                             b1.HasIndex("AuthenticationGrantTypeRefreshTokenId");
 
-                            b1.ToTable("RefreshTokens","authentication");
+                            b1.ToTable("RefreshTokens","apps");
 
                             b1.HasOne("Authentication.Domain.AuthenticationServices.AuthenticationGrantTypeRefreshToken", "AuthenticationGrantTypeRefreshToken")
                                 .WithMany()
@@ -383,7 +385,7 @@ namespace Authentication.Persistence.Migrations
 
                                     b2.HasKey("RefreshTokenSessionId");
 
-                                    b2.ToTable("RefreshTokens","authentication");
+                                    b2.ToTable("RefreshTokens","apps");
 
                                     b2.HasOne("Authentication.Domain.Identities.RefreshToken")
                                         .WithOne("TokenHash")
@@ -450,7 +452,7 @@ namespace Authentication.Persistence.Migrations
 
                             b1.HasKey("PasswordIdentityId");
 
-                            b1.ToTable("AuthenticationIdentities","authentication");
+                            b1.ToTable("AuthenticationIdentities","apps");
 
                             b1.HasOne("Authentication.Domain.Identities.PasswordIdentity")
                                 .WithOne("PasswordHash")

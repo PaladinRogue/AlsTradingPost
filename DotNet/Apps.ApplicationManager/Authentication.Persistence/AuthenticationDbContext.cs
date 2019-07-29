@@ -9,11 +9,13 @@ using Common.Domain.DataProtectors;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityFramework.Infrastructure.DateTimeConverters;
 using Persistence.EntityFramework.Infrastructure.Extensions;
+using ReferenceData.Domain;
+using ReferenceData.Persistence;
 using Identity = Authentication.Domain.Identities.Identity;
 
 namespace Authentication.Persistence
 {
-    public partial class AuthenticationDbContext : DbContext
+    public partial class AuthenticationDbContext : DbContext, IReferenceDataDbContext
     {
         public AuthenticationDbContext(DbContextOptions options) : base(options)
         {
@@ -27,9 +29,14 @@ namespace Authentication.Persistence
 
         public DbSet<User> Users { get; set; }
 
+        public DbSet<ReferenceDataType> ReferenceDataTypes { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("apps");
+            modelBuilder.HasDefaultSchema("authentication");
+
+            modelBuilder.UseReferenceData();
 
             modelBuilder.ProtectSensitiveInformation();
 
@@ -42,9 +49,7 @@ namespace Authentication.Persistence
 
             modelBuilder.Entity<Claim>()
                 .ToTable("Claims")
-                // Can't set composite key on navigation property through fluent api so have done so
-                // by changing the migration manually
-                .HasKey(c => new { c.Type, c.Value/*, c.Identity.Id*/ });
+                .HasKey(c => new {c.Type, c.IdentityId});
 
             modelBuilder.Entity<RefreshToken>()
                 .ToTable("RefreshTokens")

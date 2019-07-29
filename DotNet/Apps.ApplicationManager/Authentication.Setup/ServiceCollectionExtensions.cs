@@ -47,6 +47,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.EntityFramework.Infrastructure.Transactions;
 using Persistence.EntityFramework.Repositories;
+using ReferenceData.Setup;
 
 namespace Authentication.Setup
 {
@@ -139,6 +140,8 @@ namespace Authentication.Setup
                         .UseSqlServer(configuration.GetConnectionString("Default")));
             services.AddScoped<DbContext>(sp => sp.GetRequiredService<AuthenticationDbContext>());
             services.AddScoped<ITransactionManager, EntityFrameworkTransactionManager>();
+
+            services.AddReferenceData<AuthenticationDbContext>();
 
             return services;
         }

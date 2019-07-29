@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using Authentication.Domain.Identities.ChangeClaim;
 using Authentication.Domain.Identities.CreateClaim;
@@ -38,6 +39,8 @@ namespace Authentication.Domain.Identities
 
         [Required]
         public virtual Identity Identity { get; protected set; }
+
+        public Guid IdentityId { get; protected set; }
 
         public IAggregateRoot AggregateRoot => Identity;
 
