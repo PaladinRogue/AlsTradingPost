@@ -15,7 +15,7 @@ namespace ReferenceData.Persistence
 
             modelBuilder.Entity<ReferenceDataValue>()
                 .ToTable("ReferenceDataValues")
-                .HasAlternateKey(r => new { r.Code });
+                .HasAlternateKey(r => new { r.Code, r.ReferenceDataTypeId });
 
 
             modelBuilder.Query<ReferenceDataValueProjection>()
