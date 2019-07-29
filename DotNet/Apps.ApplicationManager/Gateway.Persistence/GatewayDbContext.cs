@@ -15,7 +15,7 @@ namespace Gateway.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("proxy");
+            modelBuilder.HasDefaultSchema("gateway");
 
             modelBuilder.ProtectSensitiveInformation();
 
