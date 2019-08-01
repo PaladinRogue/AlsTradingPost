@@ -63,8 +63,8 @@ namespace Gateway.Api
 
             services
                 .UseJsonV1Format()
-                .RegisterMessageSubscribers()
-                .RegisterDomainEventHandlers()
+                .RegisterMessageHandlers()
+                .RegisterDomainEventSubscribers()
                 .RegisterValidators()
                 .RegisterApplicationServices()
                 .RegisterDomainCommands()

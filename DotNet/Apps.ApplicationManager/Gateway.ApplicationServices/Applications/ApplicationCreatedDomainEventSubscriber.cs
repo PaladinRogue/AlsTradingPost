@@ -4,16 +4,16 @@ using Gateway.Domain.Applications.Events;
 
 namespace Gateway.ApplicationServices.Applications
 {
-    public class ApplicationCreatedDomainEventHandler : IDomainEventHandler<ApplicationCreatedDomainEvent>
+    public class ApplicationCreatedDomainEventSubscriber : IDomainEventSubscriber<ApplicationCreatedDomainEvent>
     {
         private readonly IApplicationKernalService _applicationKernalService;
 
-        public ApplicationCreatedDomainEventHandler(IApplicationKernalService applicationKernalService)
+        public ApplicationCreatedDomainEventSubscriber(IApplicationKernalService applicationKernalService)
         {
             _applicationKernalService = applicationKernalService;
         }
 
-        public Task HandleAsync(ApplicationCreatedDomainEvent domainEvent)
+        public Task ExecuteAsync(ApplicationCreatedDomainEvent domainEvent)
         {
             return _applicationKernalService.CreateAsync(domainEvent.Application);
         }

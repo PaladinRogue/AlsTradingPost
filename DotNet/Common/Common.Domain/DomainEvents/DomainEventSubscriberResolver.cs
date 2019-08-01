@@ -6,23 +6,23 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Common.Domain.DomainEvents
 {
-    public class DomainEventHandlerResolver : IDomainEventHandlerResolver
+    public class DomainEventSubscriberResolver : IDomainEventSubscriberResolver
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public DomainEventHandlerResolver(IServiceProvider serviceProvider)
+        public DomainEventSubscriberResolver(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
 
-        public IEnumerable<IDomainEventHandler<T>> ResolveAll<T>() where T : IDomainEvent
+        public IEnumerable<IDomainEventSubscriber<T>> ResolveAll<T>() where T : IDomainEvent
         {
-            List<IDomainEventHandler<T>> handlers = _serviceProvider.GetServices<IDomainEventHandler<T>>().ToList();
+            List<IDomainEventSubscriber<T>> handlers = _serviceProvider.GetServices<IDomainEventSubscriber<T>>().ToList();
             foreach (Type @interface in typeof(T).GetInterfaces())
             {
-                Type type = typeof(IDomainEventHandler<>);
+                Type type = typeof(IDomainEventSubscriber<>);
                 Type generic = type.MakeGenericType(@interface);
-                handlers.AddRange(_serviceProvider.GetServices(generic).Cast<IDomainEventHandler<T>>());
+                handlers.AddRange(_serviceProvider.GetServices(generic).Cast<IDomainEventSubscriber<T>>());
             }
 
             return handlers;

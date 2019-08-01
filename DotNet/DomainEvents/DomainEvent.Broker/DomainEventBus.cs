@@ -6,11 +6,11 @@ namespace DomainEvent.Broker
 {
     public class DomainEventBus : IDomainEventBus
     {
-        private readonly IDomainEventHandlerResolver _domainEventHandlerResolver;
+        private readonly IDomainEventSubscriberResolver _domainEventSubscriberResolver;
 
-        public DomainEventBus(IDomainEventHandlerResolver domainEventHandlerResolver)
+        public DomainEventBus(IDomainEventSubscriberResolver domainEventSubscriberResolver)
         {
-            _domainEventHandlerResolver = domainEventHandlerResolver;
+            _domainEventSubscriberResolver = domainEventSubscriberResolver;
         }
 
         public Task PublishAsync<T>(T domainEvent) where T : IDomainEvent
@@ -20,10 +20,10 @@ namespace DomainEvent.Broker
 
         private async Task ProcessDomainEventAsync<T>(T domainEvent) where T : IDomainEvent
         {
-            IEnumerable<IDomainEventHandler<T>> domainEventHandlers = _domainEventHandlerResolver.ResolveAll<T>();
-            foreach (IDomainEventHandler<T> domainEventHandler in domainEventHandlers)
+            IEnumerable<IDomainEventSubscriber<T>> domainEventSubscribers = _domainEventSubscriberResolver.ResolveAll<T>();
+            foreach (IDomainEventSubscriber<T> domainEventSubscriber in domainEventSubscribers)
             {
-                await domainEventHandler.HandleAsync(domainEvent);
+                await domainEventSubscriber.ExecuteAsync(domainEvent);
             }
         }
     }

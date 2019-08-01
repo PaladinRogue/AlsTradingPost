@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 namespace Common.Messaging.Infrastructure
 {
-    public class MessageSubscription
+    public class MessageRegistration
     {
-        private MessageSubscription(Type handlerType, Delegate asyncHandler)
+        private MessageRegistration(Type handlerType, Delegate asyncHandler)
         {
             HandlerType = handlerType;
             AsyncHandler = asyncHandler;
@@ -15,9 +15,9 @@ namespace Common.Messaging.Infrastructure
 
         public Delegate AsyncHandler { get; }
 
-        public static MessageSubscription Create<T>(Type handlerType, Func<T, Task> asyncHandler)
+        public static MessageRegistration Create<T>(Type handlerType, Func<T, Task> asyncHandler)
         {
-            return new MessageSubscription(handlerType, asyncHandler);
+            return new MessageRegistration(handlerType, asyncHandler);
         }
     }
 }

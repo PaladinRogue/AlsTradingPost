@@ -38,7 +38,7 @@ namespace Common.Messaging.Infrastructure.DeQueuers
 
         public async Task DeQueueAsync(
             IMessage message,
-            IEnumerable<MessageSubscription> messageSubscriptions)
+            IEnumerable<MessageRegistration> messageRegistrations)
         {
             if (message is IPreparedMessage preparedMessage)
             {
@@ -56,9 +56,9 @@ namespace Common.Messaging.Infrastructure.DeQueuers
                     {
                         try
                         {
-                            foreach (MessageSubscription messageSubscription in messageSubscriptions)
+                            foreach (MessageRegistration messageRegistration in messageRegistrations)
                             {
-                                await (Task) messageSubscription.AsyncHandler.DynamicInvoke(deserialisedMessage);
+                                await (Task) messageRegistration.AsyncHandler.DynamicInvoke(deserialisedMessage);
 
                                 transaction.Commit();
                             }

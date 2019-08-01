@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Common.Messaging.Infrastructure.Handlers;
 using Common.Messaging.Infrastructure.Messages;
-using Common.Messaging.Infrastructure.Subscribers;
 
 namespace Common.Messaging.Infrastructure.MessageBus
 {
@@ -9,12 +9,12 @@ namespace Common.Messaging.Infrastructure.MessageBus
     {
         void Publish(IMessage message);
 
-        Task SubscribeAsync<T, TH>(Func<T, Task> asyncHandler)
+        Task RegisterAsync<T, TH>(Func<T, Task> asyncHandler)
             where T : IMessage
-            where TH : IMessageSubscriber<T>;
+            where TH : IMessageHandler<T>;
 
-        Task UnsubscribeAsync<T, TH>()
+        Task UnregisterAsync<T, TH>()
             where T : IMessage
-            where TH : IMessageSubscriber<T>;
+            where TH : IMessageHandler<T>;
     }
 }

@@ -1,29 +1,29 @@
 using System;
 using System.Threading.Tasks;
 using Authentication.ApplicationServices.Notifications.Send;
+using Common.Messaging.Infrastructure.Handlers;
 using Common.Messaging.Infrastructure.MessageBus;
-using Common.Messaging.Infrastructure.Subscribers;
 using Common.Messaging.Messages;
 using Microsoft.Extensions.Logging;
 
-namespace Authentication.ApplicationServices.Subscribers
+namespace Authentication.ApplicationServices.Handlers
 {
-    public class SendNotificationMessageSubscriber : MessageSubscriber<SendNotificationMessage, SendNotificationMessageSubscriber>
+    public class SendNotificationMessageHandler : MessageHandler<SendNotificationMessage, SendNotificationMessageHandler>
     {
         private readonly ISendNotificationKernalService _sendNotificationKernalService;
 
-        private readonly ILogger<SendNotificationMessageSubscriber> _logger;
+        private readonly ILogger<SendNotificationMessageHandler> _logger;
 
-        public SendNotificationMessageSubscriber(
+        public SendNotificationMessageHandler(
             IMessageBus messageBus,
             ISendNotificationKernalService sendNotificationKernalService,
-            ILogger<SendNotificationMessageSubscriber> logger) : base(messageBus)
+            ILogger<SendNotificationMessageHandler> logger) : base(messageBus)
         {
             _logger = logger;
             _sendNotificationKernalService = sendNotificationKernalService;
         }
 
-        public override async Task HandleAsync(SendNotificationMessage message)
+        public override async Task ExecuteAsync(SendNotificationMessage message)
         {
             try
             {

@@ -9,12 +9,12 @@ namespace Authentication.Setup.Infrastructure.DomainEvents
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection RegisterDomainEventHandlers(this IServiceCollection services)
+        public static IServiceCollection RegisterDomainEventSubscribers(this IServiceCollection services)
         {
             return services
-                .AddScoped<IDomainEventHandler<TwoFactorAuthenticationIdentityCreatedDomainEvent>,
-                    SendNotificationWhenTwoFactorAuthenticationIdentityCreatedDomainEventHandler>()
-                .AddScoped<IDomainEventHandler<UserCreatedDomainEvent>, UpdateClaimsWhenUserCreatedDomainEventHandler>();
+                .AddScoped<IDomainEventSubscriber<TwoFactorAuthenticationIdentityCreatedDomainEvent>,
+                    SendNotificationWhenTwoFactorAuthenticationIdentityCreatedDomainEventSubscriber>()
+                .AddScoped<IDomainEventSubscriber<UserCreatedDomainEvent>, UpdateClaimsWhenUserCreatedDomainEventSubscriber>();
         }
     }
 }

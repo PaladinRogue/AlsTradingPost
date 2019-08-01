@@ -7,6 +7,6 @@ namespace Common.Messaging.Infrastructure.DeQueuers
     public interface IMessageDeQueuer
     {
         Task DeQueueAsync(IMessage message,
-            IEnumerable<MessageSubscription> messageSubscriptions);
+            IEnumerable<MessageRegistration> messageRegistrations);
     }
 }

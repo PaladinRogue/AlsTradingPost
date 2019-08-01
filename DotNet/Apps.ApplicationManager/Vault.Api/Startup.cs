@@ -77,8 +77,8 @@ namespace Vault.Api
             services
                 .UseJsonV1Format()
                 .UseAlwaysDenyAuthorisation()
-                .RegisterMessageSubscribers()
-                .RegisterDomainEventHandlers()
+                .RegisterMessageHandlers()
+                .RegisterDomainEventSubscribers()
                 .RegisterValidators()
                 .RegisterApplicationServices()
                 .RegisterDomainCommands()

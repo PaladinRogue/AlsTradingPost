@@ -3,14 +3,14 @@ using Common.Messaging.Infrastructure.DeQueuers;
 using Common.Messaging.Infrastructure.Directors;
 using Common.Messaging.Infrastructure.Dispatchers;
 using Common.Messaging.Infrastructure.Factories;
+using Common.Messaging.Infrastructure.Handlers;
 using Common.Messaging.Infrastructure.MessageBus;
 using Common.Messaging.Infrastructure.Senders;
 using Common.Messaging.Infrastructure.Serialisers;
-using Common.Messaging.Infrastructure.Subscribers;
 using Common.Resources.Settings;
 using Messaging.Broker.Connection;
 using Messaging.Broker.MessageBus;
-using Messaging.Broker.Subscriptions;
+using Messaging.Broker.Registrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -25,7 +25,7 @@ namespace Common.Setup.Infrastructure.Messaging
         {
             services.Configure<MessagingBusSettings>(configuration.GetSection(nameof(MessagingBusSettings)));
 
-            services.AddSingleton<IMessageBusSubscriptionsManager, InMemoryMessageBusSubscriptionsManager>();
+            services.AddSingleton<IMessageBusRegistrationsManager, InMemoryMessageBusRegistrationsManager>();
             services.AddSingleton<IRabbitMqPersistentConnection>(sp =>
             {
                 ILogger<DefaultRabbitMqPersistentConnection> logger = sp.GetRequiredService<ILogger<DefaultRabbitMqPersistentConnection>>();
@@ -60,7 +60,7 @@ namespace Common.Setup.Infrastructure.Messaging
                 ILogger<MessageBusRabbitMq> logger = sp.GetRequiredService<ILogger<MessageBusRabbitMq>>();
                 MessagingBusSettings messageBusSettings = sp.GetRequiredService<IOptions<MessagingBusSettings>>().Value;
 
-                IMessageBusSubscriptionsManager eventBusSubcriptionsManager = sp.GetRequiredService<IMessageBusSubscriptionsManager>();
+                IMessageBusRegistrationsManager eventBusSubcriptionsManager = sp.GetRequiredService<IMessageBusRegistrationsManager>();
                 IRabbitMqPersistentConnection rabbitMqPersistentConnection = sp.GetRequiredService<IRabbitMqPersistentConnection>();
                 IMessageDeQueuer messageDeQueuer = sp.GetRequiredService<IMessageDeQueuer>();
                 IMessageSerialiser messageSerialiser = sp.GetRequiredService<IMessageSerialiser>();
@@ -70,7 +70,7 @@ namespace Common.Setup.Infrastructure.Messaging
                 return new MessageBusRabbitMq(rabbitMqPersistentConnection, eventBusSubcriptionsManager, logger, messageDeQueuer, messageSerialiser, retryCount);
             });
 
-            services.AddSingleton<IMessageSubscriberFactory, MessageSubscriberFactory>();
+            services.AddSingleton<IMessageHandlerFactory, MessageHandlerFactory>();
             services.AddSingleton<IMessageSerialiser, JsonMessageSerialiser>();
 
             services.AddSingleton<PendingMessageDirector>();

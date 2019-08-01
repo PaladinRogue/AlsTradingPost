@@ -1,29 +1,29 @@
 using System;
 using System.Threading.Tasks;
 using Authentication.ApplicationServices.Identities.Claims;
+using Common.Messaging.Infrastructure.Handlers;
 using Common.Messaging.Infrastructure.MessageBus;
-using Common.Messaging.Infrastructure.Subscribers;
 using Common.Messaging.Messages;
 using Microsoft.Extensions.Logging;
 
-namespace Authentication.ApplicationServices.Subscribers
+namespace Authentication.ApplicationServices.Handlers
 {
-    public class AddAuthorisationClaimMessageSubscriber : MessageSubscriber<AddAuthorisationClaimMessage, AddAuthorisationClaimMessageSubscriber>
+    public class AddAuthorisationClaimMessageHandler : MessageHandler<AddAuthorisationClaimMessage, AddAuthorisationClaimMessageHandler>
     {
         private readonly IIdentityClaimsApplicationKernalService _identityClaimsApplicationKernalService;
 
-        private readonly ILogger<AddAuthorisationClaimMessageSubscriber> _logger;
+        private readonly ILogger<AddAuthorisationClaimMessageHandler> _logger;
 
-        public AddAuthorisationClaimMessageSubscriber(
+        public AddAuthorisationClaimMessageHandler(
             IMessageBus messageBus,
             IIdentityClaimsApplicationKernalService identityClaimsApplicationKernalService,
-            ILogger<AddAuthorisationClaimMessageSubscriber> logger) : base(messageBus)
+            ILogger<AddAuthorisationClaimMessageHandler> logger) : base(messageBus)
         {
             _logger = logger;
             _identityClaimsApplicationKernalService = identityClaimsApplicationKernalService;
         }
 
-        public override async Task HandleAsync(AddAuthorisationClaimMessage message)
+        public override async Task ExecuteAsync(AddAuthorisationClaimMessage message)
         {
             try
             {

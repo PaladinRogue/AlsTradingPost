@@ -4,7 +4,7 @@ namespace Vault.Setup.Infrastructure.DomainEvents
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection RegisterDomainEventHandlers(this IServiceCollection services)
+        public static IServiceCollection RegisterDomainEventSubscribers(this IServiceCollection services)
         {
             return services;
         }

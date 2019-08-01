@@ -75,8 +75,8 @@ namespace Authentication.Api
             services
                 .UseJsonV1Format()
                 .UseEmailNotifications()
-                .RegisterMessageSubscribers()
-                .RegisterDomainEventHandlers()
+                .RegisterMessageHandlers()
+                .RegisterDomainEventSubscribers()
                 .RegisterValidators()
                 .RegisterApplicationServices()
                 .RegisterDomainCommands()

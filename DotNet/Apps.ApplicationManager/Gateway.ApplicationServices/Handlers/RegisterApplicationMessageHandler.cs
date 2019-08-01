@@ -1,29 +1,29 @@
 using System;
 using System.Threading.Tasks;
+using Common.Messaging.Infrastructure.Handlers;
 using Common.Messaging.Infrastructure.MessageBus;
-using Common.Messaging.Infrastructure.Subscribers;
 using Common.Messaging.Messages;
 using Gateway.ApplicationServices.Applications.Register;
 using Microsoft.Extensions.Logging;
 
-namespace Gateway.ApplicationServices.Subscribers
+namespace Gateway.ApplicationServices.Handlers
 {
-    public class RegisterApplicationMessageSubscriber : MessageSubscriber<RegisterApplicationMessage, RegisterApplicationMessageSubscriber>
+    public class RegisterApplicationMessageHandler : MessageHandler<RegisterApplicationMessage, RegisterApplicationMessageHandler>
     {
-        private readonly ILogger<RegisterApplicationMessageSubscriber> _logger;
+        private readonly ILogger<RegisterApplicationMessageHandler> _logger;
 
         private readonly IRegisterApplicationKernalService _registerApplicationKernalService;
 
-        public RegisterApplicationMessageSubscriber(
+        public RegisterApplicationMessageHandler(
             IMessageBus messageBus,
-            ILogger<RegisterApplicationMessageSubscriber> logger,
+            ILogger<RegisterApplicationMessageHandler> logger,
             IRegisterApplicationKernalService registerApplicationKernalService) : base(messageBus)
         {
             _logger = logger;
             _registerApplicationKernalService = registerApplicationKernalService;
         }
 
-        public override async Task HandleAsync(RegisterApplicationMessage message)
+        public override async Task ExecuteAsync(RegisterApplicationMessage message)
         {
             try
             {

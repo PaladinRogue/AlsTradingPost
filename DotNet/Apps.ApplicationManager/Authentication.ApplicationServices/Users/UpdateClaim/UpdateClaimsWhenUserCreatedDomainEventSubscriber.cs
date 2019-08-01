@@ -6,17 +6,17 @@ using Common.Domain.DomainEvents.Interfaces;
 
 namespace Authentication.ApplicationServices.Users.UpdateClaim
 {
-    public class UpdateClaimsWhenUserCreatedDomainEventHandler : IDomainEventHandler<UserCreatedDomainEvent>
+    public class UpdateClaimsWhenUserCreatedDomainEventSubscriber : IDomainEventSubscriber<UserCreatedDomainEvent>
     {
         private readonly IClaimsApplicationKernalService _claimsApplicationKernalService;
 
-        public UpdateClaimsWhenUserCreatedDomainEventHandler(
+        public UpdateClaimsWhenUserCreatedDomainEventSubscriber(
             IClaimsApplicationKernalService claimsApplicationKernalService)
         {
             _claimsApplicationKernalService = claimsApplicationKernalService;
         }
 
-        public Task HandleAsync(UserCreatedDomainEvent domainEvent)
+        public Task ExecuteAsync(UserCreatedDomainEvent domainEvent)
         {
             return _claimsApplicationKernalService.AddAsync(new AddClaimAdto
             {

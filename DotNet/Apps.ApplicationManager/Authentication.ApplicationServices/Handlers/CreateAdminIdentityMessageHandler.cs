@@ -1,29 +1,29 @@
 using System;
 using System.Threading.Tasks;
 using Authentication.ApplicationServices.Identities.CreateAdmin;
+using Common.Messaging.Infrastructure.Handlers;
 using Common.Messaging.Infrastructure.MessageBus;
-using Common.Messaging.Infrastructure.Subscribers;
 using Common.Messaging.Messages;
 using Microsoft.Extensions.Logging;
 
-namespace Authentication.ApplicationServices.Subscribers
+namespace Authentication.ApplicationServices.Handlers
 {
-    public class CreateAdminIdentityMessageSubscriber : MessageSubscriber<CreateAdminIdentityMessage, CreateAdminIdentityMessageSubscriber>
+    public class CreateAdminIdentityMessageHandler : MessageHandler<CreateAdminIdentityMessage, CreateAdminIdentityMessageHandler>
     {
-        private readonly ILogger<CreateAdminIdentityMessageSubscriber> _logger;
+        private readonly ILogger<CreateAdminIdentityMessageHandler> _logger;
 
         private readonly ICreateAdminAuthenticationIdentityKernalService _createAdminAuthenticationIdentityKernalService;
 
-        public CreateAdminIdentityMessageSubscriber(
+        public CreateAdminIdentityMessageHandler(
             IMessageBus messageBus,
-            ILogger<CreateAdminIdentityMessageSubscriber> logger,
+            ILogger<CreateAdminIdentityMessageHandler> logger,
             ICreateAdminAuthenticationIdentityKernalService createAdminAuthenticationIdentityKernalService) : base(messageBus)
         {
             _logger = logger;
             _createAdminAuthenticationIdentityKernalService = createAdminAuthenticationIdentityKernalService;
         }
 
-        public override async Task HandleAsync(CreateAdminIdentityMessage message)
+        public override async Task ExecuteAsync(CreateAdminIdentityMessage message)
         {
             try
             {

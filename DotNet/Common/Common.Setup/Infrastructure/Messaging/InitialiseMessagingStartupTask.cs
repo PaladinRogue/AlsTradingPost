@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Common.Messaging.Infrastructure.Subscribers;
+using Common.Messaging.Infrastructure.Handlers;
 using Common.Setup.Infrastructure.Startup;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,9 +21,9 @@ namespace Common.Setup.Infrastructure.Messaging
             using (IServiceScope scope = _serviceProvider.CreateScope())
             {
                 IServiceProvider serviceProvider = scope.ServiceProvider;
-                IMessageSubscriberFactory messageSubscriberFactory = serviceProvider.GetRequiredService<IMessageSubscriberFactory>();
+                IMessageHandlerFactory messageHandlerFactory = serviceProvider.GetRequiredService<IMessageHandlerFactory>();
 
-                await messageSubscriberFactory.InitialiseAsync();
+                await messageHandlerFactory.InitialiseAsync();
             }
         }
     }

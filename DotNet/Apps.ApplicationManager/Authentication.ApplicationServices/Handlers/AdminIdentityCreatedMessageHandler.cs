@@ -3,18 +3,18 @@ using System.Threading.Tasks;
 using Authentication.ApplicationServices.Users.CreateAdmin;
 using Authentication.ApplicationServices.Users.Models;
 using AutoMapper;
+using Common.Messaging.Infrastructure.Handlers;
 using Common.Messaging.Infrastructure.MessageBus;
-using Common.Messaging.Infrastructure.Subscribers;
 using Common.Messaging.Messages;
 using Common.Resources.Settings;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Authentication.ApplicationServices.Subscribers
+namespace Authentication.ApplicationServices.Handlers
 {
-    public class AdminIdentityCreatedMessageSubscriber : MessageSubscriber<AdminIdentityCreatedMessage, AdminIdentityCreatedMessageSubscriber>
+    public class AdminIdentityCreatedMessageHandler : MessageHandler<AdminIdentityCreatedMessage, AdminIdentityCreatedMessageHandler>
     {
-        private readonly ILogger<AdminIdentityCreatedMessageSubscriber> _logger;
+        private readonly ILogger<AdminIdentityCreatedMessageHandler> _logger;
 
         private readonly IMapper _mapper;
 
@@ -22,9 +22,9 @@ namespace Authentication.ApplicationServices.Subscribers
 
         private readonly AppSettings _appSettings;
 
-        public AdminIdentityCreatedMessageSubscriber(
+        public AdminIdentityCreatedMessageHandler(
             IMessageBus messageBus,
-            ILogger<AdminIdentityCreatedMessageSubscriber> logger,
+            ILogger<AdminIdentityCreatedMessageHandler> logger,
             ICreateAdminUserApplicationKernalService createAdminUserApplicationKernalService,
             IMapper mapper, IOptions<AppSettings> appSettingsAccessor) : base(messageBus)
         {
@@ -34,7 +34,7 @@ namespace Authentication.ApplicationServices.Subscribers
             _appSettings = appSettingsAccessor.Value;
         }
 
-        public override async Task HandleAsync(AdminIdentityCreatedMessage message)
+        public override async Task ExecuteAsync(AdminIdentityCreatedMessage message)
         {
             try
             {

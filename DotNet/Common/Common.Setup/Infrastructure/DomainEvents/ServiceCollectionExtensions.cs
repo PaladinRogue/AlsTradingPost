@@ -11,7 +11,7 @@ namespace Common.Setup.Infrastructure.DomainEvents
         {
             return services
                 .AddSingleton<IDomainEventBus, DomainEventBus>()
-                .AddSingleton<IDomainEventHandlerResolver, DomainEventHandlerResolver>()
+                .AddSingleton<IDomainEventSubscriberResolver, DomainEventSubscriberResolver>()
                 .AddSingleton<IDomainEventDispatcher, DomainEventDispatcher>();
         }
     }

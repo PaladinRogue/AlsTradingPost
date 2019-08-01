@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Common.Messaging.Infrastructure;
 using Common.Messaging.Infrastructure.DeQueuers;
+using Common.Messaging.Infrastructure.Handlers;
 using Common.Messaging.Infrastructure.MessageBus;
 using Common.Messaging.Infrastructure.Messages;
 using Common.Messaging.Infrastructure.Serialisers;
-using Common.Messaging.Infrastructure.Subscribers;
 using Messaging.Broker.Connection;
-using Messaging.Broker.Subscriptions;
+using Messaging.Broker.Registrations;
 using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Retry;
@@ -26,7 +26,7 @@ namespace Messaging.Broker.MessageBus
 
         private readonly ILogger<MessageBusRabbitMq> _logger;
         private readonly IRabbitMqPersistentConnection _persistentConnection;
-        private readonly IMessageBusSubscriptionsManager _messageBusSubscriptionsManager;
+        private readonly IMessageBusRegistrationsManager _messageBusRegistrationsManager;
         private readonly IMessageDeQueuer _messageDeQueuer;
         private readonly IMessageSerialiser _messageSerialiser;
         private IModel _consumerChannel;
@@ -35,24 +35,24 @@ namespace Messaging.Broker.MessageBus
 
         public MessageBusRabbitMq(
             IRabbitMqPersistentConnection persistentConnection,
-            IMessageBusSubscriptionsManager messageBusSubscriptionsManager,
+            IMessageBusRegistrationsManager messageBusRegistrationsManager,
             ILogger<MessageBusRabbitMq> logger,
             IMessageDeQueuer messageDeQueuer,
             IMessageSerialiser messageSerialiser,
             int retryCount = 5)
         {
             _persistentConnection = persistentConnection;
-            _messageBusSubscriptionsManager = messageBusSubscriptionsManager;
+            _messageBusRegistrationsManager = messageBusRegistrationsManager;
             _logger = logger;
             _messageDeQueuer = messageDeQueuer;
             _messageSerialiser = messageSerialiser;
 
             _consumerChannel = CreateConsumerChannel();
             _retryCount = retryCount;
-            _messageBusSubscriptionsManager.OnMessageRemoved += SubscriptionManagerOnMessageRemoved;
+            _messageBusRegistrationsManager.OnMessageRemoved += RegistrationManagerOnMessageRemoved;
         }
 
-        private void SubscriptionManagerOnMessageRemoved(object sender, string messageName)
+        private void RegistrationManagerOnMessageRemoved(object sender, string messageName)
         {
             if (!_persistentConnection.IsConnected)
             {
@@ -61,12 +61,9 @@ namespace Messaging.Broker.MessageBus
 
             using (IModel channel = _persistentConnection.CreateModel())
             {
-                channel.QueueUnbind(
-                    queue: _queueName,
-                    exchange: BrokerName,
-                    routingKey: messageName);
+                channel.QueueUnbind(_queueName, BrokerName, messageName);
 
-                if (_messageBusSubscriptionsManager.IsEmpty)
+                if (_messageBusRegistrationsManager.IsEmpty)
                 {
                     _queueName = string.Empty;
                     _consumerChannel.Close();
@@ -89,32 +86,25 @@ namespace Messaging.Broker.MessageBus
             using (IModel channel = _persistentConnection.CreateModel())
             {
                 channel.ExchangeDeclare(
-                    exchange: BrokerName,
-                    type: "direct");
+                    BrokerName,
+                    "direct");
 
                 byte[] body = Encoding.UTF8.GetBytes(_messageSerialiser.Serialise(message));
 
-                policy.Execute(() =>
-                {
-                    channel.BasicPublish(
-                        exchange: BrokerName,
-                        routingKey: message.Type,
-                        basicProperties: null,
-                        body: body);
-                });
+                policy.Execute(() => { channel.BasicPublish(BrokerName, message.Type, null, body); });
             }
         }
 
-        public Task SubscribeAsync<T, TH>(Func<T, Task> asyncHandler) where T : IMessage where TH : IMessageSubscriber<T>
+        public Task RegisterAsync<T, TH>(Func<T, Task> asyncHandler) where T : IMessage where TH : IMessageHandler<T>
         {
-            string messageName = _messageBusSubscriptionsManager.GetMessageKey<T>();
-            DoInternalSubscription(messageName);
-            return _messageBusSubscriptionsManager.AddSubscriptionAsync<T, TH>(asyncHandler);
+            string messageName = _messageBusRegistrationsManager.GetMessageKey<T>();
+            DoInternalRegistration(messageName);
+            return _messageBusRegistrationsManager.AddRegistrationAsync<T, TH>(asyncHandler);
         }
 
-        private void DoInternalSubscription(string messageName)
+        private void DoInternalRegistration(string messageName)
         {
-            if (_messageBusSubscriptionsManager.HasSubscriptionsForMessage(messageName)) return;
+            if (_messageBusRegistrationsManager.HasRegistrationsForMessage(messageName)) return;
 
             if (!_persistentConnection.IsConnected)
             {
@@ -123,16 +113,13 @@ namespace Messaging.Broker.MessageBus
 
             using (IModel channel = _persistentConnection.CreateModel())
             {
-                channel.QueueBind(
-                    queue: _queueName,
-                    exchange: BrokerName,
-                    routingKey: messageName);
+                channel.QueueBind(_queueName, BrokerName, messageName);
             }
         }
 
-        public Task UnsubscribeAsync<T, TH>() where T : IMessage where TH : IMessageSubscriber<T>
+        public Task UnregisterAsync<T, TH>() where T : IMessage where TH : IMessageHandler<T>
         {
-            return _messageBusSubscriptionsManager.RemoveSubscriptionAsync<T, TH>();
+            return _messageBusRegistrationsManager.RemoveRegistrationAsync<T, TH>();
         }
 
         private IModel CreateConsumerChannel()
@@ -144,19 +131,15 @@ namespace Messaging.Broker.MessageBus
 
             IModel channel = _persistentConnection.CreateModel();
 
-            channel.ExchangeDeclare(
-                exchange: BrokerName,
-                type: "direct");
+            channel.ExchangeDeclare(BrokerName, "direct");
 
             _queueName = channel.QueueDeclare().QueueName;
 
-            AsyncEventingBasicConsumer consumer = new AsyncEventingBasicConsumer(channel);;
+            AsyncEventingBasicConsumer consumer = new AsyncEventingBasicConsumer(channel);
+
             consumer.Received += ConsumerRecieved;
 
-            channel.BasicConsume(
-                queue: _queueName,
-                autoAck: false,
-                consumer: consumer);
+            channel.BasicConsume(_queueName, false, consumer);
 
             channel.CallbackException += (sender, ea) =>
             {
@@ -175,18 +158,19 @@ namespace Messaging.Broker.MessageBus
             await ProcessMessageAsync(messageKey, message);
         }
 
-        private async Task ProcessMessageAsync(string messageName,
+        private async Task ProcessMessageAsync(
+            string messageName,
             string serialisedMessage)
         {
-            if (!_messageBusSubscriptionsManager.HasSubscriptionsForMessage(messageName))
+            if (!_messageBusRegistrationsManager.HasRegistrationsForMessage(messageName))
             {
                 return;
             }
 
             try
             {
-                IEnumerable<MessageSubscription> subscriptions = _messageBusSubscriptionsManager.GetSubscribersForMessage(messageName);
-                await _messageDeQueuer.DeQueueAsync(_messageSerialiser.Deserialise(serialisedMessage), subscriptions);
+                IEnumerable<MessageRegistration> registrations = _messageBusRegistrationsManager.GetRegistrationsForMessage(messageName);
+                await _messageDeQueuer.DeQueueAsync(_messageSerialiser.Deserialise(serialisedMessage), registrations);
             }
             catch (Exception e)
             {
@@ -213,7 +197,7 @@ namespace Messaging.Broker.MessageBus
         {
             _consumerChannel?.Dispose();
 
-            _messageBusSubscriptionsManager.Clear();
+            _messageBusRegistrationsManager.Clear();
         }
     }
 }

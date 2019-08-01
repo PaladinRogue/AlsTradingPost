@@ -4,18 +4,18 @@ using Common.Domain.DomainEvents.Interfaces;
 
 namespace Authentication.ApplicationServices.Identities.TwoFactor
 {
-    public class SendNotificationWhenTwoFactorAuthenticationIdentityCreatedDomainEventHandler : IDomainEventHandler<TwoFactorAuthenticationIdentityCreatedDomainEvent>
+    public class SendNotificationWhenTwoFactorAuthenticationIdentityCreatedDomainEventSubscriber : IDomainEventSubscriber<TwoFactorAuthenticationIdentityCreatedDomainEvent>
     {
         private readonly ISendTwoFactorAuthenticationNotificationKernalService
             _sendTwoFactorAuthenticationNotificationKernalService;
 
-        public SendNotificationWhenTwoFactorAuthenticationIdentityCreatedDomainEventHandler(
+        public SendNotificationWhenTwoFactorAuthenticationIdentityCreatedDomainEventSubscriber(
             ISendTwoFactorAuthenticationNotificationKernalService sendTwoFactorAuthenticationNotificationKernalService)
         {
             _sendTwoFactorAuthenticationNotificationKernalService = sendTwoFactorAuthenticationNotificationKernalService;
         }
 
-        public Task HandleAsync(TwoFactorAuthenticationIdentityCreatedDomainEvent domainEvent)
+        public Task ExecuteAsync(TwoFactorAuthenticationIdentityCreatedDomainEvent domainEvent)
         {
             return _sendTwoFactorAuthenticationNotificationKernalService.SendAsync(new SendTwoFactorAuthenticationNotificationAdto
             {
