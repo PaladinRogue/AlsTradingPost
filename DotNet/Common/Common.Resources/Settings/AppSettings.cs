@@ -4,8 +4,6 @@ namespace Common.Resources.Settings
 {
     public class AppSettings
     {
-        public string AuthenticationSecret { get; set; }
-
         public Dictionary<string, string> ConnectionStrings { get; set; }
 
         public string Name { get; set; }

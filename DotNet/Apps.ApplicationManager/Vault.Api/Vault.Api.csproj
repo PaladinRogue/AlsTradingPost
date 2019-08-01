@@ -16,8 +16,4 @@
       <ProjectReference Include="..\Vault.Broker\Vault.Broker.csproj" />
       <ProjectReference Include="..\Vault.Setup\Vault.Setup.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-      <None Remove="vault.log" />
-    </ItemGroup>
 </Project>

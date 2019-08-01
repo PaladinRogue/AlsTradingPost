@@ -22,8 +22,6 @@ using Common.Setup.Infrastructure.WebRequests;
 using Vault.Broker.Setup.DataKeys;
 using Vault.Setup;
 using Vault.Setup.Infrastructure.DataKeys;
-using Vault.Setup.Infrastructure.DomainEvents;
-using Vault.Setup.Infrastructure.Messaging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -77,8 +75,6 @@ namespace Vault.Api
             services
                 .UseJsonV1Format()
                 .UseAlwaysDenyAuthorisation()
-                .RegisterMessageHandlers()
-                .RegisterDomainEventSubscribers()
                 .RegisterValidators()
                 .RegisterApplicationServices()
                 .RegisterDomainCommands()

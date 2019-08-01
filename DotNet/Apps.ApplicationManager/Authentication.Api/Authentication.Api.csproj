@@ -2,8 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <ApplicationIcon />
-    <OutputType>WinExe</OutputType>
     <StartupObject />
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
@@ -21,9 +19,5 @@
     <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
     <ProjectReference Include="..\Authentication.Setup\Authentication.Setup.csproj" />
     <ProjectReference Include="..\Vault.Broker\Vault.Broker.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="authentication.log" />
   </ItemGroup>
 </Project>
