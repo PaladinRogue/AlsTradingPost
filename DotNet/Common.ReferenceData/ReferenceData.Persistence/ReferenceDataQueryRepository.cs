@@ -29,6 +29,18 @@ namespace ReferenceData.Persistence
             });
         }
 
+        public Task<ReferenceDataValueProjection> GetByCodeAsync(string type, string code)
+        {
+            return _referenceDataDbContext.Query<ReferenceDataValueProjection>()
+                .FromSql($@"SELECT TOP 1 *
+                            FROM [authentication].[ReferenceDataValues] v
+                            INNER JOIN [authentication].[ReferenceDataTypes] t
+                            ON v.[ReferenceDataTypeId] = t.[Id]
+                            WHERE v.[Code] = {code} AND t.[Type] = {type}")
+                .AsNoTracking()
+                .SingleOrDefaultAsync();
+        }
+
         public Task<ReferenceDataValueProjection> GetByIdAsync(Guid id)
         {
             return _referenceDataDbContext.Query<ReferenceDataValueProjection>()

@@ -9,6 +9,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
+      <ProjectReference Include="..\ReferenceData.ApplicationServices\ReferenceData.ApplicationServices.csproj" />
       <ProjectReference Include="..\ReferenceData.Domain\ReferenceData.Domain.csproj" />
       <ProjectReference Include="..\ReferenceData.Persistence\ReferenceData.Persistence.csproj" />
     </ItemGroup>
