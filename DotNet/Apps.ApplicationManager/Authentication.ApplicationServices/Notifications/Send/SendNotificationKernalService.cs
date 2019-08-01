@@ -7,7 +7,10 @@ using Authentication.Domain.NotificationTypes;
 using Common.ApplicationServices.Exceptions;
 using Common.ApplicationServices.Transactions;
 using Common.Domain.Persistence;
+using Common.Messaging.Infrastructure;
+using Common.Messaging.Messages;
 using Microsoft.Extensions.Logging;
+using Notifications.ApplicationServices.Emails;
 
 namespace Authentication.ApplicationServices.Notifications.Send
 {
@@ -21,8 +24,6 @@ namespace Authentication.ApplicationServices.Notifications.Send
 
         private readonly ITransactionManager _transactionManager;
 
-        private readonly IEmailNotificationSender _emailNotificationSender;
-
         private readonly IEmailBuilder _emailBuilder;
 
         public SendNotificationKernalService(
@@ -30,14 +31,12 @@ namespace Authentication.ApplicationServices.Notifications.Send
             IQueryRepository<NotificationType> queryRepository,
             IChannelAudienceResolverProvider channelAudienceResolverProvider,
             ITransactionManager transactionManager,
-            IEmailNotificationSender emailNotificationSender,
             IEmailBuilder emailBuilder)
         {
             _logger = logger;
             _queryRepository = queryRepository;
             _channelAudienceResolverProvider = channelAudienceResolverProvider;
             _transactionManager = transactionManager;
-            _emailNotificationSender = emailNotificationSender;
             _emailBuilder = emailBuilder;
         }
 
@@ -79,20 +78,7 @@ namespace Authentication.ApplicationServices.Notifications.Send
                                             PropertyBag = sendNotificationAdto.PropertyBag
                                         });
 
-                                        try
-                                        {
-                                            await _emailNotificationSender.SendAsync(new SendEmailNotificationAdto
-                                            {
-                                                From = "noreply@paladin-rogue.com",
-                                                Recipients = new List<string> {emailAddress},
-                                                HtmlBody = emailAdto.HtmlBody,
-                                                Subject = emailAdto.Subject
-                                            });
-                                        }
-                                        catch (Exception e)
-                                        {
-                                            _logger.LogCritical("Unable to send email", emailAdto, e);
-                                        }
+                                        await Message.SendAsync(SendEmailNotificationMessage.Create("noreply@paladin-rogue.com", emailAddress, emailAdto.Subject, emailAdto.Subject));
                                     }
 
                                     break;

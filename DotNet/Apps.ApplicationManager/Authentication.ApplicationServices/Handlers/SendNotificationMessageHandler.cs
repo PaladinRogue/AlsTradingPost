@@ -5,6 +5,7 @@ using Common.Messaging.Infrastructure.Handlers;
 using Common.Messaging.Infrastructure.MessageBus;
 using Common.Messaging.Messages;
 using Microsoft.Extensions.Logging;
+using Notifications.ApplicationServices.Emails;
 
 namespace Authentication.ApplicationServices.Handlers
 {
@@ -36,7 +37,7 @@ namespace Authentication.ApplicationServices.Handlers
             }
             catch (Exception e)
             {
-                _logger.LogCritical(e, "Unable to create admin user");
+                _logger.LogCritical(e, "Unable to send notification", message);
             }
         }
     }

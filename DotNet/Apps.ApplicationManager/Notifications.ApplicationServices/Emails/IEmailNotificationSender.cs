@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Authentication.ApplicationServices.Notifications.Emails
+namespace Notifications.ApplicationServices.Emails
 {
     public interface IEmailNotificationSender
     {

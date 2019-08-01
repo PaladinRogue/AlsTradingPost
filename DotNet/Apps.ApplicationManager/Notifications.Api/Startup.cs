@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Notifications.Setup;
+using Notifications.Setup.Infrastructure.Messaging;
 using Vault.Broker;
 using Vault.Broker.Setup.DataKeys;
 
@@ -60,6 +61,8 @@ namespace Notifications.Api
                 .UseJsonV1Format()
                 .RegisterApplicationServices()
                 .RegisterProviders()
+                .RegisterMessageHandlers()
+                .UseEmailNotifications()
                 .AddStartupTask<SetDataProtectorStartupTask>()
                 .AddStartupTask<InitialiseMessagingStartupTask>()
                 .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

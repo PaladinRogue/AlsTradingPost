@@ -168,8 +168,7 @@ namespace Authentication.Setup
         {
             return services.AddScoped<IEmailBuilder, EmailBuilder>()
                 .AddScoped<IChannelAudienceResolverProvider, ChannelAudienceResolverProvider>()
-                .AddScoped<IChannelAudienceResolver, TwoFactorAuthenticationEmailChannelResolver>()
-                .AddScoped<IEmailNotificationSender, LocalDevelopmentEmailNotificationSender>();
+                .AddScoped<IChannelAudienceResolver, TwoFactorAuthenticationEmailChannelResolver>();
         }
     }
 }

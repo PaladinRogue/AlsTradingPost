@@ -11,6 +11,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Common\Common.Api\Common.Api.csproj" />
+      <ProjectReference Include="..\Notifications.ApplicationServices\Notifications.ApplicationServices.csproj" />
     </ItemGroup>
 
     <ItemGroup>

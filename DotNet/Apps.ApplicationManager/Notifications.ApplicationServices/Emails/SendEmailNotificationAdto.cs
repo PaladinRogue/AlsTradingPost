@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 
-namespace Authentication.ApplicationServices.Notifications.Emails
+namespace Notifications.ApplicationServices.Emails
 {
     public class SendEmailNotificationAdto
     {
-        public string From { get; set; }
-        
+        public string Sender { get; set; }
+
         public IEnumerable<string> Recipients { get; set; }
 
         public string HtmlBody { get; set; }

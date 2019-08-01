@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Authentication.ApplicationServices.Notifications.Send
+namespace Notifications.ApplicationServices.Emails
 {
     public class SendNotificationAdto
     {

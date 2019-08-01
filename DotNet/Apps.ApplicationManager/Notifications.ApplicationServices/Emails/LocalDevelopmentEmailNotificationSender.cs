@@ -5,7 +5,7 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
-namespace Authentication.ApplicationServices.Notifications.Emails
+namespace Notifications.ApplicationServices.Emails
 {
     public class LocalDevelopmentEmailNotificationSender : IEmailNotificationSender
     {
@@ -25,7 +25,7 @@ namespace Authentication.ApplicationServices.Notifications.Emails
             {
                 using (MailMessage message = new MailMessage())
                 {
-                    message.From = new MailAddress(sendEmailNotificationAdto.From);
+                    message.From = new MailAddress(sendEmailNotificationAdto.Sender);
                     message.Body = sendEmailNotificationAdto.HtmlBody;
                     message.Subject = sendEmailNotificationAdto.Subject;
                     message.IsBodyHtml = true;

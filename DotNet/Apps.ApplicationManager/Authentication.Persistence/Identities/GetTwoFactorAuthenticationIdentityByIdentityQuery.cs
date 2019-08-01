@@ -17,10 +17,11 @@ namespace Authentication.Persistence.Identities
 
         public Task<TwoFactorAuthenticationIdentityProjection> RunAsync(Guid identityId)
         {
-            return _authenticationDbContext.Query<TwoFactorAuthenticationIdentityProjection>()
-                .FromSql($"SELECT * FROM [apps].[AuthenticationIdentities] WHERE [TYPE] = {AuthenticationIdentityTypes.TwoFactor} AND [IdentityId] = {identityId}")
+            return _authenticationDbContext
+                .Query<TwoFactorAuthenticationIdentityProjection>()
+                .FromSql($"SELECT * FROM [authentication].[AuthenticationIdentities] WHERE [TYPE] = {AuthenticationIdentityTypes.TwoFactor} AND [IdentityId] = {identityId}")
                 .AsNoTracking()
-                .FirstOrDefaultAsync();
+                .SingleOrDefaultAsync();
         }
     }
 }
