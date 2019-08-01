@@ -6,6 +6,8 @@
 
         public const string Password = "PASSWORD";
 
-        public const string ClientCredential = "CLIENT_CREDENTIAL";
+        public const string Facebook = "FACEBOOK";
+
+        public const string Google = "GOOGLE";
     }
 }

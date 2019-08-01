@@ -1,7 +1,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Common.Domain.DataProtectors;
 using Common.Setup.Infrastructure.Startup;
 using Vault.ApplicationServices.SharedDataKeys.Create;
 using Microsoft.Extensions.DependencyInjection;

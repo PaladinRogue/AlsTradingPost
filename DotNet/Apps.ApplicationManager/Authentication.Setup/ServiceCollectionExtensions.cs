@@ -10,8 +10,10 @@ using Authentication.ApplicationServices.Notifications.Emails;
 using Authentication.ApplicationServices.Notifications.Send;
 using Authentication.ApplicationServices.Users.CreateAdmin;
 using Authentication.Domain.AuthenticationServices;
-using Authentication.Domain.AuthenticationServices.ChangeClientCredential;
-using Authentication.Domain.AuthenticationServices.CreateClientCredential;
+using Authentication.Domain.AuthenticationServices.ChangeFacebook;
+using Authentication.Domain.AuthenticationServices.ChangeGoogle;
+using Authentication.Domain.AuthenticationServices.CreateFacebook;
+using Authentication.Domain.AuthenticationServices.CreateGoogle;
 using Authentication.Domain.Identities;
 using Authentication.Domain.Identities.AddOrChangeClaim;
 using Authentication.Domain.Identities.ChangePassword;
@@ -32,10 +34,11 @@ using Authentication.Domain.Identities.ResetPassword;
 using Authentication.Domain.NotificationTypes;
 using Authentication.Domain.Users;
 using Authentication.Domain.Users.Create;
-using Authentication.Setup.Infrastructure.Authentication.ClientCredential;
 using Authentication.Setup.Infrastructure.Authorisation;
 using Authentication.Persistence;
 using Authentication.Persistence.Identities;
+using Authentication.Setup.Infrastructure.Authentication.Facebook;
+using Authentication.Setup.Infrastructure.Authentication.Google;
 using Common.Api.Routing;
 using Common.ApplicationServices.Transactions;
 using Common.Domain.Persistence;
@@ -63,8 +66,11 @@ namespace Authentication.Setup
                 .AddScoped<IIdentityClaimsApplicationKernalService, IdentityClaimsApplicationKernalService>()
                 .AddSecureApplicationService<IIdentityApplicationService, IdentityApplicationService, IdentityApplicationServiceSecurityDecorator>()
                 .AddSecureApplicationService<IAuthenticationApplicationService, AuthenticationApplicationService, AuthenticationApplicationServiceSecurityDecorator>()
+                .AddSecureApplicationService<IFacebookAuthenticationServiceApplicationService, FacebookAuthenticationServiceApplicationService, FacebookAuthenticationServiceApplicationServiceSecurityDecorator>()
+                .AddSecureApplicationService<IGoogleAuthenticationServiceApplicationService, GoogleAuthenticationServiceApplicationService, GoogleAuthenticationServiceApplicationServiceSecurityDecorator>()
                 .AddSecureApplicationService<IAuthenticationServiceApplicationService, AuthenticationServiceApplicationService, AuthenticationServiceApplicationServiceSecurityDecorator>()
-                .AddScoped<IClientCredentialAuthenticationValidator, ClientCredentialAuthenticationValidator>();
+                .AddScoped<IFacebookAuthenticationValidator, FacebookAuthenticationValidator>()
+                .AddScoped<IGoogleAuthenticationValidator, GoogleAuthenticationValidator>();
         }
 
         public static IServiceCollection RegisterValidators(this IServiceCollection services)
@@ -82,8 +88,10 @@ namespace Authentication.Setup
                 .AddScoped<IValidator<ForgotPasswordCommandDdto>, ForgotPasswordCommandValidator>()
                 .AddScoped<IValidator<RefreshTokenLoginCommandDdto>, RefreshTokenLoginCommandValidator>()
                 .AddScoped<IValidator<RegisterClientCredentialCommandDdto>, RegisterClientCredentialCommandValidator>()
-                .AddScoped<IValidator<CreateAuthenticationGrantTypeClientCredentialDdto>, CreateAuthenticationGrantTypeClientCredentialValidator>()
-                .AddScoped<IValidator<ChangeAuthenticationGrantTypeClientCredentialDdto>, ChangeAuthenticationGrantTypeClientCredentialValidator>()
+                .AddScoped<IValidator<CreateAuthenticationGrantTypeFacebookDdto>, CreateAuthenticationGrantTypeFacebookValidator>()
+                .AddScoped<IValidator<ChangeAuthenticationGrantTypeFacebookDdto>, ChangeAuthenticationGrantTypeFacebookValidator>()
+                .AddScoped<IValidator<CreateAuthenticationGrantTypeGoogleDdto>, CreateAuthenticationGrantTypeGoogleValidator>()
+                .AddScoped<IValidator<ChangeAuthenticationGrantTypeGoogleDdto>, ChangeAuthenticationGrantTypeGoogleValidator>()
                 .AddScoped<IValidator<AddOrChangeIdentityClaimCommandDdto>, AddOrChangeIdentityClaimValidator>();
         }
 
@@ -106,8 +114,10 @@ namespace Authentication.Setup
                 .AddScoped<IRefreshTokenLoginCommand, RefreshTokenLoginCommand>()
                 .AddScoped<IRegisterClientCredentialCommand, RegisterClientCredentialCommand>()
                 .AddScoped<IClientCredentialLoginCommand, ClientCredentialLoginCommand>()
-                .AddScoped<ICreateAuthenticationGrantTypeClientCredentialCommand, CreateAuthenticationGrantTypeClientCredentialCommand>()
-                .AddScoped<IChangeAuthenticationGrantTypeClientCredentialCommand, ChangeAuthenticationGrantTypeClientCredentialCommand>()
+                .AddScoped<ICreateAuthenticationGrantTypeFacebookCommand, CreateAuthenticationGrantTypeFacebookCommand>()
+                .AddScoped<IChangeAuthenticationGrantTypeFacebookCommand, ChangeAuthenticationGrantTypeFacebookCommand>()
+                .AddScoped<ICreateAuthenticationGrantTypeGoogleCommand, CreateAuthenticationGrantTypeGoogleCommand>()
+                .AddScoped<IChangeAuthenticationGrantTypeGoogleCommand, ChangeAuthenticationGrantTypeGoogleCommand>()
                 .AddScoped<IAddOrChangeIdentityClaimCommand, AddOrChangeIdentityClaimCommand>();
         }
 

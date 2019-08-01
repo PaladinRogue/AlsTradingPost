@@ -8,11 +8,7 @@ namespace Authentication.ApplicationServices.AuthenticationServices
     {
         Task<IEnumerable<AuthenticationServiceAdto>> GetAuthenticationServicesAsync(GetAuthenticationServicesAdto getAuthenticationServicesAdto);
 
-        Task<ClientCredentialAdto> CreateClientCredential(CreateClientCredentialAdto createClientCredentialAdto);
-
-        Task<ClientCredentialAdto> GetClientCredentialAsync(GetClientCredentialAdto getClientCredentialAdto);
-
-        Task<ClientCredentialAdto> ChangeClientCredentialAsync(ChangeClientCredentialAdto changeClientCredentialAdto);
+        Task<IEnumerable<AuthenticationServiceTypeAdto>> GetAuthenticationServiceTypes();
 
         Task DeleteClientCredentialAsync(DeleteClientCredentialAdto deleteClientCredentialAdto);
     }

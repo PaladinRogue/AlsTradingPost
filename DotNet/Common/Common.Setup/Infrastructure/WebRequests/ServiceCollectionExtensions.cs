@@ -8,7 +8,9 @@ namespace Common.Setup.Infrastructure.WebRequests
         public static IServiceCollection UseWebRequests(this IServiceCollection services)
         {
             return services
-                .AddSingleton<IHttpClientFactory, HttpClientFactory>();
+                .AddSingleton<IHttpJson, HttpClientFactory>()
+                .AddSingleton<IHttpString, HttpClientFactory>()
+                .AddSingleton<IHttpRequest, HttpClientFactory>();
         }
     }
 }

@@ -3,9 +3,10 @@ using Authentication.Domain.AuthenticationServices;
 
 namespace Authentication.ApplicationServices.Authentication.ClientCredential
 {
-    public interface IClientCredentialAuthenticationValidator
+    public interface IClientCredentialAuthenticationValidator<in TClientCredential> where TClientCredential : AuthenticationGrantTypeClientCredential
     {
-        Task<IClientCredentialAuthenticationResult> Validate(AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential,
+        Task<IClientCredentialAuthenticationResult> Validate(
+            TClientCredential authenticationGrantTypeClientCredential,
             ValidateClientCredentialAdto validateClientCredentialAdto);
     }
 }

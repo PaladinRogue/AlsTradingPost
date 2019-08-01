@@ -37,7 +37,9 @@ namespace Authentication.ApplicationServices.Authentication
 
         private readonly IQueryRepository<AuthenticationService> _authenticationServiceCommandRepository;
 
-        private readonly IClientCredentialAuthenticationValidator _clientCredentialAuthenticationValidator;
+        private readonly IGoogleAuthenticationValidator _googleAuthenticationValidator;
+
+        private readonly IFacebookAuthenticationValidator _facebookAuthenticationValidator;
 
         private readonly IGetIdentityByClientCredentialIdentifierQuery _getIdentityByClientCredentialIdentifierQuery;
 
@@ -54,7 +56,8 @@ namespace Authentication.ApplicationServices.Authentication
             ICommandRepository<Identity> identityCommandRepository,
             IRefreshTokenLoginCommand refreshTokenLoginCommand,
             IQueryRepository<AuthenticationService> authenticationServiceCommandRepository,
-            IClientCredentialAuthenticationValidator clientCredentialAuthenticationValidator,
+            IGoogleAuthenticationValidator googleAuthenticationValidator,
+            IFacebookAuthenticationValidator facebookAuthenticationValidator,
             IClientCredentialLoginCommand clientCredentialLoginCommand,
             ICreateIdentityCommand createIdentityCommand,
             IGetIdentityByClientCredentialIdentifierQuery getIdentityByClientCredentialIdentifierQuery,
@@ -66,7 +69,8 @@ namespace Authentication.ApplicationServices.Authentication
             _identityCommandRepository = identityCommandRepository;
             _refreshTokenLoginCommand = refreshTokenLoginCommand;
             _authenticationServiceCommandRepository = authenticationServiceCommandRepository;
-            _clientCredentialAuthenticationValidator = clientCredentialAuthenticationValidator;
+            _googleAuthenticationValidator = googleAuthenticationValidator;
+            _facebookAuthenticationValidator = facebookAuthenticationValidator;
             _clientCredentialLoginCommand = clientCredentialLoginCommand;
             _createIdentityCommand = createIdentityCommand;
             _getIdentityByClientCredentialIdentifierQuery = getIdentityByClientCredentialIdentifierQuery;
@@ -145,22 +149,22 @@ namespace Authentication.ApplicationServices.Authentication
             }
         }
 
-        public async Task<JwtAdto> ClientCredentialAsync(ClientCredentialAdto clientCredentialAdto)
+        public async Task<JwtAdto> GoogleAsync(ClientCredentialAdto clientCredentialAdto)
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
                 try
                 {
-                    AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential =
-                        (AuthenticationGrantTypeClientCredential) await _authenticationServiceCommandRepository.GetSingleAsync(
-                            s => s is AuthenticationGrantTypeClientCredential && s.Id == clientCredentialAdto.Id);
+                    AuthenticationGrantTypeGoogle authenticationGrantTypeGoogle =
+                        (AuthenticationGrantTypeGoogle) await _authenticationServiceCommandRepository.GetSingleAsync(
+                            s => s is AuthenticationGrantTypeGoogle && s.Id == clientCredentialAdto.Id);
 
-                    if (authenticationGrantTypeClientCredential == null)
+                    if (authenticationGrantTypeGoogle == null)
                     {
                         throw new BusinessApplicationException(ExceptionType.BadRequest, ErrorCodes.ClientCredentialLoginNotConfigured, "Client credential login not configured");
                     }
 
-                    IClientCredentialAuthenticationResult clientCredentialAuthenticationResult = await _clientCredentialAuthenticationValidator.Validate(authenticationGrantTypeClientCredential, new ValidateClientCredentialAdto
+                    IClientCredentialAuthenticationResult clientCredentialAuthenticationResult = await _googleAuthenticationValidator.Validate(authenticationGrantTypeGoogle, new ValidateClientCredentialAdto
                     {
                         Token = clientCredentialAdto.Token,
                         RedirectUri = clientCredentialAdto.RedirectUri
@@ -171,13 +175,74 @@ namespace Authentication.ApplicationServices.Authentication
                         throw new BusinessApplicationException(ExceptionType.Unauthorized, "Could not validate access token");
                     }
 
-                    Identity identity = await _getIdentityByClientCredentialIdentifierQuery.RunAsync(authenticationGrantTypeClientCredential, clientCredentialAuthenticationResult.Identifier);
+                    Identity identity = await _getIdentityByClientCredentialIdentifierQuery.RunAsync(authenticationGrantTypeGoogle, clientCredentialAuthenticationResult.Identifier);
 
                     if (identity == null)
                     {
                         identity = await _createIdentityCommand.ExecuteAsync();
 
-                        await _registerClientCredentialCommand.ExecuteAsync(identity, authenticationGrantTypeClientCredential, new RegisterClientCredentialCommandDdto
+                        await _registerClientCredentialCommand.ExecuteAsync(identity, authenticationGrantTypeGoogle, new RegisterClientCredentialCommandDdto
+                        {
+                            Identifier = clientCredentialAuthenticationResult.Identifier
+                        });
+
+                        await _identityCommandRepository.AddAsync(identity);
+                    }
+
+                    await _clientCredentialLoginCommand.ExecuteAsync(identity);
+
+                    await _identityCommandRepository.UpdateAsync(identity);
+
+                    JwtAdto jwtAdto = await _jwtFactory.GenerateJwtAsync<JwtAdto>(GetClaimsIdentity(identity), identity.Session.Id);
+
+                    transaction.Commit();
+
+                    return jwtAdto;
+                }
+                catch (InvalidLoginDomainException)
+                {
+                    throw new BusinessApplicationException(ExceptionType.Unauthorized, "Your login details are incorrect");
+                }
+                catch (DomainValidationRuleException e)
+                {
+                    throw new BusinessValidationRuleApplicationException(e.ValidationResult);
+                }
+            }
+        }
+
+        public async Task<JwtAdto> FacebookAsync(ClientCredentialAdto clientCredentialAdto)
+        {
+            using (ITransaction transaction = _transactionManager.Create())
+            {
+                try
+                {
+                    AuthenticationGrantTypeFacebook authenticationGrantTypeFacebook =
+                        (AuthenticationGrantTypeFacebook) await _authenticationServiceCommandRepository.GetSingleAsync(
+                            s => s is AuthenticationGrantTypeFacebook && s.Id == clientCredentialAdto.Id);
+
+                    if (authenticationGrantTypeFacebook == null)
+                    {
+                        throw new BusinessApplicationException(ExceptionType.BadRequest, ErrorCodes.ClientCredentialLoginNotConfigured, "Client credential login not configured");
+                    }
+
+                    IClientCredentialAuthenticationResult clientCredentialAuthenticationResult = await _facebookAuthenticationValidator.Validate(authenticationGrantTypeFacebook, new ValidateClientCredentialAdto
+                    {
+                        Token = clientCredentialAdto.Token,
+                        RedirectUri = clientCredentialAdto.RedirectUri
+                    });
+
+                    if (!clientCredentialAuthenticationResult.Success)
+                    {
+                        throw new BusinessApplicationException(ExceptionType.Unauthorized, "Could not validate access token");
+                    }
+
+                    Identity identity = await _getIdentityByClientCredentialIdentifierQuery.RunAsync(authenticationGrantTypeFacebook, clientCredentialAuthenticationResult.Identifier);
+
+                    if (identity == null)
+                    {
+                        identity = await _createIdentityCommand.ExecuteAsync();
+
+                        await _registerClientCredentialCommand.ExecuteAsync(identity, authenticationGrantTypeFacebook, new RegisterClientCredentialCommandDdto
                         {
                             Identifier = clientCredentialAuthenticationResult.Identifier
                         });

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Common.ApplicationServices.WebRequests;
+using Common.Setup.Infrastructure.Exceptions;
 using Gateway.ApplicationServices.Applications;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -24,7 +25,7 @@ namespace Gateway.Setup.Infrastructure.ReverseProxy
 
         public async Task Invoke(
             HttpContext context,
-            IHttpClientFactory httpClientFactory,
+            IHttpRequest httpRequest,
             IApplicationKernalService applicationKernalService)
         {
             _applicationKernalService = applicationKernalService;
@@ -34,12 +35,18 @@ namespace Gateway.Setup.Infrastructure.ReverseProxy
             if (targetUri != null)
             {
                 HttpRequestMessage targetRequestMessage = CreateTargetMessage(context, targetUri);
-
-                using (HttpResponseMessage responseMessage = await httpClientFactory.SendAsync(targetRequestMessage, HttpCompletionOption.ResponseHeadersRead, context.RequestAborted))
+                try
                 {
-                    context.Response.StatusCode = (int) responseMessage.StatusCode;
-                    CopyFromTargetResponseHeaders(context, responseMessage);
-                    await responseMessage.Content.CopyToAsync(context.Response.Body);
+                    using (HttpResponseMessage responseMessage = await httpRequest.SendAsync(targetRequestMessage, HttpCompletionOption.ResponseHeadersRead, context.RequestAborted))
+                    {
+                        context.Response.StatusCode = (int) responseMessage.StatusCode;
+                        CopyFromTargetResponseHeaders(context, responseMessage);
+                        await responseMessage.Content.CopyToAsync(context.Response.Body);
+                    }
+                }
+                catch (TaskCanceledException)
+                {
+                    throw new ServiceUnavailableExcpetion();
                 }
 
                 return;

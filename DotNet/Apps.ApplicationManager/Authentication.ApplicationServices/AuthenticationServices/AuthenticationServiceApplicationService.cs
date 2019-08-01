@@ -1,18 +1,21 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Authentication.ApplicationServices.AuthenticationServices.Models;
+using Authentication.ApplicationServices.AuthenticationServices.Models.Facebook;
+using Authentication.ApplicationServices.AuthenticationServices.Models.Google;
+using Authentication.Domain;
 using Authentication.Domain.AuthenticationServices;
-using Authentication.Domain.AuthenticationServices.ChangeClientCredential;
-using Authentication.Domain.AuthenticationServices.CreateClientCredential;
 using AutoMapper;
-using Common.ApplicationServices.Concurrency;
 using Common.ApplicationServices.Exceptions;
 using Common.ApplicationServices.Transactions;
 using Common.Domain.Exceptions;
 using Common.Domain.Persistence;
 using Common.Resources.Builders.Dictionaries;
 using Common.Resources.Extensions;
+using ReferenceData.Domain.Persistence;
+using ReferenceData.Domain.Projections;
 
 namespace Authentication.ApplicationServices.AuthenticationServices
 {
@@ -22,28 +25,24 @@ namespace Authentication.ApplicationServices.AuthenticationServices
 
         private readonly IQueryRepository<AuthenticationService> _queryRepository;
 
+        private readonly IReferenceDataQueryRepository _referenceDataQueryRepository;
+
         private readonly ITransactionManager _transactionManager;
-
-        private readonly ICreateAuthenticationGrantTypeClientCredentialCommand _createAuthenticationGrantTypeClientCredentialCommand;
-
-        private readonly IChangeAuthenticationGrantTypeClientCredentialCommand _changeAuthenticationGrantTypeClientCredentialCommand;
 
         private readonly IMapper _mapper;
 
         public AuthenticationServiceApplicationService(
             ICommandRepository<AuthenticationService> commandRepository,
             IQueryRepository<AuthenticationService> queryRepository,
+            IReferenceDataQueryRepository referenceDataQueryRepository,
             ITransactionManager transactionManager,
-            ICreateAuthenticationGrantTypeClientCredentialCommand createAuthenticationGrantTypeClientCredentialCommand,
-            IChangeAuthenticationGrantTypeClientCredentialCommand changeAuthenticationGrantTypeClientCredentialCommand,
             IMapper mapper)
         {
             _commandRepository = commandRepository;
-            _transactionManager = transactionManager;
-            _createAuthenticationGrantTypeClientCredentialCommand = createAuthenticationGrantTypeClientCredentialCommand;
-            _mapper = mapper;
-            _changeAuthenticationGrantTypeClientCredentialCommand = changeAuthenticationGrantTypeClientCredentialCommand;
             _queryRepository = queryRepository;
+            _referenceDataQueryRepository = referenceDataQueryRepository;
+            _transactionManager = transactionManager;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<AuthenticationServiceAdto>> GetAuthenticationServicesAsync(GetAuthenticationServicesAdto getAuthenticationServicesAdto)
@@ -59,18 +58,11 @@ namespace Authentication.ApplicationServices.AuthenticationServices
                     switch (authenticationService)
                     {
                         case AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential:
-                            authenticationServiceAdtos.Add(new ClientCredentialAuthenticationServiceAdto
-                            {
-                                Id = authenticationGrantTypeClientCredential.Id,
-                                AccessUrl = BuildClientAccessUrl(authenticationGrantTypeClientCredential, getAuthenticationServicesAdto),
-                                Name = authenticationGrantTypeClientCredential.Name
-                            });
+                            authenticationServiceAdtos.Add(_mapper.Map<AuthenticationGrantTypeClientCredential, ClientCredentialAuthenticationServiceAdto>(authenticationGrantTypeClientCredential,
+                                opts => opts.AfterMap((src, dest) => dest.AccessUrl = BuildClientAccessUrl(src, getAuthenticationServicesAdto))));
                             break;
-                        case AuthenticationGrantTypePassword authenticationGrantTypePassword:
-                            authenticationServiceAdtos.Add(new PasswordAuthenticationServiceAdto());
-                            break;
-                        case AuthenticationGrantTypeRefreshToken authenticationGrantTypeRefreshToken:
-                            authenticationServiceAdtos.Add(new RefreshTokenAuthenticationServiceAdto());
+                        default:
+                            authenticationServiceAdtos.Add(_mapper.Map<AuthenticationService, AuthenticationServiceAdto>(authenticationService));
                             break;
                     }
                 }
@@ -81,77 +73,40 @@ namespace Authentication.ApplicationServices.AuthenticationServices
             }
         }
 
-        public async Task<ClientCredentialAdto> CreateClientCredential(CreateClientCredentialAdto createClientCredentialAdto)
+        public async Task<IEnumerable<AuthenticationServiceTypeAdto>> GetAuthenticationServiceTypes()
         {
             using (ITransaction transaction = _transactionManager.Create())
             {
-                try
+                IEnumerable<ReferenceDataValueProjection> referenceDataValueProjections = await _referenceDataQueryRepository.GetAllAsync(ReferenceDataTypes.ClientCredentialAuthenticationGrantType);
+
+                IList<AuthenticationServiceTypeAdto> authenticationServiceTypeAdtos = new List<AuthenticationServiceTypeAdto>();
+
+                foreach (ReferenceDataValueProjection referenceDataValueProjection in referenceDataValueProjections)
                 {
-                    AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential =
-                        await _createAuthenticationGrantTypeClientCredentialCommand.ExecuteAsync(
-                            _mapper.Map<CreateClientCredentialAdto, CreateAuthenticationGrantTypeClientCredentialDdto>(createClientCredentialAdto));
-
-                    await _commandRepository.AddAsync(authenticationGrantTypeClientCredential);
-
-                    transaction.Commit();
-
-                    return CreateClientCredentialAdto(authenticationGrantTypeClientCredential);
-                }
-                catch (DomainValidationRuleException e)
-                {
-                    throw new BusinessValidationRuleApplicationException(e.ValidationResult);
-                }
-            }
-        }
-
-        public async Task<ClientCredentialAdto> GetClientCredentialAsync(GetClientCredentialAdto getClientCredentialAdto)
-        {
-            using (ITransaction transaction = _transactionManager.Create())
-            {
-                if (!(await _queryRepository.GetByIdAsync(getClientCredentialAdto.Id) is AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential))
-                {
-                    throw new BusinessApplicationException(ExceptionType.NotFound, "Authentication service not found");
+                    switch (referenceDataValueProjection.Code)
+                    {
+                        case ClientCredentialAuthenticationGrantTypes.Facebook:
+                            authenticationServiceTypeAdtos.Add(new FacebookAuthenticationServiceTypeAdto
+                            {
+                                Id = referenceDataValueProjection.Id,
+                                Code = referenceDataValueProjection.Code
+                            });
+                            break;
+                        case ClientCredentialAuthenticationGrantTypes.Google:
+                            authenticationServiceTypeAdtos.Add(new GoogleAuthenticationServiceTypeAdto
+                            {
+                                Id = referenceDataValueProjection.Id,
+                                Code = referenceDataValueProjection.Code
+                            });
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(referenceDataValueProjection.Code));
+                    }
                 }
 
                 transaction.Commit();
 
-                return CreateClientCredentialAdto(authenticationGrantTypeClientCredential);
-            }
-        }
-
-        public async Task<ClientCredentialAdto> ChangeClientCredentialAsync(ChangeClientCredentialAdto changeClientCredentialAdto)
-        {
-            using (ITransaction transaction = _transactionManager.Create())
-            {
-                try
-                {
-                    if (!(await _commandRepository.GetWithConcurrencyCheckAsync(changeClientCredentialAdto.Id, changeClientCredentialAdto.Version) is AuthenticationGrantTypeClientCredential
-                        authenticationGrantTypeClientCredential))
-                    {
-                        throw new BusinessApplicationException(ExceptionType.NotFound, "Authentication service not found");
-                    }
-
-                    await _changeAuthenticationGrantTypeClientCredentialCommand.ExecuteAsync(authenticationGrantTypeClientCredential,
-                        _mapper.Map<ChangeClientCredentialAdto, ChangeAuthenticationGrantTypeClientCredentialDdto>(changeClientCredentialAdto));
-
-                    await _commandRepository.UpdateAsync(authenticationGrantTypeClientCredential);
-
-                    transaction.Commit();
-
-                    return CreateClientCredentialAdto(authenticationGrantTypeClientCredential);
-                }
-                catch (DomainValidationRuleException e)
-                {
-                    throw new BusinessValidationRuleApplicationException(e.ValidationResult);
-                }
-                catch (ConcurrencyDomainException e)
-                {
-                    throw new BusinessApplicationException(ExceptionType.Concurrency, e);
-                }
-                catch (NotFoundDomainException e)
-                {
-                    throw new BusinessApplicationException(ExceptionType.NotFound, e);
-                }
+                return authenticationServiceTypeAdtos;
             }
         }
 
@@ -200,22 +155,6 @@ namespace Authentication.ApplicationServices.AuthenticationServices
             }
 
             return authenticationGrantTypeClientCredential.ClientGrantAccessTokenUrl.Format(builder.Build());
-        }
-
-        private static ClientCredentialAdto CreateClientCredentialAdto(AuthenticationGrantTypeClientCredential authenticationGrantTypeClientCredential)
-        {
-            return new ClientCredentialAdto
-            {
-                Id = authenticationGrantTypeClientCredential.Id,
-                Name = authenticationGrantTypeClientCredential.Name,
-                ClientId = authenticationGrantTypeClientCredential.MaskedClientId,
-                ClientSecret = authenticationGrantTypeClientCredential.MaskedClientSecret,
-                ClientGrantAccessTokenUrl = authenticationGrantTypeClientCredential.ClientGrantAccessTokenUrl,
-                GrantAccessTokenUrl = authenticationGrantTypeClientCredential.GrantAccessTokenUrl,
-                ValidateAccessTokenUrl = authenticationGrantTypeClientCredential.ValidateAccessTokenUrl,
-                AppAccessToken = authenticationGrantTypeClientCredential.MaskedAppAccessToken,
-                Version = ConcurrencyVersionFactory.CreateFromEntity(authenticationGrantTypeClientCredential)
-            };
         }
     }
 }

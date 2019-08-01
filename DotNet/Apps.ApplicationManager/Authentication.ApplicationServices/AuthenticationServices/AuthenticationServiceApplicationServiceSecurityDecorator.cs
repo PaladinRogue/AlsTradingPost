@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Authentication.ApplicationServices.AuthenticationServices.Authorisation;
 using Authentication.ApplicationServices.AuthenticationServices.Models;
 using Common.Authorisation;
 using Common.Authorisation.ApplicationServices;
@@ -28,22 +27,10 @@ namespace Authentication.ApplicationServices.AuthenticationServices
                 DefaultAuthorisationContext.Create(AuthorisationResource.AuthenticationService, AuthorisationAction.Search));
         }
 
-        public Task<ClientCredentialAdto> CreateClientCredential(CreateClientCredentialAdto createClientCredentialAdto)
+        public Task<IEnumerable<AuthenticationServiceTypeAdto>> GetAuthenticationServiceTypes()
         {
-            return _securityApplicationService.SecureAsync(() => _authenticationServiceApplicationService.CreateClientCredential(createClientCredentialAdto),
+            return _securityApplicationService.SecureAsync(() => _authenticationServiceApplicationService.GetAuthenticationServiceTypes(),
                 DefaultAuthorisationContext.Create(AuthorisationResource.AuthenticationService, AuthorisationAction.Create));
-        }
-
-        public Task<ClientCredentialAdto> GetClientCredentialAsync(GetClientCredentialAdto getClientCredentialAdto)
-        {
-            return _securityApplicationService.SecureAsync(() => _authenticationServiceApplicationService.GetClientCredentialAsync(getClientCredentialAdto),
-                DefaultAuthorisationContext.Create(AuthorisationResource.AuthenticationService, AuthorisationAction.Get));
-        }
-
-        public Task<ClientCredentialAdto> ChangeClientCredentialAsync(ChangeClientCredentialAdto changeClientCredentialAdto)
-        {
-            return _securityApplicationService.SecureAsync(() => _authenticationServiceApplicationService.ChangeClientCredentialAsync(changeClientCredentialAdto),
-                GetAuthenticationServiceAuthorisationContext.Create(changeClientCredentialAdto.Id));
         }
 
         public Task DeleteClientCredentialAsync(DeleteClientCredentialAdto deleteClientCredentialAdto)

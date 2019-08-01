@@ -33,9 +33,15 @@ namespace Authentication.ApplicationServices.Authentication
                 DefaultAuthorisationContext.Create(AuthorisationResource.Authenticate, AuthorisationAction.Create));
         }
 
-        public Task<JwtAdto> ClientCredentialAsync(ClientCredentialAdto clientCredentialAdto)
+        public Task<JwtAdto> GoogleAsync(ClientCredentialAdto clientCredentialAdto)
         {
-            return _securityApplicationService.SecureAsync(() => _authenticationApplicationService.ClientCredentialAsync(clientCredentialAdto),
+            return _securityApplicationService.SecureAsync(() => _authenticationApplicationService.GoogleAsync(clientCredentialAdto),
+                DefaultAuthorisationContext.Create(AuthorisationResource.Authenticate, AuthorisationAction.Create));
+        }
+
+        public Task<JwtAdto> FacebookAsync(ClientCredentialAdto clientCredentialAdto)
+        {
+            return _securityApplicationService.SecureAsync(() => _authenticationApplicationService.FacebookAsync(clientCredentialAdto),
                 DefaultAuthorisationContext.Create(AuthorisationResource.Authenticate, AuthorisationAction.Create));
         }
     }

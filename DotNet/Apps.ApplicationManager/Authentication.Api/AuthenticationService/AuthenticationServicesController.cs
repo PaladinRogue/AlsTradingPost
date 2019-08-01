@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Authentication.ApplicationServices.AuthenticationServices;
 using Authentication.ApplicationServices.AuthenticationServices.Models;
 using Authentication.Setup.Infrastructure.Authorisation;
 using Authentication.Setup.Infrastructure.Routing;
+using AutoMapper;
 using Common.Api.Builders.Resource;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,12 +19,16 @@ namespace Authentication.Api.AuthenticationService
 
         private readonly IAuthenticationServiceApplicationService _authenticationServiceApplicationService;
 
+        private readonly IMapper _mapper;
+
         public AuthenticationServicesController(
             IResourceBuilder resourceBuilder,
-            IAuthenticationServiceApplicationService authenticationServiceApplicationService)
+            IAuthenticationServiceApplicationService authenticationServiceApplicationService,
+            IMapper mapper)
         {
             _resourceBuilder = resourceBuilder;
             _authenticationServiceApplicationService = authenticationServiceApplicationService;
+            _mapper = mapper;
         }
 
         [AllowAnonymous]
@@ -41,25 +44,7 @@ namespace Authentication.Api.AuthenticationService
 
             return Ok(_resourceBuilder.BuildCollection(new AuthenticationServicesResource
             {
-                Results = authenticationServiceAdtos.Select<AuthenticationServiceAdto, AuthenticationServiceSummaryResource>(a =>
-                {
-                    switch (a)
-                    {
-                        case PasswordAuthenticationServiceAdto passwordAuthenticationServiceAdto:
-                            return new PasswordAuthenticationServiceSummaryResource();
-                        case RefreshTokenAuthenticationServiceAdto refreshTokenAuthenticationServiceAdto:
-                            return new RefreshTokenAuthenticationServiceSummaryResource();
-                        case ClientCredentialAuthenticationServiceAdto clientCredentialAuthenticationServiceAdto:
-                            return new ClientCredentialAuthenticationServiceSummaryResource
-                            {
-                                Id = clientCredentialAuthenticationServiceAdto.Id,
-                                AccessUrl = clientCredentialAuthenticationServiceAdto.AccessUrl,
-                                Name = clientCredentialAuthenticationServiceAdto.Name
-                            };
-                        default:
-                            throw new ArgumentOutOfRangeException(a.GetType().Name);
-                    }
-                }).ToList()
+                Results = _mapper.Map<IEnumerable<AuthenticationServiceAdto>, IList<AuthenticationServiceSummaryResource>>(authenticationServiceAdtos)
             }));
         }
     }

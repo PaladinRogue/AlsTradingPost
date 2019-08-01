@@ -2,7 +2,6 @@
 using Authentication.Domain.Identities;
 using Authentication.Domain.NotificationTypes;
 using Authentication.Domain.Users;
-using Authentication.Persistence.AuthenticationServices;
 using Authentication.Persistence.Identities;
 using Authentication.Persistence.NotificationTypes;
 using Common.Domain.DataProtectors;
@@ -11,6 +10,7 @@ using Persistence.EntityFramework.Infrastructure.DateTimeConverters;
 using Persistence.EntityFramework.Infrastructure.Extensions;
 using ReferenceData.Domain;
 using ReferenceData.Persistence;
+using AuthenticationGrantTypes = Authentication.Persistence.AuthenticationServices.AuthenticationGrantTypes;
 using Identity = Authentication.Domain.Identities.Identity;
 
 namespace Authentication.Persistence
@@ -30,7 +30,6 @@ namespace Authentication.Persistence
         public DbSet<User> Users { get; set; }
 
         public DbSet<ReferenceDataType> ReferenceDataTypes { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -64,7 +63,8 @@ namespace Authentication.Persistence
             modelBuilder.Entity<AuthenticationService>()
                 .HasDiscriminator<string>("Type")
                 .HasValue<AuthenticationGrantTypePassword>(AuthenticationGrantTypes.Password)
-                .HasValue<AuthenticationGrantTypeClientCredential>(AuthenticationGrantTypes.ClientCredential)
+                .HasValue<AuthenticationGrantTypeFacebook>(AuthenticationGrantTypes.Facebook)
+                .HasValue<AuthenticationGrantTypeGoogle>(AuthenticationGrantTypes.Google)
                 .HasValue<AuthenticationGrantTypeRefreshToken>(AuthenticationGrantTypes.RefreshToken);
 
             modelBuilder.Entity<AuthenticationGrantTypeRefreshToken>()
@@ -74,6 +74,14 @@ namespace Authentication.Persistence
             modelBuilder.Entity<AuthenticationGrantTypePassword>()
                 .ProtectSensitiveInformation()
                 .HasBaseType<AuthenticationService>();
+
+            modelBuilder.Entity<AuthenticationGrantTypeFacebook>()
+                .ProtectSensitiveInformation()
+                .HasBaseType<AuthenticationGrantTypeClientCredential>();
+
+            modelBuilder.Entity<AuthenticationGrantTypeGoogle>()
+                .ProtectSensitiveInformation()
+                .HasBaseType<AuthenticationGrantTypeClientCredential>();
 
             modelBuilder.Entity<AuthenticationGrantTypeClientCredential>()
                 .ProtectSensitiveInformation()

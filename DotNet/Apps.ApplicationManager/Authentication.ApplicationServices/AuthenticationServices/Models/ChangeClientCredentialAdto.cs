@@ -20,8 +20,6 @@ namespace Authentication.ApplicationServices.AuthenticationServices.Models
 
         public string ValidateAccessTokenUrl { get; set; }
 
-        public string AppAccessToken { get; set; }
-
         public IConcurrencyVersion Version { get; set; }
     }
 }

@@ -12,13 +12,15 @@ namespace Authentication.Api
         public const string RefreshToken = nameof(RefreshToken);
         public const string AuthenticatePassword = nameof(AuthenticatePassword);
         public const string AuthenticateRefreshToken = nameof(AuthenticateRefreshToken);
-        public const string AuthenticateClientCredential = nameof(AuthenticateClientCredential);
         public const string ConfirmIdentity = nameof(ConfirmIdentity);
         public const string ResendConfirmIdentity = nameof(ResendConfirmIdentity);
+        public const string AuthenticateFacebook = nameof(AuthenticateFacebook);
+        public const string AuthenticateGoogle = nameof(AuthenticateGoogle);
 
         public const string AuthenticationService = nameof(AuthenticationService);
         public const string AuthenticationServicePassword = nameof(AuthenticationServicePassword);
-        public const string AuthenticationServiceClientCredential = nameof(AuthenticationServiceClientCredential);
+        public const string AuthenticationServiceFacebook = nameof(AuthenticationServiceFacebook);
+        public const string AuthenticationServiceGoogle = nameof(AuthenticationServiceGoogle);
         public const string AuthenticationServiceRefreshToken = nameof(AuthenticationServiceRefreshToken);
     }
 }

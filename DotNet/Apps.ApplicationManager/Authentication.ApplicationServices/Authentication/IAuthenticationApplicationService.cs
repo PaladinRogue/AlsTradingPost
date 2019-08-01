@@ -10,6 +10,8 @@ namespace Authentication.ApplicationServices.Authentication
 
         Task<JwtAdto> RefreshTokenAsync(RefreshTokenAdto refreshTokenAdto);
 
-        Task<JwtAdto> ClientCredentialAsync(ClientCredentialAdto clientCredentialAdto);
+        Task<JwtAdto> GoogleAsync(ClientCredentialAdto clientCredentialAdto);
+
+        Task<JwtAdto> FacebookAsync(ClientCredentialAdto clientCredentialAdto);
     }
 }

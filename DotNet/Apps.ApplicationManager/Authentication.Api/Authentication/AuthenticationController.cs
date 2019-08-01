@@ -76,20 +76,49 @@ namespace Authentication.Api.Authentication
         }
 
         [AllowAnonymous]
-        [HttpGet("clientCredential/{id}/resourceTemplate", Name = RouteDictionary.AuthenticateClientCredentialResourceTemplate)]
-        public IActionResult GetClientCredentialResourceTemplate(Guid id)
+        [HttpGet("google/{id}/resourceTemplate", Name = RouteDictionary.AuthenticateGoogleResourceTemplate)]
+        public IActionResult GetGoogleResourceTemplate(Guid id)
         {
-            return Ok(_resourceBuilder.Build(new ClientCredentialTemplate
+            return Ok(_resourceBuilder.Build(new AuthenticateGoogleTemplate
             {
                 Id = id
             }));
         }
 
         [AllowAnonymous]
-        [HttpPost("clientCredential/{id}", Name = RouteDictionary.AuthenticateClientCredential)]
-        public async Task<IActionResult> ClientCredential(Guid id, ClientCredentialTemplate template)
+        [HttpPost("google/{id}", Name = RouteDictionary.AuthenticateGoogle)]
+        public async Task<IActionResult> Google(Guid id, AuthenticateGoogleTemplate template)
         {
-            JwtAdto jwt = await _authenticationApplicationService.ClientCredentialAsync(new ClientCredentialAdto
+            JwtAdto jwt = await _authenticationApplicationService.GoogleAsync(new ClientCredentialAdto
+            {
+                Id = id,
+                Token = template.Token,
+                RedirectUri = template.RedirectUri
+            });
+
+            return Ok(_resourceBuilder.Build(new JwtResource
+            {
+                AuthToken = jwt.AuthToken,
+                ExpiresIn = jwt.ExpiresIn,
+                SessionId = jwt.SessionId
+            }));
+        }
+
+        [AllowAnonymous]
+        [HttpGet("facebook/{id}/resourceTemplate", Name = RouteDictionary.AuthenticateFacebookResourceTemplate)]
+        public IActionResult GetClientCredentialResourceTemplate(Guid id)
+        {
+            return Ok(_resourceBuilder.Build(new AuthenticateFacebookTemplate
+            {
+                Id = id
+            }));
+        }
+
+        [AllowAnonymous]
+        [HttpPost("facebook/{id}", Name = RouteDictionary.AuthenticateFacebook)]
+        public async Task<IActionResult> ClientCredential(Guid id, AuthenticateFacebookTemplate template)
+        {
+            JwtAdto jwt = await _authenticationApplicationService.FacebookAsync(new ClientCredentialAdto
             {
                 Id = id,
                 Token = template.Token,

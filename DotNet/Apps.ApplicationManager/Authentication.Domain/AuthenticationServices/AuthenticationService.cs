@@ -1,5 +1,4 @@
-﻿using System;
-using Common.Domain.Aggregates;
+﻿using Common.Domain.Aggregates;
 using Common.Domain.Entities;
 
 namespace Authentication.Domain.AuthenticationServices
