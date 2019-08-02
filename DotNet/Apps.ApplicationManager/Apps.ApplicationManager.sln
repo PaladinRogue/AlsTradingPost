@@ -43,7 +43,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.Api", "Authe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.ApplicationServices", "..\Common\Common.ApplicationServices\Common.ApplicationServices.csproj", "{4D1F7BED-D763-46CE-8F21-47FC4285C75D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Authorisation", "..\Common.Authorisation\Common.Authorisation\Common.Authorisation.csproj", "{D8D5DAC6-4A8F-4AEC-8C9D-8EF2EBF6FF5F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Authorisation", "..\Common.Authorisation\Common.Authorisation.csproj", "{D8D5DAC6-4A8F-4AEC-8C9D-8EF2EBF6FF5F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway.ApplicationServices", "Gateway.ApplicationServices\Gateway.ApplicationServices.csproj", "{93E9E08B-C081-45C9-8139-C0742B360581}"
 EndProject

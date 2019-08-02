@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common.Authorisation\Common.Authorisation\Common.Authorisation.csproj" />
+    <ProjectReference Include="..\..\Common.Authorisation\Common.Authorisation.csproj" />
     <ProjectReference Include="..\..\Common.ReferenceData\ReferenceData.Setup\ReferenceData.Setup.csproj" />
     <ProjectReference Include="..\..\Common\Common.Api\Common.Api.csproj" />
     <ProjectReference Include="..\..\Persistence\Persistence.EntityFramework\Persistence.EntityFramework.csproj" />
