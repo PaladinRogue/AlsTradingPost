@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
-using Common.Domain.Models.Interfaces;
-using Common.Resources.Concurrency.Interfaces;
+using Common.Domain.Concurrency.Interfaces;
+using Common.Domain.Entities;
 
 namespace Common.Domain.Exceptions
 {
@@ -11,7 +11,11 @@ namespace Common.Domain.Exceptions
         public ConcurrencyDomainException(IVersionedEntity entity, Exception innerException)
             : base(_formatConcurrencyException(entity.GetType(), entity.Id, entity.Version), innerException)
         {
-            
+        }
+
+        public ConcurrencyDomainException()
+            : base("No concurrency token has been provided")
+        {
         }
 
         public ConcurrencyDomainException(MemberInfo type, Guid id, IConcurrencyVersion version)
@@ -24,14 +28,9 @@ namespace Common.Domain.Exceptions
         {
         }
 
-        private static string _formatConcurrencyException(MemberInfo type, Guid id, byte[] version)
+        private static string _formatConcurrencyException(MemberInfo type, Guid id, int version)
         {
-            if (BitConverter.IsLittleEndian)
-            {
-                Array.Reverse(version);
-            }
-
-            return $"Concurrency check failed for entity: { type.Name } with Id: { id } and Version: { BitConverter.ToInt32(version, 0) }";
+            return $"Concurrency check failed for entity: { type.Name } with Id: { id } and Version: { version.ToString() }";
         }
     }
 }

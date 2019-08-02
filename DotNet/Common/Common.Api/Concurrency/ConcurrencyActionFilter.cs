@@ -2,9 +2,9 @@
 using System.Linq;
 using Common.Api.Builders.Resource;
 using Common.Api.Concurrency.Interfaces;
-using Common.Resources.Concurrency;
+using Common.Domain.Concurrency.Interfaces;
+using Common.Setup.Infrastructure.Concurrency;
 using Common.Setup.Infrastructure.Constants;
-using Common.Setup.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
@@ -13,24 +13,27 @@ namespace Common.Api.Concurrency
 {
     public class ConcurrencyActionFilter : IActionFilter
     {
-        private const HttpVerb OnActionExecutingVerbs = HttpVerb.Put | HttpVerb.Delete;
+        private const HttpVerb OnActionExecutingVerbs = HttpVerb.Put | HttpVerb.Post | HttpVerb.Delete;
 
         private const HttpVerb OnActionExecutedVerbs = HttpVerb.Get | HttpVerb.Put | HttpVerb.Post;
+
+        private readonly IConcurrencyVersionProvider _concurrencyVersionProvider;
+
+        public ConcurrencyActionFilter(IConcurrencyVersionProvider concurrencyVersionProvider)
+        {
+            _concurrencyVersionProvider = concurrencyVersionProvider;
+        }
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
             if (OnActionExecutingVerbs.HasFlag(HttpVerbMapper.GetVerb(context.HttpContext.Request.Method)))
             {
-                string concurrencyValue = context.HttpContext.Request.Headers[ConcurrencyHeaders.IfMatch];
+                IVersioned<IConcurrencyVersion> resource = context.ActionArguments.Values.OfType<IVersioned<IConcurrencyVersion>>().SingleOrDefault();
 
-                if (concurrencyValue == null) throw new PreConditionFailedException();
-
-                object resourceObj = context.ActionArguments.Values.OfType<IVersionedResource>().SingleOrDefault();
-                if (resourceObj == null) throw new BadRequestException();
-
-                IVersionedResource resource = (IVersionedResource)resourceObj;
-
-                resource.Version = ConcurrencyVersionFactory.CreateFromBase64String(concurrencyValue);
+                if (resource != null)
+                {
+                    resource.Version = _concurrencyVersionProvider.Get();
+                }
             }
         }
 

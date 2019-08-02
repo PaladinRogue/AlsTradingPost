@@ -1,5 +1,5 @@
 ﻿using System;
-using Common.Application.Authorisation;
+using Common.Authorisation.Contexts;
 using Common.Setup.Infrastructure.Constants;
 
 namespace Common.Api.Links
@@ -14,13 +14,8 @@ namespace Common.Api.Links
         public HttpVerb HttpVerb { get; }
 
         public Type AuthorisationContextType { get; }
-        
-        public LinkAttribute(string linkName, string uriName, HttpVerb httpVerb)
-            : this(linkName, uriName, httpVerb, null)
-        {
-        }
 
-        public LinkAttribute(string linkName, string uriName, HttpVerb httpVerb, Type authorisationContextType)
+        public LinkAttribute(string linkName, string uriName, HttpVerb httpVerb, Type authorisationContextType = null)
         {
             LinkName = linkName;
             UriName = uriName;

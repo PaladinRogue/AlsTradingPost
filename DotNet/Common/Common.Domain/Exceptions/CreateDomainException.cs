@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Reflection;
-using Common.Domain.Models.Interfaces;
+using Common.Domain.Entities;
 
 namespace Common.Domain.Exceptions
 {

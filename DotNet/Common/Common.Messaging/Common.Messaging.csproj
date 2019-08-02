@@ -1,8 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common.ApplicationServices\Common.ApplicationServices.csproj" />
     <ProjectReference Include="..\Common.Resources\Common.Resources.csproj" />
   </ItemGroup>
 </Project>

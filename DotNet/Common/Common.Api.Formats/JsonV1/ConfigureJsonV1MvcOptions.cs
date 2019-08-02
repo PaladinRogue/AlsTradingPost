@@ -13,7 +13,8 @@ namespace Common.Api.Formats.JsonV1
         private readonly ObjectPoolProvider _objectPoolProvider;
         private readonly MvcJsonOptions _jsonOptions;
 
-        public ConfigureJsonV1MvcOptions(ILogger<MvcOptions> logger,
+        public ConfigureJsonV1MvcOptions(
+            ILogger<MvcOptions> logger,
             ObjectPoolProvider objectPoolProvider,
             IOptions<MvcJsonOptions> jsonOptions)
         {
@@ -27,7 +28,8 @@ namespace Common.Api.Formats.JsonV1
             _jsonOptions.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             _jsonOptions.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
 
-            options.UseJsonV1InputFormatter(_logger, _objectPoolProvider, _jsonOptions, _jsonOptions.SerializerSettings)
+            options
+                .UseJsonV1InputFormatter(_logger, _objectPoolProvider, _jsonOptions, _jsonOptions.SerializerSettings)
                 .UseJsonV1OutputFormatter(_jsonOptions.SerializerSettings);
         }
     }

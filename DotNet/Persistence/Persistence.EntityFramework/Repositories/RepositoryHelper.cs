@@ -2,65 +2,99 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
+using System.Threading.Tasks;
+using Common.Domain.Concurrency.Interfaces;
+using Common.Domain.Entities;
 using Common.Domain.Exceptions;
-using Common.Domain.Models.Interfaces;
+using Common.Domain.Models;
 using Common.Resources.Extensions;
 using Common.Resources.Sorting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Persistence.EntityFramework.Repositories
 {
     public static class RepositoryHelper
     {
-        public static IQueryable<T> Get<T>(
-            IQueryable<T> results, 
+        public static Task<IQueryable<T>> GetAsync<T>(
+            IQueryable<T> results,
             IList<SortBy> sort,
             Expression<Func<T, bool>> predicate = null) where T : IEntity
         {
             IQueryable<T> filteredResults = Filter(results, predicate);
-            if (sort == null || !sort.Any()) return filteredResults;
+            if (sort == null || !sort.Any()) return Task.FromResult(filteredResults);
 
             SortBy firstSort = sort.First();
-            IOrderedQueryable<T> orderedResults = OrderBy(filteredResults, firstSort.PropertyName.CreatePropertyAccessor<T>(), firstSort.IsAscending);
-            orderedResults = sort.Skip(1).Aggregate(orderedResults, (current, sortBy) => ThenBy(current, sortBy.PropertyName.CreatePropertyAccessor<T>(), sortBy.IsAscending));
+            IOrderedQueryable<T> orderedResults = OrderBy(filteredResults, firstSort.PropertyName.CreatePropertyAccessor<T, object>(), firstSort.IsAscending);
+            orderedResults = sort.Skip(1).Aggregate(orderedResults, (current, sortBy) => ThenBy(current, sortBy.PropertyName.CreatePropertyAccessor<T, object>(), sortBy.IsAscending));
 
-            return orderedResults;
+            return Task.FromResult((IQueryable<T>) orderedResults);
         }
 
-        public static IQueryable<T> GetPage<T>(
-            IQueryable<T> results, 
-            int pageSize, int pageOffset, out int totalResults,
+        public static Task<IPagedResult<T>> GetPage<T>(
+            IQueryable<T> results,
+            int pageSize, int pageOffset,
             IList<SortBy> sort,
             Expression<Func<T, bool>> predicate = null) where T : IEntity
         {
             IQueryable<T> filteredResults = Filter(results, predicate);
-            if (sort == null || !sort.Any()) return GetPage(filteredResults, pageSize, pageOffset, out totalResults);
+            if (sort == null || !sort.Any()) return GetPageAsync(filteredResults, pageSize, pageOffset);
 
             SortBy firstSort = sort.First();
-            IOrderedQueryable<T> orderedResults = OrderBy(filteredResults, firstSort.PropertyName.CreatePropertyAccessor<T>(), firstSort.IsAscending);
-            orderedResults = sort.Skip(1).Aggregate(orderedResults, (current, sortBy) => ThenBy(current, sortBy.PropertyName.CreatePropertyAccessor<T>(), sortBy.IsAscending));
+            IOrderedQueryable<T> orderedResults = OrderBy(filteredResults, firstSort.PropertyName.CreatePropertyAccessor<T, object>(), firstSort.IsAscending);
+            orderedResults = sort.Skip(1).Aggregate(orderedResults, (current, sortBy) => ThenBy(current, sortBy.PropertyName.CreatePropertyAccessor<T, object>(), sortBy.IsAscending));
 
-            return GetPage(orderedResults ?? filteredResults, pageSize, pageOffset, out totalResults);
+            return GetPageAsync(orderedResults ?? filteredResults, pageSize, pageOffset);
         }
 
-
-        public static bool CheckExists<T>(IQueryable<T> results, Guid id) where T : IEntity
+        public static Task<bool> CheckExistsAsync<T>(IQueryable<T> results, Expression<Func<T, bool>> predicate) where T : IEntity
         {
-            return results.Any(e => e.Id == id);
+            return Filter(results, predicate).AnyAsync();
         }
 
-        public static bool CheckConcurrency<T>(IQueryable<T> results, Guid id, byte[] version) where T : IVersionedEntity
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="results"></param>
+        /// <param name="id"></param>
+        /// <param name="version"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        /// <exception cref="ConcurrencyDomainException"></exception>
+        /// <exception cref="NotFoundDomainException"></exception>
+        public static async Task<T> GetWithConcurrencyCheckAsync<T>(IQueryable<T> results, Guid id, IConcurrencyVersion version) where T : IVersionedEntity
         {
-            return results.Any(e => e.Id == id && e.Version == version);
+            if (version == null)
+            {
+                throw new ConcurrencyDomainException();
+            }
+
+            try
+            {
+                T versionedEntity = await results.SingleOrDefaultAsync(e => e.Id == id);
+
+                if (versionedEntity == null)
+                {
+                    throw new NotFoundDomainException($"Entity of type: {nameof(T)} not found with Id: {id}");
+                }
+
+                if (versionedEntity.Version != version.Version)
+                {
+                    throw new ConcurrencyDomainException(typeof(T), id, version);
+                }
+
+                return versionedEntity;
+            }
+            catch (InvalidOperationException)
+            {
+                throw new ConcurrencyDomainException(typeof(T), id, version);
+            }
         }
 
-        public static T GetById<T>(IQueryable<T> results, Guid id) where T : IEntity
+        public static async Task<T> GetByIdAsync<T>(IQueryable<T> results, Guid id) where T : IEntity
         {
             try
             {
-                return Filter(results, e => e.Id == id).SingleOrDefault();
+                return await Filter(results, e => e.Id == id).SingleOrDefaultAsync();
             }
             catch (InvalidOperationException ex)
             {
@@ -68,11 +102,11 @@ namespace Persistence.EntityFramework.Repositories
             }
         }
 
-        public static T GetSingle<T>(IQueryable<T> results, Expression<Func<T, bool>> predicate)
+        public static async Task<T> GetSingleAsync<T>(IQueryable<T> results, Expression<Func<T, bool>> predicate)
         {
             try
             {
-                return Filter(results, predicate).SingleOrDefault();
+                return await Filter(results, predicate).SingleOrDefaultAsync();
             }
             catch (InvalidOperationException ex)
             {
@@ -80,13 +114,24 @@ namespace Persistence.EntityFramework.Repositories
             }
         }
 
-        public static void Add<T>(DbSet<T> dbSet, DbContext context, T entity) where T : class, IVersionedEntity
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="dbSet"></param>
+        /// <param name="context"></param>
+        /// <param name="entity"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <exception cref="ConcurrencyDomainException"></exception>
+        /// <exception cref="CreateDomainException"></exception>
+        public static async Task AddAsync<T>(DbSet<T> dbSet, DbContext context, T entity) where T : class, IVersionedEntity
         {
             try
             {
-                dbSet.Add(entity);
+                entity.UpdateVersion();
 
-                context.SaveChanges();
+                await dbSet.AddAsync(entity);
+
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException e)
             {
@@ -98,29 +143,24 @@ namespace Persistence.EntityFramework.Repositories
             }
         }
 
-        public static void Update<T>(DbSet<T> dbSet, DbContext context, T entity) where T : class, IVersionedEntity
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="dbSet"></param>
+        /// <param name="context"></param>
+        /// <param name="entity"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <exception cref="ConcurrencyDomainException"></exception>
+        /// <exception cref="UpdateDomainException"></exception>
+        public static async Task UpdateAsync<T>(DbSet<T> dbSet, DbContext context, T entity) where T : class, IVersionedEntity
         {
             try
             {
-                EntityEntry existingTrackedEntity = context.ChangeTracker.Entries<T>().SingleOrDefault(e => e.Entity.Id == entity.Id);
+                entity.UpdateVersion();
 
-                if (existingTrackedEntity == null)
-                {
-                    dbSet.Update(entity);
-                }
-                else
-                {
-                    T existingEntity = (T)existingTrackedEntity.Entity;
-                    foreach (PropertyInfo propertyInfo in entity.GetType().GetProperties())
-                    {
-                        if (propertyInfo.CanWrite)
-                        {
-                            propertyInfo.SetValue(existingEntity, propertyInfo.GetValue(entity));
-                        }
-                    }
-                }
-                
-                context.SaveChanges();
+                dbSet.Update(entity);
+
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException e)
             {
@@ -132,15 +172,24 @@ namespace Persistence.EntityFramework.Repositories
             }
         }
 
-        public static void Delete<T>(DbSet<T> dbSet, DbContext context, Guid id) where T : class, IVersionedEntity
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="dbSet"></param>
+        /// <param name="context"></param>
+        /// <param name="id"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <exception cref="ConcurrencyDomainException"></exception>
+        /// <exception cref="DeleteDomainException"></exception>
+        public static async Task DeleteAsync<T>(DbSet<T> dbSet, DbContext context, Guid id) where T : class, IVersionedEntity
         {
-            T entity = GetById(dbSet, id);
+            T entity = await GetByIdAsync(dbSet, id);
 
             try
             {
                 dbSet.Remove(entity);
 
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException e)
             {
@@ -151,7 +200,7 @@ namespace Persistence.EntityFramework.Repositories
                 throw new DeleteDomainException(entity, e);
             }
         }
-        
+
         private static IQueryable<T> Filter<T>(IQueryable<T> results, Expression<Func<T, bool>> predicate)
         {
             return predicate != null ? results.Where(predicate) : results;
@@ -178,12 +227,10 @@ namespace Persistence.EntityFramework.Repositories
 
             return results;
         }
-        
-        private static IQueryable<T> GetPage<T>(IQueryable<T> results, int pageSize, int pageOffset, out int totalResults) where T : IEntity
-        {
-            totalResults = results.Count();
 
-            return results.Skip(pageOffset).Take(pageSize);
+        private static async Task<IPagedResult<T>> GetPageAsync<T>(IQueryable<T> results, int pageSize, int pageOffset) where T : IEntity
+        {
+            return PagedResult<T>.Create(results.Skip(pageOffset).Take(pageSize), await results.CountAsync());
         }
     }
 }

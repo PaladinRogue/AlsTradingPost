@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Common.Api.Builders.Dictionary;
 using Common.Api.Sorting;
+using Common.Resources.Builders.Dictionaries;
 using Common.Setup.Infrastructure.Constants;
 
 namespace Common.Api.Links

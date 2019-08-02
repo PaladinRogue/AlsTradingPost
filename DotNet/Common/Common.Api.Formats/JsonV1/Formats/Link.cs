@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Common.Api.Links;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Common.Api.Formats.JsonV1.Formats
 {

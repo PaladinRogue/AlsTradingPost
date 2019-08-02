@@ -5,6 +5,7 @@ using System.Reflection;
 using Common.Api.Pagination;
 using Common.Api.Pagination.Interfaces;
 using Common.Api.Resources;
+using Common.Setup.Infrastructure.Constants;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Common.Api.Links
@@ -12,7 +13,9 @@ namespace Common.Api.Links
     public class DefaultLinkBuilder : ILinkBuilder
     {
         private readonly ILinkFactory _linkFactory;
+
         private readonly IPagingLinkBuilder _pagingLinkBuilder;
+
         private readonly IServiceProvider _services;
 
         public DefaultLinkBuilder(
@@ -25,7 +28,12 @@ namespace Common.Api.Links
             _services = services;
         }
 
-        public Links BuildLinks(IResource resource, ITemplate template = null)
+        public Links BuildLinks<TResource>(TResource resource) where TResource : IResource
+        {
+            return BuildLinks<TResource, ITemplate>(resource, null);
+        }
+
+        public Links BuildLinks<TResource, TTemplate>(TResource resource, TTemplate template) where TResource : IResource where TTemplate : IResource
         {
             IList<ILink> links = resource.GetType().GetCustomAttributes<LinkAttribute>()
                 .GroupBy(linkAttribute => new
@@ -53,6 +61,7 @@ namespace Common.Api.Links
                         template,
                         basePath);
                 })
+                .Where(link => link.AllowVerbs != HttpVerb.None)
                 .ToList();
 
             ILink selfLink = links.FirstOrDefault(l => l.Name == LinkType.Self);

@@ -6,8 +6,10 @@ using Common.Api.Concurrency.Interfaces;
 using Common.Api.Links;
 using Common.Api.Meta;
 using Common.Api.Pagination.Interfaces;
+using Common.Api.PropertyTypes;
 using Common.Api.Resources;
 using Common.Api.Validation.Attributes;
+using Common.Domain.Concurrency.Interfaces;
 
 namespace Common.Api.Builders.Resource
 {
@@ -20,19 +22,35 @@ namespace Common.Api.Builders.Resource
             _linkBuilder = linkBuilder;
         }
 
-        public BuiltResource Build(IResource resource)
+        private static string GetFieldType(PropertyInfo propertyInfo)
+        {
+            if (propertyInfo.GetCustomAttribute<EmailAddressAttribute>() != null)
+            {
+                return FieldType.Email;
+            }
+
+            if (propertyInfo.GetCustomAttribute<PasswordAttribute>() != null)
+            {
+                return FieldType.Password;
+            }
+
+            return null;
+        }
+
+        public BuiltResource Build<TResource>(TResource resource) where TResource: IResource
         {
             Type resourceType = resource.GetType();
-            IEnumerable<PropertyInfo> properties = resource.GetType().GetProperties().Where(p => 
+            IEnumerable<PropertyInfo> properties = resourceType.GetProperties().Where(p =>
                 p.Name != nameof(IEntityResource.Id) && p.Name != nameof(IVersionedResource.Version) );
 
             return new BuiltResource
             {
-                Id = resource is IEntityResource entityResource ? entityResource.Id : (Guid?)null,
+                Id = resource is IEntityResource entityResource ?  entityResource.Id : (Guid?)null,
                 Type = resourceType,
-                Properties = properties.Select(p => new Property
+                Properties = properties.Where(p => !p.GetCustomAttributes<IgnoreAttribute>().Any()).Select(p => new Property
                 {
                     Type = p.PropertyType,
+                    FieldType = GetFieldType(p),
                     Name = p.Name,
                     Value = p.GetValue(resource),
                     Constraints = new Constraints
@@ -49,27 +67,40 @@ namespace Common.Api.Builders.Resource
                     }
                 }),
                 Links = _linkBuilder.BuildLinks(resource),
-                Version = resource is IVersionedResource versionedResource ? versionedResource.Version : null
+                Version = resource is IVersioned<IConcurrencyVersion> versionedResource ? versionedResource.Version : null
             };
         }
-        
-        public BuiltCollectionResource Build<T>(ICollectionResource<T> collectionResource, ITemplate template) where T: IResource
+
+        public BuiltCollectionResource BuildCollection<T>(ICollectionResource<T> collectionResource) where T : IResource
         {
             BuiltCollectionResource builtCollectionResource = new BuiltCollectionResource
             {
-                BuiltResources = collectionResource.Results.Select(r => Build(r)),
+                TotalResults = collectionResource.Results.Count,
+                BuiltResources = collectionResource.Results.Select(Build),
+                Links = _linkBuilder.BuildLinks(collectionResource)
+            };
+
+            return builtCollectionResource;
+        }
+
+        public BuiltCollectionResource BuildCollection<T>(ICollectionResource<T> collectionResource, ITemplate template) where T: IResource
+        {
+            BuiltCollectionResource builtCollectionResource = new BuiltCollectionResource
+            {
+                TotalResults = collectionResource.Results.Count,
+                BuiltResources = collectionResource.Results.Select(Build),
                 Links = _linkBuilder.BuildLinks(collectionResource, template)
             };
 
             return builtCollectionResource;
         }
 
-        public BuiltCollectionResource Build<T>(IPagedCollectionResource<T> pagedCollectionResource, IPaginationTemplate paginationTemplate) where T : IResource
+        public BuiltCollectionResource BuildCollection<T>(IPagedCollectionResource<T> pagedCollectionResource, IPaginationTemplate paginationTemplate) where T : IResource
         {
             BuiltCollectionResource builtCollectionResource = new BuiltCollectionResource
             {
                 TotalResults = pagedCollectionResource.TotalResults,
-                BuiltResources = pagedCollectionResource.Results.Select(r => Build(r)),
+                BuiltResources = pagedCollectionResource.Results.Select(Build),
                 Links = _linkBuilder.BuildLinks(pagedCollectionResource, paginationTemplate)
             };
 

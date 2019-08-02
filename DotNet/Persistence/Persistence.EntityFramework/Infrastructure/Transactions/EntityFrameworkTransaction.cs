@@ -1,20 +1,24 @@
-﻿using Common.Application.Transactions;
+﻿using Common.ApplicationServices.Transactions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Persistence.EntityFramework.Infrastructure.Transactions
 {
     public class EntityFrameworkTransaction : ITransaction
     {
+        private readonly DbContext _dbContext;
+
         private readonly IDbContextTransaction _dbContextTransaction;
 
-        private EntityFrameworkTransaction(IDbContextTransaction dbContextTransaction)
+        private EntityFrameworkTransaction(DbContext dbContext, IDbContextTransaction dbContextTransaction)
         {
+            _dbContext = dbContext;
             _dbContextTransaction = dbContextTransaction;
         }
 
-        public static ITransaction Create(IDbContextTransaction dbContextTransaction)
+        public static ITransaction Create(DbContext dbContext, IDbContextTransaction dbContextTransaction)
         {
-            return new EntityFrameworkTransaction(dbContextTransaction);
+            return new EntityFrameworkTransaction(dbContext, dbContextTransaction);
         }
 
         public void Dispose()
@@ -24,6 +28,8 @@ namespace Persistence.EntityFramework.Infrastructure.Transactions
 
         public void Commit()
         {
+            _dbContext.SaveChanges();
+
             _dbContextTransaction.Commit();
         }
 

@@ -1,7 +1,9 @@
-﻿namespace Common.Domain.DomainEvents.Interfaces
+﻿using System.Threading.Tasks;
+
+namespace Common.Domain.DomainEvents.Interfaces
 {
     public interface IDomainEventBus
     {
-        void Publish<T>(T domainEvent) where T : IDomainEvent;
+        Task PublishAsync<T>(T domainEvent) where T : IDomainEvent;
     }
 }

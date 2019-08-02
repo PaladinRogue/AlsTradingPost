@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using Common.Domain.Models.Interfaces;
+using Common.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.EntityFramework.Infrastructure.Extensions

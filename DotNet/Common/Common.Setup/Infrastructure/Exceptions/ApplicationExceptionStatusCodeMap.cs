@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
-using Common.Application.Exceptions;
+using Common.ApplicationServices.Exceptions;
 
 namespace Common.Setup.Infrastructure.Exceptions
 {
@@ -8,10 +8,13 @@ namespace Common.Setup.Infrastructure.Exceptions
     {
         private static readonly Dictionary<ExceptionType, HttpStatusCode> ExceptionTypeDictionary = new Dictionary<ExceptionType, HttpStatusCode>
         {
-            { ExceptionType.None, HttpStatusCode.OK },
+            { ExceptionType.Unknown, HttpStatusCode.InternalServerError },
+            { ExceptionType.ServiceUnavailable, HttpStatusCode.ServiceUnavailable },
             { ExceptionType.Concurrency, HttpStatusCode.PreconditionFailed },
             { ExceptionType.BadRequest, HttpStatusCode.BadRequest },
-            { ExceptionType.Unauthorized, HttpStatusCode.Unauthorized }
+            { ExceptionType.Unauthorized, HttpStatusCode.Unauthorized },
+            { ExceptionType.Conflict, HttpStatusCode.Conflict },
+            { ExceptionType.NotFound, HttpStatusCode.NotFound }
         };
 
         public static HttpStatusCode FromApplicationExceptionType(ExceptionType exceptionType)

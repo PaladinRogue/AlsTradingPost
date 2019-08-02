@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Reflection;
-using Common.Domain.Models.Interfaces;
-using Common.Resources.Concurrency.Interfaces;
+using Common.Domain.Entities;
 
 namespace Common.Domain.Exceptions
 {
@@ -9,28 +7,8 @@ namespace Common.Domain.Exceptions
     public class DeleteDomainException : DomainException
     {
         public DeleteDomainException(IVersionedEntity entity, Exception innerException)
-            : base(_formatDeleteException(entity.GetType(), entity.Id, entity.Version), innerException)
+            : base($"Unable to delete entity {entity}", innerException)
         {
-        }
-
-        public DeleteDomainException(MemberInfo type, Guid id, IConcurrencyVersion version)
-            : base(_formatDeleteException(type, id, version.Version))
-        {
-        }
-
-        public DeleteDomainException(MemberInfo type, Guid id, IConcurrencyVersion version, Exception innerException)
-            : base(_formatDeleteException(type, id, version.Version), innerException)
-        {
-        }
-
-        private static string _formatDeleteException(MemberInfo type, Guid id, byte[] version)
-        {
-            if (BitConverter.IsLittleEndian)
-            {
-                Array.Reverse(version);
-            }
-
-            return $"Failed to delete entity: { type.Name } with Id: { id } and Version: { BitConverter.ToInt32(version, 0) }";
         }
     }
 }

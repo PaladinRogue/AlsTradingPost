@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common.Authorisation\Common.Authorisation.csproj" />
+    <ProjectReference Include="..\..\Common.ReferenceData\ReferenceData.Setup\ReferenceData.Setup.csproj" />
+    <ProjectReference Include="..\..\Common\Common.Api\Common.Api.csproj" />
+    <ProjectReference Include="..\..\Persistence\Persistence.EntityFramework\Persistence.EntityFramework.csproj" />
+    <ProjectReference Include="..\Authentication.ApplicationServices\Authentication.ApplicationServices.csproj" />
+    <ProjectReference Include="..\Authentication.Persistence\Authentication.Persistence.csproj" />
+  </ItemGroup>
+</Project>

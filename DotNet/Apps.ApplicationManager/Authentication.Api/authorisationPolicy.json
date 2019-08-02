@@ -1,0 +1,38 @@
+{
+  "Authenticate": {
+    "Create": {
+      "Restriction": "Everyone"
+    }
+  },
+  "Identity": {
+    "Confirm": {
+      "Restriction": "RestrictedAppAccess"
+    },
+    "Create": {
+      "Restriction": "Everyone"
+    },
+    "Update": {
+      "Restriction": "Self"
+    },
+    "Get": {
+      "Restriction":  "Self"
+    }
+  },
+  "AuthenticationService": {
+    "Search": {
+      "Restriction": "Everyone"
+    },
+    "Get": {
+      "Restriction": "User"
+    },
+    "Create": {
+      "Restriction": "User"
+    },
+    "Update": {
+      "Restriction": "User"
+    },
+    "Delete": {
+      "Restriction": "User"
+    }
+  }
+}

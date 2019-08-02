@@ -1,5 +1,5 @@
 ﻿using Common.Api.Concurrency.Interfaces;
-using Common.Resources.Concurrency.Interfaces;
+using Common.Domain.Concurrency.Interfaces;
 
 namespace Common.Api.Concurrency
 {

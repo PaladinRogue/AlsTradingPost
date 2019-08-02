@@ -1,34 +1,40 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Common.Resources.Extensions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.AspNetCore.Routing;
 
 namespace Common.Api.Routing
 {
     public class DefaultRouteProvider : IRouteProvider<bool>
     {
-        private readonly IDictionary<string, Route<bool>> _routes;
+        protected readonly IDictionary<string, Route<bool>> Routes;
 
-        public DefaultRouteProvider(IApiDescriptionGroupCollectionProvider apiDescriptionGroupCollectionProvider)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public DefaultRouteProvider(
+            IApiDescriptionGroupCollectionProvider apiDescriptionGroupCollectionProvider,
+            IHttpContextAccessor httpContextAccessor)
         {
-            _routes = new Dictionary<string, Route<bool>>();
-            
+            _httpContextAccessor = httpContextAccessor;
+            Routes = new Dictionary<string, Route<bool>>();
+
             foreach (ApiDescriptionGroup apiDescriptionGroup in apiDescriptionGroupCollectionProvider.ApiDescriptionGroups.Items)
             {
                 foreach (ApiDescription apiDescription in apiDescriptionGroup.Items)
                 {
                     string routeName = apiDescription.ActionDescriptor.AttributeRouteInfo.Name;
                     if (string.IsNullOrEmpty(routeName)) continue;
-                    
-                    _routes.Add(
+
+                    Routes.Add(
                         routeName,
                         Route<bool>.Create(apiDescription.RelativePath, true)
                     );
                 }
             }
         }
-        
+
         public string GetRouteTemplate<TRouteData>(string routeName, bool routeRestriction, TRouteData routeData)
         {
             string template = GetRouteTemplate(routeName);
@@ -38,19 +44,21 @@ namespace Common.Api.Routing
                 return null;
             }
 
-            Dictionary<string, string> dictionary = typeof(TRouteData).GetProperties()
+            Dictionary<string,string> routeDataDictionary = routeData.GetType().GetProperties()
                 .Where(p => p.GetValue(routeData) != null)
                 .ToDictionary(
                     p => p.Name.ToCamelCase(),
                     p => p.GetValue(routeData).ToString()
                 );
 
-            return FormatRoute(RouteToCamelCase(template).Format(dictionary));
+            RouteValueDictionary httpContextRouteData = _httpContextAccessor.HttpContext.GetRouteData().Values;
+
+            return FormatRoute(RouteToCamelCase(template).Format(routeDataDictionary).Format(httpContextRouteData));
         }
 
         public bool HasAccessToRoute(string routeName, bool routeRestriction)
         {
-            return _routes.ContainsKey(routeName);
+            return Routes.ContainsKey(routeName);
         }
 
         private static string FormatRoute(string route)
@@ -63,13 +71,13 @@ namespace Common.Api.Routing
             string[] routeParts = route.Split('/');
 
             IEnumerable<string> formattedRouteParts = routeParts.Select(s => s.ToCamelCase());
-            
-            return formattedRouteParts.Join("/");
+
+            return string.Join("/", formattedRouteParts);
         }
-        
+
         private string GetRouteTemplate(string routeName)
         {
-            return HasAccessToRoute(routeName, true) ?  _routes[routeName].Template : null;
+            return HasAccessToRoute(routeName, true) ?  Routes[routeName].Template : null;
         }
     }
 }

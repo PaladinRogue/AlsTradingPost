@@ -32,14 +32,14 @@ namespace Common.Api.Formats.JsonV1.Formats
         {
             return GetFieldType(typeof(T));
         }
-        
+
         public static string GetFieldType(Type type)
         {
-            if (FieldTypeMap.ContainsKey(type))
+            if (HasFieldType(type))
             {
                 return FieldTypeMap[type];
             }
-            
+
             throw new ArgumentException($"Field type mapping is not supported for { type.Name }");
         }
     }

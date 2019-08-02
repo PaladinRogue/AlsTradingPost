@@ -1,28 +1,29 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Common.Domain.DomainEvents.Interfaces;
 
 namespace DomainEvent.Broker
 {
     public class DomainEventBus : IDomainEventBus
     {
-        private readonly IDomainEventHandlerResolver _domainEventHandlerResolver;
+        private readonly IDomainEventSubscriberResolver _domainEventSubscriberResolver;
 
-        public DomainEventBus(IDomainEventHandlerResolver domainEventHandlerResolver)
+        public DomainEventBus(IDomainEventSubscriberResolver domainEventSubscriberResolver)
         {
-            _domainEventHandlerResolver = domainEventHandlerResolver;
+            _domainEventSubscriberResolver = domainEventSubscriberResolver;
         }
 
-        public void Publish<T>(T domainEvent) where T : IDomainEvent
+        public Task PublishAsync<T>(T domainEvent) where T : IDomainEvent
         {
-            ProcessDomainEvent(domainEvent);
+            return ProcessDomainEventAsync(domainEvent);
         }
 
-        private void ProcessDomainEvent<T>(T domainEvent) where T : IDomainEvent
+        private async Task ProcessDomainEventAsync<T>(T domainEvent) where T : IDomainEvent
         {
-            IEnumerable<IDomainEventHandler<T>> domainEventHandlers = _domainEventHandlerResolver.ResolveAll<T>();
-            foreach (IDomainEventHandler<T> domainEventHandler in domainEventHandlers)
+            IEnumerable<IDomainEventSubscriber<T>> domainEventSubscribers = _domainEventSubscriberResolver.ResolveAll<T>();
+            foreach (IDomainEventSubscriber<T> domainEventSubscriber in domainEventSubscribers)
             {
-                domainEventHandler.Handle(domainEvent);
+                await domainEventSubscriber.ExecuteAsync(domainEvent);
             }
         }
     }

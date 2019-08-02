@@ -1,5 +1,5 @@
 ﻿using System;
-using Common.Application.Exceptions;
+using Common.ApplicationServices.Exceptions;
 using Common.Setup.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -31,9 +31,11 @@ namespace Common.Api.Exceptions
                     case ExceptionType.BadRequest:
                         context.Result = new BadRequestObjectResult(_applicationErrorFormatter.Format(applicationError));
                         break;
-                    case ExceptionType.None:
+                    case ExceptionType.Unknown:
                     case ExceptionType.Concurrency:
                     case ExceptionType.Unauthorized:
+                    case ExceptionType.Conflict:
+                    case ExceptionType.NotFound:
                         context.Result = new StatusCodeResult((int)applicationError.HttpStatusCode);
                         break;
                     default:

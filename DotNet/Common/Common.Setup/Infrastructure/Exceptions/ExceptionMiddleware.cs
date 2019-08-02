@@ -1,7 +1,7 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using Common.Application.Exceptions;
+using Common.ApplicationServices.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
@@ -29,7 +29,7 @@ namespace Common.Setup.Infrastructure.Exceptions
                 if (context.Response.HasStarted)
                 {
                     _logger.LogWarning(
-                        "The response has already started, the http status code middleware will not be executed.");
+                        "The response has already started, the exception middleware will not be executed.");
                     throw;
                 }
 
@@ -37,8 +37,6 @@ namespace Common.Setup.Infrastructure.Exceptions
 
                 _logger.LogInformation(ex, "Re-written app exception");
                 context.Response.StatusCode = (int)ApplicationExceptionStatusCodeMap.FromApplicationExceptionType(ex.Type);
-
-                await context.Response.WriteAsync(ex.Message);
             }
             catch (PreConditionFailedException ex)
             {
@@ -54,10 +52,23 @@ namespace Common.Setup.Infrastructure.Exceptions
                 _logger.LogInformation(ex, "Re-written bad request exception");
                 context.Response.StatusCode = (int)ApplicationExceptionStatusCodeMap.FromApplicationExceptionType(ExceptionType.BadRequest);
             }
+            catch (ServiceUnavailableExcpetion ex)
+            {
+                context.Response.Clear();
+
+                _logger.LogInformation(ex, "Re-written service unavailable exception");
+                context.Response.StatusCode = (int)ApplicationExceptionStatusCodeMap.FromApplicationExceptionType(ExceptionType.ServiceUnavailable);
+            }
             //at this point we want to catch all uncaught exceptions and return a generic response.
-            // ReSharper disable once EmptyGeneralCatchClause
             catch (Exception ex)
             {
+                if (context.Response.HasStarted)
+                {
+                    _logger.LogWarning(
+                        "The response has already started, the exception middleware will not be executed.");
+                    return;
+                }
+
                 _logger.LogCritical(ex, "Unhandled API exception");
                 context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
             }

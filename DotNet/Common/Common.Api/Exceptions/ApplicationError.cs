@@ -1,5 +1,5 @@
 ﻿using System.Net;
-using Common.Application.Exceptions;
+using Common.ApplicationServices.Exceptions;
 
 namespace Common.Api.Exceptions
 {
@@ -8,6 +8,5 @@ namespace Common.Api.Exceptions
         public HttpStatusCode HttpStatusCode { get; set; }
 
         public BusinessApplicationException Exception { get; set; }
-
     }
 }

@@ -1,23 +1,32 @@
-﻿using Common.Application.Transactions;
+﻿using Common.ApplicationServices.Transactions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Persistence.EntityFramework.Infrastructure.Transactions
 {
-    public class EntityFrameworkTransactionManager : ITransactionManager
+    public class EntityFrameworkTransactionManager : EntityFrameworkTransactionManager<DbContext>
     {
-        private readonly DbContext _dbContext;
+        public EntityFrameworkTransactionManager(DbContext dbContext) : base(dbContext)
+        {
+        }
+    }
 
-        public EntityFrameworkTransactionManager(DbContext dbContext)
+    public class EntityFrameworkTransactionManager<TDbContext> : ITransactionManager where TDbContext : DbContext
+    {
+        private readonly TDbContext _dbContext;
+
+        public EntityFrameworkTransactionManager(TDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
         public ITransaction Create()
         {
-            IDbContextTransaction dbContextTransaction = _dbContext.Database.BeginTransaction();
+            if (_dbContext.Database.CurrentTransaction != null)
+            {
+                return EntityFrameworkEmptyTransaction.Create(_dbContext.Database.CurrentTransaction);
+            }
 
-            return EntityFrameworkTransaction.Create(dbContextTransaction);
+            return EntityFrameworkTransaction.Create(_dbContext, _dbContext.Database.BeginTransaction());
         }
     }
 }

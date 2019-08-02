@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <RootNamespace>Gateway.Setup</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.6" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Common\Common.Api\Common.Api.csproj" />
+      <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
+      <ProjectReference Include="..\Gateway.ApplicationServices\Gateway.ApplicationServices.csproj" />
+      <ProjectReference Include="..\Gateway.Domain\Gateway.Domain.csproj" />
+      <ProjectReference Include="..\Gateway.Persistence\Gateway.Persistence.csproj" />
+    </ItemGroup>
+
+</Project>

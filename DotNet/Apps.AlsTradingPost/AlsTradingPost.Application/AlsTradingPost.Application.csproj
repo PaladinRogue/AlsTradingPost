@@ -3,8 +3,8 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="6.2.2" />
-    <PackageReference Include="FluentValidation" Version="7.5.2" />
+    <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="FluentValidation" Version="8.0.100" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common.Authentication\Common.Authentication.Domain\Common.Authentication.Domain.csproj" />
