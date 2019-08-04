@@ -10,13 +10,13 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import { IFormFieldConfig } from '../..';
 import { FormFieldBaseComponent } from '../../presentation-components/form-field/form-field-base.component';
 import { FormInputComponent } from '../../presentation-components/form-input/form-input.component';
 import { FormSelectComponent } from '../../presentation-components/form-select/form-select.component';
 import { FormField } from '../../services/form-field/form-field.service';
+import { IFormFieldConfig } from '../../services/form-field/interfaces/form-field-config.interface';
 import { FormInput } from '../../services/form-input/form-input.service';
-import { FormSelect } from '../..';
+import { FormSelect } from '../../services/form-select/form-select.service';
 
 @Component({
   selector: 'pr-form-field',

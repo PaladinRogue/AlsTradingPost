@@ -1,6 +1,6 @@
-import { IFormFieldConfig } from '../..';
 import { TranslateService } from '../../../internationalization';
 import { FormField } from '../../services/form-field/form-field.service';
+import { IFormFieldConfig } from '../../services/form-field/interfaces/form-field-config.interface';
 
 export abstract class FormFieldBaseComponent<TFormField extends FormField<IFormFieldConfig<unknown>, unknown>> {
   public formField: TFormField;

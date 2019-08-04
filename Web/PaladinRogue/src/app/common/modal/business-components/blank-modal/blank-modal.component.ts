@@ -10,7 +10,7 @@ import {
   ViewContainerRef
 } from '@angular/core';
 
-import { ModalContentComponent } from '../..';
+import { ModalContentComponent } from '../../business-components/modal-content/modal-content.component';
 import { BlankModal } from '../../services/modal-instance/blank-modal/blank-modal';
 
 @Component({

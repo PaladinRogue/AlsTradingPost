@@ -1,4 +1,4 @@
-import { IStorage } from '../..';
+import { IStorage } from '../../interfaces/storage/storage.interface';
 
 export class SessionStorage implements IStorage {
   private readonly _storage: Storage;

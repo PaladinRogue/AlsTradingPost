@@ -12,8 +12,8 @@ import {
 import { IAction } from '../../../interaction';
 import { ITranslate } from '../../../internationalization';
 
-import { ModalContentComponent } from '../..';
-import { DefaultModal } from '../..';
+import { ModalContentComponent } from '../../business-components/modal-content/modal-content.component';
+import { DefaultModal } from '../../services/modal-instance/default-modal/default-modal';
 
 @Component({
   selector: 'pr-default-modal',

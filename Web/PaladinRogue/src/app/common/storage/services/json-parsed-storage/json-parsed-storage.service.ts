@@ -1,6 +1,6 @@
 import { JsonParser } from '../../../core';
 
-import { IStorage } from '../..';
+import { IStorage } from '../../interfaces/storage/storage.interface';
 
 export class JsonParsedStorage implements IStorage {
   private readonly _storage: IStorage;
