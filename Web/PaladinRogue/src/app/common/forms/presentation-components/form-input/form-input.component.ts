@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslateService } from '../../../internationalization';
 import { FormInput } from '../../services/form-input/form-input.service';
 import { IFormInputConfig } from '../../services/form-input/interfaces/form-input-config.interface';
+import { FormFieldBaseComponent } from '../form-field/form-field-base.component';
 
 @Component({
   selector: 'pr-form-input',
@@ -10,16 +11,8 @@ import { IFormInputConfig } from '../../services/form-input/interfaces/form-inpu
   styleUrls: ['./form-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormInputComponent<TConfig extends IFormInputConfig<TModelValue>, TModelValue> {
-  public formField: FormInput<TConfig, TModelValue>;
-
-  private readonly _translationService: TranslateService;
-
+export class FormInputComponent<TConfig extends IFormInputConfig<TModelValue>, TModelValue> extends FormFieldBaseComponent<FormInput<TConfig, TModelValue>> {
   public constructor(translationService: TranslateService) {
-    this._translationService = translationService;
-  }
-
-  public get labelText(): string {
-    return this._translationService.fromTranslation(this.formField.label);
+    super(translationService);
   }
 }

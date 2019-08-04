@@ -10,11 +10,13 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
+import { IFormFieldConfig } from '../..';
+import { FormFieldBaseComponent } from '../../presentation-components/form-field/form-field-base.component';
 import { FormInputComponent } from '../../presentation-components/form-input/form-input.component';
 import { FormSelectComponent } from '../../presentation-components/form-select/form-select.component';
 import { FormField } from '../../services/form-field/form-field.service';
 import { FormInput } from '../../services/form-input/form-input.service';
-import { FormSelect } from '../../services/form-select/form-select.service';
+import { FormSelect } from '../..';
 
 @Component({
   selector: 'pr-form-field',
@@ -24,12 +26,12 @@ import { FormSelect } from '../../services/form-select/form-select.service';
 })
 export class FormFieldComponent implements OnInit, OnDestroy {
   @Input()
-  public prFormField: FormField<any, any>;
+  public prFormField: FormField<IFormFieldConfig<unknown>, unknown>;
 
-  @ViewChild('inputContainer', { read: ViewContainerRef })
+  @ViewChild('inputContainer', { read: ViewContainerRef, static: true })
   public inputContainer: ViewContainerRef;
 
-  public componentRef: ComponentRef<any>;
+  public componentRef: ComponentRef<FormFieldBaseComponent<FormField<IFormFieldConfig<unknown>, unknown>>>;
 
   private readonly _componentFactoryResolver: ComponentFactoryResolver;
 
@@ -38,7 +40,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    let componentFactory: ComponentFactory<any>;
+    let componentFactory: ComponentFactory<FormFieldBaseComponent<FormField<IFormFieldConfig<unknown>, unknown>>>;
 
     if (this.prFormField instanceof FormInput) {
       componentFactory = this._componentFactoryResolver.resolveComponentFactory(FormInputComponent);
@@ -46,7 +48,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
       componentFactory = this._componentFactoryResolver.resolveComponentFactory(FormSelectComponent);
     }
 
-    this.componentRef = this.inputContainer.createComponent(componentFactory);
+    this.componentRef = this.inputContainer.createComponent<FormFieldBaseComponent<FormField<IFormFieldConfig<unknown>, unknown>>>(componentFactory);
     this.componentRef.instance.formField = this.prFormField;
   }
 

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconRegistry } from '@angular/material/icon';
 
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { ENVIRONMENT } from '../environments/environment';
@@ -25,17 +26,12 @@ import {
   NumberFormat,
   TimeFormat
 } from './common/internationalization';
-import { FontAwesomeIconRepository, IconRepository } from './common/media';
+import { MaterialIconRepository, IconRepository } from './common/media';
+import { IconFactory } from './common/media/services/icon-factory/icon.factory';
 import { HomeModule } from './home/home.module';
 import { RoutingModule } from './routing/routing.module';
 import { LoginComponent } from './shared/business-components/login/login.component';
 import { SharedModule } from './shared/shared.module';
-
-function initialise_icons(iconRepository: IconRepository): () => void {
-  return (): void => {
-    iconRepository.addIcon(faHome);
-  };
-}
 
 @NgModule({
   declarations: [
@@ -71,40 +67,27 @@ function initialise_icons(iconRepository: IconRepository): () => void {
     {
       provide: DateFormat,
       deps: [HttpClient],
-      useFactory: (httpClient: HttpClient): DateFormat => {
-        return new CldrDateFormat(httpClient, 'node_modules/cldr-dates-modern');
-      }
+      useFactory: cldrDateFormatFactory
     },
     {
       provide: TimeFormat,
       deps: [HttpClient],
-      useFactory: (httpClient: HttpClient): TimeFormat => {
-        return new CldrTimeFormat(httpClient, 'node_modules/cldr-dates-modern');
-      }
+      useFactory: cldrTimeFormatFactory
     },
     {
       provide: DateTimeFormat,
       deps: [HttpClient, DateFormat, TimeFormat],
-      useFactory: (httpClient: HttpClient,
-                   dateFormat: DateFormat,
-                   timeFormat: TimeFormat): DateTimeFormat => {
-        return new CldrDateTimeFormat(httpClient, 'node_modules/cldr-dates-modern', dateFormat, timeFormat);
-      }
+      useFactory: cldrDateTimeFormatFactory
     },
     {
       provide: NumberFormat,
       deps: [HttpClient],
-      useFactory: (httpClient: HttpClient): NumberFormat => {
-        return new CldrNumberFormat(httpClient, 'node_modules/cldr-numbers-modern');
-      }
+      useFactory: cldrNumberFormatFactory
     },
     {
       provide: DataService,
       deps: [HttpApiService, ErrorHandlersProvider],
-      useFactory: (httpApiService: HttpApiService,
-                   errorHandlersProviderService: ErrorHandlersProvider): DataService => {
-        return new HttpDataService(httpApiService, errorHandlersProviderService);
-      }
+      useFactory: httpDataServiceFactory
     },
     {
       provide: APPLICATION_VERSION,
@@ -112,14 +95,13 @@ function initialise_icons(iconRepository: IconRepository): () => void {
     },
     {
       provide: IconRepository,
-      useFactory: (): IconRepository => {
-        return new FontAwesomeIconRepository();
-      }
+      deps: [MatIconRegistry],
+      useFactory: materialIconRepositoryFactory
     },
     {
       provide: APP_INITIALIZER,
-      deps: [IconRepository],
-      useFactory: initialise_icons,
+      deps: [IconFactory, IconRepository],
+      useFactory: initialiseIconsFactory,
       multi: true
     }
   ],
@@ -128,4 +110,37 @@ function initialise_icons(iconRepository: IconRepository): () => void {
   ]
 })
 export class AppModule {
+}
+
+export function cldrDateFormatFactory(httpClient: HttpClient): DateFormat {
+  return new CldrDateFormat(httpClient, 'node_modules/cldr-dates-modern');
+}
+
+export function cldrTimeFormatFactory(httpClient: HttpClient): TimeFormat {
+  return new CldrTimeFormat(httpClient, 'node_modules/cldr-dates-modern');
+}
+
+export function cldrDateTimeFormatFactory(httpClient: HttpClient,
+                                          dateFormat: DateFormat,
+                                          timeFormat: TimeFormat): DateTimeFormat {
+  return new CldrDateTimeFormat(httpClient, 'node_modules/cldr-dates-modern', dateFormat, timeFormat);
+}
+
+export function cldrNumberFormatFactory(httpClient: HttpClient): NumberFormat {
+  return new CldrNumberFormat(httpClient, 'node_modules/cldr-numbers-modern');
+}
+
+export function httpDataServiceFactory(httpApiService: HttpApiService,
+                                       errorHandlersProviderService: ErrorHandlersProvider): DataService {
+  return new HttpDataService(httpApiService, errorHandlersProviderService);
+}
+
+export function materialIconRepositoryFactory(matIconRegistry: MatIconRegistry): IconRepository {
+  return new MaterialIconRepository(matIconRegistry);
+}
+
+export function initialiseIconsFactory(iconFactory: IconFactory, iconRepository: IconRepository): () => void {
+  return (): void => {
+    iconRepository.addIcon(iconFactory.fromFontAwesome(faHome));
+  };
 }

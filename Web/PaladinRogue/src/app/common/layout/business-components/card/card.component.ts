@@ -9,9 +9,9 @@ import { FooterComponent } from '../footer/footer.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CardComponent {
-  @ContentChild(FooterComponent)
+  @ContentChild(FooterComponent, { static: false })
   public cardFooter: FooterComponent;
 
-  @ContentChild(ActionsComponent)
+  @ContentChild(ActionsComponent, { static: false })
   public cardActions: ActionsComponent;
 }

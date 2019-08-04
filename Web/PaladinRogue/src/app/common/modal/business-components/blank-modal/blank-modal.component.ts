@@ -10,7 +10,7 @@ import {
   ViewContainerRef
 } from '@angular/core';
 
-import { ModalContentComponent } from '../../business-components/modal-content/modal-content.component';
+import { ModalContentComponent } from '../..';
 import { BlankModal } from '../../services/modal-instance/blank-modal/blank-modal';
 
 @Component({
@@ -23,10 +23,10 @@ import { BlankModal } from '../../services/modal-instance/blank-modal/blank-moda
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlankModalComponent implements OnInit, OnDestroy {
-  @ViewChild('contentContainer', { read: ViewContainerRef })
+  @ViewChild('contentContainer', { read: ViewContainerRef, static: true })
   public contentContainer: ViewContainerRef;
 
-  public componentRef: ComponentRef<ModalContentComponent<any>>;
+  public componentRef: ComponentRef<ModalContentComponent<unknown>>;
 
   public readonly blankModal: BlankModal;
   private readonly _componentFactoryResolver: ComponentFactoryResolver;
@@ -38,7 +38,7 @@ export class BlankModalComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    const componentFactory: ComponentFactory<ModalContentComponent<any>> =
+    const componentFactory: ComponentFactory<ModalContentComponent<unknown>> =
       this._componentFactoryResolver.resolveComponentFactory(this.blankModal.getContentComponent());
 
     this.componentRef = this.contentContainer.createComponent(componentFactory);

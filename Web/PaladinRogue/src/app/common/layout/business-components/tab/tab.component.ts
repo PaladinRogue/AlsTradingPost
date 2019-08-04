@@ -11,6 +11,6 @@ export class TabComponent {
   @Input()
   public prTabTitle: ITranslate;
 
-  @ViewChild('content', { read: TemplateRef })
+  @ViewChild('content', { read: TemplateRef, static: false })
   public tabViewContent: TemplateRef<void>;
 }

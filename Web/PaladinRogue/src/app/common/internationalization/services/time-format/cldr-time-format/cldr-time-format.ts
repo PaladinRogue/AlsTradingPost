@@ -1,5 +1,4 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
 
 import {
   LdmlToMomentDateFormatAdapter
@@ -8,7 +7,6 @@ import { ITimeFormatMap, TimeFormatKey } from '../interfaces/time-format-map.int
 import { TimeFormat } from '../time-format';
 import { ICldrTimeFormat } from './interfaces/cldr-time-format.interface';
 
-@Injectable()
 export class CldrTimeFormat implements TimeFormat {
   private readonly _httpClient: HttpClient;
   private readonly _cldrTimeFormatBasePath: string;

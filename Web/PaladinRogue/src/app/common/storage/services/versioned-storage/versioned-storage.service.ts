@@ -1,8 +1,5 @@
-import { Injectable } from '@angular/core';
+import { IStorage } from '../..';
 
-import { IStorage } from '../../interfaces/storage/storage.interface';
-
-@Injectable()
 export class VersionedStorage implements IStorage {
   private readonly _storage: IStorage;
   private readonly _version: string;
@@ -13,11 +10,11 @@ export class VersionedStorage implements IStorage {
     this._version = version;
   }
 
-  public get(key: string): any {
+  public get(key: string): unknown {
     return this._storage.get(`${this._version}-${key}`);
   }
 
-  public set(key: string, value: any): void {
+  public set(key: string, value: unknown): void {
     this._storage.set(`${this._version}-${key}`, value);
   }
 

@@ -18,35 +18,43 @@ import { SESSION_STORAGE } from './tokens/session-storage.token';
   providers: [
     {
       provide: LOCAL_STORAGE,
-      useFactory(): LocalStorage {
-        return new LocalStorage(window.localStorage);
-      }
+      useFactory: localStorageFactory
     },
     {
       provide: SESSION_STORAGE,
-      useFactory(): SessionStorage {
-        return new SessionStorage(window.sessionStorage);
-      }
+      useFactory: sessionStorageFactory
     },
     {
-      deps: [LOCAL_STORAGE, JsonParser, APPLICATION_VERSION],
       provide: LocalStorage,
-      useFactory(localStorage: IStorage, parser: JsonParser, version: string): IStorage {
-        const jsonParsedStorage: IStorage = new JsonParsedStorage(localStorage, parser);
-
-        return new VersionedStorage(jsonParsedStorage, version);
-      }
+      deps: [LOCAL_STORAGE, JsonParser, APPLICATION_VERSION],
+      useFactory: versionedLocalStorageFactory
     },
     {
-      deps: [SESSION_STORAGE, JsonParser, APPLICATION_VERSION],
       provide: SessionStorage,
-      useFactory(sessionStorage: IStorage, parser: JsonParser, version: string): IStorage {
-        const jsonParsedStorage: IStorage = new JsonParsedStorage(sessionStorage, parser);
-
-        return new VersionedStorage(jsonParsedStorage, version);
-      }
+      deps: [SESSION_STORAGE, JsonParser, APPLICATION_VERSION],
+      useFactory: versionedSessionStorageFactory
     }
   ]
 })
 export class StorageModule {
+}
+
+export function localStorageFactory(): LocalStorage {
+  return new LocalStorage(window.localStorage);
+}
+
+export function sessionStorageFactory(): SessionStorage {
+  return new SessionStorage(window.sessionStorage);
+}
+
+export function versionedLocalStorageFactory(localStorage: IStorage, parser: JsonParser, version: string): IStorage {
+  const jsonParsedStorage: IStorage = new JsonParsedStorage(localStorage, parser);
+
+  return new VersionedStorage(jsonParsedStorage, version);
+}
+
+export function versionedSessionStorageFactory(sessionStorage: IStorage, parser: JsonParser, version: string): IStorage {
+  const jsonParsedStorage: IStorage = new JsonParsedStorage(sessionStorage, parser);
+
+  return new VersionedStorage(jsonParsedStorage, version);
 }

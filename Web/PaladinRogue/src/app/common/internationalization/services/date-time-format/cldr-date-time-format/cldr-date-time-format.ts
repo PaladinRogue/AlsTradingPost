@@ -1,15 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
 
 import '../../../../text/string-extensions/string-extensions';
 import { LdmlToMomentDateFormatAdapter } from '../../date-format-adapters/ldml-moment-date-format-adapter/ldml-to-moment-date-format.adapter';
-import { DateFormat } from '../../date-format/date-format';
-import { TimeFormat } from '../../time-format/time-format';
+import { DateFormat } from '../../..';
+import { TimeFormat } from '../../..';
 import { DateTimeFormat } from '../date-time-format';
 import { DateTimeFormatKey, IDateTimeFormatMap } from '../interfaces/date-time-format-map.interface';
 import { ICldrDateTimeFormat } from './interfaces/cldr-date-time-format.interface';
 
-@Injectable()
 export class CldrDateTimeFormat implements DateTimeFormat {
   private _dateTimeFormat: IDateTimeFormatMap;
 

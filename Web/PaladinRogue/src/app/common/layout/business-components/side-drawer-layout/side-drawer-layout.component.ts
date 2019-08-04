@@ -12,7 +12,7 @@ import { IAction } from '../../../interaction';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SideDrawerLayoutComponent extends SubscriptionOnDestroy implements OnInit {
-  @ViewChild(MatDrawer)
+  @ViewChild(MatDrawer, { static: false })
   public drawerComponent: MatDrawer;
 
   public closeAction: IAction;

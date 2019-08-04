@@ -4,8 +4,8 @@ import { MatSidenav } from '@angular/material';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SubscriptionOnDestroy } from '../../../core';
-import { IRoute } from '../../interfaces/route.interface';
-import { SideNavService } from '../../services/side-nav/side-nav.service';
+import { IRoute } from '../..';
+import { SideNavService } from '../..';
 
 @Component({
   selector: 'pr-side-nav',
@@ -17,7 +17,7 @@ export class SideNavComponent extends SubscriptionOnDestroy implements OnInit {
   @Input()
   public prSideNavRoutes: Array<IRoute>;
 
-  @ViewChild(MatSidenav)
+  @ViewChild(MatSidenav, { static: true })
   public sideNavComponent: MatSidenav;
 
   public mobileQuery: MediaQueryList;

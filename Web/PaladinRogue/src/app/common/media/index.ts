@@ -2,4 +2,4 @@ export { MediaModule } from './media.module';
 
 export { IconRepository } from './services/icon-repository/icon-repository.service';
 
-export { FontAwesomeIconRepository } from './services/icon-repository/font-awesome-icon-repository/font-awesome-icon-repository.service';
+export { MaterialIconRepository } from './services/icon-repository/material-icon-repository/material-icon-repository.service';

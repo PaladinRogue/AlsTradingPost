@@ -12,8 +12,8 @@ import {
 import { IAction } from '../../../interaction';
 import { ITranslate } from '../../../internationalization';
 
-import { ModalContentComponent } from '../../business-components/modal-content/modal-content.component';
-import { DefaultModal } from '../../services/modal-instance/default-modal/default-modal';
+import { ModalContentComponent } from '../..';
+import { DefaultModal } from '../..';
 
 @Component({
   selector: 'pr-default-modal',
@@ -25,10 +25,10 @@ import { DefaultModal } from '../../services/modal-instance/default-modal/defaul
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DefaultModalComponent implements OnInit, OnDestroy {
-  @ViewChild('contentContainer', { read: ViewContainerRef })
+  @ViewChild('contentContainer', { read: ViewContainerRef, static: true })
   public contentContainer: ViewContainerRef;
 
-  public componentRef: ComponentRef<ModalContentComponent<any>>;
+  public componentRef: ComponentRef<ModalContentComponent<unknown>>;
 
   public readonly defaultModal: DefaultModal;
   private readonly _componentFactoryResolver: ComponentFactoryResolver;
@@ -52,7 +52,7 @@ export class DefaultModalComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    const componentFactory: ComponentFactory<ModalContentComponent<any>> =
+    const componentFactory: ComponentFactory<ModalContentComponent<unknown>> =
       this._componentFactoryResolver.resolveComponentFactory(this.defaultModal.getContentComponent());
 
     this.componentRef = this.contentContainer.createComponent(componentFactory);

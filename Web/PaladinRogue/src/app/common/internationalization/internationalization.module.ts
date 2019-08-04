@@ -15,9 +15,7 @@ import { DateComponent } from './presentation-components/date/date.component';
 import { NumberComponent } from './presentation-components/number/number.component';
 import { TimeComponent } from './presentation-components/time/time.component';
 import { TranslateComponent } from './presentation-components/translate/translate.component';
-import {
-  LdmlToMomentDateFormatAdapter
-} from './services/date-format-adapters/ldml-moment-date-format-adapter/ldml-to-moment-date-format.adapter';
+import { LdmlToMomentDateFormatAdapter } from './services/date-format-adapters/ldml-moment-date-format-adapter/ldml-to-moment-date-format.adapter';
 import { DateFormat } from './services/date-format/date-format';
 import { DateTimeFormat } from './services/date-time-format/date-time-format';
 import { DateService } from './services/date/date.service';
@@ -38,47 +36,6 @@ import { Translation } from './services/translation/translation';
 import { DEFAULT_LANGUAGE } from './tokens/default-language.token';
 import { DEFAULT_LOCALE } from './tokens/default-locale.token';
 import { DEFAULT_TIMEZONE } from './tokens/default-timezone.token';
-
-function initialise_translations(languageService: LanguageService,
-                                 translation: Translation): () => void {
-  return (): void => {
-    languageService.addLanguageDependant(translation);
-  };
-}
-
-function initialise_locales(localeService: LocaleService,
-                            dateFormat: DateFormat,
-                            timeFormat: TimeFormat,
-                            dateTimeFormat: DateTimeFormat,
-                            numberFormat: NumberFormat,
-                            momentService: MomentService): () => void {
-  return (): void => {
-    localeService.addLocaleDependant(dateFormat);
-    localeService.addLocaleDependant(timeFormat);
-    localeService.addLocaleDependant(dateTimeFormat);
-    localeService.addLocaleDependant(numberFormat);
-    localeService.addLocaleDependant(momentService);
-  };
-}
-
-function initialise_timezones(timezoneService: TimezoneService,
-                              momentService: MomentService): () => void {
-  return (): void => {
-    timezoneService.addTimezoneDependant(momentService);
-  };
-}
-
-function initialise_language(languageService: LanguageService, defaultLanguageId: string): () => Promise<void> {
-  return (): Promise<void> => languageService.setLanguage(defaultLanguageId);
-}
-
-function initialise_locale(localeService: LocaleService, defaultLocaleId: string): () => Promise<void> {
-  return (): Promise<void> => localeService.setLocale(defaultLocaleId);
-}
-
-function initialise_timezone(timezoneService: TimezoneService, defaultTimezoneId: string): () => Promise<void> {
-  return (): Promise<void> => timezoneService.setTimezone(defaultTimezoneId);
-}
 
 @NgModule({
   declarations: [
@@ -118,11 +75,11 @@ export class InternationalizationModule {
       providers: [
         {
           provide: i18nToken,
-          useValue: i18next
+          useFactory: i18nextFactory
         },
         {
           provide: i18nXHRToken,
-          useValue: Backend
+          useFactory: i18nextBackendFactory
         },
         {
           provide: i18nConfigToken,
@@ -134,44 +91,42 @@ export class InternationalizationModule {
         {
           provide: Translation,
           deps: [i18nToken, i18nXHRToken, i18nConfigToken],
-          useFactory: (i18nextProvider: i18n, backend: Backend, initOptions: InitOptions): Translation => {
-            return new I18nextTranslation(i18nextProvider, backend, initOptions);
-          }
+          useFactory: i18nTranslationFactory
         },
         {
           provide: APP_INITIALIZER,
           deps: [LanguageService, Translation],
-          useFactory: initialise_translations,
+          useFactory: initialiseTranslations,
           multi: true
         },
         {
           provide: APP_INITIALIZER,
           deps: [LocaleService, DateFormat, TimeFormat, DateTimeFormat, NumberFormat, MomentService],
-          useFactory: initialise_locales,
+          useFactory: initialiseLocales,
           multi: true
         },
         {
           provide: APP_INITIALIZER,
           deps: [TimezoneService, MomentService],
-          useFactory: initialise_timezones,
+          useFactory: initialiseTimezones,
           multi: true
         },
         {
           provide: APP_INITIALIZER,
           deps: [LocaleService, DEFAULT_LOCALE],
-          useFactory: initialise_locale,
+          useFactory: initialiseLocale,
           multi: true
         },
         {
           provide: APP_INITIALIZER,
           deps: [LanguageService, DEFAULT_LANGUAGE],
-          useFactory: initialise_language,
+          useFactory: initialiseLanguage,
           multi: true
         },
         {
           provide: APP_INITIALIZER,
           deps: [TimezoneService, DEFAULT_TIMEZONE],
-          useFactory: initialise_timezone,
+          useFactory: initialiseTimezone,
           multi: true
         },
         LdmlToMomentDateFormatAdapter,
@@ -191,4 +146,57 @@ export class InternationalizationModule {
       ngModule: InternationalizationModule
     };
   }
+}
+
+export function i18nextFactory(): i18next.i18n {
+  return i18next;
+}
+
+export function i18nextBackendFactory(): unknown {
+  return Backend;
+}
+
+export function i18nTranslationFactory(i18nextProvider: i18n, backend: Backend, initOptions: InitOptions): Translation {
+  return new I18nextTranslation(i18nextProvider, backend, initOptions);
+}
+
+export function initialiseTranslations(languageService: LanguageService,
+                                       translation: Translation): () => void {
+  return (): void => {
+    languageService.addLanguageDependant(translation);
+  };
+}
+
+export function initialiseLocales(localeService: LocaleService,
+                                  dateFormat: DateFormat,
+                                  timeFormat: TimeFormat,
+                                  dateTimeFormat: DateTimeFormat,
+                                  numberFormat: NumberFormat,
+                                  momentService: MomentService): () => void {
+  return (): void => {
+    localeService.addLocaleDependant(dateFormat);
+    localeService.addLocaleDependant(timeFormat);
+    localeService.addLocaleDependant(dateTimeFormat);
+    localeService.addLocaleDependant(numberFormat);
+    localeService.addLocaleDependant(momentService);
+  };
+}
+
+export function initialiseTimezones(timezoneService: TimezoneService,
+                                    momentService: MomentService): () => void {
+  return (): void => {
+    timezoneService.addTimezoneDependant(momentService);
+  };
+}
+
+export function initialiseLanguage(languageService: LanguageService, defaultLanguageId: string): () => Promise<void> {
+  return (): Promise<void> => languageService.setLanguage(defaultLanguageId);
+}
+
+export function initialiseLocale(localeService: LocaleService, defaultLocaleId: string): () => Promise<void> {
+  return (): Promise<void> => localeService.setLocale(defaultLocaleId);
+}
+
+export function initialiseTimezone(timezoneService: TimezoneService, defaultTimezoneId: string): () => Promise<void> {
+  return (): Promise<void> => timezoneService.setTimezone(defaultTimezoneId);
 }

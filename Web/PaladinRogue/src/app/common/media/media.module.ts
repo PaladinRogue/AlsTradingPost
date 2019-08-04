@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatIconModule } from '@angular/material/icon';
 
 import { IconComponent } from './presentation-components/icon/icon.component';
 
 @NgModule({
   imports: [
-    FontAwesomeModule
+    MatIconModule
   ],
   declarations: [
     IconComponent
@@ -14,4 +14,5 @@ import { IconComponent } from './presentation-components/icon/icon.component';
     IconComponent
   ]
 })
-export class MediaModule { }
+export class MediaModule {
+}

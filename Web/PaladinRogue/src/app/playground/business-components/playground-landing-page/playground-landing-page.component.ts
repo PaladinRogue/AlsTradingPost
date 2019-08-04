@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Route } from '@angular/router/src/config';
+import { Route, Router } from '@angular/router';
 import { filter, get, map } from 'lodash';
 import { UnsavedChangesService } from '../../../common/forms/services/unsaved-changes/unsaved-changes.service';
 import { IAction } from '../../../common/interaction';
@@ -48,6 +47,12 @@ export class PlaygroundLandingPageComponent implements OnInit {
     };
   }
 
+  private static _mapRouteToTranslation(route: Route): ITranslate {
+    return {
+      translateId: `playground.routes.${route.path}`
+    };
+  }
+
   public ngOnInit(): void {
     this.toggleSideNavAction = {
       action: (): void => this._sideNavService.toggle()
@@ -57,16 +62,10 @@ export class PlaygroundLandingPageComponent implements OnInit {
       return !!route.path;
     }), (route: Route): IRoute => {
       return {
-        label: this._mapRouteToTranslation(route),
+        label: PlaygroundLandingPageComponent._mapRouteToTranslation(route),
         route: route.path,
         routeParams: route.data
       };
     });
-  }
-
-  private _mapRouteToTranslation(route: Route): ITranslate {
-    return {
-      translateId: `playground.routes.${route.path}`
-    };
   }
 }

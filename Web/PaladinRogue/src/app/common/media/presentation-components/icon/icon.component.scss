@@ -1,19 +1,36 @@
 @import "../../../../../theme/theme";
 
 :host {
-  font-size: $icon-size-medium;
+  font-size: $icon-font-size-medium;
 
   &.PrIcon {
+    $cmp: &;
+
+    &--small {
+      font-size: $icon-font-size-small;
+
+      #{$cmp}-icon {
+        height: $icon-size-small;
+        width: $icon-size-small;
+      }
+    }
+
     &--xxsmall {
-      font-size: $icon-size-xxsmall;
+      font-size: $icon-font-size-xxsmall;
+
+      #{$cmp}-icon {
+        height: $icon-size-xxsmall;
+        width: $icon-size-xxsmall;
+      }
     }
 
     &--xsmall {
-      font-size: $icon-size-xsmall;
-    }
+      font-size: $icon-font-size-xsmall;
 
-    &--small {
-      font-size: $icon-size-small;
+      #{$cmp}-icon {
+        height: $icon-size-xsmall;
+        width: $icon-size-xsmall;
+      }
     }
   }
 }

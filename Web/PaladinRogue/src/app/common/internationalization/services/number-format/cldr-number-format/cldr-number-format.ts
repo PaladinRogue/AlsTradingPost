@@ -1,5 +1,4 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
 
 import { ILocaleDependant } from '../../locale/interfaces/locale-dependant.interface';
 import { INumberFormatMap, NumberFormatKey } from '../interfaces/number-format-map.interface';
@@ -7,7 +6,6 @@ import { INumberFormatSymbolMap, NumberFormatSymbolKey } from '../interfaces/num
 import { NumberFormat } from '../number-format';
 import { ICldrNumberFormat } from './interfaces/cldr-number-format.interface';
 
-@Injectable()
 export class CldrNumberFormat implements NumberFormat, ILocaleDependant {
   private readonly _httpClient: HttpClient;
   private readonly _cldrNumberFormatBasePath: string;

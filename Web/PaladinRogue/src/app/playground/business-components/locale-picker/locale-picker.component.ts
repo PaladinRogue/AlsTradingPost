@@ -35,7 +35,9 @@ export class LocalePickerComponent implements OnInit {
         return this._languageService.getlanguage();
       },
       setValue: (value: string): void => {
-        this._languageService.setLanguage(value);
+        if (value) {
+          this._languageService.setLanguage(value);
+        }
       },
       options: [
         { value: 'en', label: 'English' },
@@ -52,7 +54,9 @@ export class LocalePickerComponent implements OnInit {
         return this._localeService.getLocale();
       },
       setValue: (value: string): void => {
-        this._localeService.setLocale(value);
+        if (value) {
+          this._localeService.setLocale(value);
+        }
       },
       options: [
         { value: 'en-GB', label: 'English - UK' },
@@ -69,7 +73,9 @@ export class LocalePickerComponent implements OnInit {
         return this._timezoneService.getTimezone();
       },
       setValue: (value: string): void => {
-        this._timezoneService.setTimezone(value);
+        if (value) {
+          this._timezoneService.setTimezone(value);
+        }
       },
       options: [
         { value: 'Europe/London', label: 'English - UK' },

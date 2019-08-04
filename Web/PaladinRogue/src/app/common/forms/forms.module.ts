@@ -8,6 +8,7 @@ import { InteractionModule } from '../interaction';
 import { InternationalizationModule } from '../internationalization';
 import { LayoutModule } from '../layout';
 import { IconRepository, MediaModule } from '../media';
+import { IconFactory } from '../media/services/icon-factory/icon.factory';
 
 import { FormFieldComponent } from './business-components/form-field/form-field.component';
 import { UnsavedChangesGuard } from './guards/unsaved-changes/unsaved-changes.guard';
@@ -18,12 +19,6 @@ import { FormSelectComponent } from './presentation-components/form-select/form-
 import { FormComponent } from './business-components/form/form.component';
 import { FormDirective } from './directives/form.directive';
 import { UnsavedChangesService } from './services/unsaved-changes/unsaved-changes.service';
-
-function initialise_icons(iconRepository: IconRepository): () => void {
-  return (): void => {
-    iconRepository.addIcon(faExclamationTriangle);
-  };
-}
 
 @NgModule({
   imports: [
@@ -61,11 +56,17 @@ function initialise_icons(iconRepository: IconRepository): () => void {
     UnsavedChangesGuard,
     {
       provide: APP_INITIALIZER,
-      deps: [IconRepository],
-      useFactory: initialise_icons,
+      deps: [IconFactory, IconRepository],
+      useFactory: initialiseIcons,
       multi: true
     }
   ]
 })
 export class FormsModule {
+}
+
+export function initialiseIcons(iconFactory: IconFactory, iconRepository: IconRepository): () => void {
+  return (): void => {
+    iconRepository.addIcon(iconFactory.fromFontAwesome(faExclamationTriangle));
+  };
 }

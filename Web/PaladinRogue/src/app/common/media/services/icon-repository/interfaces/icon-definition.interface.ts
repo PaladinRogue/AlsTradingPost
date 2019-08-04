@@ -1,5 +1,6 @@
+import { IIconLiteral } from './icon-literal.interface';
+
 export interface IIconDefinition {
-  icon: any;
+  icon: IIconLiteral;
   iconName: string;
-  prefix: string;
 }

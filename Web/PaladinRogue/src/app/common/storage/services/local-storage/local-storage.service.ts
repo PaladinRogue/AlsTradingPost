@@ -1,8 +1,5 @@
-import { Injectable } from '@angular/core';
+import { IStorage } from '../..';
 
-import { IStorage } from '../../interfaces/storage/storage.interface';
-
-@Injectable()
 export class LocalStorage implements IStorage {
   private readonly _storage: Storage;
 
