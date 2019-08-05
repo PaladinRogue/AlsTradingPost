@@ -59,8 +59,9 @@ namespace Vault.Api
                 .UseDomainEvents()
                 .UseRabbitMqMessaging(Configuration)
                 .UseDataProtection()
-                .RegisterCommonProviders()
                 .UseWebRequests()
+                .UseFluentValidation()
+                .AddCommonProviders()
                 .AddLazyCache();
 
             services.Configure<MvcOptions>(options =>
@@ -75,11 +76,11 @@ namespace Vault.Api
             services
                 .UseJsonV1Format()
                 .UseAlwaysDenyAuthorisation()
-                .RegisterValidators()
-                .RegisterApplicationServices()
-                .RegisterDomainCommands()
-                .RegisterProviders()
-                .RegisterPersistenceServices(Configuration)
+                .UseDefaultRouting()
+                .AddVaultPersistence(Configuration)
+                .AddApplicationDomain()
+                .AddSharedDataKeyDomain()
+                .AddDataKeyProviders()
                 .LoadMasterKey(Configuration)
                 .AddStartupTask<SetDataProtectorStartupTask>()
                 .AddStartupTask<SetDomainEventDispatcherStartupTask>()

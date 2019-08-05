@@ -10,7 +10,7 @@ using Common.Domain.Persistence;
 
 namespace Authentication.ApplicationServices.Users.CreateAdmin
 {
-    public class CreateAdminUserApplicationKernalService : ICreateAdminUserApplicationKernalService
+    public class CreateUserApplicationKernalService : ICreateUserApplicationKernalService
     {
         private readonly ITransactionManager _transactionManager;
 
@@ -20,7 +20,7 @@ namespace Authentication.ApplicationServices.Users.CreateAdmin
 
         private readonly ICreateUserCommand _createUserCommand;
 
-        public CreateAdminUserApplicationKernalService(
+        public CreateUserApplicationKernalService(
             ITransactionManager transactionManager,
             ICommandRepository<User> commandRepository,
             IQueryRepository<Identity> queryRepository,

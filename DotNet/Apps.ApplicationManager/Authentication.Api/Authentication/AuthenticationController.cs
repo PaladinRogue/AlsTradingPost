@@ -42,11 +42,11 @@ namespace Authentication.Api.Authentication
                 Password = passwordTemplate.Password
             });
 
-            return Ok(_resourceBuilder.Build(new JwtResource
+            return Ok(_resourceBuilder.Build(new SessionResource
             {
+                Id = jwt.SessionId,
                 AuthToken = jwt.AuthToken,
-                ExpiresIn = jwt.ExpiresIn,
-                SessionId = jwt.SessionId
+                ExpiresIn = jwt.ExpiresIn
             }));
         }
 
@@ -67,11 +67,11 @@ namespace Authentication.Api.Authentication
                 Token = refreshTokenTemplate.Token
             });
 
-            return Ok(_resourceBuilder.Build(new JwtResource
+            return Ok(_resourceBuilder.Build(new SessionResource
             {
+                Id = jwt.SessionId,
                 AuthToken = jwt.AuthToken,
-                ExpiresIn = jwt.ExpiresIn,
-                SessionId = jwt.SessionId
+                ExpiresIn = jwt.ExpiresIn
             }));
         }
 
@@ -96,11 +96,11 @@ namespace Authentication.Api.Authentication
                 RedirectUri = template.RedirectUri
             });
 
-            return Ok(_resourceBuilder.Build(new JwtResource
+            return Ok(_resourceBuilder.Build(new SessionResource
             {
+                Id = jwt.SessionId,
                 AuthToken = jwt.AuthToken,
-                ExpiresIn = jwt.ExpiresIn,
-                SessionId = jwt.SessionId
+                ExpiresIn = jwt.ExpiresIn
             }));
         }
 
@@ -125,11 +125,11 @@ namespace Authentication.Api.Authentication
                 RedirectUri = template.RedirectUri
             });
 
-            return Ok(_resourceBuilder.Build(new JwtResource
+            return Ok(_resourceBuilder.Build(new SessionResource
             {
+                Id = jwt.SessionId,
                 AuthToken = jwt.AuthToken,
-                ExpiresIn = jwt.ExpiresIn,
-                SessionId = jwt.SessionId
+                ExpiresIn = jwt.ExpiresIn
             }));
         }
     }

@@ -19,9 +19,11 @@ namespace Authentication.Persistence.Identities
         {
             return _authenticationDbContext
                 .Query<TwoFactorAuthenticationIdentityProjection>()
-                .FromSql($"SELECT * FROM [authentication].[AuthenticationIdentities] WHERE [TYPE] = {AuthenticationIdentityTypes.TwoFactor} AND [IdentityId] = {identityId}")
+                .FromSql($@"SELECT * FROM [authentication].[AuthenticationIdentities]
+                    WHERE [Type] = {AuthenticationIdentityTypes.TwoFactor}
+                    AND [IdentityId] = {identityId}")
                 .AsNoTracking()
-                .SingleOrDefaultAsync();
+                .FirstOrDefaultAsync();
         }
     }
 }

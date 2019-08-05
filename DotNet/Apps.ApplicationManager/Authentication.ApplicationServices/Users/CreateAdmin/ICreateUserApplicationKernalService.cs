@@ -3,7 +3,7 @@ using Authentication.ApplicationServices.Users.Models;
 
 namespace Authentication.ApplicationServices.Users.CreateAdmin
 {
-    public interface ICreateAdminUserApplicationKernalService
+    public interface ICreateUserApplicationKernalService
     {
         Task CreateAsync(CreateUserAdto createUserAdto);
     }

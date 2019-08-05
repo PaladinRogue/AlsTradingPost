@@ -78,7 +78,7 @@ namespace Authentication.ApplicationServices.Notifications.Send
                                             PropertyBag = sendNotificationAdto.PropertyBag
                                         });
 
-                                        await Message.SendAsync(SendEmailNotificationMessage.Create("noreply@paladin-rogue.com", emailAddress, emailAdto.Subject, emailAdto.Subject));
+                                        await Message.SendAsync(SendEmailNotificationMessage.Create("noreply@paladin-rogue.com", emailAddress, emailAdto.Subject, emailAdto.HtmlBody));
                                     }
 
                                     break;

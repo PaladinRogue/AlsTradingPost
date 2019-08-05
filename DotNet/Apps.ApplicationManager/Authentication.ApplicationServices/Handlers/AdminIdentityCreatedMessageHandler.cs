@@ -18,18 +18,18 @@ namespace Authentication.ApplicationServices.Handlers
 
         private readonly IMapper _mapper;
 
-        private readonly ICreateAdminUserApplicationKernalService _createAdminUserApplicationKernalService;
+        private readonly ICreateUserApplicationKernalService _createUserApplicationKernalService;
 
         private readonly AppSettings _appSettings;
 
         public AdminIdentityCreatedMessageHandler(
             IMessageBus messageBus,
             ILogger<AdminIdentityCreatedMessageHandler> logger,
-            ICreateAdminUserApplicationKernalService createAdminUserApplicationKernalService,
+            ICreateUserApplicationKernalService createUserApplicationKernalService,
             IMapper mapper, IOptions<AppSettings> appSettingsAccessor) : base(messageBus)
         {
             _logger = logger;
-            _createAdminUserApplicationKernalService = createAdminUserApplicationKernalService;
+            _createUserApplicationKernalService = createUserApplicationKernalService;
             _mapper = mapper;
             _appSettings = appSettingsAccessor.Value;
         }
@@ -40,7 +40,7 @@ namespace Authentication.ApplicationServices.Handlers
             {
                 if (_appSettings.SystemName == message.ApplicationName)
                 {
-                   await _createAdminUserApplicationKernalService.CreateAsync(_mapper.Map<AdminIdentityCreatedMessage, CreateUserAdto>(message));
+                   await _createUserApplicationKernalService.CreateAsync(_mapper.Map<AdminIdentityCreatedMessage, CreateUserAdto>(message));
                 }
             }
             catch (Exception e)
