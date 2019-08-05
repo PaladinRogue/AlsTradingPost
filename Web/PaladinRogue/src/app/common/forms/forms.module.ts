@@ -1,23 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { InteractionModule } from '../interaction';
 
 import { InternationalizationModule } from '../internationalization';
 import { LayoutModule } from '../layout';
-import { IconRepository, MediaModule } from '../media';
-import { IconFactory } from '../media/services/icon-factory/icon.factory';
+import { MediaModule } from '../media';
 
 import { FormFieldComponent } from './business-components/form-field/form-field.component';
-import { UnsavedChangesGuard } from './guards/unsaved-changes/unsaved-changes.guard';
-import { FormInputComponent } from './presentation-components/form-input/form-input.component';
-import { FormValidationErrorsComponent } from './presentation-components/form-validation-errors/form-validation-errors.component';
-import { SummaryFieldComponent } from './presentation-components/summary-field/summary-field.component';
-import { FormSelectComponent } from './presentation-components/form-select/form-select.component';
 import { FormComponent } from './business-components/form/form.component';
 import { FormDirective } from './directives/form.directive';
+import { UnsavedChangesGuard } from './guards/unsaved-changes/unsaved-changes.guard';
+import { FormInputComponent } from './presentation-components/form-input/form-input.component';
+import { FormSelectComponent } from './presentation-components/form-select/form-select.component';
+import { FormValidationErrorsComponent } from './presentation-components/form-validation-errors/form-validation-errors.component';
+import { SummaryFieldComponent } from './presentation-components/summary-field/summary-field.component';
 import { UnsavedChangesService } from './services/unsaved-changes/unsaved-changes.service';
 
 @NgModule({
@@ -53,20 +51,8 @@ import { UnsavedChangesService } from './services/unsaved-changes/unsaved-change
   ],
   providers: [
     UnsavedChangesService,
-    UnsavedChangesGuard,
-    {
-      provide: APP_INITIALIZER,
-      deps: [IconFactory, IconRepository],
-      useFactory: initialiseIcons,
-      multi: true
-    }
+    UnsavedChangesGuard
   ]
 })
 export class FormsModule {
-}
-
-export function initialiseIcons(iconFactory: IconFactory, iconRepository: IconRepository): () => void {
-  return (): void => {
-    iconRepository.addIcon(iconFactory.fromFontAwesome(faExclamationTriangle));
-  };
 }

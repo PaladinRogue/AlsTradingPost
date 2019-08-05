@@ -1,15 +1,15 @@
 <pr-toolbar class="PrPlaygroundLandingPage-header PrToolbar--primary">
   <pr-icon-action class="PrPlaygroundLandingPage-menu"
                   [prAction]="toggleSideNavAction"
-                  prActionIcon="bars">
+                  prActionIcon="menu">
   </pr-icon-action>
   <h2 class="PrPlaygroundLandingPage-title">
     <pr-translate [prTranslate]="{ translateId: 'app.playground.title' }"></pr-translate>
   </h2>
-  <pr-icon-action  class="PrPlaygroundLandingPage-settings"
-                   [prAction]="settingsModal" prActionIcon="cog"></pr-icon-action>
-  <pr-icon-action  class="PrPlaygroundLandingPage-profile"
-                   [prAction]="settingsModal" prActionIcon="user"></pr-icon-action>
+  <pr-icon-action class="PrPlaygroundLandingPage-settings"
+                  [prAction]="settingsModal" prActionIcon="settings"></pr-icon-action>
+  <pr-icon-action class="PrPlaygroundLandingPage-profile"
+                  [prAction]="settingsModal" prActionIcon="account_circle"></pr-icon-action>
 </pr-toolbar>
 
 

@@ -1,10 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
+import { MatIconRegistry } from '@angular/material/icon';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatIconRegistry } from '@angular/material/icon';
-
-import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { ENVIRONMENT } from '../environments/environment';
 
 import { AppComponent } from './app.component';
@@ -26,8 +24,7 @@ import {
   NumberFormat,
   TimeFormat
 } from './common/internationalization';
-import { MaterialIconRepository, IconRepository } from './common/media';
-import { IconFactory } from './common/media/services/icon-factory/icon.factory';
+import { IconRepository, MaterialIconRepository } from './common/media';
 import { HomeModule } from './home/home.module';
 import { RoutingModule } from './routing/routing.module';
 import { LoginComponent } from './shared/business-components/login/login.component';
@@ -97,12 +94,6 @@ import { SharedModule } from './shared/shared.module';
       provide: IconRepository,
       deps: [MatIconRegistry],
       useFactory: materialIconRepositoryFactory
-    },
-    {
-      provide: APP_INITIALIZER,
-      deps: [IconFactory, IconRepository],
-      useFactory: initialiseIconsFactory,
-      multi: true
     }
   ],
   bootstrap: [
@@ -137,10 +128,4 @@ export function httpDataServiceFactory(httpApiService: HttpApiService,
 
 export function materialIconRepositoryFactory(matIconRegistry: MatIconRegistry): IconRepository {
   return new MaterialIconRepository(matIconRegistry);
-}
-
-export function initialiseIconsFactory(iconFactory: IconFactory, iconRepository: IconRepository): () => void {
-  return (): void => {
-    iconRepository.addIcon(iconFactory.fromFontAwesome(faHome));
-  };
 }

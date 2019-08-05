@@ -1,8 +1,6 @@
-@import "../../../../../theme/theme";
+@import "../../../../../themes/index";
 
 :host {
-  font-size: $icon-font-size-medium;
-
   &.PrIcon {
     $cmp: &;
 
@@ -10,17 +8,7 @@
       font-size: $icon-font-size-small;
 
       #{$cmp}-icon {
-        height: $icon-size-small;
-        width: $icon-size-small;
-      }
-    }
-
-    &--xxsmall {
-      font-size: $icon-font-size-xxsmall;
-
-      #{$cmp}-icon {
-        height: $icon-size-xxsmall;
-        width: $icon-size-xxsmall;
+        font-size: $icon-size-small;
       }
     }
 
@@ -28,8 +16,15 @@
       font-size: $icon-font-size-xsmall;
 
       #{$cmp}-icon {
-        height: $icon-size-xsmall;
-        width: $icon-size-xsmall;
+        font-size: $icon-size-xsmall;
+      }
+    }
+
+    &--xxsmall {
+      font-size: $icon-font-size-xxsmall;
+
+      #{$cmp}-icon {
+        font-size: $icon-size-xxsmall;
       }
     }
   }

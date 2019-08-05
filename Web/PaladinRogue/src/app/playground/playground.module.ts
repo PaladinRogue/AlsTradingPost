@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule as AngularFormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { faBars, faCog, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FormsModule } from '../common/forms';
 import { InteractionModule } from '../common/interaction';
 import { InternationalizationModule } from '../common/internationalization';
 import { LayoutModule } from '../common/layout';
-import { IconRepository, MediaModule } from '../common/media';
+import { MediaModule } from '../common/media';
 import { IconFactory } from '../common/media/services/icon-factory/icon.factory';
 import { ModalModule } from '../common/modal';
 import { NavigationModule } from '../common/navigation';
@@ -78,24 +77,8 @@ import { TimeCardComponent } from './business-components/time-card/time-card.com
     BlankModalContentComponent
   ],
   providers: [
-    IconFactory,
-    {
-      provide: APP_INITIALIZER,
-      deps: [IconFactory, IconRepository],
-      useFactory: initialiseIcons,
-      multi: true
-    }
+    IconFactory
   ]
 })
 export class PlaygroundModule {
-}
-
-export function initialiseIcons(iconFactory: IconFactory, iconRepository: IconRepository): () => void {
-  return (): void => {
-    iconRepository.addIcon(
-      iconFactory.fromFontAwesome(faBars),
-      iconFactory.fromFontAwesome(faCog),
-      iconFactory.fromFontAwesome(faUser)
-    );
-  };
 }
