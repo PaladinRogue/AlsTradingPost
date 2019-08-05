@@ -1,0 +1,30 @@
+@import 'themes/index';
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  font-weight: normal;
+}
+
+.mat-dialog-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  @include media-tablet {
+    position: relative;
+  }
+}
+
+.mat-tab-label {
+  width: 50%;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: normal;
+}

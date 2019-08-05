@@ -2,7 +2,7 @@ namespace Authentication.Api
 {
     public static class ResourceTypes
     {
-        public const string Jwt = nameof(Jwt);
+        public const string Session = nameof(Session);
 
         public const string Identity = nameof(Identity);
         public const string ForgotPassword = nameof(ForgotPassword);

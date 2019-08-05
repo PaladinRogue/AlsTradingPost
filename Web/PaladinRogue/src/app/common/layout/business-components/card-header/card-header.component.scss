@@ -1,0 +1,7 @@
+@import "../../../../../themes/index";
+
+:host {
+  display: block;
+  border-bottom: 1px solid $colour-grey-light;
+  margin-bottom: $default-spacing-mobile;
+}

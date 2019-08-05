@@ -56,51 +56,69 @@ namespace Authentication.Setup
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection RegisterApplicationServices(this IServiceCollection services)
+        public static IServiceCollection AddAuthenticationServiceDomain(this IServiceCollection services)
         {
             return services
-                .AddScoped<ICreateAdminAuthenticationIdentityKernalService, CreateAdminAuthenticationIdentityKernalService>()
-                .AddScoped<ISendNotificationKernalService, SendNotificationKernalService>()
-                .AddScoped<ISendTwoFactorAuthenticationNotificationKernalService, SendTwoFactorAuthenticationNotificationKernalService>()
-                .AddScoped<ICreateAdminUserApplicationKernalService, CreateAdminUserApplicationKernalService>()
-                .AddScoped<IIdentityClaimsApplicationKernalService, IdentityClaimsApplicationKernalService>()
-                .AddSecureApplicationService<IIdentityApplicationService, IdentityApplicationService, IdentityApplicationServiceSecurityDecorator>()
                 .AddSecureApplicationService<IAuthenticationApplicationService, AuthenticationApplicationService, AuthenticationApplicationServiceSecurityDecorator>()
-                .AddSecureApplicationService<IFacebookAuthenticationServiceApplicationService, FacebookAuthenticationServiceApplicationService, FacebookAuthenticationServiceApplicationServiceSecurityDecorator>()
-                .AddSecureApplicationService<IGoogleAuthenticationServiceApplicationService, GoogleAuthenticationServiceApplicationService, GoogleAuthenticationServiceApplicationServiceSecurityDecorator>()
-                .AddSecureApplicationService<IAuthenticationServiceApplicationService, AuthenticationServiceApplicationService, AuthenticationServiceApplicationServiceSecurityDecorator>()
+                .AddSecureApplicationService<IFacebookAuthenticationServiceApplicationService, FacebookAuthenticationServiceApplicationService,
+                    FacebookAuthenticationServiceApplicationServiceSecurityDecorator>()
+                .AddSecureApplicationService<IGoogleAuthenticationServiceApplicationService, GoogleAuthenticationServiceApplicationService,
+                    GoogleAuthenticationServiceApplicationServiceSecurityDecorator>()
+                .AddSecureApplicationService<IAuthenticationServiceApplicationService, AuthenticationServiceApplicationService,
+                    AuthenticationServiceApplicationServiceSecurityDecorator>()
                 .AddScoped<IFacebookAuthenticationValidator, FacebookAuthenticationValidator>()
-                .AddScoped<IGoogleAuthenticationValidator, GoogleAuthenticationValidator>();
-        }
-
-        public static IServiceCollection RegisterValidators(this IServiceCollection services)
-        {
-            ValidatorOptions.LanguageManager.Enabled = false;
-
-            return services
-                .AddScoped<IValidator<CreateUserCommandDdto>, CreateUserCommandValidator>()
-                .AddScoped<IValidator<ResetPasswordCommandDdto>, ResetPasswordValidator>()
+                .AddScoped<IGoogleAuthenticationValidator, GoogleAuthenticationValidator>()
                 .AddScoped<IValidator<PasswordLoginCommandDdto>, PasswordLoginCommandValidator>()
-                .AddScoped<IValidator<CheckPasswordDdto>, CheckPasswordValidator>()
-                .AddScoped<IValidator<ChangePasswordCommandDdto>, ChangePasswordValidator>()
-                .AddScoped<IValidator<RegisterPasswordCommandDdto>, RegisterPasswordValidator>()
-                .AddScoped<IValidator<ConfirmIdentityCommandDdto>, ConfirmIdentityValidator>()
-                .AddScoped<IValidator<ForgotPasswordCommandDdto>, ForgotPasswordCommandValidator>()
                 .AddScoped<IValidator<RefreshTokenLoginCommandDdto>, RefreshTokenLoginCommandValidator>()
                 .AddScoped<IValidator<RegisterClientCredentialCommandDdto>, RegisterClientCredentialCommandValidator>()
                 .AddScoped<IValidator<CreateAuthenticationGrantTypeFacebookDdto>, CreateAuthenticationGrantTypeFacebookValidator>()
                 .AddScoped<IValidator<ChangeAuthenticationGrantTypeFacebookDdto>, ChangeAuthenticationGrantTypeFacebookValidator>()
                 .AddScoped<IValidator<CreateAuthenticationGrantTypeGoogleDdto>, CreateAuthenticationGrantTypeGoogleValidator>()
                 .AddScoped<IValidator<ChangeAuthenticationGrantTypeGoogleDdto>, ChangeAuthenticationGrantTypeGoogleValidator>()
-                .AddScoped<IValidator<AddOrChangeIdentityClaimCommandDdto>, AddOrChangeIdentityClaimValidator>();
+                .AddScoped<IRefreshTokenLoginCommand, RefreshTokenLoginCommand>()
+                .AddScoped<IRegisterClientCredentialCommand, RegisterClientCredentialCommand>()
+                .AddScoped<IClientCredentialLoginCommand, ClientCredentialLoginCommand>()
+                .AddScoped<ICreateAuthenticationGrantTypeFacebookCommand, CreateAuthenticationGrantTypeFacebookCommand>()
+                .AddScoped<IChangeAuthenticationGrantTypeFacebookCommand, ChangeAuthenticationGrantTypeFacebookCommand>()
+                .AddScoped<ICreateAuthenticationGrantTypeGoogleCommand, CreateAuthenticationGrantTypeGoogleCommand>()
+                .AddScoped<IChangeAuthenticationGrantTypeGoogleCommand, ChangeAuthenticationGrantTypeGoogleCommand>()
+                .AddScoped<IQueryRepository<AuthenticationService>, QueryRepository<AuthenticationService>>()
+                .AddScoped<ICommandRepository<AuthenticationService>, CommandRepository<AuthenticationService>>();
         }
 
-        public static IServiceCollection RegisterDomainCommands(this IServiceCollection services)
+        public static IServiceCollection AddUserDomain(this IServiceCollection services)
         {
             return services
+                .AddScoped<ICreateUserApplicationKernalService, CreateUserApplicationKernalService>()
+                .AddScoped<IValidator<CreateUserCommandDdto>, CreateUserCommandValidator>()
+                .AddScoped<ICreateUserCommand, CreateUserCommand>()
+                .AddScoped<ICommandRepository<User>, CommandRepository<User>>()
+                .AddScoped<IQueryRepository<User>, QueryRepository<User>>()
+                .AddSingleton<ICurrentUserProvider, CurrentUserProvider>();
+        }
+
+        public static IServiceCollection AddNotificationDomain(this IServiceCollection services)
+        {
+            return services
+                .AddScoped<ISendNotificationKernalService, SendNotificationKernalService>()
+                .AddScoped<ISendTwoFactorAuthenticationNotificationKernalService, SendTwoFactorAuthenticationNotificationKernalService>()
+                .AddScoped<IQueryRepository<NotificationType>, QueryRepository<NotificationType>>();
+        }
+
+        public static IServiceCollection AddIdentityDomain(this IServiceCollection services)
+        {
+            return services
+                .AddScoped<ICreateAdminAuthenticationIdentityKernalService, CreateAdminAuthenticationIdentityKernalService>()
+                .AddScoped<IIdentityClaimsApplicationKernalService, IdentityClaimsApplicationKernalService>()
+                .AddSecureApplicationService<IIdentityApplicationService, IdentityApplicationService, IdentityApplicationServiceSecurityDecorator>()
+                .AddScoped<IValidator<ResetPasswordCommandDdto>, ResetPasswordValidator>()
+                .AddScoped<IValidator<CheckPasswordDdto>, CheckPasswordValidator>()
+                .AddScoped<IValidator<ChangePasswordCommandDdto>, ChangePasswordValidator>()
+                .AddScoped<IValidator<RegisterPasswordCommandDdto>, RegisterPasswordValidator>()
+                .AddScoped<IValidator<ConfirmIdentityCommandDdto>, ConfirmIdentityValidator>()
+                .AddScoped<IValidator<ForgotPasswordCommandDdto>, ForgotPasswordCommandValidator>()
+                .AddScoped<IValidator<AddOrChangeIdentityClaimCommandDdto>, AddOrChangeIdentityClaimValidator>()
                 .AddScoped<ICreateIdentityCommand, CreateIdentityCommand>()
-                .AddScoped<ICreateUserCommand, CreateUserCommand>()
-                .AddScoped<ICreateUserCommand, CreateUserCommand>()
                 .AddScoped<IResetPasswordCommand, ResetPasswordCommand>()
                 .AddScoped<IPasswordLoginCommand, PasswordLoginCommand>()
                 .AddScoped<ICheckPasswordCommand, CheckPasswordCommand>()
@@ -111,57 +129,37 @@ namespace Authentication.Setup
                 .AddScoped<ICreateRefreshTokenCommand, CreateRefreshTokenCommand>()
                 .AddScoped<ILogoutCommand, LogoutCommand>()
                 .AddScoped<IResendConfirmIdentityCommand, ResendConfirmIdentityCommand>()
-                .AddScoped<IRefreshTokenLoginCommand, RefreshTokenLoginCommand>()
-                .AddScoped<IRegisterClientCredentialCommand, RegisterClientCredentialCommand>()
-                .AddScoped<IClientCredentialLoginCommand, ClientCredentialLoginCommand>()
-                .AddScoped<ICreateAuthenticationGrantTypeFacebookCommand, CreateAuthenticationGrantTypeFacebookCommand>()
-                .AddScoped<IChangeAuthenticationGrantTypeFacebookCommand, ChangeAuthenticationGrantTypeFacebookCommand>()
-                .AddScoped<ICreateAuthenticationGrantTypeGoogleCommand, CreateAuthenticationGrantTypeGoogleCommand>()
-                .AddScoped<IChangeAuthenticationGrantTypeGoogleCommand, ChangeAuthenticationGrantTypeGoogleCommand>()
-                .AddScoped<IAddOrChangeIdentityClaimCommand, AddOrChangeIdentityClaimCommand>();
+                .AddScoped<IAddOrChangeIdentityClaimCommand, AddOrChangeIdentityClaimCommand>()
+                .AddScoped<IGetTwoFactorAuthenticationIdentityByIdentityQuery, GetTwoFactorAuthenticationIdentityByIdentityQuery>()
+                .AddScoped<IPasswordIdentityIdentifierExistsQuery, PasswordIdentityIdentifierExistsQuery>()
+                .AddScoped<IGetIdentityByIdentifierAndPasswordQuery, GetIdentityByIdentifierAndPasswordQuery>()
+                .AddScoped<IGetIdentityByEmailAddressQuery, GetIdentityByEmailAddressQuery>()
+                .AddScoped<IGetIdentityByForgotPasswordTokenQuery, GetIdentityByForgotPasswordTokenQuery>()
+                .AddScoped<IGetIdentityBySessionQuery, GetIdentityBySessionQuery>()
+                .AddScoped<IGetIdentityByClientCredentialIdentifierQuery, GetIdentityByClientCredentialIdentifierQuery>()
+                .AddScoped<IPasswordIdentityEmailExistsQuery, PasswordIdentityEmailExistsQuery>()
+                .AddScoped<ICommandRepository<Identity>, IdentityCommandRepository>()
+                .AddScoped<IQueryRepository<Identity>, QueryRepository<Identity>>();
         }
 
-        public static IServiceCollection RegisterPersistenceServices(
+        public static IServiceCollection AddAuthenticationPersistence(
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddScoped<IGetTwoFactorAuthenticationIdentityByIdentityQuery, GetTwoFactorAuthenticationIdentityByIdentityQuery>();
-            services.AddScoped<IPasswordIdentityIdentifierExistsQuery, PasswordIdentityIdentifierExistsQuery>();
-            services.AddScoped<IGetIdentityByIdentifierAndPasswordQuery, GetIdentityByIdentifierAndPasswordQuery>();
-            services.AddScoped<IGetIdentityByEmailAddressQuery, GetIdentityByEmailAddressQuery>();
-            services.AddScoped<IGetIdentityByForgotPasswordTokenQuery, GetIdentityByForgotPasswordTokenQuery>();
-            services.AddScoped<IGetIdentityBySessionQuery, GetIdentityBySessionQuery>();
-            services.AddScoped<IGetIdentityByClientCredentialIdentifierQuery, GetIdentityByClientCredentialIdentifierQuery>();
-            services.AddScoped<IPasswordIdentityEmailExistsQuery, PasswordIdentityEmailExistsQuery>();
-
-            services.AddScoped<ICommandRepository<AuthenticationService>, CommandRepository<AuthenticationService>>();
-            services.AddScoped<ICommandRepository<Identity>, IdentityCommandRepository>();
-            services.AddScoped<ICommandRepository<User>, CommandRepository<User>>();
-
-            services.AddScoped<IQueryRepository<AuthenticationService>, QueryRepository<AuthenticationService>>();
-            services.AddScoped<IQueryRepository<Identity>, QueryRepository<Identity>>();
-            services.AddScoped<IQueryRepository<NotificationType>, QueryRepository<NotificationType>>();
-            services.AddScoped<IQueryRepository<User>, QueryRepository<User>>();
-
-            services.AddEntityFrameworkSqlServer().AddOptions()
+            return services.AddEntityFrameworkSqlServer().AddOptions()
                 .AddDbContext<AuthenticationDbContext>(options =>
                     options.UseLazyLoadingProxies()
                         .ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning))
-                        .UseSqlServer(configuration.GetConnectionString("Default")));
-            services.AddScoped<DbContext>(sp => sp.GetRequiredService<AuthenticationDbContext>());
-            services.AddScoped<ITransactionManager, EntityFrameworkTransactionManager>();
-
-            services.AddReferenceData<AuthenticationDbContext>();
-
-            return services;
+                        .UseSqlServer(configuration.GetConnectionString("Default")))
+                .AddScoped<DbContext>(sp => sp.GetRequiredService<AuthenticationDbContext>())
+                .AddScoped<ITransactionManager, EntityFrameworkTransactionManager>()
+                .AddReferenceData<AuthenticationDbContext>();
         }
 
-        public static IServiceCollection RegisterProviders(this IServiceCollection services)
+        public static IServiceCollection UseDefaultRouting(this IServiceCollection services)
         {
             return services
-                .AddSingleton<ICurrentUserProvider, CurrentUserProvider>()
-                .AddSingleton<IRouteProvider<bool>, DefaultRouteProvider>()
-                .AddSingleton<IAbsoluteRouteProvider, DefaultAbsoluteRouteProvider>();
+                .AddSingleton<IRouteProvider<bool>, DefaultRouteProvider>();
         }
 
         public static IServiceCollection UseEmailNotifications(this IServiceCollection services)

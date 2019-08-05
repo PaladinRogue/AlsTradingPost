@@ -1,0 +1,15 @@
+<pr-card>
+  <pr-card-header [prCardHeaderTitle]="{ translateId: 'modal.card.title' }"></pr-card-header>
+
+  <pr-button-action class="PrModalCard-action PrAction--raised" [prAction]="openBlankModal">
+    <pr-translate [prTranslate]="{ translateId: 'modal.card.actions.blank' }"></pr-translate>
+  </pr-button-action>
+
+  <pr-button-action class="PrModalCard-action PrAction--raised" [prAction]="openDefaultModal">
+    <pr-translate [prTranslate]="{ translateId: 'modal.card.actions.default' }"></pr-translate>
+  </pr-button-action>
+
+  <pr-button-action class="PrModalCard-action PrAction--raised" [prAction]="openConfirmationModal">
+    <pr-translate [prTranslate]="{ translateId: 'modal.card.actions.confirmation' }"></pr-translate>
+  </pr-button-action>
+</pr-card>

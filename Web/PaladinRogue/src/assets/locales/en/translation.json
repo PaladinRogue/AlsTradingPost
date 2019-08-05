@@ -1,0 +1,35 @@
+{
+  "app": {
+    "title": "Welcome to {{ title }}!",
+    "playground": {
+      "title": "Playground",
+      "icon": {
+        "title": "Icons"
+      }
+    },
+    "als": {
+      "title": "Als trading post"
+    }
+  },
+  "noContent": {
+    "label": "Nothing to see here"
+  },
+  "playground": {
+    "routes": {
+      "home": "Home",
+      "layout": "Layout",
+      "media": "Media",
+      "forms": "Forms",
+      "localization": "Localization",
+      "storage": "Storage",
+      "modal": "Modals"
+    }
+  },
+  "form": {
+    "input": {
+      "max": {
+        "hint": "{{ count }} / {{ maxLength }}"
+      }
+    }
+  }
+}

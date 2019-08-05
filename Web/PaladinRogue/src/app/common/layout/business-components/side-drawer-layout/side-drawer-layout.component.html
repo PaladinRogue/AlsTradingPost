@@ -1,0 +1,19 @@
+<mat-drawer-container class="PrSideDrawerLayout-container">
+  <mat-drawer class="PrSideDrawerLayout-drawer" mode="side" opened>
+    <ng-content select="pr-drawer"></ng-content>
+
+    <pr-icon-action class="PrSideDrawerLayout-close"
+                    [prAction]="closeAction"
+                    prActionIcon="angle-left">
+    </pr-icon-action>
+  </mat-drawer>
+  <mat-drawer-content class="PrSideDrawerLayout-content">
+    <pr-icon-action class="PrSideDrawerLayout-open"
+                    *ngIf="isClosed$ | async"
+                    [prAction]="openAction"
+                    prActionIcon="angle-right">
+    </pr-icon-action>
+
+    <ng-content select="pr-content"></ng-content>
+  </mat-drawer-content>
+</mat-drawer-container>

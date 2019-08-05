@@ -1,0 +1,13 @@
+@import "../../../../themes/index";
+
+:host {
+  .PrLocalizationPage {
+    &-container {
+      @include layout-column;
+    }
+
+    &-card {
+      @include layout-column-item(4);
+    }
+  }
+}

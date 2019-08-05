@@ -1,0 +1,60 @@
+<ng-container *ngIf="isRaised; else notRaised">
+  <ng-container [ngSwitch]="actionType$ | async">
+    <a mat-raised-button
+       [color]="colourPalette"
+       class="PrAction-route"
+       [routerLink]="prAction.route"
+       [queryParams]="prAction.routeParams"
+       *ngSwitchCase="actionTypes.ROUTE">
+      <ng-container *ngTemplateOutlet="content"></ng-container>
+    </a>
+    <button mat-raised-button
+            type="button"
+            [color]="colourPalette"
+            class="PrAction-action"
+            (click)="action()"
+            *ngSwitchCase="actionTypes.ACTION">
+      <ng-container *ngTemplateOutlet="content"></ng-container>
+    </button>
+    <button mat-raised-button
+            type="button"
+            [color]="colourPalette"
+            disabled
+            class="PrAction-noAction"
+            *ngSwitchCase="actionTypes.NONE">
+      <ng-container *ngTemplateOutlet="content"></ng-container>
+    </button>
+  </ng-container>
+</ng-container>
+<ng-template #notRaised>
+  <ng-container [ngSwitch]="actionType$ | async">
+    <a mat-button
+       [color]="colourPalette"
+       class="PrAction-route"
+       [routerLink]="prAction.route"
+       [queryParams]="prAction.routeParams"
+       *ngSwitchCase="actionTypes.ROUTE">
+      <ng-container *ngTemplateOutlet="content"></ng-container>
+    </a>
+    <button mat-button
+            type="button"
+            [color]="colourPalette"
+            class="PrAction-action"
+            (click)="action()"
+            *ngSwitchCase="actionTypes.ACTION">
+      <ng-container *ngTemplateOutlet="content"></ng-container>
+    </button>
+    <button mat-button
+            type="button"
+            disabled
+            [color]="colourPalette"
+            class="PrAction-noAction"
+            *ngSwitchCase="actionTypes.NONE">
+      <ng-container *ngTemplateOutlet="content"></ng-container>
+    </button>
+  </ng-container>
+</ng-template>
+
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>

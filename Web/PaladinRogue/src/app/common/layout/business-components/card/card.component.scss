@@ -1,0 +1,14 @@
+@import "../../../../../themes/index";
+
+:host {
+  display: block;
+  padding: $default-spacing-mobile;
+
+  @include media-tablet {
+    padding: $default-spacing;
+  }
+
+  &-content {
+    display: block;
+  }
+}

@@ -1,0 +1,10 @@
+<form [formGroup]="prForm.fieldGroup" (ngSubmit)="prForm.save()">
+  <ng-container *ngFor="let field of prForm.fields">
+    <pr-form-field [prFormField]="field"></pr-form-field>
+  </ng-container>
+
+
+  <pr-submit class="PrForm-save"
+             [prSubmitIsDisabled]="!prForm.canSave"
+             [prSubmitLabel]="{ translateId: 'form.action.save' }"></pr-submit>
+</form>

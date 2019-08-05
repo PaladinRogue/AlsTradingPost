@@ -1,0 +1,31 @@
+@import "../../../../../themes/index";
+
+:host {
+  &.PrIcon {
+    $cmp: &;
+
+    &--small {
+      font-size: $icon-font-size-small;
+
+      #{$cmp}-icon {
+        font-size: $icon-size-small;
+      }
+    }
+
+    &--xsmall {
+      font-size: $icon-font-size-xsmall;
+
+      #{$cmp}-icon {
+        font-size: $icon-size-xsmall;
+      }
+    }
+
+    &--xxsmall {
+      font-size: $icon-font-size-xxsmall;
+
+      #{$cmp}-icon {
+        font-size: $icon-size-xxsmall;
+      }
+    }
+  }
+}

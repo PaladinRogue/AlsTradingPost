@@ -1,0 +1,15 @@
+@import '~@angular/material/theming';
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import 'colour';
+@import 'font';
+@import 'interaction';
+@import 'media';
+@import 'size';
+@import 'layout';
+
+$config: mat-typography-config();
+
+:root.theme-default {
+  --font-family: #{mat-font-family($config)};
+}
+

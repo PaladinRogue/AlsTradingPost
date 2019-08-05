@@ -8,15 +8,7 @@ namespace Notifications.Setup
 {
     public static class ServiceCollectionExtensions
     {
-
-        public static IServiceCollection RegisterApplicationServices(this IServiceCollection services)
-        {
-            return services
-                .AddTransient<ISendEmailNotificationKernalService, SendEmailNotificationKernalService>()
-                .AddTransient<ITransactionManager, TransientTransactionManager>();
-        }
-
-        public static IServiceCollection RegisterProviders(this IServiceCollection services)
+        public static IServiceCollection UseDefaultRouting(this IServiceCollection services)
         {
             return services
                 .AddSingleton<IRouteProvider<bool>, DefaultRouteProvider>();
@@ -24,6 +16,7 @@ namespace Notifications.Setup
         public static IServiceCollection UseEmailNotifications(this IServiceCollection services)
         {
             return services
+                .AddScoped<ISendEmailNotificationKernalService, SendEmailNotificationKernalService>()
                 .AddScoped<IEmailNotificationSender, LocalDevelopmentEmailNotificationSender>();
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Common.ApplicationServices.Services.Query;
+using Common.ApplicationServices.Transactions;
 using Common.Authorisation;
 using Common.Authorisation.ApplicationServices;
 using Common.Authorisation.Manager;
@@ -7,6 +8,7 @@ using Common.Authorisation.Policies.Deny;
 using Common.Authorisation.Restrictions;
 using Common.Setup.Infrastructure.Concurrency;
 using Common.Setup.Infrastructure.Routing;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -19,6 +21,12 @@ namespace Common.Setup
 {
     public static class ServiceCollectionExtensions
     {
+        public static IServiceCollection UseTransientTransactions(this IServiceCollection services)
+        {
+            return services
+                .AddSingleton<ITransactionManager, TransientTransactionManager>();
+        }
+
         public static IServiceCollection AddDefaultMvcOptions(this IServiceCollection services)
         {
             services.AddMvc(options =>
@@ -41,7 +49,7 @@ namespace Common.Setup
                 .AddScoped(typeof(IQueryService<>), typeof(QueryService<>));
         }
 
-        public static IServiceCollection RegisterCommonProviders(this IServiceCollection services)
+        public static IServiceCollection AddCommonProviders(this IServiceCollection services)
         {
             return services
                 .AddSingleton<IConcurrencyVersionProvider, ConcurrencyVersionProvider>()
@@ -64,6 +72,13 @@ namespace Common.Setup
         {
             return services
                 .AddSingleton<IClock>(SystemClock.Instance);
+        }
+
+        public static IServiceCollection UseFluentValidation(this IServiceCollection services)
+        {
+            ValidatorOptions.LanguageManager.Enabled = false;
+
+            return services;
         }
     }
 }

@@ -27,51 +27,35 @@ namespace Gateway.Setup
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection RegisterApplicationServices(this IServiceCollection services)
+        public static IServiceCollection AddApplicationDomain(this IServiceCollection services)
         {
             return services
                 .AddSecureApplicationService<IApplicationApplicationService, ApplicationApplicationService, ApplicationApplicationServiceSecurityDecorator>()
                 .AddScoped<IRegisterApplicationKernalService, RegisterApplicationKernalService>()
-                .AddScoped<IApplicationKernalService, ApplicationKernalService>();
-        }
-
-        public static IServiceCollection RegisterValidators(this IServiceCollection services)
-        {
-            ValidatorOptions.LanguageManager.Enabled = false;
-
-            return services
-                .AddScoped<IValidator<ChangeApplicationDdto>, ChangeApplicationValidator>()
-                .AddScoped<IValidator<CreateApplicationDdto>, CreateApplicationValidator>();
-        }
-
-        public static IServiceCollection RegisterDomainCommands(this IServiceCollection services)
-        {
-            return services
+                .AddScoped<IApplicationKernalService, ApplicationKernalService>()
                 .AddScoped<IChangeApplicationCommand, ChangeApplicationCommand>()
-                .AddScoped<ICreateApplicationCommand, CreateApplicationCommand>();
+                .AddScoped<ICreateApplicationCommand, CreateApplicationCommand>()
+                .AddScoped<IValidator<ChangeApplicationDdto>, ChangeApplicationValidator>()
+                .AddScoped<IValidator<CreateApplicationDdto>, CreateApplicationValidator>()
+                .AddSingletonCache<IApplicationQueryRepository, ApplicationQueryRepository, ICacheDecorator<string, Application>, ApplicationQueryRepositoryCacheDecorator, GatewayCacheService>()
+                .AddScoped<IQueryRepository<Application>, QueryRepository<Application>>()
+                .AddScoped<ICommandRepository<Application>, CommandRepository<Application>>();
         }
 
-        public static IServiceCollection RegisterPersistenceServices(
+        public static IServiceCollection AddGatewayPersistence(
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddScoped<IQueryRepository<Application>, QueryRepository<Application>>();
-            services.AddScoped<ICommandRepository<Application>, CommandRepository<Application>>();
-
-            services.AddSingletonCache<IApplicationQueryRepository, ApplicationQueryRepository, ICacheDecorator<string, Application>, ApplicationQueryRepositoryCacheDecorator, GatewayCacheService>();
-
-            services.AddEntityFrameworkSqlServer().AddOptions()
+            return services.AddEntityFrameworkSqlServer().AddOptions()
                 .AddDbContext<GatewayDbContext>(options =>
                     options.UseLazyLoadingProxies()
                         .ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning))
-                        .UseSqlServer(configuration.GetConnectionString("Default")));
-            services.AddScoped<DbContext>(sp => sp.GetRequiredService<GatewayDbContext>());
-            services.AddScoped<ITransactionManager, EntityFrameworkTransactionManager>();
-
-            return services;
+                        .UseSqlServer(configuration.GetConnectionString("Default")))
+                .AddScoped<DbContext>(sp => sp.GetRequiredService<GatewayDbContext>())
+                .AddScoped<ITransactionManager, EntityFrameworkTransactionManager>();
         }
 
-        public static IServiceCollection RegisterProviders(this IServiceCollection services)
+        public static IServiceCollection UseGatewayRouteProvider(this IServiceCollection services)
         {
             return services
                 .AddScoped<IRouteProvider<bool>, GatewayRouteProvider>();

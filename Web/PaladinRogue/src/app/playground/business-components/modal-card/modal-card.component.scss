@@ -1,0 +1,10 @@
+@import "../../../../themes/index";
+
+:host {
+  .PrModalCard {
+    &-action {
+      display: block;
+      margin: $default-spacing-mobile 0;
+    }
+  }
+}

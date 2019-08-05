@@ -1,0 +1,20 @@
+<mat-sidenav-container class="PrSideNav-container">
+  <mat-sidenav class="PrSideNav-drawer"
+               [mode]="mobileQuery.matches ? 'over' : 'side'"
+               [opened]="isOpen$ | async"
+               [fixedInViewport]="true"
+               [fixedTopGap]="mobileQuery.matches ? 56 : 64">
+    <mat-nav-list>
+      <a class="PrSideNav-link"
+         *ngFor="let route of prSideNavRoutes" mat-list-item
+         [routerLink]='route.route'
+         [queryParams]='route.routeParams'
+         routerLinkActive="PrSideNav--active">
+        <pr-translate [prTranslate]="route.label"></pr-translate>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="PrSideNav-content">
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

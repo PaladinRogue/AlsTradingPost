@@ -47,8 +47,9 @@ namespace Notifications.Api
                 .UseDefaultResourceBuilders()
                 .RegisterAuthorisationServices()
                 .UseAlwaysAllowAuthorisation()
-                .RegisterCommonProviders()
+                .AddCommonProviders()
                 .UseSystemClock()
+                .UseFluentValidation()
                 .AddLazyCache();
 
             services.Configure<MvcOptions>(options =>
@@ -59,8 +60,8 @@ namespace Notifications.Api
 
             services
                 .UseJsonV1Format()
-                .RegisterApplicationServices()
-                .RegisterProviders()
+                .UseTransientTransactions()
+                .UseDefaultRouting()
                 .RegisterMessageHandlers()
                 .UseEmailNotifications()
                 .AddStartupTask<SetDataProtectorStartupTask>()

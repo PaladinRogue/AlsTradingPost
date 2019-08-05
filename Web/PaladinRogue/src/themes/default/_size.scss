@@ -1,0 +1,21 @@
+$icon-size-xxsmall: 12px;
+$icon-size-xsmall: 18px;
+$icon-size-small: 24px;
+$icon-size-medium: 30px;
+$icon-size-large: 36px;
+
+$icon-font-size-xxsmall: 18px;
+$icon-font-size-xsmall: 24px;
+$icon-font-size-small: 30px;
+$icon-font-size-medium: 36px;
+$icon-font-size-large: 42px;
+
+$default-spacing: 15px;
+$default-spacing-mobile: 10px;
+
+@mixin size-setup($size) {
+  height: $size;
+  width: $size;
+  min-height: $size;
+  min-width: $size;
+}

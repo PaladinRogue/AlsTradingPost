@@ -26,58 +26,54 @@ namespace Vault.Setup
 {
     public static class ServiceCollectionExtensions
     {
-
-        public static IServiceCollection RegisterApplicationServices(this IServiceCollection services)
+        public static IServiceCollection UseDefaultRouting(this IServiceCollection services)
         {
             return services
-                .AddScoped<ICreateSharedDataKeysApplicationKernalService, CreateSharedDataKeysApplicationKernalService>();
+                .AddSingleton<IRouteProvider<bool>, DefaultRouteProvider>();
         }
 
-        public static IServiceCollection RegisterValidators(this IServiceCollection services)
+        public static IServiceCollection AddDataKeyProviders(this IServiceCollection services)
         {
-            ValidatorOptions.LanguageManager.Enabled = false;
-
             return services
-                .AddScoped<IValidator<CreateApplicationCommandDdto>, CreateApplicationValidator>()
-                .AddScoped<IValidator<AddApplicationDataKeyCommandDdto>, AddApplicationDataKeyValidator>()
+                .AddSingleton<IMasterKeyProvider, MasterKeyProvider>()
+                .AddSingletonCache<IDataKeyProvider, DataKeyProvider, ICacheDecorator<string, DataKey>, DataKeyProviderCacheDecorator, VaultCacheService>();
+        }
+
+        public static IServiceCollection AddSharedDataKeyDomain(this IServiceCollection services)
+        {
+            return services
+                .AddScoped<ICreateSharedDataKeysApplicationKernalService, CreateSharedDataKeysApplicationKernalService>()
+                .AddScoped<ICreateSharedDataKeyCommand, CreateSharedDataKeyCommand>()
+                .AddScoped<IChangeSharedDataKeyCommand, ChangeSharedDataKeyCommand>()
                 .AddScoped<IValidator<CreateSharedDataKeyCommandDdto>, CreateSharedDataKeyValidator>()
-                .AddScoped<IValidator<ChangeSharedDataKeyCommandDdto>, ChangeSharedDataKeyValidator>();
+                .AddScoped<IValidator<ChangeSharedDataKeyCommandDdto>, ChangeSharedDataKeyValidator>()
+                .AddScoped<ICommandRepository<SharedDataKey>, CommandRepository<SharedDataKey>>()
+                .AddScoped<IQueryRepository<SharedDataKey>, QueryRepository<SharedDataKey>>();
         }
 
-        public static IServiceCollection RegisterDomainCommands(this IServiceCollection services)
+
+        public static IServiceCollection AddApplicationDomain(this IServiceCollection services)
         {
             return services
                 .AddScoped<ICreateApplicationCommand, CreateApplicationCommand>()
                 .AddScoped<IAddApplicationDataKeyCommand, AddApplicationDataKeyCommand>()
-                .AddScoped<ICreateSharedDataKeyCommand, CreateSharedDataKeyCommand>()
-                .AddScoped<IChangeSharedDataKeyCommand, ChangeSharedDataKeyCommand>();
+                .AddScoped<IValidator<CreateApplicationCommandDdto>, CreateApplicationValidator>()
+                .AddScoped<IValidator<AddApplicationDataKeyCommandDdto>, AddApplicationDataKeyValidator>()
+                .AddScoped<ICommandRepository<Application>, CommandRepository<Application>>()
+                .AddScoped<IQueryRepository<Application>, QueryRepository<Application>>();
         }
 
-        public static IServiceCollection RegisterProviders(this IServiceCollection services)
-        {
-            return services
-                .AddSingleton<IMasterKeyProvider, MasterKeyProvider>()
-                .AddSingletonCache<IDataKeyProvider, DataKeyProvider, ICacheDecorator<string, DataKey>, DataKeyProviderCacheDecorator, VaultCacheService>()
-                .AddSingleton<IRouteProvider<bool>, DefaultRouteProvider>();
-        }
-
-        public static IServiceCollection RegisterPersistenceServices(
+        public static IServiceCollection AddVaultPersistence(
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddScoped<ICommandRepository<Application>, CommandRepository<Application>>();
-            services.AddScoped<ICommandRepository<SharedDataKey>, CommandRepository<SharedDataKey>>();
-
-            services.AddScoped<IQueryRepository<Application>, QueryRepository<Application>>();
-            services.AddScoped<IQueryRepository<SharedDataKey>, QueryRepository<SharedDataKey>>();
-
             services.AddEntityFrameworkSqlServer().AddOptions()
                 .AddDbContext<VaultDbContext>(options =>
                     options.UseLazyLoadingProxies()
                         .ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning))
-                        .UseSqlServer(configuration.GetConnectionString("Default")));
-            services.AddScoped<DbContext>(sp => sp.GetRequiredService<VaultDbContext>());
-            services.AddScoped<ITransactionManager, EntityFrameworkTransactionManager>();
+                        .UseSqlServer(configuration.GetConnectionString("Default")))
+                .AddScoped<DbContext>(sp => sp.GetRequiredService<VaultDbContext>())
+                .AddScoped<ITransactionManager, EntityFrameworkTransactionManager>();
 
             return services;
         }

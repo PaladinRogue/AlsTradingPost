@@ -1,0 +1,19 @@
+@import "../../../../../themes/index";
+
+:host {
+  min-height: 200px;
+
+  .PrNoContent {
+    &-container {
+      min-height: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &-text {
+      font-style: italic;
+      color: $colour-grey;
+    }
+  }
+}

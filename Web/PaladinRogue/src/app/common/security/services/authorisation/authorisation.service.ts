@@ -1,0 +1,8 @@
+import { Injectable } from '@angular/core';
+
+@Injectable()
+export class AuthorisationService {
+  public getAuthorisationHeader(): string {
+    return 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJjOWNlNGVlYi0zY2Q0LTQ2MGYtYmZjZi03ZmRlZjU4NjY4NDkiLCJpYXQiOjE1MzY2ODk4MjIsInBzbiI6IlRyYWRlciIsInRyZCI6IjVkNjczM2E2LTNmMDktNDg3MS04MDY0LWE5YTA5YjRlMmMwMCIsInN1YiI6IjVkNjczM2E2LTNmMDktNDg3MS04MDY0LWE5YTA5YjRlMmMwMCIsInJvbCI6IkFwcEFjY2VzcyIsIm5iZiI6MTUzNjY4OTgyMiwiZXhwIjoxNTM2Njk3MDIyLCJpc3MiOiJQYWxhZGluUm9ndWUuQWxzVHJhZGluZ1Bvc3QiLCJhdWQiOiJQYWxhZGluUm9ndWUuQWxzVHJhZGluZ1Bvc3QifQ.p6ARv8I9PvhZ5OnQpjuNqDhBTqekeM3mX0NeRcuWiqs';
+  }
+}

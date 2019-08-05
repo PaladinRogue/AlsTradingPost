@@ -1,0 +1,15 @@
+@import "../../../../../themes/index";
+
+:host {
+  .PrFormValidationErrors {
+    &-icon {
+      margin-right: 5px;
+      color: $colour-warning;
+    }
+
+    &-text {
+      line-height: $font-size-xxsmall;
+      vertical-align: middle;
+    }
+  }
+}
