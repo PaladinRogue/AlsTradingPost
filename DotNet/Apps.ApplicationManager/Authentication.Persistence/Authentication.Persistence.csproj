@@ -14,8 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common.ReferenceData\ReferenceData.Persistence\ReferenceData.Persistence.csproj" />
-    <ProjectReference Include="..\..\Common\Common.Persistence\Common.Persistence.csproj" />
+    <ProjectReference Include="..\..\ReferenceData\ReferenceData.Persistence\ReferenceData.Persistence.csproj" />
     <ProjectReference Include="..\..\Persistence\Persistence.EntityFramework\Persistence.EntityFramework.csproj" />
     <ProjectReference Include="..\Authentication.ApplicationServices\Authentication.ApplicationServices.csproj" />
     <ProjectReference Include="..\Authentication.Domain\Authentication.Domain.csproj" />
