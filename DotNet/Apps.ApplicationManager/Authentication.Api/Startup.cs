@@ -7,6 +7,7 @@ using Authentication.Setup.Infrastructure.Messaging;
 using Authentication.Setup.Infrastructure.SystemAdmins;
 using Authorisation.Setup;
 using AutoMapper;
+using Common.Api;
 using Common.Api.ApplicationRegistration;
 using Common.Api.Builders;
 using Common.Api.Clocks;
@@ -38,7 +39,7 @@ using Vault.Broker.Setup.DataKeys;
 
 namespace Authentication.Api
 {
-    public class Startup : VaultApiStartup
+    public class Startup : ApiStartup
     {
         public Startup(IHostingEnvironment environment) : base(environment)
         {

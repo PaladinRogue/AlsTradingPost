@@ -37,15 +37,6 @@ namespace Vault.Api
     {
         public Startup(IHostingEnvironment environment) : base(environment)
         {
-            IConfigurationRoot configurationRoot = new ConfigurationBuilder()
-                .SetBasePath(environment.ContentRootPath)
-                .AddJsonFile("vaultSecrets.json", false, true)
-                .Build();
-
-            Configuration = new ConfigurationBuilder()
-                .AddConfiguration(Configuration)
-                .AddConfiguration(configurationRoot)
-                .Build();
         }
 
         public IServiceProvider ConfigureServices(IServiceCollection services)

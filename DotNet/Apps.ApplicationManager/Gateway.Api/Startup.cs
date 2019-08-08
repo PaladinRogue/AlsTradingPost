@@ -6,6 +6,7 @@ using Common.Api.Extensions;
 using Common.Api.Formats;
 using Authorisation.Application.Policies;
 using Authorisation.Setup;
+using Common.Api;
 using Common.Setup;
 using Common.Setup.Infrastructure.DataProtection;
 using Common.Setup.Infrastructure.DomainEvents;
@@ -32,7 +33,7 @@ using Vault.Broker.Setup.DataKeys;
 
 namespace Gateway.Api
 {
-    public class Startup : VaultApiStartup
+    public class Startup : ApiStartup
     {
         public Startup(IHostingEnvironment environment) : base(environment)
         {

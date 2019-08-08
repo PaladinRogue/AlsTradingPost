@@ -2,6 +2,7 @@
 using Authorisation.Application.Policies;
 using Authorisation.Setup;
 using AutoMapper;
+using Common.Api;
 using Common.Api.Builders;
 using Common.Api.DataProtection;
 using Common.Api.Extensions;
@@ -28,7 +29,7 @@ using Vault.Broker.Setup.DataKeys;
 
 namespace Notifications.Api
 {
-    public class Startup : VaultApiStartup
+    public class Startup : ApiStartup
     {
         public Startup(IHostingEnvironment environment) : base(environment)
         {

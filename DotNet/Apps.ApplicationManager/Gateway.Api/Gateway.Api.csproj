@@ -20,7 +20,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Common\Common.Api.Formats\Common.Api.Formats.csproj" />
-      <ProjectReference Include="..\..\Vault\Libs.Vault.Api\Libs.Vault.Api.csproj" />
       <ProjectReference Include="..\Gateway.Setup\Gateway.Setup.csproj" />
     </ItemGroup>
 </Project>

@@ -18,6 +18,7 @@
     <ProjectReference Include="..\..\Persistence\Persistence.Setup\Persistence.Setup.csproj" />
     <ProjectReference Include="..\..\ReferenceData\ReferenceData.Setup\ReferenceData.Setup.csproj" />
     <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
+    <ProjectReference Include="..\..\Vault\Libs.Vault.Setup\Libs.Vault.Setup.csproj" />
     <ProjectReference Include="..\Authentication.ApplicationServices\Authentication.ApplicationServices.csproj" />
     <ProjectReference Include="..\Authentication.Persistence\Authentication.Persistence.csproj" />
   </ItemGroup>
