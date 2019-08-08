@@ -1,11 +1,5 @@
 ﻿using Common.ApplicationServices.Services.Query;
 using Common.ApplicationServices.Transactions;
-using Common.Authorisation;
-using Common.Authorisation.ApplicationServices;
-using Common.Authorisation.Manager;
-using Common.Authorisation.Policies;
-using Common.Authorisation.Policies.Deny;
-using Common.Authorisation.Restrictions;
 using Common.Setup.Infrastructure.Concurrency;
 using Common.Setup.Infrastructure.Routing;
 using FluentValidation;
@@ -53,19 +47,8 @@ namespace Common.Setup
         {
             return services
                 .AddSingleton<IConcurrencyVersionProvider, ConcurrencyVersionProvider>()
-                .AddSingleton<IResourceOwnerProviderCollection, ResourceOwnerProviderCollection>()
                 .AddSingleton<IApiDescriptionGroupCollectionProvider, ApiDescriptionGroupCollectionProvider>()
                 .AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        }
-
-        public static IServiceCollection RegisterAuthorisationServices(this IServiceCollection services)
-        {
-            return services
-                .AddSingleton<IAuthorisationRestrictionProvider, AuthorisationRestrictionProvider>()
-                .AddSingleton<IAuthorisationPolicy, AlwaysDenyAuthorisationPolicy>()
-                .AddScoped<IAuthorisationManager, AuthorisationManager>()
-                .AddScoped<ISecurityApplicationService, DefaultSecurityApplicationService>()
-                .AddScoped<IClaimsApplicationKernalService, ClaimsApplicationKernalService>();
         }
 
         public static IServiceCollection UseSystemClock(this IServiceCollection services)

@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
 using Authentication.ApplicationServices.Identities.CreateAdmin;
-using Common.Messaging.Infrastructure.Handlers;
-using Common.Messaging.Infrastructure.MessageBus;
-using Common.Messaging.Messages;
+using Messaging.Messages;
+using Messaging.Setup.Infrastructure.Handlers;
+using Messaging.Setup.Infrastructure.MessageBus;
 using Microsoft.Extensions.Logging;
 
 namespace Authentication.ApplicationServices.Handlers

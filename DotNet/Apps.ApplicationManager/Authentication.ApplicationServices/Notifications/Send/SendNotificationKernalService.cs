@@ -7,8 +7,8 @@ using Authentication.Domain.NotificationTypes;
 using Common.ApplicationServices.Exceptions;
 using Common.ApplicationServices.Transactions;
 using Common.Domain.Persistence;
-using Common.Messaging.Infrastructure;
-using Common.Messaging.Messages;
+using Messaging.Messages;
+using Messaging.Setup.Infrastructure;
 using Microsoft.Extensions.Logging;
 using Notifications.ApplicationServices.Emails;
 

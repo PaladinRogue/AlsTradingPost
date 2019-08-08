@@ -2,8 +2,8 @@ using System.Threading.Tasks;
 using Authentication.ApplicationServices;
 using Authentication.Domain.Identities;
 using Common.ApplicationServices.Transactions;
-using Common.Authorisation.Contexts;
-using Common.Authorisation.Restrictions;
+using Authorisation.Application.Contexts;
+using Authorisation.Application.Restrictions;
 using Common.Domain.Persistence;
 using Common.Setup.Infrastructure.Authorisation;
 

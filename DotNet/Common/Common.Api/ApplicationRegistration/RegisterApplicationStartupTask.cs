@@ -2,11 +2,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Common.Api.Extensions;
-using Common.Messaging.Infrastructure.Dispatchers;
-using Common.Messaging.Infrastructure.Senders;
-using Common.Messaging.Messages;
+using Messaging.Setup.Infrastructure.Dispatchers;
+using Messaging.Setup.Infrastructure.Senders;
 using Common.Resources.Settings;
 using Common.Setup.Infrastructure.Startup;
+using Messaging.Messages;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Common.Api.ApplicationRegistration

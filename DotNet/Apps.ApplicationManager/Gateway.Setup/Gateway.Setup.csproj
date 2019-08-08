@@ -12,10 +12,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Common\Common.Api\Common.Api.csproj" />
+      <ProjectReference Include="..\..\Authorisation\Authorisation.Setup\Authorisation.Setup.csproj" />
       <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
+      <ProjectReference Include="..\..\DomainEvents\DomainEvents.Setup\DomainEvents.Setup.csproj" />
+      <ProjectReference Include="..\..\Persistence\Persistence.Setup\Persistence.Setup.csproj" />
       <ProjectReference Include="..\Gateway.ApplicationServices\Gateway.ApplicationServices.csproj" />
-      <ProjectReference Include="..\Gateway.Domain\Gateway.Domain.csproj" />
       <ProjectReference Include="..\Gateway.Persistence\Gateway.Persistence.csproj" />
     </ItemGroup>
 

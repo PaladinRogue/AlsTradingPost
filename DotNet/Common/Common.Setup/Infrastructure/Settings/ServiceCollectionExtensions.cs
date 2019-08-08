@@ -19,12 +19,5 @@ namespace Common.Setup.Infrastructure.Settings
         {
             return services.Configure<HostSettings>(configuration);
         }
-
-        public static IServiceCollection LoadSystemAdminIdentitySettings(
-            this IServiceCollection services,
-            IConfiguration configuration)
-        {
-            return services.Configure<SystemAdminIdentitySettings>(configuration.GetSection(nameof(SystemAdminIdentitySettings)));
-        }
     }
 }

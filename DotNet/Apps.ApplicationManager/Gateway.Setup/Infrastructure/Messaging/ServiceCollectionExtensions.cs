@@ -1,4 +1,4 @@
-﻿using Common.Messaging.Infrastructure.Handlers;
+﻿using Messaging.Setup.Infrastructure.Handlers;
 using Gateway.ApplicationServices.Handlers;
 using Microsoft.Extensions.DependencyInjection;
 

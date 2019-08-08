@@ -4,7 +4,8 @@ using Common.Api.Builders;
 using Common.Api.DataProtection;
 using Common.Api.Extensions;
 using Common.Api.Formats;
-using Common.Authorisation.Policies;
+using Authorisation.Application.Policies;
+using Authorisation.Setup;
 using Common.Setup;
 using Common.Setup.Infrastructure.DataProtection;
 using Common.Setup.Infrastructure.DomainEvents;
@@ -19,12 +20,13 @@ using Gateway.Setup;
 using Gateway.Setup.Infrastructure.DomainEvents;
 using Gateway.Setup.Infrastructure.Messaging;
 using Gateway.Setup.Infrastructure.ReverseProxy;
-using Vault.Broker;
-using Vault.Broker.Setup.DataKeys;
+using Libs.Vault.Broker;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Vault.Broker;
+using Vault.Broker.Setup.DataKeys;
 
 [assembly: ApiController]
 

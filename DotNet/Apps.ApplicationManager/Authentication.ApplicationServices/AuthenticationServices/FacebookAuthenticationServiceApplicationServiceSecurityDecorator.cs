@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using Authentication.ApplicationServices.AuthenticationServices.Models.Facebook;
-using Common.Authorisation;
-using Common.Authorisation.ApplicationServices;
-using Common.Authorisation.Contexts;
+using Authorisation.Application;
+using Authorisation.Application.ApplicationServices;
+using Authorisation.Application.Contexts;
 
 namespace Authentication.ApplicationServices.AuthenticationServices
 {

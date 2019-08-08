@@ -1,10 +1,11 @@
 ﻿using System;
+using Authorisation.Application.Policies;
+using Authorisation.Setup;
 using AutoMapper;
 using Common.Api.Builders;
 using Common.Api.DataProtection;
 using Common.Api.Extensions;
 using Common.Api.Formats;
-using Common.Authorisation.Policies;
 using Common.Setup;
 using Common.Setup.Infrastructure.DataProtection;
 using Common.Setup.Infrastructure.DomainEvents;
@@ -20,7 +21,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Notifications.Setup;
 using Notifications.Setup.Infrastructure.Messaging;
-using Vault.Broker;
+using Libs.Vault.Broker;
 using Vault.Broker.Setup.DataKeys;
 
 [assembly: ApiController]

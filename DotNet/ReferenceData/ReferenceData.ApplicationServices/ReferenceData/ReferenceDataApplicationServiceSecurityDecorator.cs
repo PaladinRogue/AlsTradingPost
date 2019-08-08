@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Common.Authorisation;
-using Common.Authorisation.ApplicationServices;
-using Common.Authorisation.Contexts;
+using Authorisation.Application;
+using Authorisation.Application.ApplicationServices;
+using Authorisation.Application.Contexts;
 using ReferenceData.ApplicationServices.ReferenceData.Models;
 
 namespace ReferenceData.ApplicationServices.ReferenceData

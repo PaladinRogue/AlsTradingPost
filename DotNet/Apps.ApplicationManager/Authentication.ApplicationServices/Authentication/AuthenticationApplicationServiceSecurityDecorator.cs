@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using Authentication.ApplicationServices.Authentication.Models;
 using Common.ApplicationServices.Authentication;
-using Common.Authorisation;
-using Common.Authorisation.ApplicationServices;
-using Common.Authorisation.Contexts;
+using Authorisation.Application;
+using Authorisation.Application.ApplicationServices;
+using Authorisation.Application.Contexts;
 
 namespace Authentication.ApplicationServices.Authentication
 {

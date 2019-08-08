@@ -1,7 +1,7 @@
 using System;
 using Authentication.Domain.Identities;
-using Common.Authorisation;
-using Common.Authorisation.Contexts;
+using Authorisation.Application;
+using Authorisation.Application.Contexts;
 
 namespace Authentication.ApplicationServices.Identities.Authorisation
 {

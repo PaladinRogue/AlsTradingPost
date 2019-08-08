@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using Authentication.ApplicationServices.Identities.Authorisation;
 using Authentication.ApplicationServices.Identities.Models;
-using Common.Authorisation;
-using Common.Authorisation.ApplicationServices;
-using Common.Authorisation.Contexts;
+using Authorisation.Application;
+using Authorisation.Application.ApplicationServices;
+using Authorisation.Application.Contexts;
 
 namespace Authentication.ApplicationServices.Identities
 {

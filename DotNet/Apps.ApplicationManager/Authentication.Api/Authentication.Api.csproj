@@ -15,9 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Common.Api.Formats\Common.Api.Formats.csproj" />
-    <ProjectReference Include="..\..\Common\Common.Api\Common.Api.csproj" />
-    <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
+    <ProjectReference Include="..\..\Vault\Libs.Vault.Api\Libs.Vault.Api.csproj" />
     <ProjectReference Include="..\Authentication.Setup\Authentication.Setup.csproj" />
-    <ProjectReference Include="..\Vault.Broker\Vault.Broker.csproj" />
   </ItemGroup>
 </Project>

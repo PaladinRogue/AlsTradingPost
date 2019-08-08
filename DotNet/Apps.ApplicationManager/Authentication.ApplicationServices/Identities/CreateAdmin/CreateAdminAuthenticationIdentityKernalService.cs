@@ -4,13 +4,13 @@ using Authentication.Domain.Identities;
 using Authentication.Domain.Identities.Create;
 using Authentication.Domain.Identities.ForgotPassword;
 using Authentication.Domain.Identities.RegisterPassword;
+using Authentication.Messages;
 using Common.ApplicationServices;
 using Common.ApplicationServices.Exceptions;
 using Common.ApplicationServices.Transactions;
 using Common.Domain.Exceptions;
 using Common.Domain.Persistence;
-using Common.Messaging.Infrastructure;
-using Common.Messaging.Messages;
+using Messaging.Setup.Infrastructure;
 using Microsoft.Extensions.Logging;
 using String = Common.Resources.Extensions.String;
 

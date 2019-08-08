@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Common.ApplicationServices.Transactions;
-using Common.Messaging.Infrastructure;
-using Common.Messaging.Messages;
+using Messaging.Messages;
+using Messaging.Setup.Infrastructure;
 
 namespace Authentication.ApplicationServices.Identities.TwoFactor
 {

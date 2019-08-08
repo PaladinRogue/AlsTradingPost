@@ -5,7 +5,7 @@ using Authentication.Domain.Identities;
 using Authentication.Domain.Users;
 using Common.ApplicationServices.Exceptions;
 using Common.ApplicationServices.Transactions;
-using Common.Authorisation;
+using Authorisation.Application;
 using Common.Domain.Persistence;
 using Common.Resources.Builders.Dictionaries;
 using Common.Setup.Infrastructure.Authorisation;

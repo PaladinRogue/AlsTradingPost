@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
-using Common.Messaging.Infrastructure.Handlers;
-using Common.Messaging.Infrastructure.MessageBus;
-using Common.Messaging.Messages;
+using Messaging.Setup.Infrastructure.Handlers;
+using Messaging.Setup.Infrastructure.MessageBus;
 using Gateway.ApplicationServices.Applications.Register;
+using Messaging.Messages;
 using Microsoft.Extensions.Logging;
 
 namespace Gateway.ApplicationServices.Handlers

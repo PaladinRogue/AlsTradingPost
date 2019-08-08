@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,10 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Common.Authorisation\Common.Authorisation.csproj" />
+    <ProjectReference Include="..\..\Authorisation\Authorisation.Setup\Authorisation.Setup.csproj" />
+    <ProjectReference Include="..\..\DomainEvents\DomainEvents.Setup\DomainEvents.Setup.csproj" />
+    <ProjectReference Include="..\..\Persistence\Persistence.Setup\Persistence.Setup.csproj" />
     <ProjectReference Include="..\..\ReferenceData\ReferenceData.Setup\ReferenceData.Setup.csproj" />
-    <ProjectReference Include="..\..\Common\Common.Api\Common.Api.csproj" />
-    <ProjectReference Include="..\..\Persistence\Persistence.EntityFramework\Persistence.EntityFramework.csproj" />
+    <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
     <ProjectReference Include="..\Authentication.ApplicationServices\Authentication.ApplicationServices.csproj" />
     <ProjectReference Include="..\Authentication.Persistence\Authentication.Persistence.csproj" />
   </ItemGroup>

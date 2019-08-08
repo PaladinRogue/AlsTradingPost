@@ -1,4 +1,4 @@
-﻿using Common.Messaging.Infrastructure.Handlers;
+﻿using Messaging.Setup.Infrastructure.Handlers;
 using Microsoft.Extensions.DependencyInjection;
 using Notifications.ApplicationServices.Handlers;
 

@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Authentication.ApplicationServices.Claims;
 using Authentication.Domain.Users.Events;
-using Common.Authorisation.ApplicationServices;
+using Authorisation.Application.ApplicationServices;
 using Common.Domain.DomainEvents.Interfaces;
 
 namespace Authentication.ApplicationServices.Users.UpdateClaim

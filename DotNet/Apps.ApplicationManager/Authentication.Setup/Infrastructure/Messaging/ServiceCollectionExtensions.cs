@@ -1,5 +1,5 @@
 ﻿using Authentication.ApplicationServices.Handlers;
-using Common.Messaging.Infrastructure.Handlers;
+using Messaging.Setup.Infrastructure.Handlers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Authentication.Setup.Infrastructure.Messaging

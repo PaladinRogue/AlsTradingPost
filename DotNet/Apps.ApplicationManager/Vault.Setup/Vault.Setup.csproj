@@ -6,10 +6,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Common\Common.Api\Common.Api.csproj" />
+      <ProjectReference Include="..\..\Authorisation\Authorisation.Setup\Authorisation.Setup.csproj" />
+      <ProjectReference Include="..\..\DomainEvents\DomainEvents.Setup\DomainEvents.Setup.csproj" />
+      <ProjectReference Include="..\..\Persistence\Persistence.Setup\Persistence.Setup.csproj" />
+      <ProjectReference Include="..\..\Vault\Libs.Vault.Setup\Libs.Vault.Setup.csproj" />
       <ProjectReference Include="..\Vault.ApplicationServices\Vault.ApplicationServices.csproj" />
-      <ProjectReference Include="..\Vault.Domain\Vault.Domain.csproj" />
-      <ProjectReference Include="..\Vault.Persistence\Vault.Persistence.csproj" />
     </ItemGroup>
 
     <ItemGroup>

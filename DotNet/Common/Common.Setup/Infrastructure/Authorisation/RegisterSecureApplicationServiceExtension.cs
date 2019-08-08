@@ -1,5 +1,5 @@
 using System;
-using Common.Authorisation.ApplicationServices;
+using Authorisation.Application.ApplicationServices;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Common.Setup.Infrastructure.Authorisation

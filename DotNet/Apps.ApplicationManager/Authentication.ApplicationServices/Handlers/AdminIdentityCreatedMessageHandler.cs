@@ -2,10 +2,10 @@ using System;
 using System.Threading.Tasks;
 using Authentication.ApplicationServices.Users.CreateAdmin;
 using Authentication.ApplicationServices.Users.Models;
+using Authentication.Messages;
 using AutoMapper;
-using Common.Messaging.Infrastructure.Handlers;
-using Common.Messaging.Infrastructure.MessageBus;
-using Common.Messaging.Messages;
+using Messaging.Setup.Infrastructure.Handlers;
+using Messaging.Setup.Infrastructure.MessageBus;
 using Common.Resources.Settings;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -26,7 +26,8 @@ namespace Authentication.ApplicationServices.Handlers
             IMessageBus messageBus,
             ILogger<AdminIdentityCreatedMessageHandler> logger,
             ICreateUserApplicationKernalService createUserApplicationKernalService,
-            IMapper mapper, IOptions<AppSettings> appSettingsAccessor) : base(messageBus)
+            IMapper mapper,
+            IOptions<AppSettings> appSettingsAccessor) : base(messageBus)
         {
             _logger = logger;
             _createUserApplicationKernalService = createUserApplicationKernalService;
@@ -40,7 +41,7 @@ namespace Authentication.ApplicationServices.Handlers
             {
                 if (_appSettings.SystemName == message.ApplicationName)
                 {
-                   await _createUserApplicationKernalService.CreateAsync(_mapper.Map<AdminIdentityCreatedMessage, CreateUserAdto>(message));
+                    await _createUserApplicationKernalService.CreateAsync(_mapper.Map<AdminIdentityCreatedMessage, CreateUserAdto>(message));
                 }
             }
             catch (Exception e)

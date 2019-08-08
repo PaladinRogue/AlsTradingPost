@@ -2,6 +2,7 @@
 using Common.ApplicationServices.Authentication;
 using Common.ApplicationServices.Exceptions;
 using Common.Resources.Extensions;
+using Common.Setup.Infrastructure.HttpContexts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 

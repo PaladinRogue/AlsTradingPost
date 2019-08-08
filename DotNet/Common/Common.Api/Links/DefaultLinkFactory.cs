@@ -5,8 +5,8 @@ using Common.Api.Pagination.Interfaces;
 using Common.Api.Resources;
 using Common.Api.Routing;
 using Common.Api.Sorting;
-using Common.Authorisation.Contexts;
-using Common.Authorisation.Policies;
+using Authorisation.Application.Contexts;
+using Authorisation.Application.Policies;
 using Common.Setup.Infrastructure.Constants;
 
 namespace Common.Api.Links

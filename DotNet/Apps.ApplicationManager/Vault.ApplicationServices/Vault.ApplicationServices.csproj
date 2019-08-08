@@ -6,7 +6,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Common\Common.ApplicationServices\Common.ApplicationServices.csproj" />
-      <ProjectReference Include="..\Vault.Domain\Vault.Domain.csproj" />
+      <ProjectReference Include="..\..\Vault\Libs.Vault.Application\Libs.Vault.Application.csproj" />
     </ItemGroup>
 
 </Project>
