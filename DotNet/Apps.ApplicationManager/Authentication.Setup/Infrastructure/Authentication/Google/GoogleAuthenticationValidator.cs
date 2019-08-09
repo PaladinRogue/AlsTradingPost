@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using Authentication.ApplicationServices.Authentication.ClientCredential;
+using Authentication.Application.Authentication.ClientCredential;
 using Authentication.Domain.AuthenticationServices;
-using Common.ApplicationServices.WebRequests;
+using Common.Application.WebRequests;
 using Common.Resources.Builders.Dictionaries;
 using Common.Resources.Extensions;
 using Common.Setup.Infrastructure.Exceptions;

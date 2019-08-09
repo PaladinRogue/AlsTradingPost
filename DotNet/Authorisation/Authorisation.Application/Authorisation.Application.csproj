@@ -10,8 +10,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Common\Common.Application\Common.Application.csproj" />
       <ProjectReference Include="..\Authorisation.Common\Authorisation.Common.csproj" />
       <ProjectReference Include="..\..\Messaging\Messaging.Messages\Messaging.Messages.csproj" />
-      <ProjectReference Include="..\..\Common\Common.ApplicationServices\Common.ApplicationServices.csproj" />
     </ItemGroup>
 </Project>

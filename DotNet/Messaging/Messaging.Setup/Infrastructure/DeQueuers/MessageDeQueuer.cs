@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Common.ApplicationServices.Exceptions;
-using Common.ApplicationServices.Transactions;
+using Common.Application.Exceptions;
+using Common.Application.Transactions;
 using Common.Domain.DataProtectors;
 using Messaging.Common;
 using Messaging.Setup.Infrastructure.Dispatchers;

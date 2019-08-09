@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using Common.ApplicationServices.Caching;
+using Common.Application.Caching;
 using LazyCache;
 using Microsoft.Extensions.Caching.Memory;
 using NodaTime;

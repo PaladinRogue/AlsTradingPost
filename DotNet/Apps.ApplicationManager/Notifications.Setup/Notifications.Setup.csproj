@@ -11,10 +11,10 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Authorisation\Authorisation.Setup\Authorisation.Setup.csproj" />
-      <ProjectReference Include="..\..\Common\Common.Api\Common.Api.csproj" />
       <ProjectReference Include="..\..\DomainEvents\DomainEvents.Setup\DomainEvents.Setup.csproj" />
+      <ProjectReference Include="..\..\Messaging\Messaging.Setup\Messaging.Setup.csproj" />
       <ProjectReference Include="..\..\Vault\Libs.Vault.Setup\Libs.Vault.Setup.csproj" />
-      <ProjectReference Include="..\Notifications.ApplicationServices\Notifications.ApplicationServices.csproj" />
+      <ProjectReference Include="..\Notifications.Application\Notifications.Application.csproj" />
     </ItemGroup>
 
     <ItemGroup>

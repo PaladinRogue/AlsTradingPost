@@ -1,4 +1,4 @@
-using Authentication.ApplicationServices.Authentication.ClientCredential;
+using Authentication.Application.Authentication.ClientCredential;
 
 namespace Authentication.Setup.Infrastructure.Authentication
 {

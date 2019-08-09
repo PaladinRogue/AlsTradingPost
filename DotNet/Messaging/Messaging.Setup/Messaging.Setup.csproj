@@ -4,7 +4,7 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Messaging.Common\Messaging.Common.csproj" />
+    <ProjectReference Include="..\Messaging.Messages\Messaging.Messages.csproj" />
     <ProjectReference Include="..\Messaging.RabbitMQ\Messaging.RabbitMQ.csproj" />
     <ProjectReference Include="..\..\Common\Common.Resources\Common.Resources.csproj" />
     <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />

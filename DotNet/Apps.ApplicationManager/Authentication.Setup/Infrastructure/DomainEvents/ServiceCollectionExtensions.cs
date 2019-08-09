@@ -1,5 +1,5 @@
-﻿using Authentication.ApplicationServices.Identities.TwoFactor;
-using Authentication.ApplicationServices.Users.UpdateClaim;
+﻿using Authentication.Application.Identities.TwoFactor;
+using Authentication.Application.Users.UpdateClaim;
 using Authentication.Domain.Identities.Events;
 using Authentication.Domain.Users.Events;
 using Common.Domain.DomainEvents.Interfaces;

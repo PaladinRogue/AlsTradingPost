@@ -1,5 +1,5 @@
 using System.Text;
-using Common.ApplicationServices.Caching;
+using Common.Application.Caching;
 using Common.Domain.DataProtectors;
 using Common.Domain.Persistence;
 using Common.Setup.Infrastructure.Caching;

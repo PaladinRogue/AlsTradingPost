@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Common.ApplicationServices.WebRequests;
+using Common.Application.WebRequests;
 using Common.Setup.Infrastructure.Exceptions;
 using Newtonsoft.Json;
 

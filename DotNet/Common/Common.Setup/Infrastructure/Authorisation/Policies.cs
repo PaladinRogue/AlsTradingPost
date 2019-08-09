@@ -1,4 +1,4 @@
-﻿using Common.ApplicationServices.Authentication.Constants;
+﻿using Common.Application.Authentication.Constants;
 
 namespace Common.Api.Authorisation
 {

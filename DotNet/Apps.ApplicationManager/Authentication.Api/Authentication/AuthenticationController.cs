@@ -1,10 +1,10 @@
 using System;
 using System.Threading.Tasks;
-using Authentication.ApplicationServices.Authentication;
-using Authentication.ApplicationServices.Authentication.Models;
+using Authentication.Application.Authentication;
+using Authentication.Application.Authentication.Models;
 using Authentication.Setup.Infrastructure.Routing;
 using Common.Api.Builders.Resource;
-using Common.ApplicationServices.Authentication;
+using Common.Application.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

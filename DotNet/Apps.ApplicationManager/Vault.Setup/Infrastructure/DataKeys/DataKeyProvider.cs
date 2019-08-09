@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using Common.ApplicationServices.Transactions;
+using Common.Application.Transactions;
 using Common.Domain.DataProtectors;
 using Common.Domain.Persistence;
 using Vault.Domain;

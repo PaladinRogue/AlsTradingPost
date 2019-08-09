@@ -8,7 +8,6 @@
     <PackageReference Include="NodaTime" Version="2.4.5" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Common.ApplicationServices\Common.ApplicationServices.csproj" />
     <ProjectReference Include="..\..\Common\Common.Domain\Common.Domain.csproj" />
   </ItemGroup>
 </Project>

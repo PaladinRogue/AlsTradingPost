@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using ReferenceData.ApplicationServices.ReferenceData;
+using ReferenceData.Application.ReferenceData;
 using ReferenceData.Domain.Persistence;
 using ReferenceData.Persistence;
 using Common.Setup.Infrastructure.Authorisation;

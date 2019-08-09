@@ -15,11 +15,12 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Authorisation\Authorisation.Setup\Authorisation.Setup.csproj" />
     <ProjectReference Include="..\..\DomainEvents\DomainEvents.Setup\DomainEvents.Setup.csproj" />
+    <ProjectReference Include="..\..\Messaging\Messaging.Setup\Messaging.Setup.csproj" />
     <ProjectReference Include="..\..\Persistence\Persistence.Setup\Persistence.Setup.csproj" />
     <ProjectReference Include="..\..\ReferenceData\ReferenceData.Setup\ReferenceData.Setup.csproj" />
     <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
     <ProjectReference Include="..\..\Vault\Libs.Vault.Setup\Libs.Vault.Setup.csproj" />
-    <ProjectReference Include="..\Authentication.ApplicationServices\Authentication.ApplicationServices.csproj" />
+    <ProjectReference Include="..\Authentication.Application\Authentication.Application.csproj" />
     <ProjectReference Include="..\Authentication.Persistence\Authentication.Persistence.csproj" />
   </ItemGroup>
 </Project>

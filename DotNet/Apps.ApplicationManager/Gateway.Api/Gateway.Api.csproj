@@ -6,6 +6,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <None Update="appSecrets.json.encrypted" CopyToOutputDirectory="PreserveNewest" />
+        <None Update="appSecrets.json.keyname" CopyToOutputDirectory="PreserveNewest" />
+        <Content Remove="appSecrets.json" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="AutoMapper">
           <Version>8.1.1</Version>
         </PackageReference>

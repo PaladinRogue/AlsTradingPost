@@ -14,9 +14,9 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.4.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Authorisation\Authorisation.Application\Authorisation.Application.csproj" />
+    <ProjectReference Include="..\..\Authorisation\Authorisation.Common\Authorisation.Common.csproj" />
+    <ProjectReference Include="..\..\Configuration\Configuration.Secrets\Configuration.Secrets.csproj" />
     <ProjectReference Include="..\Common.Resources\Common.Resources.csproj" />
     <ProjectReference Include="..\Common.Setup\Common.Setup.csproj" />
-    <ProjectReference Include="..\..\Messaging\Messaging.Setup\Messaging.Setup.csproj" />
   </ItemGroup>
 </Project>

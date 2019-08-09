@@ -1,4 +1,4 @@
-using Authentication.ApplicationServices.Claims;
+using Authentication.Application.Claims;
 
 namespace Authentication.Setup.Infrastructure.Authorisation
 {

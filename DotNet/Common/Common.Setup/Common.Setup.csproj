@@ -14,8 +14,7 @@
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Authorisation\Authorisation.Application\Authorisation.Application.csproj" />
-    <ProjectReference Include="..\Common.ApplicationServices\Common.ApplicationServices.csproj" />
+    <ProjectReference Include="..\Common.Application\Common.Application.csproj" />
     <ProjectReference Include="..\Common.Domain\Common.Domain.csproj" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using Common.ApplicationServices.Caching;
+using Common.Application.Caching;
 using Common.Setup.Infrastructure.Authorisation;
 using LazyCache;
 using Microsoft.Extensions.Caching.Memory;

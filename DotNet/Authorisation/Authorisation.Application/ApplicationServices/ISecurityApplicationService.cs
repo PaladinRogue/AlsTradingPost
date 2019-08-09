@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Authorisation.Application.Contexts;
-using Common.ApplicationServices.Exceptions;
+using Common.Application.Exceptions;
 
 namespace Authorisation.Application.ApplicationServices
 {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Authorisation.Application.Contexts;
-using Common.ApplicationServices.Caching;
+using Common.Application.Caching;
 
 namespace Authorisation.Application.Policies
 {

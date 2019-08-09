@@ -33,17 +33,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Messaging.Setup", "..\Messa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Api.Formats", "..\Common\Common.Api.Formats\Common.Api.Formats.csproj", "{9A303724-1BA0-4E99-8EF0-330CDE7F02D6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.ApplicationServices", "Authentication.ApplicationServices\Authentication.ApplicationServices.csproj", "{BEE1801D-B717-4CDE-8019-673F31CA819F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.Application", "Authentication.Application\Authentication.Application.csproj", "{BEE1801D-B717-4CDE-8019-673F31CA819F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.Setup", "Authentication.Setup\Authentication.Setup.csproj", "{B9A8D7E9-56AD-4875-9FD2-6DFA73213710}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.Api", "Authentication.Api\Authentication.Api.csproj", "{ADAA7F45-ED8E-40C3-9E51-5826C0C727F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.ApplicationServices", "..\Common\Common.ApplicationServices\Common.ApplicationServices.csproj", "{4D1F7BED-D763-46CE-8F21-47FC4285C75D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Application", "..\Common\Common.Application\Common.Application.csproj", "{4D1F7BED-D763-46CE-8F21-47FC4285C75D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorisation.Application", "..\Authorisation\Authorisation.Application\Authorisation.Application.csproj", "{D8D5DAC6-4A8F-4AEC-8C9D-8EF2EBF6FF5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway.ApplicationServices", "Gateway.ApplicationServices\Gateway.ApplicationServices.csproj", "{93E9E08B-C081-45C9-8139-C0742B360581}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway.Application", "Gateway.Application\Gateway.Application.csproj", "{93E9E08B-C081-45C9-8139-C0742B360581}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway.Setup", "Gateway.Setup\Gateway.Setup.csproj", "{1F52F051-D9E5-42D3-9DFE-B5E64362D042}"
 EndProject
@@ -55,7 +55,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway.Api", "Gateway.Api\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vault.Setup", "Vault.Setup\Vault.Setup.csproj", "{99474705-286D-41F5-9D9F-81D1B65AE168}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vault.ApplicationServices", "Vault.ApplicationServices\Vault.ApplicationServices.csproj", "{F1B2CE41-E083-4843-B69F-2D9DEEAC9E35}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vault.Application", "Vault.Application\Vault.Application.csproj", "{F1B2CE41-E083-4843-B69F-2D9DEEAC9E35}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vault.Api", "Vault.Api\Vault.Api.csproj", "{A58D46F0-95FD-426C-9F6B-58F87DFCFA4E}"
 EndProject
@@ -71,11 +71,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferenceData.Persistence",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferenceData.Setup", "..\ReferenceData\ReferenceData.Setup\ReferenceData.Setup.csproj", "{2ACCFC90-ACBF-4792-9B36-A0BCE1317FB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferenceData.ApplicationServices", "..\ReferenceData\ReferenceData.ApplicationServices\ReferenceData.ApplicationServices.csproj", "{C44FD35D-4698-4353-80E9-EBC53F5DC45A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferenceData.Application", "..\ReferenceData\ReferenceData.Application\ReferenceData.Application.csproj", "{C44FD35D-4698-4353-80E9-EBC53F5DC45A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notifications.Api", "Notifications.Api\Notifications.Api.csproj", "{33877363-E6CE-4458-9505-0E3B78107D22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notifications.ApplicationServices", "Notifications.ApplicationServices\Notifications.ApplicationServices.csproj", "{D4E4EBA7-2BD0-4463-B42D-A847F7324969}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notifications.Application", "Notifications.Application\Notifications.Application.csproj", "{D4E4EBA7-2BD0-4463-B42D-A847F7324969}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notifications.Setup", "Notifications.Setup\Notifications.Setup.csproj", "{D4379B76-7F98-4A87-90CB-2E6101A1B4A5}"
 EndProject
@@ -100,6 +100,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libs.Vault.Application", "..\Vault\Libs.Vault.Application\Libs.Vault.Application.csproj", "{7E9560AC-7A4F-4535-BDA0-8D9F967CCE51}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libs.Vault.Persistence", "..\Vault\Libs.Vault.Persistence\Libs.Vault.Persistence.csproj", "{D3223FFA-7111-4CC5-A81A-05504DFABC3A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{1B191D18-8BCE-41EB-B041-71FC1916C9A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Configuration.Secrets", "..\Configuration\Configuration.Secrets\Configuration.Secrets.csproj", "{E660EF94-4D95-4972-8CE2-5DA7F8E52149}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -275,6 +279,10 @@ Global
 		{D3223FFA-7111-4CC5-A81A-05504DFABC3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3223FFA-7111-4CC5-A81A-05504DFABC3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3223FFA-7111-4CC5-A81A-05504DFABC3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E660EF94-4D95-4972-8CE2-5DA7F8E52149}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E660EF94-4D95-4972-8CE2-5DA7F8E52149}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E660EF94-4D95-4972-8CE2-5DA7F8E52149}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E660EF94-4D95-4972-8CE2-5DA7F8E52149}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -305,6 +313,7 @@ Global
 		{FDD4DB0B-8EEA-4861-9D0F-F5F5A86812F6} = {B923A1AC-3BB6-4510-A108-4CE5562B275D}
 		{7E9560AC-7A4F-4535-BDA0-8D9F967CCE51} = {B923A1AC-3BB6-4510-A108-4CE5562B275D}
 		{D3223FFA-7111-4CC5-A81A-05504DFABC3A} = {B923A1AC-3BB6-4510-A108-4CE5562B275D}
+		{E660EF94-4D95-4972-8CE2-5DA7F8E52149} = {1B191D18-8BCE-41EB-B041-71FC1916C9A3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3537C8D6-D792-492E-ACF4-8DDD1AA19555}

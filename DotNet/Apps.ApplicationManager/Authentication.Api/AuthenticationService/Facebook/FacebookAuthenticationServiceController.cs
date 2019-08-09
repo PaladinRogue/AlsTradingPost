@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Authentication.ApplicationServices.AuthenticationServices;
-using Authentication.ApplicationServices.AuthenticationServices.Models;
-using Authentication.ApplicationServices.AuthenticationServices.Models.Facebook;
+using Authentication.Application.AuthenticationServices;
+using Authentication.Application.AuthenticationServices.Models;
+using Authentication.Application.AuthenticationServices.Models.Facebook;
 using Authentication.Setup.Infrastructure.Authorisation;
 using Authentication.Setup.Infrastructure.Routing;
 using AutoMapper;

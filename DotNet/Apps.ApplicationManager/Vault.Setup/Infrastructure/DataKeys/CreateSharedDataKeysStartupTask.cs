@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Common.Setup.Infrastructure.Startup;
-using Vault.ApplicationServices.SharedDataKeys.Create;
+using Vault.Application.SharedDataKeys.Create;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Vault.Setup.Infrastructure.DataKeys

@@ -1,5 +1,5 @@
 ﻿using Messaging.Setup.Infrastructure.Handlers;
-using Gateway.ApplicationServices.Handlers;
+using Gateway.Application.Handlers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Gateway.Setup.Infrastructure.Messaging

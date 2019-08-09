@@ -1,6 +1,6 @@
 ﻿using Messaging.Setup.Infrastructure.Handlers;
 using Microsoft.Extensions.DependencyInjection;
-using Notifications.ApplicationServices.Handlers;
+using Notifications.Application.Handlers;
 
 namespace Notifications.Setup.Infrastructure.Messaging
 {

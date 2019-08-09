@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Authentication.ApplicationServices.Claims;
+using Authentication.Application.Claims;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Authentication.Setup.Infrastructure.Authorisation

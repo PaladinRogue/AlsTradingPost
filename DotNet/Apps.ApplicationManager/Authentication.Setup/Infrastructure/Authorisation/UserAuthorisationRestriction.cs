@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Authentication.ApplicationServices;
+using Authentication.Application;
 using Authentication.Domain.Users;
 using Authorisation.Application.Contexts;
 using Authorisation.Application.Restrictions;

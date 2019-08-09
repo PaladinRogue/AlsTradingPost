@@ -1,4 +1,4 @@
-﻿using Authentication.ApplicationServices.Handlers;
+﻿using Authentication.Application.Handlers;
 using Messaging.Setup.Infrastructure.Handlers;
 using Microsoft.Extensions.DependencyInjection;
 

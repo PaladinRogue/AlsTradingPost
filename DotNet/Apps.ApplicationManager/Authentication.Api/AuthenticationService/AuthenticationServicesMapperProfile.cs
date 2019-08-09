@@ -1,8 +1,8 @@
 using Authentication.Api.AuthenticationService.Facebook;
 using Authentication.Api.AuthenticationService.Google;
-using Authentication.ApplicationServices.AuthenticationServices.Models;
-using Authentication.ApplicationServices.AuthenticationServices.Models.Facebook;
-using Authentication.ApplicationServices.AuthenticationServices.Models.Google;
+using Authentication.Application.AuthenticationServices.Models;
+using Authentication.Application.AuthenticationServices.Models.Facebook;
+using Authentication.Application.AuthenticationServices.Models.Google;
 using AutoMapper;
 
 namespace Authentication.Api.AuthenticationService

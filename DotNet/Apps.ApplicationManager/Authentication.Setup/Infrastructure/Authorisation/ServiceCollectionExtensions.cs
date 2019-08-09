@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Authentication.Setup.Infrastructure.Caching;
-using Common.ApplicationServices.Authentication;
+using Common.Application.Authentication;
 using Authorisation.Application;
 using Authorisation.Application.Policies;
 using Authorisation.Application.Policies.Json;
@@ -16,8 +16,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
-using CommonJwtClaimIdentifiers = Common.ApplicationServices.Claims.Constants.JwtClaimIdentifiers;
-using CommonJwtClaims = Common.ApplicationServices.Authentication.Constants.JwtClaims;
+using CommonJwtClaimIdentifiers = Common.Application.Claims.Constants.JwtClaimIdentifiers;
+using CommonJwtClaims = Common.Application.Authentication.Constants.JwtClaims;
 using CommonPolicies = Common.Api.Authorisation.Policies;
 
 namespace Authentication.Setup.Infrastructure.Authorisation

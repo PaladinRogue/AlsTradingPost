@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Authorisation\Authorisation.Application\Authorisation.Application.csproj" />
+    <ProjectReference Include="..\..\ReferenceData\ReferenceData.Domain\ReferenceData.Domain.csproj" />
+    <ProjectReference Include="..\..\Common\Common.Resources\Common.Resources.csproj" />
+    <ProjectReference Include="..\Authentication.Domain\Authentication.Domain.csproj" />
+    <ProjectReference Include="..\Authentication.Messages\Authentication.Messages.csproj" />
+  </ItemGroup>
+</Project>

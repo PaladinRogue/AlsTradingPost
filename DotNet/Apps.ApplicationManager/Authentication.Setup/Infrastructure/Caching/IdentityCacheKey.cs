@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Common.ApplicationServices.Caching;
+using Common.Application.Caching;
 using Common.Resources.ValueObjects;
 
 namespace Authentication.Setup.Infrastructure.Caching

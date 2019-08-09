@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Configuration.Secrets.Kms;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 
 namespace Common.Api
@@ -13,9 +14,9 @@ namespace Common.Api
         {
             IConfigurationBuilder builder = new ConfigurationBuilder()
                 .SetBasePath(environment.ContentRootPath)
-                .AddJsonFile("appSettings.json", false, true)
-                .AddJsonFile("secrets.json", false, true)
-                .AddJsonFile("hostSettings.json", false, true)
+                .AddJsonFile("appSettings.json", false, false)
+                .AddJsonFile(new EncryptedFileProvider(), "appSecrets.json.encrypted", true, false)
+                .AddJsonFile("hostSettings.json", false, false)
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();

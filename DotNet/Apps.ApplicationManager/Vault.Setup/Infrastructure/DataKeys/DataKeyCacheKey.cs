@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Common.ApplicationServices.Caching;
+using Common.Application.Caching;
 using Common.Domain.DataProtectors;
 
 namespace Vault.Setup.Infrastructure.DataKeys

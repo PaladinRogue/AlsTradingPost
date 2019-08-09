@@ -1,5 +1,5 @@
 ﻿using System.Net;
-using Common.ApplicationServices.Exceptions;
+using Common.Application.Exceptions;
 
 namespace Common.Api.Exceptions
 {

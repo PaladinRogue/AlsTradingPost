@@ -1,5 +1,5 @@
 ﻿using System;
-using Common.ApplicationServices.Exceptions;
+using Common.Application.Exceptions;
 using Common.Setup.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;

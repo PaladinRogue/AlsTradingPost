@@ -1,4 +1,4 @@
-using Common.ApplicationServices.WebRequests;
+using Common.Application.WebRequests;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Common.Setup.Infrastructure.WebRequests

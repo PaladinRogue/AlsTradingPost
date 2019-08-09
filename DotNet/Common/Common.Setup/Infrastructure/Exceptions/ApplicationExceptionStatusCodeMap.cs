@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
-using Common.ApplicationServices.Exceptions;
+using Common.Application.Exceptions;
 
 namespace Common.Setup.Infrastructure.Exceptions
 {

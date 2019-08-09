@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using Authorisation.Application.Contexts;
-using Common.ApplicationServices.Caching;
+using Common.Application.Caching;
 
 namespace Authorisation.Application.Policies
 {

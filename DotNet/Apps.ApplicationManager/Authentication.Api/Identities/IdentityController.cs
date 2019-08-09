@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Authentication.ApplicationServices.Identities;
-using Authentication.ApplicationServices.Identities.Models;
+using Authentication.Application.Identities;
+using Authentication.Application.Identities.Models;
 using Authentication.Setup.Infrastructure.Routing;
 using Common.Api.Authentication;
 using Common.Api.Builders.Resource;

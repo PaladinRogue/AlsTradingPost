@@ -1,11 +1,11 @@
 using Common.Api.Routing;
-using Common.ApplicationServices.Caching;
-using Common.ApplicationServices.Transactions;
+using Common.Application.Caching;
+using Common.Application.Transactions;
 using Common.Domain.DataProtectors;
 using Common.Domain.Persistence;
 using Common.Setup.Infrastructure.Caching;
 using FluentValidation;
-using Vault.ApplicationServices.SharedDataKeys.Create;
+using Vault.Application.SharedDataKeys.Create;
 using Vault.Domain.Applications;
 using Vault.Domain.Applications.AddDataKey;
 using Vault.Domain.Applications.Create;
@@ -59,8 +59,8 @@ namespace Vault.Setup
                 .AddScoped<IAddApplicationDataKeyCommand, AddApplicationDataKeyCommand>()
                 .AddScoped<IValidator<CreateApplicationCommandDdto>, CreateApplicationValidator>()
                 .AddScoped<IValidator<AddApplicationDataKeyCommandDdto>, AddApplicationDataKeyValidator>()
-                .AddScoped<ICommandRepository<Application>, CommandRepository<Application>>()
-                .AddScoped<IQueryRepository<Application>, QueryRepository<Application>>();
+                .AddScoped<ICommandRepository<Domain.Applications.Application>, CommandRepository<Domain.Applications.Application>>()
+                .AddScoped<IQueryRepository<Domain.Applications.Application>, QueryRepository<Domain.Applications.Application>>();
         }
 
         public static IServiceCollection AddVaultPersistence(

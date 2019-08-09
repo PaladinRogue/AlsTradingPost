@@ -1,4 +1,4 @@
-using Common.ApplicationServices.Concurrency;
+using Common.Application.Concurrency;
 using Common.Domain.Concurrency.Interfaces;
 using Common.Setup.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Http;

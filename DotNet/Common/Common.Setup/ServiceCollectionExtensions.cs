@@ -1,5 +1,5 @@
-﻿using Common.ApplicationServices.Services.Query;
-using Common.ApplicationServices.Transactions;
+﻿using Common.Application.Services.Query;
+using Common.Application.Transactions;
 using Common.Setup.Infrastructure.Concurrency;
 using Common.Setup.Infrastructure.Routing;
 using FluentValidation;

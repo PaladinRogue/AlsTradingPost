@@ -1,5 +1,5 @@
 using System;
-using Authentication.ApplicationServices.AuthenticationServices.Authorisation;
+using Authentication.Application.AuthenticationServices.Authorisation;
 using Common.Api.Links;
 using Common.Api.Resources;
 using Common.Setup.Infrastructure.Constants;

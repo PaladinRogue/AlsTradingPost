@@ -1,13 +1,13 @@
 ﻿using Common.Api.Routing;
-using Common.ApplicationServices.Caching;
-using Common.ApplicationServices.Transactions;
+using Common.Application.Caching;
+using Common.Application.Transactions;
 using Common.Domain.Persistence;
 using Common.Setup.Infrastructure.Authorisation;
 using Common.Setup.Infrastructure.Caching;
 using FluentValidation;
-using Gateway.ApplicationServices.Applications;
-using Gateway.ApplicationServices.Applications.Caching;
-using Gateway.ApplicationServices.Applications.Register;
+using Gateway.Application.Applications;
+using Gateway.Application.Applications.Caching;
+using Gateway.Application.Applications.Register;
 using Gateway.Domain.Applications;
 using Gateway.Domain.Applications.Change;
 using Gateway.Domain.Applications.Create;
@@ -37,9 +37,9 @@ namespace Gateway.Setup
                 .AddScoped<ICreateApplicationCommand, CreateApplicationCommand>()
                 .AddScoped<IValidator<ChangeApplicationDdto>, ChangeApplicationValidator>()
                 .AddScoped<IValidator<CreateApplicationDdto>, CreateApplicationValidator>()
-                .AddSingletonCache<IApplicationQueryRepository, ApplicationQueryRepository, ICacheDecorator<string, Application>, ApplicationQueryRepositoryCacheDecorator, GatewayCacheService>()
-                .AddScoped<IQueryRepository<Application>, QueryRepository<Application>>()
-                .AddScoped<ICommandRepository<Application>, CommandRepository<Application>>();
+                .AddSingletonCache<IApplicationQueryRepository, ApplicationQueryRepository, ICacheDecorator<string, Domain.Applications.Application>, ApplicationQueryRepositoryCacheDecorator, GatewayCacheService>()
+                .AddScoped<IQueryRepository<Domain.Applications.Application>, QueryRepository<Domain.Applications.Application>>()
+                .AddScoped<ICommandRepository<Domain.Applications.Application>, CommandRepository<Domain.Applications.Application>>();
         }
 
         public static IServiceCollection AddGatewayPersistence(

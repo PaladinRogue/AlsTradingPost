@@ -1,6 +1,6 @@
 using System;
-using Authentication.ApplicationServices.AuthenticationServices.Authorisation;
-using Authentication.ApplicationServices.Identities.Authorisation;
+using Authentication.Application.AuthenticationServices.Authorisation;
+using Authentication.Application.Identities.Authorisation;
 using Common.Api.Links;
 using Common.Api.Resources;
 using Common.Setup.Infrastructure.Constants;

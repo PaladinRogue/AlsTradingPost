@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Authentication.ApplicationServices;
+using Authentication.Application;
 using Authentication.Domain.Identities;
-using Common.ApplicationServices.Transactions;
+using Common.Application.Transactions;
 using Authorisation.Application.Contexts;
 using Authorisation.Application.Restrictions;
 using Common.Domain.Persistence;

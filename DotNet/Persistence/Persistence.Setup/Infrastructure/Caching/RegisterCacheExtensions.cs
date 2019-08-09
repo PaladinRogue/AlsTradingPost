@@ -1,5 +1,5 @@
 using System;
-using Common.ApplicationServices.Caching;
+using Common.Application.Caching;
 using Common.Domain.Aggregates;
 using Common.Domain.Persistence;
 using Microsoft.Extensions.DependencyInjection;

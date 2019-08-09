@@ -9,8 +9,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Authorisation\Authorisation.Setup\Authorisation.Setup.csproj" />
       <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
-      <ProjectReference Include="..\ReferenceData.ApplicationServices\ReferenceData.ApplicationServices.csproj" />
+      <ProjectReference Include="..\ReferenceData.Application\ReferenceData.Application.csproj" />
       <ProjectReference Include="..\ReferenceData.Persistence\ReferenceData.Persistence.csproj" />
     </ItemGroup>
 

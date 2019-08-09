@@ -1,8 +1,8 @@
 using Common.Api.Routing;
-using Common.ApplicationServices.Transactions;
+using Common.Application.Transactions;
 using Microsoft.Extensions.DependencyInjection;
-using Notifications.ApplicationServices.Emails;
-using Notifications.ApplicationServices.Emails.Send;
+using Notifications.Application.Emails;
+using Notifications.Application.Emails.Send;
 
 namespace Notifications.Setup
 {
