@@ -1,6 +1,6 @@
-﻿using Common.Domain.DomainEvents.Interfaces;
+﻿using PaladinRogue.Libray.Core.Domain.DomainEvents.Interfaces;
 
-namespace Authentication.Domain.Users.Events
+namespace PaladinRogue.Authentication.Domain.Users.Events
 {
     public class UserCreatedDomainEvent : IDomainEvent
     {

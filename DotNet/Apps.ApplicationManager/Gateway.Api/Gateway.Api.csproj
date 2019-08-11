@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
         <LangVersion>latest</LangVersion>
+        <RootNamespace>PaladinRogue.Gateway.Api</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -25,7 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Common\Common.Api.Formats\Common.Api.Formats.csproj" />
+      <ProjectReference Include="..\..\Core\Core.Api.Formats\Core.Api.Formats.csproj" />
       <ProjectReference Include="..\Gateway.Setup\Gateway.Setup.csproj" />
     </ItemGroup>
 </Project>

@@ -1,14 +1,14 @@
 using System.Threading.Tasks;
-using Authentication.Application.Users.Models;
-using Authentication.Domain.Identities;
-using Authentication.Domain.Users;
-using Authentication.Domain.Users.Create;
-using Common.Application.Exceptions;
-using Common.Application.Transactions;
-using Common.Domain.Exceptions;
-using Common.Domain.Persistence;
+using PaladinRogue.Authentication.Application.Users.Models;
+using PaladinRogue.Authentication.Domain.Identities;
+using PaladinRogue.Authentication.Domain.Users;
+using PaladinRogue.Authentication.Domain.Users.Create;
+using PaladinRogue.Libray.Core.Application.Exceptions;
+using PaladinRogue.Libray.Core.Application.Transactions;
+using PaladinRogue.Libray.Core.Domain.Exceptions;
+using PaladinRogue.Libray.Core.Domain.Persistence;
 
-namespace Authentication.Application.Users.CreateAdmin
+namespace PaladinRogue.Authentication.Application.Users.CreateAdmin
 {
     public class CreateUserApplicationKernalService : ICreateUserApplicationKernalService
     {

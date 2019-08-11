@@ -1,29 +1,28 @@
-﻿using Common.Api.Routing;
-using Common.Application.Caching;
-using Common.Application.Transactions;
-using Common.Domain.Persistence;
-using Common.Setup.Infrastructure.Authorisation;
-using Common.Setup.Infrastructure.Caching;
-using FluentValidation;
-using Gateway.Application.Applications;
-using Gateway.Application.Applications.Caching;
-using Gateway.Application.Applications.Register;
-using Gateway.Domain.Applications;
-using Gateway.Domain.Applications.Change;
-using Gateway.Domain.Applications.Create;
-using Gateway.Domain.Applications.Persistence;
-using Gateway.Persistence;
-using Gateway.Persistence.Applications;
-using Gateway.Setup.Infrastructure.Caching;
-using Gateway.Setup.Infrastructure.Routing;
+﻿using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Persistence.EntityFramework.Infrastructure.Transactions;
-using Persistence.EntityFramework.Repositories;
+using PaladinRogue.Gateway.Application.Applications;
+using PaladinRogue.Gateway.Application.Applications.Caching;
+using PaladinRogue.Gateway.Application.Applications.Register;
+using PaladinRogue.Gateway.Domain.Applications.Change;
+using PaladinRogue.Gateway.Domain.Applications.Create;
+using PaladinRogue.Gateway.Domain.Applications.Persistence;
+using PaladinRogue.Gateway.Persistence;
+using PaladinRogue.Gateway.Persistence.Applications;
+using PaladinRogue.Gateway.Setup.Infrastructure.Caching;
+using PaladinRogue.Gateway.Setup.Infrastructure.Routing;
+using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Authorisation;
+using PaladinRogue.Libray.Core.Application.Caching;
+using PaladinRogue.Libray.Core.Application.Transactions;
+using PaladinRogue.Libray.Core.Domain.Persistence;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Routing;
+using PaladinRogue.Libray.Persistence.EntityFramework.Repositories;
+using PaladinRogue.Libray.Persistence.Setup.Infrastructure.Caching;
+using PaladinRogue.Libray.Persistence.Setup.Infrastructure.Transactions;
 
-namespace Gateway.Setup
+namespace PaladinRogue.Gateway.Setup
 {
     public static class ServiceCollectionExtensions
     {

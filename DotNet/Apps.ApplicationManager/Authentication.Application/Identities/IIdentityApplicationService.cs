@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Authentication.Application.Identities.Models;
+using PaladinRogue.Authentication.Application.Identities.Models;
 
-namespace Authentication.Application.Identities
+namespace PaladinRogue.Authentication.Application.Identities
 {
     public interface IIdentityApplicationService
     {

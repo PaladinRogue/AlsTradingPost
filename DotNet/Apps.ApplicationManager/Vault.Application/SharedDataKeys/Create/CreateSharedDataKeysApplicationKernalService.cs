@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Common.Application.Transactions;
-using Common.Domain.Persistence;
-using Common.Resources.Encryption;
-using Vault.Domain.SharedDataKeys;
-using Vault.Domain.SharedDataKeys.Change;
-using Vault.Domain.SharedDataKeys.Create;
 using Microsoft.Extensions.Logging;
+using PaladinRogue.Libray.Core.Application.Transactions;
+using PaladinRogue.Libray.Core.Common.Encryption;
+using PaladinRogue.Libray.Core.Domain.Persistence;
+using PaladinRogue.Libray.Vault.Domain.SharedDataKeys;
+using PaladinRogue.Libray.Vault.Domain.SharedDataKeys.Change;
+using PaladinRogue.Libray.Vault.Domain.SharedDataKeys.Create;
 
-namespace Vault.Application.SharedDataKeys.Create
+namespace PaladinRogue.Vault.Application.SharedDataKeys.Create
 {
     public class CreateSharedDataKeysApplicationKernalService : ICreateSharedDataKeysApplicationKernalService
     {
@@ -51,7 +51,7 @@ namespace Vault.Application.SharedDataKeys.Create
                 {
                     IList<SharedDataKey> existingKeys = (await _commandRepository.GetAsync()).ToList();
 
-                    foreach (FieldInfo fieldInfo in typeof(Common.Domain.DataProtectors.SharedDataKeys).GetFields())
+                    foreach (FieldInfo fieldInfo in typeof(Libray.Core.Domain.DataProtectors.SharedDataKeys).GetFields())
                     {
                         string keyName = fieldInfo.GetRawConstantValue().ToString();
 

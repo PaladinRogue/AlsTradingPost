@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Persistence.EntityFramework.Infrastructure.Extensions;
-using Persistence.EntityFramework.Infrastructure.Uris;
-using Gateway.Domain.Applications;
+using PaladinRogue.Gateway.Domain.Applications;
+using PaladinRogue.Libray.Persistence.EntityFramework.Infrastructure.Extensions;
+using PaladinRogue.Libray.Persistence.EntityFramework.Infrastructure.Uris;
 
-namespace Gateway.Persistence
+namespace PaladinRogue.Gateway.Persistence
 {
     public class GatewayDbContext : DbContext
     {

@@ -1,11 +1,11 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using Authentication.Domain.Identities.ChangeClaim;
-using Authentication.Domain.Identities.CreateClaim;
-using Common.Domain.Aggregates;
-using Common.Resources;
+using PaladinRogue.Authentication.Domain.Identities.ChangeClaim;
+using PaladinRogue.Authentication.Domain.Identities.CreateClaim;
+using PaladinRogue.Libray.Core.Common;
+using PaladinRogue.Libray.Core.Domain.Aggregates;
 
-namespace Authentication.Domain.Identities
+namespace PaladinRogue.Authentication.Domain.Identities
 {
     public class Claim : IAggregateMember
     {

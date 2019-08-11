@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using Common.Application.Caching;
-using Common.Domain.DataProtectors;
+using PaladinRogue.Libray.Core.Application.Caching;
+using PaladinRogue.Libray.Core.Domain.DataProtectors;
 
-namespace Vault.Setup.Infrastructure.DataKeys
+namespace PaladinRogue.Vault.Setup.Infrastructure.DataKeys
 {
     public class DataKeyProviderCacheDecorator : CacheDecorator<string, DataKeyCacheKey, DataKey>, IDataKeyProvider
     {

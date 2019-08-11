@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
-using Common.Resources.Extensions;
+using PaladinRogue.Libray.Core.Common.Extensions;
 
-namespace Authentication.Application.Notifications.Emails
+namespace PaladinRogue.Authentication.Application.Notifications.Emails
 {
     public class EmailBuilder : IEmailBuilder
     {

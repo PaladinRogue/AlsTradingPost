@@ -1,6 +1,6 @@
-using Common.Domain.DomainEvents.Interfaces;
+using PaladinRogue.Libray.Core.Domain.DomainEvents.Interfaces;
 
-namespace Gateway.Domain.Applications.Events
+namespace PaladinRogue.Gateway.Domain.Applications.Events
 {
     public class ApplicationCreatedDomainEvent : IDomainEvent
     {

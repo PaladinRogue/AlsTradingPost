@@ -1,10 +1,10 @@
 using System;
-using Authentication.Application.AuthenticationServices.Authorisation;
-using Common.Api.Links;
-using Common.Api.Resources;
-using Common.Setup.Infrastructure.Constants;
+using PaladinRogue.Authentication.Application.AuthenticationServices.Authorisation;
+using PaladinRogue.Libray.Core.Api.Links;
+using PaladinRogue.Libray.Core.Api.Resources;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Constants;
 
-namespace Authentication.Api.AuthenticationService.Facebook
+namespace PaladinRogue.Authentication.Api.AuthenticationService.Facebook
 {
     [ResourceType(ResourceTypes.AuthenticationServiceFacebook)]
     [SelfLink(RouteDictionary.GetFacebookAuthenticationService, HttpVerb.Get, typeof(GetAuthenticationServiceAuthorisationContext))]

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Common.Application.Transactions;
-using Messaging.Messages;
-using Messaging.Setup.Infrastructure;
+using PaladinRogue.Authentication.Messages;
+using PaladinRogue.Libray.Core.Application.Transactions;
+using PaladinRogue.Libray.Messaging.Common.Messages;
 
-namespace Authentication.Application.Identities.TwoFactor
+namespace PaladinRogue.Authentication.Application.Identities.TwoFactor
 {
     public class SendTwoFactorAuthenticationNotificationKernalService : ISendTwoFactorAuthenticationNotificationKernalService
     {

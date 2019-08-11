@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
-using Gateway.Domain.Applications;
 
-namespace Gateway.Application.Applications
+namespace PaladinRogue.Gateway.Application.Applications
 {
     public interface IApplicationCache
     {

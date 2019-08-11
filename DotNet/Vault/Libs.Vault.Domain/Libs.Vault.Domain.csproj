@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
         <LangVersion>latest</LangVersion>
+        <RootNamespace>PaladinRogue.Libray.Vault.Domain</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -12,6 +13,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Common\Common.Domain\Common.Domain.csproj" />
+      <ProjectReference Include="..\..\Core\Core.Domain\Core.Domain.csproj" />
     </ItemGroup>
 </Project>

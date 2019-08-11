@@ -1,4 +1,4 @@
-﻿namespace Gateway.Api
+﻿namespace PaladinRogue.Gateway.Api
 {
     public static class RouteDictionary
     {

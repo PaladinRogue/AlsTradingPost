@@ -1,4 +1,4 @@
-﻿namespace Authentication.Domain.AuthenticationServices
+﻿namespace PaladinRogue.Authentication.Domain.AuthenticationServices
 {
     public class AuthenticationGrantTypePassword : AuthenticationService
     {

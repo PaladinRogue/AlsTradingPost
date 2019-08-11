@@ -1,6 +1,6 @@
-﻿using Messaging.Common;
+﻿using PaladinRogue.Libray.Messaging.Common.Messages;
 
-namespace Messaging.Setup.Infrastructure.Serialisers
+namespace PaladinRogue.Libray.Messaging.Common.Serialisers
 {
     public interface IMessageSerialiser
     {

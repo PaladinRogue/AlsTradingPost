@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using Common.Domain.DomainEvents.Interfaces;
-using Gateway.Domain.Applications.Events;
+using PaladinRogue.Gateway.Domain.Applications.Events;
+using PaladinRogue.Libray.Core.Domain.DomainEvents.Interfaces;
 
-namespace Gateway.Application.Applications
+namespace PaladinRogue.Gateway.Application.Applications
 {
     public class ApplicationChangedDomainEventSubscriber : IDomainEventSubscriber<ApplicationChangedDomainEvent>
     {

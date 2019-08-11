@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Authorisation.Application
+namespace PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Owners
 {
     public interface IResourceOwnerProviderCollection
     {

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using FluentValidation;
 
-namespace Gateway.Domain.Applications.Change
+namespace PaladinRogue.Gateway.Domain.Applications.Change
 {
     public class ChangeApplicationCommand : IChangeApplicationCommand
     {

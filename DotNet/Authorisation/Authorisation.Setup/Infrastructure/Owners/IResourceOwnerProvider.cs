@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Common.Domain.Aggregates;
+using PaladinRogue.Libray.Core.Domain.Aggregates;
 
-namespace Authorisation.Application
+namespace PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Owners
 {
     public interface IResourceOwnerProvider
     {

@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Authentication.Domain.Identities.ConfirmIdentity
+namespace PaladinRogue.Authentication.Domain.Identities.ConfirmIdentity
 {
     public interface IConfirmIdentityCommand
     {

@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Authentication.Domain.AuthenticationServices;
+using PaladinRogue.Authentication.Domain.AuthenticationServices;
 
-namespace Authentication.Domain.Identities.RegisterPassword
+namespace PaladinRogue.Authentication.Domain.Identities.RegisterPassword
 {
     public interface IRegisterPasswordCommand
     {

@@ -1,4 +1,4 @@
-namespace Authorisation.Application.Restrictions
+namespace PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Restrictions
 {
     public interface IRestrictionResult
     {

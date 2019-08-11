@@ -1,7 +1,7 @@
-using Common.Resources;
 using FluentValidation;
+using PaladinRogue.Libray.Core.Common;
 
-namespace Authentication.Domain.Identities.AddOrChangeClaim
+namespace PaladinRogue.Authentication.Domain.Identities.AddOrChangeClaim
 {
     public class AddOrChangeIdentityClaimValidator : AbstractValidator<AddOrChangeIdentityClaimCommandDdto>
     {

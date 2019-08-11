@@ -1,13 +1,13 @@
 using System.Threading.Tasks;
-using Authentication.Domain.Identities;
-using Authentication.Domain.Identities.AddOrChangeClaim;
-using Common.Application.Exceptions;
-using Common.Application.Transactions;
-using Common.Domain.Exceptions;
-using Common.Domain.Persistence;
 using Microsoft.Extensions.Logging;
+using PaladinRogue.Authentication.Domain.Identities;
+using PaladinRogue.Authentication.Domain.Identities.AddOrChangeClaim;
+using PaladinRogue.Libray.Core.Application.Exceptions;
+using PaladinRogue.Libray.Core.Application.Transactions;
+using PaladinRogue.Libray.Core.Domain.Exceptions;
+using PaladinRogue.Libray.Core.Domain.Persistence;
 
-namespace Authentication.Application.Identities.Claims
+namespace PaladinRogue.Authentication.Application.Identities.Claims
 {
     public class IdentityClaimsApplicationKernalService : IIdentityClaimsApplicationKernalService
     {

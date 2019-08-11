@@ -1,4 +1,4 @@
-﻿namespace Gateway.Setup.Infrastructure.Routing
+﻿namespace PaladinRogue.Gateway.Setup.Infrastructure.Routing
 {
     public static class ApplicationRouteDictionary
     {

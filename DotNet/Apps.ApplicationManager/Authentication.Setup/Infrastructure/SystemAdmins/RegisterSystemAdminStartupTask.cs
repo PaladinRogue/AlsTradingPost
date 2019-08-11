@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Common.Api.Extensions;
-using Messaging.Setup.Infrastructure.Dispatchers;
-using Messaging.Setup.Infrastructure.Senders;
-using Common.Resources.Settings;
-using Common.Setup.Infrastructure.Startup;
-using Messaging.Messages;
 using Microsoft.Extensions.DependencyInjection;
+using PaladinRogue.Authentication.Messages;
+using PaladinRogue.Libray.Core.Common.Settings;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Options;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Startup;
+using PaladinRogue.Libray.Messaging.Common.Dispatchers;
+using PaladinRogue.Libray.Messaging.Common.Senders;
 
-namespace Authentication.Setup.Infrastructure.SystemAdmins
+namespace PaladinRogue.Authentication.Setup.Infrastructure.SystemAdmins
 {
     public class RegisterSystemAdminStartupTask : IStartupTask
     {

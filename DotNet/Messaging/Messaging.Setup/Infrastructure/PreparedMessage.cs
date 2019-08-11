@@ -1,7 +1,7 @@
 using System;
-using Messaging.Setup.Infrastructure.Interfaces;
+using PaladinRogue.Libray.Messaging.Setup.Infrastructure.Interfaces;
 
-namespace Messaging.Setup.Infrastructure
+namespace PaladinRogue.Libray.Messaging.Setup.Infrastructure
 {
     public class PreparedMessage : IPreparedMessage
     {
@@ -25,9 +25,9 @@ namespace Messaging.Setup.Infrastructure
         public Guid Id { get; set; }
 
         public string Type { get; set; }
-        
+
         public string SecurityToken { get; set; }
-        
+
         public string Payload { get; set; }
     }
 }

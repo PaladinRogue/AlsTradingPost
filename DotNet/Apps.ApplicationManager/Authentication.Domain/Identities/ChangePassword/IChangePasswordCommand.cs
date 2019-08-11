@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Authentication.Domain.Identities.ChangePassword
+namespace PaladinRogue.Authentication.Domain.Identities.ChangePassword
 {
     public interface IChangePasswordCommand
     {

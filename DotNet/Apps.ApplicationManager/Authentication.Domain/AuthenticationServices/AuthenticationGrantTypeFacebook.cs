@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Authentication.Domain.AuthenticationServices.ChangeFacebook;
-using Authentication.Domain.AuthenticationServices.CreateFacebook;
-using Common.Domain.DataProtectors;
-using Common.Resources;
+using PaladinRogue.Authentication.Domain.AuthenticationServices.ChangeFacebook;
+using PaladinRogue.Authentication.Domain.AuthenticationServices.CreateFacebook;
+using PaladinRogue.Libray.Core.Common;
+using PaladinRogue.Libray.Core.Domain.DataProtectors;
 
-namespace Authentication.Domain.AuthenticationServices
+namespace PaladinRogue.Authentication.Domain.AuthenticationServices
 {
     public class AuthenticationGrantTypeFacebook : AuthenticationGrantTypeClientCredential
     {

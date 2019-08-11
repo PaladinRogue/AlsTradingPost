@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Common.Application.Transactions;
-using Common.Domain.Persistence;
+using PaladinRogue.Libray.Core.Application.Transactions;
+using PaladinRogue.Libray.Core.Domain.Persistence;
 
-namespace Gateway.Application.Applications
+namespace PaladinRogue.Gateway.Application.Applications
 {
     public class ApplicationApplicationService : IApplicationApplicationService
     {

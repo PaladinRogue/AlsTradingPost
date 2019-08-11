@@ -1,8 +1,7 @@
 using System.Text.RegularExpressions;
-using Common.Resources;
 using FluentValidation;
 
-namespace Authentication.Domain.Identities.ResetPassword
+namespace PaladinRogue.Authentication.Domain.Identities.ResetPassword
 {
     public class ResetPasswordValidator : AbstractValidator<ResetPasswordCommandDdto>
     {

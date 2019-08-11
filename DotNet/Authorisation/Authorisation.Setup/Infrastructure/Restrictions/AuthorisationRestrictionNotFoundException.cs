@@ -1,6 +1,6 @@
 using System;
 
-namespace Authorisation.Application.Restrictions
+namespace PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Restrictions
 {
     public class AuthorisationRestrictionNotFoundException : Exception
     {

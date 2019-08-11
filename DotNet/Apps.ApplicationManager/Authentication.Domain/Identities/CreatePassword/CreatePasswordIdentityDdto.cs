@@ -1,4 +1,4 @@
-namespace Authentication.Domain.Identities.CreatePassword
+namespace PaladinRogue.Authentication.Domain.Identities.CreatePassword
 {
     internal class CreatePasswordIdentityDdto
     {

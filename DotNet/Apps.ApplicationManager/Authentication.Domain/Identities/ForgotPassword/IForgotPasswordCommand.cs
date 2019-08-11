@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Authentication.Domain.Identities.ForgotPassword
+namespace PaladinRogue.Authentication.Domain.Identities.ForgotPassword
 {
     public interface IForgotPasswordCommand
     {

@@ -1,11 +1,11 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Common.Setup.Infrastructure.Startup;
-using Vault.Application.SharedDataKeys.Create;
 using Microsoft.Extensions.DependencyInjection;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Startup;
+using PaladinRogue.Vault.Application.SharedDataKeys.Create;
 
-namespace Vault.Setup.Infrastructure.DataKeys
+namespace PaladinRogue.Vault.Setup.Infrastructure.DataKeys
 {
     public class CreateSharedDataKeysStartupTask : IStartupTask
     {

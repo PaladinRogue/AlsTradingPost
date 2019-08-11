@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Messaging.Common;
+using PaladinRogue.Libray.Messaging.Common.Messages;
 
-namespace Messaging.Messages
+namespace PaladinRogue.Authentication.Messages
 {
     public class SendNotificationMessage : IMessage
     {

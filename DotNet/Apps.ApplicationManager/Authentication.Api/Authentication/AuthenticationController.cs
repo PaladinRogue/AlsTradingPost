@@ -1,14 +1,14 @@
 using System;
 using System.Threading.Tasks;
-using Authentication.Application.Authentication;
-using Authentication.Application.Authentication.Models;
-using Authentication.Setup.Infrastructure.Routing;
-using Common.Api.Builders.Resource;
-using Common.Application.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PaladinRogue.Authentication.Application.Authentication;
+using PaladinRogue.Authentication.Application.Authentication.Models;
+using PaladinRogue.Authentication.Setup.Infrastructure.Routing;
+using PaladinRogue.Libray.Core.Api.Builders.Resource;
+using PaladinRogue.Libray.Core.Application.Authentication;
 
-namespace Authentication.Api.Authentication
+namespace PaladinRogue.Authentication.Api.Authentication
 {
     [AuthenticationControllerRoute("authenticate")]
     public class AuthenticationController : ControllerBase

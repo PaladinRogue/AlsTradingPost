@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Common.Domain.Concurrency.Interfaces;
-using Common.Domain.Entities;
-using Common.Domain.Exceptions;
-using Common.Domain.Models;
-using Common.Resources.Extensions;
-using Common.Resources.Sorting;
 using Microsoft.EntityFrameworkCore;
+using PaladinRogue.Libray.Core.Common.Extensions;
+using PaladinRogue.Libray.Core.Common.Sorting;
+using PaladinRogue.Libray.Core.Domain.Concurrency.Interfaces;
+using PaladinRogue.Libray.Core.Domain.Entities;
+using PaladinRogue.Libray.Core.Domain.Exceptions;
+using PaladinRogue.Libray.Core.Domain.Models;
 
-namespace Persistence.EntityFramework.Repositories
+namespace PaladinRogue.Libray.Persistence.EntityFramework.Repositories
 {
     public static class RepositoryHelper
     {

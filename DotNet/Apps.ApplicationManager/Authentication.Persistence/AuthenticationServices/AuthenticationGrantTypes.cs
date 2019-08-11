@@ -1,4 +1,4 @@
-﻿namespace Authentication.Persistence.AuthenticationServices
+﻿namespace PaladinRogue.Authentication.Persistence.AuthenticationServices
 {
     public static class AuthenticationGrantTypes
     {

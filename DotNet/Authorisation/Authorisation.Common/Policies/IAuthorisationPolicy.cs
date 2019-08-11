@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Authorisation.Application.Contexts;
+using PaladinRogue.Libray.Authorisation.Common.Contexts;
 
-namespace Authorisation.Application.Policies
+namespace PaladinRogue.Libray.Authorisation.Common.Policies
 {
     public interface IAuthorisationPolicy
     {

@@ -1,7 +1,7 @@
 using System;
-using Common.Domain.Exceptions;
+using PaladinRogue.Libray.Core.Domain.Exceptions;
 
-namespace Authentication.Domain.Identities.Login
+namespace PaladinRogue.Authentication.Domain.Identities.Login
 {
     public class InvalidLoginDomainException : DomainException
     {

@@ -1,8 +1,8 @@
-﻿using Messaging.Setup.Infrastructure.Handlers;
-using Gateway.Application.Handlers;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using PaladinRogue.Gateway.Application.Handlers;
+using PaladinRogue.Libray.Messaging.Common.Handlers;
 
-namespace Gateway.Setup.Infrastructure.Messaging
+namespace PaladinRogue.Gateway.Setup.Infrastructure.Messaging
 {
     public static class ServiceCollectionExtensions
     {

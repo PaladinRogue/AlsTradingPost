@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Authorisation.Application.Policies
+namespace PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Policies
 {
     public class ResourcePolicies : Dictionary<string, ActionPolicies>
     {

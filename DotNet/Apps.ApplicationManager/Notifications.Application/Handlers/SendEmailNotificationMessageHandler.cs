@@ -1,13 +1,13 @@
 using System;
 using System.Threading.Tasks;
-using Messaging.Messages;
-using Messaging.Setup.Infrastructure.Handlers;
-using Messaging.Setup.Infrastructure.MessageBus;
 using Microsoft.Extensions.Logging;
-using Notifications.Application.Emails;
-using Notifications.Application.Emails.Send;
+using Notifications.Messages;
+using PaladinRogue.Libray.Messaging.Common.Handlers;
+using PaladinRogue.Libray.Messaging.Common.MessageBus;
+using PaladinRogue.Notifications.Application.Emails;
+using PaladinRogue.Notifications.Application.Emails.Send;
 
-namespace Notifications.Application.Handlers
+namespace PaladinRogue.Notifications.Application.Handlers
 {
     public class SendEmailNotificationMessageHandler : MessageHandler<SendEmailNotificationMessage, SendEmailNotificationMessageHandler>
     {

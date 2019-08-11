@@ -1,4 +1,4 @@
-namespace Authentication.Domain.NotificationTypes
+namespace PaladinRogue.Authentication.Domain.NotificationTypes
 {
     public static class NotificationNames
     {

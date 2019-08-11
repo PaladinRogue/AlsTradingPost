@@ -1,7 +1,7 @@
-using Common.Resources;
 using FluentValidation;
+using PaladinRogue.Libray.Core.Common;
 
-namespace Authentication.Domain.Identities.Login.Password
+namespace PaladinRogue.Authentication.Domain.Identities.Login.Password
 {
     public class PasswordLoginCommandValidator : AbstractValidator<PasswordLoginCommandDdto>
     {

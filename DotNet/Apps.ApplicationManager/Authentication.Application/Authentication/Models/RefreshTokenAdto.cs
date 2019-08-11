@@ -1,6 +1,6 @@
 using System;
 
-namespace Authentication.Application.Authentication.Models
+namespace PaladinRogue.Authentication.Application.Authentication.Models
 {
     public class RefreshTokenAdto
     {

@@ -1,11 +1,11 @@
 using System.Threading.Tasks;
-using Common.Domain.DataProtectors;
-using Vault.Domain;
 using Microsoft.Extensions.Options;
-using Vault.Setup.Infrastructure.Settings;
-using DataKey = Common.Domain.DataProtectors.DataKey;
+using PaladinRogue.Libray.Core.Domain.DataProtectors;
+using PaladinRogue.Libray.Vault.Domain;
+using PaladinRogue.Libray.Vault.Setup.Infrastructure.Settings;
+using DataKey = PaladinRogue.Libray.Core.Domain.DataProtectors.DataKey;
 
-namespace Vault.Setup.Infrastructure.DataKeys
+namespace PaladinRogue.Libray.Vault.Setup.Infrastructure.DataKeys
 {
     public class MasterKeyProvider : IMasterKeyProvider
     {

@@ -1,4 +1,4 @@
-namespace Authentication.Domain.Identities.ConfirmIdentity
+namespace PaladinRogue.Authentication.Domain.Identities.ConfirmIdentity
 {
     internal class ConfirmIdentityDdto
     {

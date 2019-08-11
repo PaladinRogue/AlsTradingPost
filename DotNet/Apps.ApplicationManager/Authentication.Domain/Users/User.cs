@@ -1,11 +1,11 @@
 using System.Threading.Tasks;
-using Authentication.Domain.Identities;
-using Authentication.Domain.Users.Events;
-using Common.Domain.Aggregates;
-using Common.Domain.DomainEvents;
-using Common.Domain.Entities;
+using PaladinRogue.Authentication.Domain.Identities;
+using PaladinRogue.Authentication.Domain.Users.Events;
+using PaladinRogue.Libray.Core.Domain.Aggregates;
+using PaladinRogue.Libray.Core.Domain.DomainEvents;
+using PaladinRogue.Libray.Core.Domain.Entities;
 
-namespace Authentication.Domain.Users
+namespace PaladinRogue.Authentication.Domain.Users
 {
     public class User : VersionedEntity, IAggregateRoot
     {

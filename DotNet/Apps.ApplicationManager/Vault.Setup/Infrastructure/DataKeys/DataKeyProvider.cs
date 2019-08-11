@@ -1,13 +1,13 @@
 using System;
 using System.Threading.Tasks;
-using Common.Application.Transactions;
-using Common.Domain.DataProtectors;
-using Common.Domain.Persistence;
-using Vault.Domain;
-using Vault.Domain.SharedDataKeys;
-using DataKey = Common.Domain.DataProtectors.DataKey;
+using PaladinRogue.Libray.Core.Application.Transactions;
+using PaladinRogue.Libray.Core.Domain.DataProtectors;
+using PaladinRogue.Libray.Core.Domain.Persistence;
+using PaladinRogue.Libray.Vault.Domain;
+using PaladinRogue.Libray.Vault.Domain.SharedDataKeys;
+using DataKey = PaladinRogue.Libray.Core.Domain.DataProtectors.DataKey;
 
-namespace Vault.Setup.Infrastructure.DataKeys
+namespace PaladinRogue.Vault.Setup.Infrastructure.DataKeys
 {
     public class DataKeyProvider : IDataKeyProvider
     {

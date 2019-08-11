@@ -1,6 +1,6 @@
 using System;
 
-namespace Authentication.Application.AuthenticationServices.Models.Facebook
+namespace PaladinRogue.Authentication.Application.AuthenticationServices.Models.Facebook
 {
     public class GetFacebookAdto
     {

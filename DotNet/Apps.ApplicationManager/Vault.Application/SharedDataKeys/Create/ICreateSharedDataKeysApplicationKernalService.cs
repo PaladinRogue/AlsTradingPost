@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Vault.Application.SharedDataKeys.Create
+namespace PaladinRogue.Vault.Application.SharedDataKeys.Create
 {
     public interface ICreateSharedDataKeysApplicationKernalService
     {

@@ -2,10 +2,11 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
+        <RootNamespace>PaladinRogue.Vault.Application</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Common\Common.Application\Common.Application.csproj" />
+      <ProjectReference Include="..\..\Core\Core.Application\Core.Application.csproj" />
       <ProjectReference Include="..\..\Vault\Libs.Vault.Application\Libs.Vault.Application.csproj" />
     </ItemGroup>
 

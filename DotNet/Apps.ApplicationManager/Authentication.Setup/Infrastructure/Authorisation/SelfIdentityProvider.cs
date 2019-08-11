@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Authentication.Domain.Identities;
-using Authentication.Domain.Users;
-using Common.Application.Exceptions;
-using Common.Application.Transactions;
-using Authorisation.Application;
-using Common.Domain.Persistence;
-using Common.Resources.Builders.Dictionaries;
-using Common.Setup.Infrastructure.Authorisation;
+using PaladinRogue.Authentication.Domain.Identities;
+using PaladinRogue.Authentication.Domain.Users;
+using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Self;
+using PaladinRogue.Libray.Core.Application.Exceptions;
+using PaladinRogue.Libray.Core.Application.Transactions;
+using PaladinRogue.Libray.Core.Common.Builders.Dictionaries;
+using PaladinRogue.Libray.Core.Domain.Persistence;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Authorisation;
 
-namespace Authentication.Setup.Infrastructure.Authorisation
+namespace PaladinRogue.Authentication.Setup.Infrastructure.Authorisation
 {
     public class SelfIdentityProvider : ISelfProvider
     {

@@ -1,9 +1,9 @@
-using Common.Api.Links;
-using Common.Api.Resources;
-using Common.Setup.Infrastructure.Constants;
-using Gateway.Setup.Infrastructure.Routing;
+using PaladinRogue.Gateway.Setup.Infrastructure.Routing;
+using PaladinRogue.Libray.Core.Api.Links;
+using PaladinRogue.Libray.Core.Api.Resources;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Constants;
 
-namespace Gateway.Api.Aggregation
+namespace PaladinRogue.Gateway.Api.Aggregation
 {
     [ResourceType(ResourceTypes.Application)]
     [SelfLink(ApplicationRouteDictionary.Entrypoint, HttpVerb.Get)]

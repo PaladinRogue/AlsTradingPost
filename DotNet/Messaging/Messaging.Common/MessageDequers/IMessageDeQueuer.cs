@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Messaging.Common;
+using PaladinRogue.Libray.Messaging.Common.Messages;
+using PaladinRogue.Libray.Messaging.Common.Registrations;
 
-namespace Messaging.Setup.Infrastructure.DeQueuers
+namespace PaladinRogue.Libray.Messaging.Common.MessageDequers
 {
     public interface IMessageDeQueuer
     {

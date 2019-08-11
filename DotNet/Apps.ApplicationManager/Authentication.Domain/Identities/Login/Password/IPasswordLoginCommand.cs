@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Authentication.Domain.Identities.Login.Password
+namespace PaladinRogue.Authentication.Domain.Identities.Login.Password
 {
     public interface IPasswordLoginCommand
     {

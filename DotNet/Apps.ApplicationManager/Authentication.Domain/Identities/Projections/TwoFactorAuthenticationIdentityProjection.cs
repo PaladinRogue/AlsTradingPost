@@ -1,6 +1,6 @@
-using Common.Domain.DataProtectors;
+using PaladinRogue.Libray.Core.Domain.DataProtectors;
 
-namespace Authentication.Domain.Identities.Projections
+namespace PaladinRogue.Authentication.Domain.Identities.Projections
 {
     public class TwoFactorAuthenticationIdentityProjection
     {

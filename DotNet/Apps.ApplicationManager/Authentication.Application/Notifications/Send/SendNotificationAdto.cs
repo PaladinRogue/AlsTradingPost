@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Notifications.ApplicationServices.Emails
+namespace PaladinRogue.Authentication.Application.Notifications.Send
 {
     public class SendNotificationAdto
     {

@@ -1,4 +1,4 @@
-﻿namespace Gateway.Application
+﻿namespace PaladinRogue.Gateway.Application
 {
     public static class AuthorisationResource
     {

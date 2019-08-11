@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Common.Domain.DataProtectors;
-using Messaging.Common;
-using Messaging.Setup.Infrastructure.Interfaces;
-using Messaging.Setup.Infrastructure.Serialisers;
+using PaladinRogue.Libray.Core.Domain.DataProtectors;
+using PaladinRogue.Libray.Messaging.Common.Messages;
+using PaladinRogue.Libray.Messaging.Common.Serialisers;
+using PaladinRogue.Libray.Messaging.Setup.Infrastructure.Interfaces;
 
-namespace Messaging.Setup.Infrastructure.Factories
+namespace PaladinRogue.Libray.Messaging.Setup.Infrastructure.Factories
 {
     public class MessageFactory : IMessageFactory
     {

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Authorisation.Application;
-using Authorisation.Application.ApplicationServices;
-using Authorisation.Application.Contexts;
+using PaladinRogue.Libray.Authorisation.Application.ApplicationServices;
+using PaladinRogue.Libray.Authorisation.Common;
+using PaladinRogue.Libray.Authorisation.Common.Contexts;
 
-namespace Gateway.Application.Applications
+namespace PaladinRogue.Gateway.Application.Applications
 {
     public class ApplicationApplicationServiceSecurityDecorator : IApplicationApplicationService
     {

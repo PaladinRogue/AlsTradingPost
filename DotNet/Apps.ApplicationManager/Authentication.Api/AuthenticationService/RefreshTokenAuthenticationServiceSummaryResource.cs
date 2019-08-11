@@ -1,8 +1,8 @@
-using Common.Api.Links;
-using Common.Api.Resources;
-using Common.Setup.Infrastructure.Constants;
+using PaladinRogue.Libray.Core.Api.Links;
+using PaladinRogue.Libray.Core.Api.Resources;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Constants;
 
-namespace Authentication.Api.AuthenticationService
+namespace PaladinRogue.Authentication.Api.AuthenticationService
 {
     [ResourceType(ResourceTypes.AuthenticationServiceRefreshToken)]
     [Link(LinkDictionary.Authenticate, RouteDictionary.AuthenticateRefreshTokenResourceTemplate, HttpVerb.Get)]

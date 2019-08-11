@@ -1,11 +1,11 @@
-using Common.Api.Links;
-using Common.Api.PropertyTypes;
-using Common.Api.Resources;
-using Common.Api.Validation.Attributes;
-using Common.Resources;
-using Common.Setup.Infrastructure.Constants;
+using PaladinRogue.Libray.Core.Api.Links;
+using PaladinRogue.Libray.Core.Api.PropertyTypes;
+using PaladinRogue.Libray.Core.Api.Resources;
+using PaladinRogue.Libray.Core.Api.Validation.Attributes;
+using PaladinRogue.Libray.Core.Common;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Constants;
 
-namespace Authentication.Api.Identities
+namespace PaladinRogue.Authentication.Api.Identities
 {
     [ResourceType(ResourceTypes.Password)]
     [SelfLink(RouteDictionary.RegisterPasswordResourceTemplate, HttpVerb.Get)]

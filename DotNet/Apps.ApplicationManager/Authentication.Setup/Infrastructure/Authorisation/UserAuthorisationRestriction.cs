@@ -1,11 +1,11 @@
 using System.Threading.Tasks;
-using Authentication.Application;
-using Authentication.Domain.Users;
-using Authorisation.Application.Contexts;
-using Authorisation.Application.Restrictions;
-using Common.Domain.Persistence;
+using PaladinRogue.Authentication.Application;
+using PaladinRogue.Authentication.Domain.Users;
+using PaladinRogue.Libray.Authorisation.Common.Contexts;
+using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Restrictions;
+using PaladinRogue.Libray.Core.Domain.Persistence;
 
-namespace Authentication.Setup.Infrastructure.Authorisation
+namespace PaladinRogue.Authentication.Setup.Infrastructure.Authorisation
 {
     public class UserAuthorisationRestriction : IAuthorisationRestriction
     {

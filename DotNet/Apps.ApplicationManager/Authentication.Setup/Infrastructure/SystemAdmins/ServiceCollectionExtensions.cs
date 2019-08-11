@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Authentication.Setup.Infrastructure.SystemAdmins
+namespace PaladinRogue.Authentication.Setup.Infrastructure.SystemAdmins
 {
     public static class ServiceCollectionExtensions
     {

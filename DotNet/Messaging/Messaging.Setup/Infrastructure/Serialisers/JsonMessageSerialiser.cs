@@ -1,7 +1,8 @@
-﻿using Messaging.Common;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using PaladinRogue.Libray.Messaging.Common.Messages;
+using PaladinRogue.Libray.Messaging.Common.Serialisers;
 
-namespace Messaging.Setup.Infrastructure.Serialisers
+namespace PaladinRogue.Libray.Messaging.Setup.Infrastructure.Serialisers
 {
     public class JsonMessageSerialiser : IMessageSerialiser
     {
@@ -14,7 +15,7 @@ namespace Messaging.Setup.Infrastructure.Serialisers
                 TypeNameHandling = TypeNameHandling.All
             };
         }
-        
+
         public string Serialise(IMessage message)
         {
             return JsonConvert.SerializeObject(message, _settings);

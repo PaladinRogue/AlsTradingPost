@@ -1,4 +1,4 @@
-namespace Authentication.Domain.Identities.ValidateToken
+namespace PaladinRogue.Authentication.Domain.Identities.ValidateToken
 {
     internal class ValidateRefreshTokenDdto
     {

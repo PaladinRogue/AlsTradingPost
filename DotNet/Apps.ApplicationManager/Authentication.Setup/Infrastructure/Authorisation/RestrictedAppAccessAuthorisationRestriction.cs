@@ -1,13 +1,13 @@
 using System.Threading.Tasks;
-using Authentication.Application;
-using Authentication.Domain.Identities;
-using Common.Application.Transactions;
-using Authorisation.Application.Contexts;
-using Authorisation.Application.Restrictions;
-using Common.Domain.Persistence;
-using Common.Setup.Infrastructure.Authorisation;
+using PaladinRogue.Authentication.Application;
+using PaladinRogue.Authentication.Domain.Identities;
+using PaladinRogue.Libray.Authorisation.Common.Contexts;
+using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Restrictions;
+using PaladinRogue.Libray.Core.Application.Transactions;
+using PaladinRogue.Libray.Core.Domain.Persistence;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Authorisation;
 
-namespace Authentication.Setup.Infrastructure.Authorisation
+namespace PaladinRogue.Authentication.Setup.Infrastructure.Authorisation
 {
     public class RestrictedAppAccessAuthorisationRestriction : IAuthorisationRestriction
     {

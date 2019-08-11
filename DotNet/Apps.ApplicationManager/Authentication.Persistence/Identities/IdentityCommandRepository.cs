@@ -1,12 +1,12 @@
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
-using Authentication.Domain.Identities;
-using Common.Domain.DataProtectors;
 using Microsoft.EntityFrameworkCore;
-using Persistence.EntityFramework.Repositories;
+using PaladinRogue.Authentication.Domain.Identities;
+using PaladinRogue.Libray.Core.Domain.DataProtectors;
+using PaladinRogue.Libray.Persistence.EntityFramework.Repositories;
 
-namespace Authentication.Persistence.Identities
+namespace PaladinRogue.Authentication.Persistence.Identities
 {
     public class IdentityCommandRepository : CommandRepository<Identity>
     {

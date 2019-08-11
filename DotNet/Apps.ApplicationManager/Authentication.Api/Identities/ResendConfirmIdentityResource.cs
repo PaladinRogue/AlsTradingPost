@@ -1,6 +1,6 @@
-using Common.Api.Resources;
+using PaladinRogue.Libray.Core.Api.Resources;
 
-namespace Authentication.Api.Identities
+namespace PaladinRogue.Authentication.Api.Identities
 {
     [ResourceType(ResourceTypes.ResendConfirmIdentity)]
     public class ResendConfirmIdentityResource : IResource

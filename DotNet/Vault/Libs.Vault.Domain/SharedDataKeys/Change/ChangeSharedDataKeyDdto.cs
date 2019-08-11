@@ -1,6 +1,6 @@
 using Microsoft.IdentityModel.Tokens;
 
-namespace Vault.Domain.SharedDataKeys.Change
+namespace PaladinRogue.Libray.Vault.Domain.SharedDataKeys.Change
 {
     internal class ChangeSharedDataKeyDdto
     {

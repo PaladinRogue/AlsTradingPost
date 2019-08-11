@@ -1,4 +1,4 @@
-﻿namespace Gateway.Domain.Applications.Create
+﻿namespace PaladinRogue.Gateway.Domain.Applications.Create
 {
     public class CreateApplicationDdto
     {

@@ -8,7 +8,7 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Exceptions;
 
-namespace Messaging.RabbitMQ.Connection
+namespace PaladinRogue.Libray.Messaging.RabbitMQ.Connection
 {
     public class DefaultRabbitMqPersistentConnection : IRabbitMqPersistentConnection
     {

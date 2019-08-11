@@ -1,4 +1,4 @@
-﻿namespace Gateway.Application.Applications.Register
+﻿namespace PaladinRogue.Gateway.Application.Applications.Register
 {
     public class RegisterApplicationAdto
     {

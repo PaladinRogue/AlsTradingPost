@@ -2,10 +2,11 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
+        <RootNamespace>PaladinRogue.Libray.DomainEvents.Setup</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
+      <ProjectReference Include="..\..\Core\Core.Setup\Core.Setup.csproj" />
       <ProjectReference Include="..\DomainEvents.Broker\DomainEvents.Broker.csproj" />
     </ItemGroup>
 

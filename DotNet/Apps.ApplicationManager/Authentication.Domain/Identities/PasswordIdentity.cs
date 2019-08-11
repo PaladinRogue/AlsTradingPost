@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using Authentication.Domain.AuthenticationServices;
-using Authentication.Domain.Identities.ChangePassword;
-using Authentication.Domain.Identities.CheckPassword;
-using Authentication.Domain.Identities.CreatePassword;
-using Common.Domain.DataProtectors;
-using Common.Resources;
+using PaladinRogue.Authentication.Domain.AuthenticationServices;
+using PaladinRogue.Authentication.Domain.Identities.ChangePassword;
+using PaladinRogue.Authentication.Domain.Identities.CheckPassword;
+using PaladinRogue.Authentication.Domain.Identities.CreatePassword;
+using PaladinRogue.Libray.Core.Common;
+using PaladinRogue.Libray.Core.Domain.DataProtectors;
 
-namespace Authentication.Domain.Identities
+namespace PaladinRogue.Authentication.Domain.Identities
 {
     public class PasswordIdentity : AuthenticationIdentity
     {

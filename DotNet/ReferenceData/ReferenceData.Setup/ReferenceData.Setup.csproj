@@ -2,6 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
+        <RootNamespace>PaladinRogue.Libray.ReferenceData.Setup</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -10,7 +11,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Authorisation\Authorisation.Setup\Authorisation.Setup.csproj" />
-      <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
+      <ProjectReference Include="..\..\Core\Core.Setup\Core.Setup.csproj" />
       <ProjectReference Include="..\ReferenceData.Application\ReferenceData.Application.csproj" />
       <ProjectReference Include="..\ReferenceData.Persistence\ReferenceData.Persistence.csproj" />
     </ItemGroup>

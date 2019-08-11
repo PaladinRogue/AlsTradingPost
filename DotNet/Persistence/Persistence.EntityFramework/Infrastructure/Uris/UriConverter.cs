@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Persistence.EntityFramework.Infrastructure.Uris
+namespace PaladinRogue.Libray.Persistence.EntityFramework.Infrastructure.Uris
 {
     public class UriConverter : ValueConverter<Uri, string>
     {

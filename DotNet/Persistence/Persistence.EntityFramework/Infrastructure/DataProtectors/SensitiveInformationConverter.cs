@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq.Expressions;
-using Common.Domain.DataProtectors;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using PaladinRogue.Libray.Core.Domain.DataProtectors;
 
-namespace Persistence.EntityFramework.Infrastructure.DataProtectors
+namespace PaladinRogue.Libray.Persistence.EntityFramework.Infrastructure.DataProtectors
 {
     public class SensitiveInformationConverter : ValueConverter<string, string>
     {

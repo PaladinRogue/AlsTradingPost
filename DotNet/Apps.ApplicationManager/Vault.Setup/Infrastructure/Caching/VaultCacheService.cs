@@ -1,11 +1,11 @@
 using System;
 using System.Threading.Tasks;
-using Common.Application.Caching;
 using LazyCache;
 using Microsoft.Extensions.Caching.Memory;
 using NodaTime;
+using PaladinRogue.Libray.Core.Application.Caching;
 
-namespace Vault.Setup.Infrastructure.Caching
+namespace PaladinRogue.Vault.Setup.Infrastructure.Caching
 {
     public class VaultCacheService : ICacheService
     {

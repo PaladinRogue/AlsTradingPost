@@ -1,4 +1,4 @@
-namespace ReferenceData.Application.ReferenceData.Models
+namespace PaladinRogue.Libray.ReferenceData.Application.ReferenceData.Models
 {
     public class GetAllReferenceDataAdto
     {

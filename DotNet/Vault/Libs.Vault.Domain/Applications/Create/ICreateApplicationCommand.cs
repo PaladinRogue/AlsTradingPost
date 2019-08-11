@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Vault.Domain.Applications.Create
+namespace PaladinRogue.Libray.Vault.Domain.Applications.Create
 {
     public interface ICreateApplicationCommand
     {

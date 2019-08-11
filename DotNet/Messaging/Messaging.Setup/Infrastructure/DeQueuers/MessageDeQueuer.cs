@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Common.Application.Exceptions;
-using Common.Application.Transactions;
-using Common.Domain.DataProtectors;
-using Messaging.Common;
-using Messaging.Setup.Infrastructure.Dispatchers;
-using Messaging.Setup.Infrastructure.Interfaces;
-using Messaging.Setup.Infrastructure.Serialisers;
 using Microsoft.Extensions.DependencyInjection;
+using PaladinRogue.Libray.Core.Application.Exceptions;
+using PaladinRogue.Libray.Core.Application.Transactions;
+using PaladinRogue.Libray.Core.Domain.DataProtectors;
+using PaladinRogue.Libray.Messaging.Common.Dispatchers;
+using PaladinRogue.Libray.Messaging.Common.MessageDequers;
+using PaladinRogue.Libray.Messaging.Common.Messages;
+using PaladinRogue.Libray.Messaging.Common.Registrations;
+using PaladinRogue.Libray.Messaging.Common.Serialisers;
+using PaladinRogue.Libray.Messaging.Setup.Infrastructure.Interfaces;
 
-namespace Messaging.Setup.Infrastructure.DeQueuers
+namespace PaladinRogue.Libray.Messaging.Setup.Infrastructure.DeQueuers
 {
     public class MessageDeQueuer : IMessageDeQueuer
     {

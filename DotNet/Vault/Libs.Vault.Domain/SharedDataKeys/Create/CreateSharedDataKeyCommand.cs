@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using FluentValidation;
 
-namespace Vault.Domain.SharedDataKeys.Create
+namespace PaladinRogue.Libray.Vault.Domain.SharedDataKeys.Create
 {
     public class CreateSharedDataKeyCommand : ICreateSharedDataKeyCommand
     {

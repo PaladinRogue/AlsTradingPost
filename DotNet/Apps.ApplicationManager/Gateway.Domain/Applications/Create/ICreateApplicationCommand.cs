@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Gateway.Domain.Applications.Create
+namespace PaladinRogue.Gateway.Domain.Applications.Create
 {
     public interface ICreateApplicationCommand
     {

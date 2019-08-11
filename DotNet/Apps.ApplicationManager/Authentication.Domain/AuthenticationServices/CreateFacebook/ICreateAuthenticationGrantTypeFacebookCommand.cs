@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Authentication.Domain.AuthenticationServices.CreateFacebook
+namespace PaladinRogue.Authentication.Domain.AuthenticationServices.CreateFacebook
 {
     public interface ICreateAuthenticationGrantTypeFacebookCommand
     {

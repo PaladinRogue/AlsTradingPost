@@ -1,4 +1,4 @@
-namespace Authentication.Application
+namespace PaladinRogue.Authentication.Application
 {
     public class AuthorisationRestriction
     {

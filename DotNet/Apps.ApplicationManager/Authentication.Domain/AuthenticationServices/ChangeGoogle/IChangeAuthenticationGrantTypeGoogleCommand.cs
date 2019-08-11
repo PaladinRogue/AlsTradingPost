@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Authentication.Domain.AuthenticationServices.ChangeGoogle
+namespace PaladinRogue.Authentication.Domain.AuthenticationServices.ChangeGoogle
 {
     public interface IChangeAuthenticationGrantTypeGoogleCommand
     {

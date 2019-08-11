@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using Common.Application.Caching;
-using Gateway.Domain.Applications;
+using PaladinRogue.Libray.Core.Application.Caching;
 
-namespace Gateway.Application.Applications.Caching
+namespace PaladinRogue.Gateway.Application.Applications.Caching
 {
     public class ApplicationCacheKey : CacheKey<Domain.Applications.Application>
     {

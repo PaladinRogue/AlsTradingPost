@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Authentication.Application.Users.Models;
+using PaladinRogue.Authentication.Application.Users.Models;
 
-namespace Authentication.Application.Users.CreateAdmin
+namespace PaladinRogue.Authentication.Application.Users.CreateAdmin
 {
     public interface ICreateUserApplicationKernalService
     {

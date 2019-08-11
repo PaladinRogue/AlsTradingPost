@@ -1,7 +1,7 @@
-﻿using Common.Application.Transactions;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using PaladinRogue.Libray.Core.Application.Transactions;
 
-namespace Persistence.EntityFramework.Infrastructure.Transactions
+namespace PaladinRogue.Libray.Persistence.Setup.Infrastructure.Transactions
 {
     public class EntityFrameworkTransactionManager : EntityFrameworkTransactionManager<DbContext>
     {

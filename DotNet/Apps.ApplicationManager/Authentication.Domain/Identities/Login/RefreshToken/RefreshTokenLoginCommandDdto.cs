@@ -1,6 +1,6 @@
 using System;
 
-namespace Authentication.Domain.Identities.Login.RefreshToken
+namespace PaladinRogue.Authentication.Domain.Identities.Login.RefreshToken
 {
     public class RefreshTokenLoginCommandDdto
     {

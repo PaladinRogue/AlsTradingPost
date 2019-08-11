@@ -1,9 +1,9 @@
-﻿using Authentication.Setup.Infrastructure.Routing;
-using Common.Api.Builders.Resource;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PaladinRogue.Authentication.Setup.Infrastructure.Routing;
+using PaladinRogue.Libray.Core.Api.Builders.Resource;
 
-namespace Authentication.Api.Status
+namespace PaladinRogue.Authentication.Api.Status
 {
     [AuthenticationControllerRoute]
     public class StatusController : ControllerBase

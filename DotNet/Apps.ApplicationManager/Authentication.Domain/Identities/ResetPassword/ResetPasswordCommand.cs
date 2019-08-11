@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
-using Authentication.Domain.Identities.Queries;
-using Authentication.Domain.Identities.ValidateToken;
-using Common.Domain.Validation;
 using FluentValidation;
+using PaladinRogue.Authentication.Domain.Identities.Queries;
+using PaladinRogue.Authentication.Domain.Identities.ValidateToken;
+using PaladinRogue.Libray.Core.Domain.Validation;
 
-namespace Authentication.Domain.Identities.ResetPassword
+namespace PaladinRogue.Authentication.Domain.Identities.ResetPassword
 {
     public class ResetPasswordCommand : IResetPasswordCommand
     {

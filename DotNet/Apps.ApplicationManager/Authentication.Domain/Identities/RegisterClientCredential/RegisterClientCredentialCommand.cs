@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
-using Authentication.Domain.AuthenticationServices;
-using Common.Domain.Validation;
 using FluentValidation;
+using PaladinRogue.Authentication.Domain.AuthenticationServices;
+using PaladinRogue.Libray.Core.Domain.Validation;
 
-namespace Authentication.Domain.Identities.RegisterClientCredential
+namespace PaladinRogue.Authentication.Domain.Identities.RegisterClientCredential
 {
     public class RegisterClientCredentialCommand : IRegisterClientCredentialCommand
     {

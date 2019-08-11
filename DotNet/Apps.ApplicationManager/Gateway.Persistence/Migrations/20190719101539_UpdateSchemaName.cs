@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Gateway.Persistence.Migrations
+namespace PaladinRogue.Gateway.Persistence.Migrations
 {
     public partial class UpdateSchemaName : Migration
     {

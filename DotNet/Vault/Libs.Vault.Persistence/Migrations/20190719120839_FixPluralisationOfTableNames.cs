@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Vault.Persistence.Migrations
+namespace PaladinRogue.Libray.Vault.Persistence.Migrations
 {
     public partial class FixPluralisationOfTableNames : Migration
     {

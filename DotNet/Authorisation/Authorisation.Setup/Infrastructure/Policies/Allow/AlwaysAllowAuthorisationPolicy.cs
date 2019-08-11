@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Authorisation.Application.Contexts;
+using PaladinRogue.Libray.Authorisation.Common.Contexts;
+using PaladinRogue.Libray.Authorisation.Common.Policies;
 
-namespace Authorisation.Application.Policies.Allow
+namespace PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Policies.Allow
 {
     public class AlwaysAllowAuthorisationPolicy : IAuthorisationPolicy
     {

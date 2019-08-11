@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ReferenceData.Application.ReferenceData.Models;
+using PaladinRogue.Libray.ReferenceData.Application.ReferenceData.Models;
 
-namespace ReferenceData.Application.ReferenceData
+namespace PaladinRogue.Libray.ReferenceData.Application.ReferenceData
 {
     public interface IReferenceDataApplicationService
     {

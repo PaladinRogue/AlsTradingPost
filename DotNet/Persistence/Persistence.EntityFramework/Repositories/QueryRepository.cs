@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Common.Domain.Aggregates;
-using Common.Domain.Models;
-using Common.Domain.Persistence;
-using Common.Resources.Sorting;
 using Microsoft.EntityFrameworkCore;
+using PaladinRogue.Libray.Core.Common.Sorting;
+using PaladinRogue.Libray.Core.Domain.Aggregates;
+using PaladinRogue.Libray.Core.Domain.Models;
+using PaladinRogue.Libray.Core.Domain.Persistence;
 
-namespace Persistence.EntityFramework.Repositories
+namespace PaladinRogue.Libray.Persistence.EntityFramework.Repositories
 {
     public class QueryRepository<T> : QueryRepository<T, DbContext> where T : class, IAggregateRoot
     {

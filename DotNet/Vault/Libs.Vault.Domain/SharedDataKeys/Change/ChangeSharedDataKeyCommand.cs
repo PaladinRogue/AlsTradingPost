@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using FluentValidation;
 
-namespace Vault.Domain.SharedDataKeys.Change
+namespace PaladinRogue.Libray.Vault.Domain.SharedDataKeys.Change
 {
     public class ChangeSharedDataKeyCommand : IChangeSharedDataKeyCommand
     {

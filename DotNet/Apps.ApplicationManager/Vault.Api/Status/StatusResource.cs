@@ -1,8 +1,8 @@
-﻿using Common.Api.Links;
-using Common.Api.Resources;
-using Common.Setup.Infrastructure.Constants;
+﻿using PaladinRogue.Libray.Core.Api.Links;
+using PaladinRogue.Libray.Core.Api.Resources;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Constants;
 
-namespace Vault.Api.Status
+namespace PaladinRogue.Vault.Api.Status
 {
     [ResourceType(ResourceTypes.Status)]
     [SelfLink(RouteDictionary.Status, HttpVerb.Get)]

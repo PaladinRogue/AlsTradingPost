@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Authorisation.Application.Contexts;
-using Common.Application.Caching;
+using PaladinRogue.Libray.Authorisation.Common.Contexts;
+using PaladinRogue.Libray.Core.Application.Caching;
 
-namespace Authorisation.Application.Policies
+namespace PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Policies
 {
     public class AuthorisationContextCacheKey : CacheKey<bool>, IAuthorisationContext
     {

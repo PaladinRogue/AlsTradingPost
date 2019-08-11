@@ -1,11 +1,11 @@
 using System.Threading.Tasks;
-using Authentication.Application.Identities.Authorisation;
-using Authentication.Application.Identities.Models;
-using Authorisation.Application;
-using Authorisation.Application.ApplicationServices;
-using Authorisation.Application.Contexts;
+using PaladinRogue.Authentication.Application.Identities.Authorisation;
+using PaladinRogue.Authentication.Application.Identities.Models;
+using PaladinRogue.Libray.Authorisation.Application.ApplicationServices;
+using PaladinRogue.Libray.Authorisation.Common;
+using PaladinRogue.Libray.Authorisation.Common.Contexts;
 
-namespace Authentication.Application.Identities
+namespace PaladinRogue.Authentication.Application.Identities
 {
     public class IdentityApplicationServiceSecurityDecorator : IIdentityApplicationService
     {

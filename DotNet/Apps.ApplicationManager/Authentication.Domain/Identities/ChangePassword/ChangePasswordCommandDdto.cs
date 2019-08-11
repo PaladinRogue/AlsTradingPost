@@ -1,4 +1,4 @@
-namespace Authentication.Domain.Identities.ChangePassword
+namespace PaladinRogue.Authentication.Domain.Identities.ChangePassword
 {
     public class ChangePasswordCommandDdto
     {

@@ -1,16 +1,16 @@
 using System;
 using System.Threading.Tasks;
-using Authentication.Application.Users.CreateAdmin;
-using Authentication.Application.Users.Models;
-using Authentication.Messages;
 using AutoMapper;
-using Messaging.Setup.Infrastructure.Handlers;
-using Messaging.Setup.Infrastructure.MessageBus;
-using Common.Resources.Settings;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PaladinRogue.Authentication.Application.Users.CreateAdmin;
+using PaladinRogue.Authentication.Application.Users.Models;
+using PaladinRogue.Authentication.Messages;
+using PaladinRogue.Libray.Core.Common.Settings;
+using PaladinRogue.Libray.Messaging.Common.Handlers;
+using PaladinRogue.Libray.Messaging.Common.MessageBus;
 
-namespace Authentication.Application.Handlers
+namespace PaladinRogue.Authentication.Application.Handlers
 {
     public class AdminIdentityCreatedMessageHandler : MessageHandler<AdminIdentityCreatedMessage, AdminIdentityCreatedMessageHandler>
     {

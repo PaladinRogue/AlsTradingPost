@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Authentication.Application.Identities.Claims
+namespace PaladinRogue.Authentication.Application.Identities.Claims
 {
     public interface IIdentityClaimsApplicationKernalService
     {

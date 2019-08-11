@@ -3,10 +3,11 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
         <LangVersion>latest</LangVersion>
+        <RootNamespace>PaladinRogue.Libray.Vault.Setup</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
+      <ProjectReference Include="..\..\Core\Core.Setup\Core.Setup.csproj" />
       <ProjectReference Include="..\..\Persistence\Persistence.Setup\Persistence.Setup.csproj" />
       <ProjectReference Include="..\Libs.Vault.Application\Libs.Vault.Application.csproj" />
       <ProjectReference Include="..\Libs.Vault.Persistence\Libs.Vault.Persistence.csproj" />

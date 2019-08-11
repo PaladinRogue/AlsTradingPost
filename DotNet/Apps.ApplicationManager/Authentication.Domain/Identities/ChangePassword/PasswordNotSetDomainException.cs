@@ -1,6 +1,6 @@
-using Common.Domain.Exceptions;
+using PaladinRogue.Libray.Core.Domain.Exceptions;
 
-namespace Authentication.Domain.Identities.ChangePassword
+namespace PaladinRogue.Authentication.Domain.Identities.ChangePassword
 {
     public class PasswordNotSetDomainException : DomainException
     {

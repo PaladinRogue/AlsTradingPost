@@ -1,8 +1,7 @@
 using System.Text.RegularExpressions;
-using Common.Resources;
 using FluentValidation;
 
-namespace Authentication.Domain.Identities.RegisterPassword
+namespace PaladinRogue.Authentication.Domain.Identities.RegisterPassword
 {
     public class RegisterPasswordValidator : AbstractValidator<RegisterPasswordCommandDdto>
     {

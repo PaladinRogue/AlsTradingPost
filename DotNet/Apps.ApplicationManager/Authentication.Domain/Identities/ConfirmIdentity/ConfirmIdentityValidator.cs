@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Authentication.Domain.Identities.ConfirmIdentity
+namespace PaladinRogue.Authentication.Domain.Identities.ConfirmIdentity
 {
     public class ConfirmIdentityValidator : AbstractValidator<ConfirmIdentityCommandDdto>
     {

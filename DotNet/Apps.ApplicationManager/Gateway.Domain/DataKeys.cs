@@ -1,4 +1,4 @@
-namespace Gateway.Domain
+namespace PaladinRogue.Gateway.Domain
 {
     public class DataKeys
     {

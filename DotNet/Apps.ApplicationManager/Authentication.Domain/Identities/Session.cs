@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Authentication.Domain.AuthenticationServices;
-using Common.Domain.Aggregates;
-using Common.Domain.Entities;
+using PaladinRogue.Authentication.Domain.AuthenticationServices;
+using PaladinRogue.Libray.Core.Domain.Aggregates;
+using PaladinRogue.Libray.Core.Domain.Entities;
 
-namespace Authentication.Domain.Identities
+namespace PaladinRogue.Authentication.Domain.Identities
 {
     public class Session : Entity, IAggregateMember
     {

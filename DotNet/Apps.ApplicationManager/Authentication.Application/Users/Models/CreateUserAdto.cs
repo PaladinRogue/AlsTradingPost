@@ -1,6 +1,6 @@
 using System;
 
-namespace Authentication.Application.Users.Models
+namespace PaladinRogue.Authentication.Application.Users.Models
 {
     public class CreateUserAdto
     {

@@ -1,6 +1,6 @@
 using Microsoft.IdentityModel.Tokens;
 
-namespace Vault.Domain.SharedDataKeys.Create
+namespace PaladinRogue.Libray.Vault.Domain.SharedDataKeys.Create
 {
     public class CreateSharedDataKeyCommandDdto
     {

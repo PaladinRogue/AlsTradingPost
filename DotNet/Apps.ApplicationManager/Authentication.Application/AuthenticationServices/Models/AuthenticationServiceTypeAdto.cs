@@ -1,6 +1,6 @@
 using System;
 
-namespace Authentication.Application.AuthenticationServices.Models
+namespace PaladinRogue.Authentication.Application.AuthenticationServices.Models
 {
     public class AuthenticationServiceTypeAdto
     {

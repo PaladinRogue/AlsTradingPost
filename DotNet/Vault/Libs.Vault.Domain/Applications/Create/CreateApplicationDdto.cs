@@ -1,4 +1,4 @@
-namespace Vault.Domain.Applications.Create
+namespace PaladinRogue.Libray.Vault.Domain.Applications.Create
 {
     internal class CreateApplicationDdto
     {

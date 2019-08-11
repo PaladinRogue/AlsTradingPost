@@ -1,27 +1,27 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Authentication.Application.Authentication.ClientCredential;
-using Authentication.Application.Authentication.Models;
-using Authentication.Domain.AuthenticationServices;
-using Authentication.Domain.Identities;
-using Authentication.Domain.Identities.Create;
-using Authentication.Domain.Identities.Login;
-using Authentication.Domain.Identities.Login.ClientCredential;
-using Authentication.Domain.Identities.Login.Password;
-using Authentication.Domain.Identities.Login.RefreshToken;
-using Authentication.Domain.Identities.Queries;
-using Authentication.Domain.Identities.RegisterClientCredential;
-using Common.Application;
-using Common.Application.Authentication;
-using Common.Application.Claims;
-using Common.Application.Exceptions;
-using Common.Application.Transactions;
-using Common.Domain.Exceptions;
-using Common.Domain.Persistence;
-using Claim = Authentication.Domain.Identities.Claim;
-using JwtClaims = Common.Application.Authentication.Constants.JwtClaims;
+using PaladinRogue.Authentication.Application.Authentication.ClientCredential;
+using PaladinRogue.Authentication.Application.Authentication.Models;
+using PaladinRogue.Authentication.Domain.AuthenticationServices;
+using PaladinRogue.Authentication.Domain.Identities;
+using PaladinRogue.Authentication.Domain.Identities.Create;
+using PaladinRogue.Authentication.Domain.Identities.Login;
+using PaladinRogue.Authentication.Domain.Identities.Login.ClientCredential;
+using PaladinRogue.Authentication.Domain.Identities.Login.Password;
+using PaladinRogue.Authentication.Domain.Identities.Login.RefreshToken;
+using PaladinRogue.Authentication.Domain.Identities.Queries;
+using PaladinRogue.Authentication.Domain.Identities.RegisterClientCredential;
+using PaladinRogue.Libray.Core.Application;
+using PaladinRogue.Libray.Core.Application.Authentication;
+using PaladinRogue.Libray.Core.Application.Claims;
+using PaladinRogue.Libray.Core.Application.Exceptions;
+using PaladinRogue.Libray.Core.Application.Transactions;
+using PaladinRogue.Libray.Core.Domain.Exceptions;
+using PaladinRogue.Libray.Core.Domain.Persistence;
+using Claim = PaladinRogue.Authentication.Domain.Identities.Claim;
+using JwtClaims = PaladinRogue.Libray.Core.Application.Authentication.Constants.JwtClaims;
 
-namespace Authentication.Application.Authentication
+namespace PaladinRogue.Authentication.Application.Authentication
 {
     public class AuthenticationApplicationService : IAuthenticationApplicationService
     {

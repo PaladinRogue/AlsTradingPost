@@ -1,7 +1,7 @@
 using System;
-using Common.Api.Resources;
+using PaladinRogue.Libray.Core.Api.Resources;
 
-namespace Authentication.Api.Identities
+namespace PaladinRogue.Authentication.Api.Identities
 {
     [ResourceType(ResourceTypes.Password)]
     public class ChangePasswordResource : IEntityResource

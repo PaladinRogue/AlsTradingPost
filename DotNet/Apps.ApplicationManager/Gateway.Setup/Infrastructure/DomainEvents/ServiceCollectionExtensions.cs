@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Gateway.Setup.Infrastructure.DomainEvents
+namespace PaladinRogue.Gateway.Setup.Infrastructure.DomainEvents
 {
     public static class ServiceCollectionExtensions
     {

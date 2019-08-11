@@ -1,11 +1,11 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Common.Setup.Infrastructure.Startup;
-using Libs.Vault.Broker.ApplicationServices;
 using Microsoft.Extensions.DependencyInjection;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Startup;
+using PaladinRogue.Libray.Vault.Application.DataKeys;
 
-namespace Vault.Broker
+namespace PaladinRogue.Libray.Vault.Setup.Infrastructure.Startup
 {
     public class CreateDataKeysStartupTask<T> : IStartupTask
     {

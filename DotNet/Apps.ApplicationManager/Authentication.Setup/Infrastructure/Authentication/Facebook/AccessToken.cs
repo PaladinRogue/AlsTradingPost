@@ -1,4 +1,4 @@
-namespace Authentication.Setup.Infrastructure.Authentication.Facebook
+namespace PaladinRogue.Authentication.Setup.Infrastructure.Authentication.Facebook
 {
     public class AccessToken
     {

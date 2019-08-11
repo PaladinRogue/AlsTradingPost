@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Authentication.Domain.Identities.Create
+namespace PaladinRogue.Authentication.Domain.Identities.Create
 {
     public class CreateIdentityCommand : ICreateIdentityCommand
     {

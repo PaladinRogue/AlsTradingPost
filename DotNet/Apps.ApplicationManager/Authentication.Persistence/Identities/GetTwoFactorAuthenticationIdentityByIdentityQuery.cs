@@ -1,10 +1,10 @@
 using System;
 using System.Threading.Tasks;
-using Authentication.Domain.Identities.Projections;
-using Authentication.Domain.Identities.Queries;
 using Microsoft.EntityFrameworkCore;
+using PaladinRogue.Authentication.Domain.Identities.Projections;
+using PaladinRogue.Authentication.Domain.Identities.Queries;
 
-namespace Authentication.Persistence.Identities
+namespace PaladinRogue.Authentication.Persistence.Identities
 {
     public class GetTwoFactorAuthenticationIdentityByIdentityQuery : IGetTwoFactorAuthenticationIdentityByIdentityQuery
     {

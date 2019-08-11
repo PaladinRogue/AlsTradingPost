@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Authentication.Application.AuthenticationServices;
-using Authentication.Application.AuthenticationServices.Models;
-using Authentication.Application.AuthenticationServices.Models.Facebook;
-using Authentication.Setup.Infrastructure.Authorisation;
-using Authentication.Setup.Infrastructure.Routing;
 using AutoMapper;
-using Common.Api.Builders.Resource;
-using Common.Setup.Infrastructure.Concurrency;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PaladinRogue.Authentication.Application.AuthenticationServices;
+using PaladinRogue.Authentication.Application.AuthenticationServices.Models;
+using PaladinRogue.Authentication.Application.AuthenticationServices.Models.Facebook;
+using PaladinRogue.Authentication.Setup.Infrastructure.Authorisation;
+using PaladinRogue.Authentication.Setup.Infrastructure.Routing;
+using PaladinRogue.Libray.Core.Api.Builders.Resource;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Concurrency;
 
-namespace Authentication.Api.AuthenticationService.Facebook
+namespace PaladinRogue.Authentication.Api.AuthenticationService.Facebook
 {
     [AuthenticationControllerRoute("services/facebook")]
     [Authorize(Policies.User)]

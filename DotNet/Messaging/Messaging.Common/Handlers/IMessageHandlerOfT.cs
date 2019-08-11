@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Messaging.Common;
+using PaladinRogue.Libray.Messaging.Common.Messages;
 
-namespace Messaging.Setup.Infrastructure.Handlers
+namespace PaladinRogue.Libray.Messaging.Common.Handlers
 {
 	public interface IMessageHandler<in T> where T : IMessage
 	{

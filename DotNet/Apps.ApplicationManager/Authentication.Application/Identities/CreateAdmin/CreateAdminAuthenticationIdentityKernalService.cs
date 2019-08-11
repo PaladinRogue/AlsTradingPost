@@ -1,20 +1,20 @@
 ﻿using System.Threading.Tasks;
-using Authentication.Domain.AuthenticationServices;
-using Authentication.Domain.Identities;
-using Authentication.Domain.Identities.Create;
-using Authentication.Domain.Identities.ForgotPassword;
-using Authentication.Domain.Identities.RegisterPassword;
-using Authentication.Messages;
-using Common.Application;
-using Common.Application.Exceptions;
-using Common.Application.Transactions;
-using Common.Domain.Exceptions;
-using Common.Domain.Persistence;
-using Messaging.Setup.Infrastructure;
 using Microsoft.Extensions.Logging;
-using String = Common.Resources.Extensions.String;
+using PaladinRogue.Authentication.Domain.AuthenticationServices;
+using PaladinRogue.Authentication.Domain.Identities;
+using PaladinRogue.Authentication.Domain.Identities.Create;
+using PaladinRogue.Authentication.Domain.Identities.ForgotPassword;
+using PaladinRogue.Authentication.Domain.Identities.RegisterPassword;
+using PaladinRogue.Authentication.Messages;
+using PaladinRogue.Libray.Core.Application;
+using PaladinRogue.Libray.Core.Application.Exceptions;
+using PaladinRogue.Libray.Core.Application.Transactions;
+using PaladinRogue.Libray.Core.Domain.Exceptions;
+using PaladinRogue.Libray.Core.Domain.Persistence;
+using PaladinRogue.Libray.Messaging.Common.Messages;
+using String = PaladinRogue.Libray.Core.Common.Extensions.String;
 
-namespace Authentication.Application.Identities.CreateAdmin
+namespace PaladinRogue.Authentication.Application.Identities.CreateAdmin
 {
     public class CreateAdminAuthenticationIdentityKernalService : ICreateAdminAuthenticationIdentityKernalService
     {

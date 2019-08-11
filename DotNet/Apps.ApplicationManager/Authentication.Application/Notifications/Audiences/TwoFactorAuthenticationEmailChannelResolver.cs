@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Authentication.Domain.Identities.Projections;
-using Authentication.Domain.Identities.Queries;
-using Authentication.Domain.NotificationTypes;
+using PaladinRogue.Authentication.Domain.Identities.Projections;
+using PaladinRogue.Authentication.Domain.Identities.Queries;
+using PaladinRogue.Authentication.Domain.NotificationTypes;
 
-namespace Authentication.Application.Notifications.Audiences
+namespace PaladinRogue.Authentication.Application.Notifications.Audiences
 {
     public class TwoFactorAuthenticationEmailChannelResolver : IChannelAudienceResolver
     {

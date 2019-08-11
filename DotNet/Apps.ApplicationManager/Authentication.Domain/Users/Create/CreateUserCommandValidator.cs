@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Authentication.Domain.Users.Create
+namespace PaladinRogue.Authentication.Domain.Users.Create
 {
     public class CreateUserCommandValidator : AbstractValidator<CreateUserCommandDdto>
     {

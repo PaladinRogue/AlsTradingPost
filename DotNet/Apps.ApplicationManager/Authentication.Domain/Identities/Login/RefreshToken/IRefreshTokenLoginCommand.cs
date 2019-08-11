@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Authentication.Domain.Identities.Login.RefreshToken
+namespace PaladinRogue.Authentication.Domain.Identities.Login.RefreshToken
 {
     public interface IRefreshTokenLoginCommand
     {

@@ -1,16 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using Authentication.Domain.Identities.CreateTwoFactor;
-using Authentication.Domain.Identities.Events;
-using Authentication.Domain.Identities.ValidateToken;
-using Common.Domain.Clocks;
-using Common.Domain.DataProtectors;
-using Common.Domain.DomainEvents;
-using Common.Resources;
 using NodaTime;
-using String = Common.Resources.Extensions.String;
+using PaladinRogue.Authentication.Domain.Identities.CreateTwoFactor;
+using PaladinRogue.Authentication.Domain.Identities.Events;
+using PaladinRogue.Authentication.Domain.Identities.ValidateToken;
+using PaladinRogue.Libray.Core.Common;
+using PaladinRogue.Libray.Core.Domain.Clocks;
+using PaladinRogue.Libray.Core.Domain.DataProtectors;
+using PaladinRogue.Libray.Core.Domain.DomainEvents;
+using String = PaladinRogue.Libray.Core.Common.Extensions.String;
 
-namespace Authentication.Domain.Identities
+namespace PaladinRogue.Authentication.Domain.Identities
 {
     public class TwoFactorAuthenticationIdentity : AuthenticationIdentity
     {

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Authentication.Domain.Identities.ResetPassword
+namespace PaladinRogue.Authentication.Domain.Identities.ResetPassword
 {
     public interface IResetPasswordCommand
     {

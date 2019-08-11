@@ -1,8 +1,8 @@
-﻿using Authentication.Application.Handlers;
-using Messaging.Setup.Infrastructure.Handlers;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using PaladinRogue.Authentication.Application.Handlers;
+using PaladinRogue.Libray.Messaging.Common.Handlers;
 
-namespace Authentication.Setup.Infrastructure.Messaging
+namespace PaladinRogue.Authentication.Setup.Infrastructure.Messaging
 {
     public static class ServiceCollectionExtensions
     {

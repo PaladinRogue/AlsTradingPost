@@ -1,12 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using Common.Domain.Aggregates;
-using Common.Domain.Entities;
-using Common.Resources;
-using Gateway.Domain.Applications.Change;
-using Gateway.Domain.Applications.Create;
+using PaladinRogue.Gateway.Domain.Applications.Change;
+using PaladinRogue.Gateway.Domain.Applications.Create;
+using PaladinRogue.Libray.Core.Common;
+using PaladinRogue.Libray.Core.Domain.Aggregates;
+using PaladinRogue.Libray.Core.Domain.Entities;
 
-namespace Gateway.Domain.Applications
+namespace PaladinRogue.Gateway.Domain.Applications
 {
     public class Application : VersionedEntity, IAggregateRoot
     {

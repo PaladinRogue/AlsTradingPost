@@ -1,4 +1,4 @@
-﻿namespace Authentication.Application.Identities.CreateAdmin
+﻿namespace PaladinRogue.Authentication.Application.Identities.CreateAdmin
 {
     public class CreateAdminAuthenticationIdentityAdto
     {

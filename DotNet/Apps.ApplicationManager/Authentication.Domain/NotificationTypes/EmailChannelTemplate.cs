@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Authentication.Domain.NotificationTypes
+namespace PaladinRogue.Authentication.Domain.NotificationTypes
 {
     public class EmailChannelTemplate : NotificationChannelTemplate
     {

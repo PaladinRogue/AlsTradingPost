@@ -1,6 +1,6 @@
-using Authentication.Domain.NotificationTypes;
+using PaladinRogue.Authentication.Domain.NotificationTypes;
 
-namespace Authentication.Application.Notifications.Audiences
+namespace PaladinRogue.Authentication.Application.Notifications.Audiences
 {
     public interface IChannelAudienceResolverProvider
     {

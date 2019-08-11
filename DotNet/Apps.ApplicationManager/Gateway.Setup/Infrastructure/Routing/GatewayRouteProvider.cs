@@ -1,8 +1,8 @@
-using Common.Api.Routing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Routing;
 
-namespace Gateway.Setup.Infrastructure.Routing
+namespace PaladinRogue.Gateway.Setup.Infrastructure.Routing
 {
     public class GatewayRouteProvider : DefaultRouteProvider
     {

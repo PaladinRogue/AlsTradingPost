@@ -1,4 +1,4 @@
-namespace Authentication.Domain
+namespace PaladinRogue.Authentication.Domain
 {
     public static class RegexPatterns
     {

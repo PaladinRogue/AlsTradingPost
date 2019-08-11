@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Common.Api.Builders.Resource;
-using Gateway.Application.Applications;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PaladinRogue.Gateway.Application.Applications;
+using PaladinRogue.Libray.Core.Api.Builders.Resource;
 
-namespace Gateway.Api.Aggregation
+namespace PaladinRogue.Gateway.Api.Aggregation
 {
     [Route("")]
     public class AggregationController : ControllerBase

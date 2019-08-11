@@ -1,4 +1,4 @@
-namespace Authentication.Domain.Identities.RegisterClientCredential
+namespace PaladinRogue.Authentication.Domain.Identities.RegisterClientCredential
 {
     internal class RegisterClientCredentialDdto
     {

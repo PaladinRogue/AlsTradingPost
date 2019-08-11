@@ -1,8 +1,8 @@
-﻿using Messaging.Setup.Infrastructure.Handlers;
-using Microsoft.Extensions.DependencyInjection;
-using Notifications.Application.Handlers;
+﻿using Microsoft.Extensions.DependencyInjection;
+using PaladinRogue.Libray.Messaging.Common.Handlers;
+using PaladinRogue.Notifications.Application.Handlers;
 
-namespace Notifications.Setup.Infrastructure.Messaging
+namespace PaladinRogue.Notifications.Setup.Infrastructure.Messaging
 {
     public static class ServiceCollectionExtensions
     {

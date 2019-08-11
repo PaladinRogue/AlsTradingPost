@@ -1,9 +1,8 @@
 using System.Threading.Tasks;
-using Common.Application.Caching;
-using Gateway.Domain.Applications;
-using Gateway.Domain.Applications.Persistence;
+using PaladinRogue.Gateway.Domain.Applications.Persistence;
+using PaladinRogue.Libray.Core.Application.Caching;
 
-namespace Gateway.Application.Applications.Caching
+namespace PaladinRogue.Gateway.Application.Applications.Caching
 {
     public class ApplicationQueryRepositoryCacheDecorator : CacheDecorator<string, ApplicationCacheKey, Domain.Applications.Application>, IApplicationQueryRepository
     {

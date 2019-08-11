@@ -1,6 +1,6 @@
 using System;
 
-namespace Gateway.Application.Applications
+namespace PaladinRogue.Gateway.Application.Applications
 {
     public class ApplicationAdto
     {

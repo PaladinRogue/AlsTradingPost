@@ -5,7 +5,7 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
-namespace Notifications.Application.Emails
+namespace PaladinRogue.Notifications.Application.Emails
 {
     public class LocalDevelopmentEmailNotificationSender : IEmailNotificationSender
     {

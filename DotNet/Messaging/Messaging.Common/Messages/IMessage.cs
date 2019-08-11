@@ -1,4 +1,4 @@
-﻿namespace Messaging.Common
+﻿namespace PaladinRogue.Libray.Messaging.Common.Messages
 {
     public interface IMessage
     {

@@ -1,4 +1,4 @@
-namespace Authentication.Application.AuthenticationServices.Models.Google
+namespace PaladinRogue.Authentication.Application.AuthenticationServices.Models.Google
 {
     public class GoogleAdto : ClientCredentialAdto
     {

@@ -1,7 +1,7 @@
-﻿using Common.Domain.Aggregates;
-using Common.Domain.Entities;
+﻿using PaladinRogue.Libray.Core.Domain.Aggregates;
+using PaladinRogue.Libray.Core.Domain.Entities;
 
-namespace Authentication.Domain.AuthenticationServices
+namespace PaladinRogue.Authentication.Domain.AuthenticationServices
 {
     public abstract class AuthenticationService : VersionedEntity, IAggregateRoot
     {

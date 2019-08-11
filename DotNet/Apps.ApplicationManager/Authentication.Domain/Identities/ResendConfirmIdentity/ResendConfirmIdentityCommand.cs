@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Authentication.Domain.Identities.ResendConfirmIdentity
+namespace PaladinRogue.Authentication.Domain.Identities.ResendConfirmIdentity
 {
     public class ResendConfirmIdentityCommand : IResendConfirmIdentityCommand
     {

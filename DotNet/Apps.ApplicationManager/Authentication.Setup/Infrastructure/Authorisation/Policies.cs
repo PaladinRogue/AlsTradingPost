@@ -1,6 +1,6 @@
-using Authentication.Application.Claims;
+using PaladinRogue.Authentication.Application.Claims;
 
-namespace Authentication.Setup.Infrastructure.Authorisation
+namespace PaladinRogue.Authentication.Setup.Infrastructure.Authorisation
 {
     public static class Policies
     {

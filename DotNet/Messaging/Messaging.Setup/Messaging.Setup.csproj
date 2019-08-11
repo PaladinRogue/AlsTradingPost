@@ -2,12 +2,12 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <LangVersion>latest</LangVersion>
+    <RootNamespace>PaladinRogue.Libray.Messaging.Setup</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Messaging.Messages\Messaging.Messages.csproj" />
+    <ProjectReference Include="..\..\Core\Core.Common\Core.Common.csproj" />
+    <ProjectReference Include="..\..\Core\Core.Setup\Core.Setup.csproj" />
     <ProjectReference Include="..\Messaging.RabbitMQ\Messaging.RabbitMQ.csproj" />
-    <ProjectReference Include="..\..\Common\Common.Resources\Common.Resources.csproj" />
-    <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />

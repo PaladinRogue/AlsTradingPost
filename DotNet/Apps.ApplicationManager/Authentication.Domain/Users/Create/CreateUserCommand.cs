@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using FluentValidation;
 
-namespace Authentication.Domain.Users.Create
+namespace PaladinRogue.Authentication.Domain.Users.Create
 {
     public class CreateUserCommand : ICreateUserCommand
     {

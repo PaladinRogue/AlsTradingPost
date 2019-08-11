@@ -2,11 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Authorisation.Application.Contexts;
-using Authorisation.Application.Restrictions;
-using Common.Domain.Aggregates;
+using PaladinRogue.Libray.Authorisation.Common.Contexts;
+using PaladinRogue.Libray.Authorisation.Common.Policies;
+using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Owners;
+using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Restrictions;
+using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Self;
+using PaladinRogue.Libray.Core.Domain.Aggregates;
 
-namespace Authorisation.Application.Policies
+namespace PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Policies
 {
     public class AuthorisationPolicy : IAuthorisationPolicy
     {

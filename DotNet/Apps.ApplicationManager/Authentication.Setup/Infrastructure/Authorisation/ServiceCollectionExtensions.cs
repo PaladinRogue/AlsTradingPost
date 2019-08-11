@@ -1,26 +1,27 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Authentication.Setup.Infrastructure.Caching;
-using Common.Application.Authentication;
-using Authorisation.Application;
-using Authorisation.Application.Policies;
-using Authorisation.Application.Policies.Json;
-using Authorisation.Application.Restrictions;
-using Common.Domain.DataProtectors;
-using Common.Setup.Infrastructure.Authorisation;
-using Common.Setup.Infrastructure.Caching;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
-using CommonJwtClaimIdentifiers = Common.Application.Claims.Constants.JwtClaimIdentifiers;
-using CommonJwtClaims = Common.Application.Authentication.Constants.JwtClaims;
-using CommonPolicies = Common.Api.Authorisation.Policies;
+using PaladinRogue.Authentication.Setup.Infrastructure.Caching;
+using PaladinRogue.Libray.Authorisation.Common.Policies;
+using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Policies;
+using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Policies.Json;
+using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Restrictions;
+using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Self;
+using PaladinRogue.Libray.Core.Application.Authentication;
+using PaladinRogue.Libray.Core.Domain.DataProtectors;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Authorisation;
+using PaladinRogue.Libray.Persistence.Setup.Infrastructure.Caching;
+using CommonJwtClaimIdentifiers = PaladinRogue.Libray.Core.Application.Claims.Constants.JwtClaimIdentifiers;
+using CommonJwtClaims = PaladinRogue.Libray.Core.Application.Authentication.Constants.JwtClaims;
+using CommonPolicies = PaladinRogue.Libray.Core.Setup.Infrastructure.Authorisation.Policies;
 
-namespace Authentication.Setup.Infrastructure.Authorisation
+namespace PaladinRogue.Authentication.Setup.Infrastructure.Authorisation
 {
     public static class ServiceCollectionExtensions
     {

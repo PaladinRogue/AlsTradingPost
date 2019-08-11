@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Authentication.Domain.Identities.CheckPassword
+namespace PaladinRogue.Authentication.Domain.Identities.CheckPassword
 {
     public interface ICheckPasswordCommand
     {

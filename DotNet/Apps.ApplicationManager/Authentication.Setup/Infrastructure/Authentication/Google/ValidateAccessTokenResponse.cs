@@ -1,4 +1,4 @@
-namespace Authentication.Setup.Infrastructure.Authentication.Google
+namespace PaladinRogue.Authentication.Setup.Infrastructure.Authentication.Google
 {
     public class ValidateAccessTokenResponse
     {

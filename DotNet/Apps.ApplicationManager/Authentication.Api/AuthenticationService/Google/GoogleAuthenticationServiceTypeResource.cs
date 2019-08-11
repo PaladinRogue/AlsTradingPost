@@ -1,8 +1,8 @@
-using Common.Api.Links;
-using Common.Api.Resources;
-using Common.Setup.Infrastructure.Constants;
+using PaladinRogue.Libray.Core.Api.Links;
+using PaladinRogue.Libray.Core.Api.Resources;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Constants;
 
-namespace Authentication.Api.AuthenticationService.Google
+namespace PaladinRogue.Authentication.Api.AuthenticationService.Google
 {
     [ResourceType(ResourceTypes.AuthenticationServiceGoogle)]
     [CreateLink(RouteDictionary.GoogleAuthenticationServiceResourceTemplate, HttpVerb.Get)]

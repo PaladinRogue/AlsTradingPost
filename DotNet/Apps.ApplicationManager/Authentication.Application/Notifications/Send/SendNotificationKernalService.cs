@@ -1,18 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Authentication.Application.Notifications.Audiences;
-using Authentication.Application.Notifications.Emails;
-using Authentication.Domain.NotificationTypes;
-using Common.Application.Exceptions;
-using Common.Application.Transactions;
-using Common.Domain.Persistence;
-using Messaging.Messages;
-using Messaging.Setup.Infrastructure;
 using Microsoft.Extensions.Logging;
-using Notifications.ApplicationServices.Emails;
+using Notifications.Messages;
+using PaladinRogue.Authentication.Application.Notifications.Audiences;
+using PaladinRogue.Authentication.Application.Notifications.Emails;
+using PaladinRogue.Authentication.Domain.NotificationTypes;
+using PaladinRogue.Libray.Core.Application.Exceptions;
+using PaladinRogue.Libray.Core.Application.Transactions;
+using PaladinRogue.Libray.Core.Domain.Persistence;
+using PaladinRogue.Libray.Messaging.Common.Messages;
 
-namespace Authentication.Application.Notifications.Send
+namespace PaladinRogue.Authentication.Application.Notifications.Send
 {
     public class SendNotificationKernalService : ISendNotificationKernalService
     {

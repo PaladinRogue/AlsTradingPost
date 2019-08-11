@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Common.Application.Caching;
-using Common.Resources.ValueObjects;
+using PaladinRogue.Libray.Core.Application.Caching;
+using PaladinRogue.Libray.Core.Common.ValueObjects;
 
-namespace Authentication.Setup.Infrastructure.Caching
+namespace PaladinRogue.Authentication.Setup.Infrastructure.Caching
 {
     public class IdentityCacheKey<TKey, TValue> : ValueObject<IdentityCacheKey<TKey, TValue>> where TKey : CacheKey<TValue>
     {

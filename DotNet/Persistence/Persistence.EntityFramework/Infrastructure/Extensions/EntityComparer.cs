@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Common.Domain.Entities;
+using PaladinRogue.Libray.Core.Domain.Entities;
 
-namespace Persistence.EntityFramework.Infrastructure.Extensions
+namespace PaladinRogue.Libray.Persistence.EntityFramework.Infrastructure.Extensions
 {
     public class EntityComparer<T> : IEqualityComparer<T> where T : class, IEntity
     {

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using Authentication.Application.AuthenticationServices.Authorisation;
-using Common.Api.Links;
-using Common.Api.Resources;
-using Common.Setup.Infrastructure.Constants;
+using PaladinRogue.Authentication.Application.AuthenticationServices.Authorisation;
+using PaladinRogue.Libray.Core.Api.Links;
+using PaladinRogue.Libray.Core.Api.Resources;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Constants;
 
-namespace Authentication.Api.AuthenticationService
+namespace PaladinRogue.Authentication.Api.AuthenticationService
 {
     [SelfLink(RouteDictionary.GetAuthenticationServices, HttpVerb.Get)]
     [CreateLink(RouteDictionary.GetAuthenticationServiceResourceTemplateTypes, HttpVerb.Get, typeof(CreateAuthenticationServiceAuthorisationContext))]

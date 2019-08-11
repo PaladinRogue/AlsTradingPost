@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Authentication.Application.AuthenticationServices.Models.Facebook;
+using PaladinRogue.Authentication.Application.AuthenticationServices.Models.Facebook;
 
-namespace Authentication.Application.AuthenticationServices
+namespace PaladinRogue.Authentication.Application.AuthenticationServices
 {
     public interface IFacebookAuthenticationServiceApplicationService
     {

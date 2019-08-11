@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Authentication.Persistence.Migrations
+namespace PaladinRogue.Authentication.Persistence.Migrations
 {
     [DbContext(typeof(AuthenticationDbContext))]
     [Migration("20190703164256_MoveRefreshTokenToSession")]
@@ -309,7 +309,7 @@ namespace Authentication.Persistence.Migrations
                         .HasForeignKey("Authentication.Domain.Identities.RefreshToken", "SessionId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.OwnsOne("Common.Domain.DataProtection.HashSet", "TokenHash", b1 =>
+                    b.OwnsOne("Core.Domain.DataProtection.HashSet", "TokenHash", b1 =>
                         {
                             b1.Property<Guid>("RefreshTokenId");
 
@@ -327,7 +327,7 @@ namespace Authentication.Persistence.Migrations
 
                             b1.HasOne("Authentication.Domain.Identities.RefreshToken")
                                 .WithOne("TokenHash")
-                                .HasForeignKey("Common.Domain.DataProtection.HashSet", "RefreshTokenId")
+                                .HasForeignKey("Core.Domain.DataProtection.HashSet", "RefreshTokenId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
                 });
@@ -367,7 +367,7 @@ namespace Authentication.Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("AuthenticationGrantTypePasswordId");
 
-                    b.OwnsOne("Common.Domain.DataProtection.HashSet", "PasswordHash", b1 =>
+                    b.OwnsOne("Core.Domain.DataProtection.HashSet", "PasswordHash", b1 =>
                         {
                             b1.Property<Guid>("PasswordIdentityId");
 
@@ -385,7 +385,7 @@ namespace Authentication.Persistence.Migrations
 
                             b1.HasOne("Authentication.Domain.Identities.PasswordIdentity")
                                 .WithOne("PasswordHash")
-                                .HasForeignKey("Common.Domain.DataProtection.HashSet", "PasswordIdentityId")
+                                .HasForeignKey("Core.Domain.DataProtection.HashSet", "PasswordIdentityId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
                 });

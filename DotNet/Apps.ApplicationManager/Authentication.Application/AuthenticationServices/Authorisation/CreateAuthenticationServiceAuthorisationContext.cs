@@ -1,9 +1,9 @@
 using System;
-using Authentication.Domain.Identities;
-using Authorisation.Application;
-using Authorisation.Application.Contexts;
+using PaladinRogue.Authentication.Domain.Identities;
+using PaladinRogue.Libray.Authorisation.Common;
+using PaladinRogue.Libray.Authorisation.Common.Contexts;
 
-namespace Authentication.Application.AuthenticationServices.Authorisation
+namespace PaladinRogue.Authentication.Application.AuthenticationServices.Authorisation
 {
     public class CreateAuthenticationServiceAuthorisationContext : IAuthorisationContext
     {

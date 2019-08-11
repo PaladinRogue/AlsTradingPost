@@ -1,4 +1,4 @@
-namespace Authentication.Domain.Identities.ForgotPassword
+namespace PaladinRogue.Authentication.Domain.Identities.ForgotPassword
 {
     public class ForgotPasswordDdto
     {

@@ -1,12 +1,12 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Authentication.Domain;
-using Authentication.Domain.Identities;
-using Authentication.Domain.Identities.Queries;
-using Common.Domain.DataProtectors;
 using Microsoft.EntityFrameworkCore;
+using PaladinRogue.Authentication.Domain;
+using PaladinRogue.Authentication.Domain.Identities;
+using PaladinRogue.Authentication.Domain.Identities.Queries;
+using PaladinRogue.Libray.Core.Domain.DataProtectors;
 
-namespace Authentication.Persistence.Identities
+namespace PaladinRogue.Authentication.Persistence.Identities
 {
     public class PasswordIdentityEmailExistsQuery : IPasswordIdentityEmailExistsQuery
     {

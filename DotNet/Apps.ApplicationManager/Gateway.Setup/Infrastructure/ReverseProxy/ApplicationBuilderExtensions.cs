@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 
-namespace Gateway.Setup.Infrastructure.ReverseProxy
+namespace PaladinRogue.Gateway.Setup.Infrastructure.ReverseProxy
 {
     public static class ApplicationBuilderExtensions
     {

@@ -1,7 +1,7 @@
-﻿using Authentication.Domain.AuthenticationServices.ChangeGoogle;
-using Authentication.Domain.AuthenticationServices.CreateGoogle;
+﻿using PaladinRogue.Authentication.Domain.AuthenticationServices.ChangeGoogle;
+using PaladinRogue.Authentication.Domain.AuthenticationServices.CreateGoogle;
 
-namespace Authentication.Domain.AuthenticationServices
+namespace PaladinRogue.Authentication.Domain.AuthenticationServices
 {
     public class AuthenticationGrantTypeGoogle : AuthenticationGrantTypeClientCredential
     {

@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Common.Domain.DataProtectors;
-using Common.Domain.Persistence;
-using Common.Resources.Settings;
-using Libs.Vault.Domain.Domain.Persistence;
-using Vault.Domain.Applications;
-using Vault.Domain.Applications.AddDataKey;
-using Vault.Domain.Applications.Create;
-using Vault.Domain.SharedDataKeys;
 using Microsoft.Extensions.Options;
+using PaladinRogue.Libray.Core.Common.Settings;
+using PaladinRogue.Libray.Core.Domain.DataProtectors;
+using PaladinRogue.Libray.Core.Domain.Persistence;
+using PaladinRogue.Libray.Vault.Domain.Applications;
+using PaladinRogue.Libray.Vault.Domain.Applications.AddDataKey;
+using PaladinRogue.Libray.Vault.Domain.Applications.Create;
+using PaladinRogue.Libray.Vault.Domain.DataKeys.Persistence;
+using PaladinRogue.Libray.Vault.Domain.SharedDataKeys;
 
-namespace Libs.Vault.Domain.Persistence
+namespace PaladinRogue.Libray.Vault.Persistence.DataKeys
 {
     public class DataKeyRepository : IDataKeyRepository
     {

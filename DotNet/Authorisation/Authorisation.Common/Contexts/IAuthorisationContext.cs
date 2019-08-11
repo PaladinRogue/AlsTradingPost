@@ -1,6 +1,7 @@
 ﻿using System;
+using PaladinRogue.Libray.Authorisation.Common.Rules;
 
-namespace Authorisation.Application.Contexts
+namespace PaladinRogue.Libray.Authorisation.Common.Contexts
 {
     public interface IAuthorisationContext : IAuthorisationRule
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Messaging.Setup.Infrastructure.Directors
+namespace PaladinRogue.Libray.Messaging.Setup.Infrastructure.Directors
 {
     public interface IProvider<out T>
 	{

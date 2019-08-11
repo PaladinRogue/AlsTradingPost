@@ -1,6 +1,6 @@
-using Common.Api.Resources;
+using PaladinRogue.Libray.Core.Api.Resources;
 
-namespace Authentication.Api.AuthenticationService
+namespace PaladinRogue.Authentication.Api.AuthenticationService
 {
     [ResourceType(ResourceTypes.AuthenticationService)]
     public class AuthenticationServiceSummaryResource : IResource

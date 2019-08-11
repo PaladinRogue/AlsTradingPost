@@ -1,10 +1,10 @@
 using System;
-using Authentication.Application.AuthenticationServices.Authorisation;
-using Common.Api.Links;
-using Common.Api.Resources;
-using Common.Setup.Infrastructure.Constants;
+using PaladinRogue.Authentication.Application.AuthenticationServices.Authorisation;
+using PaladinRogue.Libray.Core.Api.Links;
+using PaladinRogue.Libray.Core.Api.Resources;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Constants;
 
-namespace Authentication.Api.AuthenticationService.Google
+namespace PaladinRogue.Authentication.Api.AuthenticationService.Google
 {
     [ResourceType(ResourceTypes.AuthenticationServiceGoogle)]
     [SelfLink(RouteDictionary.GetGoogleAuthenticationService, HttpVerb.Get, typeof(GetAuthenticationServiceAuthorisationContext))]

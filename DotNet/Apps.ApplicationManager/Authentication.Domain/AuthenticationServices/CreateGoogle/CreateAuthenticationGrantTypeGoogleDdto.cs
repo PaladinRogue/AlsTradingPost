@@ -1,4 +1,4 @@
-﻿namespace Authentication.Domain.AuthenticationServices.CreateGoogle
+﻿namespace PaladinRogue.Authentication.Domain.AuthenticationServices.CreateGoogle
 {
     public class CreateAuthenticationGrantTypeGoogleDdto
     {

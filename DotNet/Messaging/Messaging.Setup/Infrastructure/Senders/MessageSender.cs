@@ -1,10 +1,11 @@
 ﻿using System.Threading.Tasks;
-using Messaging.Common;
-using Messaging.Setup.Infrastructure.Directors;
-using Messaging.Setup.Infrastructure.Factories;
-using Messaging.Setup.Infrastructure.Interfaces;
+using PaladinRogue.Libray.Messaging.Common.Messages;
+using PaladinRogue.Libray.Messaging.Common.Senders;
+using PaladinRogue.Libray.Messaging.Setup.Infrastructure.Directors;
+using PaladinRogue.Libray.Messaging.Setup.Infrastructure.Factories;
+using PaladinRogue.Libray.Messaging.Setup.Infrastructure.Interfaces;
 
-namespace Messaging.Setup.Infrastructure.Senders
+namespace PaladinRogue.Libray.Messaging.Setup.Infrastructure.Senders
 {
     public class MessageSender : IMessageSender
     {

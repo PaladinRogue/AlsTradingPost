@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
-using Persistence.EntityFramework.Repositories;
-using Gateway.Domain.Applications;
-using Gateway.Domain.Applications.Persistence;
+using PaladinRogue.Gateway.Domain.Applications;
+using PaladinRogue.Gateway.Domain.Applications.Persistence;
+using PaladinRogue.Libray.Persistence.EntityFramework.Repositories;
 
-namespace Gateway.Persistence.Applications
+namespace PaladinRogue.Gateway.Persistence.Applications
 {
     public class ApplicationQueryRepository : IApplicationQueryRepository
     {

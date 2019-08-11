@@ -1,7 +1,7 @@
-using Common.Resources;
 using FluentValidation;
+using PaladinRogue.Libray.Core.Common;
 
-namespace Authentication.Domain.AuthenticationServices.CreateFacebook
+namespace PaladinRogue.Authentication.Domain.AuthenticationServices.CreateFacebook
 {
     public class CreateAuthenticationGrantTypeFacebookValidator : AbstractValidator<CreateAuthenticationGrantTypeFacebookDdto>
     {

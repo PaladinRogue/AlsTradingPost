@@ -1,24 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Authentication.Domain.AuthenticationServices;
-using Authentication.Domain.Identities.AddOrChangeClaim;
-using Authentication.Domain.Identities.ChangeClaim;
-using Authentication.Domain.Identities.ChangePassword;
-using Authentication.Domain.Identities.CreateClaim;
-using Authentication.Domain.Identities.CreateClientCredential;
-using Authentication.Domain.Identities.CreatePassword;
-using Authentication.Domain.Identities.CreateTwoFactor;
-using Authentication.Domain.Identities.ForgotPassword;
-using Authentication.Domain.Identities.RegisterClientCredential;
-using Authentication.Domain.Identities.RegisterPassword;
-using Authentication.Domain.Identities.ResendConfirmIdentity;
-using Authentication.Domain.Identities.ResetPassword;
-using Authentication.Domain.Identities.ValidateToken;
-using Common.Domain.Aggregates;
-using Common.Domain.Entities;
+using PaladinRogue.Authentication.Domain.AuthenticationServices;
+using PaladinRogue.Authentication.Domain.Identities.AddOrChangeClaim;
+using PaladinRogue.Authentication.Domain.Identities.ChangeClaim;
+using PaladinRogue.Authentication.Domain.Identities.ChangePassword;
+using PaladinRogue.Authentication.Domain.Identities.CreateClaim;
+using PaladinRogue.Authentication.Domain.Identities.CreateClientCredential;
+using PaladinRogue.Authentication.Domain.Identities.CreatePassword;
+using PaladinRogue.Authentication.Domain.Identities.CreateTwoFactor;
+using PaladinRogue.Authentication.Domain.Identities.ForgotPassword;
+using PaladinRogue.Authentication.Domain.Identities.RegisterClientCredential;
+using PaladinRogue.Authentication.Domain.Identities.RegisterPassword;
+using PaladinRogue.Authentication.Domain.Identities.ResendConfirmIdentity;
+using PaladinRogue.Authentication.Domain.Identities.ResetPassword;
+using PaladinRogue.Authentication.Domain.Identities.ValidateToken;
+using PaladinRogue.Libray.Core.Domain.Aggregates;
+using PaladinRogue.Libray.Core.Domain.Entities;
 
-namespace Authentication.Domain.Identities
+namespace PaladinRogue.Authentication.Domain.Identities
 {
     public class Identity : VersionedEntity, IAggregateRoot
     {

@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Authentication.Application.AuthenticationServices.Models.Google;
+using PaladinRogue.Authentication.Application.AuthenticationServices.Models.Google;
 
-namespace Authentication.Application.AuthenticationServices
+namespace PaladinRogue.Authentication.Application.AuthenticationServices
 {
     public interface IGoogleAuthenticationServiceApplicationService
     {

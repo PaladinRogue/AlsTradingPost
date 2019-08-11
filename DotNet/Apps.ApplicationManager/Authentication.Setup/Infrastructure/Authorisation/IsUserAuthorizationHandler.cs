@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using Authentication.Application.Claims;
 using Microsoft.AspNetCore.Authorization;
+using PaladinRogue.Authentication.Application.Claims;
 
-namespace Authentication.Setup.Infrastructure.Authorisation
+namespace PaladinRogue.Authentication.Setup.Infrastructure.Authorisation
 {
     public class IsUserAuthorizationHandler : AuthorizationHandler<UserRequirement>
     {

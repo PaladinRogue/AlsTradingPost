@@ -1,15 +1,15 @@
 using System;
 using System.Threading.Tasks;
-using Authentication.Application.Authentication.ClientCredential;
-using Authentication.Domain.AuthenticationServices;
-using Common.Application.WebRequests;
-using Common.Resources.Builders.Dictionaries;
-using Common.Resources.Extensions;
-using Common.Setup.Infrastructure.Exceptions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using PaladinRogue.Authentication.Application.Authentication.ClientCredential;
+using PaladinRogue.Authentication.Domain.AuthenticationServices;
+using PaladinRogue.Libray.Core.Application.WebRequests;
+using PaladinRogue.Libray.Core.Common.Builders.Dictionaries;
+using PaladinRogue.Libray.Core.Common.Extensions;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Exceptions;
 
-namespace Authentication.Setup.Infrastructure.Authentication.Google
+namespace PaladinRogue.Authentication.Setup.Infrastructure.Authentication.Google
 {
     public class GoogleAuthenticationValidator : IGoogleAuthenticationValidator
     {

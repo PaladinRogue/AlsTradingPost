@@ -1,7 +1,7 @@
-using Common.Application.Concurrency;
-using Common.Domain.Concurrency.Interfaces;
+using PaladinRogue.Libray.Core.Application.Concurrency;
+using PaladinRogue.Libray.Core.Domain.Concurrency.Interfaces;
 
-namespace Authentication.Application.Identities.Models
+namespace PaladinRogue.Authentication.Application.Identities.Models
 {
     public class ResetPasswordAdto : IInboundVersionedAdto
     {

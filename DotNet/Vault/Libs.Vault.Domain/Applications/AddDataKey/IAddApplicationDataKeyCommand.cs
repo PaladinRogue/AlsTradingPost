@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Vault.Domain.Applications.AddDataKey
+namespace PaladinRogue.Libray.Vault.Domain.Applications.AddDataKey
 {
     public interface IAddApplicationDataKeyCommand
     {

@@ -1,12 +1,12 @@
 ﻿using System.Linq;
 using System.Reflection;
-using Common.Domain.DataProtectors;
-using Common.Resources;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Persistence.EntityFramework.Infrastructure.DataProtectors;
+using PaladinRogue.Libray.Core.Common;
+using PaladinRogue.Libray.Core.Domain.DataProtectors;
+using PaladinRogue.Libray.Persistence.EntityFramework.Infrastructure.DataProtectors;
 
-namespace Persistence.EntityFramework.Infrastructure.Extensions
+namespace PaladinRogue.Libray.Persistence.EntityFramework.Infrastructure.Extensions
 {
     public static class ModelBuilderExtensions
     {

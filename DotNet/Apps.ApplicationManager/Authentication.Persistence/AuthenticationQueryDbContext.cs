@@ -1,8 +1,8 @@
-using Authentication.Domain.Identities.Projections;
 using Microsoft.EntityFrameworkCore;
-using Persistence.EntityFramework.Infrastructure.Extensions;
+using PaladinRogue.Authentication.Domain.Identities.Projections;
+using PaladinRogue.Libray.Persistence.EntityFramework.Infrastructure.Extensions;
 
-namespace Authentication.Persistence
+namespace PaladinRogue.Authentication.Persistence
 {
     public partial class AuthenticationDbContext
     {

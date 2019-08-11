@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using ReferenceData.Domain;
-using ReferenceData.Domain.Projections;
+using PaladinRogue.Libray.ReferenceData.Domain;
+using PaladinRogue.Libray.ReferenceData.Domain.Projections;
 
-namespace ReferenceData.Persistence
+namespace PaladinRogue.Libray.ReferenceData.Persistence
 {
     public static class ModelBuilderExtensions
     {

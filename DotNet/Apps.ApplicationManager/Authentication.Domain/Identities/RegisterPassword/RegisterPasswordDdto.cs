@@ -1,4 +1,4 @@
-namespace Authentication.Domain.Identities.RegisterPassword
+namespace PaladinRogue.Authentication.Domain.Identities.RegisterPassword
 {
     internal class RegisterPasswordDdto
     {

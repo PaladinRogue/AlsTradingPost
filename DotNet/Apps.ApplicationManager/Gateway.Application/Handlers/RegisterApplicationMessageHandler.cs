@@ -1,12 +1,12 @@
 using System;
 using System.Threading.Tasks;
-using Gateway.Application.Applications.Register;
-using Messaging.Setup.Infrastructure.Handlers;
-using Messaging.Setup.Infrastructure.MessageBus;
-using Messaging.Messages;
+using Gateway.Messages;
 using Microsoft.Extensions.Logging;
+using PaladinRogue.Gateway.Application.Applications.Register;
+using PaladinRogue.Libray.Messaging.Common.Handlers;
+using PaladinRogue.Libray.Messaging.Common.MessageBus;
 
-namespace Gateway.Application.Handlers
+namespace PaladinRogue.Gateway.Application.Handlers
 {
     public class RegisterApplicationMessageHandler : MessageHandler<RegisterApplicationMessage, RegisterApplicationMessageHandler>
     {

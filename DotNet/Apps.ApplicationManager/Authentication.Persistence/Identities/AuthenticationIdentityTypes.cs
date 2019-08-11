@@ -1,4 +1,4 @@
-﻿namespace Authentication.Persistence.Identities
+﻿namespace PaladinRogue.Authentication.Persistence.Identities
 {
     public static class AuthenticationIdentityTypes
     {

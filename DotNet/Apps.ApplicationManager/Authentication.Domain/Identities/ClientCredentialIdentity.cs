@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Authentication.Domain.AuthenticationServices;
-using Authentication.Domain.Identities.CreateClientCredential;
-using Common.Domain.DataProtectors;
-using Common.Resources;
+using PaladinRogue.Authentication.Domain.AuthenticationServices;
+using PaladinRogue.Authentication.Domain.Identities.CreateClientCredential;
+using PaladinRogue.Libray.Core.Common;
+using PaladinRogue.Libray.Core.Domain.DataProtectors;
 
-namespace Authentication.Domain.Identities
+namespace PaladinRogue.Authentication.Domain.Identities
 {
     public class ClientCredentialIdentity : AuthenticationIdentity
     {

@@ -1,4 +1,4 @@
-﻿namespace Authentication.Setup.Infrastructure.SystemAdmins
+﻿namespace PaladinRogue.Authentication.Setup.Infrastructure.SystemAdmins
 {
     public class SystemAdminIdentitySettings
     {

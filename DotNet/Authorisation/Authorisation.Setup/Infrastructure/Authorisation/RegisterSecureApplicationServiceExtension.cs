@@ -1,8 +1,8 @@
 using System;
-using Authorisation.Application.ApplicationServices;
 using Microsoft.Extensions.DependencyInjection;
+using PaladinRogue.Libray.Authorisation.Application.ApplicationServices;
 
-namespace Common.Setup.Infrastructure.Authorisation
+namespace PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Authorisation
 {
     public static class RegisterSecureApplicationServiceExtension
     {

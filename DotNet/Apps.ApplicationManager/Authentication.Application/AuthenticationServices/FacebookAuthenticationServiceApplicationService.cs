@@ -1,16 +1,16 @@
 using System.Threading.Tasks;
-using Authentication.Application.AuthenticationServices.Models.Facebook;
-using Authentication.Domain.AuthenticationServices;
-using Authentication.Domain.AuthenticationServices.ChangeFacebook;
-using Authentication.Domain.AuthenticationServices.CreateFacebook;
 using AutoMapper;
-using Common.Application.Concurrency;
-using Common.Application.Exceptions;
-using Common.Application.Transactions;
-using Common.Domain.Exceptions;
-using Common.Domain.Persistence;
+using PaladinRogue.Authentication.Application.AuthenticationServices.Models.Facebook;
+using PaladinRogue.Authentication.Domain.AuthenticationServices;
+using PaladinRogue.Authentication.Domain.AuthenticationServices.ChangeFacebook;
+using PaladinRogue.Authentication.Domain.AuthenticationServices.CreateFacebook;
+using PaladinRogue.Libray.Core.Application.Concurrency;
+using PaladinRogue.Libray.Core.Application.Exceptions;
+using PaladinRogue.Libray.Core.Application.Transactions;
+using PaladinRogue.Libray.Core.Domain.Exceptions;
+using PaladinRogue.Libray.Core.Domain.Persistence;
 
-namespace Authentication.Application.AuthenticationServices
+namespace PaladinRogue.Authentication.Application.AuthenticationServices
 {
     public class FacebookAuthenticationServiceApplicationService : IFacebookAuthenticationServiceApplicationService
     {

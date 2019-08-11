@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
-using Common.Application.Transactions;
 using Microsoft.Extensions.Logging;
+using PaladinRogue.Libray.Core.Application.Transactions;
 
-namespace Notifications.Application.Emails.Send
+namespace PaladinRogue.Notifications.Application.Emails.Send
 {
     public class SendEmailNotificationKernalService : ISendEmailNotificationKernalService
     {

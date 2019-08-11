@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
-using Authentication.Domain.Identities.Queries;
-using Common.Domain.Validation;
 using FluentValidation;
+using PaladinRogue.Authentication.Domain.Identities.Queries;
+using PaladinRogue.Libray.Core.Domain.Validation;
 
-namespace Authentication.Domain.Identities.ForgotPassword
+namespace PaladinRogue.Authentication.Domain.Identities.ForgotPassword
 {
     public class ForgotPasswordCommand : IForgotPasswordCommand
     {

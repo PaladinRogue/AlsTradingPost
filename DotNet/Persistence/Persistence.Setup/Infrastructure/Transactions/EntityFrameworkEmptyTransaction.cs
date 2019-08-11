@@ -1,7 +1,7 @@
-﻿using Common.Application.Transactions;
-using Microsoft.EntityFrameworkCore.Storage;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using PaladinRogue.Libray.Core.Application.Transactions;
 
-namespace Persistence.EntityFramework.Infrastructure.Transactions
+namespace PaladinRogue.Libray.Persistence.Setup.Infrastructure.Transactions
 {
     public class EntityFrameworkEmptyTransaction : ITransaction
     {

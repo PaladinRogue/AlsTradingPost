@@ -1,4 +1,4 @@
-namespace Authentication.Domain.Identities.Login.Password
+namespace PaladinRogue.Authentication.Domain.Identities.Login.Password
 {
     public class PasswordLoginCommandDdto
     {

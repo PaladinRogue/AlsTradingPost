@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Authentication.Domain.Identities;
-using Authentication.Domain.NotificationTypes;
+using PaladinRogue.Authentication.Domain.Identities;
+using PaladinRogue.Authentication.Domain.NotificationTypes;
 
-namespace Authentication.Application.Identities.TwoFactor
+namespace PaladinRogue.Authentication.Application.Identities.TwoFactor
 {
     public static class TwoFactorAuthenticationNotificationMap
     {

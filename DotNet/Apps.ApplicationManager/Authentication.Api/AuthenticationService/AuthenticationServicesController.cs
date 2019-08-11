@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Authentication.Application.AuthenticationServices;
-using Authentication.Application.AuthenticationServices.Models;
-using Authentication.Setup.Infrastructure.Authorisation;
-using Authentication.Setup.Infrastructure.Routing;
 using AutoMapper;
-using Common.Api.Builders.Resource;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PaladinRogue.Authentication.Application.AuthenticationServices;
+using PaladinRogue.Authentication.Application.AuthenticationServices.Models;
+using PaladinRogue.Authentication.Setup.Infrastructure.Authorisation;
+using PaladinRogue.Authentication.Setup.Infrastructure.Routing;
+using PaladinRogue.Libray.Core.Api.Builders.Resource;
 
-namespace Authentication.Api.AuthenticationService
+namespace PaladinRogue.Authentication.Api.AuthenticationService
 {
     [AuthenticationControllerRoute("")]
     [Authorize(Policies.User)]

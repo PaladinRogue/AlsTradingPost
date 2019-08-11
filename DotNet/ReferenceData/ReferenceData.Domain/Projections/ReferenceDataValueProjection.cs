@@ -1,6 +1,6 @@
 using System;
 
-namespace ReferenceData.Domain.Projections
+namespace PaladinRogue.Libray.ReferenceData.Domain.Projections
 {
     public class ReferenceDataValueProjection
     {

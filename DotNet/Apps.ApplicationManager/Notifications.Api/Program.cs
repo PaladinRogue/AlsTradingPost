@@ -1,11 +1,11 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
-using Common.Setup.Infrastructure.Startup;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Startup;
 
-namespace Notifications.Api
+namespace PaladinRogue.Notifications.Api
 {
     public class Program
     {

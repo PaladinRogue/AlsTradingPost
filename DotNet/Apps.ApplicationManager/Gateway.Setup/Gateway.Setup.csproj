@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
-        <RootNamespace>Gateway.Setup</RootNamespace>
+        <RootNamespace>PaladinRogue.Gateway.Setup</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,7 +13,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Authorisation\Authorisation.Setup\Authorisation.Setup.csproj" />
-      <ProjectReference Include="..\..\Common\Common.Setup\Common.Setup.csproj" />
+      <ProjectReference Include="..\..\Core\Core.Setup\Core.Setup.csproj" />
       <ProjectReference Include="..\..\DomainEvents\DomainEvents.Setup\DomainEvents.Setup.csproj" />
       <ProjectReference Include="..\..\Messaging\Messaging.Setup\Messaging.Setup.csproj" />
       <ProjectReference Include="..\..\Persistence\Persistence.Setup\Persistence.Setup.csproj" />

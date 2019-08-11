@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Authorisation.Application.Contexts;
-using Authorisation.Application.Manager;
-using Common.Application.Exceptions;
+using PaladinRogue.Libray.Authorisation.Common.Contexts;
+using PaladinRogue.Libray.Authorisation.Common.Managers;
+using PaladinRogue.Libray.Core.Application.Exceptions;
 
-namespace Authorisation.Application.ApplicationServices
+namespace PaladinRogue.Libray.Authorisation.Application.ApplicationServices
 {
     public class DefaultSecurityApplicationService : ISecurityApplicationService
     {

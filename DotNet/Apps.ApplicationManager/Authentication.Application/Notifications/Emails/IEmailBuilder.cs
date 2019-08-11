@@ -1,4 +1,4 @@
-namespace Authentication.Application.Notifications.Emails
+namespace PaladinRogue.Authentication.Application.Notifications.Emails
 {
     public interface IEmailBuilder
     {

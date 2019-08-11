@@ -1,13 +1,12 @@
 ﻿using System;
-using Authentication.Application.Claims;
-using Common.Application.Authentication;
-using Common.Application.Exceptions;
-using Common.Resources.Extensions;
-using Common.Setup.Infrastructure.HttpContexts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
+using PaladinRogue.Authentication.Application.Claims;
+using PaladinRogue.Libray.Core.Application.Authentication;
+using PaladinRogue.Libray.Core.Application.Exceptions;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.HttpContexts;
 
-namespace Authentication.Setup.Infrastructure.Authorisation
+namespace PaladinRogue.Authentication.Setup.Infrastructure.Authorisation
 {
     public class CurrentUserProvider : ICurrentUserProvider
     {

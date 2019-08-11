@@ -1,28 +1,28 @@
 using System.Text;
-using Common.Application.Caching;
-using Common.Domain.DataProtectors;
-using Common.Domain.Persistence;
-using Common.Setup.Infrastructure.Caching;
 using FluentValidation;
-using Libs.Vault.Broker.ApplicationServices;
-using Libs.Vault.Domain.Caching;
-using Libs.Vault.Domain.Domain.Persistence;
-using Libs.Vault.Domain.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Persistence.EntityFramework.Repositories;
-using Vault.Domain.Applications;
-using Vault.Domain.Applications.AddDataKey;
-using Vault.Domain.Applications.Create;
-using Vault.Domain.SharedDataKeys;
-using Vault.Persistence;
-using Vault.Setup.Infrastructure.DataKeys;
-using Vault.Setup.Infrastructure.Settings;
+using PaladinRogue.Libray.Core.Application.Caching;
+using PaladinRogue.Libray.Core.Domain.DataProtectors;
+using PaladinRogue.Libray.Core.Domain.Persistence;
+using PaladinRogue.Libray.Persistence.EntityFramework.Repositories;
+using PaladinRogue.Libray.Persistence.Setup.Infrastructure.Caching;
+using PaladinRogue.Libray.Vault.Application.Caching;
+using PaladinRogue.Libray.Vault.Application.DataKeys;
+using PaladinRogue.Libray.Vault.Domain.Applications.AddDataKey;
+using PaladinRogue.Libray.Vault.Domain.Applications.Create;
+using PaladinRogue.Libray.Vault.Domain.DataKeys.Persistence;
+using PaladinRogue.Libray.Vault.Domain.SharedDataKeys;
+using PaladinRogue.Libray.Vault.Persistence;
+using PaladinRogue.Libray.Vault.Persistence.DataKeys;
+using PaladinRogue.Libray.Vault.Setup.Infrastructure.DataKeys;
+using PaladinRogue.Libray.Vault.Setup.Infrastructure.Settings;
+using PaladinRogue.Libray.Vault.Setup.Infrastructure.Transactions;
 
-namespace Vault.Broker.Setup.DataKeys
+namespace PaladinRogue.Libray.Vault.Setup
 {
     public static class ServiceCollectionExtensions
     {
@@ -66,8 +66,8 @@ namespace Vault.Broker.Setup.DataKeys
 
                 .AddScoped<IVaultTransactionManager, VaultTransactionManager>()
                 .AddScoped<IDataKeyRepository, DataKeyRepository>()
-                .AddScoped<ICommandRepository<Application>, CommandRepository<Application, VaultDbContext>>()
-                .AddScoped<IQueryRepository<Application>, QueryRepository<Application, VaultDbContext>>()
+                .AddScoped<ICommandRepository<Domain.Applications.Application>, CommandRepository<Domain.Applications.Application, VaultDbContext>>()
+                .AddScoped<IQueryRepository<Domain.Applications.Application>, QueryRepository<Domain.Applications.Application, VaultDbContext>>()
                 .AddScoped<IQueryRepository<SharedDataKey>, QueryRepository<SharedDataKey, VaultDbContext>>();
         }
     }

@@ -1,10 +1,9 @@
-using Common.Api.Routing;
-using Common.Application.Transactions;
 using Microsoft.Extensions.DependencyInjection;
-using Notifications.Application.Emails;
-using Notifications.Application.Emails.Send;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Routing;
+using PaladinRogue.Notifications.Application.Emails;
+using PaladinRogue.Notifications.Application.Emails.Send;
 
-namespace Notifications.Setup
+namespace PaladinRogue.Notifications.Setup
 {
     public static class ServiceCollectionExtensions
     {

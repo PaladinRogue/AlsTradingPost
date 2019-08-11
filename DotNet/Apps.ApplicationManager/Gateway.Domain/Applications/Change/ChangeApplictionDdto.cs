@@ -1,4 +1,4 @@
-﻿namespace Gateway.Domain.Applications.Change
+﻿namespace PaladinRogue.Gateway.Domain.Applications.Change
 {
     public class ChangeApplicationDdto
     {

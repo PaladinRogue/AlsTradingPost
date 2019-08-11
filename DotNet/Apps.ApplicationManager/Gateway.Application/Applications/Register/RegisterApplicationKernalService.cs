@@ -1,13 +1,12 @@
 ﻿using System.Threading.Tasks;
-using Common.Application.Exceptions;
-using Common.Application.Transactions;
-using Common.Domain.Exceptions;
-using Common.Domain.Persistence;
-using Gateway.Domain.Applications;
-using Gateway.Domain.Applications.Change;
-using Gateway.Domain.Applications.Create;
+using PaladinRogue.Gateway.Domain.Applications.Change;
+using PaladinRogue.Gateway.Domain.Applications.Create;
+using PaladinRogue.Libray.Core.Application.Exceptions;
+using PaladinRogue.Libray.Core.Application.Transactions;
+using PaladinRogue.Libray.Core.Domain.Exceptions;
+using PaladinRogue.Libray.Core.Domain.Persistence;
 
-namespace Gateway.Application.Applications.Register
+namespace PaladinRogue.Gateway.Application.Applications.Register
 {
     public class RegisterApplicationKernalService : IRegisterApplicationKernalService
     {

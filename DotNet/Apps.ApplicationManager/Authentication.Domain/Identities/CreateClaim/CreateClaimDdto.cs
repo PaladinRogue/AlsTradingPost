@@ -1,4 +1,4 @@
-namespace Authentication.Domain.Identities.CreateClaim
+namespace PaladinRogue.Authentication.Domain.Identities.CreateClaim
 {
     internal class CreateClaimDdto
     {

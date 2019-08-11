@@ -1,6 +1,6 @@
-using Authentication.Domain.AuthenticationServices;
+using PaladinRogue.Authentication.Domain.AuthenticationServices;
 
-namespace Authentication.Application.Authentication.ClientCredential
+namespace PaladinRogue.Authentication.Application.Authentication.ClientCredential
 {
     public interface IGoogleAuthenticationValidator : IClientCredentialAuthenticationValidator<AuthenticationGrantTypeGoogle>
     {

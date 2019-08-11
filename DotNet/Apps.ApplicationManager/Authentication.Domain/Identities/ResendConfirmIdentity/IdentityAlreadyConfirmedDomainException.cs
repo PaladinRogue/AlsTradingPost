@@ -1,7 +1,7 @@
 ﻿using System;
-using Common.Domain.Exceptions;
+using PaladinRogue.Libray.Core.Domain.Exceptions;
 
-namespace Authentication.Domain.Identities.ResendConfirmIdentity
+namespace PaladinRogue.Authentication.Domain.Identities.ResendConfirmIdentity
 {
     public class IdentityAlreadyConfirmedDomainException : DomainException
     {

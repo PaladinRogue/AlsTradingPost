@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using Authentication.Domain.Identities.Events;
-using Common.Domain.DomainEvents.Interfaces;
+using PaladinRogue.Authentication.Domain.Identities.Events;
+using PaladinRogue.Libray.Core.Domain.DomainEvents.Interfaces;
 
-namespace Authentication.Application.Identities.TwoFactor
+namespace PaladinRogue.Authentication.Application.Identities.TwoFactor
 {
     public class SendNotificationWhenTwoFactorAuthenticationIdentityCreatedDomainEventSubscriber : IDomainEventSubscriber<TwoFactorAuthenticationIdentityCreatedDomainEvent>
     {

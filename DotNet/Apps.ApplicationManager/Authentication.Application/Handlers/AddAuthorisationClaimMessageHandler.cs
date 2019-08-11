@@ -1,12 +1,12 @@
 using System;
 using System.Threading.Tasks;
-using Authentication.Application.Identities.Claims;
-using Messaging.Messages;
-using Messaging.Setup.Infrastructure.Handlers;
-using Messaging.Setup.Infrastructure.MessageBus;
 using Microsoft.Extensions.Logging;
+using PaladinRogue.Authentication.Application.Identities.Claims;
+using PaladinRogue.Authentication.Messages;
+using PaladinRogue.Libray.Messaging.Common.Handlers;
+using PaladinRogue.Libray.Messaging.Common.MessageBus;
 
-namespace Authentication.Application.Handlers
+namespace PaladinRogue.Authentication.Application.Handlers
 {
     public class AddAuthorisationClaimMessageHandler : MessageHandler<AddAuthorisationClaimMessage, AddAuthorisationClaimMessageHandler>
     {

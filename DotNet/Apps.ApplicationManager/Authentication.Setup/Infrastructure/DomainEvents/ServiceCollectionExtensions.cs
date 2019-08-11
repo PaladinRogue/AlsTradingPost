@@ -1,11 +1,11 @@
-﻿using Authentication.Application.Identities.TwoFactor;
-using Authentication.Application.Users.UpdateClaim;
-using Authentication.Domain.Identities.Events;
-using Authentication.Domain.Users.Events;
-using Common.Domain.DomainEvents.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using PaladinRogue.Authentication.Application.Identities.TwoFactor;
+using PaladinRogue.Authentication.Application.Users.UpdateClaim;
+using PaladinRogue.Authentication.Domain.Identities.Events;
+using PaladinRogue.Authentication.Domain.Users.Events;
+using PaladinRogue.Libray.Core.Domain.DomainEvents.Interfaces;
 
-namespace Authentication.Setup.Infrastructure.DomainEvents
+namespace PaladinRogue.Authentication.Setup.Infrastructure.DomainEvents
 {
     public static class ServiceCollectionExtensions
     {

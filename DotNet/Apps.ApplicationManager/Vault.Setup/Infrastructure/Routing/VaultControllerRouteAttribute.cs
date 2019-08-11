@@ -1,6 +1,6 @@
-using Common.Api.Routing;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Routing;
 
-namespace Vault.Setup.Infrastructure.Routing
+namespace PaladinRogue.Vault.Setup.Infrastructure.Routing
 {
     public class VaultControllerRouteAttribute : ControllerRouteAttribute
     {

@@ -1,7 +1,7 @@
-using Common.Domain.Aggregates;
-using Common.Domain.Entities;
+using PaladinRogue.Libray.Core.Domain.Aggregates;
+using PaladinRogue.Libray.Core.Domain.Entities;
 
-namespace Authentication.Domain.NotificationTypes
+namespace PaladinRogue.Authentication.Domain.NotificationTypes
 {
     public class NotificationTypeChannel : Entity, IAggregateMember
     {

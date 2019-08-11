@@ -1,4 +1,4 @@
-﻿namespace Authentication.Domain.Identities.ResetPassword
+﻿namespace PaladinRogue.Authentication.Domain.Identities.ResetPassword
 {
     internal class ResetPasswordDdto
     {

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Common.Domain.Aggregates;
-using Common.Domain.Entities;
-using Common.Resources;
+using PaladinRogue.Libray.Core.Common;
+using PaladinRogue.Libray.Core.Domain.Aggregates;
+using PaladinRogue.Libray.Core.Domain.Entities;
 
-namespace ReferenceData.Domain
+namespace PaladinRogue.Libray.ReferenceData.Domain
 {
     public class ReferenceDataType : VersionedEntity, IAggregateRoot
     {

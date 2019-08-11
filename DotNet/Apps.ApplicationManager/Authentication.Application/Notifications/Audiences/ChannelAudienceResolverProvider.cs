@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Authentication.Domain.NotificationTypes;
-using Common.Application.Exceptions;
+using PaladinRogue.Authentication.Domain.NotificationTypes;
+using PaladinRogue.Libray.Core.Application.Exceptions;
 
-namespace Authentication.Application.Notifications.Audiences
+namespace PaladinRogue.Authentication.Application.Notifications.Audiences
 {
     public class ChannelAudienceResolverProvider : IChannelAudienceResolverProvider
     {

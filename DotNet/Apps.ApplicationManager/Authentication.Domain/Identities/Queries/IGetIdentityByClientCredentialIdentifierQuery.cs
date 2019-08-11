@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Authentication.Domain.AuthenticationServices;
+using PaladinRogue.Authentication.Domain.AuthenticationServices;
 
-namespace Authentication.Domain.Identities.Queries
+namespace PaladinRogue.Authentication.Domain.Identities.Queries
 {
     public interface IGetIdentityByClientCredentialIdentifierQuery
     {

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Common.Application.Caching;
-using Common.Domain.DataProtectors;
+using PaladinRogue.Libray.Core.Application.Caching;
+using PaladinRogue.Libray.Core.Domain.DataProtectors;
 
-namespace Vault.Broker.Setup.DataKeys
+namespace PaladinRogue.Libray.Vault.Application.Caching
 {
     public class DataKeyCacheKey : CacheKey<DataKey>
     {

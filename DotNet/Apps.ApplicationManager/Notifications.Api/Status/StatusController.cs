@@ -1,9 +1,9 @@
-﻿using Common.Api.Builders.Resource;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Notifications.Setup.Infrastructure.Routing;
+using PaladinRogue.Libray.Core.Api.Builders.Resource;
+using PaladinRogue.Notifications.Setup.Infrastructure.Routing;
 
-namespace Notifications.Api.Status
+namespace PaladinRogue.Notifications.Api.Status
 {
     [NotificationsControllerRoute]
     public class StatusController : ControllerBase

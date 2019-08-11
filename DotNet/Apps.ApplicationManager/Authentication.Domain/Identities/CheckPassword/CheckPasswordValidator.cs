@@ -1,8 +1,7 @@
 using System.Text.RegularExpressions;
-using Common.Resources;
 using FluentValidation;
 
-namespace Authentication.Domain.Identities.CheckPassword
+namespace PaladinRogue.Authentication.Domain.Identities.CheckPassword
 {
     public class CheckPasswordValidator : AbstractValidator<CheckPasswordDdto>
     {

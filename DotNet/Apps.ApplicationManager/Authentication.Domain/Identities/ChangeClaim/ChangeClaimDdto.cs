@@ -1,4 +1,4 @@
-namespace Authentication.Domain.Identities.ChangeClaim
+namespace PaladinRogue.Authentication.Domain.Identities.ChangeClaim
 {
     internal class ChangeClaimDdto
     {

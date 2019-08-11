@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using Common.Domain.Validation;
 using FluentValidation;
+using PaladinRogue.Libray.Core.Domain.Validation;
 
-namespace Authentication.Domain.Identities.AddOrChangeClaim
+namespace PaladinRogue.Authentication.Domain.Identities.AddOrChangeClaim
 {
     public class AddOrChangeIdentityClaimCommand : IAddOrChangeIdentityClaimCommand
     {

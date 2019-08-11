@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
-using Messaging.Setup.Infrastructure.Directors;
-using Messaging.Setup.Infrastructure.MessageBus;
+using PaladinRogue.Libray.Messaging.Common.Dispatchers;
+using PaladinRogue.Libray.Messaging.Common.MessageBus;
+using PaladinRogue.Libray.Messaging.Setup.Infrastructure.Directors;
 
-namespace Messaging.Setup.Infrastructure.Dispatchers
+namespace PaladinRogue.Libray.Messaging.Setup.Infrastructure.Dispatchers
 {
 	public class MessageDispatcher : IMessageDispatcher
 	{

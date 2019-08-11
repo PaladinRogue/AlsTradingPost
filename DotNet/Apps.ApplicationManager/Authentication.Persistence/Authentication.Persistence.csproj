@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <RootNamespace>PaladinRogue.Authentication.Persistence</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,6 +1,6 @@
-﻿using Common.Domain.DomainEvents.Interfaces;
+﻿using PaladinRogue.Libray.Core.Domain.DomainEvents.Interfaces;
 
-namespace Authentication.Domain.Identities.Events
+namespace PaladinRogue.Authentication.Domain.Identities.Events
 {
     public class TwoFactorAuthenticationIdentityCreatedDomainEvent : IDomainEvent
     {

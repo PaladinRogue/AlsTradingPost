@@ -1,7 +1,7 @@
 ﻿using System;
-using Common.Domain.Exceptions;
+using PaladinRogue.Libray.Core.Domain.Exceptions;
 
-namespace Authentication.Domain.Identities.RegisterClientCredential
+namespace PaladinRogue.Authentication.Domain.Identities.RegisterClientCredential
 {
     public class ClientCredentialIdentityExistsDomainException : DomainException
     {

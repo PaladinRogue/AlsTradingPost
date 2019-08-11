@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Authentication.Persistence.Migrations
+namespace PaladinRogue.Authentication.Persistence.Migrations
 {
     [DbContext(typeof(AuthenticationDbContext))]
     [Migration("20190625193604_InitialCreate")]
@@ -316,7 +316,7 @@ namespace Authentication.Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("AuthenticationGrantTypePasswordId");
 
-                    b.OwnsOne("Common.Domain.Models.DataProtection.HashSet", "PasswordHash", b1 =>
+                    b.OwnsOne("Core.Domain.Models.DataProtection.HashSet", "PasswordHash", b1 =>
                         {
                             b1.Property<Guid>("PasswordIdentityId");
 
@@ -330,7 +330,7 @@ namespace Authentication.Persistence.Migrations
 
                             b1.HasOne("Authentication.Domain.Identities.PasswordIdentity")
                                 .WithOne("PasswordHash")
-                                .HasForeignKey("Common.Domain.Models.DataProtection.HashSet", "PasswordIdentityId")
+                                .HasForeignKey("Core.Domain.Models.DataProtection.HashSet", "PasswordIdentityId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
                 });

@@ -1,19 +1,19 @@
-﻿using Authentication.Domain.AuthenticationServices;
-using Authentication.Domain.Identities;
-using Authentication.Domain.NotificationTypes;
-using Authentication.Domain.Users;
-using Authentication.Persistence.Identities;
-using Authentication.Persistence.NotificationTypes;
-using Common.Domain.DataProtectors;
-using Microsoft.EntityFrameworkCore;
-using Persistence.EntityFramework.Infrastructure.DateTimeConverters;
-using Persistence.EntityFramework.Infrastructure.Extensions;
-using ReferenceData.Domain;
-using ReferenceData.Persistence;
-using AuthenticationGrantTypes = Authentication.Persistence.AuthenticationServices.AuthenticationGrantTypes;
-using Identity = Authentication.Domain.Identities.Identity;
+﻿using Microsoft.EntityFrameworkCore;
+using PaladinRogue.Authentication.Domain.AuthenticationServices;
+using PaladinRogue.Authentication.Domain.Identities;
+using PaladinRogue.Authentication.Domain.NotificationTypes;
+using PaladinRogue.Authentication.Domain.Users;
+using PaladinRogue.Authentication.Persistence.Identities;
+using PaladinRogue.Authentication.Persistence.NotificationTypes;
+using PaladinRogue.Libray.Core.Domain.DataProtectors;
+using PaladinRogue.Libray.Persistence.EntityFramework.Infrastructure.DateTimeConverters;
+using PaladinRogue.Libray.Persistence.EntityFramework.Infrastructure.Extensions;
+using PaladinRogue.Libray.ReferenceData.Domain;
+using PaladinRogue.Libray.ReferenceData.Persistence;
+using AuthenticationGrantTypes = PaladinRogue.Authentication.Persistence.AuthenticationServices.AuthenticationGrantTypes;
+using Identity = PaladinRogue.Authentication.Domain.Identities.Identity;
 
-namespace Authentication.Persistence
+namespace PaladinRogue.Authentication.Persistence
 {
     public partial class AuthenticationDbContext : DbContext, IReferenceDataDbContext
     {

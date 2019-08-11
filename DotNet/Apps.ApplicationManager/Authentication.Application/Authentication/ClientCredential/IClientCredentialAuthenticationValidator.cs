@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Authentication.Domain.AuthenticationServices;
+using PaladinRogue.Authentication.Domain.AuthenticationServices;
 
-namespace Authentication.Application.Authentication.ClientCredential
+namespace PaladinRogue.Authentication.Application.Authentication.ClientCredential
 {
     public interface IClientCredentialAuthenticationValidator<in TClientCredential> where TClientCredential : AuthenticationGrantTypeClientCredential
     {

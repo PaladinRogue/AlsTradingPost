@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Authorisation.Application
+namespace PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Owners
 {
     public class ResourceOwnerProviderCollection : IResourceOwnerProviderCollection
     {

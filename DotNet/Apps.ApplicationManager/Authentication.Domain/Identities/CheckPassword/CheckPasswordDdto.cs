@@ -1,4 +1,4 @@
-namespace Authentication.Domain.Identities.CheckPassword
+namespace PaladinRogue.Authentication.Domain.Identities.CheckPassword
 {
     public class CheckPasswordDdto
     {

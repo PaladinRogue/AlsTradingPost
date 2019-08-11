@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using Common.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using PaladinRogue.Libray.Core.Domain.Entities;
 
-namespace Persistence.EntityFramework.Infrastructure.Extensions
+namespace PaladinRogue.Libray.Persistence.EntityFramework.Infrastructure.Extensions
 {
     public static class DbSetExtensions
     {

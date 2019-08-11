@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
-using Authentication.Application.AuthenticationServices.Models.Facebook;
-using Authorisation.Application;
-using Authorisation.Application.ApplicationServices;
-using Authorisation.Application.Contexts;
+using PaladinRogue.Authentication.Application.AuthenticationServices.Models.Facebook;
+using PaladinRogue.Libray.Authorisation.Application.ApplicationServices;
+using PaladinRogue.Libray.Authorisation.Common;
+using PaladinRogue.Libray.Authorisation.Common.Contexts;
 
-namespace Authentication.Application.AuthenticationServices
+namespace PaladinRogue.Authentication.Application.AuthenticationServices
 {
     public class FacebookAuthenticationServiceApplicationServiceSecurityDecorator : IFacebookAuthenticationServiceApplicationService
     {

@@ -1,4 +1,4 @@
-namespace Notifications.Api
+namespace PaladinRogue.Notifications.Api
 {
     public static class ResourceTypes
     {

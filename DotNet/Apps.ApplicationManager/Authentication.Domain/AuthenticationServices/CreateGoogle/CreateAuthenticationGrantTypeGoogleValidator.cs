@@ -1,7 +1,7 @@
-using Common.Resources;
 using FluentValidation;
+using PaladinRogue.Libray.Core.Common;
 
-namespace Authentication.Domain.AuthenticationServices.CreateGoogle
+namespace PaladinRogue.Authentication.Domain.AuthenticationServices.CreateGoogle
 {
     public class CreateAuthenticationGrantTypeGoogleValidator : AbstractValidator<CreateAuthenticationGrantTypeGoogleDdto>
     {

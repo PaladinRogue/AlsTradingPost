@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Authorisation.Application
+namespace PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Self
 {
     public interface ISelfProvider
     {

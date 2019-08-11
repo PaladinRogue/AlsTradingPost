@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using Common.Domain.Validation;
 using FluentValidation;
+using PaladinRogue.Libray.Core.Domain.Validation;
 
-namespace Authentication.Domain.Identities.CheckPassword
+namespace PaladinRogue.Authentication.Domain.Identities.CheckPassword
 {
     public class CheckPasswordCommand : ICheckPasswordCommand
     {

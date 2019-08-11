@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Authentication.Domain.Identities.Logout
+namespace PaladinRogue.Authentication.Domain.Identities.Logout
 {
     public class LogoutCommand : ILogoutCommand
     {

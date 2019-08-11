@@ -1,4 +1,4 @@
-namespace Vault.Api
+namespace PaladinRogue.Vault.Api
 {
     public static class ResourceTypes
     {

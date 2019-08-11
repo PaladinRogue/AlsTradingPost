@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace Gateway.Application.Applications.Mappings
+namespace PaladinRogue.Gateway.Application.Applications.Mappings
 {
     public class ApplicationMappingProfile : Profile
     {

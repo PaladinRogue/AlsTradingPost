@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Messaging.Common;
-using Messaging.Setup.Infrastructure.Handlers;
+using PaladinRogue.Libray.Messaging.Common.Handlers;
+using PaladinRogue.Libray.Messaging.Common.Messages;
 
-namespace Messaging.Setup.Infrastructure.MessageBus
+namespace PaladinRogue.Libray.Messaging.Common.MessageBus
 {
     public interface IMessageBus
     {

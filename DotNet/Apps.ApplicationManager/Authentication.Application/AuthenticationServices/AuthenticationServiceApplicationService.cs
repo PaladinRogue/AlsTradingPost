@@ -2,22 +2,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Authentication.Application.AuthenticationServices.Models;
-using Authentication.Application.AuthenticationServices.Models.Facebook;
-using Authentication.Application.AuthenticationServices.Models.Google;
-using Authentication.Domain;
-using Authentication.Domain.AuthenticationServices;
 using AutoMapper;
-using Common.Application.Exceptions;
-using Common.Application.Transactions;
-using Common.Domain.Exceptions;
-using Common.Domain.Persistence;
-using Common.Resources.Builders.Dictionaries;
-using Common.Resources.Extensions;
-using ReferenceData.Domain.Persistence;
-using ReferenceData.Domain.Projections;
+using PaladinRogue.Authentication.Application.AuthenticationServices.Models;
+using PaladinRogue.Authentication.Application.AuthenticationServices.Models.Facebook;
+using PaladinRogue.Authentication.Application.AuthenticationServices.Models.Google;
+using PaladinRogue.Authentication.Domain;
+using PaladinRogue.Authentication.Domain.AuthenticationServices;
+using PaladinRogue.Libray.Core.Application.Exceptions;
+using PaladinRogue.Libray.Core.Application.Transactions;
+using PaladinRogue.Libray.Core.Common.Builders.Dictionaries;
+using PaladinRogue.Libray.Core.Common.Extensions;
+using PaladinRogue.Libray.Core.Domain.Exceptions;
+using PaladinRogue.Libray.Core.Domain.Persistence;
+using PaladinRogue.Libray.ReferenceData.Domain.Persistence;
+using PaladinRogue.Libray.ReferenceData.Domain.Projections;
 
-namespace Authentication.Application.AuthenticationServices
+namespace PaladinRogue.Authentication.Application.AuthenticationServices
 {
     public class AuthenticationServiceApplicationService : IAuthenticationServiceApplicationService
     {

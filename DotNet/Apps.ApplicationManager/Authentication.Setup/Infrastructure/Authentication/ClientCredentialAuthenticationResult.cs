@@ -1,6 +1,6 @@
-using Authentication.Application.Authentication.ClientCredential;
+using PaladinRogue.Authentication.Application.Authentication.ClientCredential;
 
-namespace Authentication.Setup.Infrastructure.Authentication
+namespace PaladinRogue.Authentication.Setup.Infrastructure.Authentication
 {
     public class ClientCredentialAuthenticationResult : IClientCredentialAuthenticationResult
     {

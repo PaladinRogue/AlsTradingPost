@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using Messaging.Setup.Infrastructure.Dispatchers;
 using Microsoft.AspNetCore.Http;
+using PaladinRogue.Libray.Messaging.Common.Dispatchers;
 
-namespace Common.Setup.Infrastructure.Messaging
+namespace PaladinRogue.Libray.Messaging.Setup.Infrastructure.Dispatchers
 {
     public class DispatchMessagesMiddleware
     {

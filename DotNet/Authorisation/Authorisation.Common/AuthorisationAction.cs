@@ -1,4 +1,4 @@
-﻿namespace Authorisation.Application
+﻿namespace PaladinRogue.Libray.Authorisation.Common
 {
     public static class AuthorisationAction
     {

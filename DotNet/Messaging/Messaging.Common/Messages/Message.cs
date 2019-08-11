@@ -1,9 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Messaging.Common;
-using Messaging.Setup.Infrastructure.Dispatchers;
-using Messaging.Setup.Infrastructure.Senders;
+using PaladinRogue.Libray.Messaging.Common.Senders;
 
-namespace Messaging.Setup.Infrastructure
+namespace PaladinRogue.Libray.Messaging.Common.Messages
 {
     public static class Message
     {

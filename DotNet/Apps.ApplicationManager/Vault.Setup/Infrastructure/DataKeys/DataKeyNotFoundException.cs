@@ -1,6 +1,6 @@
 using System;
 
-namespace Vault.Setup.Infrastructure.DataKeys
+namespace PaladinRogue.Vault.Setup.Infrastructure.DataKeys
 {
     public class DataKeyNotFoundException : Exception
     {

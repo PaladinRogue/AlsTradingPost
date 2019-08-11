@@ -1,4 +1,4 @@
-namespace Authentication.Domain.Identities.CreateRefreshToken
+namespace PaladinRogue.Authentication.Domain.Identities.CreateRefreshToken
 {
     public class RefreshTokenIdentityDdto
     {

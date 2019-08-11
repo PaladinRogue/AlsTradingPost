@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
         <LangVersion>latest</LangVersion>
+        <RootNamespace>PaladinRogue.Notifications.Api</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -10,7 +11,7 @@
         <None Update="appSecrets.json.keyname" CopyToOutputDirectory="PreserveNewest" />
         <Content Remove="appSecrets.json" />
     </ItemGroup>
-    
+
     <ItemGroup>
         <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.1.1" />
         <PackageReference Include="LazyCache.AspNetCore" Version="2.0.1" />
@@ -18,7 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Common\Common.Api.Formats\Common.Api.Formats.csproj" />
+        <ProjectReference Include="..\..\Core\Core.Api.Formats\Core.Api.Formats.csproj" />
         <ProjectReference Include="..\Notifications.Setup\Notifications.Setup.csproj" />
     </ItemGroup>
 </Project>

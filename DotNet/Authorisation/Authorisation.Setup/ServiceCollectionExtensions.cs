@@ -1,12 +1,13 @@
-﻿using Authorisation.Application;
-using Authorisation.Application.ApplicationServices;
-using Authorisation.Application.Manager;
-using Authorisation.Application.Policies;
-using Authorisation.Application.Policies.Deny;
-using Authorisation.Application.Restrictions;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using PaladinRogue.Libray.Authorisation.Application.ApplicationServices;
+using PaladinRogue.Libray.Authorisation.Common.Managers;
+using PaladinRogue.Libray.Authorisation.Common.Policies;
+using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Managers;
+using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Owners;
+using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Policies.Deny;
+using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Restrictions;
 
-namespace Authorisation.Setup
+namespace PaladinRogue.Libray.Authorisation.Setup
 {
     public static class ServiceCollectionExtensions
     {

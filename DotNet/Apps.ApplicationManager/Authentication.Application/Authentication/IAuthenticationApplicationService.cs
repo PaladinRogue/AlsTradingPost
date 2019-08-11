@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using Authentication.Application.Authentication.Models;
-using Common.Application.Authentication;
+using PaladinRogue.Authentication.Application.Authentication.Models;
+using PaladinRogue.Libray.Core.Application.Authentication;
 
-namespace Authentication.Application.Authentication
+namespace PaladinRogue.Authentication.Application.Authentication
 {
     public interface IAuthenticationApplicationService
     {

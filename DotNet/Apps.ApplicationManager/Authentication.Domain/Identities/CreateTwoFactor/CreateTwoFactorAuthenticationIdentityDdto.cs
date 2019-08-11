@@ -1,4 +1,4 @@
-namespace Authentication.Domain.Identities.CreateTwoFactor
+namespace PaladinRogue.Authentication.Domain.Identities.CreateTwoFactor
 {
     internal class CreateTwoFactorAuthenticationIdentityDdto
     {

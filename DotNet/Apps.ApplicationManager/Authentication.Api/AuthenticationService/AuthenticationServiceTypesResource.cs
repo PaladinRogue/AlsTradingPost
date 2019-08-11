@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Common.Api.Resources;
+using PaladinRogue.Libray.Core.Api.Resources;
 
-namespace Authentication.Api.AuthenticationService
+namespace PaladinRogue.Authentication.Api.AuthenticationService
 {
     public class AuthenticationServiceTypesResource : ICollectionResource<AuthenticationServiceTypeResource>
     {

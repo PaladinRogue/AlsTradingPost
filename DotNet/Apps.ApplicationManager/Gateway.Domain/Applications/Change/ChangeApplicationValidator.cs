@@ -1,7 +1,7 @@
-﻿using Common.Resources;
-using FluentValidation;
+﻿using FluentValidation;
+using PaladinRogue.Libray.Core.Common;
 
-namespace Gateway.Domain.Applications.Change
+namespace PaladinRogue.Gateway.Domain.Applications.Change
 {
     public class ChangeApplicationValidator : AbstractValidator<ChangeApplicationDdto>
     {

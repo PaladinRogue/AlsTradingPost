@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using Common.Domain.Validation;
 using FluentValidation;
+using PaladinRogue.Libray.Core.Domain.Validation;
 
-namespace Authentication.Domain.Identities.ChangePassword
+namespace PaladinRogue.Authentication.Domain.Identities.ChangePassword
 {
     public class ChangePasswordCommand : IChangePasswordCommand
     {

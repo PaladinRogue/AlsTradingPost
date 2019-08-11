@@ -2,13 +2,14 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
+        <RootNamespace>PaladinRogue.Gateway.Application</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\Authorisation\Authorisation.Application\Authorisation.Application.csproj" />
-      <ProjectReference Include="..\..\Common\Common.Application\Common.Application.csproj" />
-      <ProjectReference Include="..\..\Messaging\Messaging.Messages\Messaging.Messages.csproj" />
+      <ProjectReference Include="..\..\Core\Core.Application\Core.Application.csproj" />
       <ProjectReference Include="..\Gateway.Domain\Gateway.Domain.csproj" />
+      <ProjectReference Include="..\Gateway.Messages\Gateway.Messages.csproj" />
     </ItemGroup>
 
 </Project>

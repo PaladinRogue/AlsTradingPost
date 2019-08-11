@@ -1,4 +1,4 @@
-﻿namespace Authorisation.Application.Policies
+﻿namespace PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Policies
 {
     public interface IAuthorisationPolicyProvider
     {

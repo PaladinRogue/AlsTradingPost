@@ -1,4 +1,4 @@
-namespace Authentication.Application.Authentication.ClientCredential
+namespace PaladinRogue.Authentication.Application.Authentication.ClientCredential
 {
     public class ValidateClientCredentialAdto
     {

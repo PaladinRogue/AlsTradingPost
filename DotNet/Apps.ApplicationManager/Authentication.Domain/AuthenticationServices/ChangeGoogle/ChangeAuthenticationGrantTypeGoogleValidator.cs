@@ -1,7 +1,7 @@
-using Common.Resources;
 using FluentValidation;
+using PaladinRogue.Libray.Core.Common;
 
-namespace Authentication.Domain.AuthenticationServices.ChangeGoogle
+namespace PaladinRogue.Authentication.Domain.AuthenticationServices.ChangeGoogle
 {
     public class ChangeAuthenticationGrantTypeGoogleValidator : AbstractValidator<ChangeAuthenticationGrantTypeGoogleDdto>
     {

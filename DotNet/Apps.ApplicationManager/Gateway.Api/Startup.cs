@@ -1,37 +1,37 @@
 ﻿using System;
 using AutoMapper;
-using Common.Api.Builders;
-using Common.Api.DataProtection;
-using Common.Api.Extensions;
-using Common.Api.Formats;
-using Authorisation.Application.Policies;
-using Authorisation.Setup;
-using Common.Api;
-using Common.Setup;
-using Common.Setup.Infrastructure.DataProtection;
-using Common.Setup.Infrastructure.DomainEvents;
-using Common.Setup.Infrastructure.Exceptions;
-using Common.Setup.Infrastructure.Messaging;
-using Common.Setup.Infrastructure.Persistence;
-using Common.Setup.Infrastructure.Settings;
-using Common.Setup.Infrastructure.Startup;
-using Common.Setup.Infrastructure.WebRequests;
-using Gateway.Domain;
-using Gateway.Setup;
-using Gateway.Setup.Infrastructure.DomainEvents;
-using Gateway.Setup.Infrastructure.Messaging;
-using Gateway.Setup.Infrastructure.ReverseProxy;
-using Libs.Vault.Broker;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using Vault.Broker;
-using Vault.Broker.Setup.DataKeys;
+using PaladinRogue.Gateway.Domain;
+using PaladinRogue.Gateway.Setup;
+using PaladinRogue.Gateway.Setup.Infrastructure.DomainEvents;
+using PaladinRogue.Gateway.Setup.Infrastructure.Messaging;
+using PaladinRogue.Gateway.Setup.Infrastructure.ReverseProxy;
+using PaladinRogue.Libray.Authorisation.Setup;
+using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Policies;
+using PaladinRogue.Libray.Core.Api;
+using PaladinRogue.Libray.Core.Api.Builders;
+using PaladinRogue.Libray.Core.Api.DataProtection;
+using PaladinRogue.Libray.Core.Api.Extensions;
+using PaladinRogue.Libray.Core.Api.Formats;
+using PaladinRogue.Libray.Core.Setup;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.DataProtection;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Exceptions;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Persistence;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Settings;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Startup;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.WebRequests;
+using PaladinRogue.Libray.DomainEvents.Setup;
+using PaladinRogue.Libray.Messaging.Setup;
+using PaladinRogue.Libray.Messaging.Setup.Infrastructure.Startup;
+using PaladinRogue.Libray.Vault.Setup;
+using PaladinRogue.Libray.Vault.Setup.Infrastructure.Startup;
 
 [assembly: ApiController]
 
-namespace Gateway.Api
+namespace PaladinRogue.Gateway.Api
 {
     public class Startup : ApiStartup
     {

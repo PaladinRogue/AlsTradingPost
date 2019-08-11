@@ -1,4 +1,4 @@
-﻿namespace Authentication.Domain.AuthenticationServices.CreateFacebook
+﻿namespace PaladinRogue.Authentication.Domain.AuthenticationServices.CreateFacebook
 {
     public class CreateAuthenticationGrantTypeFacebookDdto
     {

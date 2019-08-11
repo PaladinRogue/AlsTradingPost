@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Notifications.Application.Emails
+namespace PaladinRogue.Notifications.Application.Emails
 {
     public interface IEmailNotificationSender
     {

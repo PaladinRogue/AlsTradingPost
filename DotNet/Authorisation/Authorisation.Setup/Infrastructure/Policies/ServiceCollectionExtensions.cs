@@ -1,8 +1,9 @@
-using Authorisation.Application.Policies.Allow;
-using Authorisation.Application.Policies.Deny;
 using Microsoft.Extensions.DependencyInjection;
+using PaladinRogue.Libray.Authorisation.Common.Policies;
+using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Policies.Allow;
+using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Policies.Deny;
 
-namespace Authorisation.Application.Policies
+namespace PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Policies
 {
     public static class ServiceCollectionExtensions
     {

@@ -1,24 +1,27 @@
 using System;
-using Messaging.Setup.Infrastructure.DeQueuers;
-using Messaging.Setup.Infrastructure.Directors;
-using Messaging.Setup.Infrastructure.Dispatchers;
-using Messaging.Setup.Infrastructure.Factories;
-using Messaging.Setup.Infrastructure.Handlers;
-using Messaging.Setup.Infrastructure.MessageBus;
-using Messaging.Setup.Infrastructure.Senders;
-using Messaging.Setup.Infrastructure.Serialisers;
-using Common.Resources.Settings;
-using Messaging.RabbitMQ.Connection;
-using Messaging.RabbitMQ.MessageBus;
-using Messaging.RabbitMQ.Registrations;
-using Messaging.Setup.Infrastructure.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PaladinRogue.Libray.Messaging.Common.Dispatchers;
+using PaladinRogue.Libray.Messaging.Common.MessageBus;
+using PaladinRogue.Libray.Messaging.Common.MessageDequers;
+using PaladinRogue.Libray.Messaging.Common.Senders;
+using PaladinRogue.Libray.Messaging.Common.Serialisers;
+using PaladinRogue.Libray.Messaging.RabbitMQ.Connection;
+using PaladinRogue.Libray.Messaging.RabbitMQ.MessageBus;
+using PaladinRogue.Libray.Messaging.RabbitMQ.Registrations;
+using PaladinRogue.Libray.Messaging.Setup.Infrastructure.DeQueuers;
+using PaladinRogue.Libray.Messaging.Setup.Infrastructure.Directors;
+using PaladinRogue.Libray.Messaging.Setup.Infrastructure.Dispatchers;
+using PaladinRogue.Libray.Messaging.Setup.Infrastructure.Factories;
+using PaladinRogue.Libray.Messaging.Setup.Infrastructure.Handlers;
+using PaladinRogue.Libray.Messaging.Setup.Infrastructure.Senders;
+using PaladinRogue.Libray.Messaging.Setup.Infrastructure.Serialisers;
+using PaladinRogue.Libray.Messaging.Setup.Infrastructure.Settings;
 using RabbitMQ.Client;
 
-namespace Common.Setup.Infrastructure.Messaging
+namespace PaladinRogue.Libray.Messaging.Setup
 {
     public static class ServiceCollectionExtensions
     {

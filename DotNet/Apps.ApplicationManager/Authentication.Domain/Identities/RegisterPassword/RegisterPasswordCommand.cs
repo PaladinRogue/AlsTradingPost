@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Authentication.Domain.AuthenticationServices;
-using Authentication.Domain.Identities.Queries;
-using Common.Domain.Exceptions;
-using Common.Domain.Validation;
 using FluentValidation;
+using PaladinRogue.Authentication.Domain.AuthenticationServices;
+using PaladinRogue.Authentication.Domain.Identities.Queries;
+using PaladinRogue.Libray.Core.Domain.Exceptions;
+using PaladinRogue.Libray.Core.Domain.Validation;
 
-namespace Authentication.Domain.Identities.RegisterPassword
+namespace PaladinRogue.Authentication.Domain.Identities.RegisterPassword
 {
     public class RegisterPasswordCommand : IRegisterPasswordCommand
     {

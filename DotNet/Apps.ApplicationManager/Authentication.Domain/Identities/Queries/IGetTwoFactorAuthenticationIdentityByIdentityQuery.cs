@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using Authentication.Domain.Identities.Projections;
+using PaladinRogue.Authentication.Domain.Identities.Projections;
 
-namespace Authentication.Domain.Identities.Queries
+namespace PaladinRogue.Authentication.Domain.Identities.Queries
 {
     public interface IGetTwoFactorAuthenticationIdentityByIdentityQuery
     {

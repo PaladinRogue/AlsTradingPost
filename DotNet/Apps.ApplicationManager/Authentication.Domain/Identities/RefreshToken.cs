@@ -1,14 +1,14 @@
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using Authentication.Domain.AuthenticationServices;
-using Authentication.Domain.Identities.ValidateToken;
-using Common.Domain.Aggregates;
-using Common.Domain.Clocks;
-using Common.Domain.DataProtectors;
-using Common.Resources.Extensions;
 using NodaTime;
+using PaladinRogue.Authentication.Domain.AuthenticationServices;
+using PaladinRogue.Authentication.Domain.Identities.ValidateToken;
+using PaladinRogue.Libray.Core.Common.Extensions;
+using PaladinRogue.Libray.Core.Domain.Aggregates;
+using PaladinRogue.Libray.Core.Domain.Clocks;
+using PaladinRogue.Libray.Core.Domain.DataProtectors;
 
-namespace Authentication.Domain.Identities
+namespace PaladinRogue.Authentication.Domain.Identities
 {
     public class RefreshToken : IAggregateMember
     {

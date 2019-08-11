@@ -1,4 +1,4 @@
-﻿namespace ReferenceData.Application
+﻿namespace PaladinRogue.Libray.ReferenceData.Application
 {
     public static class AuthorisationResource
     {

@@ -1,25 +1,25 @@
 using System.Threading.Tasks;
-using Authentication.Application.Identities.Models;
-using Authentication.Domain.AuthenticationServices;
-using Authentication.Domain.Identities;
-using Authentication.Domain.Identities.ChangePassword;
-using Authentication.Domain.Identities.ConfirmIdentity;
-using Authentication.Domain.Identities.Create;
-using Authentication.Domain.Identities.CreateRefreshToken;
-using Authentication.Domain.Identities.ForgotPassword;
-using Authentication.Domain.Identities.Logout;
-using Authentication.Domain.Identities.RegisterPassword;
-using Authentication.Domain.Identities.ResendConfirmIdentity;
-using Authentication.Domain.Identities.ResetPassword;
-using Authentication.Domain.Identities.ValidateToken;
-using Common.Application;
-using Common.Application.Concurrency;
-using Common.Application.Exceptions;
-using Common.Application.Transactions;
-using Common.Domain.Exceptions;
-using Common.Domain.Persistence;
+using PaladinRogue.Authentication.Application.Identities.Models;
+using PaladinRogue.Authentication.Domain.AuthenticationServices;
+using PaladinRogue.Authentication.Domain.Identities;
+using PaladinRogue.Authentication.Domain.Identities.ChangePassword;
+using PaladinRogue.Authentication.Domain.Identities.ConfirmIdentity;
+using PaladinRogue.Authentication.Domain.Identities.Create;
+using PaladinRogue.Authentication.Domain.Identities.CreateRefreshToken;
+using PaladinRogue.Authentication.Domain.Identities.ForgotPassword;
+using PaladinRogue.Authentication.Domain.Identities.Logout;
+using PaladinRogue.Authentication.Domain.Identities.RegisterPassword;
+using PaladinRogue.Authentication.Domain.Identities.ResendConfirmIdentity;
+using PaladinRogue.Authentication.Domain.Identities.ResetPassword;
+using PaladinRogue.Authentication.Domain.Identities.ValidateToken;
+using PaladinRogue.Libray.Core.Application;
+using PaladinRogue.Libray.Core.Application.Concurrency;
+using PaladinRogue.Libray.Core.Application.Exceptions;
+using PaladinRogue.Libray.Core.Application.Transactions;
+using PaladinRogue.Libray.Core.Domain.Exceptions;
+using PaladinRogue.Libray.Core.Domain.Persistence;
 
-namespace Authentication.Application.Identities
+namespace PaladinRogue.Authentication.Application.Identities
 {
     public class IdentityApplicationService : IIdentityApplicationService
     {

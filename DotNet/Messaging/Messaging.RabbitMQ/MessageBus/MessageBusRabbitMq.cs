@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
-using Messaging.Setup.Infrastructure;
-using Messaging.Setup.Infrastructure.DeQueuers;
-using Messaging.Setup.Infrastructure.Handlers;
-using Messaging.Setup.Infrastructure.MessageBus;
-using Messaging.Setup.Infrastructure.Serialisers;
-using Messaging.Common;
-using Messaging.RabbitMQ.Connection;
-using Messaging.RabbitMQ.Registrations;
 using Microsoft.Extensions.Logging;
+using PaladinRogue.Libray.Messaging.Common.Handlers;
+using PaladinRogue.Libray.Messaging.Common.MessageBus;
+using PaladinRogue.Libray.Messaging.Common.MessageDequers;
+using PaladinRogue.Libray.Messaging.Common.Messages;
+using PaladinRogue.Libray.Messaging.Common.Registrations;
+using PaladinRogue.Libray.Messaging.Common.Serialisers;
+using PaladinRogue.Libray.Messaging.RabbitMQ.Connection;
+using PaladinRogue.Libray.Messaging.RabbitMQ.Registrations;
 using Polly;
 using Polly.Retry;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Exceptions;
 
-namespace Messaging.RabbitMQ.MessageBus
+namespace PaladinRogue.Libray.Messaging.RabbitMQ.MessageBus
 {
     public class MessageBusRabbitMq : IMessageBus
     {

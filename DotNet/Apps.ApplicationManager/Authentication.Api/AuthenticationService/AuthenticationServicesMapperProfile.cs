@@ -1,11 +1,11 @@
-using Authentication.Api.AuthenticationService.Facebook;
-using Authentication.Api.AuthenticationService.Google;
-using Authentication.Application.AuthenticationServices.Models;
-using Authentication.Application.AuthenticationServices.Models.Facebook;
-using Authentication.Application.AuthenticationServices.Models.Google;
 using AutoMapper;
+using PaladinRogue.Authentication.Api.AuthenticationService.Facebook;
+using PaladinRogue.Authentication.Api.AuthenticationService.Google;
+using PaladinRogue.Authentication.Application.AuthenticationServices.Models;
+using PaladinRogue.Authentication.Application.AuthenticationServices.Models.Facebook;
+using PaladinRogue.Authentication.Application.AuthenticationServices.Models.Google;
 
-namespace Authentication.Api.AuthenticationService
+namespace PaladinRogue.Authentication.Api.AuthenticationService
 {
     public class AuthenticationServicesMapperProfile : Profile
     {

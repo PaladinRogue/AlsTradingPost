@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Authorisation.Application.Contexts;
+using PaladinRogue.Libray.Authorisation.Common.Contexts;
 
-namespace Authorisation.Application.Restrictions
+namespace PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Restrictions
 {
     public interface IAuthorisationRestriction
     {

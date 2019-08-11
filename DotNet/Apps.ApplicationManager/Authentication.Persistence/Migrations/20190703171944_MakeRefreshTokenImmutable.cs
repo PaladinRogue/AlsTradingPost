@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Authentication.Persistence.Migrations
+namespace PaladinRogue.Authentication.Persistence.Migrations
 {
     public partial class MakeRefreshTokenImmutable : Migration
     {

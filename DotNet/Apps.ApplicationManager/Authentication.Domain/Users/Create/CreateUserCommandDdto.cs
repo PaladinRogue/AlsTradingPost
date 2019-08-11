@@ -1,6 +1,6 @@
-using Authentication.Domain.Identities;
+using PaladinRogue.Authentication.Domain.Identities;
 
-namespace Authentication.Domain.Users.Create
+namespace PaladinRogue.Authentication.Domain.Users.Create
 {
     public class CreateUserCommandDdto
     {

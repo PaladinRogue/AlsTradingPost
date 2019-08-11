@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Common.Domain.Aggregates;
-using Common.Domain.Entities;
+using PaladinRogue.Libray.Core.Domain.Aggregates;
+using PaladinRogue.Libray.Core.Domain.Entities;
 
-namespace Authentication.Domain.Identities
+namespace PaladinRogue.Authentication.Domain.Identities
 {
     public abstract class AuthenticationIdentity : Entity, IAggregateMember
     {

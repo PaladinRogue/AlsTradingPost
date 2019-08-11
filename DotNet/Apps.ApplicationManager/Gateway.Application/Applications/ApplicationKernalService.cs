@@ -1,11 +1,10 @@
 using System.Threading.Tasks;
-using Common.Application.Caching;
-using Common.Application.Exceptions;
-using Common.Application.Transactions;
-using Gateway.Domain.Applications;
-using Gateway.Domain.Applications.Persistence;
+using PaladinRogue.Gateway.Domain.Applications.Persistence;
+using PaladinRogue.Libray.Core.Application.Caching;
+using PaladinRogue.Libray.Core.Application.Exceptions;
+using PaladinRogue.Libray.Core.Application.Transactions;
 
-namespace Gateway.Application.Applications
+namespace PaladinRogue.Gateway.Application.Applications
 {
     public class ApplicationKernalService : IApplicationKernalService
     {

@@ -1,19 +1,18 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Common.Domain.DataProtectors;
 
-namespace Libs.Vault.Domain.Domain.Persistence
+namespace PaladinRogue.Libray.Vault.Domain.DataKeys.Persistence
 {
     public interface IDataKeyRepository
     {
-        Task<IEnumerable<DataKey>> GetAllSharedAsync();
+        Task<IEnumerable<Core.Domain.DataProtectors.DataKey>> GetAllSharedAsync();
 
-        Task<DataKey> GetSharedAsync(string name);
+        Task<Core.Domain.DataProtectors.DataKey> GetSharedAsync(string name);
 
-        Task<IEnumerable<DataKey>> GetAllAsync();
+        Task<IEnumerable<Core.Domain.DataProtectors.DataKey>> GetAllAsync();
 
-        Task<DataKey> GetAsync(string name);
+        Task<Core.Domain.DataProtectors.DataKey> GetAsync(string name);
 
-        Task CreateKeyAsync(DataKey dataKey);
+        Task CreateKeyAsync(Core.Domain.DataProtectors.DataKey dataKey);
     }
 }

@@ -1,4 +1,4 @@
-namespace Vault.Domain
+namespace PaladinRogue.Libray.Vault.Domain
 {
     public class MasterDataKeys
     {

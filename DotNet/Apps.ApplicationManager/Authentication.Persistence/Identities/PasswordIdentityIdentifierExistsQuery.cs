@@ -1,10 +1,10 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Authentication.Domain.Identities;
-using Authentication.Domain.Identities.Queries;
 using Microsoft.EntityFrameworkCore;
+using PaladinRogue.Authentication.Domain.Identities;
+using PaladinRogue.Authentication.Domain.Identities.Queries;
 
-namespace Authentication.Persistence.Identities
+namespace PaladinRogue.Authentication.Persistence.Identities
 {
     public class PasswordIdentityIdentifierExistsQuery : IPasswordIdentityIdentifierExistsQuery
     {

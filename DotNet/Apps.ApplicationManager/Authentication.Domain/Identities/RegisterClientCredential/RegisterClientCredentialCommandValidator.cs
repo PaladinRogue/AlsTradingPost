@@ -1,7 +1,7 @@
-using Common.Resources;
 using FluentValidation;
+using PaladinRogue.Libray.Core.Common;
 
-namespace Authentication.Domain.Identities.RegisterClientCredential
+namespace PaladinRogue.Authentication.Domain.Identities.RegisterClientCredential
 {
     public class RegisterClientCredentialCommandValidator : AbstractValidator<RegisterClientCredentialCommandDdto>
     {

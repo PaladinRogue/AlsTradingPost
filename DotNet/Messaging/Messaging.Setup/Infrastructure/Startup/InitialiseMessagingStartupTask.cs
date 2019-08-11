@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Messaging.Setup.Infrastructure.Handlers;
-using Common.Setup.Infrastructure.Startup;
 using Microsoft.Extensions.DependencyInjection;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Startup;
+using PaladinRogue.Libray.Messaging.Setup.Infrastructure.Handlers;
 
-namespace Common.Setup.Infrastructure.Messaging
+namespace PaladinRogue.Libray.Messaging.Setup.Infrastructure.Startup
 {
     public class InitialiseMessagingStartupTask : IStartupTask
     {

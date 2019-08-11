@@ -1,8 +1,8 @@
 using System;
-using Common.Api.Resources;
-using Common.Api.Validation.Attributes;
+using PaladinRogue.Libray.Core.Api.Resources;
+using PaladinRogue.Libray.Core.Api.Validation.Attributes;
 
-namespace Authentication.Api.Authentication
+namespace PaladinRogue.Authentication.Api.Authentication
 {
     public class AuthenticateClientCredentialTemplate : ITemplate
     {

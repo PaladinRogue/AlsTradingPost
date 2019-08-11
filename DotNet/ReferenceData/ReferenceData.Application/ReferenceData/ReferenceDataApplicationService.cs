@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Common.Application.Transactions;
-using ReferenceData.Application.ReferenceData.Models;
-using ReferenceData.Domain.Persistence;
-using ReferenceData.Domain.Projections;
+using PaladinRogue.Libray.Core.Application.Transactions;
+using PaladinRogue.Libray.ReferenceData.Application.ReferenceData.Models;
+using PaladinRogue.Libray.ReferenceData.Domain.Persistence;
+using PaladinRogue.Libray.ReferenceData.Domain.Projections;
 
-namespace ReferenceData.Application.ReferenceData
+namespace PaladinRogue.Libray.ReferenceData.Application.ReferenceData
 {
     public class ReferenceDataApplicationService : IReferenceDataApplicationService
     {

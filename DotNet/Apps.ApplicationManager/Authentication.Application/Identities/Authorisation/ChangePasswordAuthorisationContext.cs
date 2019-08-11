@@ -1,9 +1,9 @@
 using System;
-using Authentication.Domain.Identities;
-using Authorisation.Application;
-using Authorisation.Application.Contexts;
+using PaladinRogue.Authentication.Domain.Identities;
+using PaladinRogue.Libray.Authorisation.Common;
+using PaladinRogue.Libray.Authorisation.Common.Contexts;
 
-namespace Authentication.Application.Identities.Authorisation
+namespace PaladinRogue.Authentication.Application.Identities.Authorisation
 {
     public class ChangePasswordAuthorisationContext : IAuthorisationContext
     {

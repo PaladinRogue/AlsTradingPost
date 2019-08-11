@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using Common.Domain.Validation;
 using FluentValidation;
+using PaladinRogue.Libray.Core.Domain.Validation;
 
-namespace Authentication.Domain.AuthenticationServices.ChangeFacebook
+namespace PaladinRogue.Authentication.Domain.AuthenticationServices.ChangeFacebook
 {
     public class ChangeAuthenticationGrantTypeFacebookCommand : IChangeAuthenticationGrantTypeFacebookCommand
     {

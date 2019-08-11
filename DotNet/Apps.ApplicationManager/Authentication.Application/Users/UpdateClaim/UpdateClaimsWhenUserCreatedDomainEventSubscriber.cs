@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
-using Authentication.Application.Claims;
-using Authentication.Domain.Users.Events;
-using Authorisation.Application.ApplicationServices;
-using Common.Domain.DomainEvents.Interfaces;
+using PaladinRogue.Authentication.Application.Claims;
+using PaladinRogue.Authentication.Domain.Users.Events;
+using PaladinRogue.Libray.Authorisation.Application.ApplicationServices;
+using PaladinRogue.Libray.Core.Domain.DomainEvents.Interfaces;
 
-namespace Authentication.Application.Users.UpdateClaim
+namespace PaladinRogue.Authentication.Application.Users.UpdateClaim
 {
     public class UpdateClaimsWhenUserCreatedDomainEventSubscriber : IDomainEventSubscriber<UserCreatedDomainEvent>
     {

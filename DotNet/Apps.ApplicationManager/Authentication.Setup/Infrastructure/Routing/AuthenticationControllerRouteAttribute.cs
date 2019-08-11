@@ -1,6 +1,6 @@
-using Common.Api.Routing;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Routing;
 
-namespace Authentication.Setup.Infrastructure.Routing
+namespace PaladinRogue.Authentication.Setup.Infrastructure.Routing
 {
     public class AuthenticationControllerRouteAttribute : ControllerRouteAttribute
     {

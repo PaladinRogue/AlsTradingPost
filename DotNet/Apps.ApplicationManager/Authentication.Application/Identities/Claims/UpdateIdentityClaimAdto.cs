@@ -1,6 +1,6 @@
 using System;
 
-namespace Authentication.Application.Identities.Claims
+namespace PaladinRogue.Authentication.Application.Identities.Claims
 {
     public class UpdateIdentityClaimAdto
     {

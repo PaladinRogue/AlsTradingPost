@@ -1,12 +1,12 @@
 using System;
 using System.Threading.Tasks;
-using Common.Application.Caching;
-using Common.Setup.Infrastructure.Authorisation;
 using LazyCache;
 using Microsoft.Extensions.Caching.Memory;
 using NodaTime;
+using PaladinRogue.Libray.Core.Application.Caching;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Authorisation;
 
-namespace Authentication.Setup.Infrastructure.Caching
+namespace PaladinRogue.Authentication.Setup.Infrastructure.Caching
 {
     public class IdentityCacheService : ICacheService
     {

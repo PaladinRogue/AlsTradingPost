@@ -1,13 +1,12 @@
 using System;
 using System.Threading.Tasks;
-using Authentication.Application.Notifications.Send;
-using Messaging.Messages;
-using Messaging.Setup.Infrastructure.Handlers;
-using Messaging.Setup.Infrastructure.MessageBus;
 using Microsoft.Extensions.Logging;
-using Notifications.ApplicationServices.Emails;
+using PaladinRogue.Authentication.Application.Notifications.Send;
+using PaladinRogue.Authentication.Messages;
+using PaladinRogue.Libray.Messaging.Common.Handlers;
+using PaladinRogue.Libray.Messaging.Common.MessageBus;
 
-namespace Authentication.Application.Handlers
+namespace PaladinRogue.Authentication.Application.Handlers
 {
     public class SendNotificationMessageHandler : MessageHandler<SendNotificationMessage, SendNotificationMessageHandler>
     {

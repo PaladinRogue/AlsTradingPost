@@ -7,19 +7,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.Domain", "Au
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.Persistence", "Authentication.Persistence\Authentication.Persistence.csproj", "{7504B7B2-11F7-4A9F-A4A1-28699187E3C7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{79DBFCBE-67CD-487F-B2F7-F1A88C048919}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{79DBFCBE-67CD-487F-B2F7-F1A88C048919}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Persistence", "Persistence", "{0078ACE3-063A-47C7-A077-DA4EFC8AA181}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence.EntityFramework", "..\Persistence\Persistence.EntityFramework\Persistence.EntityFramework.csproj", "{FC8F455A-3E8F-44AD-9084-1EABE04A2372}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Domain", "..\Common\Common.Domain\Common.Domain.csproj", "{C3B2FB9B-CC04-4D81-9F39-C05164730795}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Domain", "..\Core\Core.Domain\Core.Domain.csproj", "{C3B2FB9B-CC04-4D81-9F39-C05164730795}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Resources", "..\Common\Common.Resources\Common.Resources.csproj", "{EDF6E22E-FE43-46DC-8EF0-C2F79E6CB6A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Common", "..\Core\Core.Common\Core.Common.csproj", "{EDF6E22E-FE43-46DC-8EF0-C2F79E6CB6A7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Api", "..\Common\Common.Api\Common.Api.csproj", "{4BA1A3BE-B734-4055-AE2A-57E712F6CEEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Api", "..\Core\Core.Api\Core.Api.csproj", "{4BA1A3BE-B734-4055-AE2A-57E712F6CEEE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Setup", "..\Common\Common.Setup\Common.Setup.csproj", "{49551DE4-EFFE-4FBF-9843-FE1B4BA715B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Setup", "..\Core\Core.Setup\Core.Setup.csproj", "{49551DE4-EFFE-4FBF-9843-FE1B4BA715B6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DomainEvents", "DomainEvents", "{674229FE-30C5-45E9-9B7C-4DFA220EB669}"
 EndProject
@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Messaging.RabbitMQ", "..\Me
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Messaging.Setup", "..\Messaging\Messaging.Setup\Messaging.Setup.csproj", "{029F2E12-BDB3-4170-8070-1A99626FD141}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Api.Formats", "..\Common\Common.Api.Formats\Common.Api.Formats.csproj", "{9A303724-1BA0-4E99-8EF0-330CDE7F02D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Api.Formats", "..\Core\Core.Api.Formats\Core.Api.Formats.csproj", "{9A303724-1BA0-4E99-8EF0-330CDE7F02D6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.Application", "Authentication.Application\Authentication.Application.csproj", "{BEE1801D-B717-4CDE-8019-673F31CA819F}"
 EndProject
@@ -39,7 +39,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.Setup", "Aut
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.Api", "Authentication.Api\Authentication.Api.csproj", "{ADAA7F45-ED8E-40C3-9E51-5826C0C727F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Application", "..\Common\Common.Application\Common.Application.csproj", "{4D1F7BED-D763-46CE-8F21-47FC4285C75D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Application", "..\Core\Core.Application\Core.Application.csproj", "{4D1F7BED-D763-46CE-8F21-47FC4285C75D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorisation.Application", "..\Authorisation\Authorisation.Application\Authorisation.Application.csproj", "{D8D5DAC6-4A8F-4AEC-8C9D-8EF2EBF6FF5F}"
 EndProject
@@ -79,8 +79,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notifications.Application",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notifications.Setup", "Notifications.Setup\Notifications.Setup.csproj", "{D4379B76-7F98-4A87-90CB-2E6101A1B4A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messaging.Messages", "..\Messaging\Messaging.Messages\Messaging.Messages.csproj", "{7A3D5A13-257F-4434-BCDA-61C594048CBF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messaging.Common", "..\Messaging\Messaging.Common\Messaging.Common.csproj", "{DCF4C6BF-FDD0-400A-AA78-CF164DC97246}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.Messages", "Authentication.Messages\Authentication.Messages.csproj", "{1B28B9FA-35AC-40F0-9904-F2B07B8703DB}"
@@ -104,6 +102,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{1B191D18-8BCE-41EB-B041-71FC1916C9A3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Configuration.Secrets", "..\Configuration\Configuration.Secrets\Configuration.Secrets.csproj", "{E660EF94-4D95-4972-8CE2-5DA7F8E52149}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway.Messages", "Gateway.Messages\Gateway.Messages.csproj", "{7094188D-2E84-4401-8868-F5A74FC2D73D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notifications.Messages", "Notifications.Messages\Notifications.Messages.csproj", "{ED9A7F24-6770-48CE-AA4E-CA0EDDBE0C80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -239,10 +241,6 @@ Global
 		{D4379B76-7F98-4A87-90CB-2E6101A1B4A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4379B76-7F98-4A87-90CB-2E6101A1B4A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4379B76-7F98-4A87-90CB-2E6101A1B4A5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7A3D5A13-257F-4434-BCDA-61C594048CBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7A3D5A13-257F-4434-BCDA-61C594048CBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7A3D5A13-257F-4434-BCDA-61C594048CBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7A3D5A13-257F-4434-BCDA-61C594048CBF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DCF4C6BF-FDD0-400A-AA78-CF164DC97246}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DCF4C6BF-FDD0-400A-AA78-CF164DC97246}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCF4C6BF-FDD0-400A-AA78-CF164DC97246}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -283,6 +281,14 @@ Global
 		{E660EF94-4D95-4972-8CE2-5DA7F8E52149}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E660EF94-4D95-4972-8CE2-5DA7F8E52149}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E660EF94-4D95-4972-8CE2-5DA7F8E52149}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7094188D-2E84-4401-8868-F5A74FC2D73D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7094188D-2E84-4401-8868-F5A74FC2D73D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7094188D-2E84-4401-8868-F5A74FC2D73D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7094188D-2E84-4401-8868-F5A74FC2D73D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED9A7F24-6770-48CE-AA4E-CA0EDDBE0C80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED9A7F24-6770-48CE-AA4E-CA0EDDBE0C80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED9A7F24-6770-48CE-AA4E-CA0EDDBE0C80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED9A7F24-6770-48CE-AA4E-CA0EDDBE0C80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -303,7 +309,6 @@ Global
 		{2ACCFC90-ACBF-4792-9B36-A0BCE1317FB3} = {08D93BF1-4C8C-4D45-882D-CB0EFF0C7E80}
 		{C44FD35D-4698-4353-80E9-EBC53F5DC45A} = {08D93BF1-4C8C-4D45-882D-CB0EFF0C7E80}
 		{029F2E12-BDB3-4170-8070-1A99626FD141} = {4802E3E9-E628-490A-BE87-033AE0A624FD}
-		{7A3D5A13-257F-4434-BCDA-61C594048CBF} = {4802E3E9-E628-490A-BE87-033AE0A624FD}
 		{DCF4C6BF-FDD0-400A-AA78-CF164DC97246} = {4802E3E9-E628-490A-BE87-033AE0A624FD}
 		{D8D5DAC6-4A8F-4AEC-8C9D-8EF2EBF6FF5F} = {85C5CE01-A1F7-483F-90AE-E330DC948D0A}
 		{19B3CD4A-7E9A-45C8-89B0-31BFF6724BA4} = {0078ACE3-063A-47C7-A077-DA4EFC8AA181}

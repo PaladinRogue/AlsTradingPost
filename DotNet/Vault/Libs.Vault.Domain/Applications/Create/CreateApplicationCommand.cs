@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using FluentValidation;
 
-namespace Vault.Domain.Applications.Create
+namespace PaladinRogue.Libray.Vault.Domain.Applications.Create
 {
     public class CreateApplicationCommand : ICreateApplicationCommand
     {

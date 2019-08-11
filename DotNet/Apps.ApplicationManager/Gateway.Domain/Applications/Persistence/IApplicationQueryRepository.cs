@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Gateway.Domain.Applications.Persistence
+namespace PaladinRogue.Gateway.Domain.Applications.Persistence
 {
     public interface IApplicationQueryRepository
     {

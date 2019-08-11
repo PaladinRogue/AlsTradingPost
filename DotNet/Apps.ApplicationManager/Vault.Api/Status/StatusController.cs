@@ -1,9 +1,9 @@
-﻿using Common.Api.Builders.Resource;
-using Vault.Setup.Infrastructure.Routing;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PaladinRogue.Libray.Core.Api.Builders.Resource;
+using PaladinRogue.Vault.Setup.Infrastructure.Routing;
 
-namespace Vault.Api.Status
+namespace PaladinRogue.Vault.Api.Status
 {
     [VaultControllerRoute]
     public class StatusController : ControllerBase

@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Authorisation.Application.ApplicationServices
+namespace PaladinRogue.Libray.Authorisation.Application.ApplicationServices
 {
     public interface IClaimsApplicationKernalService
     {

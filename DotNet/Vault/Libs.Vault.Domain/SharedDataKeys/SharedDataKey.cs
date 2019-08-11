@@ -1,8 +1,8 @@
-using Common.Domain.Aggregates;
-using Vault.Domain.SharedDataKeys.Change;
-using Vault.Domain.SharedDataKeys.Create;
+using PaladinRogue.Libray.Core.Domain.Aggregates;
+using PaladinRogue.Libray.Vault.Domain.SharedDataKeys.Change;
+using PaladinRogue.Libray.Vault.Domain.SharedDataKeys.Create;
 
-namespace Vault.Domain.SharedDataKeys
+namespace PaladinRogue.Libray.Vault.Domain.SharedDataKeys
 {
     public class SharedDataKey : DataKey, IAggregateRoot
     {

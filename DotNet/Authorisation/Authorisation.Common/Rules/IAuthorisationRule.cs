@@ -1,5 +1,5 @@
 ﻿
-namespace Authorisation.Application
+namespace PaladinRogue.Libray.Authorisation.Common.Rules
 {
     public interface IAuthorisationRule
     {

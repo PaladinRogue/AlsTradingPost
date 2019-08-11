@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Common.Domain.DataProtectors;
-using Common.Resources;
+using PaladinRogue.Libray.Core.Common;
+using PaladinRogue.Libray.Core.Domain.DataProtectors;
 
-namespace Authentication.Domain.AuthenticationServices
+namespace PaladinRogue.Authentication.Domain.AuthenticationServices
 {
     public class AuthenticationGrantTypeClientCredential : AuthenticationService
     {

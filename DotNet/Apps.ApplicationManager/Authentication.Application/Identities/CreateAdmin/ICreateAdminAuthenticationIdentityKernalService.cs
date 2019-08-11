@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Authentication.Application.Identities.CreateAdmin
+namespace PaladinRogue.Authentication.Application.Identities.CreateAdmin
 {
     public interface ICreateAdminAuthenticationIdentityKernalService
     {

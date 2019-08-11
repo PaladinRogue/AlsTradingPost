@@ -1,4 +1,4 @@
-namespace Authentication.Domain.Identities.CreateClientCredential
+namespace PaladinRogue.Authentication.Domain.Identities.CreateClientCredential
 {
     internal class CreateClientCredentialIdentityDdto
     {

@@ -1,7 +1,7 @@
-﻿using Common.Resources;
-using FluentValidation;
+﻿using FluentValidation;
+using PaladinRogue.Libray.Core.Common;
 
-namespace Gateway.Domain.Applications.Create
+namespace PaladinRogue.Gateway.Domain.Applications.Create
 {
     public class CreateApplicationValidator : AbstractValidator<CreateApplicationDdto>
     {

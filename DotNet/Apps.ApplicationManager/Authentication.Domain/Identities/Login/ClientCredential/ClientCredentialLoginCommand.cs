@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Authentication.Domain.Identities.Login.ClientCredential
+namespace PaladinRogue.Authentication.Domain.Identities.Login.ClientCredential
 {
     public class ClientCredentialLoginCommand : IClientCredentialLoginCommand
     {

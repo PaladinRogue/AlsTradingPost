@@ -1,4 +1,4 @@
-﻿namespace Authentication.Api
+﻿namespace PaladinRogue.Authentication.Api
 {
     public static class RouteDictionary
     {

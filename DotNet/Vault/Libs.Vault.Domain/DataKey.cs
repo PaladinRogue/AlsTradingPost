@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
-using Common.Domain.Entities;
-using Common.Resources;
 using Microsoft.IdentityModel.Tokens;
+using PaladinRogue.Libray.Core.Common;
+using PaladinRogue.Libray.Core.Domain.Entities;
 
-namespace Vault.Domain
+namespace PaladinRogue.Libray.Vault.Domain
 {
     public abstract class DataKey : VersionedEntity
     {

@@ -1,7 +1,7 @@
 ﻿using System;
-using Messaging.Common;
+using PaladinRogue.Libray.Messaging.Common.Messages;
 
-namespace Authentication.Messages
+namespace PaladinRogue.Authentication.Messages
 {
     public class AdminIdentityCreatedMessage : IMessage
     {

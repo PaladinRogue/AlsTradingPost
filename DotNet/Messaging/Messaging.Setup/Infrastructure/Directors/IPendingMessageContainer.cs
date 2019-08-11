@@ -1,6 +1,6 @@
-﻿using Messaging.Common;
+﻿using PaladinRogue.Libray.Messaging.Common.Messages;
 
-namespace Messaging.Setup.Infrastructure.Directors
+namespace PaladinRogue.Libray.Messaging.Setup.Infrastructure.Directors
 {
     public interface IPendingMessageContainer : IContainer<IMessage>
     {

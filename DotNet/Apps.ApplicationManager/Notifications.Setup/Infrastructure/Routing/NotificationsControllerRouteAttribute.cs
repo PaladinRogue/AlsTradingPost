@@ -1,6 +1,6 @@
-using Common.Api.Routing;
+using PaladinRogue.Libray.Core.Setup.Infrastructure.Routing;
 
-namespace Notifications.Setup.Infrastructure.Routing
+namespace PaladinRogue.Notifications.Setup.Infrastructure.Routing
 {
     public class NotificationsControllerRouteAttribute : ControllerRouteAttribute
     {
