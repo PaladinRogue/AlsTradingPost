@@ -2,7 +2,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PaladinRogue.Libray.Core.Application.WebRequests
+namespace PaladinRogue.Library.Core.Application.WebRequests
 {
     public interface IHttpRequest
     {

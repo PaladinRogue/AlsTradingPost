@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NodaTime;
 
-namespace PaladinRogue.Libray.Persistence.EntityFramework.Infrastructure.DateTimeConverters
+namespace PaladinRogue.Library.Persistence.EntityFramework.Infrastructure.DateTimeConverters
 {
     public class InstantConverter : ValueConverter<Instant, DateTime>
     {

@@ -1,4 +1,4 @@
-namespace PaladinRogue.Libray.Core.Api.Formats.JsonV1
+namespace PaladinRogue.Library.Core.Api.Formats.JsonV1
 {
     public static class MediaTypes
     {

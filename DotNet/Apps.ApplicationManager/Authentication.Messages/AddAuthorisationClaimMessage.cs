@@ -1,5 +1,5 @@
 ﻿using System;
-using PaladinRogue.Libray.Messaging.Common.Messages;
+using PaladinRogue.Library.Messaging.Common.Messages;
 
 namespace PaladinRogue.Authentication.Messages
 {

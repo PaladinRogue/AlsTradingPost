@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
         <LangVersion>latest</LangVersion>
-        <RootNamespace>PaladinRogue.Libray.Vault.Domain</RootNamespace>
+        <RootNamespace>PaladinRogue.Library.Vault.Domain</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

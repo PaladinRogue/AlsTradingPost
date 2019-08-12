@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using PaladinRogue.Libray.Core.Common.Sorting;
-using PaladinRogue.Libray.Core.Domain.Entities;
-using PaladinRogue.Libray.Core.Domain.Sorting;
+using PaladinRogue.Library.Core.Common.Sorting;
+using PaladinRogue.Library.Core.Domain.Entities;
+using PaladinRogue.Library.Core.Domain.Sorting;
 
-namespace PaladinRogue.Libray.Core.Application.Services.Query
+namespace PaladinRogue.Library.Core.Application.Services.Query
 {
     public interface IGetQueryService<T> where T : IEntity
     {

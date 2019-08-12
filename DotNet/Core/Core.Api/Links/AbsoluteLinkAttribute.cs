@@ -1,7 +1,7 @@
 ﻿using System;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Constants;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Constants;
 
-namespace PaladinRogue.Libray.Core.Api.Links
+namespace PaladinRogue.Library.Core.Api.Links
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class AbsoluteLinkAttribute : LinkAttribute

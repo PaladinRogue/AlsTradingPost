@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 
-namespace PaladinRogue.Libray.Core.Common.Extensions
+namespace PaladinRogue.Library.Core.Common.Extensions
 {
 	public static class Extensions
 	{

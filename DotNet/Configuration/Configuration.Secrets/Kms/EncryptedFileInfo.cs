@@ -4,7 +4,7 @@ using Google.Cloud.Kms.V1;
 using Google.Protobuf;
 using Microsoft.Extensions.FileProviders;
 
-namespace PaladinRogue.Libray.Configuration.Secrets.Kms
+namespace PaladinRogue.Library.Configuration.Secrets.Kms
 {
     public class EncryptedFileInfo : IFileInfo
     {

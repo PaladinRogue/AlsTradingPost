@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Routing;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Routing;
 
 namespace PaladinRogue.Gateway.Setup.Infrastructure.Routing
 {

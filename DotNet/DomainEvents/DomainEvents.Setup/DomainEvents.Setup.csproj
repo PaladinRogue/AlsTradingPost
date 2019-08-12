@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
-        <RootNamespace>PaladinRogue.Libray.DomainEvents.Setup</RootNamespace>
+        <RootNamespace>PaladinRogue.Library.DomainEvents.Setup</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

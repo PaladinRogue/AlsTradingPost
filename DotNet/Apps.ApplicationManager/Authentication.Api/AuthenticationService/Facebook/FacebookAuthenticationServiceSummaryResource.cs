@@ -1,8 +1,8 @@
 using System;
 using PaladinRogue.Authentication.Application.AuthenticationServices.Authorisation;
-using PaladinRogue.Libray.Core.Api.Links;
-using PaladinRogue.Libray.Core.Api.Resources;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Constants;
+using PaladinRogue.Library.Core.Api.Links;
+using PaladinRogue.Library.Core.Api.Resources;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Constants;
 
 namespace PaladinRogue.Authentication.Api.AuthenticationService.Facebook
 {

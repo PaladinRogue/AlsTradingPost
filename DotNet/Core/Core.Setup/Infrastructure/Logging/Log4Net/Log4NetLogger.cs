@@ -5,7 +5,7 @@ using log4net;
 using log4net.Repository;
 using Microsoft.Extensions.Logging;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Logging.Log4Net
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.Logging.Log4Net
 {
     public class Log4NetLogger : ILogger
     {

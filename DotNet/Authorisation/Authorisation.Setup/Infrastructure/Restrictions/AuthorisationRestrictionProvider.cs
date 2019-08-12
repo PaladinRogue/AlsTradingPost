@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Restrictions
+namespace PaladinRogue.Library.Authorisation.Setup.Infrastructure.Restrictions
 {
     public class AuthorisationRestrictionProvider : IAuthorisationRestrictionProvider
     {

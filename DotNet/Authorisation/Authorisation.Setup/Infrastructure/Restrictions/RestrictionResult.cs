@@ -1,4 +1,4 @@
-namespace PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Restrictions
+namespace PaladinRogue.Library.Authorisation.Setup.Infrastructure.Restrictions
 {
     public class RestrictionResult : IRestrictionResult
     {

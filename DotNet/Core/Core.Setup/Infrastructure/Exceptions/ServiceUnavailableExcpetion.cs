@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Exceptions
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.Exceptions
 {
     [Serializable]
     public class ServiceUnavailableExcpetion : Exception

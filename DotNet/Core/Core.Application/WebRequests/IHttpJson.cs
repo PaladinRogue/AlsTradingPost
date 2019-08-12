@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace PaladinRogue.Libray.Core.Application.WebRequests
+namespace PaladinRogue.Library.Core.Application.WebRequests
 {
     public interface IHttpJson
     {

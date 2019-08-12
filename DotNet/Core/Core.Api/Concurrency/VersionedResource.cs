@@ -1,8 +1,8 @@
-﻿using PaladinRogue.Libray.Core.Api.Concurrency.Interfaces;
-using PaladinRogue.Libray.Core.Api.Resources;
-using PaladinRogue.Libray.Core.Domain.Concurrency.Interfaces;
+﻿using PaladinRogue.Library.Core.Api.Concurrency.Interfaces;
+using PaladinRogue.Library.Core.Api.Resources;
+using PaladinRogue.Library.Core.Domain.Concurrency.Interfaces;
 
-namespace PaladinRogue.Libray.Core.Api.Concurrency
+namespace PaladinRogue.Library.Core.Api.Concurrency
 {
     public class VersionedResource : IVersionedResource
     {

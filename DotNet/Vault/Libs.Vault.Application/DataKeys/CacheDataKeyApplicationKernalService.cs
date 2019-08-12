@@ -2,14 +2,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using PaladinRogue.Libray.Core.Application.Exceptions;
-using PaladinRogue.Libray.Core.Application.Transactions;
-using PaladinRogue.Libray.Core.Common.Encryption;
-using PaladinRogue.Libray.Core.Domain.DataProtectors;
-using PaladinRogue.Libray.Vault.Application.Caching;
-using PaladinRogue.Libray.Vault.Domain.DataKeys.Persistence;
+using PaladinRogue.Library.Core.Application.Exceptions;
+using PaladinRogue.Library.Core.Application.Transactions;
+using PaladinRogue.Library.Core.Common.Encryption;
+using PaladinRogue.Library.Core.Domain.DataProtectors;
+using PaladinRogue.Library.Vault.Application.Caching;
+using PaladinRogue.Library.Vault.Domain.DataKeys.Persistence;
 
-namespace PaladinRogue.Libray.Vault.Application.DataKeys
+namespace PaladinRogue.Library.Vault.Application.DataKeys
 {
     public class CacheDataKeyApplicationKernalService : ICacheDataKeyApplicationKernalService
     {

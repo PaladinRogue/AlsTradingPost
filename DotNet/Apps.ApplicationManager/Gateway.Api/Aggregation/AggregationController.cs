@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PaladinRogue.Gateway.Application.Applications;
-using PaladinRogue.Libray.Core.Api.Builders.Resource;
+using PaladinRogue.Library.Core.Api.Builders.Resource;
 
 namespace PaladinRogue.Gateway.Api.Aggregation
 {

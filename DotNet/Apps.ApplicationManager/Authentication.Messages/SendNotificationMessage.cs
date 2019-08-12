@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using PaladinRogue.Libray.Messaging.Common.Messages;
+using PaladinRogue.Library.Messaging.Common.Messages;
 
 namespace PaladinRogue.Authentication.Messages
 {

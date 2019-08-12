@@ -1,6 +1,6 @@
-using PaladinRogue.Libray.Core.Common.ValueObjects;
+using PaladinRogue.Library.Core.Common.ValueObjects;
 
-namespace PaladinRogue.Libray.Core.Application.Caching
+namespace PaladinRogue.Library.Core.Application.Caching
 {
     public abstract class CacheKey<TValue> : ValueObject<CacheKey<TValue>>
     {

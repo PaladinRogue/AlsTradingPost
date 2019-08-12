@@ -1,7 +1,7 @@
 ﻿using System;
 using RabbitMQ.Client;
 
-namespace PaladinRogue.Libray.Messaging.RabbitMQ.Connection
+namespace PaladinRogue.Library.Messaging.RabbitMQ.Connection
 {
     public interface IRabbitMqPersistentConnection : IDisposable
     {

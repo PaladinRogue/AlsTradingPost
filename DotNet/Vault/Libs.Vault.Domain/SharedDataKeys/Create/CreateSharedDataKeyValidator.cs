@@ -1,7 +1,7 @@
 using FluentValidation;
-using PaladinRogue.Libray.Core.Common;
+using PaladinRogue.Library.Core.Common;
 
-namespace PaladinRogue.Libray.Vault.Domain.SharedDataKeys.Create
+namespace PaladinRogue.Library.Vault.Domain.SharedDataKeys.Create
 {
     public class CreateSharedDataKeyValidator : AbstractValidator<CreateSharedDataKeyCommandDdto>
     {

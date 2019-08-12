@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using PaladinRogue.Authentication.Application.Authentication.Models;
-using PaladinRogue.Libray.Core.Application.Authentication;
+using PaladinRogue.Library.Core.Application.Authentication;
 
 namespace PaladinRogue.Authentication.Application.Authentication
 {

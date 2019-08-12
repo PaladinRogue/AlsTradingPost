@@ -3,8 +3,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PaladinRogue.Authentication.Domain.Identities;
-using PaladinRogue.Libray.Core.Domain.DataProtectors;
-using PaladinRogue.Libray.Persistence.EntityFramework.Repositories;
+using PaladinRogue.Library.Core.Domain.DataProtectors;
+using PaladinRogue.Library.Persistence.EntityFramework.Repositories;
 
 namespace PaladinRogue.Authentication.Persistence.Identities
 {

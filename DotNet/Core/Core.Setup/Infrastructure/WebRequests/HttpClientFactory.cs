@@ -3,10 +3,10 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using PaladinRogue.Libray.Core.Application.WebRequests;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Exceptions;
+using PaladinRogue.Library.Core.Application.WebRequests;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Exceptions;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.WebRequests
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.WebRequests
 {
     public class HttpClientFactory : IHttpJson, IHttpRequest, IHttpString
     {

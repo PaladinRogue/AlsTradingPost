@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PaladinRogue.Libray.Core.Api.Builders.Resource;
+using PaladinRogue.Library.Core.Api.Builders.Resource;
 using PaladinRogue.Vault.Setup.Infrastructure.Routing;
 
 namespace PaladinRogue.Vault.Api.Status

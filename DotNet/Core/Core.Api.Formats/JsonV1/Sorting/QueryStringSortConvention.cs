@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
-using PaladinRogue.Libray.Core.Api.QueryString;
-using PaladinRogue.Libray.Core.Api.Sorting;
+using PaladinRogue.Library.Core.Api.QueryString;
+using PaladinRogue.Library.Core.Api.Sorting;
 
-namespace PaladinRogue.Libray.Core.Api.Formats.JsonV1.Sorting
+namespace PaladinRogue.Library.Core.Api.Formats.JsonV1.Sorting
 {
     public class QueryStringSortConvention : IActionModelConvention
     {

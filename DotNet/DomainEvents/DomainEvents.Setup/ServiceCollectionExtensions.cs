@@ -1,9 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
-using PaladinRogue.Libray.Core.Domain.DomainEvents;
-using PaladinRogue.Libray.Core.Domain.DomainEvents.Interfaces;
-using PaladinRogue.Libray.DomainEvents.Broker;
+using PaladinRogue.Library.Core.Domain.DomainEvents;
+using PaladinRogue.Library.Core.Domain.DomainEvents.Interfaces;
+using PaladinRogue.Library.DomainEvents.Broker;
 
-namespace PaladinRogue.Libray.DomainEvents.Setup
+namespace PaladinRogue.Library.DomainEvents.Setup
 {
     public static class ServiceCollectionExtensions
     {

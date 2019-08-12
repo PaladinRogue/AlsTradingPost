@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using PaladinRogue.Libray.Core.Common.Sorting;
+using PaladinRogue.Library.Core.Common.Sorting;
 
-namespace PaladinRogue.Libray.Core.Api.Formats.JsonV1.Extensions
+namespace PaladinRogue.Library.Core.Api.Formats.JsonV1.Extensions
 {
     public static class SortByExtensions
     {

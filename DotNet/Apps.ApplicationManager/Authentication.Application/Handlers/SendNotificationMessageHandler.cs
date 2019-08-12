@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using PaladinRogue.Authentication.Application.Notifications.Send;
 using PaladinRogue.Authentication.Messages;
-using PaladinRogue.Libray.Messaging.Common.Handlers;
-using PaladinRogue.Libray.Messaging.Common.MessageBus;
+using PaladinRogue.Library.Messaging.Common.Handlers;
+using PaladinRogue.Library.Messaging.Common.MessageBus;
 
 namespace PaladinRogue.Authentication.Application.Handlers
 {

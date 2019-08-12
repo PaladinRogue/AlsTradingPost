@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Reflection;
-using PaladinRogue.Libray.Core.Domain.Entities;
+using PaladinRogue.Library.Core.Domain.Entities;
 
-namespace PaladinRogue.Libray.Core.Domain.Exceptions
+namespace PaladinRogue.Library.Core.Domain.Exceptions
 {
     [Serializable]
     public class CreateDomainException : DomainException

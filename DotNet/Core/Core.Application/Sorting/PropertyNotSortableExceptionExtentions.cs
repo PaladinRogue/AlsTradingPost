@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using PaladinRogue.Libray.Core.Domain.Sorting;
-using PaladinRogue.Libray.Core.Domain.Validation;
+using PaladinRogue.Library.Core.Domain.Sorting;
+using PaladinRogue.Library.Core.Domain.Validation;
 
-namespace PaladinRogue.Libray.Core.Application.Sorting
+namespace PaladinRogue.Library.Core.Application.Sorting
 {
     public static class PropertyNotSortableExceptionExtentions
     {

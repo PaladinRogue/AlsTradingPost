@@ -1,4 +1,4 @@
-﻿namespace PaladinRogue.Libray.Core.Application.Claims.Constants
+﻿namespace PaladinRogue.Library.Core.Application.Claims.Constants
 {
     public static class JwtClaimIdentifiers
     {

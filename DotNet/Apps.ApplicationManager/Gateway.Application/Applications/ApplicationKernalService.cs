@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using PaladinRogue.Gateway.Domain.Applications.Persistence;
-using PaladinRogue.Libray.Core.Application.Caching;
-using PaladinRogue.Libray.Core.Application.Exceptions;
-using PaladinRogue.Libray.Core.Application.Transactions;
+using PaladinRogue.Library.Core.Application.Caching;
+using PaladinRogue.Library.Core.Application.Exceptions;
+using PaladinRogue.Library.Core.Application.Transactions;
 
 namespace PaladinRogue.Gateway.Application.Applications
 {

@@ -1,11 +1,11 @@
 using Microsoft.Extensions.DependencyInjection;
-using PaladinRogue.Libray.Core.Common.Encryption;
-using PaladinRogue.Libray.Core.Domain.DataProtectors;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Encryption;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Hashing;
-using DataProtector = PaladinRogue.Libray.Core.Domain.DataProtectors.DataProtector;
+using PaladinRogue.Library.Core.Common.Encryption;
+using PaladinRogue.Library.Core.Domain.DataProtectors;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Encryption;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Hashing;
+using DataProtector = PaladinRogue.Library.Core.Domain.DataProtectors.DataProtector;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.DataProtection
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.DataProtection
 {
     public static class ServiceCollectionExtensions
     {

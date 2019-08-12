@@ -1,12 +1,12 @@
 using System;
-using PaladinRogue.Libray.Core.Api.Concurrency;
-using PaladinRogue.Libray.Core.Api.Links;
-using PaladinRogue.Libray.Core.Api.Meta;
-using PaladinRogue.Libray.Core.Api.PropertyTypes;
-using PaladinRogue.Libray.Core.Api.Resources;
-using PaladinRogue.Libray.Core.Api.Validation.Attributes;
-using PaladinRogue.Libray.Core.Common;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Constants;
+using PaladinRogue.Library.Core.Api.Concurrency;
+using PaladinRogue.Library.Core.Api.Links;
+using PaladinRogue.Library.Core.Api.Meta;
+using PaladinRogue.Library.Core.Api.PropertyTypes;
+using PaladinRogue.Library.Core.Api.Resources;
+using PaladinRogue.Library.Core.Api.Validation.Attributes;
+using PaladinRogue.Library.Core.Common;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Constants;
 
 namespace PaladinRogue.Authentication.Api.AuthenticationService.Facebook
 {

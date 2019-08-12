@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using PaladinRogue.Libray.Core.Application.Caching;
+using PaladinRogue.Library.Core.Application.Caching;
 
 namespace PaladinRogue.Gateway.Application.Applications.Caching
 {

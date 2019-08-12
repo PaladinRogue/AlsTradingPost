@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
-        <RootNamespace>PaladinRogue.Libray.Authorisation.Setup</RootNamespace>
+        <RootNamespace>PaladinRogue.Library.Authorisation.Setup</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

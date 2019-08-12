@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PaladinRogue.Libray.Core.Application.Transactions;
-using PaladinRogue.Libray.Core.Domain.Persistence;
+using PaladinRogue.Library.Core.Application.Transactions;
+using PaladinRogue.Library.Core.Domain.Persistence;
 
 namespace PaladinRogue.Gateway.Application.Applications
 {

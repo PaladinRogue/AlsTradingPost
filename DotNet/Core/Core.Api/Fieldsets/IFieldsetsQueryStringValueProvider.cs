@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PaladinRogue.Libray.Core.Api.Fieldsets
+namespace PaladinRogue.Library.Core.Api.Fieldsets
 {
     public interface IFieldsetsQueryStringValueProvider
     {

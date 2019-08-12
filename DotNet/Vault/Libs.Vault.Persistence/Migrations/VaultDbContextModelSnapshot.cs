@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace PaladinRogue.Libray.Vault.Persistence.Migrations
+namespace PaladinRogue.Library.Vault.Persistence.Migrations
 {
     [DbContext(typeof(VaultDbContext))]
     partial class VaultDbContextModelSnapshot : ModelSnapshot

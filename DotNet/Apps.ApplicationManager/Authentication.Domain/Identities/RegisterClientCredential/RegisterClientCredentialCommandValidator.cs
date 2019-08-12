@@ -1,5 +1,5 @@
 using FluentValidation;
-using PaladinRogue.Libray.Core.Common;
+using PaladinRogue.Library.Core.Common;
 
 namespace PaladinRogue.Authentication.Domain.Identities.RegisterClientCredential
 {

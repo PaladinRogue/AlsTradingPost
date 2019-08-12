@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
-using PaladinRogue.Libray.Authorisation.Common.Contexts;
-using PaladinRogue.Libray.Authorisation.Common.Policies;
-using PaladinRogue.Libray.Core.Application.Caching;
+using PaladinRogue.Library.Authorisation.Common.Contexts;
+using PaladinRogue.Library.Authorisation.Common.Policies;
+using PaladinRogue.Library.Core.Application.Caching;
 
-namespace PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Policies
+namespace PaladinRogue.Library.Authorisation.Setup.Infrastructure.Policies
 {
     public class AuthorisationPolicyCacheDecorator : IAuthorisationPolicy
     {

@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using LazyCache;
 using Microsoft.Extensions.Caching.Memory;
 using NodaTime;
-using PaladinRogue.Libray.Core.Application.Caching;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Authorisation;
+using PaladinRogue.Library.Core.Application.Caching;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Authorisation;
 
 namespace PaladinRogue.Authentication.Setup.Infrastructure.Caching
 {

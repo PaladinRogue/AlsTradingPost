@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Constants;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Constants;
 
-namespace PaladinRogue.Libray.Core.Api.Links
+namespace PaladinRogue.Library.Core.Api.Links
 {
     public interface ILink
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PaladinRogue.Libray.Core.Domain.DomainEvents
+namespace PaladinRogue.Library.Core.Domain.DomainEvents
 {
     [Serializable]
     public class DomainEventDispatcherNotSetException : Exception

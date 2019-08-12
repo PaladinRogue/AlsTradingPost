@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using PaladinRogue.Authentication.Domain.Identities.Events;
-using PaladinRogue.Libray.Core.Domain.DomainEvents.Interfaces;
+using PaladinRogue.Library.Core.Domain.DomainEvents.Interfaces;
 
 namespace PaladinRogue.Authentication.Application.Identities.TwoFactor
 {

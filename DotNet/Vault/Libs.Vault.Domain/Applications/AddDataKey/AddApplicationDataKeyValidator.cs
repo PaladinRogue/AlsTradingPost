@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace PaladinRogue.Libray.Vault.Domain.Applications.AddDataKey
+namespace PaladinRogue.Library.Vault.Domain.Applications.AddDataKey
 {
     public class AddApplicationDataKeyValidator : AbstractValidator<AddApplicationDataKeyCommandDdto>
     {

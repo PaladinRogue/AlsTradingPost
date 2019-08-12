@@ -1,4 +1,4 @@
-namespace PaladinRogue.Libray.Core.Api.Routing
+namespace PaladinRogue.Library.Core.Api.Routing
 {
     public interface IAbsoluteRouteProvider
     {

@@ -1,6 +1,6 @@
-﻿using PaladinRogue.Libray.Core.Application.Authentication.Constants;
+﻿using PaladinRogue.Library.Core.Application.Authentication.Constants;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Authorisation
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.Authorisation
 {
     public class Policies
     {

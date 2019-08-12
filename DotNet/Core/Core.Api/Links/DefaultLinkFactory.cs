@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using PaladinRogue.Libray.Authorisation.Common.Contexts;
-using PaladinRogue.Libray.Authorisation.Common.Policies;
-using PaladinRogue.Libray.Core.Api.Pagination.Interfaces;
-using PaladinRogue.Libray.Core.Api.Resources;
-using PaladinRogue.Libray.Core.Api.Sorting;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Constants;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Routing;
+using PaladinRogue.Library.Authorisation.Common.Contexts;
+using PaladinRogue.Library.Authorisation.Common.Policies;
+using PaladinRogue.Library.Core.Api.Pagination.Interfaces;
+using PaladinRogue.Library.Core.Api.Resources;
+using PaladinRogue.Library.Core.Api.Sorting;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Constants;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Routing;
 
-namespace PaladinRogue.Libray.Core.Api.Links
+namespace PaladinRogue.Library.Core.Api.Links
 {
     public class DefaultLinkFactory : ILinkFactory
     {

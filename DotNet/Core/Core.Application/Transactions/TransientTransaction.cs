@@ -1,6 +1,6 @@
 ﻿using System.Transactions;
 
-namespace PaladinRogue.Libray.Core.Application.Transactions
+namespace PaladinRogue.Library.Core.Application.Transactions
 {
     public class TransientTransaction : ITransaction
     {

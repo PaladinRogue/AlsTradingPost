@@ -2,7 +2,7 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Options
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.Options
 {
     public static class ServiceProviderExtensions
     {

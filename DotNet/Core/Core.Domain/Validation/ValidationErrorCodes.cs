@@ -1,4 +1,4 @@
-﻿namespace PaladinRogue.Libray.Core.Domain.Validation
+﻿namespace PaladinRogue.Library.Core.Domain.Validation
 {
     public static class ValidationErrorCodes
     {

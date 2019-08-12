@@ -15,8 +15,8 @@ using PaladinRogue.Authentication.Domain.Identities.RegisterPassword;
 using PaladinRogue.Authentication.Domain.Identities.ResendConfirmIdentity;
 using PaladinRogue.Authentication.Domain.Identities.ResetPassword;
 using PaladinRogue.Authentication.Domain.Identities.ValidateToken;
-using PaladinRogue.Libray.Core.Domain.Aggregates;
-using PaladinRogue.Libray.Core.Domain.Entities;
+using PaladinRogue.Library.Core.Domain.Aggregates;
+using PaladinRogue.Library.Core.Domain.Entities;
 
 namespace PaladinRogue.Authentication.Domain.Identities
 {

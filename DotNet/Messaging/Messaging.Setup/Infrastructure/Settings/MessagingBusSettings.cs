@@ -1,4 +1,4 @@
-﻿namespace PaladinRogue.Libray.Messaging.Setup.Infrastructure.Settings
+﻿namespace PaladinRogue.Library.Messaging.Setup.Infrastructure.Settings
 {
     public class MessagingBusSettings
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using PaladinRogue.Libray.Core.Common.Sorting;
+using PaladinRogue.Library.Core.Common.Sorting;
 
-namespace PaladinRogue.Libray.Core.Api.Links
+namespace PaladinRogue.Library.Core.Api.Links
 {
     public class SortLink : Link
     {

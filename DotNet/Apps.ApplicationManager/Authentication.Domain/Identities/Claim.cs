@@ -2,8 +2,8 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using PaladinRogue.Authentication.Domain.Identities.ChangeClaim;
 using PaladinRogue.Authentication.Domain.Identities.CreateClaim;
-using PaladinRogue.Libray.Core.Common;
-using PaladinRogue.Libray.Core.Domain.Aggregates;
+using PaladinRogue.Library.Core.Common;
+using PaladinRogue.Library.Core.Domain.Aggregates;
 
 namespace PaladinRogue.Authentication.Domain.Identities
 {

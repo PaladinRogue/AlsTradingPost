@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PaladinRogue.Libray.Core.Api.Formats.JsonV1.Formats
+namespace PaladinRogue.Library.Core.Api.Formats.JsonV1.Formats
 {
     public class Error
     {

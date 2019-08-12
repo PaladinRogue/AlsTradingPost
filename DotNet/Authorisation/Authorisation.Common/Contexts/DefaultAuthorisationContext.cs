@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PaladinRogue.Libray.Authorisation.Common.Contexts
+namespace PaladinRogue.Library.Authorisation.Common.Contexts
 {
     public class DefaultAuthorisationContext : IAuthorisationContext
     {

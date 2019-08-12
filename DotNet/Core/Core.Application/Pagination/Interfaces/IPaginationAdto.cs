@@ -1,4 +1,4 @@
-﻿namespace PaladinRogue.Libray.Core.Application.Pagination.Interfaces
+﻿namespace PaladinRogue.Library.Core.Application.Pagination.Interfaces
 {
     public interface IPaginationAdto
     {

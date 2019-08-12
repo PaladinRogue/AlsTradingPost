@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using PaladinRogue.Libray.Core.Common.Encryption;
+using PaladinRogue.Library.Core.Common.Encryption;
 
-namespace PaladinRogue.Libray.Core.Domain.DataProtectors
+namespace PaladinRogue.Library.Core.Domain.DataProtectors
 {
     public class DataProtector : IDataProtector
     {

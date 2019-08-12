@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PaladinRogue.Libray.Core.Api.Links
+namespace PaladinRogue.Library.Core.Api.Links
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class SearchLinkAttribute : LinkAttribute

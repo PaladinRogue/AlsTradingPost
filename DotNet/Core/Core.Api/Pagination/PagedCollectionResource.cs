@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using PaladinRogue.Libray.Core.Api.Meta;
-using PaladinRogue.Libray.Core.Api.Pagination.Interfaces;
-using PaladinRogue.Libray.Core.Api.Resources;
+using PaladinRogue.Library.Core.Api.Meta;
+using PaladinRogue.Library.Core.Api.Pagination.Interfaces;
+using PaladinRogue.Library.Core.Api.Resources;
 
-namespace PaladinRogue.Libray.Core.Api.Pagination
+namespace PaladinRogue.Library.Core.Api.Pagination
 {
     public class PagedCollectionResource<T> : IPagedCollectionResource<T> where T : IResource
     {

@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using PaladinRogue.Libray.Core.Api.Sorting;
-using PaladinRogue.Libray.Core.Common.Builders.Dictionaries;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Constants;
+using PaladinRogue.Library.Core.Api.Sorting;
+using PaladinRogue.Library.Core.Common.Builders.Dictionaries;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Constants;
 
-namespace PaladinRogue.Libray.Core.Api.Links
+namespace PaladinRogue.Library.Core.Api.Links
 {
     public class DefaultSortingLinkBuilder : ISortingLinkBuilder
     {

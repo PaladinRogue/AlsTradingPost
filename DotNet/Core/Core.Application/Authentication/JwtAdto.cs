@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PaladinRogue.Libray.Core.Application.Authentication
+namespace PaladinRogue.Library.Core.Application.Authentication
 {
     public class JwtAdto : IJwtAdto
     {

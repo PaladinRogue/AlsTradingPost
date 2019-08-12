@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using PaladinRogue.Libray.Core.Api.Formats.JsonV1.Extensions;
-using PaladinRogue.Libray.Core.Api.Formats.JsonV1.Formats;
-using PaladinRogue.Libray.Core.Api.Links;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Constants;
-using Link = PaladinRogue.Libray.Core.Api.Formats.JsonV1.Formats.Link;
+using PaladinRogue.Library.Core.Api.Formats.JsonV1.Extensions;
+using PaladinRogue.Library.Core.Api.Formats.JsonV1.Formats;
+using PaladinRogue.Library.Core.Api.Links;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Constants;
+using Link = PaladinRogue.Library.Core.Api.Formats.JsonV1.Formats.Link;
 
-namespace PaladinRogue.Libray.Core.Api.Formats.JsonV1
+namespace PaladinRogue.Library.Core.Api.Formats.JsonV1
 {
     public class LinkFactory
     {

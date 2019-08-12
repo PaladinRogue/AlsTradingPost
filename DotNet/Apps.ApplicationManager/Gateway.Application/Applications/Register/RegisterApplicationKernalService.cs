@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using PaladinRogue.Gateway.Domain.Applications.Change;
 using PaladinRogue.Gateway.Domain.Applications.Create;
-using PaladinRogue.Libray.Core.Application.Exceptions;
-using PaladinRogue.Libray.Core.Application.Transactions;
-using PaladinRogue.Libray.Core.Domain.Exceptions;
-using PaladinRogue.Libray.Core.Domain.Persistence;
+using PaladinRogue.Library.Core.Application.Exceptions;
+using PaladinRogue.Library.Core.Application.Transactions;
+using PaladinRogue.Library.Core.Domain.Exceptions;
+using PaladinRogue.Library.Core.Domain.Persistence;
 
 namespace PaladinRogue.Gateway.Application.Applications.Register
 {

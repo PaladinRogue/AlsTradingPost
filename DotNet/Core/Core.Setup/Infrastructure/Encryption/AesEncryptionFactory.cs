@@ -3,9 +3,9 @@ using System.IO;
 using System.Security.Cryptography;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using PaladinRogue.Libray.Core.Common.Encryption;
+using PaladinRogue.Library.Core.Common.Encryption;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Encryption
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.Encryption
 {
     public class AesEncryptionFactory : IEncryptionFactory
     {

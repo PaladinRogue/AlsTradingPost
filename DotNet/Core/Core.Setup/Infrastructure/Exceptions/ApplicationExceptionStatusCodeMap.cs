@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Net;
-using PaladinRogue.Libray.Core.Application.Exceptions;
+using PaladinRogue.Library.Core.Application.Exceptions;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Exceptions
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.Exceptions
 {
     public static class ApplicationExceptionStatusCodeMap
     {

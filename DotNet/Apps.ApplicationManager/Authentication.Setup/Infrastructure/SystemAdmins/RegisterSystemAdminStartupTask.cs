@@ -3,11 +3,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using PaladinRogue.Authentication.Messages;
-using PaladinRogue.Libray.Core.Common.Settings;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Options;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Startup;
-using PaladinRogue.Libray.Messaging.Common.Dispatchers;
-using PaladinRogue.Libray.Messaging.Common.Senders;
+using PaladinRogue.Library.Core.Common.Settings;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Options;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Startup;
+using PaladinRogue.Library.Messaging.Common.Dispatchers;
+using PaladinRogue.Library.Messaging.Common.Senders;
 
 namespace PaladinRogue.Authentication.Setup.Infrastructure.SystemAdmins
 {

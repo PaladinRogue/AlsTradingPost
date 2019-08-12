@@ -1,4 +1,4 @@
-﻿namespace PaladinRogue.Libray.Core.Application.Transactions
+﻿namespace PaladinRogue.Library.Core.Application.Transactions
 {
     public interface ITransactionManager
     {

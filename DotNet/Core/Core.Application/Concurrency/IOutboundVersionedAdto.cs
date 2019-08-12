@@ -1,6 +1,6 @@
-﻿using PaladinRogue.Libray.Core.Domain.Concurrency.Interfaces;
+﻿using PaladinRogue.Library.Core.Domain.Concurrency.Interfaces;
 
-namespace PaladinRogue.Libray.Core.Application.Concurrency
+namespace PaladinRogue.Library.Core.Application.Concurrency
 {
     public interface IOutboundVersionedAdto : IVersionAdto<IConcurrencyVersion>
     {

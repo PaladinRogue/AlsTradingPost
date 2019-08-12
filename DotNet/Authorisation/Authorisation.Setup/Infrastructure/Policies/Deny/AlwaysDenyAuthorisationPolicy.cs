@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using PaladinRogue.Libray.Authorisation.Common.Contexts;
-using PaladinRogue.Libray.Authorisation.Common.Policies;
+using PaladinRogue.Library.Authorisation.Common.Contexts;
+using PaladinRogue.Library.Authorisation.Common.Policies;
 
-namespace PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Policies.Deny
+namespace PaladinRogue.Library.Authorisation.Setup.Infrastructure.Policies.Deny
 {
     public class AlwaysDenyAuthorisationPolicy : IAuthorisationPolicy
     {

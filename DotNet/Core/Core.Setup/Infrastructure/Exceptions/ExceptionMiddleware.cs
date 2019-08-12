@@ -3,9 +3,9 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using PaladinRogue.Libray.Core.Application.Exceptions;
+using PaladinRogue.Library.Core.Application.Exceptions;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Exceptions
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.Exceptions
 {
     public class ExceptionMiddleware
     {

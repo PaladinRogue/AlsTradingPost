@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace PaladinRogue.Libray.Messaging.Setup.Infrastructure.Handlers
+namespace PaladinRogue.Library.Messaging.Setup.Infrastructure.Handlers
 {
     public interface IMessageHandlerFactory
     {

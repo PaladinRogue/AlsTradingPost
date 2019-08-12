@@ -1,11 +1,11 @@
 ﻿using System;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using PaladinRogue.Libray.Core.Application.Authentication;
-using PaladinRogue.Libray.Core.Application.Exceptions;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.HttpContexts;
+using PaladinRogue.Library.Core.Application.Authentication;
+using PaladinRogue.Library.Core.Application.Exceptions;
+using PaladinRogue.Library.Core.Setup.Infrastructure.HttpContexts;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Authorisation
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.Authorisation
 {
     public class CurrentIdentityProvider : ICurrentIdentityProvider
     {

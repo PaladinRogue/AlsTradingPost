@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PaladinRogue.Libray.Core.Api.Builders.Resource;
+using PaladinRogue.Library.Core.Api.Builders.Resource;
 using PaladinRogue.Notifications.Setup.Infrastructure.Routing;
 
 namespace PaladinRogue.Notifications.Api.Status

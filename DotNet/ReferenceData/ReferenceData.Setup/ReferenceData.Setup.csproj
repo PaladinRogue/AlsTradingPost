@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
-        <RootNamespace>PaladinRogue.Libray.ReferenceData.Setup</RootNamespace>
+        <RootNamespace>PaladinRogue.Library.ReferenceData.Setup</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

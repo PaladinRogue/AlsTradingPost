@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PaladinRogue.Libray.Core.Api.Meta
+namespace PaladinRogue.Library.Core.Api.Meta
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class SortableAttribute : Attribute

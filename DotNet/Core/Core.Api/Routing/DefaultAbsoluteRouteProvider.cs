@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Options;
-using PaladinRogue.Libray.Core.Common.Settings;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Routing;
+using PaladinRogue.Library.Core.Common.Settings;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Routing;
 
-namespace PaladinRogue.Libray.Core.Api.Routing
+namespace PaladinRogue.Library.Core.Api.Routing
 {
     public class DefaultAbsoluteRouteProvider : IAbsoluteRouteProvider
     {

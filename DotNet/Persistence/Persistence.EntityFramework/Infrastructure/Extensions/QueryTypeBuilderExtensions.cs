@@ -3,10 +3,10 @@ using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PaladinRogue.Libray.Core.Domain.DataProtectors;
-using PaladinRogue.Libray.Persistence.EntityFramework.Infrastructure.DataProtectors;
+using PaladinRogue.Library.Core.Domain.DataProtectors;
+using PaladinRogue.Library.Persistence.EntityFramework.Infrastructure.DataProtectors;
 
-namespace PaladinRogue.Libray.Persistence.EntityFramework.Infrastructure.Extensions
+namespace PaladinRogue.Library.Persistence.EntityFramework.Infrastructure.Extensions
 {
     public static class QueryTypeBuilderExtensions
     {

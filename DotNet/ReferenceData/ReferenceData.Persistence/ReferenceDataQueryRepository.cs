@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using PaladinRogue.Libray.Persistence.EntityFramework.Repositories;
-using PaladinRogue.Libray.ReferenceData.Domain.Persistence;
-using PaladinRogue.Libray.ReferenceData.Domain.Projections;
+using PaladinRogue.Library.Persistence.EntityFramework.Repositories;
+using PaladinRogue.Library.ReferenceData.Domain.Persistence;
+using PaladinRogue.Library.ReferenceData.Domain.Projections;
 
-namespace PaladinRogue.Libray.ReferenceData.Persistence
+namespace PaladinRogue.Library.ReferenceData.Persistence
 {
     public class ReferenceDataQueryRepository<TDbContext> : IReferenceDataQueryRepository where TDbContext : DbContext, IReferenceDataDbContext
     {

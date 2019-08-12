@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Startup;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Startup;
 
 namespace PaladinRogue.Vault.Api
 {

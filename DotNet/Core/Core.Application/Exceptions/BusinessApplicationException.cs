@@ -1,6 +1,6 @@
 using System;
 
-namespace PaladinRogue.Libray.Core.Application.Exceptions
+namespace PaladinRogue.Library.Core.Application.Exceptions
 {
     public class BusinessApplicationException : Exception
     {

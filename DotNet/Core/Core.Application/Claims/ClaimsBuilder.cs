@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using PaladinRogue.Libray.Core.Application.Claims.Constants;
+using PaladinRogue.Library.Core.Application.Claims.Constants;
 
-namespace PaladinRogue.Libray.Core.Application.Claims
+namespace PaladinRogue.Library.Core.Application.Claims
 {
     public class ClaimsBuilder
     {

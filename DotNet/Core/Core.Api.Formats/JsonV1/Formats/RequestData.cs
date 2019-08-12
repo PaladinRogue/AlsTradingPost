@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace PaladinRogue.Libray.Core.Api.Formats.JsonV1.Formats
+namespace PaladinRogue.Library.Core.Api.Formats.JsonV1.Formats
 {
     public class RequestData
     {

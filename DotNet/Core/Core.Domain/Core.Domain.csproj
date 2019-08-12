@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <RootNamespace>PaladinRogue.Libray.Core.Domain</RootNamespace>
+    <RootNamespace>PaladinRogue.Library.Core.Domain</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.1.0" />

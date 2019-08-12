@@ -2,10 +2,10 @@
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using PaladinRogue.Libray.Core.Application.Transactions;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Constants;
+using PaladinRogue.Library.Core.Application.Transactions;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Constants;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Transactions
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.Transactions
 {
     public class TransactionPerRequestMiddleware
     {

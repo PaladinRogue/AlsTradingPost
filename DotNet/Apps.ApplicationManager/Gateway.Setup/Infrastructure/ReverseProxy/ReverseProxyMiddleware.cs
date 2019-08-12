@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.Primitives;
 using PaladinRogue.Gateway.Application.Applications;
-using PaladinRogue.Libray.Core.Application.WebRequests;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Exceptions;
+using PaladinRogue.Library.Core.Application.WebRequests;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Exceptions;
 
 namespace PaladinRogue.Gateway.Setup.Infrastructure.ReverseProxy
 {

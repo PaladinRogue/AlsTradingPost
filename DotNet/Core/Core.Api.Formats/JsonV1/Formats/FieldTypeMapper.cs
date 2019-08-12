@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using PaladinRogue.Libray.Core.Common.Sorting;
+using PaladinRogue.Library.Core.Common.Sorting;
 
-namespace PaladinRogue.Libray.Core.Api.Formats.JsonV1.Formats
+namespace PaladinRogue.Library.Core.Api.Formats.JsonV1.Formats
 {
     public static class FieldTypeMapper
     {

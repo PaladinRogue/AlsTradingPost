@@ -1,6 +1,6 @@
 using System;
 using PaladinRogue.Authentication.Domain.Identities;
-using PaladinRogue.Libray.Authorisation.Common.Contexts;
+using PaladinRogue.Library.Authorisation.Common.Contexts;
 
 namespace PaladinRogue.Authentication.Application.Identities.Authorisation
 {

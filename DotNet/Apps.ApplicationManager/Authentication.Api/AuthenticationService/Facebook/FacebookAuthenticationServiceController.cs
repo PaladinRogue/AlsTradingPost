@@ -8,8 +8,8 @@ using PaladinRogue.Authentication.Application.AuthenticationServices.Models;
 using PaladinRogue.Authentication.Application.AuthenticationServices.Models.Facebook;
 using PaladinRogue.Authentication.Setup.Infrastructure.Authorisation;
 using PaladinRogue.Authentication.Setup.Infrastructure.Routing;
-using PaladinRogue.Libray.Core.Api.Builders.Resource;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Concurrency;
+using PaladinRogue.Library.Core.Api.Builders.Resource;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Concurrency;
 
 namespace PaladinRogue.Authentication.Api.AuthenticationService.Facebook
 {

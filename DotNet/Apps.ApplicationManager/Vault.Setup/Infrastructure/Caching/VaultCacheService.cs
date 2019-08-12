@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using LazyCache;
 using Microsoft.Extensions.Caching.Memory;
 using NodaTime;
-using PaladinRogue.Libray.Core.Application.Caching;
+using PaladinRogue.Library.Core.Application.Caching;
 
 namespace PaladinRogue.Vault.Setup.Infrastructure.Caching
 {

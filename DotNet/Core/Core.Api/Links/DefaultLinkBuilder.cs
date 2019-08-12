@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using PaladinRogue.Libray.Core.Api.Pagination;
-using PaladinRogue.Libray.Core.Api.Pagination.Interfaces;
-using PaladinRogue.Libray.Core.Api.Resources;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Constants;
+using PaladinRogue.Library.Core.Api.Pagination;
+using PaladinRogue.Library.Core.Api.Pagination.Interfaces;
+using PaladinRogue.Library.Core.Api.Resources;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Constants;
 
-namespace PaladinRogue.Libray.Core.Api.Links
+namespace PaladinRogue.Library.Core.Api.Links
 {
     public class DefaultLinkBuilder : ILinkBuilder
     {

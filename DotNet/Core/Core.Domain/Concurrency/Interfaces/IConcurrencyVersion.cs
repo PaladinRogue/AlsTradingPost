@@ -1,5 +1,5 @@
 ﻿
-namespace PaladinRogue.Libray.Core.Domain.Concurrency.Interfaces
+namespace PaladinRogue.Library.Core.Domain.Concurrency.Interfaces
 {
     public interface IConcurrencyVersion
     {

@@ -8,14 +8,14 @@ using PaladinRogue.Authentication.Application.AuthenticationServices.Models.Face
 using PaladinRogue.Authentication.Application.AuthenticationServices.Models.Google;
 using PaladinRogue.Authentication.Domain;
 using PaladinRogue.Authentication.Domain.AuthenticationServices;
-using PaladinRogue.Libray.Core.Application.Exceptions;
-using PaladinRogue.Libray.Core.Application.Transactions;
-using PaladinRogue.Libray.Core.Common.Builders.Dictionaries;
-using PaladinRogue.Libray.Core.Common.Extensions;
-using PaladinRogue.Libray.Core.Domain.Exceptions;
-using PaladinRogue.Libray.Core.Domain.Persistence;
-using PaladinRogue.Libray.ReferenceData.Domain.Persistence;
-using PaladinRogue.Libray.ReferenceData.Domain.Projections;
+using PaladinRogue.Library.Core.Application.Exceptions;
+using PaladinRogue.Library.Core.Application.Transactions;
+using PaladinRogue.Library.Core.Common.Builders.Dictionaries;
+using PaladinRogue.Library.Core.Common.Extensions;
+using PaladinRogue.Library.Core.Domain.Exceptions;
+using PaladinRogue.Library.Core.Domain.Persistence;
+using PaladinRogue.Library.ReferenceData.Domain.Persistence;
+using PaladinRogue.Library.ReferenceData.Domain.Projections;
 
 namespace PaladinRogue.Authentication.Application.AuthenticationServices
 {

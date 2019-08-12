@@ -1,5 +1,5 @@
 ﻿using System;
-using PaladinRogue.Libray.Core.Domain.Exceptions;
+using PaladinRogue.Library.Core.Domain.Exceptions;
 
 namespace PaladinRogue.Authentication.Domain.Identities.ResendConfirmIdentity
 {

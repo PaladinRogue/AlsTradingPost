@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace PaladinRogue.Libray.Vault.Application.DataKeys
+namespace PaladinRogue.Library.Vault.Application.DataKeys
 {
     public interface ICacheDataKeyApplicationKernalService
     {

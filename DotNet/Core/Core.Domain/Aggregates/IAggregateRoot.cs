@@ -1,6 +1,6 @@
-﻿using PaladinRogue.Libray.Core.Domain.Entities;
+﻿using PaladinRogue.Library.Core.Domain.Entities;
 
-namespace PaladinRogue.Libray.Core.Domain.Aggregates
+namespace PaladinRogue.Library.Core.Domain.Aggregates
 {
     public interface IAggregateRoot : IVersionedEntity
     {

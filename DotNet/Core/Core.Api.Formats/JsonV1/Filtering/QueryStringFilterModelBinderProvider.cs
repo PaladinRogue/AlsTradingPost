@@ -2,9 +2,9 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
-using PaladinRogue.Libray.Core.Api.Resources;
+using PaladinRogue.Library.Core.Api.Resources;
 
-namespace PaladinRogue.Libray.Core.Api.Formats.JsonV1.Filtering
+namespace PaladinRogue.Library.Core.Api.Formats.JsonV1.Filtering
 {
     public class QueryStringFilterModelBinderProvider : IModelBinderProvider
     {

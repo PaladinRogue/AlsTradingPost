@@ -8,18 +8,18 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
 using PaladinRogue.Authentication.Setup.Infrastructure.Caching;
-using PaladinRogue.Libray.Authorisation.Common.Policies;
-using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Policies;
-using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Policies.Json;
-using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Restrictions;
-using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Self;
-using PaladinRogue.Libray.Core.Application.Authentication;
-using PaladinRogue.Libray.Core.Domain.DataProtectors;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Authorisation;
-using PaladinRogue.Libray.Persistence.Setup.Infrastructure.Caching;
-using CommonJwtClaimIdentifiers = PaladinRogue.Libray.Core.Application.Claims.Constants.JwtClaimIdentifiers;
-using CommonJwtClaims = PaladinRogue.Libray.Core.Application.Authentication.Constants.JwtClaims;
-using CommonPolicies = PaladinRogue.Libray.Core.Setup.Infrastructure.Authorisation.Policies;
+using PaladinRogue.Library.Authorisation.Common.Policies;
+using PaladinRogue.Library.Authorisation.Setup.Infrastructure.Policies;
+using PaladinRogue.Library.Authorisation.Setup.Infrastructure.Policies.Json;
+using PaladinRogue.Library.Authorisation.Setup.Infrastructure.Restrictions;
+using PaladinRogue.Library.Authorisation.Setup.Infrastructure.Self;
+using PaladinRogue.Library.Core.Application.Authentication;
+using PaladinRogue.Library.Core.Domain.DataProtectors;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Authorisation;
+using PaladinRogue.Library.Persistence.Setup.Infrastructure.Caching;
+using CommonJwtClaimIdentifiers = PaladinRogue.Library.Core.Application.Claims.Constants.JwtClaimIdentifiers;
+using CommonJwtClaims = PaladinRogue.Library.Core.Application.Authentication.Constants.JwtClaims;
+using CommonPolicies = PaladinRogue.Library.Core.Setup.Infrastructure.Authorisation.Policies;
 
 namespace PaladinRogue.Authentication.Setup.Infrastructure.Authorisation
 {

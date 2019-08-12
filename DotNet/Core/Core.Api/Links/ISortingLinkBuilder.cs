@@ -1,6 +1,6 @@
-﻿using PaladinRogue.Libray.Core.Api.Sorting;
+﻿using PaladinRogue.Library.Core.Api.Sorting;
 
-namespace PaladinRogue.Libray.Core.Api.Links
+namespace PaladinRogue.Library.Core.Api.Links
 {
     public interface ISortingLinkBuilder
     {

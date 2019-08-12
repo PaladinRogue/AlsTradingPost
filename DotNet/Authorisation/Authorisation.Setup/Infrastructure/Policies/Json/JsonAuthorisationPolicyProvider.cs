@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Policies.Json
+namespace PaladinRogue.Library.Authorisation.Setup.Infrastructure.Policies.Json
 {
     public class JsonAuthorisationPolicyProvider : IAuthorisationPolicyProvider
     {

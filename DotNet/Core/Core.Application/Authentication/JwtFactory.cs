@@ -6,7 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 
-namespace PaladinRogue.Libray.Core.Application.Authentication
+namespace PaladinRogue.Library.Core.Application.Authentication
 {
 	public class JwtFactory : IJwtFactory
 	{

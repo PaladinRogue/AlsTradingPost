@@ -1,4 +1,4 @@
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Routing;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Routing;
 
 namespace PaladinRogue.Notifications.Setup.Infrastructure.Routing
 {

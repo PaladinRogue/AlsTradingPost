@@ -3,7 +3,7 @@ using PaladinRogue.Authentication.Application.Identities.TwoFactor;
 using PaladinRogue.Authentication.Application.Users.UpdateClaim;
 using PaladinRogue.Authentication.Domain.Identities.Events;
 using PaladinRogue.Authentication.Domain.Users.Events;
-using PaladinRogue.Libray.Core.Domain.DomainEvents.Interfaces;
+using PaladinRogue.Library.Core.Domain.DomainEvents.Interfaces;
 
 namespace PaladinRogue.Authentication.Setup.Infrastructure.DomainEvents
 {

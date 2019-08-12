@@ -1,4 +1,4 @@
-using PaladinRogue.Libray.Core.Domain.DataProtectors;
+using PaladinRogue.Library.Core.Domain.DataProtectors;
 
 namespace PaladinRogue.Authentication.Domain.Identities.Projections
 {

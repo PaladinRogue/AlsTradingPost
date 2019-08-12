@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using PaladinRogue.Libray.Messaging.Common.Messages;
+using PaladinRogue.Library.Messaging.Common.Messages;
 
 namespace Notifications.Messages
 {

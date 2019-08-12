@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace PaladinRogue.Libray.Core.Api.Formats.JsonV1
+namespace PaladinRogue.Library.Core.Api.Formats.JsonV1
 {
     public class JsonV1Middleware
     {

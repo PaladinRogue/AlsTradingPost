@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using PaladinRogue.Authentication.Messages;
-using PaladinRogue.Libray.Core.Application.Transactions;
-using PaladinRogue.Libray.Messaging.Common.Messages;
+using PaladinRogue.Library.Core.Application.Transactions;
+using PaladinRogue.Library.Messaging.Common.Messages;
 
 namespace PaladinRogue.Authentication.Application.Identities.TwoFactor
 {

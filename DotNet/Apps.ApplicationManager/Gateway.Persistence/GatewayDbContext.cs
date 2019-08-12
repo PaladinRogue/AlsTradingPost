@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PaladinRogue.Gateway.Domain.Applications;
-using PaladinRogue.Libray.Persistence.EntityFramework.Infrastructure.Extensions;
-using PaladinRogue.Libray.Persistence.EntityFramework.Infrastructure.Uris;
+using PaladinRogue.Library.Persistence.EntityFramework.Infrastructure.Extensions;
+using PaladinRogue.Library.Persistence.EntityFramework.Infrastructure.Uris;
 
 namespace PaladinRogue.Gateway.Persistence
 {

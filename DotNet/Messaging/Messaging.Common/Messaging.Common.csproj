@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
-        <RootNamespace>PaladinRogue.Libray.Messaging.Common</RootNamespace>
+        <RootNamespace>PaladinRogue.Library.Messaging.Common</RootNamespace>
     </PropertyGroup>
 
 </Project>

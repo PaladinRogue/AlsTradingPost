@@ -1,4 +1,4 @@
-﻿namespace PaladinRogue.Libray.Core.Application.Authentication.Constants
+﻿namespace PaladinRogue.Library.Core.Application.Authentication.Constants
 {
     public static class JwtClaims
     {

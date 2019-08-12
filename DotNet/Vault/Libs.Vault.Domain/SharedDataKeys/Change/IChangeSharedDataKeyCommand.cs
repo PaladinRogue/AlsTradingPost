@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace PaladinRogue.Libray.Vault.Domain.SharedDataKeys.Change
+namespace PaladinRogue.Library.Vault.Domain.SharedDataKeys.Change
 {
     public interface IChangeSharedDataKeyCommand
     {

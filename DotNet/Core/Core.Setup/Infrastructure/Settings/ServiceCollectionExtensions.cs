@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PaladinRogue.Libray.Core.Common.Settings;
+using PaladinRogue.Library.Core.Common.Settings;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Settings
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.Settings
 {
     public static class ServiceCollectionExtensions
     {

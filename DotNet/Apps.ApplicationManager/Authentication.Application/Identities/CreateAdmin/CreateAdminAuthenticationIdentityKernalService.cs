@@ -6,13 +6,13 @@ using PaladinRogue.Authentication.Domain.Identities.Create;
 using PaladinRogue.Authentication.Domain.Identities.ForgotPassword;
 using PaladinRogue.Authentication.Domain.Identities.RegisterPassword;
 using PaladinRogue.Authentication.Messages;
-using PaladinRogue.Libray.Core.Application;
-using PaladinRogue.Libray.Core.Application.Exceptions;
-using PaladinRogue.Libray.Core.Application.Transactions;
-using PaladinRogue.Libray.Core.Domain.Exceptions;
-using PaladinRogue.Libray.Core.Domain.Persistence;
-using PaladinRogue.Libray.Messaging.Common.Messages;
-using String = PaladinRogue.Libray.Core.Common.Extensions.String;
+using PaladinRogue.Library.Core.Application;
+using PaladinRogue.Library.Core.Application.Exceptions;
+using PaladinRogue.Library.Core.Application.Transactions;
+using PaladinRogue.Library.Core.Domain.Exceptions;
+using PaladinRogue.Library.Core.Domain.Persistence;
+using PaladinRogue.Library.Messaging.Common.Messages;
+using String = PaladinRogue.Library.Core.Common.Extensions.String;
 
 namespace PaladinRogue.Authentication.Application.Identities.CreateAdmin
 {

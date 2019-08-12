@@ -13,14 +13,14 @@ using PaladinRogue.Gateway.Persistence;
 using PaladinRogue.Gateway.Persistence.Applications;
 using PaladinRogue.Gateway.Setup.Infrastructure.Caching;
 using PaladinRogue.Gateway.Setup.Infrastructure.Routing;
-using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Authorisation;
-using PaladinRogue.Libray.Core.Application.Caching;
-using PaladinRogue.Libray.Core.Application.Transactions;
-using PaladinRogue.Libray.Core.Domain.Persistence;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Routing;
-using PaladinRogue.Libray.Persistence.EntityFramework.Repositories;
-using PaladinRogue.Libray.Persistence.Setup.Infrastructure.Caching;
-using PaladinRogue.Libray.Persistence.Setup.Infrastructure.Transactions;
+using PaladinRogue.Library.Authorisation.Setup.Infrastructure.Authorisation;
+using PaladinRogue.Library.Core.Application.Caching;
+using PaladinRogue.Library.Core.Application.Transactions;
+using PaladinRogue.Library.Core.Domain.Persistence;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Routing;
+using PaladinRogue.Library.Persistence.EntityFramework.Repositories;
+using PaladinRogue.Library.Persistence.Setup.Infrastructure.Caching;
+using PaladinRogue.Library.Persistence.Setup.Infrastructure.Transactions;
 
 namespace PaladinRogue.Gateway.Setup
 {

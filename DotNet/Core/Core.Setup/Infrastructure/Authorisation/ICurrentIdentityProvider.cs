@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Authorisation
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.Authorisation
 {
     public interface ICurrentIdentityProvider
     {

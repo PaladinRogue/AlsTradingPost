@@ -7,7 +7,7 @@ using PaladinRogue.Authentication.Application.AuthenticationServices;
 using PaladinRogue.Authentication.Application.AuthenticationServices.Models;
 using PaladinRogue.Authentication.Setup.Infrastructure.Authorisation;
 using PaladinRogue.Authentication.Setup.Infrastructure.Routing;
-using PaladinRogue.Libray.Core.Api.Builders.Resource;
+using PaladinRogue.Library.Core.Api.Builders.Resource;
 
 namespace PaladinRogue.Authentication.Api.AuthenticationService
 {

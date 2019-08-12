@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
-using PaladinRogue.Libray.Core.Api.Builders.Resource;
-using PaladinRogue.Libray.Core.Api.Exceptions;
+using PaladinRogue.Library.Core.Api.Builders.Resource;
+using PaladinRogue.Library.Core.Api.Exceptions;
 
-namespace PaladinRogue.Libray.Core.Api.Formats.JsonV1.Formatters
+namespace PaladinRogue.Library.Core.Api.Formats.JsonV1.Formatters
 {
     public class JsonV1OutputFormatter : JsonOutputFormatter
     {

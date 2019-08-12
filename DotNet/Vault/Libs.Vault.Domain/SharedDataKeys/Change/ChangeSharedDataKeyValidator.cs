@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace PaladinRogue.Libray.Vault.Domain.SharedDataKeys.Change
+namespace PaladinRogue.Library.Vault.Domain.SharedDataKeys.Change
 {
     public class ChangeSharedDataKeyValidator : AbstractValidator<ChangeSharedDataKeyCommandDdto>
     {

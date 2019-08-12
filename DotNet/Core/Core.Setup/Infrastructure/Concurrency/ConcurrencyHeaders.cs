@@ -1,4 +1,4 @@
-﻿namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Concurrency
+﻿namespace PaladinRogue.Library.Core.Setup.Infrastructure.Concurrency
 {
     public class ConcurrencyHeaders
     {

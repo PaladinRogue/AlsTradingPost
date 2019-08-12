@@ -2,9 +2,9 @@ using System;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.IdentityModel.Tokens;
-using PaladinRogue.Libray.Core.Domain.DataProtectors;
+using PaladinRogue.Library.Core.Domain.DataProtectors;
 
-namespace PaladinRogue.Libray.Persistence.EntityFramework.Infrastructure.SecurityKeys
+namespace PaladinRogue.Library.Persistence.EntityFramework.Infrastructure.SecurityKeys
 {
     public class SymmetricSecurityKeyConverter: ValueConverter<SymmetricSecurityKey, string>
     {

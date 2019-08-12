@@ -1,4 +1,4 @@
-﻿namespace PaladinRogue.Libray.Core.Application.Concurrency
+﻿namespace PaladinRogue.Library.Core.Application.Concurrency
 {
     public interface IVersionAdto<T>
     {

@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using PaladinRogue.Libray.Core.Common.Extensions;
+using PaladinRogue.Library.Core.Common.Extensions;
 
 namespace PaladinRogue.Authentication.Application.Notifications.Emails
 {

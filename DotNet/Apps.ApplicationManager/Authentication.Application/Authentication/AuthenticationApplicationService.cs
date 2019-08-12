@@ -11,15 +11,15 @@ using PaladinRogue.Authentication.Domain.Identities.Login.Password;
 using PaladinRogue.Authentication.Domain.Identities.Login.RefreshToken;
 using PaladinRogue.Authentication.Domain.Identities.Queries;
 using PaladinRogue.Authentication.Domain.Identities.RegisterClientCredential;
-using PaladinRogue.Libray.Core.Application;
-using PaladinRogue.Libray.Core.Application.Authentication;
-using PaladinRogue.Libray.Core.Application.Claims;
-using PaladinRogue.Libray.Core.Application.Exceptions;
-using PaladinRogue.Libray.Core.Application.Transactions;
-using PaladinRogue.Libray.Core.Domain.Exceptions;
-using PaladinRogue.Libray.Core.Domain.Persistence;
+using PaladinRogue.Library.Core.Application;
+using PaladinRogue.Library.Core.Application.Authentication;
+using PaladinRogue.Library.Core.Application.Claims;
+using PaladinRogue.Library.Core.Application.Exceptions;
+using PaladinRogue.Library.Core.Application.Transactions;
+using PaladinRogue.Library.Core.Domain.Exceptions;
+using PaladinRogue.Library.Core.Domain.Persistence;
 using Claim = PaladinRogue.Authentication.Domain.Identities.Claim;
-using JwtClaims = PaladinRogue.Libray.Core.Application.Authentication.Constants.JwtClaims;
+using JwtClaims = PaladinRogue.Library.Core.Application.Authentication.Constants.JwtClaims;
 
 namespace PaladinRogue.Authentication.Application.Authentication
 {

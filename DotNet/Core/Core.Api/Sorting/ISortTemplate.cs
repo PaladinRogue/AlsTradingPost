@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using PaladinRogue.Libray.Core.Api.Resources;
-using PaladinRogue.Libray.Core.Common.Sorting;
+using PaladinRogue.Library.Core.Api.Resources;
+using PaladinRogue.Library.Core.Common.Sorting;
 
-namespace PaladinRogue.Libray.Core.Api.Sorting
+namespace PaladinRogue.Library.Core.Api.Sorting
 {
     public interface ISortTemplate : ITemplate
     {

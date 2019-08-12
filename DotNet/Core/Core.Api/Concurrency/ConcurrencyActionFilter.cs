@@ -3,13 +3,13 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
-using PaladinRogue.Libray.Core.Api.Builders.Resource;
-using PaladinRogue.Libray.Core.Api.Concurrency.Interfaces;
-using PaladinRogue.Libray.Core.Domain.Concurrency.Interfaces;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Concurrency;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Constants;
+using PaladinRogue.Library.Core.Api.Builders.Resource;
+using PaladinRogue.Library.Core.Api.Concurrency.Interfaces;
+using PaladinRogue.Library.Core.Domain.Concurrency.Interfaces;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Concurrency;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Constants;
 
-namespace PaladinRogue.Libray.Core.Api.Concurrency
+namespace PaladinRogue.Library.Core.Api.Concurrency
 {
     public class ConcurrencyActionFilter : IActionFilter
     {

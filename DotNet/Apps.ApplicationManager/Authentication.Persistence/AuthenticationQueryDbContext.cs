@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PaladinRogue.Authentication.Domain.Identities.Projections;
-using PaladinRogue.Libray.Persistence.EntityFramework.Infrastructure.Extensions;
+using PaladinRogue.Library.Persistence.EntityFramework.Infrastructure.Extensions;
 
 namespace PaladinRogue.Authentication.Persistence
 {

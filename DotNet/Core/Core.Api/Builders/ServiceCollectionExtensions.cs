@@ -1,8 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
-using PaladinRogue.Libray.Core.Api.Builders.Resource;
-using PaladinRogue.Libray.Core.Api.Links;
+using PaladinRogue.Library.Core.Api.Builders.Resource;
+using PaladinRogue.Library.Core.Api.Links;
 
-namespace PaladinRogue.Libray.Core.Api.Builders
+namespace PaladinRogue.Library.Core.Api.Builders
 {
     public static class ServiceCollectionExtensions
     {

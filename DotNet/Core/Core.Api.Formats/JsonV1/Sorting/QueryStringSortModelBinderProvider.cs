@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
-using PaladinRogue.Libray.Core.Api.Sorting;
+using PaladinRogue.Library.Core.Api.Sorting;
 
-namespace PaladinRogue.Libray.Core.Api.Formats.JsonV1.Sorting
+namespace PaladinRogue.Library.Core.Api.Formats.JsonV1.Sorting
 {
     public class QueryStringSortModelBinderProvider : IModelBinderProvider
     {

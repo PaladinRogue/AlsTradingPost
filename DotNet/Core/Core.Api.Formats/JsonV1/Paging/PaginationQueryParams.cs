@@ -1,4 +1,4 @@
-﻿namespace PaladinRogue.Libray.Core.Api.Formats.JsonV1.Paging
+﻿namespace PaladinRogue.Library.Core.Api.Formats.JsonV1.Paging
 {
     public class PaginationQueryParams
     {

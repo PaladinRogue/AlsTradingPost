@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace PaladinRogue.Libray.Vault.Domain.DataKeys.Persistence
+namespace PaladinRogue.Library.Vault.Domain.DataKeys.Persistence
 {
     public interface IDataKeyRepository
     {

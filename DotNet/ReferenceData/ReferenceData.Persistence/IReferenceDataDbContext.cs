@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace PaladinRogue.Libray.ReferenceData.Persistence
+namespace PaladinRogue.Library.ReferenceData.Persistence
 {
     public interface IReferenceDataDbContext
     {

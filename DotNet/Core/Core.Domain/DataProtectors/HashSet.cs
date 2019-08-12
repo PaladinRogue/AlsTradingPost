@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using PaladinRogue.Libray.Core.Common;
-using PaladinRogue.Libray.Core.Common.ValueObjects;
+using PaladinRogue.Library.Core.Common;
+using PaladinRogue.Library.Core.Common.ValueObjects;
 
-namespace PaladinRogue.Libray.Core.Domain.DataProtectors
+namespace PaladinRogue.Library.Core.Domain.DataProtectors
 {
     public class HashSet : ValueObject<HashSet>
     {

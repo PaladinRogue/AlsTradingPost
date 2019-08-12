@@ -1,4 +1,4 @@
-﻿namespace PaladinRogue.Libray.Core.Api.Pagination
+﻿namespace PaladinRogue.Library.Core.Api.Pagination
 {
     public interface IPagedResource
     {

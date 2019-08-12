@@ -5,27 +5,27 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Policies;
-using PaladinRogue.Libray.Core.Api;
-using PaladinRogue.Libray.Core.Api.Builders;
-using PaladinRogue.Libray.Core.Api.Clocks;
-using PaladinRogue.Libray.Core.Api.DataProtection;
-using PaladinRogue.Libray.Core.Api.DomainEvents;
-using PaladinRogue.Libray.Core.Api.Extensions;
-using PaladinRogue.Libray.Core.Api.Formats;
-using PaladinRogue.Libray.Core.Setup;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.DataProtection;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Exceptions;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Logging;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Persistence;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Settings;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Startup;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.WebRequests;
-using PaladinRogue.Libray.DomainEvents.Setup;
-using PaladinRogue.Libray.Messaging.Setup;
-using PaladinRogue.Libray.Messaging.Setup.Infrastructure.Dispatchers;
-using PaladinRogue.Libray.Messaging.Setup.Infrastructure.Startup;
-using PaladinRogue.Libray.Vault.Setup;
+using PaladinRogue.Library.Authorisation.Setup.Infrastructure.Policies;
+using PaladinRogue.Library.Core.Api;
+using PaladinRogue.Library.Core.Api.Builders;
+using PaladinRogue.Library.Core.Api.Clocks;
+using PaladinRogue.Library.Core.Api.DataProtection;
+using PaladinRogue.Library.Core.Api.DomainEvents;
+using PaladinRogue.Library.Core.Api.Extensions;
+using PaladinRogue.Library.Core.Api.Formats;
+using PaladinRogue.Library.Core.Setup;
+using PaladinRogue.Library.Core.Setup.Infrastructure.DataProtection;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Exceptions;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Logging;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Persistence;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Settings;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Startup;
+using PaladinRogue.Library.Core.Setup.Infrastructure.WebRequests;
+using PaladinRogue.Library.DomainEvents.Setup;
+using PaladinRogue.Library.Messaging.Setup;
+using PaladinRogue.Library.Messaging.Setup.Infrastructure.Dispatchers;
+using PaladinRogue.Library.Messaging.Setup.Infrastructure.Startup;
+using PaladinRogue.Library.Vault.Setup;
 using PaladinRogue.Vault.Setup;
 using PaladinRogue.Vault.Setup.Infrastructure.DataKeys;
 
@@ -90,7 +90,7 @@ namespace PaladinRogue.Vault.Api
             ILoggerFactory loggerFactory)
         {
 
-            loggerFactory.AddLog4Net();
+            loggerFactory.AddLogging();
 
             app.Map("/v1", jsonVersion =>
             {

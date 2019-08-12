@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PaladinRogue.Libray.Authorisation.Application.ApplicationServices;
-using PaladinRogue.Libray.Authorisation.Common;
-using PaladinRogue.Libray.Authorisation.Common.Contexts;
-using PaladinRogue.Libray.ReferenceData.Application.ReferenceData.Models;
+using PaladinRogue.Library.Authorisation.Application.ApplicationServices;
+using PaladinRogue.Library.Authorisation.Common;
+using PaladinRogue.Library.Authorisation.Common.Contexts;
+using PaladinRogue.Library.ReferenceData.Application.ReferenceData.Models;
 
-namespace PaladinRogue.Libray.ReferenceData.Application.ReferenceData
+namespace PaladinRogue.Library.ReferenceData.Application.ReferenceData
 {
     public class ReferenceDataApplicationServiceSecurityDecorator : IReferenceDataApplicationService
     {

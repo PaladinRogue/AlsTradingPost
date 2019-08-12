@@ -44,13 +44,13 @@ using PaladinRogue.Authentication.Persistence.Identities;
 using PaladinRogue.Authentication.Setup.Infrastructure.Authentication.Facebook;
 using PaladinRogue.Authentication.Setup.Infrastructure.Authentication.Google;
 using PaladinRogue.Authentication.Setup.Infrastructure.Authorisation;
-using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Authorisation;
-using PaladinRogue.Libray.Core.Application.Transactions;
-using PaladinRogue.Libray.Core.Domain.Persistence;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Routing;
-using PaladinRogue.Libray.Persistence.EntityFramework.Repositories;
-using PaladinRogue.Libray.Persistence.Setup.Infrastructure.Transactions;
-using PaladinRogue.Libray.ReferenceData.Setup;
+using PaladinRogue.Library.Authorisation.Setup.Infrastructure.Authorisation;
+using PaladinRogue.Library.Core.Application.Transactions;
+using PaladinRogue.Library.Core.Domain.Persistence;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Routing;
+using PaladinRogue.Library.Persistence.EntityFramework.Repositories;
+using PaladinRogue.Library.Persistence.Setup.Infrastructure.Transactions;
+using PaladinRogue.Library.ReferenceData.Setup;
 
 namespace PaladinRogue.Authentication.Setup
 {

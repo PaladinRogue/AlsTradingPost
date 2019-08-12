@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using PaladinRogue.Libray.Core.Api.Sorting;
-using PaladinRogue.Libray.Core.Common.Sorting;
+using PaladinRogue.Library.Core.Api.Sorting;
+using PaladinRogue.Library.Core.Common.Sorting;
 
-namespace PaladinRogue.Libray.Core.Api.Formats.JsonV1.Sorting
+namespace PaladinRogue.Library.Core.Api.Formats.JsonV1.Sorting
 {
     public class QueryStringSortModelBinder : IModelBinder
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PaladinRogue.Gateway.Application.Handlers;
-using PaladinRogue.Libray.Messaging.Common.Handlers;
+using PaladinRogue.Library.Messaging.Common.Handlers;
 
 namespace PaladinRogue.Gateway.Setup.Infrastructure.Messaging
 {

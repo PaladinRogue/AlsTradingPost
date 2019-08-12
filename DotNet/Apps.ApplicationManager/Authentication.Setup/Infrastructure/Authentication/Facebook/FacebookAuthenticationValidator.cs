@@ -4,10 +4,10 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using PaladinRogue.Authentication.Application.Authentication.ClientCredential;
 using PaladinRogue.Authentication.Domain.AuthenticationServices;
-using PaladinRogue.Libray.Core.Application.WebRequests;
-using PaladinRogue.Libray.Core.Common.Builders.Dictionaries;
-using PaladinRogue.Libray.Core.Common.Extensions;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Exceptions;
+using PaladinRogue.Library.Core.Application.WebRequests;
+using PaladinRogue.Library.Core.Common.Builders.Dictionaries;
+using PaladinRogue.Library.Core.Common.Extensions;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Exceptions;
 
 namespace PaladinRogue.Authentication.Setup.Infrastructure.Authentication.Facebook
 {

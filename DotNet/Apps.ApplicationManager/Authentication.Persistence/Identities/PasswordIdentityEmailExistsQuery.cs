@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using PaladinRogue.Authentication.Domain;
 using PaladinRogue.Authentication.Domain.Identities;
 using PaladinRogue.Authentication.Domain.Identities.Queries;
-using PaladinRogue.Libray.Core.Domain.DataProtectors;
+using PaladinRogue.Library.Core.Domain.DataProtectors;
 
 namespace PaladinRogue.Authentication.Persistence.Identities
 {

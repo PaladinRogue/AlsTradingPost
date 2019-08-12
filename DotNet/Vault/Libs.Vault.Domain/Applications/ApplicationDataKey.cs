@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using PaladinRogue.Libray.Core.Domain.Aggregates;
-using PaladinRogue.Libray.Vault.Domain.Applications.CreateDataKey;
+using PaladinRogue.Library.Core.Domain.Aggregates;
+using PaladinRogue.Library.Vault.Domain.Applications.CreateDataKey;
 
-namespace PaladinRogue.Libray.Vault.Domain.Applications
+namespace PaladinRogue.Library.Vault.Domain.Applications
 {
     public class ApplicationDataKey : DataKey, IAggregateMember
     {

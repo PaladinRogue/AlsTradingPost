@@ -1,6 +1,6 @@
-﻿using PaladinRogue.Libray.Messaging.Common.Messages;
+﻿using PaladinRogue.Library.Messaging.Common.Messages;
 
-namespace PaladinRogue.Libray.Messaging.Setup.Infrastructure.Directors
+namespace PaladinRogue.Library.Messaging.Setup.Infrastructure.Directors
 {
     public interface IPendingMessageProvider : IProvider<IMessage>
     {

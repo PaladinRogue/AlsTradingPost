@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Http;
-using PaladinRogue.Libray.Core.Application.Concurrency;
-using PaladinRogue.Libray.Core.Domain.Concurrency.Interfaces;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Exceptions;
+using PaladinRogue.Library.Core.Application.Concurrency;
+using PaladinRogue.Library.Core.Domain.Concurrency.Interfaces;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Exceptions;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Concurrency
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.Concurrency
 {
     public class ConcurrencyVersionProvider : IConcurrencyVersionProvider
     {

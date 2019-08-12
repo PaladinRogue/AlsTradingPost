@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PaladinRogue.Libray.Vault.Persistence.Migrations
+namespace PaladinRogue.Library.Vault.Persistence.Migrations
 {
     public partial class InitialCreate : Migration
     {

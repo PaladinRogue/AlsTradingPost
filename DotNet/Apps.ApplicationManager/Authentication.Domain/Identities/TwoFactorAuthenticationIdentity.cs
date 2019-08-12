@@ -4,11 +4,11 @@ using NodaTime;
 using PaladinRogue.Authentication.Domain.Identities.CreateTwoFactor;
 using PaladinRogue.Authentication.Domain.Identities.Events;
 using PaladinRogue.Authentication.Domain.Identities.ValidateToken;
-using PaladinRogue.Libray.Core.Common;
-using PaladinRogue.Libray.Core.Domain.Clocks;
-using PaladinRogue.Libray.Core.Domain.DataProtectors;
-using PaladinRogue.Libray.Core.Domain.DomainEvents;
-using String = PaladinRogue.Libray.Core.Common.Extensions.String;
+using PaladinRogue.Library.Core.Common;
+using PaladinRogue.Library.Core.Domain.Clocks;
+using PaladinRogue.Library.Core.Domain.DataProtectors;
+using PaladinRogue.Library.Core.Domain.DomainEvents;
+using String = PaladinRogue.Library.Core.Common.Extensions.String;
 
 namespace PaladinRogue.Authentication.Domain.Identities
 {

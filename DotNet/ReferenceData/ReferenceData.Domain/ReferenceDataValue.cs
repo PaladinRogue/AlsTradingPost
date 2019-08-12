@@ -1,10 +1,10 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using PaladinRogue.Libray.Core.Common;
-using PaladinRogue.Libray.Core.Domain.Aggregates;
-using PaladinRogue.Libray.Core.Domain.Entities;
+using PaladinRogue.Library.Core.Common;
+using PaladinRogue.Library.Core.Domain.Aggregates;
+using PaladinRogue.Library.Core.Domain.Entities;
 
-namespace PaladinRogue.Libray.ReferenceData.Domain
+namespace PaladinRogue.Library.ReferenceData.Domain
 {
     public class ReferenceDataValue : Entity, IAggregateMember
     {

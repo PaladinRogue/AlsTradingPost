@@ -2,9 +2,9 @@
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using PaladinRogue.Libray.Core.Domain.DataProtectors;
+using PaladinRogue.Library.Core.Domain.DataProtectors;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Hashing
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.Hashing
 {
     public class Sha256HashFactory : IHashFactory
     {

@@ -1,4 +1,4 @@
-﻿namespace PaladinRogue.Libray.Core.Domain.Entities
+﻿namespace PaladinRogue.Library.Core.Domain.Entities
 {
     public interface IVersionedEntity : IEntity
     {

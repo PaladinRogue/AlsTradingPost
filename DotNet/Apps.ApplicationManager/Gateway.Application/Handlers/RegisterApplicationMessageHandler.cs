@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using Gateway.Messages;
 using Microsoft.Extensions.Logging;
 using PaladinRogue.Gateway.Application.Applications.Register;
-using PaladinRogue.Libray.Messaging.Common.Handlers;
-using PaladinRogue.Libray.Messaging.Common.MessageBus;
+using PaladinRogue.Library.Messaging.Common.Handlers;
+using PaladinRogue.Library.Messaging.Common.MessageBus;
 
 namespace PaladinRogue.Gateway.Application.Handlers
 {

@@ -4,12 +4,12 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using PaladinRogue.Libray.Core.Application.Transactions;
-using PaladinRogue.Libray.Core.Common.Encryption;
-using PaladinRogue.Libray.Core.Domain.Persistence;
-using PaladinRogue.Libray.Vault.Domain.SharedDataKeys;
-using PaladinRogue.Libray.Vault.Domain.SharedDataKeys.Change;
-using PaladinRogue.Libray.Vault.Domain.SharedDataKeys.Create;
+using PaladinRogue.Library.Core.Application.Transactions;
+using PaladinRogue.Library.Core.Common.Encryption;
+using PaladinRogue.Library.Core.Domain.Persistence;
+using PaladinRogue.Library.Vault.Domain.SharedDataKeys;
+using PaladinRogue.Library.Vault.Domain.SharedDataKeys.Change;
+using PaladinRogue.Library.Vault.Domain.SharedDataKeys.Create;
 
 namespace PaladinRogue.Vault.Application.SharedDataKeys.Create
 {
@@ -51,7 +51,7 @@ namespace PaladinRogue.Vault.Application.SharedDataKeys.Create
                 {
                     IList<SharedDataKey> existingKeys = (await _commandRepository.GetAsync()).ToList();
 
-                    foreach (FieldInfo fieldInfo in typeof(Libray.Core.Domain.DataProtectors.SharedDataKeys).GetFields())
+                    foreach (FieldInfo fieldInfo in typeof(Library.Core.Domain.DataProtectors.SharedDataKeys).GetFields())
                     {
                         string keyName = fieldInfo.GetRawConstantValue().ToString();
 

@@ -1,10 +1,10 @@
 ﻿using System;
 using Newtonsoft.Json;
-using PaladinRogue.Libray.Core.Application.Exceptions;
-using PaladinRogue.Libray.Core.Domain.Concurrency.Interfaces;
-using PaladinRogue.Libray.Core.Domain.Entities;
+using PaladinRogue.Library.Core.Application.Exceptions;
+using PaladinRogue.Library.Core.Domain.Concurrency.Interfaces;
+using PaladinRogue.Library.Core.Domain.Entities;
 
-namespace PaladinRogue.Libray.Core.Application.Concurrency
+namespace PaladinRogue.Library.Core.Application.Concurrency
 {
     public static class ConcurrencyVersionFactory
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace PaladinRogue.Libray.Core.Domain.Pagination.Interfaces
+namespace PaladinRogue.Library.Core.Domain.Pagination.Interfaces
 {
     public interface IPagedCollectionDdto<T>
     {

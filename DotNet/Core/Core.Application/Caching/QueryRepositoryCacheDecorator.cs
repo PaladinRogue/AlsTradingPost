@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using PaladinRogue.Libray.Core.Common.Sorting;
-using PaladinRogue.Libray.Core.Domain.Aggregates;
-using PaladinRogue.Libray.Core.Domain.Models;
-using PaladinRogue.Libray.Core.Domain.Persistence;
+using PaladinRogue.Library.Core.Common.Sorting;
+using PaladinRogue.Library.Core.Domain.Aggregates;
+using PaladinRogue.Library.Core.Domain.Models;
+using PaladinRogue.Library.Core.Domain.Persistence;
 
-namespace PaladinRogue.Libray.Core.Application.Caching
+namespace PaladinRogue.Library.Core.Application.Caching
 {
     public class QueryRepositoryCacheDecorator<T> : CacheDecorator<Guid, EntityCacheKey<T>, T>, IQueryRepository<T> where T : class, IAggregateRoot
     {

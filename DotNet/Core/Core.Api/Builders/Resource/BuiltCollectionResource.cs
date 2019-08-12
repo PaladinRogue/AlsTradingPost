@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace PaladinRogue.Libray.Core.Api.Builders.Resource
+namespace PaladinRogue.Library.Core.Api.Builders.Resource
 {
     public class BuiltCollectionResource
     {

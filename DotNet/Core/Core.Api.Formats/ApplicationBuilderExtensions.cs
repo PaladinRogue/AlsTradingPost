@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Builder;
-using PaladinRogue.Libray.Core.Api.Formats.JsonV1;
+using PaladinRogue.Library.Core.Api.Formats.JsonV1;
 
-namespace PaladinRogue.Libray.Core.Api.Formats
+namespace PaladinRogue.Library.Core.Api.Formats
 {
     public static class ApplicationBuilderExtensions
     {

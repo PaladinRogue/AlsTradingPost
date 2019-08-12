@@ -3,7 +3,7 @@ using Google.Cloud.Kms.V1;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Primitives;
 
-namespace PaladinRogue.Libray.Configuration.Secrets.Kms
+namespace PaladinRogue.Library.Configuration.Secrets.Kms
 {
     public class EncryptedFileProvider : IFileProvider
     {

@@ -4,13 +4,13 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using PaladinRogue.Libray.Core.Common.Sorting;
-using PaladinRogue.Libray.Core.Domain.Aggregates;
-using PaladinRogue.Libray.Core.Domain.Concurrency.Interfaces;
-using PaladinRogue.Libray.Core.Domain.Exceptions;
-using PaladinRogue.Libray.Core.Domain.Persistence;
+using PaladinRogue.Library.Core.Common.Sorting;
+using PaladinRogue.Library.Core.Domain.Aggregates;
+using PaladinRogue.Library.Core.Domain.Concurrency.Interfaces;
+using PaladinRogue.Library.Core.Domain.Exceptions;
+using PaladinRogue.Library.Core.Domain.Persistence;
 
-namespace PaladinRogue.Libray.Persistence.EntityFramework.Repositories
+namespace PaladinRogue.Library.Persistence.EntityFramework.Repositories
 {
     public class CommandRepository<T> : CommandRepository<T, DbContext> where T : class, IAggregateRoot
     {

@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using PaladinRogue.Libray.Messaging.Common.MessageBus;
-using PaladinRogue.Libray.Messaging.Common.Messages;
+using PaladinRogue.Library.Messaging.Common.MessageBus;
+using PaladinRogue.Library.Messaging.Common.Messages;
 
-namespace PaladinRogue.Libray.Messaging.Common.Handlers
+namespace PaladinRogue.Library.Messaging.Common.Handlers
 {
     public abstract class MessageHandler<T, TMessageHandler> : IMessageHandler, IMessageHandler<T>
         where T: IMessage

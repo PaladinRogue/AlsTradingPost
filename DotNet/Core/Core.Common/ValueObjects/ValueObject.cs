@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PaladinRogue.Libray.Core.Common.ValueObjects
+namespace PaladinRogue.Library.Core.Common.ValueObjects
 {
     public abstract class ValueObject<T>
     {

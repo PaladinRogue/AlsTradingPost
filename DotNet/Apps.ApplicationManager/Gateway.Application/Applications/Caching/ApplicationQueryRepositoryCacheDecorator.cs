@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using PaladinRogue.Gateway.Domain.Applications.Persistence;
-using PaladinRogue.Libray.Core.Application.Caching;
+using PaladinRogue.Library.Core.Application.Caching;
 
 namespace PaladinRogue.Gateway.Application.Applications.Caching
 {

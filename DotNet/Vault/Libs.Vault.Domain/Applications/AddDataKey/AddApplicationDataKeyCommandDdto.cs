@@ -1,6 +1,6 @@
 using Microsoft.IdentityModel.Tokens;
 
-namespace PaladinRogue.Libray.Vault.Domain.Applications.AddDataKey
+namespace PaladinRogue.Library.Vault.Domain.Applications.AddDataKey
 {
     public class AddApplicationDataKeyCommandDdto
     {

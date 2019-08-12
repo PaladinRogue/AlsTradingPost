@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <RootNamespace>PaladinRogue.Libray.Core.Api</RootNamespace>
+    <RootNamespace>PaladinRogue.Library.Core.Api</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="8.4.0" />

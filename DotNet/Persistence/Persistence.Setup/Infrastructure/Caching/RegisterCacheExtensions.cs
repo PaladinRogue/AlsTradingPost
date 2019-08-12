@@ -1,11 +1,11 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
-using PaladinRogue.Libray.Core.Application.Caching;
-using PaladinRogue.Libray.Core.Domain.Aggregates;
-using PaladinRogue.Libray.Core.Domain.Persistence;
-using PaladinRogue.Libray.Persistence.EntityFramework.Repositories;
+using PaladinRogue.Library.Core.Application.Caching;
+using PaladinRogue.Library.Core.Domain.Aggregates;
+using PaladinRogue.Library.Core.Domain.Persistence;
+using PaladinRogue.Library.Persistence.EntityFramework.Repositories;
 
-namespace PaladinRogue.Libray.Persistence.Setup.Infrastructure.Caching
+namespace PaladinRogue.Library.Persistence.Setup.Infrastructure.Caching
 {
     public static class RegisterCacheExtensions
     {

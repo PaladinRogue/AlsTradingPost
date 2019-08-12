@@ -1,4 +1,4 @@
-﻿namespace PaladinRogue.Libray.Core.Api.Resources
+﻿namespace PaladinRogue.Library.Core.Api.Resources
 {
     public interface ISummaryResource : IResource
     {

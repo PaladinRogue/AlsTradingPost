@@ -1,4 +1,4 @@
-using PaladinRogue.Libray.Core.Domain.DomainEvents.Interfaces;
+using PaladinRogue.Library.Core.Domain.DomainEvents.Interfaces;
 
 namespace PaladinRogue.Gateway.Domain.Applications.Events
 {

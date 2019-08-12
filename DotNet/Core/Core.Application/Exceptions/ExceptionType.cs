@@ -1,4 +1,4 @@
-﻿namespace PaladinRogue.Libray.Core.Application.Exceptions
+﻿namespace PaladinRogue.Library.Core.Application.Exceptions
 {
     public enum ExceptionType
     {

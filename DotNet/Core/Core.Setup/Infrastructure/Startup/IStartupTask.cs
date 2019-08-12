@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Startup
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.Startup
 {
     public interface IStartupTask
     {

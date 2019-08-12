@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace PaladinRogue.Libray.Core.Api.Links
+namespace PaladinRogue.Library.Core.Api.Links
 {
     public class Links
     {

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using PaladinRogue.Libray.Messaging.Common.Messages;
+using PaladinRogue.Library.Messaging.Common.Messages;
 
-namespace PaladinRogue.Libray.Messaging.Setup.Infrastructure.Directors
+namespace PaladinRogue.Library.Messaging.Setup.Infrastructure.Directors
 {
     public class PendingMessageDirector : IPendingMessageContainer, IPendingMessageProvider
     {

@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using FluentValidation;
-using PaladinRogue.Libray.Core.Domain.Validation;
+using PaladinRogue.Library.Core.Domain.Validation;
 
-namespace PaladinRogue.Libray.Vault.Domain.Applications.AddDataKey
+namespace PaladinRogue.Library.Vault.Domain.Applications.AddDataKey
 {
     public class AddApplicationDataKeyCommand : IAddApplicationDataKeyCommand
     {

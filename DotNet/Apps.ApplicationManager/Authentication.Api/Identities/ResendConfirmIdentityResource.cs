@@ -1,4 +1,4 @@
-using PaladinRogue.Libray.Core.Api.Resources;
+using PaladinRogue.Library.Core.Api.Resources;
 
 namespace PaladinRogue.Authentication.Api.Identities
 {

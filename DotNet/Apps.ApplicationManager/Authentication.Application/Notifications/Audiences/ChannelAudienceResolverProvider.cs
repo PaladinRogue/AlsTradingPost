@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PaladinRogue.Authentication.Domain.NotificationTypes;
-using PaladinRogue.Libray.Core.Application.Exceptions;
+using PaladinRogue.Library.Core.Application.Exceptions;
 
 namespace PaladinRogue.Authentication.Application.Notifications.Audiences
 {

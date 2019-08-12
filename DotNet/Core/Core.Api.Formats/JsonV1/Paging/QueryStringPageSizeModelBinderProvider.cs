@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
-using PaladinRogue.Libray.Core.Api.Pagination.Interfaces;
+using PaladinRogue.Library.Core.Api.Pagination.Interfaces;
 
-namespace PaladinRogue.Libray.Core.Api.Formats.JsonV1.Paging
+namespace PaladinRogue.Library.Core.Api.Formats.JsonV1.Paging
 {
     public class QueryStringPageSizeModelBinderProvider : IModelBinderProvider
     {

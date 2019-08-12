@@ -1,4 +1,4 @@
-﻿namespace PaladinRogue.Libray.Core.Api.Headers
+﻿namespace PaladinRogue.Library.Core.Api.Headers
 {
     public static class HeaderType
     {

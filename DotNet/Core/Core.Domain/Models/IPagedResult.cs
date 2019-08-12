@@ -1,6 +1,6 @@
 using System.Linq;
 
-namespace PaladinRogue.Libray.Core.Domain.Models
+namespace PaladinRogue.Library.Core.Domain.Models
 {
     public interface IPagedResult<out T>
     {

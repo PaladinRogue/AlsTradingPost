@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using PaladinRogue.Libray.Core.Api.Concurrency.Interfaces;
-using PaladinRogue.Libray.Core.Api.Links;
-using PaladinRogue.Libray.Core.Api.Meta;
-using PaladinRogue.Libray.Core.Api.Pagination.Interfaces;
-using PaladinRogue.Libray.Core.Api.PropertyTypes;
-using PaladinRogue.Libray.Core.Api.Resources;
-using PaladinRogue.Libray.Core.Api.Validation.Attributes;
-using PaladinRogue.Libray.Core.Domain.Concurrency.Interfaces;
+using PaladinRogue.Library.Core.Api.Concurrency.Interfaces;
+using PaladinRogue.Library.Core.Api.Links;
+using PaladinRogue.Library.Core.Api.Meta;
+using PaladinRogue.Library.Core.Api.Pagination.Interfaces;
+using PaladinRogue.Library.Core.Api.PropertyTypes;
+using PaladinRogue.Library.Core.Api.Resources;
+using PaladinRogue.Library.Core.Api.Validation.Attributes;
+using PaladinRogue.Library.Core.Domain.Concurrency.Interfaces;
 
-namespace PaladinRogue.Libray.Core.Api.Builders.Resource
+namespace PaladinRogue.Library.Core.Api.Builders.Resource
 {
     public class DefaultResourceBuilder : IResourceBuilder
     {

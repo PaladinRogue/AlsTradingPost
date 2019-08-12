@@ -12,12 +12,12 @@ using PaladinRogue.Authentication.Domain.Identities.RegisterPassword;
 using PaladinRogue.Authentication.Domain.Identities.ResendConfirmIdentity;
 using PaladinRogue.Authentication.Domain.Identities.ResetPassword;
 using PaladinRogue.Authentication.Domain.Identities.ValidateToken;
-using PaladinRogue.Libray.Core.Application;
-using PaladinRogue.Libray.Core.Application.Concurrency;
-using PaladinRogue.Libray.Core.Application.Exceptions;
-using PaladinRogue.Libray.Core.Application.Transactions;
-using PaladinRogue.Libray.Core.Domain.Exceptions;
-using PaladinRogue.Libray.Core.Domain.Persistence;
+using PaladinRogue.Library.Core.Application;
+using PaladinRogue.Library.Core.Application.Concurrency;
+using PaladinRogue.Library.Core.Application.Exceptions;
+using PaladinRogue.Library.Core.Application.Transactions;
+using PaladinRogue.Library.Core.Domain.Exceptions;
+using PaladinRogue.Library.Core.Domain.Persistence;
 
 namespace PaladinRogue.Authentication.Application.Identities
 {

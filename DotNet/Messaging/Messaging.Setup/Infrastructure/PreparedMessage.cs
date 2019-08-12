@@ -1,7 +1,7 @@
 using System;
-using PaladinRogue.Libray.Messaging.Setup.Infrastructure.Interfaces;
+using PaladinRogue.Library.Messaging.Setup.Infrastructure.Interfaces;
 
-namespace PaladinRogue.Libray.Messaging.Setup.Infrastructure
+namespace PaladinRogue.Library.Messaging.Setup.Infrastructure
 {
     public class PreparedMessage : IPreparedMessage
     {

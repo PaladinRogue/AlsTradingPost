@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PaladinRogue.Libray.Core.Api.Validation.Attributes
+namespace PaladinRogue.Library.Core.Api.Validation.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class RequiredAttribute : Attribute

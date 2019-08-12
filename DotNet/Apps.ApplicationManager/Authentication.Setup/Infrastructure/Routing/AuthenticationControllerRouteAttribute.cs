@@ -1,4 +1,4 @@
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Routing;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Routing;
 
 namespace PaladinRogue.Authentication.Setup.Infrastructure.Routing
 {

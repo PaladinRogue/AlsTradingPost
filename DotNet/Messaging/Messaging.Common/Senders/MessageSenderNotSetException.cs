@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PaladinRogue.Libray.Messaging.Common.Senders
+namespace PaladinRogue.Library.Messaging.Common.Senders
 {
     [Serializable]
     public class MessageSenderNotSetException : Exception

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Exceptions
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.Exceptions
 {
     public static class ApplicationBuilderExtensions
     {

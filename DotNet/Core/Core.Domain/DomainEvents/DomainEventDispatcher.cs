@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using PaladinRogue.Libray.Core.Domain.DomainEvents.Interfaces;
+using PaladinRogue.Library.Core.Domain.DomainEvents.Interfaces;
 
-namespace PaladinRogue.Libray.Core.Domain.DomainEvents
+namespace PaladinRogue.Library.Core.Domain.DomainEvents
 {
     public class DomainEventDispatcher : IDomainEventDispatcher
     {

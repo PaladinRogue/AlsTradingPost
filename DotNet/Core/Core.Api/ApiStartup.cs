@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using PaladinRogue.Libray.Configuration.Secrets.Kms;
+using PaladinRogue.Library.Configuration.Secrets.Kms;
 
-namespace PaladinRogue.Libray.Core.Api
+namespace PaladinRogue.Library.Core.Api
 {
     public abstract class ApiStartup
     {

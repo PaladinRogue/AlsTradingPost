@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using PaladinRogue.Libray.Core.Common;
-using PaladinRogue.Libray.Core.Domain.DataProtectors;
+using PaladinRogue.Library.Core.Common;
+using PaladinRogue.Library.Core.Domain.DataProtectors;
 
 namespace PaladinRogue.Authentication.Domain.AuthenticationServices
 {

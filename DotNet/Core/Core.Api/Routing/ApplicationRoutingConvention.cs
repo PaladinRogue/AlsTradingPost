@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
-namespace PaladinRogue.Libray.Core.Api.Routing
+namespace PaladinRogue.Library.Core.Api.Routing
 {
     public class ApplicationRoutingConvention : IControllerModelConvention
     {

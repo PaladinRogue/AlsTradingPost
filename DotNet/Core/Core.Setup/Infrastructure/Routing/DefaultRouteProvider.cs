@@ -3,9 +3,9 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Routing;
-using PaladinRogue.Libray.Core.Common.Extensions;
+using PaladinRogue.Library.Core.Common.Extensions;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Routing
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.Routing
 {
     public class DefaultRouteProvider : IRouteProvider<bool>
     {

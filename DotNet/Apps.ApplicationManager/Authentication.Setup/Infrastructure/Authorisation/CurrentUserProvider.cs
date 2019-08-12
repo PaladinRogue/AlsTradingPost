@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using PaladinRogue.Authentication.Application.Claims;
-using PaladinRogue.Libray.Core.Application.Authentication;
-using PaladinRogue.Libray.Core.Application.Exceptions;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.HttpContexts;
+using PaladinRogue.Library.Core.Application.Authentication;
+using PaladinRogue.Library.Core.Application.Exceptions;
+using PaladinRogue.Library.Core.Setup.Infrastructure.HttpContexts;
 
 namespace PaladinRogue.Authentication.Setup.Infrastructure.Authorisation
 {

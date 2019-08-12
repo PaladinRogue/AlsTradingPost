@@ -2,10 +2,10 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Startup;
-using PaladinRogue.Libray.Vault.Application.DataKeys;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Startup;
+using PaladinRogue.Library.Vault.Application.DataKeys;
 
-namespace PaladinRogue.Libray.Vault.Setup.Infrastructure.Startup
+namespace PaladinRogue.Library.Vault.Setup.Infrastructure.Startup
 {
     public class CreateDataKeysStartupTask<T> : IStartupTask
     {

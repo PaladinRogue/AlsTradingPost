@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace PaladinRogue.Libray.Core.Api.QueryString
+namespace PaladinRogue.Library.Core.Api.QueryString
 {
     public class SeparatedQueryStringFilter : IResourceFilter
     {

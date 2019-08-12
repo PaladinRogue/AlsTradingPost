@@ -1,5 +1,5 @@
 ﻿
-namespace PaladinRogue.Libray.Messaging.Setup.Infrastructure.Directors
+namespace PaladinRogue.Library.Messaging.Setup.Infrastructure.Directors
 {
     public interface IContainer<in T>
 	{

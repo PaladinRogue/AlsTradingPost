@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Constants
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.Constants
 {
     public class HttpVerbMapper
     {

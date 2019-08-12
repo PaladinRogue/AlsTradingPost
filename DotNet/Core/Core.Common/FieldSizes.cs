@@ -1,4 +1,4 @@
-namespace PaladinRogue.Libray.Core.Common
+namespace PaladinRogue.Library.Core.Common
 {
     public class FieldSizes
     {

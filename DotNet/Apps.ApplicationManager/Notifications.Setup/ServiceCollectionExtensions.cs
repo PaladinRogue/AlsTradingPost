@@ -1,5 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Routing;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Routing;
 using PaladinRogue.Notifications.Application.Emails;
 using PaladinRogue.Notifications.Application.Emails.Send;
 

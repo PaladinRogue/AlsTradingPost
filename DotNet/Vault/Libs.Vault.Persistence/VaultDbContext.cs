@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using PaladinRogue.Libray.Persistence.EntityFramework.Infrastructure.Extensions;
-using PaladinRogue.Libray.Persistence.EntityFramework.Infrastructure.SecurityKeys;
-using PaladinRogue.Libray.Vault.Domain;
-using PaladinRogue.Libray.Vault.Domain.Applications;
-using PaladinRogue.Libray.Vault.Domain.SharedDataKeys;
+using PaladinRogue.Library.Persistence.EntityFramework.Infrastructure.Extensions;
+using PaladinRogue.Library.Persistence.EntityFramework.Infrastructure.SecurityKeys;
+using PaladinRogue.Library.Vault.Domain;
+using PaladinRogue.Library.Vault.Domain.Applications;
+using PaladinRogue.Library.Vault.Domain.SharedDataKeys;
 
-namespace PaladinRogue.Libray.Vault.Persistence
+namespace PaladinRogue.Library.Vault.Persistence
 {
     public class VaultDbContext : DbContext
     {

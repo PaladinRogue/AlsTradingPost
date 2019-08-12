@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace PaladinRogue.Libray.Core.Common.Extensions
+namespace PaladinRogue.Library.Core.Common.Extensions
 {
     public static class String
     {

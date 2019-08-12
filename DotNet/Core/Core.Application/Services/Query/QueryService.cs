@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using PaladinRogue.Libray.Core.Common.Sorting;
-using PaladinRogue.Libray.Core.Domain.Aggregates;
-using PaladinRogue.Libray.Core.Domain.Models;
-using PaladinRogue.Libray.Core.Domain.Pagination.Interfaces;
-using PaladinRogue.Libray.Core.Domain.Persistence;
-using PaladinRogue.Libray.Core.Domain.Sorting;
+using PaladinRogue.Library.Core.Common.Sorting;
+using PaladinRogue.Library.Core.Domain.Aggregates;
+using PaladinRogue.Library.Core.Domain.Models;
+using PaladinRogue.Library.Core.Domain.Pagination.Interfaces;
+using PaladinRogue.Library.Core.Domain.Persistence;
+using PaladinRogue.Library.Core.Domain.Sorting;
 
-namespace PaladinRogue.Libray.Core.Application.Services.Query
+namespace PaladinRogue.Library.Core.Application.Services.Query
 {
     public class QueryService<T> : IQueryService<T> where T : IAggregateRoot
     {

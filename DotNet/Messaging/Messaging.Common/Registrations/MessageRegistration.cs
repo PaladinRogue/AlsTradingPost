@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace PaladinRogue.Libray.Messaging.Common.Registrations
+namespace PaladinRogue.Library.Messaging.Common.Registrations
 {
     public class MessageRegistration
     {

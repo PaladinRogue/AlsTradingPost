@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <RootNamespace>PaladinRogue.Libray.Persistence.EntityFramework</RootNamespace>
+    <RootNamespace>PaladinRogue.Library.Persistence.EntityFramework</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.4" />

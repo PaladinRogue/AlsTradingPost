@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using PaladinRogue.Libray.Core.Api.Exceptions;
-using PaladinRogue.Libray.Core.Application.Exceptions;
+using PaladinRogue.Library.Core.Api.Exceptions;
+using PaladinRogue.Library.Core.Application.Exceptions;
 
-namespace PaladinRogue.Libray.Core.Api.Validation
+namespace PaladinRogue.Library.Core.Api.Validation
 {
     public class BusinessValidationRuleApplicationExceptionFilter : IExceptionFilter
     {

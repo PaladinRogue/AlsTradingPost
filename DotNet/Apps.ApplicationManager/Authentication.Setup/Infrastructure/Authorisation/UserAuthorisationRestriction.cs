@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using PaladinRogue.Authentication.Application;
 using PaladinRogue.Authentication.Domain.Users;
-using PaladinRogue.Libray.Authorisation.Common.Contexts;
-using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Restrictions;
-using PaladinRogue.Libray.Core.Domain.Persistence;
+using PaladinRogue.Library.Authorisation.Common.Contexts;
+using PaladinRogue.Library.Authorisation.Setup.Infrastructure.Restrictions;
+using PaladinRogue.Library.Core.Domain.Persistence;
 
 namespace PaladinRogue.Authentication.Setup.Infrastructure.Authorisation
 {

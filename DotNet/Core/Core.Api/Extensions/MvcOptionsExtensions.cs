@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using PaladinRogue.Libray.Core.Api.Authorisation;
-using PaladinRogue.Libray.Core.Api.Concurrency;
-using PaladinRogue.Libray.Core.Api.Exceptions;
-using PaladinRogue.Libray.Core.Api.Validation;
+using PaladinRogue.Library.Core.Api.Authorisation;
+using PaladinRogue.Library.Core.Api.Concurrency;
+using PaladinRogue.Library.Core.Api.Exceptions;
+using PaladinRogue.Library.Core.Api.Validation;
 
-namespace PaladinRogue.Libray.Core.Api.Extensions
+namespace PaladinRogue.Library.Core.Api.Extensions
 {
     public static class MvcOptionsExtensions
     {

@@ -1,6 +1,6 @@
-﻿using PaladinRogue.Libray.Core.Domain.Pagination.Interfaces;
+﻿using PaladinRogue.Library.Core.Domain.Pagination.Interfaces;
 
-namespace PaladinRogue.Libray.Core.Domain.Pagination
+namespace PaladinRogue.Library.Core.Domain.Pagination
 {
     public class PaginationDdto : IPaginationDdto
     {

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using PaladinRogue.Libray.Messaging.Common.Handlers;
+using PaladinRogue.Library.Messaging.Common.Handlers;
 
-namespace PaladinRogue.Libray.Messaging.Setup.Infrastructure.Handlers
+namespace PaladinRogue.Library.Messaging.Setup.Infrastructure.Handlers
 {
     public class MessageHandlerFactory : IMessageHandlerFactory
 	{

@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Startup
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.Startup
 {
     public static class ServiceCollectionExtensions
     {

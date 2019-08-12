@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using PaladinRogue.Libray.Messaging.Common.Messages;
+using PaladinRogue.Library.Messaging.Common.Messages;
 
-namespace PaladinRogue.Libray.Messaging.Common.Senders
+namespace PaladinRogue.Library.Messaging.Common.Senders
 {
     public interface IMessageSender
     {

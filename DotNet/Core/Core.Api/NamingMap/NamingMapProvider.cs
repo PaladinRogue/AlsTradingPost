@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PaladinRogue.Libray.Core.Api.NamingMap
+namespace PaladinRogue.Library.Core.Api.NamingMap
 {
     public class NamingMapProvider : INamingMapProvider
     {

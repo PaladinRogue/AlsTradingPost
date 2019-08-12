@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PaladinRogue.Libray.Core.Domain.Aggregates
+namespace PaladinRogue.Library.Core.Domain.Aggregates
 {
     public class AggregateOwner<T> : IAggregateOwner where T : IAggregateRoot
     {

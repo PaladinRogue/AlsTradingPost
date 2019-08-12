@@ -3,21 +3,21 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PaladinRogue.Libray.Core.Application.Caching;
-using PaladinRogue.Libray.Core.Application.Transactions;
-using PaladinRogue.Libray.Core.Domain.DataProtectors;
-using PaladinRogue.Libray.Core.Domain.Persistence;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Routing;
-using PaladinRogue.Libray.Persistence.EntityFramework.Repositories;
-using PaladinRogue.Libray.Persistence.Setup.Infrastructure.Caching;
-using PaladinRogue.Libray.Persistence.Setup.Infrastructure.Transactions;
-using PaladinRogue.Libray.Vault.Domain.Applications.AddDataKey;
-using PaladinRogue.Libray.Vault.Domain.Applications.Create;
-using PaladinRogue.Libray.Vault.Domain.SharedDataKeys;
-using PaladinRogue.Libray.Vault.Domain.SharedDataKeys.Change;
-using PaladinRogue.Libray.Vault.Domain.SharedDataKeys.Create;
-using PaladinRogue.Libray.Vault.Persistence;
-using PaladinRogue.Libray.Vault.Setup.Infrastructure.DataKeys;
+using PaladinRogue.Library.Core.Application.Caching;
+using PaladinRogue.Library.Core.Application.Transactions;
+using PaladinRogue.Library.Core.Domain.DataProtectors;
+using PaladinRogue.Library.Core.Domain.Persistence;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Routing;
+using PaladinRogue.Library.Persistence.EntityFramework.Repositories;
+using PaladinRogue.Library.Persistence.Setup.Infrastructure.Caching;
+using PaladinRogue.Library.Persistence.Setup.Infrastructure.Transactions;
+using PaladinRogue.Library.Vault.Domain.Applications.AddDataKey;
+using PaladinRogue.Library.Vault.Domain.Applications.Create;
+using PaladinRogue.Library.Vault.Domain.SharedDataKeys;
+using PaladinRogue.Library.Vault.Domain.SharedDataKeys.Change;
+using PaladinRogue.Library.Vault.Domain.SharedDataKeys.Create;
+using PaladinRogue.Library.Vault.Persistence;
+using PaladinRogue.Library.Vault.Setup.Infrastructure.DataKeys;
 using PaladinRogue.Vault.Application.SharedDataKeys.Create;
 using PaladinRogue.Vault.Setup.Infrastructure.Caching;
 using DataKeyProvider = PaladinRogue.Vault.Setup.Infrastructure.DataKeys.DataKeyProvider;
@@ -60,8 +60,8 @@ namespace PaladinRogue.Vault.Setup
                 .AddScoped<IAddApplicationDataKeyCommand, AddApplicationDataKeyCommand>()
                 .AddScoped<IValidator<CreateApplicationCommandDdto>, CreateApplicationValidator>()
                 .AddScoped<IValidator<AddApplicationDataKeyCommandDdto>, AddApplicationDataKeyValidator>()
-                .AddScoped<ICommandRepository<Libray.Vault.Domain.Applications.Application>, CommandRepository<Libray.Vault.Domain.Applications.Application>>()
-                .AddScoped<IQueryRepository<Libray.Vault.Domain.Applications.Application>, QueryRepository<Libray.Vault.Domain.Applications.Application>>();
+                .AddScoped<ICommandRepository<Library.Vault.Domain.Applications.Application>, CommandRepository<Library.Vault.Domain.Applications.Application>>()
+                .AddScoped<IQueryRepository<Library.Vault.Domain.Applications.Application>, QueryRepository<Library.Vault.Domain.Applications.Application>>();
         }
 
         public static IServiceCollection AddVaultPersistence(

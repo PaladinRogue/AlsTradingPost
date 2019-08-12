@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using LazyCache;
 using Microsoft.Extensions.Caching.Memory;
 using NodaTime;
-using PaladinRogue.Libray.Core.Application.Caching;
+using PaladinRogue.Library.Core.Application.Caching;
 
-namespace PaladinRogue.Libray.Vault.Application.Caching
+namespace PaladinRogue.Library.Vault.Application.Caching
 {
     public class ApplicationCacheService : ICacheService
     {

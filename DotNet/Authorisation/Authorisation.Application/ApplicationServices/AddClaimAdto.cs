@@ -1,6 +1,6 @@
 using System;
 
-namespace PaladinRogue.Libray.Authorisation.Application.ApplicationServices
+namespace PaladinRogue.Library.Authorisation.Application.ApplicationServices
 {
     public class AddClaimAdto
     {

@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace PaladinRogue.Libray.Core.Application.Caching
+namespace PaladinRogue.Library.Core.Application.Caching
 {
     public interface ICacheDecorator<in TKey, in TValue>
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace PaladinRogue.Libray.Core.Domain.Clocks
+namespace PaladinRogue.Library.Core.Domain.Clocks
 {
     public class ClockNotSetException : Exception
     {

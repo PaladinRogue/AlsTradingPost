@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace PaladinRogue.Libray.Core.Common.Settings
+namespace PaladinRogue.Library.Core.Common.Settings
 {
     public class AppSettings
     {

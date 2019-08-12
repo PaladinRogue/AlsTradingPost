@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PaladinRogue.Libray.Core.Domain.Sorting
+namespace PaladinRogue.Library.Core.Domain.Sorting
 {
     [Serializable]
     public class PropertyNotSortableException : Exception

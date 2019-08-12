@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <RootNamespace>PaladinRogue.Libray.Authorisation.Common</RootNamespace>
+        <RootNamespace>PaladinRogue.Library.Authorisation.Common</RootNamespace>
     </PropertyGroup>
 
 </Project>

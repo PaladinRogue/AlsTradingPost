@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PaladinRogue.Libray.Messaging.Common.Handlers;
-using PaladinRogue.Libray.Messaging.Common.Messages;
-using PaladinRogue.Libray.Messaging.Common.Registrations;
+using PaladinRogue.Library.Messaging.Common.Handlers;
+using PaladinRogue.Library.Messaging.Common.Messages;
+using PaladinRogue.Library.Messaging.Common.Registrations;
 
-namespace PaladinRogue.Libray.Messaging.RabbitMQ.Registrations
+namespace PaladinRogue.Library.Messaging.RabbitMQ.Registrations
 {
     public interface IMessageBusRegistrationsManager
     {

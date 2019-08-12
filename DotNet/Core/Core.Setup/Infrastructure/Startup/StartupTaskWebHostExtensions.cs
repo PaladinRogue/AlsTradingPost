@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Startup
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.Startup
 {
     public static class StartupTaskWebHostExtensions
     {

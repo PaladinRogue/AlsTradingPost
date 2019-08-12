@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using PaladinRogue.Libray.Core.Domain.Exceptions;
+using PaladinRogue.Library.Core.Domain.Exceptions;
 
-namespace PaladinRogue.Libray.Core.Domain.Persistence
+namespace PaladinRogue.Library.Core.Domain.Persistence
 {
     public interface IAddCommand<in T>
     {

@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using PaladinRogue.Authentication.Application.Claims;
 using PaladinRogue.Authentication.Domain.Users.Events;
-using PaladinRogue.Libray.Authorisation.Application.ApplicationServices;
-using PaladinRogue.Libray.Core.Domain.DomainEvents.Interfaces;
+using PaladinRogue.Library.Authorisation.Application.ApplicationServices;
+using PaladinRogue.Library.Core.Domain.DomainEvents.Interfaces;
 
 namespace PaladinRogue.Authentication.Application.Users.UpdateClaim
 {

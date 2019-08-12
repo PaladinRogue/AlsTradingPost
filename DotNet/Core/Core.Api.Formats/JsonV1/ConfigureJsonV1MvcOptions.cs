@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace PaladinRogue.Libray.Core.Api.Formats.JsonV1
+namespace PaladinRogue.Library.Core.Api.Formats.JsonV1
 {
     public class ConfigureJsonV1MvcOptions : IConfigureOptions<MvcOptions>
     {

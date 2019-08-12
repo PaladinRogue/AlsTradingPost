@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace PaladinRogue.Libray.Core.Api.Resources
+namespace PaladinRogue.Library.Core.Api.Resources
 {
     public interface ICollectionResource<T> : IResource where T : IResource
     {

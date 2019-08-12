@@ -4,12 +4,12 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using PaladinRogue.Libray.Core.Common.Sorting;
-using PaladinRogue.Libray.Core.Domain.Aggregates;
-using PaladinRogue.Libray.Core.Domain.Models;
-using PaladinRogue.Libray.Core.Domain.Persistence;
+using PaladinRogue.Library.Core.Common.Sorting;
+using PaladinRogue.Library.Core.Domain.Aggregates;
+using PaladinRogue.Library.Core.Domain.Models;
+using PaladinRogue.Library.Core.Domain.Persistence;
 
-namespace PaladinRogue.Libray.Persistence.EntityFramework.Repositories
+namespace PaladinRogue.Library.Persistence.EntityFramework.Repositories
 {
     public class QueryRepository<T> : QueryRepository<T, DbContext> where T : class, IAggregateRoot
     {

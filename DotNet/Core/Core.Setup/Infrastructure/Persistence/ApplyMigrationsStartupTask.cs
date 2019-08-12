@@ -3,9 +3,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Startup;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Startup;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Persistence
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.Persistence
 {
     public class ApplyMigrationsStartupTask : IStartupTask
     {

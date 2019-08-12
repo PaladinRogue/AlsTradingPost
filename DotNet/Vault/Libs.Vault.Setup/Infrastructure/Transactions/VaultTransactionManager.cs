@@ -1,7 +1,7 @@
-using PaladinRogue.Libray.Persistence.Setup.Infrastructure.Transactions;
-using PaladinRogue.Libray.Vault.Persistence;
+using PaladinRogue.Library.Persistence.Setup.Infrastructure.Transactions;
+using PaladinRogue.Library.Vault.Persistence;
 
-namespace PaladinRogue.Libray.Vault.Setup.Infrastructure.Transactions
+namespace PaladinRogue.Library.Vault.Setup.Infrastructure.Transactions
 {
     public class VaultTransactionManager : EntityFrameworkTransactionManager<VaultDbContext>, IVaultTransactionManager
     {

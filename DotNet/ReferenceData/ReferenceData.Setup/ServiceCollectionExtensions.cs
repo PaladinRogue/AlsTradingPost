@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Authorisation;
-using PaladinRogue.Libray.ReferenceData.Application.ReferenceData;
-using PaladinRogue.Libray.ReferenceData.Domain.Persistence;
-using PaladinRogue.Libray.ReferenceData.Persistence;
+using PaladinRogue.Library.Authorisation.Setup.Infrastructure.Authorisation;
+using PaladinRogue.Library.ReferenceData.Application.ReferenceData;
+using PaladinRogue.Library.ReferenceData.Domain.Persistence;
+using PaladinRogue.Library.ReferenceData.Persistence;
 
-namespace PaladinRogue.Libray.ReferenceData.Setup
+namespace PaladinRogue.Library.ReferenceData.Setup
 {
     public static class ServiceCollectionExtensions
     {

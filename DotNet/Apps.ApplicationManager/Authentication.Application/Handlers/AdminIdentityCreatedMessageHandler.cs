@@ -6,9 +6,9 @@ using Microsoft.Extensions.Options;
 using PaladinRogue.Authentication.Application.Users.CreateAdmin;
 using PaladinRogue.Authentication.Application.Users.Models;
 using PaladinRogue.Authentication.Messages;
-using PaladinRogue.Libray.Core.Common.Settings;
-using PaladinRogue.Libray.Messaging.Common.Handlers;
-using PaladinRogue.Libray.Messaging.Common.MessageBus;
+using PaladinRogue.Library.Core.Common.Settings;
+using PaladinRogue.Library.Messaging.Common.Handlers;
+using PaladinRogue.Library.Messaging.Common.MessageBus;
 
 namespace PaladinRogue.Authentication.Application.Handlers
 {

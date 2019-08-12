@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PaladinRogue.Libray.ReferenceData.Domain.Projections;
+using PaladinRogue.Library.ReferenceData.Domain.Projections;
 
-namespace PaladinRogue.Libray.ReferenceData.Domain.Persistence
+namespace PaladinRogue.Library.ReferenceData.Domain.Persistence
 {
     public interface IReferenceDataQueryRepository
     {

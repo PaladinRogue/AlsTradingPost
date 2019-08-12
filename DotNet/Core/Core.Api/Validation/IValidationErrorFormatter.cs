@@ -1,7 +1,7 @@
-﻿using PaladinRogue.Libray.Core.Api.Exceptions;
-using PaladinRogue.Libray.Core.Domain.Validation;
+﻿using PaladinRogue.Library.Core.Api.Exceptions;
+using PaladinRogue.Library.Core.Domain.Validation;
 
-namespace PaladinRogue.Libray.Core.Api.Validation
+namespace PaladinRogue.Library.Core.Api.Validation
 {
     public interface IValidationErrorFormatter<out T> where T: IFormattedError
     {

@@ -6,12 +6,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using NodaTime;
-using PaladinRogue.Libray.Core.Application.Services.Query;
-using PaladinRogue.Libray.Core.Application.Transactions;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Concurrency;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Routing;
+using PaladinRogue.Library.Core.Application.Services.Query;
+using PaladinRogue.Library.Core.Application.Transactions;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Concurrency;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Routing;
 
-namespace PaladinRogue.Libray.Core.Setup
+namespace PaladinRogue.Library.Core.Setup
 {
     public static class ServiceCollectionExtensions
     {

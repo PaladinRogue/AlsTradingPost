@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace PaladinRogue.Libray.Core.Api.QueryString
+namespace PaladinRogue.Library.Core.Api.QueryString
 {
     public class SeparatedQueryStringValueProviderFactory : IValueProviderFactory
     {

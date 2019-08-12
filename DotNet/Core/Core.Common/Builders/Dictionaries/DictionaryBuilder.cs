@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace PaladinRogue.Libray.Core.Common.Builders.Dictionaries
+namespace PaladinRogue.Library.Core.Common.Builders.Dictionaries
 {
     public class DictionaryBuilder<TKey, TValue> : IDictionaryBuilder<TKey, TValue>
     {

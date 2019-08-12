@@ -1,6 +1,6 @@
 using System;
-using PaladinRogue.Libray.Core.Api.Resources;
-using PaladinRogue.Libray.Core.Api.Validation.Attributes;
+using PaladinRogue.Library.Core.Api.Resources;
+using PaladinRogue.Library.Core.Api.Validation.Attributes;
 
 namespace PaladinRogue.Authentication.Api.Authentication
 {

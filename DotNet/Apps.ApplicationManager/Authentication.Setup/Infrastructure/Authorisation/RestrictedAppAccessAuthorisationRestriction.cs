@@ -1,11 +1,11 @@
 using System.Threading.Tasks;
 using PaladinRogue.Authentication.Application;
 using PaladinRogue.Authentication.Domain.Identities;
-using PaladinRogue.Libray.Authorisation.Common.Contexts;
-using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Restrictions;
-using PaladinRogue.Libray.Core.Application.Transactions;
-using PaladinRogue.Libray.Core.Domain.Persistence;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Authorisation;
+using PaladinRogue.Library.Authorisation.Common.Contexts;
+using PaladinRogue.Library.Authorisation.Setup.Infrastructure.Restrictions;
+using PaladinRogue.Library.Core.Application.Transactions;
+using PaladinRogue.Library.Core.Domain.Persistence;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Authorisation;
 
 namespace PaladinRogue.Authentication.Setup.Infrastructure.Authorisation
 {

@@ -1,6 +1,6 @@
 using Microsoft.IdentityModel.Tokens;
 
-namespace PaladinRogue.Libray.Vault.Setup.Infrastructure.Settings
+namespace PaladinRogue.Library.Vault.Setup.Infrastructure.Settings
 {
     public class DataProtectionSettings
     {

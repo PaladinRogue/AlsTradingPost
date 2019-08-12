@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using PaladinRogue.Libray.Core.Application.Exceptions;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Exceptions;
+using PaladinRogue.Library.Core.Application.Exceptions;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Exceptions;
 
-namespace PaladinRogue.Libray.Core.Api.Exceptions
+namespace PaladinRogue.Library.Core.Api.Exceptions
 {
     public class BusinessApplicationExceptionFilter : IExceptionFilter
     {

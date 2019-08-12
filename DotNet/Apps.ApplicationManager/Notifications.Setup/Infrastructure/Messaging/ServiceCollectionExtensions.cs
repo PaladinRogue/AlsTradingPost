@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using PaladinRogue.Libray.Messaging.Common.Handlers;
+using PaladinRogue.Library.Messaging.Common.Handlers;
 using PaladinRogue.Notifications.Application.Handlers;
 
 namespace PaladinRogue.Notifications.Setup.Infrastructure.Messaging

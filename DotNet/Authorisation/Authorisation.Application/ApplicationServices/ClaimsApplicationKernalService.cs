@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using PaladinRogue.Authentication.Messages;
-using PaladinRogue.Libray.Messaging.Common.Messages;
+using PaladinRogue.Library.Messaging.Common.Messages;
 
-namespace PaladinRogue.Libray.Authorisation.Application.ApplicationServices
+namespace PaladinRogue.Library.Authorisation.Application.ApplicationServices
 {
     public class ClaimsApplicationKernalService : IClaimsApplicationKernalService
     {

@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace PaladinRogue.Libray.Core.Application.Authentication
+namespace PaladinRogue.Library.Core.Application.Authentication
 {
     public interface IJwtFactory
     {

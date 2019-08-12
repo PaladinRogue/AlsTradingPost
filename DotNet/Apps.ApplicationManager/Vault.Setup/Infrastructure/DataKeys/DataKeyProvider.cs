@@ -1,11 +1,11 @@
 using System;
 using System.Threading.Tasks;
-using PaladinRogue.Libray.Core.Application.Transactions;
-using PaladinRogue.Libray.Core.Domain.DataProtectors;
-using PaladinRogue.Libray.Core.Domain.Persistence;
-using PaladinRogue.Libray.Vault.Domain;
-using PaladinRogue.Libray.Vault.Domain.SharedDataKeys;
-using DataKey = PaladinRogue.Libray.Core.Domain.DataProtectors.DataKey;
+using PaladinRogue.Library.Core.Application.Transactions;
+using PaladinRogue.Library.Core.Domain.DataProtectors;
+using PaladinRogue.Library.Core.Domain.Persistence;
+using PaladinRogue.Library.Vault.Domain;
+using PaladinRogue.Library.Vault.Domain.SharedDataKeys;
+using DataKey = PaladinRogue.Library.Core.Domain.DataProtectors.DataKey;
 
 namespace PaladinRogue.Vault.Setup.Infrastructure.DataKeys
 {

@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
-using PaladinRogue.Libray.Core.Application.WebRequests;
+using PaladinRogue.Library.Core.Application.WebRequests;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.WebRequests
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.WebRequests
 {
     public static class ServiceCollectionExtensions
     {

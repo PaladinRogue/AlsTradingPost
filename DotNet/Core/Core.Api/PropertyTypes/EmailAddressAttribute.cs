@@ -1,6 +1,6 @@
 using System;
 
-namespace PaladinRogue.Libray.Core.Api.PropertyTypes
+namespace PaladinRogue.Library.Core.Api.PropertyTypes
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class EmailAddressAttribute : Attribute

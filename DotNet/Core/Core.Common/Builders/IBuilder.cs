@@ -1,4 +1,4 @@
-﻿namespace PaladinRogue.Libray.Core.Common.Builders
+﻿namespace PaladinRogue.Library.Core.Common.Builders
 {
     public interface IBuilder<out T>
     {

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace PaladinRogue.Libray.Core.Domain.DomainEvents.Interfaces
+namespace PaladinRogue.Library.Core.Domain.DomainEvents.Interfaces
 {
     public interface IDomainEventBus
     {

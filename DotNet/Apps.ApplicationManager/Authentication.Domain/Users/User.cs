@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using PaladinRogue.Authentication.Domain.Identities;
 using PaladinRogue.Authentication.Domain.Users.Events;
-using PaladinRogue.Libray.Core.Domain.Aggregates;
-using PaladinRogue.Libray.Core.Domain.DomainEvents;
-using PaladinRogue.Libray.Core.Domain.Entities;
+using PaladinRogue.Library.Core.Domain.Aggregates;
+using PaladinRogue.Library.Core.Domain.DomainEvents;
+using PaladinRogue.Library.Core.Domain.Entities;
 
 namespace PaladinRogue.Authentication.Domain.Users
 {

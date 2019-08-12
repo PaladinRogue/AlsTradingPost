@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 using PaladinRogue.Gateway.Domain.Applications.Change;
 using PaladinRogue.Gateway.Domain.Applications.Create;
-using PaladinRogue.Libray.Core.Common;
-using PaladinRogue.Libray.Core.Domain.Aggregates;
-using PaladinRogue.Libray.Core.Domain.Entities;
+using PaladinRogue.Library.Core.Common;
+using PaladinRogue.Library.Core.Domain.Aggregates;
+using PaladinRogue.Library.Core.Domain.Entities;
 
 namespace PaladinRogue.Gateway.Domain.Applications
 {

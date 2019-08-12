@@ -1,7 +1,7 @@
-﻿using PaladinRogue.Libray.Core.Api.Pagination.Interfaces;
-using PaladinRogue.Libray.Core.Api.Resources;
+﻿using PaladinRogue.Library.Core.Api.Pagination.Interfaces;
+using PaladinRogue.Library.Core.Api.Resources;
 
-namespace PaladinRogue.Libray.Core.Api.Builders.Resource
+namespace PaladinRogue.Library.Core.Api.Builders.Resource
 {
     public interface IResourceBuilder
     {

@@ -1,6 +1,6 @@
-using PaladinRogue.Libray.Core.Api.Exceptions;
+using PaladinRogue.Library.Core.Api.Exceptions;
 
-namespace PaladinRogue.Libray.Core.Api.Formats.JsonV1.Formats
+namespace PaladinRogue.Library.Core.Api.Formats.JsonV1.Formats
 {
     public static class ApplicationErrorExtensions
     {

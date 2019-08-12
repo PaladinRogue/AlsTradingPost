@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace PaladinRogue.Libray.Core.Domain.Exceptions
+namespace PaladinRogue.Library.Core.Domain.Exceptions
 {
     [Serializable]
     public class GetSingleDomainException<T> : DomainException

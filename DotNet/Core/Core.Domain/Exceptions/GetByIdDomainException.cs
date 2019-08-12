@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PaladinRogue.Libray.Core.Domain.Exceptions
+namespace PaladinRogue.Library.Core.Domain.Exceptions
 {
     [Serializable]
     public class GetByIdDomainException : DomainException

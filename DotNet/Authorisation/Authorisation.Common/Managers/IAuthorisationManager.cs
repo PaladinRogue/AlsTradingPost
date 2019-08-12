@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using PaladinRogue.Libray.Authorisation.Common.Contexts;
+using PaladinRogue.Library.Authorisation.Common.Contexts;
 
-namespace PaladinRogue.Libray.Authorisation.Common.Managers
+namespace PaladinRogue.Library.Authorisation.Common.Managers
 {
     public interface IAuthorisationManager
     {

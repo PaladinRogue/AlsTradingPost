@@ -4,11 +4,11 @@ using PaladinRogue.Authentication.Application.AuthenticationServices.Models.Face
 using PaladinRogue.Authentication.Domain.AuthenticationServices;
 using PaladinRogue.Authentication.Domain.AuthenticationServices.ChangeFacebook;
 using PaladinRogue.Authentication.Domain.AuthenticationServices.CreateFacebook;
-using PaladinRogue.Libray.Core.Application.Concurrency;
-using PaladinRogue.Libray.Core.Application.Exceptions;
-using PaladinRogue.Libray.Core.Application.Transactions;
-using PaladinRogue.Libray.Core.Domain.Exceptions;
-using PaladinRogue.Libray.Core.Domain.Persistence;
+using PaladinRogue.Library.Core.Application.Concurrency;
+using PaladinRogue.Library.Core.Application.Exceptions;
+using PaladinRogue.Library.Core.Application.Transactions;
+using PaladinRogue.Library.Core.Domain.Exceptions;
+using PaladinRogue.Library.Core.Domain.Persistence;
 
 namespace PaladinRogue.Authentication.Application.AuthenticationServices
 {

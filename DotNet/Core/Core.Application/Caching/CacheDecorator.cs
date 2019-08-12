@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace PaladinRogue.Libray.Core.Application.Caching
+namespace PaladinRogue.Library.Core.Application.Caching
 {
     public abstract class CacheDecorator<TKey, TCacheKey, TCacheValue> : ICacheDecorator<TKey, TCacheValue> where TCacheKey : CacheKey<TCacheValue>
     {

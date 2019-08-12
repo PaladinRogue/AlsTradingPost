@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <RootNamespace>PaladinRogue.Libray.Core.Common</RootNamespace>
+    <RootNamespace>PaladinRogue.Library.Core.Common</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.8" />

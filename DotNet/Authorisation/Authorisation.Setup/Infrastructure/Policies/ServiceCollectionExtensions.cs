@@ -1,9 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
-using PaladinRogue.Libray.Authorisation.Common.Policies;
-using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Policies.Allow;
-using PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Policies.Deny;
+using PaladinRogue.Library.Authorisation.Common.Policies;
+using PaladinRogue.Library.Authorisation.Setup.Infrastructure.Policies.Allow;
+using PaladinRogue.Library.Authorisation.Setup.Infrastructure.Policies.Deny;
 
-namespace PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Policies
+namespace PaladinRogue.Library.Authorisation.Setup.Infrastructure.Policies
 {
     public static class ServiceCollectionExtensions
     {

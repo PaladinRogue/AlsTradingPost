@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using PaladinRogue.Libray.Core.Api.Exceptions;
-using PaladinRogue.Libray.Core.Api.Formats.JsonV1;
-using PaladinRogue.Libray.Core.Api.Formats.JsonV1.Filtering;
-using PaladinRogue.Libray.Core.Api.Formats.JsonV1.Formatters;
-using PaladinRogue.Libray.Core.Api.Formats.JsonV1.Paging;
-using PaladinRogue.Libray.Core.Api.Formats.JsonV1.Sorting;
-using PaladinRogue.Libray.Core.Api.Validation;
+using PaladinRogue.Library.Core.Api.Exceptions;
+using PaladinRogue.Library.Core.Api.Formats.JsonV1;
+using PaladinRogue.Library.Core.Api.Formats.JsonV1.Filtering;
+using PaladinRogue.Library.Core.Api.Formats.JsonV1.Formatters;
+using PaladinRogue.Library.Core.Api.Formats.JsonV1.Paging;
+using PaladinRogue.Library.Core.Api.Formats.JsonV1.Sorting;
+using PaladinRogue.Library.Core.Api.Validation;
 
-namespace PaladinRogue.Libray.Core.Api.Formats
+namespace PaladinRogue.Library.Core.Api.Formats
 {
     public static class ServiceCollectionExtensions
     {

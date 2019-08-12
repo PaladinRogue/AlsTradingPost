@@ -1,6 +1,6 @@
 using System;
 
-namespace PaladinRogue.Libray.Core.Api.Authentication
+namespace PaladinRogue.Library.Core.Api.Authentication
 {
     [AttributeUsage(AttributeTargets.Method)]
     public class AllowRestrictedAppAccessAttribute : Attribute

@@ -4,14 +4,14 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using PaladinRogue.Libray.Core.Common.Extensions;
-using PaladinRogue.Libray.Core.Common.Sorting;
-using PaladinRogue.Libray.Core.Domain.Concurrency.Interfaces;
-using PaladinRogue.Libray.Core.Domain.Entities;
-using PaladinRogue.Libray.Core.Domain.Exceptions;
-using PaladinRogue.Libray.Core.Domain.Models;
+using PaladinRogue.Library.Core.Common.Extensions;
+using PaladinRogue.Library.Core.Common.Sorting;
+using PaladinRogue.Library.Core.Domain.Concurrency.Interfaces;
+using PaladinRogue.Library.Core.Domain.Entities;
+using PaladinRogue.Library.Core.Domain.Exceptions;
+using PaladinRogue.Library.Core.Domain.Models;
 
-namespace PaladinRogue.Libray.Persistence.EntityFramework.Repositories
+namespace PaladinRogue.Library.Persistence.EntityFramework.Repositories
 {
     public static class RepositoryHelper
     {

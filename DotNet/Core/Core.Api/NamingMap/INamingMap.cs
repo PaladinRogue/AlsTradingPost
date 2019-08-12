@@ -1,4 +1,4 @@
-﻿namespace PaladinRogue.Libray.Core.Api.NamingMap
+﻿namespace PaladinRogue.Library.Core.Api.NamingMap
 {
     public interface INamingMap
     {

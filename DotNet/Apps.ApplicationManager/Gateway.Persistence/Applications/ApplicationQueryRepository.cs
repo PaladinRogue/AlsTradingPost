@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using PaladinRogue.Gateway.Domain.Applications;
 using PaladinRogue.Gateway.Domain.Applications.Persistence;
-using PaladinRogue.Libray.Persistence.EntityFramework.Repositories;
+using PaladinRogue.Library.Persistence.EntityFramework.Repositories;
 
 namespace PaladinRogue.Gateway.Persistence.Applications
 {

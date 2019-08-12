@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using PaladinRogue.Libray.Core.Application.Pagination.Interfaces;
+using PaladinRogue.Library.Core.Application.Pagination.Interfaces;
 
-namespace PaladinRogue.Libray.Core.Application.Pagination
+namespace PaladinRogue.Library.Core.Application.Pagination
 {
     public class PagedCollectionAdto<T> : IPagedCollectionAdto<T>
     {

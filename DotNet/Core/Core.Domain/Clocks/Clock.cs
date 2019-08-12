@@ -1,6 +1,6 @@
 using NodaTime;
 
-namespace PaladinRogue.Libray.Core.Domain.Clocks
+namespace PaladinRogue.Library.Core.Domain.Clocks
 {
     public static class Clock
     {

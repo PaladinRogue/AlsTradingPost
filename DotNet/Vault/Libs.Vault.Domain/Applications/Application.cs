@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using PaladinRogue.Libray.Core.Common;
-using PaladinRogue.Libray.Core.Domain.Aggregates;
-using PaladinRogue.Libray.Core.Domain.Entities;
-using PaladinRogue.Libray.Vault.Domain.Applications.AddDataKey;
-using PaladinRogue.Libray.Vault.Domain.Applications.Create;
-using PaladinRogue.Libray.Vault.Domain.Applications.CreateDataKey;
+using PaladinRogue.Library.Core.Common;
+using PaladinRogue.Library.Core.Domain.Aggregates;
+using PaladinRogue.Library.Core.Domain.Entities;
+using PaladinRogue.Library.Vault.Domain.Applications.AddDataKey;
+using PaladinRogue.Library.Vault.Domain.Applications.Create;
+using PaladinRogue.Library.Vault.Domain.Applications.CreateDataKey;
 
-namespace PaladinRogue.Libray.Vault.Domain.Applications
+namespace PaladinRogue.Library.Vault.Domain.Applications
 {
     public class Application : VersionedEntity, IAggregateRoot
     {

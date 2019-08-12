@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PaladinRogue.Libray.Core.Api.Builders.Resource
+namespace PaladinRogue.Library.Core.Api.Builders.Resource
 {
     public class Property
     {

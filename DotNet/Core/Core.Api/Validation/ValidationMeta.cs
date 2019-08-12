@@ -1,4 +1,4 @@
-﻿namespace PaladinRogue.Libray.Core.Api.Validation
+﻿namespace PaladinRogue.Library.Core.Api.Validation
 {
     public static class ValidationMeta
     {

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using PaladinRogue.Libray.Core.Domain.Entities;
+using PaladinRogue.Library.Core.Domain.Entities;
 
-namespace PaladinRogue.Libray.Core.Application.Caching
+namespace PaladinRogue.Library.Core.Application.Caching
 {
     public class EntityCacheKey<TValue> : CacheKey<TValue> where TValue : IEntity
     {

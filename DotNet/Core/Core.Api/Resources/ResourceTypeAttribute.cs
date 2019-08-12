@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PaladinRogue.Libray.Core.Api.Resources
+namespace PaladinRogue.Library.Core.Api.Resources
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class ResourceTypeAttribute : Attribute

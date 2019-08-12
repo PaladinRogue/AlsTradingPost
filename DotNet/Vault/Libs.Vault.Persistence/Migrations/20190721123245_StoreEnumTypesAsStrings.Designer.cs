@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PaladinRogue.Libray.Vault.Persistence.Migrations
+namespace PaladinRogue.Library.Vault.Persistence.Migrations
 {
     [DbContext(typeof(VaultDbContext))]
     [Migration("20190721123245_StoreEnumTypesAsStrings")]

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Routing
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.Routing
 {
     public class ApiExplorerVisibilityEnabledConvention : IApplicationModelConvention
     {

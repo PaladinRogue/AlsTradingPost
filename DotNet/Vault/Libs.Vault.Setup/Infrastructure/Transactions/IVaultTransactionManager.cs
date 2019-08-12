@@ -1,6 +1,6 @@
-using PaladinRogue.Libray.Core.Application.Transactions;
+using PaladinRogue.Library.Core.Application.Transactions;
 
-namespace PaladinRogue.Libray.Vault.Setup.Infrastructure.Transactions
+namespace PaladinRogue.Library.Vault.Setup.Infrastructure.Transactions
 {
     public interface IVaultTransactionManager : ITransactionManager
     {

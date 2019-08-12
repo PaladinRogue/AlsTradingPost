@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using FluentValidation;
-using PaladinRogue.Libray.Core.Domain.Exceptions;
+using PaladinRogue.Library.Core.Domain.Exceptions;
 
-namespace PaladinRogue.Libray.Core.Domain.Validation
+namespace PaladinRogue.Library.Core.Domain.Validation
 {
     public static class FluentValidationExtension
     {

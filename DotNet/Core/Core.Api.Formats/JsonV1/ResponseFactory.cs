@@ -2,16 +2,16 @@
 using System.Linq;
 using System.Reflection;
 using Microsoft.AspNetCore.Http;
-using PaladinRogue.Libray.Core.Api.Builders.Resource;
-using PaladinRogue.Libray.Core.Api.Formats.JsonV1.Formats;
-using PaladinRogue.Libray.Core.Api.Headers;
-using PaladinRogue.Libray.Core.Api.Links;
-using PaladinRogue.Libray.Core.Api.Resources;
-using PaladinRogue.Libray.Core.Common.Builders.Dictionaries;
-using PaladinRogue.Libray.Core.Common.Extensions;
-using Link = PaladinRogue.Libray.Core.Api.Formats.JsonV1.Formats.Link;
+using PaladinRogue.Library.Core.Api.Builders.Resource;
+using PaladinRogue.Library.Core.Api.Formats.JsonV1.Formats;
+using PaladinRogue.Library.Core.Api.Headers;
+using PaladinRogue.Library.Core.Api.Links;
+using PaladinRogue.Library.Core.Api.Resources;
+using PaladinRogue.Library.Core.Common.Builders.Dictionaries;
+using PaladinRogue.Library.Core.Common.Extensions;
+using Link = PaladinRogue.Library.Core.Api.Formats.JsonV1.Formats.Link;
 
-namespace PaladinRogue.Libray.Core.Api.Formats.JsonV1
+namespace PaladinRogue.Library.Core.Api.Formats.JsonV1
 {
     public class ResponseFactory
     {

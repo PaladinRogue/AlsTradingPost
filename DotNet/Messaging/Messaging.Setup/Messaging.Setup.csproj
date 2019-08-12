@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <RootNamespace>PaladinRogue.Libray.Messaging.Setup</RootNamespace>
+    <RootNamespace>PaladinRogue.Library.Messaging.Setup</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Core.Common\Core.Common.csproj" />

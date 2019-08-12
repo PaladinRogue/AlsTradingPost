@@ -1,4 +1,4 @@
-﻿namespace PaladinRogue.Libray.Core.Common.Sorting
+﻿namespace PaladinRogue.Library.Core.Common.Sorting
 {
     public class SortBy
     {

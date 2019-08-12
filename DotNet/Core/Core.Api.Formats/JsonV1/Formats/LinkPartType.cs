@@ -1,4 +1,4 @@
-﻿namespace PaladinRogue.Libray.Core.Api.Formats.JsonV1.Formats
+﻿namespace PaladinRogue.Library.Core.Api.Formats.JsonV1.Formats
 {
     public static class LinkPartType
     {

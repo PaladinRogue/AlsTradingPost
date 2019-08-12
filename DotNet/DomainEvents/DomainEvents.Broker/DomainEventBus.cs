@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using PaladinRogue.Libray.Core.Domain.DomainEvents.Interfaces;
+using PaladinRogue.Library.Core.Domain.DomainEvents.Interfaces;
 
-namespace PaladinRogue.Libray.DomainEvents.Broker
+namespace PaladinRogue.Library.DomainEvents.Broker
 {
     public class DomainEventBus : IDomainEventBus
     {

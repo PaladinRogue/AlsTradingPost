@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 
-namespace PaladinRogue.Libray.Messaging.Setup.Infrastructure.Dispatchers
+namespace PaladinRogue.Library.Messaging.Setup.Infrastructure.Dispatchers
 {
     public static class ApplicationBuilderExtensions
     {

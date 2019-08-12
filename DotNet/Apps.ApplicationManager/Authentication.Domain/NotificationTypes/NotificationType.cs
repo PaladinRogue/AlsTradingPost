@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using PaladinRogue.Libray.Core.Domain.Aggregates;
-using PaladinRogue.Libray.Core.Domain.Entities;
+using PaladinRogue.Library.Core.Domain.Aggregates;
+using PaladinRogue.Library.Core.Domain.Entities;
 
 namespace PaladinRogue.Authentication.Domain.NotificationTypes
 {

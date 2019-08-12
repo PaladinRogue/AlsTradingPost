@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace PaladinRogue.Libray.Core.Domain.DataProtectors
+namespace PaladinRogue.Library.Core.Domain.DataProtectors
 {
     public static class DataProtection
     {

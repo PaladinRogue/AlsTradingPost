@@ -1,4 +1,4 @@
-﻿namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Routing
+﻿namespace PaladinRogue.Library.Core.Setup.Infrastructure.Routing
 {
     public class Route<T>
     {

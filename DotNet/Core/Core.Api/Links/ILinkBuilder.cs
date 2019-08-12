@@ -1,6 +1,6 @@
-﻿using PaladinRogue.Libray.Core.Api.Resources;
+﻿using PaladinRogue.Library.Core.Api.Resources;
 
-namespace PaladinRogue.Libray.Core.Api.Links
+namespace PaladinRogue.Library.Core.Api.Links
 {
     public interface ILinkBuilder
     {

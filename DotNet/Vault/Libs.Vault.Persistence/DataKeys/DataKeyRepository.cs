@@ -2,16 +2,16 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
-using PaladinRogue.Libray.Core.Common.Settings;
-using PaladinRogue.Libray.Core.Domain.DataProtectors;
-using PaladinRogue.Libray.Core.Domain.Persistence;
-using PaladinRogue.Libray.Vault.Domain.Applications;
-using PaladinRogue.Libray.Vault.Domain.Applications.AddDataKey;
-using PaladinRogue.Libray.Vault.Domain.Applications.Create;
-using PaladinRogue.Libray.Vault.Domain.DataKeys.Persistence;
-using PaladinRogue.Libray.Vault.Domain.SharedDataKeys;
+using PaladinRogue.Library.Core.Common.Settings;
+using PaladinRogue.Library.Core.Domain.DataProtectors;
+using PaladinRogue.Library.Core.Domain.Persistence;
+using PaladinRogue.Library.Vault.Domain.Applications;
+using PaladinRogue.Library.Vault.Domain.Applications.AddDataKey;
+using PaladinRogue.Library.Vault.Domain.Applications.Create;
+using PaladinRogue.Library.Vault.Domain.DataKeys.Persistence;
+using PaladinRogue.Library.Vault.Domain.SharedDataKeys;
 
-namespace PaladinRogue.Libray.Vault.Persistence.DataKeys
+namespace PaladinRogue.Library.Vault.Persistence.DataKeys
 {
     public class DataKeyRepository : IDataKeyRepository
     {

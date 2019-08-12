@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using PaladinRogue.Authentication.Application.Authentication.Models;
-using PaladinRogue.Libray.Authorisation.Application.ApplicationServices;
-using PaladinRogue.Libray.Authorisation.Common;
-using PaladinRogue.Libray.Authorisation.Common.Contexts;
-using PaladinRogue.Libray.Core.Application.Authentication;
+using PaladinRogue.Library.Authorisation.Application.ApplicationServices;
+using PaladinRogue.Library.Authorisation.Common;
+using PaladinRogue.Library.Authorisation.Common.Contexts;
+using PaladinRogue.Library.Core.Application.Authentication;
 
 namespace PaladinRogue.Authentication.Application.Authentication
 {

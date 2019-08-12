@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using PaladinRogue.Authentication.Domain.AuthenticationServices.ChangeFacebook;
 using PaladinRogue.Authentication.Domain.AuthenticationServices.CreateFacebook;
-using PaladinRogue.Libray.Core.Common;
-using PaladinRogue.Libray.Core.Domain.DataProtectors;
+using PaladinRogue.Library.Core.Common;
+using PaladinRogue.Library.Core.Domain.DataProtectors;
 
 namespace PaladinRogue.Authentication.Domain.AuthenticationServices
 {

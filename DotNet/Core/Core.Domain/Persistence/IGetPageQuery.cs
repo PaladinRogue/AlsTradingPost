@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using PaladinRogue.Libray.Core.Common.Sorting;
-using PaladinRogue.Libray.Core.Domain.Models;
+using PaladinRogue.Library.Core.Common.Sorting;
+using PaladinRogue.Library.Core.Domain.Models;
 
-namespace PaladinRogue.Libray.Core.Domain.Persistence
+namespace PaladinRogue.Library.Core.Domain.Persistence
 {
     public interface IGetPageQuery<T>
     {

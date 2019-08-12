@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
-        <RootNamespace>PaladinRogue.Libray.Persistence.Setup</RootNamespace>
+        <RootNamespace>PaladinRogue.Library.Persistence.Setup</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

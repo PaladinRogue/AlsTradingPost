@@ -2,9 +2,9 @@
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using PaladinRogue.Libray.Messaging.Common.Dispatchers;
+using PaladinRogue.Library.Messaging.Common.Dispatchers;
 
-namespace PaladinRogue.Libray.Messaging.Setup.Infrastructure.Dispatchers
+namespace PaladinRogue.Library.Messaging.Setup.Infrastructure.Dispatchers
 {
     public class DispatchMessagesMiddleware
     {

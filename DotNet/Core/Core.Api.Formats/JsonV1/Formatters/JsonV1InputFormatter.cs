@@ -16,13 +16,13 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.ObjectPool;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
-using PaladinRogue.Libray.Core.Api.Exceptions;
-using PaladinRogue.Libray.Core.Api.Formats.JsonV1.Formats;
-using PaladinRogue.Libray.Core.Api.Resources;
-using PaladinRogue.Libray.Core.Application;
-using PaladinRogue.Libray.Core.Application.Exceptions;
+using PaladinRogue.Library.Core.Api.Exceptions;
+using PaladinRogue.Library.Core.Api.Formats.JsonV1.Formats;
+using PaladinRogue.Library.Core.Api.Resources;
+using PaladinRogue.Library.Core.Application;
+using PaladinRogue.Library.Core.Application.Exceptions;
 
-namespace PaladinRogue.Libray.Core.Api.Formats.JsonV1.Formatters
+namespace PaladinRogue.Library.Core.Api.Formats.JsonV1.Formatters
 {
     public class JsonV1InputFormatter : JsonInputFormatter
     {

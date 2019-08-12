@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Constants
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.Constants
 {
     [Flags]
     public enum HttpVerb

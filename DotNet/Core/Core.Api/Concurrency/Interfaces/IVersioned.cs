@@ -1,4 +1,4 @@
-﻿namespace PaladinRogue.Libray.Core.Api.Concurrency.Interfaces
+﻿namespace PaladinRogue.Library.Core.Api.Concurrency.Interfaces
 {
     public interface IVersioned<T>
     {

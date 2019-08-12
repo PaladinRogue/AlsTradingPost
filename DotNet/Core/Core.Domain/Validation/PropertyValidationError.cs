@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace PaladinRogue.Libray.Core.Domain.Validation
+namespace PaladinRogue.Library.Core.Domain.Validation
 {
     public class PropertyValidationError
     {

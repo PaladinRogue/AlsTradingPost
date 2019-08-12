@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
-        <RootNamespace>PaladinRogue.Libray.Vault.Application</RootNamespace>
+        <RootNamespace>PaladinRogue.Library.Vault.Application</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

@@ -5,24 +5,24 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using PaladinRogue.Libray.Core.Application.Caching;
-using PaladinRogue.Libray.Core.Domain.DataProtectors;
-using PaladinRogue.Libray.Core.Domain.Persistence;
-using PaladinRogue.Libray.Persistence.EntityFramework.Repositories;
-using PaladinRogue.Libray.Persistence.Setup.Infrastructure.Caching;
-using PaladinRogue.Libray.Vault.Application.Caching;
-using PaladinRogue.Libray.Vault.Application.DataKeys;
-using PaladinRogue.Libray.Vault.Domain.Applications.AddDataKey;
-using PaladinRogue.Libray.Vault.Domain.Applications.Create;
-using PaladinRogue.Libray.Vault.Domain.DataKeys.Persistence;
-using PaladinRogue.Libray.Vault.Domain.SharedDataKeys;
-using PaladinRogue.Libray.Vault.Persistence;
-using PaladinRogue.Libray.Vault.Persistence.DataKeys;
-using PaladinRogue.Libray.Vault.Setup.Infrastructure.DataKeys;
-using PaladinRogue.Libray.Vault.Setup.Infrastructure.Settings;
-using PaladinRogue.Libray.Vault.Setup.Infrastructure.Transactions;
+using PaladinRogue.Library.Core.Application.Caching;
+using PaladinRogue.Library.Core.Domain.DataProtectors;
+using PaladinRogue.Library.Core.Domain.Persistence;
+using PaladinRogue.Library.Persistence.EntityFramework.Repositories;
+using PaladinRogue.Library.Persistence.Setup.Infrastructure.Caching;
+using PaladinRogue.Library.Vault.Application.Caching;
+using PaladinRogue.Library.Vault.Application.DataKeys;
+using PaladinRogue.Library.Vault.Domain.Applications.AddDataKey;
+using PaladinRogue.Library.Vault.Domain.Applications.Create;
+using PaladinRogue.Library.Vault.Domain.DataKeys.Persistence;
+using PaladinRogue.Library.Vault.Domain.SharedDataKeys;
+using PaladinRogue.Library.Vault.Persistence;
+using PaladinRogue.Library.Vault.Persistence.DataKeys;
+using PaladinRogue.Library.Vault.Setup.Infrastructure.DataKeys;
+using PaladinRogue.Library.Vault.Setup.Infrastructure.Settings;
+using PaladinRogue.Library.Vault.Setup.Infrastructure.Transactions;
 
-namespace PaladinRogue.Libray.Vault.Setup
+namespace PaladinRogue.Library.Vault.Setup
 {
     public static class ServiceCollectionExtensions
     {

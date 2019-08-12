@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using FluentValidation;
 using PaladinRogue.Authentication.Domain.AuthenticationServices;
 using PaladinRogue.Authentication.Domain.Identities.Queries;
-using PaladinRogue.Libray.Core.Domain.Exceptions;
-using PaladinRogue.Libray.Core.Domain.Validation;
+using PaladinRogue.Library.Core.Domain.Exceptions;
+using PaladinRogue.Library.Core.Domain.Validation;
 
 namespace PaladinRogue.Authentication.Domain.Identities.RegisterPassword
 {

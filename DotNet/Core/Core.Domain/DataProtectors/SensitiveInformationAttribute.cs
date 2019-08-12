@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PaladinRogue.Libray.Core.Domain.DataProtectors
+namespace PaladinRogue.Library.Core.Domain.DataProtectors
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class SensitiveInformationAttribute : Attribute

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace PaladinRogue.Libray.Core.Api.Formats.JsonV1.Filtering
+namespace PaladinRogue.Library.Core.Api.Formats.JsonV1.Filtering
 {
     public class QueryStringFilterModelBinder : IModelBinder
     {

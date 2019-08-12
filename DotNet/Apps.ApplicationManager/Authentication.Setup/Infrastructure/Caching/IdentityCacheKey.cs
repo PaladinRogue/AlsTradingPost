@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using PaladinRogue.Libray.Core.Application.Caching;
-using PaladinRogue.Libray.Core.Common.ValueObjects;
+using PaladinRogue.Library.Core.Application.Caching;
+using PaladinRogue.Library.Core.Common.ValueObjects;
 
 namespace PaladinRogue.Authentication.Setup.Infrastructure.Caching
 {

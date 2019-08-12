@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace PaladinRogue.Libray.Messaging.Common.Dispatchers
+namespace PaladinRogue.Library.Messaging.Common.Dispatchers
 {
 	public interface IMessageDispatcher
 	{

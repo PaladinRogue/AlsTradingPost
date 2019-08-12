@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <RootNamespace>PaladinRogue.Libray.Messaging.RabbitMQ</RootNamespace>
+    <RootNamespace>PaladinRogue.Library.Messaging.RabbitMQ</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />

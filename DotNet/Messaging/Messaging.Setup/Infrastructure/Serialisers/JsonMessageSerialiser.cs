@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
-using PaladinRogue.Libray.Messaging.Common.Messages;
-using PaladinRogue.Libray.Messaging.Common.Serialisers;
+using PaladinRogue.Library.Messaging.Common.Messages;
+using PaladinRogue.Library.Messaging.Common.Serialisers;
 
-namespace PaladinRogue.Libray.Messaging.Setup.Infrastructure.Serialisers
+namespace PaladinRogue.Library.Messaging.Setup.Infrastructure.Serialisers
 {
     public class JsonMessageSerialiser : IMessageSerialiser
     {

@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 using NodaTime;
 using PaladinRogue.Authentication.Domain.AuthenticationServices;
 using PaladinRogue.Authentication.Domain.Identities.ValidateToken;
-using PaladinRogue.Libray.Core.Common.Extensions;
-using PaladinRogue.Libray.Core.Domain.Aggregates;
-using PaladinRogue.Libray.Core.Domain.Clocks;
-using PaladinRogue.Libray.Core.Domain.DataProtectors;
+using PaladinRogue.Library.Core.Common.Extensions;
+using PaladinRogue.Library.Core.Domain.Aggregates;
+using PaladinRogue.Library.Core.Domain.Clocks;
+using PaladinRogue.Library.Core.Domain.DataProtectors;
 
 namespace PaladinRogue.Authentication.Domain.Identities
 {

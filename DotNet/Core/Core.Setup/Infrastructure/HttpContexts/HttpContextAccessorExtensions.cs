@@ -3,7 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.HttpContexts
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.HttpContexts
 {
     public static class HttpContextAccessorExtensions
     {

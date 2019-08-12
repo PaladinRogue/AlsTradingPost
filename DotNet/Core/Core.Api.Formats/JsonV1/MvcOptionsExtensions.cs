@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.ObjectPool;
 using Newtonsoft.Json;
-using PaladinRogue.Libray.Core.Api.Formats.JsonV1.Formatters;
+using PaladinRogue.Library.Core.Api.Formats.JsonV1.Formatters;
 
-namespace PaladinRogue.Libray.Core.Api.Formats.JsonV1
+namespace PaladinRogue.Library.Core.Api.Formats.JsonV1
 {
     public static class MvcOptionsExtensions
     {

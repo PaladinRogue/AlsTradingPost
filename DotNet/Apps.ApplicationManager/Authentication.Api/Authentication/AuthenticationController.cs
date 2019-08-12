@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using PaladinRogue.Authentication.Application.Authentication;
 using PaladinRogue.Authentication.Application.Authentication.Models;
 using PaladinRogue.Authentication.Setup.Infrastructure.Routing;
-using PaladinRogue.Libray.Core.Api.Builders.Resource;
-using PaladinRogue.Libray.Core.Application.Authentication;
+using PaladinRogue.Library.Core.Api.Builders.Resource;
+using PaladinRogue.Library.Core.Application.Authentication;
 
 namespace PaladinRogue.Authentication.Api.Authentication
 {

@@ -1,5 +1,5 @@
-using PaladinRogue.Libray.Core.Application.Concurrency;
-using PaladinRogue.Libray.Core.Domain.Concurrency.Interfaces;
+using PaladinRogue.Library.Core.Application.Concurrency;
+using PaladinRogue.Library.Core.Domain.Concurrency.Interfaces;
 
 namespace PaladinRogue.Authentication.Application.Identities.Models
 {

@@ -1,7 +1,7 @@
 using FluentValidation;
-using PaladinRogue.Libray.Core.Common;
+using PaladinRogue.Library.Core.Common;
 
-namespace PaladinRogue.Libray.Vault.Domain.Applications.Create
+namespace PaladinRogue.Library.Vault.Domain.Applications.Create
 {
     public class CreateApplicationValidator : AbstractValidator<CreateApplicationCommandDdto>
     {

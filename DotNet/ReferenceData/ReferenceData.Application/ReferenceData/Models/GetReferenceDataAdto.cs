@@ -1,6 +1,6 @@
 using System;
 
-namespace PaladinRogue.Libray.ReferenceData.Application.ReferenceData.Models
+namespace PaladinRogue.Library.ReferenceData.Application.ReferenceData.Models
 {
     public class GetReferenceDataAdto
     {

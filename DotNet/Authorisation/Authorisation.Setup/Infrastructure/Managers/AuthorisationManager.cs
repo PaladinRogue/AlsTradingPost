@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using PaladinRogue.Libray.Authorisation.Common.Contexts;
-using PaladinRogue.Libray.Authorisation.Common.Managers;
-using PaladinRogue.Libray.Authorisation.Common.Policies;
+using PaladinRogue.Library.Authorisation.Common.Contexts;
+using PaladinRogue.Library.Authorisation.Common.Managers;
+using PaladinRogue.Library.Authorisation.Common.Policies;
 
-namespace PaladinRogue.Libray.Authorisation.Setup.Infrastructure.Managers
+namespace PaladinRogue.Library.Authorisation.Setup.Infrastructure.Managers
 {
     public class AuthorisationManager : IAuthorisationManager
     {

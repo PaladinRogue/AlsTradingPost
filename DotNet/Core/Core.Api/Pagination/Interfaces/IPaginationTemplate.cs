@@ -1,6 +1,6 @@
-﻿using PaladinRogue.Libray.Core.Api.Sorting;
+﻿using PaladinRogue.Library.Core.Api.Sorting;
 
-namespace PaladinRogue.Libray.Core.Api.Pagination.Interfaces
+namespace PaladinRogue.Library.Core.Api.Pagination.Interfaces
 {
     public interface IPaginationTemplate : ISortTemplate
     {

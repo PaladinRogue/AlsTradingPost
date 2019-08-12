@@ -3,10 +3,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using NodaTime;
-using PaladinRogue.Libray.Core.Domain.Clocks;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Startup;
+using PaladinRogue.Library.Core.Domain.Clocks;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Startup;
 
-namespace PaladinRogue.Libray.Core.Api.Clocks
+namespace PaladinRogue.Library.Core.Api.Clocks
 {
     public class SetClockStartupTask : IStartupTask
     {

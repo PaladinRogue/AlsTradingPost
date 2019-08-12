@@ -1,6 +1,6 @@
-﻿using PaladinRogue.Libray.Core.Api.Pagination.Interfaces;
+﻿using PaladinRogue.Library.Core.Api.Pagination.Interfaces;
 
-namespace PaladinRogue.Libray.Core.Api.Links
+namespace PaladinRogue.Library.Core.Api.Links
 {
     public interface IPagingLinkBuilder
     {

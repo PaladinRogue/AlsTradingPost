@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using FluentValidation;
-using PaladinRogue.Libray.Core.Domain.Validation;
+using PaladinRogue.Library.Core.Domain.Validation;
 
 namespace PaladinRogue.Authentication.Domain.AuthenticationServices.ChangeFacebook
 {

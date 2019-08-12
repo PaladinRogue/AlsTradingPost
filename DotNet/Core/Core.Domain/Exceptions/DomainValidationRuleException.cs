@@ -1,7 +1,7 @@
 ﻿using System;
-using PaladinRogue.Libray.Core.Domain.Validation;
+using PaladinRogue.Library.Core.Domain.Validation;
 
-namespace PaladinRogue.Libray.Core.Domain.Exceptions
+namespace PaladinRogue.Library.Core.Domain.Exceptions
 {
     public class DomainValidationRuleException : Exception
     {

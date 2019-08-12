@@ -3,7 +3,7 @@ using System.IO;
 using System.Xml;
 using Microsoft.Extensions.Logging;
 
-namespace PaladinRogue.Libray.Core.Setup.Infrastructure.Logging.Log4Net
+namespace PaladinRogue.Library.Core.Setup.Infrastructure.Logging.Log4Net
 {
     public class Log4NetProvider : ILoggerProvider
     {

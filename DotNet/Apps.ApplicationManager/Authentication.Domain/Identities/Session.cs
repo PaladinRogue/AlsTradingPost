@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using PaladinRogue.Authentication.Domain.AuthenticationServices;
-using PaladinRogue.Libray.Core.Domain.Aggregates;
-using PaladinRogue.Libray.Core.Domain.Entities;
+using PaladinRogue.Library.Core.Domain.Aggregates;
+using PaladinRogue.Library.Core.Domain.Entities;
 
 namespace PaladinRogue.Authentication.Domain.Identities
 {

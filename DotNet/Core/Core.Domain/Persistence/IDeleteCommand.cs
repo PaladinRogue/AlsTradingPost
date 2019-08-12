@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace PaladinRogue.Libray.Core.Domain.Persistence
+namespace PaladinRogue.Library.Core.Domain.Persistence
 {
     public interface IDeleteCommand
     {

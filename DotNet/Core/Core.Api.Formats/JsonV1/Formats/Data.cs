@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace PaladinRogue.Libray.Core.Api.Formats.JsonV1.Formats
+namespace PaladinRogue.Library.Core.Api.Formats.JsonV1.Formats
 {
     public class Data
     {

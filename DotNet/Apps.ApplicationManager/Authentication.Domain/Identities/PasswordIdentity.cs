@@ -4,8 +4,8 @@ using PaladinRogue.Authentication.Domain.AuthenticationServices;
 using PaladinRogue.Authentication.Domain.Identities.ChangePassword;
 using PaladinRogue.Authentication.Domain.Identities.CheckPassword;
 using PaladinRogue.Authentication.Domain.Identities.CreatePassword;
-using PaladinRogue.Libray.Core.Common;
-using PaladinRogue.Libray.Core.Domain.DataProtectors;
+using PaladinRogue.Library.Core.Common;
+using PaladinRogue.Library.Core.Domain.DataProtectors;
 
 namespace PaladinRogue.Authentication.Domain.Identities
 {

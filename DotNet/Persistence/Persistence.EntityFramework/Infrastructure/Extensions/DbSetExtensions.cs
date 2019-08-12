@@ -2,9 +2,9 @@
 using System.Linq;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using PaladinRogue.Libray.Core.Domain.Entities;
+using PaladinRogue.Library.Core.Domain.Entities;
 
-namespace PaladinRogue.Libray.Persistence.EntityFramework.Infrastructure.Extensions
+namespace PaladinRogue.Library.Persistence.EntityFramework.Infrastructure.Extensions
 {
     public static class DbSetExtensions
     {

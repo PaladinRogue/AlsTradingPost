@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PaladinRogue.Libray.Core.Api.Resources
+namespace PaladinRogue.Library.Core.Api.Resources
 {
     public interface IEntityResource : IResource
     {

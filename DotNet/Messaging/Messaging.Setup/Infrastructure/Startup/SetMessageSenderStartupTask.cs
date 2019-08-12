@@ -2,11 +2,11 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using PaladinRogue.Libray.Core.Setup.Infrastructure.Startup;
-using PaladinRogue.Libray.Messaging.Common.Messages;
-using PaladinRogue.Libray.Messaging.Common.Senders;
+using PaladinRogue.Library.Core.Setup.Infrastructure.Startup;
+using PaladinRogue.Library.Messaging.Common.Messages;
+using PaladinRogue.Library.Messaging.Common.Senders;
 
-namespace PaladinRogue.Libray.Messaging.Setup.Infrastructure.Startup
+namespace PaladinRogue.Library.Messaging.Setup.Infrastructure.Startup
 {
     public class SetMessageSenderStartupTask : IStartupTask
     {
