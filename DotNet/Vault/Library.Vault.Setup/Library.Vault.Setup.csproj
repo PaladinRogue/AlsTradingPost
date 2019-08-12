@@ -9,7 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\Core\Core.Setup\Core.Setup.csproj" />
       <ProjectReference Include="..\..\Persistence\Persistence.Setup\Persistence.Setup.csproj" />
-      <ProjectReference Include="..\Libs.Vault.Application\Libs.Vault.Application.csproj" />
-      <ProjectReference Include="..\Libs.Vault.Persistence\Libs.Vault.Persistence.csproj" />
+      <ProjectReference Include="..\Library.Vault.Application\Library.Vault.Application.csproj" />
+      <ProjectReference Include="..\Library.Vault.Persistence\Library.Vault.Persistence.csproj" />
     </ItemGroup>
 </Project>

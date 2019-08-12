@@ -61,7 +61,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vault.Api", "Vault.Api\Vaul
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vault", "Vault", "{B923A1AC-3BB6-4510-A108-4CE5562B275D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libs.Vault.Domain", "..\Vault\Libs.Vault.Domain\Libs.Vault.Domain.csproj", "{F67F7F43-AFBC-47BC-96DA-309E5A7F3204}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Vault.Domain", "..\Vault\Library.Vault.Domain\Library.Vault.Domain.csproj", "{F67F7F43-AFBC-47BC-96DA-309E5A7F3204}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReferenceData", "ReferenceData", "{08D93BF1-4C8C-4D45-882D-CB0EFF0C7E80}"
 EndProject
@@ -93,11 +93,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorisation.Setup", "..\A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorisation.Common", "..\Authorisation\Authorisation.Common\Authorisation.Common.csproj", "{FB01218A-D6CD-442A-AF49-5662FC18D5BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libs.Vault.Setup", "..\Vault\Libs.Vault.Setup\Libs.Vault.Setup.csproj", "{FDD4DB0B-8EEA-4861-9D0F-F5F5A86812F6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Vault.Setup", "..\Vault\Library.Vault.Setup\Library.Vault.Setup.csproj", "{FDD4DB0B-8EEA-4861-9D0F-F5F5A86812F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libs.Vault.Application", "..\Vault\Libs.Vault.Application\Libs.Vault.Application.csproj", "{7E9560AC-7A4F-4535-BDA0-8D9F967CCE51}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Vault.Application", "..\Vault\Library.Vault.Application\Library.Vault.Application.csproj", "{7E9560AC-7A4F-4535-BDA0-8D9F967CCE51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libs.Vault.Persistence", "..\Vault\Libs.Vault.Persistence\Libs.Vault.Persistence.csproj", "{D3223FFA-7111-4CC5-A81A-05504DFABC3A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Vault.Persistence", "..\Vault\Library.Vault.Persistence\Library.Vault.Persistence.csproj", "{D3223FFA-7111-4CC5-A81A-05504DFABC3A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{1B191D18-8BCE-41EB-B041-71FC1916C9A3}"
 EndProject

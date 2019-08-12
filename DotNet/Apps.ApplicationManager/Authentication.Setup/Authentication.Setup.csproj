@@ -20,7 +20,7 @@
     <ProjectReference Include="..\..\Messaging\Messaging.Setup\Messaging.Setup.csproj" />
     <ProjectReference Include="..\..\Persistence\Persistence.Setup\Persistence.Setup.csproj" />
     <ProjectReference Include="..\..\ReferenceData\ReferenceData.Setup\ReferenceData.Setup.csproj" />
-    <ProjectReference Include="..\..\Vault\Libs.Vault.Setup\Libs.Vault.Setup.csproj" />
+    <ProjectReference Include="..\..\Vault\Library.Vault.Setup\Library.Vault.Setup.csproj" />
     <ProjectReference Include="..\Authentication.Application\Authentication.Application.csproj" />
     <ProjectReference Include="..\Authentication.Persistence\Authentication.Persistence.csproj" />
   </ItemGroup>

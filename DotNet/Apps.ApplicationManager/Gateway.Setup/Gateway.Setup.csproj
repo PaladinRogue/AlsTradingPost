@@ -17,7 +17,7 @@
       <ProjectReference Include="..\..\DomainEvents\DomainEvents.Setup\DomainEvents.Setup.csproj" />
       <ProjectReference Include="..\..\Messaging\Messaging.Setup\Messaging.Setup.csproj" />
       <ProjectReference Include="..\..\Persistence\Persistence.Setup\Persistence.Setup.csproj" />
-      <ProjectReference Include="..\..\Vault\Libs.Vault.Setup\Libs.Vault.Setup.csproj" />
+      <ProjectReference Include="..\..\Vault\Library.Vault.Setup\Library.Vault.Setup.csproj" />
       <ProjectReference Include="..\Gateway.Application\Gateway.Application.csproj" />
       <ProjectReference Include="..\Gateway.Persistence\Gateway.Persistence.csproj" />
     </ItemGroup>

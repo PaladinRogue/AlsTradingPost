@@ -6,7 +6,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\Persistence\Persistence.EntityFramework\Persistence.EntityFramework.csproj" />
-        <ProjectReference Include="..\Libs.Vault.Domain\Libs.Vault.Domain.csproj" />
+        <ProjectReference Include="..\Library.Vault.Domain\Library.Vault.Domain.csproj" />
     </ItemGroup>
 
     <ItemGroup>
