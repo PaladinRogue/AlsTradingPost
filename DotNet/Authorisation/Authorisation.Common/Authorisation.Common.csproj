@@ -1,9 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-    <PropertyGroup>
-        <TargetFramework>netcoreapp2.2</TargetFramework>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <RootNamespace>PaladinRogue.Library.Authorisation.Common</RootNamespace>
-    </PropertyGroup>
-
-</Project>

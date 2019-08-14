@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <RootNamespace>PaladinRogue.Authentication.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NodaTime" Version="2.4.5" />
+    <PackageReference Include="PaladinRogue.Library.Core.Domain" Version="1.0.0" />
+  </ItemGroup>
+</Project>

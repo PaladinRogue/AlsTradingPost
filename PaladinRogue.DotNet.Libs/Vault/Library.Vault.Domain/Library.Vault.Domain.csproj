@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <RootNamespace>PaladinRogue.Library.Vault.Domain</RootNamespace>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>PaladinRogue.Library.Vault.Domain</PackageId>
+        <Authors>PaladinRogue</Authors>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="LazyCache" Version="2.0.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Core\Core.Domain\Core.Domain.csproj" />
+    </ItemGroup>
+</Project>

@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <RootNamespace>PaladinRogue.Library.Authorisation.Setup</RootNamespace>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>PaladinRogue.Library.Authorisation.Setup</PackageId>
+        <Authors>PaladinRogue</Authors>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Authorisation.Application\Authorisation.Application.csproj" />
+      <ProjectReference Include="..\Authorisation.Common\Authorisation.Common.csproj" />
+    </ItemGroup>
+</Project>

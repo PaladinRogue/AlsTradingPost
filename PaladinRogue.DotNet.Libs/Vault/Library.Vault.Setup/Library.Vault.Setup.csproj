@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <RootNamespace>PaladinRogue.Library.Vault.Setup</RootNamespace>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>PaladinRogue.Library.Vault.Setup</PackageId>
+        <Authors>PaladinRogue</Authors>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Core\Core.Setup\Core.Setup.csproj" />
+      <ProjectReference Include="..\..\Persistence\Persistence.Setup\Persistence.Setup.csproj" />
+      <ProjectReference Include="..\Library.Vault.Application\Library.Vault.Application.csproj" />
+      <ProjectReference Include="..\Library.Vault.Persistence\Library.Vault.Persistence.csproj" />
+    </ItemGroup>
+</Project>
