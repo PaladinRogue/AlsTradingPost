@@ -1,6 +1,6 @@
 ﻿using PaladinRogue.Library.Messaging.Common.Messages;
 
-namespace Gateway.Messages
+namespace PaladinRogue.Gateway.Messages
 {
     public class RegisterApplicationMessage : IMessage
     {

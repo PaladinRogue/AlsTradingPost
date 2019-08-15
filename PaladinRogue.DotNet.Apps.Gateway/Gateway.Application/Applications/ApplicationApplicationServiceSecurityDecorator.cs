@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PaladinRogue.Library.Authorisation.Application.ApplicationServices;
 using PaladinRogue.Library.Authorisation.Common;
+using PaladinRogue.Library.Authorisation.Common.Authorisation;
 using PaladinRogue.Library.Authorisation.Common.Contexts;
 
 namespace PaladinRogue.Gateway.Application.Applications

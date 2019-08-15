@@ -11,6 +11,7 @@ using PaladinRogue.Authentication.Setup.Infrastructure.Authorisation;
 using PaladinRogue.Authentication.Setup.Infrastructure.DomainEvents;
 using PaladinRogue.Authentication.Setup.Infrastructure.Messaging;
 using PaladinRogue.Authentication.Setup.Infrastructure.SystemAdmins;
+using PaladinRogue.Gateway.ApplicationRegistration;
 using PaladinRogue.Library.Authorisation.Setup;
 using PaladinRogue.Library.Core.Api;
 using PaladinRogue.Library.Core.Api.Builders;

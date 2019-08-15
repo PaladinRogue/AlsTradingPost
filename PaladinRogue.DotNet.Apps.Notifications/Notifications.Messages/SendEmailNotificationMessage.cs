@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using PaladinRogue.Library.Messaging.Common.Messages;
 
-namespace Notifications.Messages
+namespace PaladinRogue.Notifications.Messages
 {
     public class SendEmailNotificationMessage : IMessage
     {

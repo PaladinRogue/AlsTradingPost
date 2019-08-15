@@ -7,26 +7,20 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Update="appSecrets.json.encrypted" CopyToOutputDirectory="PreserveNewest" />
-        <None Update="appSecrets.json.keyname" CopyToOutputDirectory="PreserveNewest" />
-        <Content Remove="appSecrets.json" />
+        <None Update="appSecrets.json.encrypted" CopyToOutputDirectory="PreserveNewest"/>
+        <None Update="appSecrets.json.keyname" CopyToOutputDirectory="PreserveNewest"/>
+        <Content Remove="appSecrets.json"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper">
-          <Version>8.1.1</Version>
-        </PackageReference>
-        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection">
-          <Version>6.1.1</Version>
-        </PackageReference>
-        <PackageReference Include="LazyCache.AspNetCore">
-          <Version>2.0.1</Version>
-        </PackageReference>
-        <PackageReference Include="Microsoft.AspNetCore.App" />
+        <PackageReference Include="AutoMapper" Version="8.1.1"/>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.1.1"/>
+        <PackageReference Include="LazyCache.AspNetCore" Version="2.0.1"/>
+        <PackageReference Include="Microsoft.AspNetCore.App"/>
+        <PackageReference Include="PaladinRogue.Library.Core.Api.Formats" Version="1.0.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Core\Core.Api.Formats\Core.Api.Formats.csproj" />
-      <ProjectReference Include="..\Gateway.Setup\Gateway.Setup.csproj" />
+        <ProjectReference Include="..\Gateway.Setup\Gateway.Setup.csproj"/>
     </ItemGroup>
 </Project>

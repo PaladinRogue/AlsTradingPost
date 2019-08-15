@@ -15,5 +15,6 @@
     <PackageReference Include="PaladinRogue.Library.Core.Application" Version="1.0.0" />
     <PackageReference Include="PaladinRogue.Library.Messaging.Common" Version="1.0.0" />
     <PackageReference Include="PaladinRogue.Library.ReferenceData.Application" Version="1.0.0" />
+    <PackageReference Include="PaladinRogue.Notifications.Messages" Version="1.0.0" />
   </ItemGroup>
 </Project>

@@ -6,10 +6,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Authorisation\Authorisation.Application\Authorisation.Application.csproj" />
-      <ProjectReference Include="..\..\Core\Core.Application\Core.Application.csproj" />
       <ProjectReference Include="..\Gateway.Domain\Gateway.Domain.csproj" />
       <ProjectReference Include="..\Gateway.Messages\Gateway.Messages.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="PaladinRogue.Library.Authorisation.Application" Version="1.0.0" />
+      <PackageReference Include="PaladinRogue.Library.Core.Application" Version="1.0.0" />
     </ItemGroup>
 
 </Project>

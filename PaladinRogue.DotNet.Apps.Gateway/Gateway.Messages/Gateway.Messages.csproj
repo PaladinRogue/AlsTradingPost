@@ -2,10 +2,13 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>PaladinRogue.Gateway.Messages</PackageId>
+        <Authors>PaladinRogue</Authors>
+        <RootNamespace>PaladinRogue.Gateway.Messages</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Messaging\Messaging.Common\Messaging.Common.csproj" />
+      <PackageReference Include="PaladinRogue.Library.Messaging.Common" Version="1.0.0" />
     </ItemGroup>
-
 </Project>

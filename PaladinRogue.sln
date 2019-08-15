@@ -33,55 +33,55 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vault", "Vault", "{8DB3A817
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.Api", "PaladinRogue.DotNet.Apps.Authentication\Authentication.Api\Authentication.Api.csproj", "{A4002D1F-F7AB-456F-A286-F0464D969FB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Api", "PaladinRogue.DotNet.Libs.Core\Core.Api\Core.Api.csproj", "{448A7467-C4A3-491F-8776-98929BA5CC4D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Api", "PaladinRogue.DotNet.Libs\Core\Core.Api\Core.Api.csproj", "{448A7467-C4A3-491F-8776-98929BA5CC4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Api.Formats", "PaladinRogue.DotNet.Libs.Core\Core.Api.Formats\Core.Api.Formats.csproj", "{6A02DD50-1F63-4999-9756-73CBC9EC00E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Api.Formats", "PaladinRogue.DotNet.Libs\Core\Core.Api.Formats\Core.Api.Formats.csproj", "{6A02DD50-1F63-4999-9756-73CBC9EC00E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Application", "PaladinRogue.DotNet.Libs.Core\Core.Application\Core.Application.csproj", "{533996AA-7162-409E-A0B7-A510AA97CED7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Application", "PaladinRogue.DotNet.Libs\Core\Core.Application\Core.Application.csproj", "{533996AA-7162-409E-A0B7-A510AA97CED7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Common", "PaladinRogue.DotNet.Libs.Core\Core.Common\Core.Common.csproj", "{864EF5A5-EADE-4153-8BC0-CA99F6C1025A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Common", "PaladinRogue.DotNet.Libs\Core\Core.Common\Core.Common.csproj", "{864EF5A5-EADE-4153-8BC0-CA99F6C1025A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Domain", "PaladinRogue.DotNet.Libs.Core\Core.Domain\Core.Domain.csproj", "{83205DE1-082B-46A6-A43A-C7425053895D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Domain", "PaladinRogue.DotNet.Libs\Core\Core.Domain\Core.Domain.csproj", "{83205DE1-082B-46A6-A43A-C7425053895D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Setup", "PaladinRogue.DotNet.Libs.Core\Core.Setup\Core.Setup.csproj", "{86235ADD-8C4A-4BBF-BE64-1C00E49062B0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Setup", "PaladinRogue.DotNet.Libs\Core\Core.Setup\Core.Setup.csproj", "{86235ADD-8C4A-4BBF-BE64-1C00E49062B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Configuration.Secrets", "PaladinRogue.DotNet.Libs.Configuration\Configuration.Secrets\Configuration.Secrets.csproj", "{573CF4BB-4A32-4E7A-AE71-93FB490CF152}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Configuration.Secrets", "PaladinRogue.DotNet.Libs\Configuration\Configuration.Secrets\Configuration.Secrets.csproj", "{573CF4BB-4A32-4E7A-AE71-93FB490CF152}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainEvents.Setup", "PaladinRogue.DotNet.Libs.DomainEvents\DomainEvents.Setup\DomainEvents.Setup.csproj", "{728F8002-4047-4457-A2DC-2377C2119BDD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainEvents.Setup", "PaladinRogue.DotNet.Libs\DomainEvents\DomainEvents.Setup\DomainEvents.Setup.csproj", "{728F8002-4047-4457-A2DC-2377C2119BDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainEvents.Broker", "PaladinRogue.DotNet.Libs.DomainEvents\DomainEvents.Broker\DomainEvents.Broker.csproj", "{4C82906A-C96F-4BAE-9400-CB7234614191}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainEvents.Broker", "PaladinRogue.DotNet.Libs\DomainEvents\DomainEvents.Broker\DomainEvents.Broker.csproj", "{4C82906A-C96F-4BAE-9400-CB7234614191}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messaging.Setup", "PaladinRogue.DotNet.Libs.Messaging\Messaging.Setup\Messaging.Setup.csproj", "{FA88DF31-22FF-4346-8375-0966D2003ECD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messaging.Setup", "PaladinRogue.DotNet.Libs\Messaging\Messaging.Setup\Messaging.Setup.csproj", "{FA88DF31-22FF-4346-8375-0966D2003ECD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messaging.RabbitMQ", "PaladinRogue.DotNet.Libs.Messaging\Messaging.RabbitMQ\Messaging.RabbitMQ.csproj", "{96C9EF8A-4696-4587-85A0-E593B2A281F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messaging.RabbitMQ", "PaladinRogue.DotNet.Libs\Messaging\Messaging.RabbitMQ\Messaging.RabbitMQ.csproj", "{96C9EF8A-4696-4587-85A0-E593B2A281F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messaging.Messages", "PaladinRogue.DotNet.Libs.Messaging\Messaging.Messages\Messaging.Messages.csproj", "{F28C3B66-CE87-4532-920C-CD8E82878303}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messaging.Messages", "PaladinRogue.DotNet.Libs\Messaging\Messaging.Messages\Messaging.Messages.csproj", "{F28C3B66-CE87-4532-920C-CD8E82878303}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messaging.Common", "PaladinRogue.DotNet.Libs.Messaging\Messaging.Common\Messaging.Common.csproj", "{C2594B55-F152-4461-A5E7-4B5975E30D33}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messaging.Common", "PaladinRogue.DotNet.Libs\Messaging\Messaging.Common\Messaging.Common.csproj", "{C2594B55-F152-4461-A5E7-4B5975E30D33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorisation.Application", "PaladinRogue.DotNet.Libs.Authorisation\Authorisation.Application\Authorisation.Application.csproj", "{E12B26DC-0A26-4B4A-86CA-B1CA954D0836}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorisation.Application", "PaladinRogue.DotNet.Libs\Authorisation\Authorisation.Application\Authorisation.Application.csproj", "{E12B26DC-0A26-4B4A-86CA-B1CA954D0836}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorisation.Common", "PaladinRogue.DotNet.Libs.Authorisation\Authorisation.Common\Authorisation.Common.csproj", "{15773F0A-3A95-43E3-99D3-C3F9A3A1141A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorisation.Common", "PaladinRogue.DotNet.Libs\Authorisation\Authorisation.Common\Authorisation.Common.csproj", "{15773F0A-3A95-43E3-99D3-C3F9A3A1141A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorisation.Setup", "PaladinRogue.DotNet.Libs.Authorisation\Authorisation.Setup\Authorisation.Setup.csproj", "{FBCC1679-C6F0-4CD1-B99E-DC411A9011D0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorisation.Setup", "PaladinRogue.DotNet.Libs\Authorisation\Authorisation.Setup\Authorisation.Setup.csproj", "{FBCC1679-C6F0-4CD1-B99E-DC411A9011D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence.EntityFramework", "PaladinRogue.DotNet.Libs.Persistence\Persistence.EntityFramework\Persistence.EntityFramework.csproj", "{239BE5B6-B227-4B2E-9554-5BB87A61E4FF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence.EntityFramework", "PaladinRogue.DotNet.Libs\Persistence\Persistence.EntityFramework\Persistence.EntityFramework.csproj", "{239BE5B6-B227-4B2E-9554-5BB87A61E4FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence.Setup", "PaladinRogue.DotNet.Libs.Persistence\Persistence.Setup\Persistence.Setup.csproj", "{4AFC7AB3-A201-47D7-92CB-84F975D3FEDE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence.Setup", "PaladinRogue.DotNet.Libs\Persistence\Persistence.Setup\Persistence.Setup.csproj", "{4AFC7AB3-A201-47D7-92CB-84F975D3FEDE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferenceData.Application", "PaladinRogue.DotNet.Libs.ReferenceData\ReferenceData.Application\ReferenceData.Application.csproj", "{F9E05276-8DFB-46DC-90E0-C38B434BFDC7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferenceData.Application", "PaladinRogue.DotNet.Libs\ReferenceData\ReferenceData.Application\ReferenceData.Application.csproj", "{F9E05276-8DFB-46DC-90E0-C38B434BFDC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferenceData.Domain", "PaladinRogue.DotNet.Libs.ReferenceData\ReferenceData.Domain\ReferenceData.Domain.csproj", "{132C3629-F111-4FD8-AFAD-6D96D2185790}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferenceData.Domain", "PaladinRogue.DotNet.Libs\ReferenceData\ReferenceData.Domain\ReferenceData.Domain.csproj", "{132C3629-F111-4FD8-AFAD-6D96D2185790}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferenceData.Persistence", "PaladinRogue.DotNet.Libs.ReferenceData\ReferenceData.Persistence\ReferenceData.Persistence.csproj", "{AA59BCB8-269B-408D-A5A5-A48EE9899393}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferenceData.Persistence", "PaladinRogue.DotNet.Libs\ReferenceData\ReferenceData.Persistence\ReferenceData.Persistence.csproj", "{AA59BCB8-269B-408D-A5A5-A48EE9899393}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferenceData.Setup", "PaladinRogue.DotNet.Libs.ReferenceData\ReferenceData.Setup\ReferenceData.Setup.csproj", "{D20B920E-3740-4AB9-AADB-8FA8B98C80E5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferenceData.Setup", "PaladinRogue.DotNet.Libs\ReferenceData\ReferenceData.Setup\ReferenceData.Setup.csproj", "{D20B920E-3740-4AB9-AADB-8FA8B98C80E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Vault.Application", "PaladinRogue.DotNet.Libs.Vault\Library.Vault.Application\Library.Vault.Application.csproj", "{43C517DE-EA05-4AC0-9FDE-84B3AB0EA8C7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Vault.Application", "PaladinRogue.DotNet.Libs\Vault\Library.Vault.Application\Library.Vault.Application.csproj", "{43C517DE-EA05-4AC0-9FDE-84B3AB0EA8C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Vault.Persistence", "PaladinRogue.DotNet.Libs.Vault\Library.Vault.Persistence\Library.Vault.Persistence.csproj", "{9B15B8D3-C096-47D0-80E7-84948D3AA466}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Vault.Persistence", "PaladinRogue.DotNet.Libs\Vault\Library.Vault.Persistence\Library.Vault.Persistence.csproj", "{9B15B8D3-C096-47D0-80E7-84948D3AA466}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Vault.Setup", "PaladinRogue.DotNet.Libs.Vault\Library.Vault.Setup\Library.Vault.Setup.csproj", "{923B1842-66E3-4B3C-9AA1-44C6B4FB883D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Vault.Setup", "PaladinRogue.DotNet.Libs\Vault\Library.Vault.Setup\Library.Vault.Setup.csproj", "{923B1842-66E3-4B3C-9AA1-44C6B4FB883D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.Application", "PaladinRogue.DotNet.Apps.Authentication\Authentication.Application\Authentication.Application.csproj", "{CBE7D936-AF80-4DAB-95EA-D18772B556E3}"
 EndProject
@@ -118,6 +118,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway.Persistence", "PaladinRogue.DotNet.Apps.Gateway\Gateway.Persistence\Gateway.Persistence.csproj", "{121A667F-49F3-4630-AA47-5F3D55C587EE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway.Setup", "PaladinRogue.DotNet.Apps.Gateway\Gateway.Setup\Gateway.Setup.csproj", "{8B324F45-CE6F-42CB-83D8-402E6E9B2E56}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Vault.Domain", "PaladinRogue.DotNet.Libs\Vault\Library.Vault.Domain\Library.Vault.Domain.csproj", "{0C82F83C-5528-4016-B9C1-49407DE87E17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -301,6 +303,10 @@ Global
 		{8B324F45-CE6F-42CB-83D8-402E6E9B2E56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B324F45-CE6F-42CB-83D8-402E6E9B2E56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B324F45-CE6F-42CB-83D8-402E6E9B2E56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C82F83C-5528-4016-B9C1-49407DE87E17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C82F83C-5528-4016-B9C1-49407DE87E17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C82F83C-5528-4016-B9C1-49407DE87E17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C82F83C-5528-4016-B9C1-49407DE87E17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -363,6 +369,7 @@ Global
 		{67A73DF7-94D5-4EED-BD7E-0677780FE402} = {AC51BEF3-E8B5-4FCB-BF84-69DDAE4122CA}
 		{121A667F-49F3-4630-AA47-5F3D55C587EE} = {AC51BEF3-E8B5-4FCB-BF84-69DDAE4122CA}
 		{8B324F45-CE6F-42CB-83D8-402E6E9B2E56} = {AC51BEF3-E8B5-4FCB-BF84-69DDAE4122CA}
+		{0C82F83C-5528-4016-B9C1-49407DE87E17} = {B923A1AC-3BB6-4510-A108-4CE5562B275D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3537C8D6-D792-492E-ACF4-8DDD1AA19555}

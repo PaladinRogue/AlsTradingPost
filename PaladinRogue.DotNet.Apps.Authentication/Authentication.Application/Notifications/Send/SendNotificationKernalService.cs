@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Notifications.Messages;
 using PaladinRogue.Authentication.Application.Notifications.Audiences;
 using PaladinRogue.Authentication.Application.Notifications.Emails;
 using PaladinRogue.Authentication.Domain.NotificationTypes;
@@ -10,6 +9,7 @@ using PaladinRogue.Library.Core.Application.Exceptions;
 using PaladinRogue.Library.Core.Application.Transactions;
 using PaladinRogue.Library.Core.Domain.Persistence;
 using PaladinRogue.Library.Messaging.Common.Messages;
+using PaladinRogue.Notifications.Messages;
 
 namespace PaladinRogue.Authentication.Application.Notifications.Send
 {

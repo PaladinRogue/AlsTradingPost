@@ -6,7 +6,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Core\Core.Domain\Core.Domain.csproj" />
+      <PackageReference Include="PaladinRogue.Library.Core.Domain" Version="1.0.0" />
     </ItemGroup>
-
 </Project>

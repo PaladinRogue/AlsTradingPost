@@ -7,16 +7,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Authorisation\Authorisation.Setup\Authorisation.Setup.csproj" />
-      <ProjectReference Include="..\..\DomainEvents\DomainEvents.Setup\DomainEvents.Setup.csproj" />
-      <ProjectReference Include="..\..\Messaging\Messaging.Setup\Messaging.Setup.csproj" />
-      <ProjectReference Include="..\..\Persistence\Persistence.Setup\Persistence.Setup.csproj" />
-      <ProjectReference Include="..\..\Vault\Library.Vault.Setup\Library.Vault.Setup.csproj" />
       <ProjectReference Include="..\Vault.Application\Vault.Application.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.4" />
+      <PackageReference Include="PaladinRogue.Library.Authorisation.Setup" Version="1.0.0" />
+      <PackageReference Include="PaladinRogue.Library.Core.Setup" Version="1.0.0" />
+      <PackageReference Include="PaladinRogue.Library.DomainEvents.Setup" Version="1.0.0" />
+      <PackageReference Include="PaladinRogue.Library.Messaging.Setup" Version="1.0.0" />
+      <PackageReference Include="PaladinRogue.Library.Vault.Setup" Version="1.0.0" />
     </ItemGroup>
 
 </Project>

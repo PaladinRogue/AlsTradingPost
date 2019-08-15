@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using Gateway.Messages;
 using Microsoft.Extensions.Logging;
 using PaladinRogue.Gateway.Application.Applications.Register;
+using PaladinRogue.Gateway.Messages;
 using PaladinRogue.Library.Messaging.Common.Handlers;
 using PaladinRogue.Library.Messaging.Common.MessageBus;
 

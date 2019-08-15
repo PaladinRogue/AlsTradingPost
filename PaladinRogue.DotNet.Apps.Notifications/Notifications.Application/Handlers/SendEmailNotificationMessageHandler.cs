@@ -1,11 +1,11 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Notifications.Messages;
 using PaladinRogue.Library.Messaging.Common.Handlers;
 using PaladinRogue.Library.Messaging.Common.MessageBus;
 using PaladinRogue.Notifications.Application.Emails;
 using PaladinRogue.Notifications.Application.Emails.Send;
+using PaladinRogue.Notifications.Messages;
 
 namespace PaladinRogue.Notifications.Application.Handlers
 {

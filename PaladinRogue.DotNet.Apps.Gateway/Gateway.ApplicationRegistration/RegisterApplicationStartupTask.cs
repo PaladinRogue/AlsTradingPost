@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Gateway.Messages;
 using Microsoft.Extensions.DependencyInjection;
+using PaladinRogue.Gateway.Messages;
 using PaladinRogue.Library.Core.Common.Settings;
 using PaladinRogue.Library.Core.Setup.Infrastructure.Options;
 using PaladinRogue.Library.Core.Setup.Infrastructure.Startup;
 using PaladinRogue.Library.Messaging.Common.Dispatchers;
 using PaladinRogue.Library.Messaging.Common.Senders;
 
-namespace PaladinRogue.Library.Core.Setup.Infrastructure.ApplicationRegistration
+namespace PaladinRogue.Gateway.ApplicationRegistration
 {
     public class RegisterApplicationStartupTask : IStartupTask
     {
