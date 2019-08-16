@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>PaladinRogue.Gateway.ApplicationRegistration</PackageId>
+        <Authors>PaladinRogue</Authors>
+        <RootNamespace>PaladinRogue.Gateway.ApplicationRegistration</RootNamespace>
+        <PackageVersion>1.0.1</PackageVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="PaladinRogue.Library.Core.Setup" Version="1.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\PaladinRogue.Gateway.Messages\PaladinRogue.Gateway.Messages.csproj" />
+    </ItemGroup>
+
+</Project>

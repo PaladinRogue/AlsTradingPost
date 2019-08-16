@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <RootNamespace>PaladinRogue.Library.Core.Api</RootNamespace>
+        <PackageId>PaladinRogue.Library.Core.Api</PackageId>
+        <Authors>PaladinRogue</Authors>
+        <PackageVersion>1.0.2</PackageVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="FluentValidation" Version="8.4.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.2.4" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="2.2.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.2.0" />
+        <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.4.0" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.4.0" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\Configuration\PaladinRogue.Library.Configuration.Secrets\PaladinRogue.Library.Configuration.Secrets.csproj" />
+      <ProjectReference Include="..\PaladinRogue.Library.Core.Setup\PaladinRogue.Library.Core.Setup.csproj" />
+    </ItemGroup>
+</Project>

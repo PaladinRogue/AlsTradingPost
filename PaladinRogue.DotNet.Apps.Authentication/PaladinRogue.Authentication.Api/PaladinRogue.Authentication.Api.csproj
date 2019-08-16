@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <StartupObject />
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>PaladinRogue.Authentication.Api</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="appSecrets.json.encrypted" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="appSecrets.json.keyname" CopyToOutputDirectory="PreserveNewest" />
+    <Content Remove="appSecrets.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.1.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.1.0" />
+    <PackageReference Include="LazyCache.AspNetCore" Version="2.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="PaladinRogue.Gateway.ApplicationRegistration" Version="1.0.1" />
+    <PackageReference Include="PaladinRogue.Library.Core.Api.Formats" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PaladinRogue.Authentication.Setup\PaladinRogue.Authentication.Setup.csproj" />
+  </ItemGroup>
+</Project>

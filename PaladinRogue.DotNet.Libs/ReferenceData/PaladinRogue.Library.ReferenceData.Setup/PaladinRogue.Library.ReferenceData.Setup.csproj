@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <RootNamespace>PaladinRogue.Library.ReferenceData.Setup</RootNamespace>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>PaladinRogue.Library.ReferenceData.Setup</PackageId>
+        <Authors>PaladinRogue</Authors>
+        <PackageVersion>1.0.1</PackageVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Authorisation\PaladinRogue.Library.Authorisation.Setup\PaladinRogue.Library.Authorisation.Setup.csproj" />
+      <ProjectReference Include="..\..\Core\PaladinRogue.Library.Core.Setup\PaladinRogue.Library.Core.Setup.csproj" />
+      <ProjectReference Include="..\PaladinRogue.Library.ReferenceData.Application\PaladinRogue.Library.ReferenceData.Application.csproj" />
+      <ProjectReference Include="..\PaladinRogue.Library.ReferenceData.Persistence\PaladinRogue.Library.ReferenceData.Persistence.csproj" />
+    </ItemGroup>
+</Project>

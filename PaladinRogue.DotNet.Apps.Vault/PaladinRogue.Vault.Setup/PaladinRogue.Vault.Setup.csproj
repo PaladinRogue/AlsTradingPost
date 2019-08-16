@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <RootNamespace>PaladinRogue.Vault.Setup</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.4" />
+      <PackageReference Include="PaladinRogue.Library.Authorisation.Setup" Version="1.0.1" />
+      <PackageReference Include="PaladinRogue.Library.Core.Setup" Version="1.0.1" />
+      <PackageReference Include="PaladinRogue.Library.DomainEvents.Setup" Version="1.0.1" />
+      <PackageReference Include="PaladinRogue.Library.Messaging.Setup" Version="1.0.1" />
+      <PackageReference Include="PaladinRogue.Library.Vault.Setup" Version="1.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\PaladinRogue.Vault.Application\PaladinRogue.Vault.Application.csproj" />
+    </ItemGroup>
+
+</Project>

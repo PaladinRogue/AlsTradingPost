@@ -295,7 +295,6 @@ __pycache__/
 *.pubxml
 
 *.gitconfig
-**/vaultSecrets.json
-**/secrets.json
+**/appSecrets.json
 *.log.*
 *.eml

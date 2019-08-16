@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <RootNamespace>PaladinRogue.Gateway.Application</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\PaladinRogue.Gateway.Domain\PaladinRogue.Gateway.Domain.csproj" />
+      <ProjectReference Include="..\PaladinRogue.Gateway.Messages\PaladinRogue.Gateway.Messages.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="PaladinRogue.Library.Authorisation.Application" Version="1.0.1" />
+      <PackageReference Include="PaladinRogue.Library.Core.Application" Version="1.0.1" />
+    </ItemGroup>
+
+</Project>

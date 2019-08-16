@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <RootNamespace>PaladinRogue.Library.Messaging.RabbitMQ</RootNamespace>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>PaladinRogue.Library.Messaging.RabbitMQ</PackageId>
+        <Authors>PaladinRogue</Authors>
+        <PackageVersion>1.0.1</PackageVersion>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+        <PackageReference Include="Polly" Version="7.1.0" />
+        <PackageReference Include="RabbitMQ.Client" Version="5.1.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\PaladinRogue.Library.Messaging.Common\PaladinRogue.Library.Messaging.Common.csproj" />
+    </ItemGroup>
+</Project>

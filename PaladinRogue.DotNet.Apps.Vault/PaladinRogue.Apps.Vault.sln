@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vault.Api", "Vault.Api\Vault.Api.csproj", "{2CD1AED6-5541-480D-B8FA-357FA627AA79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vault.Application", "Vault.Application\Vault.Application.csproj", "{9F0D3BFC-24C4-40AC-8052-3726C5E52A77}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vault.Setup", "Vault.Setup\Vault.Setup.csproj", "{D40D00D4-D785-4F72-A70E-4CA1813980D7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2CD1AED6-5541-480D-B8FA-357FA627AA79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CD1AED6-5541-480D-B8FA-357FA627AA79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CD1AED6-5541-480D-B8FA-357FA627AA79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CD1AED6-5541-480D-B8FA-357FA627AA79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F0D3BFC-24C4-40AC-8052-3726C5E52A77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F0D3BFC-24C4-40AC-8052-3726C5E52A77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F0D3BFC-24C4-40AC-8052-3726C5E52A77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F0D3BFC-24C4-40AC-8052-3726C5E52A77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D40D00D4-D785-4F72-A70E-4CA1813980D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D40D00D4-D785-4F72-A70E-4CA1813980D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D40D00D4-D785-4F72-A70E-4CA1813980D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D40D00D4-D785-4F72-A70E-4CA1813980D7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
