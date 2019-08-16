@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <RootNamespace>PaladinRogue.Library.Messaging.Setup</RootNamespace>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>PaladinRogue.Library.Messaging.Setup</PackageId>
+        <Authors>PaladinRogue</Authors>
+        <PackageVersion>1.0.1</PackageVersion>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\Core\PaladinRogue.Library.Core.Setup\PaladinRogue.Library.Core.Setup.csproj" />
+      <ProjectReference Include="..\PaladinRogue.Library.Messaging.RabbitMQ\PaladinRogue.Library.Messaging.RabbitMQ.csproj" />
+    </ItemGroup>
+</Project>

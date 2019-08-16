@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <RootNamespace>PaladinRogue.Library.Vault.Application</RootNamespace>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>PaladinRogue.Library.Vault.Application</PackageId>
+        <Authors>PaladinRogue</Authors>
+        <PackageVersion>1.0.1</PackageVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Core\PaladinRogue.Library.Core.Application\PaladinRogue.Library.Core.Application.csproj" />
+      <ProjectReference Include="..\PaladinRogue.Library.Vault.Domain\PaladinRogue.Library.Vault.Domain.csproj" />
+    </ItemGroup>
+</Project>

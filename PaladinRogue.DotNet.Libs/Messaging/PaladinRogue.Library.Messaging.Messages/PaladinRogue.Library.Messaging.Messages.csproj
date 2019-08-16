@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <PackageId>PaladinRogue.Library.Messaging.Messages</PackageId>
+        <Authors>PaladinRogue</Authors>
+        <PackageVersion>1.0.1</PackageVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <RootNamespace>Messaging.Messages</RootNamespace>
+    </PropertyGroup>
+
+</Project>

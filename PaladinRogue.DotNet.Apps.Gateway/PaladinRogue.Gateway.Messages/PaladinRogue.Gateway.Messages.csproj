@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>PaladinRogue.Gateway.Messages</PackageId>
+        <Authors>PaladinRogue</Authors>
+        <PackageVersion>1.0.1</PackageVersion>
+        <RootNamespace>PaladinRogue.Gateway.Messages</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="PaladinRogue.Library.Messaging.Common" Version="1.0.1"/>
+    </ItemGroup>
+</Project>

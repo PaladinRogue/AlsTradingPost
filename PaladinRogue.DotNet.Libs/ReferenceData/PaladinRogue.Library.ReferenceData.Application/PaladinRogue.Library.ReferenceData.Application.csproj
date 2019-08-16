@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <RootNamespace>PaladinRogue.Library.ReferenceData.Application</RootNamespace>
+        <PackageId>PaladinRogue.Library.ReferenceData.Application</PackageId>
+        <Authors>PaladinRogue</Authors>
+        <PackageVersion>1.0.1</PackageVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\Authorisation\PaladinRogue.Library.Authorisation.Application\PaladinRogue.Library.Authorisation.Application.csproj" />
+      <ProjectReference Include="..\..\Core\PaladinRogue.Library.Core.Application\PaladinRogue.Library.Core.Application.csproj" />
+      <ProjectReference Include="..\PaladinRogue.Library.ReferenceData.Domain\PaladinRogue.Library.ReferenceData.Domain.csproj" />
+    </ItemGroup>
+</Project>

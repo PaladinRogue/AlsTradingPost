@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <RootNamespace>PaladinRogue.Library.ReferenceData.Domain</RootNamespace>
+        <PackageId>PaladinRogue.Library.ReferenceData.Domain</PackageId>
+        <Authors>PaladinRogue</Authors>
+        <PackageVersion>1.0.1</PackageVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\Core\PaladinRogue.Library.Core.Domain\PaladinRogue.Library.Core.Domain.csproj" />
+    </ItemGroup>
+</Project>

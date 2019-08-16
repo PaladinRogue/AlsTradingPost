@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <RootNamespace>PaladinRogue.Library.ReferenceData.Persistence</RootNamespace>
+        <PackageId>PaladinRogue.Library.ReferenceData.Persistence</PackageId>
+        <Authors>PaladinRogue</Authors>
+        <PackageVersion>1.0.1</PackageVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Persistence\PaladinRogue.Library.Persistence.EntityFramework\PaladinRogue.Library.Persistence.EntityFramework.csproj" />
+      <ProjectReference Include="..\PaladinRogue.Library.ReferenceData.Domain\PaladinRogue.Library.ReferenceData.Domain.csproj" />
+    </ItemGroup>
+
+</Project>
